@@ -1,37 +1,92 @@
-# 🧩 Template Git Repo
+# 🧠 Claude AI Playbook
 
-*Baseline for creating new internal repositories with consistent structure and standards.*
-
-[![Ruff](https://img.shields.io/badge/linting-ruff-blue?logo=python\&logoColor=white)](https://docs.astral.sh/ruff/)
+*Source of truth for version-controlled Claude workflows, personas, and session instructions.*
 
 ---
 
-## 🎯 Purpose
+## Purpose
 
-A **generic starting point** for new projects, providing:
+Defines the standard approach for using Claude, including:
 
-* Standard Git structure
-* Templates for PRs, CODEOWNERS, and branching
-* Pre-commit hooks for linting and validation
+- **Session startup instructions**
+- **Workflows**
+- **Personas**
+- **Context templates**
 
----
-
-## 📝 Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for branching rules, commit conventions, and PR process.
+These files are installed locally into `~/.claude/`.
 
 ---
 
-## 🪄 How to Use This Repo
+## How It Works
 
-1. Click **“Use this template”** at the top of the repository page.
-2. Enter a name for your new repository and create it.
-3. Clone your new repository locally:
+- **`src/claude/`** → managed Claude files
+- **`src/sh/claude/`** → install and update scripts
+- **`~/.claude/`** → local runtime location
 
-   ```bash
-   git clone <new-repo-url>
-   cd <new-repo>
-   ```
+---
 
-4. Update the `README.md` and `requirements.txt` as needed.
-5. Optionally, set up a Python virtual environment — see [docs/virtualenv_setup.md](docs/virtualenv_setup.md).
+## Quick Start
+
+Clone the repo:
+
+```bash
+git clone <repo-url>
+cd claude_ai_playbook
+````
+
+Install the Claude files locally:
+
+```bash
+bash src/sh/claude/install_claude_files.sh
+```
+
+This will:
+
+* create `~/.claude/` if needed
+* copy managed files into it
+* back up conflicting files if required
+
+---
+
+## Updating
+
+Pull latest changes and re-sync:
+
+```bash
+git pull
+bash src/sh/claude/update_claude_files.sh
+```
+
+---
+
+## Repo Structure
+
+```text
+src/
+  claude/
+    commands/
+    context/
+    personas/
+    session/
+    workflows/
+
+  sh/claude/
+    bootstrap_claude_repo.sh
+    install_claude_files.sh
+    update_claude_files.sh
+```
+
+---
+
+## Principles
+
+* **Plan before execution**
+* **Reuse standard workflows**
+* **Keep instructions modular**
+* **Update in Git, then sync locally**
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for branching, commit, and PR standards.
