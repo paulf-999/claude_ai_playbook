@@ -16,6 +16,11 @@ ERROR='\033[0;31m' # red (for error messages)
 CRITICAL='\033[1;31m' # bold red (for critical errors)
 COLOUR_OFF='\033[0m' # Text Reset
 
+# reference to root dir
+ROOT_DIR="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+TIMESTAMP="$(date +%Y%m%d_%H%M%S)"
+
+
 # Function to standardise log messaging
 log_message() {
     local LOGGING_LEVEL="$1"
@@ -44,6 +49,6 @@ file_exists() {
 
 # Signal handler to catch interruptions (Ctrl+C)
 handle_interruption() {
-    print_info_message "Script execution aborted by the user."
+    log_message "${WARNING}" "Script execution aborted by the user."
     exit 1
 }
