@@ -90,4 +90,3 @@ Follow the [Astronomer DAG best practices guide](https://docs.astronomer.io/lear
 - Keep DAG files as configuration only — do not perform heavy computation at parse time.
 - Avoid top-level database or API calls in DAG files, as they run on every scheduler heartbeat.
 - Use connection and variable caching to reduce load on the metadata database.
-
