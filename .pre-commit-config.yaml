@@ -1,6 +1,6 @@
 ---
 # all commands by default will run on every commit
-default_install_hook_types: [pre-commit, commit-msg]
+default_install_hook_types: [pre-commit]
 default_stages: [commit]
 # some configs are only available after v2.18
 minimum_pre_commit_version: '2.18'
@@ -14,14 +14,6 @@ repos:
             name: Git checks - committed to protected Git branch?
           - id: check-merge-conflict # checks for files that contain merge conflict strings.
             name: Git checks - any merge conflicts?
-
-    - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
-      rev: v9.22.0
-      hooks:
-          - id: commitlint # validate Git commit messages
-            name: Git checks - Git commit validation
-            stages: [commit-msg]
-            additional_dependencies: ['@commitlint/config-conventional']
 
     - repo: local
       hooks:

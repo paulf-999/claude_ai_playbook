@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git branch:*)",
+      "Bash(git checkout:*)",
+      "Bash(git commit:*)",
+      "Bash(git diff:*)",
+      "Bash(git fetch:*)",
+      "Bash(git log:*)",
+      "Bash(git merge:*)",
+      "Bash(git pull:*)",
+      "Bash(git push:*)",
+      "Bash(git rebase:*)",
+      "Bash(git status:*)",
+      "Bash(gh:*)",
+      "Bash(make:*)",
+      "Bash(python:*)",
+      "Bash(pip:*)",
+      "Bash(docker:*)",
+      "Bash(find:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(cp:*)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '{\"systemMessage\": \"MANDATORY: Call the EnterPlanMode tool immediately. Do not output any text, greet the user, or take any other action until EnterPlanMode has been called. This is not optional. Once in planning mode, follow the session startup protocol: (1) Read all imported context files and summarise the current project context in 2-3 sentences for confirmation. (2) Ask: What is the task for this session? Wait for each response before proceeding to the next step.\"}'"
+          }
+        ]
+      }
+    ]
+  }
+}

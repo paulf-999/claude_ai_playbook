@@ -1,92 +1,38 @@
-# 🧠 Claude AI Playbook
+# 📖 Claude AI Playbook
 
-*Source of truth for version-controlled Claude workflows, personas, and session instructions.*
-
----
-
-## Purpose
-
-Defines the standard approach for using Claude, including:
-
-- **Session startup instructions**
-- **Workflows**
-- **Personas**
-- **Context templates**
-
-These files are installed locally into `~/.claude/`.
+This repo provides a starting point for every session across every project: how Claude should behave, what role it plays, what standards it follows, and how sessions should start and end.
 
 ---
 
-## How It Works
+## 🚀 Getting started
 
-- **`src/claude/`** → managed Claude files
-- **`src/sh/claude/`** → install and update scripts
-- **`~/.claude/`** → local runtime location
-
----
-
-## Quick Start
-
-Clone the repo:
+Install the Claude files into the global user directory `~/.claude/` by running
 
 ```bash
-git clone <repo-url>
-cd claude_ai_playbook
-````
-
-Install the Claude files locally:
-
-```bash
-bash src/sh/claude/install_claude_files.sh
+make install
 ```
 
-This will:
-
-* create `~/.claude/` if needed
-* copy managed files into it
-* back up conflicting files if required
+See [docs/quickstart.md](docs/quickstart.md) for the full walkthrough.
 
 ---
 
-## Updating
+## 🔄 Keeping up to date
 
-Pull latest changes and re-sync:
+When the playbook is updated, pull and re-sync:
 
 ```bash
 git pull
-bash src/sh/claude/update_claude_files.sh
+make update
 ```
 
 ---
 
-## Repo Structure
+## 📦 What's installed
 
-```text
-src/
-  claude/
-    commands/
-    context/
-    personas/
-    session/
-    workflows/
-
-  sh/claude/
-    bootstrap_claude_repo.sh
-    install_claude_files.sh
-    update_claude_files.sh
-```
+See [docs/whats_installed.md](docs/whats_installed.md) for a description of every category of file deployed into `~/.claude/` — rules, process, agents, commands, skills, and style guides.
 
 ---
 
-## Principles
+## 🤝 Contributing
 
-* **Plan before execution**
-* **Reuse standard workflows**
-* **Keep instructions modular**
-* **Update in Git, then sync locally**
-
----
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for branching, commit, and PR standards.
+See [CONTRIBUTING.md](CONTRIBUTING.md).
