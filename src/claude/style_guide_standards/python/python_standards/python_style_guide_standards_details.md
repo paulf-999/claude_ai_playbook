@@ -82,6 +82,26 @@ Do not use Google-style or NumPy-style docstrings.
 
 ---
 
+## 💬 Inline comments
+
+Add inline comments only where the code is not self-evident — non-obvious logic, non-trivial regex, fallback behaviour, or constraints that are not apparent from the code itself. Do not comment obvious operations.
+
+```python
+# Strips the leading '@' but preserves './' for relative path resolution
+relative = line[1:]
+
+pattern = r"~/.claude/[^\s`'\"\)>]+"  # exclude whitespace and common delimiters
+
+if report.when != "call":  # skip setup/teardown phases; only record the test body result
+    return
+```
+
+- Place the comment on the line above for multi-line explanations, or inline at the end for brief notes.
+- Keep comments accurate — stale comments are worse than none.
+- Do not restate what the code does in plain English (`i += 1  # increment i`).
+
+---
+
 ## ⚠️ Error handling
 
 - Catch specific exceptions, not bare `except Exception:` or `except:`.

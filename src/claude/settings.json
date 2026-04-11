@@ -1,5 +1,33 @@
 {
+  "autoMemoryEnabled": true,
+  "deniedMcpServers": [
+    {"serverName": "github"},
+    {"serverName": "atlassian"}
+  ],
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/claude_prompt_reviewer.py"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/claude_session_cost.py"
+          }
+        ]
+      }
+    ]
+  },
   "permissions": {
+    "defaultMode": "plan",
     "allow": [
       "Bash(git add:*)",
       "Bash(git branch:*)",
@@ -22,18 +50,6 @@
       "Bash(mkdir:*)",
       "Bash(mv:*)",
       "Bash(cp:*)"
-    ]
-  },
-  "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "printf '{\"systemMessage\": \"MANDATORY: Call the EnterPlanMode tool immediately. Do not output any text, greet the user, or take any other action until EnterPlanMode has been called. This is not optional. Once in planning mode, follow the session startup protocol: (1) Read all imported context files and summarise the current project context in 2-3 sentences for confirmation. (2) Ask: What is the task for this session? Wait for each response before proceeding to the next step.\"}'"
-          }
-        ]
-      }
     ]
   }
 }

@@ -2,6 +2,11 @@
 
 # Server-specific MCP installation functions
 
+# NPX command strings for core servers — defined as scalars for bash 3.2 compatibility (macOS)
+NPX_CONTEXT7="npx -y @upstash/context7-mcp"
+NPX_SEQUENTIAL_THINKING="npx -y @modelcontextprotocol/server-sequential-thinking"
+NPX_MEMORY="npx -y @modelcontextprotocol/server-memory"
+
 # Install the GitHub MCP server via remote HTTP (requires a GitHub PAT with repo scope)
 install_github_server() {
     if is_installed "github"; then
@@ -31,6 +36,20 @@ install_github_server() {
     verify_installation "github"
 }
 
+# Install the Omni Analytics MCP server via HTTP transport (triggers OAuth in browser)
+install_omni_server() {
+    if is_installed "omni"; then
+        log_message "${INFO}" "Skipping 'omni' — already registered."
+        verify_installation "omni"
+        return
+    fi
+
+    log_message "${DEBUG}" "Installing 'omni' (HTTP transport — will open browser for OAuth)..."
+    claude mcp add --scope user --transport http omni https://callbacks.omniapp.co/callback/mcp  # OAuth handled by browser redirect
+    log_message "${INFO}" "Installed 'omni'."
+    verify_installation "omni"
+}
+
 # Install the Atlassian MCP server via HTTP transport (triggers OAuth/SSO in browser)
 install_atlassian_server() {
     if is_installed "atlassian"; then
@@ -47,9 +66,8 @@ install_atlassian_server() {
 
 # Install core MCP servers (no authentication required)
 install_mcp_servers() {
-    for NAME in "${!NPX_SERVERS[@]}"; do
-        install_npx_server "${NAME}" "${NPX_SERVERS[${NAME}]}"  # look up command by server name
-    done
-
+    install_npx_server "context7" "${NPX_CONTEXT7}"
+    install_npx_server "sequential-thinking" "${NPX_SEQUENTIAL_THINKING}"
+    install_npx_server "memory" "${NPX_MEMORY}"
     install_filesystem_server
 }

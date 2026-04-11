@@ -1,4 +1,4 @@
-Start a structured debugging session using the debugger sub-agent approach.
+Start a structured debugging session. Use this mid-session to diagnose an issue without switching sub-agents.
 
 Ask the user to describe the problem: what was expected, what actually happened, and any error messages or logs available.
 

@@ -85,10 +85,11 @@ requirements.txt              # Python dependencies (if applicable)
 
 - Keep PRs small and focused — split into multiple PRs if needed.
 - PRs must contain fewer than 20 files. If a change genuinely cannot be split, use a `release/` branch prefix and ensure the PR applies the same type of change consistently (e.g., a bulk formatting or linting pass). The PR must be tied to a significant release and must be easy to review despite its size.
-- PRs should follow the standard PR template with:
-  - Summary of the change
-  - Type: Feature / Trivial / Bugfix / Refactoring / Documentation / Breaking Change
-  - Related Jira issue(s)
-  - Testing checklist (DEV/local, UAT, other)
+- **Always use `.github/pull_request_template.md` as the PR body.** Read the file before raising any PR — never substitute a custom format.
+- When completing the template:
+  - Fill in the Summary section with a description of the change
+  - In the **Type of PR Change** section, keep all options — tick only the one that applies with `[x]`; leave all others as `[ ]`
+  - Link related Jira issues
+  - Tick the appropriate testing checklist items
 - Flag breaking changes explicitly and describe the rollout impact.
 - Files must not contain merge conflict markers.

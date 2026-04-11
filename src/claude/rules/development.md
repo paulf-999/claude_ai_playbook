@@ -47,6 +47,18 @@ These principles apply across all languages and tools used by the team (Python, 
 
 ---
 
+## 🧹 DRY (Don't Repeat Yourself)
+
+- Every piece of logic, configuration, or data definition should have a single authoritative source. Duplication creates drift — when the same thing exists in two places, they inevitably diverge.
+- Python: extract repeated logic into utility functions or shared modules rather than copying code between scripts.
+- SQL / dbt: use macros and `ref()` for shared logic — do not copy-paste model logic or column expressions across files.
+- Terraform: use modules for repeated resource patterns — do not duplicate provider blocks, variable definitions, or resource configurations.
+- Airflow: use shared operators, hooks, and utility functions rather than duplicating DAG logic across pipelines.
+- Config: define each environment-specific value once (e.g. in a YAML config or `.env`) and reference it — do not repeat the same value in multiple places.
+- CI/CD: extract repeated job steps into reusable workflows or composite actions rather than duplicating pipeline YAML.
+
+---
+
 ## 🧩 Modularity
 
 - One function, model, or task should do one thing. Do not bundle unrelated logic.

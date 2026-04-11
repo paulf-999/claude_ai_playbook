@@ -8,6 +8,12 @@ source src/sh/claude/helpers/claude_file_utils.sh
 # Functions
 #=======================================================================
 
+# User-editable files that must be preserved across updates.
+# These are deployed once by make install and owned by the user thereafter.
+USER_EDITABLE_FILES=(
+    "process/session_input.md"
+)
+
 # Remove only repo-managed items from target directory.
 # Derived dynamically from SOURCE_DIR so new additions are handled automatically.
 # Preserves unmanaged directories (e.g. projects/, plugins/) to avoid data loss.
@@ -20,13 +26,38 @@ remove_managed_files() {
     done
 }
 
+# Save user-editable files to a temp location before managed files are removed.
+preserve_user_editable_files() {
+    for FILE in "${USER_EDITABLE_FILES[@]}"; do
+        local TEMP_PATH="/tmp/.claude_preserve_${FILE//\//_}"
+        if [[ -f "${TARGET_DIR}/${FILE}" ]]; then
+            cp "${TARGET_DIR}/${FILE}" "${TEMP_PATH}"
+            log_message "${INFO}" "Preserved user-editable file: ${FILE}"
+        fi
+    done
+}
+
+# Restore user-editable files after managed files have been copied.
+restore_user_editable_files() {
+    for FILE in "${USER_EDITABLE_FILES[@]}"; do
+        local TEMP_PATH="/tmp/.claude_preserve_${FILE//\//_}"
+        if [[ -f "${TEMP_PATH}" ]]; then
+            cp "${TEMP_PATH}" "${TARGET_DIR}/${FILE}"
+            rm "${TEMP_PATH}"
+            log_message "${INFO}" "Restored user-editable file: ${FILE}"
+        fi
+    done
+}
+
 # Execute full update flow for Claude files
 update_claude_files() {
-    validate_source_dir    # from claude_file_utils.sh
-    validate_target_dir    # from claude_file_utils.sh
-    backup_target_dir "copy"  # from claude_file_utils.sh
-    remove_managed_files   # local
-    copy_claude_files      # from claude_file_utils.sh
+    validate_source_dir           # from claude_file_utils.sh
+    validate_target_dir           # from claude_file_utils.sh
+    backup_target_dir "copy"      # from claude_file_utils.sh
+    preserve_user_editable_files  # local
+    remove_managed_files          # local
+    copy_claude_files             # from claude_file_utils.sh
+    restore_user_editable_files   # local
 }
 
 #=======================================================================

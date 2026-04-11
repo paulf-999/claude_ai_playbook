@@ -7,17 +7,6 @@ source src/sh/claude/helpers/mcp_helpers.sh
 source src/sh/claude/helpers/mcp_server_installers.sh
 
 #=======================================================================
-# Variables
-#=======================================================================
-
-# MCP servers to install at user scope via npx
-declare -A NPX_SERVERS=(
-    ["context7"]="npx -y @upstash/context7-mcp"
-    ["sequential-thinking"]="npx -y @modelcontextprotocol/server-sequential-thinking"
-    ["memory"]="npx -y @modelcontextprotocol/server-memory"
-)
-
-#=======================================================================
 # Functions
 #=======================================================================
 
@@ -29,14 +18,23 @@ install_single_server() {
         core)                                  # installs all core servers in one pass
             install_mcp_servers
             ;;
-        context7|sequential-thinking|memory)   # npx-based servers defined in NPX_SERVERS
-            install_npx_server "${SERVER}" "${NPX_SERVERS[${SERVER}]}"
+        context7)
+            install_npx_server "context7" "${NPX_CONTEXT7}"
+            ;;
+        sequential-thinking)
+            install_npx_server "sequential-thinking" "${NPX_SEQUENTIAL_THINKING}"
+            ;;
+        memory)
+            install_npx_server "memory" "${NPX_MEMORY}"
             ;;
         filesystem)
             install_filesystem_server
             ;;
         github)                                # requires PAT — prompts interactively
             install_github_server
+            ;;
+        omni)                                  # requires OAuth — opens browser
+            install_omni_server
             ;;
         atlassian)                             # requires SSO — opens browser
             install_atlassian_server
@@ -45,7 +43,7 @@ install_single_server() {
             print_o365_reminder
             ;;
         *)
-            log_message "${ERROR}" "Unknown server: '${SERVER}'. Valid options: core, context7, sequential-thinking, memory, filesystem, github, atlassian, o365"
+            log_message "${ERROR}" "Unknown server: '${SERVER}'. Valid options: core, context7, sequential-thinking, memory, filesystem, github, omni, atlassian, o365"
             exit 1
             ;;
     esac

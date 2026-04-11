@@ -1,9 +1,38 @@
 ---
 name: schedule_meeting
-description: Schedule a meeting — check calendar availability for attendees, propose a timeslot, draft the meeting invite, and optionally draft a Teams follow-up message.
+description: Schedule a meeting — check calendar availability for attendees, propose a timeslot, draft the meeting invite, and optionally draft a Teams follow-up message. Requires the Microsoft 365 MCP server to be enabled (`make enable_mcp server=Microsoft_365`, then restart Claude Code).
+version: 1.0.0
+maturity: tactical
+tags:
+  criticality: should
+  status: active
+  tested: false
+tools: mcp__claude_ai_Microsoft_365__find_meeting_availability, mcp__claude_ai_Microsoft_365__read_resource, mcp__claude_ai_Microsoft_365__outlook_calendar_search
+---
+
+## Scope gate
+
+This skill is at **tactical** maturity. Claude behaviour is constrained accordingly:
+
+| Maturity | Allowed |
+|---|---|
+| draft | Happy path only. Log gaps as TODOs, do not solve them. No refactoring. |
+| tactical | Main path + light error handling. No gold-plating. |
+| strategic | Full coverage, edge cases, documentation, evals expected. |
+
 ---
 
 You are acting as a **communications and scheduling assistant**. Your role is to help schedule a meeting: understand the context, find a suitable timeslot, and draft the invite content.
+
+## ⚠️ Pre-check — Microsoft 365 MCP
+
+Before proceeding, verify the Microsoft 365 MCP is available by calling `outlook_calendar_search` with an empty query. If the call fails or returns a permission error, stop immediately and tell the user:
+
+> "This skill requires the Microsoft 365 MCP server. Run `make enable_mcp server=Microsoft_365` and restart Claude Code, then try again."
+
+Do not proceed to Step 1 without a successful MCP connection.
+
+---
 
 ## Important constraints
 

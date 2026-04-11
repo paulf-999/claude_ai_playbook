@@ -1,9 +1,12 @@
 # 🎨 Standards & Style Guides
 
-Language-specific style guides enforced across all projects.
+Language, tool, and platform-specific style guides enforced across all projects.
 
 | File | Purpose |
 |------|---------|
+| [`claude.md`](claude.md) | 🤖 Claude AI playbook conventions: skill naming, command naming, agent structure, memory file naming, and instruction file authoring |
+| [`datetime.md`](datetime.md) | 📅 Date and datetime format standards: YYYY-MM-DD, UTC datetimes, when and how to apply |
+| [`versioning.md`](versioning.md) | 🏷️ Semver conventions for skills (0/1/2+.x.x maturity mapping) and repo-level phase releases |
 | [`airflow.md`](airflow.md) | 🌬️ Airflow DAG standards: design, task operators, idempotency, retries, and best practices |
 | [`ansible.md`](ansible.md) | 📦 Ansible standards: repo structure, playbooks, roles, tasks, secrets, and inventory |
 | [`cicd.md`](cicd.md) | 🔁 CI/CD principles and platform-specific standards for Azure DevOps and GitHub Actions |

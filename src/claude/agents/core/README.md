@@ -1,10 +1,9 @@
-# 🤖 Agents — Core
+# 🎭 Agents — Core
 
-General-purpose sub-agents available in any project context.
+Full-session personas with full tool access. Use these for open-ended sessions that span multiple technologies or concerns.
 
 | File | Agent name | Purpose |
 |------|------------|---------|
-| [`code_reviewer.md`](code_reviewer.md) | `code-reviewer` | 🔍 Review code, PRs, and diffs for correctness, standards, security, and test coverage |
-| [`debugger.md`](debugger.md) | `debugger` | 🐛 Diagnose errors, pipeline failures, unexpected behaviour, and data quality issues |
-| [`devops.md`](devops.md) | `devops` | 🏗️ Infrastructure, CI/CD, Terraform, Ansible, Docker, and deployment config |
-| [`technical_writer.md`](technical_writer.md) | `technical-writer` | ✍️ Draft and improve documentation, READMEs, runbooks, ADRs, and Confluence pages |
+| [`architect.md`](architect.md) | `architect` | 🏛️ End-to-end analytics architecture, hands-on across the full stack *(default)* |
+| [`project_manager.md`](project_manager.md) | `project_manager` | 📋 Work planning, task structuring, documentation, and stakeholder communication |
+| [`technical_writer.md`](technical_writer.md) | `technical_writer` | ✍️ Draft and improve documentation, READMEs, runbooks, ADRs, and Confluence pages |

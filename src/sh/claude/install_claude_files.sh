@@ -19,7 +19,19 @@ install_claude_files() {
 # Install the Claude CLI via npm (optional step — failure does not abort the install)
 install_claude_cli() {
     bash src/sh/claude/install_claude_cli.sh \
-        || log_message "${WARNING}" "Claude CLI installation did not complete — run: make install_claude_cli"
+        || log_message "${WARNING}" "Claude CLI installation did not complete — run: bash src/sh/claude/install_claude_cli.sh"
+}
+
+# Add the npm global bin directory to PATH for the remainder of this script.
+# Required so that install_core_mcp_servers and install_plugins can find the
+# newly installed claude binary without the user opening a new terminal.
+update_npm_path() {
+    local NPM_PREFIX
+    NPM_PREFIX=$(npm config get prefix 2>/dev/null) || return 0
+    if [ -n "$NPM_PREFIX" ] && [[ ":$PATH:" != *":$NPM_PREFIX/bin:"* ]]; then
+        export PATH="$NPM_PREFIX/bin:$PATH"
+        log_message "${DEBUG}" "Added $NPM_PREFIX/bin to PATH for this session."
+    fi
 }
 
 # Install core MCP servers (optional step — failure does not abort the install)
@@ -32,6 +44,18 @@ install_core_mcp_servers() {
     fi
     bash src/sh/claude/install_mcp_servers.sh core \
         || log_message "${WARNING}" "MCP server installation did not complete — run: make install_core_mcp_servers"
+}
+
+# Install Claude Code plugins (optional step — failure does not abort the install)
+# Skips gracefully if the claude CLI is not yet installed.
+install_plugins() {
+    if ! command -v claude &>/dev/null; then
+        log_message "${WARNING}" "Claude CLI not found — skipping plugin installation."
+        log_message "${WARNING}" "Run: bash src/sh/claude/install_plugins.sh"
+        return 0
+    fi
+    bash src/sh/claude/install_plugins.sh \
+        || log_message "${WARNING}" "Plugin installation did not complete — run: bash src/sh/claude/install_plugins.sh"
 }
 
 # Print instructions for optional MCP servers that require manual setup
@@ -58,7 +82,9 @@ print_section_header "${DEBUG}" "Claude file installation started."
 install_claude_files
 print_operation_summary "installation"
 install_claude_cli
+update_npm_path
 install_core_mcp_servers
+install_plugins
 print_optional_mcp_instructions
 
 print_section_header "${DEBUG}" "Claude file installation completed." && echo

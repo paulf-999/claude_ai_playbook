@@ -3,26 +3,33 @@ SHELL = /bin/sh
 #================================================================
 # Usage
 #================================================================
-# make install                      # install Claude config files into ~/.claude/, install Claude CLI, and install core MCP servers
-# make update                       # update Claude config files in ~/.claude/
-# make install_claude_cli           # install Claude CLI via npm
-# make install_core_mcp_servers     # install core MCP servers (context7, sequential-thinking, memory, filesystem)
-# make install_mcp_server_github    # install GitHub MCP server (prompts for PAT)
-# make install_mcp_server_atlassian # install Atlassian MCP server (opens browser for SSO)
-# make install_mcp_server_o365      # print manual setup instructions for Microsoft 365 connector
+# make deps             # install Python test dependencies into the active environment
+# make test             # run structural validation tests
+# make lint_tags        # validate Tier 1 tags on all Claude components (run before committing)
+# make audit_components # run periodic health audit on the Claude component library
+# make install          # install Claude config files, Claude CLI, core MCP servers, and plugins
+# make update           # update Claude config files in ~/.claude/
+# make install_plugins  # install Claude Code plugins only (runs install_plugins.sh)
+# make patch_plugins    # apply team patches to installed plugins (run after install_plugins)
+#
+# MCP server targets (install_core_mcp_servers, install_mcp_server_*, enable_mcp,
+# disable_mcp) are defined in src/make/mcp.mk.
+#================================================================
 
 #=======================================================================
 # Variables
 #=======================================================================
-.EXPORT_ALL_VARIABLES:
-
-# load variables from separate file
-include src/make/variables.mk # load variables from a separate makefile file
+include src/make/variables.mk
+include src/make/mcp.mk
 
 #=======================================================================
 # Targets
 #=======================================================================
 all: install
+
+deps:
+	@echo "${INFO}\nInstalling Python test dependencies${COLOUR_OFF}"
+	@pip install -r requirements.txt
 
 install:
 	@echo "${INFO}\nInstalling Claude config files into ~/.claude/${COLOUR_OFF}"
@@ -32,27 +39,25 @@ update:
 	@echo "${INFO}\nUpdating Claude config files in ~/.claude/${COLOUR_OFF}"
 	@bash src/sh/claude/update_claude_files.sh
 
-install_claude_cli:
-	@echo "${INFO}\nInstalling Claude CLI${COLOUR_OFF}"
-	@bash src/sh/claude/install_claude_cli.sh
+install_plugins:
+	@echo "${INFO}\nInstalling Claude Code plugins${COLOUR_OFF}"
+	@bash src/sh/claude/install_plugins.sh
 
-install_core_mcp_servers:
-	@echo "${INFO}\nInstalling core MCP servers${COLOUR_OFF}"
-	@bash src/sh/claude/install_mcp_servers.sh core
+patch_plugins:
+	@echo "${INFO}\nApplying team patches to installed plugins${COLOUR_OFF}"
+	@python3 src/claude/skills/patches/skill-creator-patch.py
 
-install_mcp_server_github:
-	@echo "${INFO}\nInstalling GitHub MCP server${COLOUR_OFF}"
-	@bash src/sh/claude/install_mcp_servers.sh github
+test:
+	@echo "${INFO}\nRunning structural validation tests${COLOUR_OFF}"
+	@pytest
 
-install_mcp_server_atlassian:
-	@echo "${INFO}\nInstalling Atlassian MCP server${COLOUR_OFF}"
-	@bash src/sh/claude/install_mcp_servers.sh atlassian
+lint_tags:
+	@echo "${INFO}\nValidating Tier 1 tags on Claude components${COLOUR_OFF}"
+	@python3 src/sh/claude/claude_tag_lint.py
 
-install_mcp_server_o365:
-	@bash src/sh/claude/install_mcp_servers.sh o365
-
-# Phony targets
-.PHONY: all install update install_claude_cli install_core_mcp_servers install_mcp_server_github install_mcp_server_atlassian install_mcp_server_o365
+audit_components:
+	@echo "${INFO}\nRunning Claude component health audit${COLOUR_OFF}"
+	@python3 src/sh/claude/claude_component_audit.py
 
 # .PHONY tells Make that these targets don't represent files
-# This prevents conflicts with any files named "all" or "clean"
+.PHONY: all deps install update install_plugins patch_plugins test lint_tags audit_components
