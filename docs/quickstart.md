@@ -78,4 +78,3 @@ This syncs config files only — it does not re-install the CLI, MCP servers, or
 | Parallel sessions with worktrees | [Run multiple Claude sessions simultaneously on separate branches](reference/advanced_usage/worktrees.md) |
 | Resuming sessions | [Resume interrupted sessions, pick up from a PR, or fork a session](reference/advanced_usage/sessions.md) |
 | Training resources | [Free training from Anthropic](training.md) |
-| DQ check skill | [Creating DQ Framework tests with /dq-check](reference/skills/dq_check.md) |
