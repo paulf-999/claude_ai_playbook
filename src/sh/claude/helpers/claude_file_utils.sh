@@ -69,6 +69,25 @@ copy_claude_files() {
     log_message "${INFO}" "Copied Claude files to: ${TARGET_DIR}"
 }
 
+# Merge wip/skills subdirectories into ~/.claude/skills/ so WIP skills are invokable.
+# Top-level skill dirs are copied directly. The archive/ dir is excluded.
+# Non-directory items (e.g. README.md) are skipped.
+merge_skills_wip() {
+    local WIP_DIR="${SOURCE_DIR}/wip/skills"
+    local SKILLS_DIR="${TARGET_DIR}/skills"
+
+    for ITEM in "${WIP_DIR}"/*/; do
+        [[ -d "${ITEM}" ]] || continue
+        local ITEM_NAME
+        ITEM_NAME=$(basename "${ITEM}")
+        if [[ "${ITEM_NAME}" == "archive" ]]; then
+            continue  # skip archived skills
+        fi
+        cp -R "${ITEM}" "${SKILLS_DIR}/${ITEM_NAME}"
+        log_message "${INFO}" "Merged wip/skills/${ITEM_NAME} into skills/"
+    done
+}
+
 # Print summary of Claude file operation (install/update)
 print_operation_summary() {
     local OPERATION="$1"  # operation type: "installation" or "update"

@@ -15,6 +15,8 @@ Exit codes:
     1 — one or more components have FAIL-level issues
 """
 
+from __future__ import annotations
+
 import argparse
 import sys
 from datetime import date
@@ -83,19 +85,7 @@ def validate_component(metadata: dict) -> tuple[list[str], list[str]]:
             f"tags.status: invalid value '{status}' (expected: active | dormant | deprecated | wip)"
         )
 
-    # tested — YAML parses `false`/`true` as Python bool; accept both bool and string form
-    tested_raw = tags.get("tested")
-    if tested_raw is None:
-        failures.append("tags.tested: missing")
-    else:
-        tested = _normalise_bool(tested_raw)
-        if tested is None:
-            failures.append(f"tags.tested: invalid value '{tested_raw}' (expected: true | false)")
-        else:
-            if criticality in {"must", "should"} and not tested:
-                warnings.append(
-                    f"tags.tested is false for criticality:{criticality} — consider adding test coverage"
-                )
+    _validate_tested(tags, criticality, failures, warnings)
 
     # ── last-reviewed ─────────────────────────────────────────────────────────
     last_reviewed = metadata.get("last-reviewed")
@@ -106,6 +96,33 @@ def validate_component(metadata: dict) -> tuple[list[str], list[str]]:
         _check_staleness(last_reviewed, warnings)
 
     return failures, warnings
+
+
+def _validate_tested(
+    tags: dict, criticality: str | None, failures: list[str], warnings: list[str]
+) -> None:
+    """Check the tags.tested field and emit failures or warnings as appropriate.
+
+    :param tags: The tags sub-dict from component frontmatter.
+    :type tags: dict
+    :param criticality: Resolved criticality value (may be None if missing/invalid).
+    :type criticality: str or None
+    :param failures: Mutable list to append failure messages to.
+    :type failures: list[str]
+    :param warnings: Mutable list to append warning messages to.
+    :type warnings: list[str]
+    """
+    tested_raw = tags.get("tested")
+    if tested_raw is None:
+        failures.append("tags.tested: missing")
+        return
+    tested = _normalise_bool(tested_raw)
+    if tested is None:
+        failures.append(f"tags.tested: invalid value '{tested_raw}' (expected: true | false)")
+    elif criticality in {"must", "should"} and not tested:
+        warnings.append(
+            f"tags.tested is false for criticality:{criticality} — consider adding test coverage"
+        )
 
 
 def _normalise_bool(value: object) -> bool | None:
@@ -255,9 +272,25 @@ def main() -> int:
         else:
             n_warn_only += 1
 
-    # summary
+    return _print_summary(len(components), n_clean, n_warn_only, n_fail)
+
+
+def _print_summary(total: int, n_clean: int, n_warn_only: int, n_fail: int) -> int:
+    """Print the scan summary and return the appropriate exit code.
+
+    :param total: Total number of components scanned.
+    :type total: int
+    :param n_clean: Components with no failures or warnings.
+    :type n_clean: int
+    :param n_warn_only: Components with warnings but no failures.
+    :type n_warn_only: int
+    :param n_fail: Components with at least one failure.
+    :type n_fail: int
+    :return: 0 if all components pass, 1 if any failures were found.
+    :rtype: int
+    """
     print(f"{'─' * 60}")
-    print(f"  Scanned   {len(components)} component(s)")
+    print(f"  Scanned   {total} component(s)")
     print(f"  Clean     {n_clean}")
     if n_warn_only:
         print(f"  Warnings  {n_warn_only} component(s) — advisory only")
@@ -265,7 +298,6 @@ def main() -> int:
         print(f"  Failures  {n_fail} component(s) — must be fixed\n")
         print("Exit: 1 — fix FAILs before merging")
         return 1
-
     print()
     print("Exit: 0 — all components pass")
     return 0

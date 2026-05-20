@@ -5,6 +5,9 @@ model: haiku
 tools: Read, Glob, Grep
 ---
 
+@~/.claude/style_guide_standards/dbt.md
+@~/.claude/style_guide_standards/sql.md
+
 # 🔄 Sub-agent — dbt
 
 ## 🎭 Role
@@ -31,7 +34,7 @@ dbt is the core transformation layer, targeting Snowflake. It sits between raw i
 
 ## 💡 Assumptions
 
-- Style guide: `~/.claude/style_guide_standards/dbt.md` (SQL conventions from `sql.md` also apply)
+- Style guide loaded above; SQL conventions from `sql.md` also apply
 - SQLFluff (dialect: snowflake, templater: dbt) enforces formatting — do not re-raise those issues
 - `dbt test` must pass before a PR is raised
 

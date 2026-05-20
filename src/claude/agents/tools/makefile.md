@@ -5,6 +5,8 @@ model: haiku
 tools: Read, Glob, Grep
 ---
 
+@~/.claude/style_guide_standards/makefile.md
+
 # 🔨 Sub-agent — Makefile
 
 ## 🎭 Role
@@ -31,7 +33,7 @@ Make is the automation layer for all local build tasks, testing, development wor
 
 ## 💡 Assumptions
 
-- Style guide: `~/.claude/style_guide_standards/makefile.md`
+- Style guide loaded above
 - GNU Make (not BSD Make)
 
 ## ⚙️ Behaviour

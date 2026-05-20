@@ -1,8 +1,8 @@
 # Date & Time Standards
 
-Applies to all Claude-generated content, file metadata, new code, and documentation from
-adoption date onwards. Do not retroactively update existing files — apply opportunistically
-when a file is being actively modified for another reason.
+ISO format applies to technical contexts (code, metadata, logs). Human-facing content uses
+English sentence-style dates instead. Do not retroactively update existing files — apply
+opportunistically when a file is being actively modified for another reason.
 
 ---
 
@@ -22,10 +22,26 @@ it makes the timezone explicit and avoids ambiguity.
 
 ---
 
-## Applies to
+## Applies to — technical contexts
+
+Use ISO format where dates are machine-readable, sortable, or stored:
 
 - Frontmatter fields (e.g. `last-reviewed`, `created`, `updated`)
 - Changelog and release note dates
 - Log entries and audit outputs
-- New code files and documentation
+- Code files and technical documentation
+- Memory files and plan files
 - Existing files being actively modified for another reason — do not update files solely to fix date formatting
+
+---
+
+## Does not apply to — human-facing content
+
+Use English sentence-style dates (e.g. `1st May 2026`, `23rd April 2026`) in content written for a human audience:
+
+- Confluence pages
+- Pull request descriptions
+- Teams messages and emails
+- Jira ticket descriptions and comments
+- Meeting notes, agendas, and catchup prep output
+- DR tracking notes and similar narrative documents

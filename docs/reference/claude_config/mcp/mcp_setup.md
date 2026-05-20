@@ -31,7 +31,6 @@ Core servers (context7, memory, sequential-thinking, filesystem) are always acti
 
 ```bash
 make install_mcp_server_github    # prompts for GitHub PAT
-make install_mcp_server_omni      # opens browser for OAuth
 make install_mcp_server_atlassian # opens browser for SSO
 make install_mcp_server_o365      # prints manual setup instructions
 ```
@@ -39,7 +38,6 @@ make install_mcp_server_o365      # prints manual setup instructions
 | Server | Purpose |
 |---|---|
 | `github` | 🐙 Private GitHub repo access — see [`github_mcp_setup.md`](github_mcp_setup.md) |
-| `omni` | 📊 Omni Analytics — natural language queries against governed data models — see [`omni_mcp_setup.md`](omni_mcp_setup.md) |
 | `atlassian` | 🔗 Jira and Confluence access via SSO — requires an active Atlassian account; opens browser to authenticate |
 | `o365` | 🪟 Microsoft 365 (Outlook, Teams, SharePoint, Calendar) — cannot be configured via CLI; see [`o365_mcp_setup.md`](o365_mcp_setup.md) |
 

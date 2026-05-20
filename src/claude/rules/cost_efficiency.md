@@ -15,6 +15,7 @@ All users operate under a $200/month Claude credit limit. Every interaction cons
 
 - Do not spawn sub-agents unless the task genuinely requires parallelism or context isolation.
 - One sub-agent where one will do — do not parallelise for its own sake.
+- When a task involves reading more than 3 files, editing across more than one directory, or a search → edit cycle, automatically use the task brief pattern — do not wait to be asked. Write `/tmp/task_brief_<slug>.md`, pass the path to the appropriate sub-agent (see `process/task_brief.md` for sub-agent selection), then read only `/tmp/task_output_<slug>.md` on return. Do not re-read files the sub-agent already processed.
 
 ---
 

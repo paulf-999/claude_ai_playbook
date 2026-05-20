@@ -37,6 +37,8 @@ includes/
   classes/
 ```
 
+> **Note:** Files in `includes/` are shared across all DAGs. Do not modify them without team review — DAG-specific logic belongs in `__py_helpers.py` or `__sql_queries.py` in the DAG folder. See [best_practices.md](best_practices.md).
+
 ---
 
 ## 🏷️ Naming conventions

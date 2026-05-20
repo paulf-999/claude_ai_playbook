@@ -38,12 +38,18 @@ install_nvm_and_node() {
     nvm use --lts
 }
 
-# Attempt to refresh PATH after a global npm install so the new binary is
-# immediately visible without opening a new terminal. Tries three approaches
-# in order: re-source nvm (most common case), Homebrew shell env (macOS), and
-# a command-hash reset. Safe to call even if none of the tools are present.
+# Attempt to refresh PATH after a global install so the new binary is
+# immediately visible without opening a new terminal. Tries in order:
+# re-source nvm (most common), ~/.local/bin (used by the official Anthropic
+# installer on Linux), Homebrew shell env (macOS), and a command-hash reset.
+# Safe to call even if none of the tools are present.
 refresh_path_after_install() {
     maybe_source_nvm
+    # ~/.local/bin is the default user-local binary location on Linux and is
+    # used by the official Claude installer when system paths are not writable.
+    if [[ -d "${HOME}/.local/bin" ]] && [[ ":${PATH}:" != *":${HOME}/.local/bin:"* ]]; then
+        export PATH="${HOME}/.local/bin:${PATH}"
+    fi
     if command -v brew &>/dev/null; then
         eval "$(brew shellenv)" 2>/dev/null || true
     fi
@@ -63,7 +69,23 @@ check_npm_prefix_writable() {
     fi
 }
 
+# Install the Claude CLI using the official Anthropic installer script.
+# Used as a fallback when the npm-based install is unavailable or fails.
+install_claude_cli_via_curl() {
+    if ! command -v curl &>/dev/null; then
+        log_message "${WARNING}" "curl is not available — cannot use fallback installer."
+        log_message "${WARNING}" "Install curl with: sudo apt install curl"
+        log_message "${WARNING}" "Then re-run: bash src/sh/claude/install_claude_cli.sh"
+        return 1
+    fi
+
+    log_message "${INFO}" "Falling back to official Claude CLI installer..."
+    curl -fsSL https://claude.ai/install.sh | bash
+}
+
 # Install the Claude CLI, handling Node.js/npm prerequisites automatically.
+# Falls back to the official curl-based installer if npm is unavailable or
+# the npm prefix is not user-writable.
 install_claude_cli() {
     if command -v claude &>/dev/null; then
         log_message "${INFO}" "Claude CLI already installed — skipping."
@@ -77,30 +99,31 @@ install_claude_cli() {
         install_nvm_and_node
     fi
 
-    # Guard: if npm is still not available after the install attempt, abort
+    # If npm is still not available, fall back to the official installer
     if ! command -v npm &>/dev/null; then
-        log_message "${WARNING}" "npm unavailable — skipping Claude CLI installation."
-        return 0
+        log_message "${WARNING}" "npm unavailable — trying official installer."
+        install_claude_cli_via_curl
+    # If npm prefix is not user-writable, fall back to the official installer
+    elif ! check_npm_prefix_writable; then
+        log_message "${WARNING}" "npm prefix not user-writable — trying official installer."
+        install_claude_cli_via_curl
+    else
+        log_message "${INFO}" "Installing Claude CLI via npm..."
+        npm install -g @anthropic-ai/claude-code
     fi
 
-    # Guard: abort if the npm prefix is not user-writable
-    if ! check_npm_prefix_writable; then
-        return 0
-    fi
-
-    log_message "${INFO}" "Installing Claude CLI..."
-    npm install -g @anthropic-ai/claude-code
-
-    # The install may not be visible in PATH yet — attempt a targeted refresh
-    # before falling back to a message.
-    if ! command -v claude &>/dev/null; then
-        refresh_path_after_install
-    fi
+    # Refresh PATH so the new binary is visible in this session and to
+    # subsequent steps (MCP server install, plugin install) without requiring
+    # a new terminal.
+    refresh_path_after_install
 
     if command -v claude &>/dev/null; then
         log_message "${INFO}" "Claude CLI installed successfully."
     else
-        log_message "${WARNING}" "Claude CLI installed but not yet in PATH. Open a new terminal or run: source ~/.nvm/nvm.sh"
+        log_message "${WARNING}" "Claude CLI installed but not yet in PATH."
+        log_message "${WARNING}" "Reload your shell profile to use it immediately:"
+        log_message "${WARNING}" "  source ~/.zshrc    # zsh"
+        log_message "${WARNING}" "  source ~/.bashrc   # bash"
     fi
 }
 

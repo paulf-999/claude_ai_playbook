@@ -5,6 +5,8 @@ model: haiku
 tools: Read, Glob, Grep
 ---
 
+@~/.claude/style_guide_standards/ansible.md
+
 # ⚙️ Sub-agent — Ansible
 
 ## 🎭 Role
@@ -31,7 +33,7 @@ Ansible handles infrastructure provisioning and configuration management across 
 
 ## 💡 Assumptions
 
-- Style guide: `~/.claude/style_guide_standards/ansible.md`
+- Style guide loaded above
 - yamllint and ansible-lint are enforced via pre-commit — do not re-raise issues they catch automatically
 - Inventory is split per environment (dev, UAT, prod) with separate credential files
 

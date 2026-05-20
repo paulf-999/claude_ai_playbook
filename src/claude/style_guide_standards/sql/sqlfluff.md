@@ -1,7 +1,7 @@
 # 🔧 SQLFluff Configuration
 
 SQL style is enforced by SQLFluff. The canonical config lives in the dbt repo:
-[`da-etl-dbtanalytics/.sqlfluff`](https://github.com/payroc/da-etl-dbtanalytics/blob/main/.sqlfluff)
+[`da-etl-dbtanalytics/.sqlfluff`](https://github.com/dmt-ghe-engineering/da-etl-dbtanalytics/blob/main/.sqlfluff)
 
 All SQLFluff violations must be resolved before committing.
 

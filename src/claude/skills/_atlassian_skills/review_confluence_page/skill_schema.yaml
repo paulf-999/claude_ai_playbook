@@ -1,0 +1,38 @@
+---
+name: review_confluence_page
+version: 0.1.0
+
+dispatch:
+    triggers:
+        explicit:
+            - /review_confluence_page
+            - /review_confluence_page <url_or_id>
+        contextual:
+            - user asks to review a Confluence page
+            - auto-triggered at end of /create_confluence_page when user opts in
+
+    not_for:
+        - creating a Confluence page — use /create_confluence_page instead
+        - general writing feedback not tied to a published Confluence page
+
+output:
+    type: mixed
+    confirmation_required: true
+    reversible: false
+    artifacts:
+        - /tmp/review_confluence_<page_id>.md
+    side_effects:
+        - posts footer comment to Confluence page
+    required_sections:
+        - review_comment
+        - page_url
+    optional_sections: []
+
+dependencies:
+    tools:
+        - Agent
+    mcp_servers:
+        - Atlassian
+    external:
+        - Confluence page with read access
+        - Atlassian MCP server enabled

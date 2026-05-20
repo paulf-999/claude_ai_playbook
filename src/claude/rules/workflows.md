@@ -10,7 +10,7 @@ Common end-to-end patterns for the team's most frequent tasks. Each workflow ref
 2. **Branch** — create a `feature/` branch from `main`. See `rules/git.md` for naming conventions.
 3. **Code** — apply idempotent, DRY design throughout. See `rules/development.md`. For Python files, Pyright LSP runs automatically on every edit — resolve type errors before moving on. Run `/simplify` after implementing to surface reuse, quality, and efficiency improvements. For non-trivial changes, follow with `/devils_advocate` to adversarially review the diff before moving on.
 4. **Test** — write or update tests before considering the task complete. All tests must pass. See `rules/testing.md`.
-5. **PR** — keep PRs under 20 files; use the repo PR template; flag breaking changes explicitly. See `rules/git.md`.
+5. **PR** — always invoke the `/create_pr` skill (via the `Skill` tool) to handle the full PR workflow. Never raise a PR by running git/gh commands manually. Run `git rev-parse --show-toplevel` to get the repo root, then read `<repo_root>/.github/pull_request_template.md` using that absolute path — this file must be used as the PR body structure, no exceptions. If it does not exist, stop and tell the user: *"No `.github/pull_request_template.md` found in this repo. Please create one before raising a PR, or confirm you want to proceed without it."* Do not invent a PR body structure or fall back to a minimal body. Keep PRs under 20 files; flag breaking changes explicitly. See `rules/git.md`.
 
 ---
 

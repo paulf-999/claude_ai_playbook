@@ -5,6 +5,8 @@ model: haiku
 tools: Read, Glob, Grep
 ---
 
+@~/.claude/style_guide_standards/airflow.md
+
 # 🌊 Sub-agent — Airflow
 
 ## 🎭 Role
@@ -32,7 +34,7 @@ Airflow is the orchestration engine for all ETL/ELT workflows. It schedules and 
 
 ## 💡 Assumptions
 
-- Style guide: `~/.claude/style_guide_standards/airflow.md`
+- Style guide loaded above
 - All DAGs must be config-driven — no hardcoded connection strings, dates, or parameters
 - Idempotency is a hard requirement: non-idempotent tasks are blocking issues
 

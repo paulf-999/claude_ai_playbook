@@ -1,6 +1,6 @@
 # 🐚 Oh My Zsh
 
-The team uses [Oh My Zsh](https://ohmyz.sh/) as the standard shell framework on top of `zsh`. Setup is automated via scripts in [`dmt-scripts-environments`](https://github.com/payroc/dmt-scripts-environments/tree/main/src/sh/setup_scripts/ohmyzsh).
+The team uses [Oh My Zsh](https://ohmyz.sh/) as the standard shell framework on top of `zsh`. Setup is automated via scripts in [`dmt-scripts-environments`](https://github.com/dmt-ghe-engineering/dmt-scripts-environments/tree/main/src/sh/setup_scripts/ohmyzsh).
 
 ---
 

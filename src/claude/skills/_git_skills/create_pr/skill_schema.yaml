@@ -1,0 +1,41 @@
+---
+name: create_pr
+version: 1.3.0
+
+dispatch:
+    triggers:
+        explicit:
+            - /create_pr
+            - /create_mr
+        contextual:
+            - user asks to create, raise, or open a PR or MR
+
+    not_for:
+        - reviewing a PR — use /review_pr instead
+        - posting a Teams notification — use /notify_pr instead
+
+output:
+    type: mixed
+    confirmation_required: true
+    reversible: false
+    artifacts: []
+    side_effects:
+        - creates GitHub pull request
+        - pushes branch to remote
+    required_sections:
+        - pr_url
+    optional_sections:
+        - review_comment (if user opts in via /review_pr)
+        - teams_notification (if user opts in via /notify_pr)
+
+dependencies:
+    tools:
+        - Bash
+        - Read
+        - Glob
+        - Agent
+    mcp_servers: []
+    external:
+        - GitHub repository with write access
+        - .github/pull_request_template.md present in repo
+        - gh CLI authenticated to GitHub

@@ -1,6 +1,8 @@
 # 🎭 Agents — Core
 
-Full-session personas with full tool access. Use these for open-ended sessions that span multiple technologies or concerns.
+Full-session personas for open-ended sessions.
+
+## General-purpose personas
 
 | File | Agent name | Purpose |
 |------|------------|---------|

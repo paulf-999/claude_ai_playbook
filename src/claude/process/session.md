@@ -23,7 +23,7 @@ Read `~/.claude/process/session_input.md`. If the `## Sub-agent` section contain
 > - `ops/mac_user` — reviews shell scripts for macOS compatibility (bash 3.2, BSD coreutils)
 >
 > **Custom sub-agents — tools** (focused work or automated code review per technology):
-> - `tools/python`, `tools/sql`, `tools/unix`, `tools/makefile`, `tools/dbt`, `tools/docker`, `tools/cicd`, `tools/ansible`, `tools/airflow`, `tools/terraform`
+> - `tools/python`, `tools/sql`, `tools/unix`, `tools/makefile`, `tools/dbt`, `tools/docker`, `tools/cicd`, `tools/ansible`, `tools/airflow`, `tools/terraform`, `tools/jira`
 >
 > **Built-in Claude Code agents:**
 > - `general-purpose` — research, multi-step tasks, code search
@@ -37,12 +37,14 @@ Read all imported context files. Summarise the current project context in 2-3 se
 **Step 3 — Task**
 Read `~/.claude/process/session_input.md`. If the `## Task` section contains a non-comment value, read it and confirm back to me: "I'll be working on: ..." Wait for my confirmation before proceeding. Otherwise, prompt: "What is the task for this session?" and wait for my response before doing anything.
 
+> **Delegation check:** Before starting, assess whether this task qualifies for the task brief pattern: reading more than 3 files, editing across more than one directory, or a search → edit cycle. If yes, write `/tmp/task_brief_<slug>.md` and delegate before doing any file work. See `process/task_brief.md` for the template and sub-agent selection.
+
 **Step 4 — MCP servers**
-Integration MCP servers (GitHub, Atlassian, Microsoft_365, omni) are disabled by default. Based on the confirmed task, state which integrations are needed and prompt:
+Integration MCP servers (GitHub, Atlassian, Microsoft_365) may or may not be active. Based on the confirmed task, identify which integrations are needed. For each, check whether its tools are already visible in the available tools list — active servers expose tools prefixed `mcp__claude_ai_<server>__`. Only prompt to enable servers that are not yet active:
 
-> "This task will need: [list]. Run `make enable_mcp server=<name>` for each, then restart Claude Code. Core servers (context7, memory, filesystem, sequential-thinking) are always active."
+> "This task will need: [list]. The following are not yet enabled — run `make enable_mcp server=<name>` for each, then restart Claude Code. Core servers (context7, memory, filesystem, sequential-thinking) are always active."
 
-Skip this step if the task requires no external integrations.
+Skip this step if the task requires no external integrations, or if all required servers are already active.
 
 **Step 5 — Reviewer session (optional)**
 Once the task is confirmed, ask: "Would you like to set up a writer/reviewer session? I'll act as the writer. You can open a second Claude session and paste the reviewer prompt below to have it independently critique my output."

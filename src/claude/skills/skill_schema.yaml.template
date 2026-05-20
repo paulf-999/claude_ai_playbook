@@ -1,0 +1,82 @@
+# skill_schema.yaml — full machine-readable trigger and output contract for a skill.
+# Co-locate alongside SKILL.md. Authoritative over SKILL.md frontmatter trigger/output fields if present.
+# Copy this file, rename to skill_schema.yaml, and fill in all fields.
+# Fields marked (required) must be populated. Fields marked (optional) may be omitted if not applicable.
+
+# ---------------------------------------------------------------------------
+# Identity
+# ---------------------------------------------------------------------------
+name: skill-name          # (required) matches the `name` field in SKILL.md
+version: 0.1.0            # (required) matches the `version` field in SKILL.md
+
+# ---------------------------------------------------------------------------
+# Dispatch — tells an orchestrator when to use and when to avoid this skill
+# ---------------------------------------------------------------------------
+dispatch:
+  triggers:
+    explicit:             # (required) slash commands and exact phrases that invoke this skill
+      - /skill-name
+      - "exact trigger phrase"
+    contextual:           # (optional) situational conditions that imply this skill — omit or leave empty if the skill is only invoked via explicit commands
+      - user asks to do X
+      - user mentions Y in the context of Z
+
+  not_for:                # (required) conditions where a different skill or no skill is correct
+    - /other-skill handles this case instead
+    - situation where this skill would misfire
+
+# ---------------------------------------------------------------------------
+# Output contract — tells an orchestrator what to expect after invocation
+# ---------------------------------------------------------------------------
+output:
+  # (required) one of: conversational | file | external_service | mixed
+  # conversational  — Claude produces a text response; no files written, no external calls
+  # file            — skill writes or modifies files on disk
+  # external_service — skill calls an external API (Jira, GitHub, Microsoft 365, etc.)
+  # mixed           — combination of the above
+  type: conversational
+
+  # (required) true if the skill performs irreversible or externally-visible actions
+  confirmation_required: false
+
+  # (required) true if the skill's actions can be undone; false if permanent (e.g. push to GitHub)
+  reversible: true
+
+  # (optional) file paths or glob patterns produced — relevant for file and mixed types
+  artifacts: []
+
+  # (optional) externally-visible side effects the orchestrator should communicate to the user
+  side_effects: []
+  # examples:
+  #   - creates GitHub pull request
+  #   - posts comment to Jira ticket
+  #   - pushes branch to remote
+  #   - sends Teams message
+
+  # (optional) output sections/artifacts that are always present in the skill's response
+  required_sections: []
+  # examples:
+  #   - pr_url
+  #   - summary_table
+
+  # (optional) output sections/artifacts that appear only on some execution paths
+  optional_sections: []
+
+# ---------------------------------------------------------------------------
+# Dependencies — tools, MCP servers, and external access this skill requires
+# ---------------------------------------------------------------------------
+dependencies:
+  # (optional) Claude tools this skill uses — omit if no tool access needed
+  tools: []
+  # examples: Bash, Read, Write, Edit, Glob, Grep, Agent
+
+  # (optional) MCP servers that must be active — omit if none required
+  mcp_servers: []
+  # examples: Atlassian, Microsoft_365, GitHub
+
+  # (optional) external systems or access required beyond MCP — omit if none
+  external: []
+  # examples:
+  #   - GitHub repository with write access
+  #   - .github/pull_request_template.md present in repo
+  #   - Jira project write access

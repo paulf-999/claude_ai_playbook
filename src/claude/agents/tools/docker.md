@@ -5,6 +5,8 @@ model: haiku
 tools: Read, Glob, Grep
 ---
 
+@~/.claude/style_guide_standards/docker.md
+
 # 🐳 Sub-agent — Docker
 
 ## 🎭 Role
@@ -31,7 +33,7 @@ Docker is the containerisation standard for all services, ensuring reproducibili
 
 ## 💡 Assumptions
 
-- Style guide: `~/.claude/style_guide_standards/docker.md`
+- Style guide loaded above
 - Prefer minimal base images (`slim`, `alpine`, distroless) unless there is a specific reason not to
 - Non-root user is mandatory for all production images
 
