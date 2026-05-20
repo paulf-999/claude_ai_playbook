@@ -2,7 +2,7 @@
 
 ## 🗂️ Project structure
 
-All Python projects must follow the standard structure defined in the [team Python template repo](https://github.com/payroc/pyrc-lib-template_python_git_repo):
+All Python projects must follow the standard structure defined in the [team Python template repo](https://github.com/dmt-ghe-engineering/dmt-lib-template_python_git_repo):
 
 ```
 src/my_project/   Application source code

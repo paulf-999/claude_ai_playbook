@@ -6,8 +6,13 @@
 @~/.claude/process/environment.md
 @~/.claude/process/planning.md
 @~/.claude/process/session.md
+@~/.claude/process/permissions.md
+@~/.claude/process/maintaining_claude_md.md
 @~/.claude/rules/behaviour/general.md
 @~/.claude/rules/behaviour/risky_actions.md
+@~/.claude/rules/behaviour/memory.md
+@~/.claude/rules/behaviour/decision_logging.md
+@~/.claude/rules/behaviour/playbook.md
 @~/.claude/rules/development.md
 @~/.claude/rules/git.md
 @~/.claude/rules/file_standards.md
@@ -18,19 +23,13 @@
 @~/.claude/rules/transparency.md
 @~/.claude/rules/optimisation.md
 @~/.claude/rules/workflows.md
+@~/.claude/rules/skill_standards.md
+@~/.claude/rules/managed_files.md
 @~/.claude/style_guide_standards/datetime.md
 @~/.claude/style_guide_standards/versioning.md
-@~/.claude/style_guide_standards/python.md
-@~/.claude/style_guide_standards/sql.md
-@~/.claude/style_guide_standards/unix.md
-@~/.claude/style_guide_standards/makefile.md
-@~/.claude/style_guide_standards/dbt.md
-@~/.claude/style_guide_standards/docker.md
-@~/.claude/style_guide_standards/cicd.md
-@~/.claude/style_guide_standards/ansible.md
-@~/.claude/style_guide_standards/airflow.md
-@~/.claude/style_guide_standards/terraform.md
+@~/.claude/style_guide_standards/jira.md
 @~/.claude/context.md
+@~/.claude/memory/MEMORY.md
 
 @./agents/core/architect.md
 
@@ -54,7 +53,7 @@ Available sub-agents:
 | ops | new_user | `agents/ops/new_user.md` |
 | ops | claude_reviewer | `agents/ops/claude_reviewer.md` |
 | ops | mac_user | `agents/ops/mac_user.md` |
-| tools | python / sql / unix / makefile / dbt / docker / cicd / ansible / airflow / terraform *(one per style guide)* | `agents/tools/<name>.md` |
+| tools | python / sql / unix / makefile / dbt / docker / cicd / ansible / airflow / terraform / jira *(one per style guide)* | `agents/tools/<name>.md` |
 
 Built-in Claude Code agents (no file needed): `general-purpose`, `explore`.
 

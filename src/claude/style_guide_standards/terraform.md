@@ -1,6 +1,6 @@
 # 🏗️ Terraform Style Guide & Standards
 
-Defines the team's standards for writing and structuring Terraform code, based on the `payroc/dmt-iac-snowflake_terraform` repository.
+Defines the team's standards for writing and structuring Terraform code, based on the `dmt-ghe-engineering/dmt-iac-snowflake_terraform` repository.
 
 ---
 

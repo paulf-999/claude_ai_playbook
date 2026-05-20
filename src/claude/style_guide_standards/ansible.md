@@ -1,6 +1,6 @@
 # 📦 Ansible Style Guide & Standards
 
-Defines the team's standards for writing and structuring Ansible projects. Informed by [payroc/dmt-cac-ansible_sandbox](https://github.com/payroc/dmt-cac-ansible_sandbox).
+Defines the team's standards for writing and structuring Ansible projects.
 
 ---
 
@@ -8,75 +8,78 @@ Defines the team's standards for writing and structuring Ansible projects. Infor
 
 | File | Purpose |
 |------|---------|
-| [`ansible/playbooks.md`](ansible/playbooks.md) | Playbook structure, role references, tags, and examples |
-| [`ansible/roles_and_tasks.md`](ansible/roles_and_tasks.md) | Role structure, defaults, task conventions, and examples |
-| [`ansible/secrets_and_inventory.md`](ansible/secrets_and_inventory.md) | Secrets management, inventory layout, and config-driven inputs |
+| [`ansible/playbooks.md`](ansible/playbooks.md) | Playbook naming, folder structure, symlinks, CODEOWNERS, and tags |
+| [`ansible/roles_and_tasks.md`](ansible/roles_and_tasks.md) | Role layout, capability categories, task conventions, and versioning |
+| [`ansible/secrets_and_inventory.md`](ansible/secrets_and_inventory.md) | Vault secrets, dynamic inventory plugins, and scope layout |
+| [`ansible/variables.md`](ansible/variables.md) | `l1`–`l6` group_vars hierarchy, precedence, and variable naming |
 
 ---
 
 ## 🗂️ Repo structure
 
 ```
-ansible.cfg                     # project-level Ansible configuration
-inputs/                         # config-driven input files (YAML)
-inventories/
-  <environment>/                # one subdirectory per environment (sandbox, dev, uat, prod)
-    inventory.ini               # host definitions
-    group_vars/                 # group-level variable files
+group_vars/                         # variable files shared across all playbooks
+  all.yml                           # global defaults and Vault lookups
+  l1_<env>.yml                      # environment-wide variables
+  l2_<env>_<site>.yml               # site-level within an environment
+  ...                               # l3–l6 files as needed (see variables.md)
+host_vars/                          # host-specific variable files
+  <inventory_hostname>.yml
+inventory/
+  <scope>/                          # one subdirectory per inventory scope
+    ansible.cfg                     # scope-specific configuration
+    vars.yaml                       # scope metadata/variables
+    <provider>_<account>_<plugin>.yml  # dynamic inventory plugin config
 playbooks/
-  site.yml                      # top-level playbook
+  <dept_or_app>/                    # one subdirectory per owner or application
+    [<team>/]                       # optional team-level nesting
+      <app>_<asset_role>_<descriptor>.yml
+      group_vars -> ../../group_vars  # symlink
+      roles -> ../../roles            # symlink
 roles/
-  <role_name>/
-    defaults/
-      main.yml                  # default variable values
-    tasks/
-      main.yml                  # task entry point
-    handlers/                   # (if needed)
-    templates/                  # Jinja2 templates (if needed)
-    files/                      # static files (if needed)
-src/                            # supporting scripts and utilities
-docs/                           # project documentation
+  <technical_capability>/           # functional grouping (e.g. application, systems)
+    <role_name>/
+      defaults/
+        main.yml
+      tasks/
+        main.yml
+      handlers/
+      templates/
+      files/
+      meta/
+filter_plugins/                     # custom Jinja2 filters
+pipelines/                          # CI/CD pipeline definitions
 ```
 
-- One inventory directory per environment — never share inventory files across environments.
-- All configurable inputs live in `inputs/` as YAML files, keeping playbooks free of hardcoded values.
-
----
-
-## ⚙️ ansible.cfg
-
-Every project must have an `ansible.cfg` at the repo root. At minimum, define:
-
-```ini
-[defaults]
-inventory  = inventories/<default_env>/inventory.ini
-roles_path = ./roles
-```
-
-Explicitly setting `roles_path` ensures roles are resolved from the project root regardless of where Ansible is invoked.
+- No `inputs/` directory — this repo does not use a config-driven YAML inputs pattern.
+- No single root-level `ansible.cfg` — each inventory scope has its own (see `secrets_and_inventory.md`).
+- No static `.ini` inventory files — all inventories use dynamic plugins.
 
 ---
 
 ## 🏷️ Naming conventions
 
-| Construct | Convention |
-|-----------|------------|
-| Roles | `snake_case` |
-| Variables | `snake_case` |
-| Playbook files | `snake_case.yml` |
-| Inventory files | `inventory.ini` |
-| Task names | Sentence case, descriptive — every task must have a `name` |
-| Tags | `snake_case` or `kebab-case`, consistent within a project |
+| Construct | Convention | Example |
+|-----------|------------|---------|
+| Playbook files | `[app]_[asset_role]_[descriptor].yml` | `pyrc_ilb_setup.yml` |
+| Role directories | `roles/[capability]/[role_name]` | `roles/systems/azure_devops_agent` |
+| Inventory scope dirs | `[org]-[env]-[qualifier]` | `pyrc-prd-cde`, `pyrc-stg-dct` |
+| Dynamic plugin files | `[provider]_[account/site]_[plugin].yml` | `aws_28122221233-aws_ec2.yml` |
+| Variables in roles | `[role]_[variable_name]` | `webserver_port` |
+| Variables in vars files | `[app/dept]__[role]_[variable_name]_[descriptor]` | `pyrc__nginx_port_http` |
+| Task names | Sentence case, descriptive | `Install nginx package` |
+| Tags | `snake_case` | `install`, `configure`, `restart` |
 
-Use fully qualified collection names (FQCN) for all modules: `ansible.builtin.apt`, not `apt`. This avoids ambiguity as collections grow.
+Use FQCN for all modules: `ansible.builtin.apt`, not `apt`.
 
 ---
 
 ## 🔩 Linting
 
-- All YAML files must pass `yamllint` before committing. The canonical config is `.yamllint` at the repo root.
-- All playbooks and roles must pass `ansible-lint` before committing.
+- All YAML files must pass `yamllint --strict` before committing.
+- All playbooks and roles must pass `ansible-lint` (production profile) before committing.
 - Both are enforced via pre-commit hooks — fix the underlying issue rather than suppressing warnings.
+- Ansible-lint skips: `role-name[path]`, `var-naming[no-role-prefix]`.
 
 ---
 
@@ -85,3 +88,4 @@ Use fully qualified collection names (FQCN) for all modules: `ansible.builtin.ap
 @./ansible/playbooks.md
 @./ansible/roles_and_tasks.md
 @./ansible/secrets_and_inventory.md
+@./ansible/variables.md

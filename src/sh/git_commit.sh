@@ -5,7 +5,10 @@
 # Usage: git_commit.sh [--no-verify]
 # See: https://www.conventionalcommits.org/en/v1.0.0/
 
-set -uo pipefail
+set -euo pipefail
+# Note: -e is required by the bash style guide. read -rp and [[ ]] conditionals
+# are not affected; the only risk is that a non-zero exit from a subshell inside
+# a prompt expansion would abort the script, which is acceptable here.
 
 # Try to source shell utils; fallback if unavailable
 if ! source src/sh/shell_utils.sh 2>/dev/null; then
@@ -182,7 +185,7 @@ build_menu_display_names() {
     for i in "${!STAGED[@]}"; do
         local filename
         filename="$(basename -- "${STAGED[$i]}")"
-        DISPLAY_NAMES[$i]="$(truncate_scope "$filename")"
+        DISPLAY_NAMES[i]="$(truncate_scope "$filename")"
     done
 
     # Handle duplicate filenames
@@ -195,7 +198,7 @@ build_menu_display_names() {
         if (( dup_count > 1 )); then
             local parent
             parent="$(basename -- "$(dirname -- "${STAGED[$i]}")")"
-            DISPLAY_NAMES[$i]+=" [${parent}]"
+            DISPLAY_NAMES[i]+=" [${parent}]"
         fi
     done
 }

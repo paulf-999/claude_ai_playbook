@@ -57,6 +57,7 @@ update_claude_files() {
     preserve_user_editable_files  # local
     remove_managed_files          # local
     copy_claude_files             # from claude_file_utils.sh
+    merge_skills_wip              # from claude_file_utils.sh
     restore_user_editable_files   # local
 }
 

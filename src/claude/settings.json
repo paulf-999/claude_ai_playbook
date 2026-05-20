@@ -1,5 +1,13 @@
 {
   "autoMemoryEnabled": true,
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    }
+  },
   "deniedMcpServers": [
     {"serverName": "github"},
     {"serverName": "atlassian"}
@@ -10,7 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/hooks/claude_prompt_reviewer.py"
+            "command": "python3 ~/.claude/wip/hooks/claude_prompt_reviewer.py"
           }
         ]
       }
@@ -20,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/hooks/claude_session_cost.py"
+            "command": "python3 ~/.claude/wip/hooks/claude_session_cost.py"
           }
         ]
       }
@@ -41,6 +49,7 @@
       "Bash(git push:*)",
       "Bash(git rebase:*)",
       "Bash(git status:*)",
+      "Bash(git -C:*)",
       "Bash(gh:*)",
       "Bash(make:*)",
       "Bash(python:*)",
@@ -49,7 +58,32 @@
       "Bash(find:*)",
       "Bash(mkdir:*)",
       "Bash(mv:*)",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "Write(/tmp/*)",
+      "Edit(/tmp/*)",
+      "Edit(~/.claude/plans/PLANS.md)",
+      "mcp__memory__read_graph",
+      "mcp__memory__search_nodes",
+      "mcp__memory__open_nodes",
+      "mcp__memory__create_entities",
+      "mcp__memory__add_observations",
+      "mcp__memory__create_relations",
+      "mcp__memory__delete_entities",
+      "mcp__memory__delete_observations",
+      "mcp__memory__delete_relations",
+      "mcp__filesystem__read_file",
+      "mcp__filesystem__read_multiple_files",
+      "mcp__filesystem__read_text_file",
+      "mcp__filesystem__list_directory",
+      "mcp__filesystem__list_directory_with_sizes",
+      "mcp__filesystem__directory_tree",
+      "mcp__filesystem__get_file_info",
+      "mcp__filesystem__list_allowed_directories",
+      "mcp__filesystem__search_files",
+      "mcp__filesystem__read_media_file",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs",
+      "mcp__sequential-thinking__sequentialthinking"
     ]
   }
 }

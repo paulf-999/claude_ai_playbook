@@ -1,15 +1,60 @@
 # .github/CODEOWNERS
 # The last matching rule wins. Use team handles, not individuals.
 
-# Default: everything in the repo
-*                 @your-github-username
+# =============================================================================
+# Repo meta
+# =============================================================================
 
-# GitHub meta (workflows, PR/issue templates)
-.github/          @your-github-username
+# Covers CODEOWNERS itself, PR/issue templates, and CI/CD workflows.
+.github/                          @dmt-ghe-engineering/dpe
 
-# Documentation
-docs/             @your-github-username @your-org/analytics
+# Playbook documentation — dpe leads; shane and iain co-own to distribute review load.
+docs/                             @dmt-ghe-engineering/dpe @shane-orourke_pyrc @john-demoy_pyrc @Scott-Morgan_pyrc
 
-# Tooling & scripts/
-src/
-src/sh/           @your-github-username
+# Test suite — dpe leads; shane and iain co-own to distribute review load.
+tests/                            @dmt-ghe-engineering/dpe @shane-orourke_pyrc @john-demoy_pyrc @Scott-Morgan_pyrc
+
+# =============================================================================
+# src/ — tooling
+# =============================================================================
+
+# Makefile includes and build tooling — dpe owns the build and developer tooling layer.
+src/make/                         @dmt-ghe-engineering/dpe
+
+# Shell scripts and shared utilities — dpe owns platform scripts and install tooling.
+src/sh/                           @dmt-ghe-engineering/dpe
+
+# Reusable script and config templates — dpe owns the template layer underpinning the repo.
+src/templates/                    @dmt-ghe-engineering/dpe
+
+# =============================================================================
+# src/claude/ — governance (@dpe)
+# =============================================================================
+
+# Fallback for src/claude/: files directly in this directory and any future subdirs not covered by a more specific rule below default to dpe.
+src/claude/                       @dmt-ghe-engineering/dpe @shane-orourke_pyrc @john-demoy_pyrc @Scott-Morgan_pyrc
+
+# Session behaviour config (planning, permissions, session management). Changes affect all playbook users — dpe leads with shane and iain as co-owners.
+src/claude/process/               @dmt-ghe-engineering/dpe @shane-orourke_pyrc @john-demoy_pyrc @Scott-Morgan_pyrc
+
+# Rules define Claude's behaviour across all sessions. Governance-level content — dpe leads with shane and iain as co-owners.
+src/claude/rules/                 @dmt-ghe-engineering/dpe @shane-orourke_pyrc @john-demoy_pyrc @Scott-Morgan_pyrc
+
+# Cross-team coding standards. dpe leads with shane and iain as co-owners to distribute review load.
+src/claude/style_guide_standards/ @dmt-ghe-engineering/dpe @shane-orourke_pyrc @john-demoy_pyrc @Scott-Morgan_pyrc
+
+# =============================================================================
+# src/claude/ — skills (den co-ownership)
+# All other src/claude/ subdirs fall back to the dpe + shane rule above.
+# Named individuals are listed in place of the full den team handle to avoid spamming all team members.
+# =============================================================================
+
+# Skills are multi-step workflows primarily authored and used by den.
+src/claude/skills/                @dmt-ghe-engineering/dpe @shane-orourke_pyrc @john-demoy_pyrc @Scott-Morgan_pyrc @Iain-McInnes_pyrc @rajesh-rao_pyrc @jonny-barnsley_pyrc @Nivedita-Baliga_pyrc
+
+# WIP skills in development — dpe and shane co-own to keep review load manageable.
+src/claude/wip/skills/            @dmt-ghe-engineering/dpe @shane-orourke_pyrc @john-demoy_pyrc @Scott-Morgan_pyrc
+
+# data_platform patterns and templates are DPE-specific — exclude den reviewers.
+src/claude/skills/create_confluence_page/patterns/data_platform/   @dmt-ghe-engineering/dpe
+src/claude/skills/create_confluence_page/templates/data_platform/  @dmt-ghe-engineering/dpe

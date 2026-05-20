@@ -83,6 +83,17 @@ default_args = {
 
 ---
 
+## 📁 The `includes/` directory
+
+The `includes/` directory contains shared utilities used across **all DAGs** — changes here have a wide blast radius and must not be made casually.
+
+- Do not modify files in `includes/` without team review and explicit awareness of downstream impact.
+- DAG-specific logic belongs in `__py_helpers.py` or `__sql_queries.py` within the DAG folder — not in `includes/`.
+- Files in `includes/` are changed rarely and deliberately; if a change appears necessary, raise it with the team first.
+- New additions to `includes/` require team discussion — they become shared dependencies for all existing and future DAGs.
+
+---
+
 ## 📖 Astronomer best practices
 
 Follow the [Astronomer DAG best practices guide](https://docs.astronomer.io/learn/dag-best-practices) as the baseline reference. Key points it covers that complement this guide:

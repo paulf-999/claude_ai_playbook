@@ -5,6 +5,8 @@ model: haiku
 tools: Read, Glob, Grep
 ---
 
+@~/.claude/style_guide_standards/unix.md
+
 # 🐚 Sub-agent — Unix / Bash
 
 ## 🎭 Role
@@ -30,7 +32,7 @@ Shell scripts handle operational tasks across CI/CD pipelines and local developm
 
 ## 💡 Assumptions
 
-- Style guide: `~/.claude/style_guide_standards/unix.md`
+- Style guide loaded above
 - shellcheck is enforced via pre-commit — do not re-raise issues it catches automatically
 - Bash on Ubuntu (WSL2)
 

@@ -27,10 +27,11 @@
      Ops (Claude setup maintenance):
        ops/new_user          — simulates a first-time user; use for onboarding validation
        ops/claude_reviewer   — reviews Claude configuration artefacts against best practices
+       ops/mac_user          — reviews shell scripts and Makefiles for macOS compatibility
 
      Tools (focused work or code review per technology):
        tools/python | tools/sql | tools/unix | tools/makefile | tools/dbt
-       tools/docker | tools/cicd | tools/ansible | tools/airflow | tools/terraform
+       tools/docker | tools/cicd | tools/ansible | tools/airflow | tools/terraform | tools/jira
 
      Built-in Claude Code agents (no file needed):
        general-purpose      — research, multi-step tasks, code search

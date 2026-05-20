@@ -18,6 +18,8 @@ Usage:
     make audit_components                                      # via Makefile target
 """
 
+from __future__ import annotations
+
 import sys
 from collections import defaultdict
 from datetime import date
@@ -28,7 +30,7 @@ import frontmatter
 # ── constants ─────────────────────────────────────────────────────────────────
 
 SCAN_DIRS = ["skills", "agents", "rules", "process", "commands"]
-EXCLUDE_DIRS = {"style_guide_standards", "skills_wip", "patches"}
+EXCLUDE_DIRS = {"style_guide_standards", "patches"}
 EXCLUDE_NAMES = {"README.md"}
 STALENESS_WARN_DAYS = 90
 

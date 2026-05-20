@@ -1,4 +1,4 @@
-# CLAUDE.md — claude_ai_playbook
+# CLAUDE.md — dmt-scripts-claude_ai_playbook
 
 This file provides repo-specific instructions for Claude Code when working in the playbook repo.
 
@@ -11,7 +11,7 @@ Whenever a new artefact is added to `src/claude/`, the documentation listed belo
 | Artefact | Required doc updates |
 |---|---|
 | **Skill** (`skills/`) | `src/claude/skills/README.md` · `docs/whats_installed.md` skills section |
-| **Skill WIP** (`skills_wip/`) | `src/claude/skills_wip/README.md` only — WIP skills are not listed in `whats_installed.md` |
+| **Skill WIP** (`wip/skills/`) | `src/claude/wip/skills/README.md` · `docs/whats_installed.md` skills section — WIP skills are merged into `~/.claude/skills/` at install time and are invokable |
 | **Rule** (`rules/`) | `src/claude/rules/README.md` · `src/claude/CLAUDE.md` (add `@import`) · `docs/whats_installed.md` rules description |
 | **Rule (behaviour)** (`rules/behaviour/`) | `src/claude/rules/behaviour/README.md` · `src/claude/CLAUDE.md` (add `@import`) · `docs/whats_installed.md` rules description |
 | **Process file** (`process/`) | `src/claude/process/README.md` · `src/claude/CLAUDE.md` (add `@import`) · `docs/whats_installed.md` process section |

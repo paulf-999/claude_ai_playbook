@@ -1,4 +1,4 @@
-SHELL = /bin/sh
+SHELL = /bin/bash
 
 #================================================================
 # Usage
@@ -9,6 +9,9 @@ SHELL = /bin/sh
 # make audit_components # run periodic health audit on the Claude component library
 # make install          # install Claude config files, Claude CLI, core MCP servers, and plugins
 # make update           # update Claude config files in ~/.claude/
+# make clean            # remove compiled Python files and caches
+# make clean_plans      # archive executed/superseded plans to ~/.claude/plans/archive/
+# make clean_backups    # move old ~/.claude_backup_* dirs to ~/.claude_backup_archive/
 # make install_plugins  # install Claude Code plugins only (runs install_plugins.sh)
 # make patch_plugins    # apply team patches to installed plugins (run after install_plugins)
 #
@@ -45,7 +48,7 @@ install_plugins:
 
 patch_plugins:
 	@echo "${INFO}\nApplying team patches to installed plugins${COLOUR_OFF}"
-	@python3 src/claude/skills/patches/skill-creator-patch.py
+	@python3 src/claude/plugins/skill-creator-patch.py
 
 test:
 	@echo "${INFO}\nRunning structural validation tests${COLOUR_OFF}"
@@ -59,5 +62,17 @@ audit_components:
 	@echo "${INFO}\nRunning Claude component health audit${COLOUR_OFF}"
 	@python3 src/sh/claude/claude_component_audit.py
 
+clean_plans:
+	@echo "${INFO}\nArchiving executed/superseded plans to ~/.claude/plans/archive/${COLOUR_OFF}"
+	@python3 src/sh/claude/clean_plans.py
+
+clean_backups:
+	@echo "${INFO}\nMoving old ~/.claude_backup_* dirs to ~/.claude_backup_archive/${COLOUR_OFF}"
+	@python3 src/sh/claude/clean_backups.py
+
+clean:
+	@find . -type f -name "*.pyc" -delete
+	@find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+
 # .PHONY tells Make that these targets don't represent files
-.PHONY: all deps install update install_plugins patch_plugins test lint_tags audit_components
+.PHONY: all deps install update install_plugins patch_plugins test lint_tags audit_components clean_plans clean_backups clean

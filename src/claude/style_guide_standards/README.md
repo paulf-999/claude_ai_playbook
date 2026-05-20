@@ -12,6 +12,7 @@ Language, tool, and platform-specific style guides enforced across all projects.
 | [`cicd.md`](cicd.md) | 🔁 CI/CD principles and platform-specific standards for Azure DevOps and GitHub Actions |
 | [`dbt.md`](dbt.md) | 🔵 dbt style guide: model organisation, naming conventions, YAML, snapshots, and macros |
 | [`docker.md`](docker.md) | 🐳 Docker and Dockerfile standards: base images, layer optimisation, security, and naming |
+| [`jira.md`](jira.md) | 🎫 Jira standards for the DM project: ticket structure, field requirements, components, sprint planning, and hygiene |
 | [`makefile.md`](makefile.md) | 🛠️ Makefile naming conventions, variable assignment, and command patterns |
 | [`python.md`](python.md) | 🐍 Python standards, referencing the team Python template repo |
 | [`sql.md`](sql.md) | 🗄️ SQL style enforced via SQLFluff, referencing the canonical `.sqlfluff` config |

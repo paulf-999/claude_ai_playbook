@@ -1,77 +1,83 @@
-# 🔒 Secrets, Inventory & Config Inputs
+# 🔐 Ansible Secrets & Inventory
 
-## 🔑 Secrets management
+## 🔑 Secrets — HashiCorp Vault
 
-- Never commit secrets or credentials. Use a `.env` file (git-ignored) populated from `.env_template`.
-- Load secrets into Ansible facts via a dedicated `secrets_env` role using the `ansible.builtin.env` lookup.
-- Always set `no_log: true` on tasks that read or set secret values.
-- Always assert that required secrets are present and non-empty immediately after loading — fail with a descriptive message if missing.
-- Provide a `.env_template` in the repo root documenting all required environment variables without values.
+No secrets are stored in this repo. All credentials are retrieved at runtime from HashiCorp Vault using the `community.hashi_vault.vault_kv2_get` lookup plugin.
 
-<details>
-<summary>Click to expand — example <code>secrets_env</code> role tasks</summary>
+Vault lookups are declared in `group_vars/all.yml` so they are available to all playbooks:
 
 ```yaml
----
-- name: Load required secrets from environment
-  no_log: true
-  ansible.builtin.set_fact:
-    GIT_PAT_TOKEN: "{{ lookup('ansible.builtin.env', 'GIT_PAT_TOKEN') | default('', true) }}"
-
-- name: Fail if required secrets are missing
-  ansible.builtin.assert:
-    that:
-      - GIT_PAT_TOKEN | length > 0
-    fail_msg: >
-      Missing required env vars. Ensure .env exists (copied from .env_template) and is populated.
+# group_vars/all.yml
+my_service_password: >-
+  {{ lookup('community.hashi_vault.vault_kv2_get',
+     'secret/my_service',
+     token=vault_token)['data']['password'] }}
 ```
 
-</details>
-
-<details>
-<summary>Click to expand — example <code>.env_template</code></summary>
-
-```bash
-# Copy this file to .env and populate with real values.
-# Never commit .env.
-GIT_PAT_TOKEN=
-```
-
-</details>
+- Never hardcode credentials, tokens, or passwords anywhere in the repo.
+- Never log secret values — use `no_log: true` on tasks that consume them.
+- If a credential must be passed as a variable, ensure it originates from a Vault lookup, not a defaults file or plain vars file.
 
 ---
 
-## 📦 Inventory
+## 🗃️ Inventory layout
 
-- One inventory directory per environment under `inventories/`.
-- Use `.ini` format for inventory files. Include inline comments to explain host connection settings.
-- Define `ansible_connection`, `ansible_python_interpreter`, and other connection parameters explicitly.
-- Place group-level variables in `inventories/<env>/group_vars/` — do not embed them in the inventory file.
+Inventories are organised under `inventory/` with one subdirectory per scope:
 
-<details>
-<summary>Click to expand — example <code>inventories/sandbox/inventory.ini</code></summary>
+```
+inventory/
+  <org>-<env>-<qualifier>/        # e.g. pyrc-prd-cde, pyrc-stg-dct, tech_ops-crp
+    ansible.cfg                   # scope-specific Ansible configuration
+    vars.yaml                     # scope metadata and variables
+    <provider>_<account>_<plugin>.yml  # dynamic inventory plugin config
+```
+
+Each scope directory is self-contained — its `ansible.cfg` sets the inventory path, roles path, and filter_plugins path for that scope.
+
+---
+
+## ⚙️ ansible.cfg per scope
+
+Each `inventory/<scope>/ansible.cfg` must contain three sections. Use an existing scope as a reference template — do not build one from scratch.
 
 ```ini
-[sandbox]  # Docker-based sandbox host
-sandbox_webserver ansible_connection=docker ansible_python_interpreter=/usr/bin/python3
+[defaults]
+host_key_checking = False
+inventory      = <absolute_path_to_this_scope_dir>
+roles_path     = <absolute_path_to_repo_root>/roles
+filter_plugins = <absolute_path_to_repo_root>/filter_plugins
+
+[hashi_vault_collection]
+auth_method  = token
+namespace    = admin/<scope>-ns-secretstore
+mount_point  = pyrc-kv-ansible
+url          = https://<vault_cluster_url>:8200
+token_file   = vault-token-via-agent
+token_path   = /opt/hcp/token
+
+[inventory]
+cache            = True
+cache_plugin     = jsonfile
+cache_timeout    = 300
+cache_connection = <cache_dir>
 ```
 
-</details>
+There is no root-level `ansible.cfg`. All configuration is scope-scoped.
 
 ---
 
-## 🎛️ Config-driven inputs
+## 🔌 Dynamic inventory plugins
 
-- Externalise all run-time configuration into YAML files under `inputs/`.
-- Playbooks and roles read from these files rather than accepting ad-hoc `--extra-vars`.
+All inventory uses dynamic plugins — no static `.ini` files. Plugin config files are named:
 
-<details>
-<summary>Click to expand — example <code>inputs/docker_config.yml</code></summary>
-
-```yaml
-docker:
-  container_name: sandbox_webserver
-  image: ubuntu:22.04
+```
+[provider]_[account/site]_[plugin].yml
 ```
 
-</details>
+| Provider prefix | Plugin type | Example filename |
+|-----------------|-------------|-----------------|
+| `aws` | AWS EC2 | `aws_28122221233-aws_ec2.yml` |
+| `azu` | Azure RM | `azu_3aa06344-c271-4c9a-9cfd-e29dd9e99fe6-azure_rm.yml` |
+| `vca` | VMware vCenter | `vca_lon_prd_vdc_vmware.yml` |
+
+Each plugin YAML file contains only the configuration for that cloud provider and account — no host lists, no credentials.

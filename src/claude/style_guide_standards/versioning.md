@@ -20,6 +20,11 @@ Version increment rules:
 - Minor (`x.N.0`) — new capabilities added without changing the maturity tier
 - Major (`N.0.0`) — promotion to the next maturity tier
 
+What does **not** trigger a version bump:
+
+- Moving a skill between directories (e.g. `skills_wip/` → `skills/`) — directory location is organisational, not a measure of maturity
+- Renaming a skill file or folder without changing its content
+
 ---
 
 ## Repo-level release versioning

@@ -5,6 +5,8 @@ model: haiku
 tools: Read, Glob, Grep
 ---
 
+@~/.claude/style_guide_standards/terraform.md
+
 # 🏗️ Sub-agent — Terraform
 
 ## 🎭 Role
@@ -32,7 +34,7 @@ Terraform manages all Snowflake infrastructure: databases, schemas, warehouses, 
 
 ## 💡 Assumptions
 
-- Style guide: `~/.claude/style_guide_standards/terraform.md`
+- Style guide loaded above
 - Always review `terraform plan` before `apply` — never apply without a plan review
 - State is stored remotely — never commit `.tfstate` files
 - Credentials come from environment variables or the CI/CD secret store, never `.tf` files

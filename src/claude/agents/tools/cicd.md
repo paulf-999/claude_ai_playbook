@@ -5,6 +5,8 @@ model: haiku
 tools: Read, Glob, Grep
 ---
 
+@~/.claude/style_guide_standards/cicd.md
+
 # 🚀 Sub-agent — CI/CD
 
 ## 🎭 Role
@@ -31,7 +33,7 @@ CI/CD orchestrates code quality checks and deployments across all platform artif
 
 ## 💡 Assumptions
 
-- Style guide: `~/.claude/style_guide_standards/cicd.md`
+- Style guide loaded above
 - Secrets are managed via Azure Key Vault or GitHub Secrets — never in pipeline YAML
 - All external dependencies must be version-pinned
 

@@ -5,6 +5,8 @@ model: haiku
 tools: Read, Glob, Grep
 ---
 
+@~/.claude/style_guide_standards/sql.md
+
 # 🗄️ Sub-agent — SQL
 
 ## 🎭 Role
@@ -30,7 +32,7 @@ SQL is the primary transformation language in dbt, targeting Snowflake. All SQL 
 
 ## 💡 Assumptions
 
-- Style guide: `~/.claude/style_guide_standards/sql.md`
+- Style guide loaded above
 - SQLFluff enforces formatting — do not re-raise issues it catches automatically
 - Snowflake dialect; dbt templater
 

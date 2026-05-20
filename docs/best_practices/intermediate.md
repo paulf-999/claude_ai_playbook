@@ -83,7 +83,7 @@ The maturity tier also controls a scope gate block in the skill body:
 | `tactical` | Main path + light error handling — no gold-plating |
 | `strategic` | Full coverage — edge cases, documentation, evals expected |
 
-Full schema (Tier 1 + optional Tier 2 tags): `src/claude/skills/patches/claude-tag-schema.md`
+Full schema (Tier 1 + optional Tier 2 tags): `src/claude/plugins/claude-tag-schema.md`
 
 ---
 

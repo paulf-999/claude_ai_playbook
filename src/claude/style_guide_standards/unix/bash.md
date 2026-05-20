@@ -5,7 +5,7 @@ Defines the team's Bash/Shell scripting standards, structure conventions, and to
 ## 📄 Template
 
 All new scripts must follow the team bash template:
-[`dmt-scripts-git_repo_template/src/templates/bash_script_template.sh`](https://github.com/payroc/dmt-scripts-git_repo_template/blob/main/src/templates/bash_script_template.sh)
+[`dmt-scripts-git_repo_template/src/templates/bash_script_template.sh`](https://github.com/dmt-ghe-engineering/dmt-scripts-git_repo_template/blob/main/src/templates/bash_script_template.sh)
 
 ---
 

@@ -9,7 +9,6 @@
 # Usage:
 #   make install_core_mcp_servers     # install core MCP servers (context7, sequential-thinking, memory, filesystem)
 #   make install_mcp_server_github    # install GitHub MCP server (prompts for PAT)
-#   make install_mcp_server_omni      # install Omni Analytics MCP server (opens browser for OAuth)
 #   make install_mcp_server_atlassian # install Atlassian MCP server (opens browser for SSO)
 #   make install_mcp_server_o365      # print manual setup instructions for Microsoft 365 connector
 #   make enable_mcp server=<name>     # enable an integration MCP server (groups: dev, docs, all)
@@ -23,10 +22,6 @@ install_core_mcp_servers:
 install_mcp_server_github:
 	@echo "${INFO}\nInstalling GitHub MCP server${COLOUR_OFF}"
 	@bash src/sh/claude/install_mcp_servers.sh github
-
-install_mcp_server_omni:
-	@echo "${INFO}\nInstalling Omni Analytics MCP server${COLOUR_OFF}"
-	@bash src/sh/claude/install_mcp_servers.sh omni
 
 install_mcp_server_atlassian:
 	@echo "${INFO}\nInstalling Atlassian MCP server${COLOUR_OFF}"
@@ -43,4 +38,4 @@ disable_mcp:
 	@echo "${INFO}\nDisabling MCP server: $(server)${COLOUR_OFF}"
 	@bash src/sh/claude/mcp_toggle.sh disable $(server)
 
-.PHONY: install_core_mcp_servers install_mcp_server_github install_mcp_server_omni install_mcp_server_atlassian install_mcp_server_o365 enable_mcp disable_mcp
+.PHONY: install_core_mcp_servers install_mcp_server_github install_mcp_server_atlassian install_mcp_server_o365 enable_mcp disable_mcp

@@ -1,0 +1,42 @@
+---
+name: Test Claude config
+
+on:
+    pull_request:
+        paths:
+            - src/claude/**
+            - tests/**
+            - requirements.txt
+            - pytest.ini
+    push:
+        branches:
+            - main
+        paths:
+            - src/claude/**
+
+jobs:
+    test:
+        name: Structural validation
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: '3.10'
+
+            - name: Install dependencies
+              run: pip install -r requirements.txt
+
+            - name: Run tests with coverage
+              run: pytest --cov-report=xml:coverage.xml
+
+            - name: Upload coverage report
+              uses: actions/upload-artifact@v4
+              if: always()
+              with:
+                  name: coverage-report
+                  path: coverage.xml

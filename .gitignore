@@ -15,6 +15,7 @@
 #=======================================================================
 *.json
 !src/claude/settings.json
+!src/claude/skills/**/evals/*.json
 *.csv
 *.csv.gz
 *.tsv

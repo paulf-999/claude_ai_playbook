@@ -5,6 +5,8 @@ model: haiku
 tools: Read, Glob, Grep
 ---
 
+@~/.claude/style_guide_standards/python.md
+
 # 🐍 Sub-agent — Python
 
 ## 🎭 Role
@@ -30,7 +32,7 @@ Python is the core language for data transformation scripts, Airflow operators, 
 
 ## 💡 Assumptions
 
-- Style guide: `~/.claude/style_guide_standards/python.md`
+- Style guide loaded above
 - Tooling: ruff, flake8, bandit, pytest — do not flag issues these tools enforce automatically
 - Target Python version: 3.10
 

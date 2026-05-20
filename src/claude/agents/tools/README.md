@@ -13,6 +13,7 @@ When a task spans multiple technologies, use the `architect` agent instead.
 | [`dbt.md`](dbt.md) | `dbt` | `models/**/*.sql`, `models/**/*.yml` | 🔄 dbt model review, layer conventions, and test coverage |
 | [`docker.md`](docker.md) | `docker` | `Dockerfile`, `.dockerignore` | 🐳 Dockerfile security, layer optimisation, and pinning |
 | [`cicd.md`](cicd.md) | `cicd` | `.github/workflows/*.yml`, `azure-pipelines.yml` | 🚀 CI/CD pipeline structure, secrets, and deployment safety |
+| [`jira.md`](jira.md) | `jira` | DM Jira project (via Atlassian MCP) | 🎫 Jira ticket review, field completeness, and hygiene checks |
 | [`ansible.md`](ansible.md) | `ansible` | `*.yml` (playbooks/roles/inventory) | ⚙️ Ansible playbook review and FQCN enforcement |
 | [`airflow.md`](airflow.md) | `airflow` | `dags/**/*.py` | 🌊 Airflow DAG review, idempotency, and config conventions |
 | [`terraform.md`](terraform.md) | `terraform` | `*.tf`, `*.tfvars` | 🏗️ Terraform IaC review, module structure, and pinning |

@@ -33,7 +33,7 @@
 
 ## 🗂️ Repo structure
 
-New repos should follow the standard team template at [payroc/dmt-scripts-git_repo_template](https://github.com/payroc/dmt-scripts-git_repo_template). The expected top-level layout is:
+New repos should follow the standard team template at [dmt-ghe-engineering/dmt-scripts-git_repo_template](https://github.com/dmt-ghe-engineering/dmt-scripts-git_repo_template). The expected top-level layout is:
 
 ```
 .github/
@@ -87,7 +87,9 @@ requirements.txt              # Python dependencies (if applicable)
 - PRs must contain fewer than 20 files. If a change genuinely cannot be split, use a `release/` branch prefix and ensure the PR applies the same type of change consistently (e.g., a bulk formatting or linting pass). The PR must be tied to a significant release and must be easy to review despite its size.
 - **Always use `.github/pull_request_template.md` as the PR body.** Read the file before raising any PR — never substitute a custom format.
 - When completing the template:
-  - Fill in the Summary section with a description of the change
+  - **Title** — Conventional Commits format: `type(scope): description`. The description must be non-technical, written for a mixed audience of engineers and non-engineers — describes the outcome, not the implementation. If a filename or directory appears in the scope or description, wrap it in backticks (e.g. `` `git.md` ``, `` `src/claude/` ``).
+  - **Summary** — 1 sentence, 2 at most. Non-technical. No code references or implementation detail.
+  - **(Optional) Additional Details** — bullet-pointed, at most 3 bullets. Non-technical.
   - In the **Type of PR Change** section, keep all options — tick only the one that applies with `[x]`; leave all others as `[ ]`
   - Link related Jira issues
   - Tick the appropriate testing checklist items
