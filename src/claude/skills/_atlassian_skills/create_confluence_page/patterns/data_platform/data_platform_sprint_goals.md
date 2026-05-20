@@ -134,7 +134,7 @@ For each of these four sections, render a `table` with `"attrs": {"layout": "ful
 | 5 | Owner | |
 | 6 | Status | ADF `status` node — colour mapping: `In Progress` → yellow, `Planned` → neutral, `Blocked` → red |
 | 7 | Key Tasks | `bulletList` nested inside the `tableCell`; wrap in `<details>` equivalent using nested paragraphs if list is long |
-| 8 | Jira | One linked bullet per ticket — `link` mark with `href: https://payroc.atlassian.net/browse/<key>` |
+| 8 | Jira | One linked bullet per ticket — `link` mark with `href: https://<your-org>.atlassian.net/browse/<key>` |
 | 9 | Stakeholders | |
 | 10 | Why | For Blocked items that require a warning (e.g. PAT revocation risk), render as a `warning` panel nested inside the cell |
 | 11 | Sprint Outcome | |

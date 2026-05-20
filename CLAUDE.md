@@ -1,4 +1,4 @@
-# CLAUDE.md — dmt-scripts-claude_ai_playbook
+# CLAUDE.md — claude_ai_playbook
 
 This file provides repo-specific instructions for Claude Code when working in the playbook repo.
 
