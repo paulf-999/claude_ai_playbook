@@ -1,0 +1,41 @@
+{
+  "skill_name": "confluence_create_page",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "create a confluence page for our sprint goals",
+      "expected_output": "Claude presents the known page patterns, user selects data_platform_sprint_goals, Claude reads the pattern file, gathers content, writes a draft to ~/_drafts/confluence/<slug>_draft.md, asks for review, iterates on feedback, then publishes to Confluence only after the user explicitly approves the draft.",
+      "files": [],
+      "assertions": [
+        "Claude presents all 9 known patterns (6 generic + 3 data platform) for user selection",
+        "Claude reads the data_platform_sprint_goals pattern file before proceeding",
+        "Claude writes a draft to ~/_drafts/confluence/ before creating anything in Confluence",
+        "Draft filename uses lowercase with underscores (no spaces, no hyphens)",
+        "Claude asks the user to review the draft and requests approval before publishing",
+        "Claude does not call createConfluencePage until the user explicitly approves the draft"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "/confluence_create_page",
+      "expected_output": "Claude verifies the Atlassian MCP is available, then presents the pattern selection prompt. If the MCP is unavailable, Claude stops and tells the user to enable it.",
+      "files": [],
+      "assertions": [
+        "Claude calls getAccessibleAtlassianResources before proceeding to Phase 1",
+        "Claude stops and tells the user to run 'make enable_mcp server=Atlassian' if the MCP is unavailable",
+        "Claude does not proceed to pattern selection without a successful MCP connection"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "create a how-to guide for our team",
+      "expected_output": "Claude reads the how_to pattern file, gathers prerequisites and steps, writes the draft to ~/_drafts/confluence/, asks for review, and after user approval publishes to Confluence. After publishing, Claude asks if the user wants a review comment posted.",
+      "files": [],
+      "assertions": [
+        "Claude reads the how_to pattern file from the patterns/ directory",
+        "Draft is written to ~/_drafts/confluence/ before any Confluence API call",
+        "After publishing, Claude offers to run /confluence_review_page on the new page"
+      ]
+    }
+  ]
+}

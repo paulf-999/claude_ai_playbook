@@ -28,13 +28,26 @@ install_github_server() {
     fi
 
     log_message "${DEBUG}" "Installing 'github' MCP server (remote HTTP)..."
-    # PAT injected at runtime, never stored
     claude mcp add-json github \
-        "{\"type\":\"http\",\"url\":\"https://api.githubcopilot.com/mcp\",\"headers\":{\"Authorization\":\"Bearer ${GITHUB_PAT}\"}}" \
+        "{\"type\":\"http\",\"url\":\"https://api.githubcopilot.com/mcp\",\"headers\":{\"Authorization\":\"Bearer ${GITHUB_PAT}\"}}" \  # PAT injected at runtime, never stored
         --scope user
     log_message "${INFO}" "Installed 'github'."
 
     verify_installation "github"
+}
+
+# Install the Omni Analytics MCP server via HTTP transport (triggers OAuth in browser)
+install_omni_server() {
+    if is_installed "omni"; then
+        log_message "${INFO}" "Skipping 'omni' — already registered."
+        verify_installation "omni"
+        return
+    fi
+
+    log_message "${DEBUG}" "Installing 'omni' (HTTP transport — will open browser for OAuth)..."
+    claude mcp add --scope user --transport http omni https://callbacks.omniapp.co/callback/mcp  # OAuth handled by browser redirect
+    log_message "${INFO}" "Installed 'omni'."
+    verify_installation "omni"
 }
 
 # Install the Atlassian MCP server via HTTP transport (triggers OAuth/SSO in browser)

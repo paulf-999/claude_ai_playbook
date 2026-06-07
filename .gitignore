@@ -1,3 +1,13 @@
+docs/mcp/
+src/claude/skills/_dbt_skills/
+src/claude/skills/_data_engineering_skills/
+src/claude/mcp/
+src/claude/agents/tools/payroc_engineering_naming_standards.md
+
+# tests
+tests/mcp/
+tests/skills/_dbt_skills/
+
 #=======================================================================
 # Common credentials / secrets
 #=======================================================================

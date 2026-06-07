@@ -11,3 +11,4 @@ Instructions that govern how Claude structures its work within a session.
 | [`maintaining_claude_md.md`](maintaining_claude_md.md) | 🧹 Criteria for adding, updating, and removing rules from `CLAUDE.md` — what belongs vs. what should stay in a one-off prompt | yes | active |
 | [`session_input.md`](session_input.md) | ⚙️ Pre-session configuration — set sub-agent and task before launching Claude to skip interactive prompts | no | active |
 | [`task_brief.md`](task_brief.md) | 📋 Lean orchestration convention — task brief and output summary templates for delegating heavy file work to sub-agents | no | active |
+| [`drafts.md`](drafts.md) | 📝 Draft file convention — root path `~/_drafts/`, subdirectory layout by type, and filename format | yes | active |

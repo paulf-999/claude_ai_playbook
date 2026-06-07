@@ -6,7 +6,7 @@ maturity: tactical
 tags:
   criticality: should
   status: active
-  tested: false
+  tested: true
 tools: Read, mcp__claude_ai_Atlassian__getAccessibleAtlassianResources, mcp__claude_ai_Atlassian__searchJiraIssuesUsingJql, mcp__claude_ai_Atlassian__getJiraIssue, mcp__claude_ai_Atlassian__createJiraIssue, mcp__claude_ai_Atlassian__editJiraIssue, mcp__claude_ai_Atlassian__transitionJiraIssue
 ---
 

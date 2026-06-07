@@ -20,11 +20,25 @@ All Claude components — agents, skills, rules, process files, hooks, commands,
 
 ### Naming
 
-- Use **action-object** (verb_noun) naming: `plan_sprint`, `create_confluence_page`, `draft_comms`
+- Use **descriptive snake_case** naming — the name should clearly convey what the skill does or is for
+- Prefer action-object (verb_noun) where it reads naturally: `draft_comms`, `schedule_meeting`, `confluence_create_page`
+- Use noun phrases where they are clearer: `sprint_planning_dpe_team`, `warehouse_design`, `weekly_one_to_one_prep`
 - snake_case, lowercase only — no hyphens
-- Name should reflect what the skill *does*, not what it *produces*
+- Where a skill is clearly associated with a tool or domain, prefix the filename with that domain — e.g. `confluence_`, `jira_`, `git_`
 
-**Why:** Adopted in sprint 61 after reviewing the existing skill names and observing they all followed an action-object pattern organically. Codified to ensure new skills (e.g. `plan_sprint`, future `plan_roadmap`) remain consistent and distinguishable from one another. Action-object names also read naturally as invocations: `/plan_sprint`, `/draft_comms`.
+**Why (descriptive naming):** Originally codified as strict action-object (sprint 61) after observing the first cohort of skills followed that pattern organically. Relaxed after noun-phrase names like `sprint_planning_dpe_team` and `warehouse_design` proved equally clear as invocations. The constraint is descriptiveness and consistency — not word order.
+
+**Why (domain prefix):** Skills are installed into `~/.claude/skills/`, a flat directory — subdirectories are not supported. Domain prefixes are the only way to visually cluster related skills as the library grows. This prefix applies to the skill's invocation name (the filename and `/skill-name` command), not to the source directory (`_<domain>_skills/` in the repo, which is for housekeeping only).
+
+| Domain | Prefix | Examples |
+|---|---|---|
+| Confluence | `confluence_` | `confluence_create_page`, `confluence_review_page` |
+| Jira | `jira_` | `jira_create`, `jira_update`, `jira_hygiene` |
+| Git / GitHub | `git_` | `git_create_pr`, `git_review_pr`, `git_notify_pr` |
+
+> **Note:** Examples show target names — currently installed skills retain their existing names until next edited. The table is not exhaustive — apply the same pattern for any domain with multiple related skills.
+
+The domain prefix is a recommendation, not a hard rule. Rename existing skills opportunistically when editing them for another reason.
 
 ### `SKILL.md` frontmatter
 
@@ -41,6 +55,23 @@ description: One sentence — what the skill does and when to use it.
 - `description` must fit on a single line; it appears verbatim in the skills README
 
 **Why:** The frontmatter mirrors the pattern used by Claude Code's built-in skill discovery. A consistent, machine-readable name and description allows the skills README to be kept in sync and makes it easier to surface the right skill at invocation time.
+
+### Scope
+
+A skill should do one thing. If a skill requires the user to choose between multiple unrelated
+operations, it is likely too broad and should be split.
+
+**Signs a skill is too broad:** the skill presents a menu of multiple unrelated options; the
+skill name contains "manage", "handle", or another generic verb; different operations
+would have different natural language triggers.
+
+**Preferred approach:** one skill per distinct user intent; use pattern classification as
+the dispatcher — not a Phase 1 menu inside the skill; group related skills in the same
+`_<domain>_skills/` directory.
+
+**Acceptable exceptions:**
+- Two operations that are always invoked together or share a single logical outcome.
+- Operations that are genuinely inseparable — the user would never want one without the other.
 
 ---
 

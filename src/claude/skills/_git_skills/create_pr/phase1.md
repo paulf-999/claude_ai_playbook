@@ -38,8 +38,8 @@ Using what you have gathered:
   - **PR Summary**: 1 punchy plain-English sentence. 2 sentences absolute maximum — only if a single sentence would lose critical context. No jargon, no implementation detail, no code references. State what changed and why it matters.
   - **(Optional) Additional Details**: omit this section entirely if not needed. If used: one line if there is a single point; bullet-point every point (max 3) if there are multiple. Never mix prose and bullets in the same section.
   - Leave all checkboxes intact and tick only the one that applies.
-  - **Jira links**: If the template has a "Related Jira Issue(s)" section and the context contains a Jira ticket ID, format it as a hyperlink using your team's Jira base URL (e.g. `[TICKET-123](https://your-org.atlassian.net/browse/TICKET-123)`). If no Jira ticket is known, leave the placeholder text from the template unchanged.
-  - **Team name links**: When the PR body mentions a GitHub team by name, hyperlink it to its team page on your org (e.g. `[team-name](https://github.com/orgs/your-org/teams/team-name)`). Apply consistently across all sections.
+  - **Jira links**: If the template has a "Related Jira Issue(s)" section and the context contains a Jira ticket ID (e.g. `DM-39010`), format it as a hyperlink: `[DM-39010](https://payroc.atlassian.net/browse/DM-39010)`. If no Jira ticket is known, leave the placeholder text from the template unchanged.
+  - **Team name links**: When the PR body mentions a GitHub team by name, hyperlink it to its team page. Examples: `[den](https://github.com/orgs/dmt-ghe-engineering/teams/den)`, `[DPE](https://github.com/orgs/dmt-ghe-engineering/teams/dpe)`. Apply consistently across all sections.
 - **Labels**: Inspect the changed file paths, branch name, and commit message to map to GitHub labels. Apply all matching labels using `--label "<label>"` in the `gh pr create` command (multiple `--label` flags are allowed). Mapping rules:
 
   *File path rules (apply for any matching changed file):*

@@ -9,6 +9,7 @@ from datetime import date, timedelta
 from pathlib import Path
 
 import frontmatter
+import pytest
 
 from src.sh.claude.claude_component_audit import (
     STALENESS_WARN_DAYS,

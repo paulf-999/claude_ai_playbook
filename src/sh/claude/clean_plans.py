@@ -5,56 +5,11 @@ Reads the PLANS.md catalogue, lists all entries with status 'executed' or
 ~/.claude/plans/archive/ and removes their rows from PLANS.md.
 """
 
-from __future__ import annotations
-
 import os
 import re
 import shutil
 import sys
 from datetime import date
-
-
-def _parse_header_cols(lines: list[str]) -> tuple[int | None, int | None, int | None]:
-    """Return (file_col, date_col, status_col) indices from the PLANS.md table header.
-
-    :param lines: Lines from PLANS.md.
-    :type lines: list[str]
-    :return: Column index tuple; any member is None if the column was not found.
-    :rtype: tuple[int | None, int | None, int | None]
-    """
-    for line in lines:
-        if "|" not in line:
-            continue
-        parts = [p.strip() for p in line.split("|")]
-        if "File" in parts and "Status" in parts:
-            return (
-                parts.index("File"),
-                parts.index("Date") if "Date" in parts else None,
-                parts.index("Status"),
-            )
-    return None, None, None
-
-
-def _is_old_enough(parts: list[str], date_col: int | None, min_age_days: int, today: date) -> bool:
-    """Return True if the row is old enough to be archived (or has an unparseable/missing date).
-
-    :param parts: Pipe-split, stripped cells from a table row.
-    :type parts: list[str]
-    :param date_col: Index of the Date column, or None if absent.
-    :type date_col: int or None
-    :param min_age_days: Minimum age threshold in days.
-    :type min_age_days: int
-    :param today: Reference date for age calculation.
-    :type today: date
-    :return: True if the row should be included as an archive candidate.
-    :rtype: bool
-    """
-    if date_col is None or date_col >= len(parts):
-        return True
-    try:
-        return (today - date.fromisoformat(parts[date_col])).days >= min_age_days
-    except ValueError:
-        return True  # Unparseable date — include conservatively.
 
 
 def _find_candidates(
@@ -80,7 +35,20 @@ def _find_candidates(
     if today is None:
         today = date.today()
 
-    file_col, date_col, status_col = _parse_header_cols(lines)
+    # Locate column indices from the header row.
+    file_col: int | None = None
+    date_col: int | None = None
+    status_col: int | None = None
+    for line in lines:
+        if "|" not in line:
+            continue
+        parts = [p.strip() for p in line.split("|")]
+        if "File" in parts and "Status" in parts:
+            file_col = parts.index("File")
+            status_col = parts.index("Status")
+            date_col = parts.index("Date") if "Date" in parts else None
+            break
+
     if file_col is None or status_col is None:
         return []
 
@@ -91,12 +59,21 @@ def _find_candidates(
         parts = [p.strip() for p in line.split("|")]
         if len(parts) <= max(file_col, status_col):
             continue
-        if parts[status_col] not in ("executed", "superseded"):
+        status = parts[status_col]
+        if status not in ("executed", "superseded"):
             continue
-        if not _is_old_enough(parts, date_col, min_age_days, today):
-            continue
+        # Apply age filter when a Date column is present.
+        if date_col is not None and date_col < len(parts):
+            try:
+                plan_date = date.fromisoformat(parts[date_col])
+                if (today - plan_date).days < min_age_days:
+                    continue
+            except ValueError:
+                pass  # Unparseable date — include the row conservatively.
+        # Extract filename from the markdown link [filename.md](filename.md)
         m = re.search(r"\[([^\]]+)\]\([^)]+\)", parts[file_col])
-        candidates.append((i, line.rstrip(), m.group(1) if m else None))
+        filename = m.group(1) if m else None
+        candidates.append((i, line.rstrip(), filename))
     return candidates
 
 

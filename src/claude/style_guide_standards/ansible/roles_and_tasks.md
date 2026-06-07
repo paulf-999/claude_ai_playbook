@@ -40,6 +40,17 @@ ansible-galaxy role init --offline <role_name>
 
 ---
 
+## 🔖 CODEOWNERS
+
+When adding a new role directory, update `.github/CODEOWNERS`. Key ownerships:
+
+- `/roles/database` — `@payroc/database-administration`
+- `/roles/observability` — `@markkelly-payroc`
+
+Add the new role path and assign the appropriate owner or team.
+
+---
+
 ## 📌 Role versioning
 
 - `main` is the current stable version of every role.
@@ -62,6 +73,18 @@ ansible-galaxy role init --offline <role_name>
 - Assert required variables are defined and non-empty at the start of a role — fail fast with a clear message.
 - Use `no_log: true` on any task that handles secrets or sensitive values.
 - Roles must be self-contained and reusable — no hardcoded environment-specific values inside a role.
+- In `rescue` blocks: surface logs inline rather than referencing a file path; include in-cluster diagnostics (port bindings, pod logs, events); use `failed_when: false` on all diagnostic tasks so a missing resource does not mask the original error; do not auto-uninstall — preserve state for post-failure investigation.
+
+---
+
+## 🐳 Docker compose tasks
+
+When using `community.docker.docker_compose_v2`:
+
+- Use `pull: missing` rather than `pull: always` when image tags are immutable and a dedicated pre-pull task manages freshness — avoids re-pulling images already cached. Use `pull: always` if tags are mutable.
+- Add `retries: 3` and `delay: 5` to guard against transient registry or network failures.
+
+---
 
 <details>
 <summary>Click to expand — example <code>tasks/main.yml</code></summary>

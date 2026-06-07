@@ -23,7 +23,19 @@ Read `~/.claude/process/session_input.md`. If the `## Sub-agent` section contain
 > - `ops/mac_user` — reviews shell scripts for macOS compatibility (bash 3.2, BSD coreutils)
 >
 > **Custom sub-agents — tools** (focused work or automated code review per technology):
-> - `tools/python`, `tools/sql`, `tools/unix`, `tools/makefile`, `tools/dbt`, `tools/docker`, `tools/cicd`, `tools/ansible`, `tools/airflow`, `tools/terraform`, `tools/jira`
+> - `tools/python`, `tools/sql`, `tools/unix`, `tools/makefile`, `tools/dbt`, `tools/docker`, `tools/cicd`, `tools/ansible`, `tools/airflow`, `tools/terraform`, `tools/jira`, `tools/payroc_engineering_naming_standards`, `tools/codeowners`
+>
+> **Custom sub-agents — pipeline** (dispatched by skills; not typically selected manually):
+> - `data-project-manager` — orchestrates end-to-end data pipeline delivery from brief to sign-off
+> - `requirements-consolidator` — consolidates business requirements into a structured technical brief
+> - `payroc-data-architect` — designs dbt data models and source-to-target mappings
+> - `dbt-warehouse-engineer` — writes and refactors dbt SQL models following Payroc standards
+> - `dbt-pr-reviewer` — reviews dbt PRs against coding standards; posts a formal GitHub review
+> - `dbt-uat-test-planner` — produces UAT testing plans for dbt PRs
+> - `dbt-uat-evaluator` — executes UAT validation queries and posts a GO/NO-GO report
+> - `data-docs-writer` — writes Confluence pages, dbt YAML descriptions, and README files
+> - `airflow-dag-engineer` — writes and reviews Airflow DAGs following Payroc patterns
+> - `omni-semantic-engineer` — designs and updates the Omni semantic layer
 >
 > **Built-in Claude Code agents:**
 > - `general-purpose` — research, multi-step tasks, code search
@@ -40,7 +52,7 @@ Read `~/.claude/process/session_input.md`. If the `## Task` section contains a n
 > **Delegation check:** Before starting, assess whether this task qualifies for the task brief pattern: reading more than 3 files, editing across more than one directory, or a search → edit cycle. If yes, write `/tmp/task_brief_<slug>.md` and delegate before doing any file work. See `process/task_brief.md` for the template and sub-agent selection.
 
 **Step 4 — MCP servers**
-Integration MCP servers (GitHub, Atlassian, Microsoft_365) may or may not be active. Based on the confirmed task, identify which integrations are needed. For each, check whether its tools are already visible in the available tools list — active servers expose tools prefixed `mcp__claude_ai_<server>__`. Only prompt to enable servers that are not yet active:
+Integration MCP servers (GitHub, Atlassian, Microsoft_365, omni) may or may not be active. Based on the confirmed task, identify which integrations are needed. For each, check whether its tools are already visible in the available tools list — active servers expose tools prefixed `mcp__claude_ai_<server>__`. Only prompt to enable servers that are not yet active:
 
 > "This task will need: [list]. The following are not yet enabled — run `make enable_mcp server=<name>` for each, then restart Claude Code. Core servers (context7, memory, filesystem, sequential-thinking) are always active."
 
@@ -104,5 +116,3 @@ Then produce a context update in this format:
 **Open questions:** ...
 **Known issues:** ...
 **Pruning candidates:** Rules in CLAUDE.md that appeared redundant, were never relevant this session, or duplicate what a tool already enforces. Leave blank if none.
-
-I will paste this into `context.md`.

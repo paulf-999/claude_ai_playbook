@@ -54,7 +54,7 @@ while IFS= read -r file; do
         src/claude/agents/*)
             add_test "tests/test_agents.py" ;;
         src/claude/skills/*)
-            add_test "tests/test_skills_structural.py" ;;
+            add_test "tests/test_skills.py" ;;
         src/claude/process/*)
             add_test "tests/test_process.py" ;;
         src/claude/commands/*)

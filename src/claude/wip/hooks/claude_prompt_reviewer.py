@@ -9,8 +9,6 @@ Input:  JSON on stdin — {"prompt": "...", "session_id": "...", ...}
 Output: JSON on stdout — {"additionalContext": "..."} or {"decision": "block", "reason": "..."}
 """
 
-from __future__ import annotations
-
 import json
 import re
 import sys

@@ -14,6 +14,7 @@ install_claude_files() {
     create_target_dir_if_missing # from claude_file_utils.sh
     backup_target_dir "move"     # from claude_file_utils.sh
     copy_claude_files            # from claude_file_utils.sh
+    flatten_skills               # from claude_file_utils.sh
 }
 
 # Install the Claude CLI via npm (optional step — failure does not abort the install)

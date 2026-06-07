@@ -5,8 +5,6 @@ install_claude_files.sh and update_claude_files.sh, and moves those older
 than min_age_days to ~/.claude_backup_archive/.
 """
 
-from __future__ import annotations
-
 import os
 import re
 import shutil

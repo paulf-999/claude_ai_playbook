@@ -1,0 +1,42 @@
+{
+  "skill_name": "notify_pr",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "/notify_pr",
+      "expected_output": "Claude reads teams_config.json from the project memory directory, detects the open PR on the current branch, extracts the change type from the PR body, maps changed files to DWH layers, resolves reviewers from the Teams mapping cache or Microsoft 365 MCP, presents a confirmation prompt, and posts an Adaptive Card to the Teams webhook.",
+      "files": [],
+      "assertions": [
+        "Claude derives the project memory directory by replacing / with - in the CWD and prefixing ~/.claude/projects/",
+        "Claude reads teams_config.json from that directory",
+        "Claude detects change type from '- [x] **Label**' in the PR body",
+        "Claude maps changed file paths to layer labels using the layers config",
+        "Claude presents a confirmation prompt with PR title and resolved reviewer list before posting",
+        "Claude posts the payload via the configured Teams webhook URL",
+        "Claude uses Adaptive Card format when all reviewers have a valid AAD ID"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "/notify_pr 42",
+      "expected_output": "Claude uses PR #42 directly (no branch detection), reads config, resolves reviewers, confirms, and posts. The DWH layers line is omitted when the layers config is empty.",
+      "files": [],
+      "assertions": [
+        "Claude uses PR number 42 without running gh pr view for branch detection",
+        "DWH layers line is omitted from the Teams message when layers config is []",
+        "Claude falls back to MessageCard format when any reviewer lacks an AAD ID"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "/notify_pr",
+      "expected_output": "No teams_config.json found in the project memory directory. Claude stops and tells the user to create it with the required structure and set up an incoming webhook in Teams.",
+      "files": [],
+      "assertions": [
+        "Claude checks for teams_config.json before proceeding to Phase 2",
+        "Claude stops and provides setup instructions when the file is not found",
+        "Claude does not attempt to fetch PR metadata when config is missing"
+      ]
+    }
+  ]
+}

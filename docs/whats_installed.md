@@ -27,7 +27,8 @@ Instructions that shape how Claude works within a session:
 - the planning requirement before non-trivial changes (including the plan catalogue)
 - the structured session start/end checklist
 - the permission model
-- and the task brief convention for lean sub-agent orchestration.
+- the task brief convention for lean sub-agent orchestration (see [`docs/reference/claude_config/orchestration.md`](reference/claude_config/orchestration.md))
+- and the draft file convention (`~/_drafts/`, organised by type)
 
 ---
 
@@ -87,6 +88,8 @@ See [`src/claude/skills/README.md`](../src/claude/skills/README.md)
 See [`src/claude/style_guide_standards/README.md`](../src/claude/style_guide_standards/README.md)
 
 Coding standards and platform conventions for all technologies used by the team.
+
+**`claude.md` is the meta-guide for the playbook itself** — it defines naming and structural conventions for all Claude components: skills, agents, commands, rules, and memory files. Read this before adding or renaming any playbook component. Loaded globally in every session via `CLAUDE.md`.
 
 ---
 

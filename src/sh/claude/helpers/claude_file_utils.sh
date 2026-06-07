@@ -69,6 +69,27 @@ copy_claude_files() {
     log_message "${INFO}" "Copied Claude files to: ${TARGET_DIR}"
 }
 
+# Flatten skill group directories in ~/.claude/skills/.
+# Group dirs are identified by a leading underscore (e.g. _meetings_skills/).
+# Each skill subdirectory is promoted directly to ~/.claude/skills/;
+# then the group dir is removed.
+flatten_skills() {
+    local SKILLS_DIR="${TARGET_DIR}/skills"
+
+    for GROUP_DIR in "${SKILLS_DIR}"/_*/; do
+        [[ -d "${GROUP_DIR}" ]] || continue
+        for SKILL_DIR in "${GROUP_DIR}"*/; do
+            [[ -d "${SKILL_DIR}" ]] || continue
+            local SKILL_NAME
+            SKILL_NAME=$(basename "${SKILL_DIR}")
+            cp -R "${SKILL_DIR}" "${SKILLS_DIR}/${SKILL_NAME}"
+            log_message "${INFO}" "Flattened skill: ${SKILL_NAME}"
+        done
+        rm -rf "${GROUP_DIR}"
+        log_message "${INFO}" "Removed skill group dir: $(basename "${GROUP_DIR}")"
+    done
+}
+
 # Merge wip/skills subdirectories into ~/.claude/skills/ so WIP skills are invokable.
 # Top-level skill dirs are copied directly. The archive/ dir is excluded.
 # Non-directory items (e.g. README.md) are skipped.

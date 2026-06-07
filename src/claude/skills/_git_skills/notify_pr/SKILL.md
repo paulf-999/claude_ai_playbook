@@ -6,7 +6,7 @@ maturity: tactical
 tags:
   criticality: should
   status: active
-  tested: false
+  tested: true
 tools: Bash, Read, Write
 triggers:
   explicit:
@@ -16,7 +16,7 @@ triggers:
     - auto-triggered at end of /create_pr when user opts in
 not_for:
   - creating a PR — use /create_pr instead
-  - posting a GitHub review comment — use /review_pr instead
+  - posting a GitHub review comment — use /git_review_pr instead
 output:
   type: external_service
   confirmation_required: true

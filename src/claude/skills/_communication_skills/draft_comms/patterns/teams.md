@@ -52,3 +52,9 @@ Wait for the user's response before proceeding.
 Ask the user: "Does this work, or would you like any adjustments — tone, length, specific wording?"
 
 Continue refining until the user is happy.
+
+---
+
+## Step 4 — Save
+
+Once the user approves, save the final draft to `~/_drafts/teams/<slug>_YYYY-MMM-DD.md` and confirm the path.

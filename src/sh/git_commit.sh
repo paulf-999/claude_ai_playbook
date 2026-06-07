@@ -185,7 +185,7 @@ build_menu_display_names() {
     for i in "${!STAGED[@]}"; do
         local filename
         filename="$(basename -- "${STAGED[$i]}")"
-        DISPLAY_NAMES[i]="$(truncate_scope "$filename")"
+        DISPLAY_NAMES[$i]="$(truncate_scope "$filename")"
     done
 
     # Handle duplicate filenames
@@ -198,7 +198,7 @@ build_menu_display_names() {
         if (( dup_count > 1 )); then
             local parent
             parent="$(basename -- "$(dirname -- "${STAGED[$i]}")")"
-            DISPLAY_NAMES[i]+=" [${parent}]"
+            DISPLAY_NAMES[$i]+=" [${parent}]"
         fi
     done
 }

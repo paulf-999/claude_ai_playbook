@@ -20,6 +20,7 @@ import pytest
 SKILLS_DIR = Path(__file__).parent.parent / "src" / "claude" / "skills"
 SKILLS_WIP_DIR = Path(__file__).parent.parent / "src" / "claude" / "wip" / "skills"
 CLAUDE_CONFIG_DIR = Path(__file__).parent.parent / "src" / "claude"
+TESTS_SKILLS_DIR = Path(__file__).parent / "skills"
 
 CLAUDE_HOME_ALIAS = "~/.claude/"
 CLAUDE_HOME_REPO = str(CLAUDE_CONFIG_DIR) + "/"
@@ -35,6 +36,10 @@ _all_skill_entries = _stable_skill_dirs + _wip_skill_dirs
 
 skill_dirs = [entry[0] for entry in _all_skill_entries]
 
+# Stable-only lists — used where WIP skills should be excluded (e.g. test file enforcement)
+stable_skill_dirs = [entry[0] for entry in _stable_skill_dirs]
+stable_skill_ids = [str(d.relative_to(SKILLS_DIR)) for d in stable_skill_dirs]
+
 # Use relative paths as IDs (e.g. "commit", "wip/manage_jira") for clear test output
 skill_ids = [
     str(d.relative_to(root))
@@ -42,6 +47,16 @@ skill_ids = [
     else "wip/" + str(d.relative_to(SKILLS_WIP_DIR))
     for d, root in _all_skill_entries
 ]
+
+# Skills that pre-date the test-file enforcement rule and have not yet had tests written.
+# Remove a skill from this set when its test file is added — the structural test will then
+# enforce the contract automatically.
+_TEST_COVERAGE_EXEMPT: set[str] = {
+    "_data_engineering_skills/review_dbt_pr",
+    "_data_engineering_skills/file_template_update",
+    "_meetings_skills/sprint_planning_dpe_team",
+    "_atlassian_skills/populate_jira_business_value",
+}
 
 
 def _load_skill_md(skill_dir: Path) -> frontmatter.Post:
@@ -172,4 +187,40 @@ def test_skill_file_references_exist(skill_dir: Path) -> None:
     assert not missing, (
         f"{skill_dir.name}/SKILL.md: referenced files not found in repo:\n"
         + "\n".join(f"  {ref}" for ref in missing)
+    )
+
+
+@pytest.mark.parametrize("skill_dir", stable_skill_dirs, ids=stable_skill_ids)
+def test_tested_true_implies_test_file_exists(skill_dir: Path) -> None:
+    """A stable skill with tags.tested: true must have a corresponding test file.
+
+    When a skill's frontmatter is updated to ``tested: true``, this test enforces
+    that a test file actually exists. Skills in ``_TEST_COVERAGE_EXEMPT`` are
+    grandfathered — remove a skill from that set when its test file is added.
+
+    The expected test file is resolved by searching ``tests/skills/`` for any file
+    matching ``test_<skill_name>_skill.py`` at any depth. This handles both grouped
+    (e.g. ``tests/skills/_git_skills/``) and flat layouts.
+
+    :param skill_dir: Path to the skill directory.
+    :type skill_dir: Path
+    """
+    post = _load_skill_md(skill_dir)
+    tags = post.metadata.get("tags") or {}
+    tested = tags.get("tested", False)
+
+    if not tested:
+        pytest.skip(f"{skill_dir.name}: tags.tested is false — skipping")
+
+    skill_id = str(skill_dir.relative_to(SKILLS_DIR))
+    if skill_id in _TEST_COVERAGE_EXEMPT:
+        pytest.skip(f"{skill_dir.name}: grandfathered in _TEST_COVERAGE_EXEMPT — skipping")
+
+    expected_filename = f"test_{skill_dir.name}_skill.py"
+    matches = list(TESTS_SKILLS_DIR.rglob(expected_filename))
+
+    assert matches, (
+        f"{skill_dir.name}/SKILL.md sets tags.tested: true but no test file found.\n"
+        f"Expected a file named '{expected_filename}' somewhere under tests/skills/.\n"
+        f"Either add the test file or set tags.tested: false in SKILL.md."
     )

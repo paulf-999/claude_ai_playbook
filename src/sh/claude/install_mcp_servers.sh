@@ -33,6 +33,9 @@ install_single_server() {
         github)                                # requires PAT — prompts interactively
             install_github_server
             ;;
+        omni)                                  # requires OAuth — opens browser
+            install_omni_server
+            ;;
         atlassian)                             # requires SSO — opens browser
             install_atlassian_server
             ;;
@@ -40,7 +43,7 @@ install_single_server() {
             print_o365_reminder
             ;;
         *)
-            log_message "${ERROR}" "Unknown server: '${SERVER}'. Valid options: core, context7, sequential-thinking, memory, filesystem, github, atlassian, o365"
+            log_message "${ERROR}" "Unknown server: '${SERVER}'. Valid options: core, context7, sequential-thinking, memory, filesystem, github, omni, atlassian, o365"
             exit 1
             ;;
     esac

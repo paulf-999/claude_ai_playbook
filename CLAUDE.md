@@ -1,4 +1,4 @@
-# CLAUDE.md — claude_ai_playbook
+# CLAUDE.md — dmt-scripts-claude_ai_playbook
 
 This file provides repo-specific instructions for Claude Code when working in the playbook repo.
 
@@ -19,5 +19,6 @@ Whenever a new artefact is added to `src/claude/`, the documentation listed belo
 | **Hook** (`hooks/`) | `docs/whats_installed.md` hooks table · `settings.json` lifecycle event registration |
 | **Style guide** (`style_guide_standards/`) | `src/claude/style_guide_standards/README.md` · `src/claude/CLAUDE.md` (add `@import`) · `docs/whats_installed.md` style guides table · create matching tool agent in `src/claude/agents/tools/` and update `agents/tools/README.md` |
 | **Command** (`commands/`) | `src/claude/commands/README.md` · `docs/whats_installed.md` commands section |
+| **Skill behavioural test** (`tests/skills/`) | Set `tested: true` in the skill's `SKILL.md` frontmatter · update the group README (`_<group>_skills/README.md`) `Tested` column — no other doc updates required; `tests/skills/README.md` describes the pattern only, not individual files |
 
 After updating the required files above, scan the rest of `docs/` for pages that may reference the area being changed — `quickstart.md`, `training.md`, `best_practices_generic.md`, and files under `docs/reference/` may also need updating depending on the nature of the addition.

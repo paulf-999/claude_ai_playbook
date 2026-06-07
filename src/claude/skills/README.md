@@ -28,9 +28,15 @@ See [_communication_skills/README.md](_communication_skills/README.md).
 
 ---
 
-## 🗄️ Data Platform (`skills/_data_platform_skills/`)
+## 🗄️ Data Engineering (`skills/_data_engineering_skills/`)
 
-See [_data_platform_skills/README.md](_data_platform_skills/README.md).
+See [_data_engineering_skills/README.md](_data_engineering_skills/README.md).
+
+---
+
+## 🗄️ dbt (`skills/_dbt_skills/`)
+
+See [_dbt_skills/README.md](_dbt_skills/README.md).
 
 ---
 
@@ -43,3 +49,9 @@ See [_git_skills/README.md](_git_skills/README.md).
 ## 🏗️ Infrastructure (`skills/_infrastructure_skills/`)
 
 See [_infrastructure_skills/README.md](_infrastructure_skills/README.md).
+
+---
+
+## 📅 Meetings (`skills/_meetings_skills/`)
+
+See [_meetings_skills/README.md](_meetings_skills/README.md).

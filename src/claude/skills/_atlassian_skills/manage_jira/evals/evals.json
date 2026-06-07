@@ -1,0 +1,39 @@
+{
+  "skill_name": "manage_jira",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "create a batch of jira tickets from our template",
+      "expected_output": "Claude verifies the Atlassian MCP, presents the 4 operation patterns, user selects batch_create_from_template, Claude reads the corresponding pattern file and follows it.",
+      "files": [],
+      "assertions": [
+        "Claude calls getAccessibleAtlassianResources before proceeding",
+        "Claude presents all 4 operation patterns to the user",
+        "Claude reads patterns/batch_create_from_template.md and follows it exactly",
+        "Claude does not proceed without MCP confirmation"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "run a hygiene check on our jira board",
+      "expected_output": "Claude confirms MCP availability, user selects hygiene_check, Claude reads the pattern file and scans tickets for missing or incorrect fields, presenting a report. Optionally auto-fixes on user instruction.",
+      "files": [],
+      "assertions": [
+        "Claude reads patterns/hygiene_check.md from the manage_jira patterns directory",
+        "Claude produces a report of missing or incorrect fields",
+        "Claude offers auto-fix only after presenting the report"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "/manage_jira",
+      "expected_output": "Atlassian MCP is unavailable. Claude stops and instructs the user to run 'make enable_mcp server=Atlassian' and restart Claude Code.",
+      "files": [],
+      "assertions": [
+        "Claude calls getAccessibleAtlassianResources as the first action",
+        "Claude stops immediately when the MCP call fails",
+        "Claude tells the user to enable the Atlassian MCP server before retrying"
+      ]
+    }
+  ]
+}

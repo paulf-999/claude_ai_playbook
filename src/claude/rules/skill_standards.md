@@ -6,8 +6,8 @@ Apply these rules whenever writing a new skill or revising an existing one.
 
 ## 📏 File length
 
-- `SKILL.md` must not exceed **100 lines**.
-- If a skill exceeds this limit, extract the largest phase or reference sections into child markdown files co-located in the skill directory (e.g. `phase1.md`, `parameters.md`) and reference them from `SKILL.md`.
+- `SKILL.md` must not exceed **100 lines**. Up to 110 lines is tolerated where the overage is incidental (e.g. a long frontmatter description or a single extra TODO line) — but not as a routine allowance.
+- If a skill materially exceeds this limit, extract the largest phase or reference sections into child markdown files co-located in the skill directory (e.g. `phase1.md`, `parameters.md`) and reference them from `SKILL.md`.
 - The parent `SKILL.md` describes the skill and references child pages — it does not contain all the content itself.
 
 ---
@@ -77,8 +77,8 @@ Use generic terms instead:
 
 | Instead of | Use |
 |---|---|
-| A person's first name | "team member(s)" |
-| Named examples in templates | Placeholder text (e.g. `Sprint N`, `team member 1 / team member 2`) |
+| A person's first name | "Data Management team member(s)" |
+| Named examples in templates | Placeholder text (e.g. `Sprint N`, `DM team member 1 / DM team member 2`) |
 
 Personal context belongs in `~/.claude/memory/` — loaded at runtime, never committed.
 

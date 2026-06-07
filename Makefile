@@ -8,10 +8,12 @@ SHELL = /bin/bash
 # make lint_tags        # validate Tier 1 tags on all Claude components (run before committing)
 # make audit_components # run periodic health audit on the Claude component library
 # make install          # install Claude config files, Claude CLI, core MCP servers, and plugins
-# make update           # update Claude config files in ~/.claude/
-# make clean            # remove compiled Python files and caches
+# make update           # update Claude config files in ~/.claude/ (WSL)
 # make clean_plans      # archive executed/superseded plans to ~/.claude/plans/archive/
 # make clean_backups    # move old ~/.claude_backup_* dirs to ~/.claude_backup_archive/
+# make install_windows  # sync Claude config files to Windows .claude (run from WSL2)
+# make update_windows   # alias for install_windows
+# make sync             # update WSL + Windows .claude in one step (run from WSL2)
 # make install_plugins  # install Claude Code plugins only (runs install_plugins.sh)
 # make patch_plugins    # apply team patches to installed plugins (run after install_plugins)
 #
@@ -42,6 +44,14 @@ update:
 	@echo "${INFO}\nUpdating Claude config files in ~/.claude/${COLOUR_OFF}"
 	@bash src/sh/claude/update_claude_files.sh
 
+install_windows:
+	@echo "${INFO}\nSyncing Claude config files to Windows .claude (requires WSL2)${COLOUR_OFF}"
+	@bash src/sh/claude/install_claude_files_windows.sh
+
+update_windows: install_windows
+
+sync: update install_windows
+
 install_plugins:
 	@echo "${INFO}\nInstalling Claude Code plugins${COLOUR_OFF}"
 	@bash src/sh/claude/install_plugins.sh
@@ -70,9 +80,5 @@ clean_backups:
 	@echo "${INFO}\nMoving old ~/.claude_backup_* dirs to ~/.claude_backup_archive/${COLOUR_OFF}"
 	@python3 src/sh/claude/clean_backups.py
 
-clean:
-	@find . -type f -name "*.pyc" -delete
-	@find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
-
 # .PHONY tells Make that these targets don't represent files
-.PHONY: all deps install update install_plugins patch_plugins test lint_tags audit_components clean_plans clean_backups clean
+.PHONY: all deps install update install_windows update_windows sync install_plugins patch_plugins test lint_tags audit_components clean_plans clean_backups

@@ -35,6 +35,14 @@ Use ISO format where dates are machine-readable, sortable, or stored:
 
 ---
 
+## Known exceptions
+
+| Context | Format | Reason |
+|---|---|---|
+| Draft filenames (`~/_drafts/`) | `YYYY-MMM-DD` | 3-letter month abbreviation is easier to read at a glance in `ls` output — e.g. `rundeck_page_2026-May-20.md` |
+
+---
+
 ## Does not apply to — human-facing content
 
 Use English sentence-style dates (e.g. `1st May 2026`, `23rd April 2026`) in content written for a human audience:

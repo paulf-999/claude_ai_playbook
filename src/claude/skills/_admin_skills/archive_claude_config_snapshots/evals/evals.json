@@ -1,0 +1,44 @@
+{
+  "skill_name": "archive_claude_config_snapshots",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "/archive_claude_config_snapshots",
+      "expected_output": "Claude detects eligible ~/.claude_<timestamp> directories older than 30 days and ~/.claude_archived/ entries older than 90 days, lists them with destinations, waits for user confirmation, then moves them using mv.",
+      "files": [],
+      "assertions": [
+        "Claude runs the tier-1 find command targeting ~/.claude_* directories with -mtime +30",
+        "Claude runs the tier-2 find command targeting ~/.claude_archived/ entries with -mtime +90",
+        "Claude lists eligible directories and their destinations before moving anything",
+        "Claude waits for explicit user confirmation before proceeding",
+        "Claude uses mv (not rm) to relocate directories",
+        "Tier-1 directories are moved to ~/.claude_archived/",
+        "Tier-2 directories are moved to ~/.claude_deep_archived/"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "clean up my claude snapshot directories",
+      "expected_output": "Claude detects no eligible directories (all are within threshold ages) and reports 'No directories eligible for archiving.' without moving anything.",
+      "files": [],
+      "assertions": [
+        "Claude runs both tier-1 and tier-2 find commands",
+        "Claude reports that no directories are eligible when both find commands return empty results",
+        "Claude does not move any directories",
+        "Claude stops after reporting 'no eligible directories'"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "archive my old claude snapshots",
+      "expected_output": "Claude detects eligible directories in both tiers, presents a combined summary listing source and destination for each, waits for confirmation, then moves all eligible directories and reports a count summary.",
+      "files": [],
+      "assertions": [
+        "Claude presents the full list of directories to be moved before taking action",
+        "Each item in the list includes the source path and destination directory",
+        "After confirmation, Claude reports a count: N moved to ~/.claude_archived/, M moved to ~/.claude_deep_archived/",
+        "mkdir -p is run to ensure destination directories exist before moving"
+      ]
+    }
+  ]
+}

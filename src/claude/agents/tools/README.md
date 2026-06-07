@@ -17,3 +17,5 @@ When a task spans multiple technologies, use the `architect` agent instead.
 | [`ansible.md`](ansible.md) | `ansible` | `*.yml` (playbooks/roles/inventory) | ⚙️ Ansible playbook review and FQCN enforcement |
 | [`airflow.md`](airflow.md) | `airflow` | `dags/**/*.py` | 🌊 Airflow DAG review, idempotency, and config conventions |
 | [`terraform.md`](terraform.md) | `terraform` | `*.tf`, `*.tfvars` | 🏗️ Terraform IaC review, module structure, and pinning |
+| [`codeowners.md`](codeowners.md) | `codeowners` | `.github/CODEOWNERS`, `CODEOWNERS` | 🔑 CODEOWNERS file review — rule ordering, team handle format, section structure, and self-ownership |
+| [`payroc_engineering_naming_standards.md`](payroc_engineering_naming_standards.md) | `payroc_engineering_naming_standards` | *(explicit invocation only)* | 🏷️ Validates resource names against Payroc engineering naming standards |

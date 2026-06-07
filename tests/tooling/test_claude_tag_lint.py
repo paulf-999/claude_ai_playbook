@@ -9,6 +9,7 @@ from datetime import date, timedelta
 from pathlib import Path
 
 import frontmatter
+import pytest
 
 from src.sh.claude.claude_tag_lint import STALENESS_WARN_DAYS, find_components, validate_component
 
@@ -18,7 +19,7 @@ VALID_METADATA: dict = {
     "name": "test-skill",
     "maturity": "draft",
     "tags": {
-        "criticality": "could",  # 'could' avoids staleness warnings — use must/should explicitly in warn tests
+        "criticality": "could",  # 'could' avoids tested/last-reviewed warnings — use must/should explicitly in warn tests
         "status": "active",
         "tested": False,
     },

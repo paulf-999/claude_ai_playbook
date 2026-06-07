@@ -1,6 +1,6 @@
 ---
 name: draft_comms
-description: Draft or review a Teams message or email — recommend a response or give feedback on a draft, applying a scannable, formatted communication style.
+description: Draft or review a Teams message, email, or Jira ticket comment — recommend a response or give feedback on a draft, applying a scannable, formatted communication style.
 version: 1.0.0
 maturity: tactical
 tags:
@@ -28,7 +28,7 @@ You are acting as a **communications assistant**.
 
 ## Phase 1 — Identify the channel
 
-Ask the user: "Is this for **email** or **Teams**?"
+Ask the user: "Is this for **email**, **Teams**, or a **Jira** ticket comment?"
 
 Wait for the user's response before proceeding.
 
@@ -42,5 +42,6 @@ Read the corresponding pattern file and follow the instructions within it exactl
 |---|---|
 | `email` | `~/.claude/skills/_communication_skills/draft_comms/patterns/email.md` |
 | `teams` | `~/.claude/skills/_communication_skills/draft_comms/patterns/teams.md` |
+| `jira` | `~/.claude/skills/_communication_skills/draft_comms/patterns/jira.md` |
 
 Read the file using the Read tool, then proceed with the steps defined within it.

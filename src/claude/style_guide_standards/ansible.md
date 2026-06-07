@@ -1,6 +1,6 @@
 # 📦 Ansible Style Guide & Standards
 
-Defines the team's standards for writing and structuring Ansible projects.
+Defines the team's standards for writing and structuring Ansible projects. Sourced from `pyrc-cac-ans`, the Payroc Engineering Ansible monorepo.
 
 ---
 
