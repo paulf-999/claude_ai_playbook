@@ -91,6 +91,6 @@ yamllint --strict playbooks/<team>/<name>_setup.yml
 yamllint --strict group_vars/l4_*.yml
 ```
 
-Fix all issues, then invoke `/create_pr`.
+Fix all issues, then invoke `/git_create_pr`.
 
 ---

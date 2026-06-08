@@ -102,7 +102,7 @@ def test_pattern_guide_referenced(guide: str) -> None:
 # ─── Tests: end-of-workflow step ─────────────────────────────────────────────────
 
 def test_create_pr_invoked_at_end() -> None:
-    """Skill must invoke /create_pr as the final step after validation passes."""
-    assert "/create_pr" in _skill_content(), (
-        "SKILL.md must invoke /create_pr as the final step of the validation phase"
+    """Skill must invoke /git_create_pr as the final step after validation passes."""
+    assert "/git_create_pr" in _skill_content(), (
+        "SKILL.md must invoke /git_create_pr as the final step of the validation phase"
     )

@@ -7,7 +7,7 @@ components are added, modified, promoted, or retired.
 
 **Status values:** `active` | `wip` | `unverified` | `broken` | `deprecated`
 
-Last updated: 2026-04-29
+Last updated: 3rd June 2026
 
 ---
 
@@ -19,5 +19,6 @@ Last updated: 2026-04-29
 | Skills — WIP | [wip/skills/README.md](wip/skills/README.md) | Draft skills (v0.x.x); includes archive/ for stale WIP |
 | Hooks | [hooks/README.md](hooks/README.md) | No active hooks; see [wip_hooks.md](hooks/wip_hooks.md) |
 | Agents | [agents/README.md](agents/README.md) | 19 agents across core / utility / ops / tools groups |
-| Commands | [commands/README.md](commands/README.md) | 5 commands |
 | Process Files | [process/README.md](process/README.md) | 5 process files imported in `CLAUDE.md` |
+
+> **Slash commands are legacy** as of Claude Code v2.1.101 (April 2026). Create new invokable workflows as skills in `skills/` instead. See [docs](https://code.claude.com/docs/en/agent-sdk/slash-commands).

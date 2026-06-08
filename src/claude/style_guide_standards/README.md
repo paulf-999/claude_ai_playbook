@@ -2,11 +2,11 @@
 
 Language, tool, and platform-specific style guides enforced across all projects.
 
-> **New to the playbook?** Start with [`claude.md`](claude.md) — it defines naming and structural conventions for all Claude components (skills, agents, commands, rules, memory files). Read it before adding or renaming any playbook component.
+> **New to the playbook?** Start with [`claude.md`](claude.md) — it defines naming and structural conventions for all Claude components (skills, agents, rules, memory files). Read it before adding or renaming any playbook component.
 
 | File | Purpose |
 |------|---------|
-| [`claude.md`](claude.md) | 🤖 Claude AI playbook conventions: skill naming, command naming, agent structure, memory file naming, and instruction file authoring |
+| [`claude.md`](claude.md) | 🤖 Claude AI playbook conventions: skill naming, agent structure, memory file naming, and instruction file authoring |
 | [`datetime.md`](datetime.md) | 📅 Date and datetime format standards: YYYY-MM-DD, UTC datetimes, when and how to apply |
 | [`versioning.md`](versioning.md) | 🏷️ Semver conventions for skills (0/1/2+.x.x maturity mapping) and repo-level phase releases |
 | [`airflow.md`](airflow.md) | 🌬️ Airflow DAG standards: design, task operators, idempotency, retries, and best practices |

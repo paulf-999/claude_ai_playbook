@@ -98,7 +98,7 @@ yamllint --strict group_vars/l4_*.yml
 ansible-playbook playbooks/<team>/<app>_setup.yml --check --diff -i inventory/<env>/
 ```
 
-Then invoke `/create_pr`.
+Then invoke `/git_create_pr`.
 
 ---
 

@@ -41,6 +41,9 @@ Ask the user in a single message:
 1. Sprint number
 2. Team capacity — story points per person (1 SP = 1 person-day). Ask for each team member separately.
 3. Is there an existing sprint goals Confluence page? If yes, ask for the page URL or ID.
+4. What is the team/area name for ticket titles? (e.g. `Data Platform`, `Data Analytics`) — this will be used as the `<Area>` prefix on all new tickets created this session.
+
+Store the area prefix and use it consistently throughout the session.
 
 ---
 
@@ -73,6 +76,16 @@ Flag:
 
 ---
 
+## Step 3.5 — Field hygiene check (optional)
+
+After presenting the capacity summary, ask:
+
+> "Would you like me to run a full field hygiene check on this sprint's tickets using `/jira_hygiene`? It checks each ticket against the Definition of Ready — missing story points, unset components, missing business value, and so on."
+
+If the user agrees, invoke `/jira_hygiene` scoped to the sprint — pass the sprint number as the filter. Results will be presented by that skill.
+
+---
+
 ## Step 4 — Review Confluence page (if provided)
 
 If the user provided an existing sprint goals page, read it using `getConfluencePage` (markdown format is sufficient here).
@@ -92,7 +105,7 @@ Present the gaps to the user and ask:
 If the user wants to create tickets for untracked items:
 
 For each item, collect:
-- Summary (title)
+- Summary (title) — format as `<Area> — <action or topic>` using the area prefix collected in Step 1. Do not infer or default the area — use only what the user provided.
 - Description (key tasks)
 - Story points
 - Assignee

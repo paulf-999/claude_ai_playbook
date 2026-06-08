@@ -4,9 +4,9 @@ Standards for authoring and naming files within the Claude AI playbook (`src/cla
 
 ---
 
-## General naming rule
+## 🔤 General naming rule
 
-All Claude components — agents, skills, rules, process files, hooks, commands, memory files, and style guides — use **snake_case** (underscores, not hyphens). This applies to both filenames and the `name:` field in frontmatter.
+All Claude components — agents, skills, rules, process files, hooks, memory files, and style guides — use **snake_case** (underscores, not hyphens). This applies to both filenames and the `name:` field in frontmatter.
 
 - `new_user`, not `new-user`
 - `code_reviewer`, not `code-reviewer`
@@ -16,19 +16,19 @@ All Claude components — agents, skills, rules, process files, hooks, commands,
 
 ---
 
-## Skills
+## 🎯 Skills
 
-### Naming
+### 📛 Naming
 
 - Use **descriptive snake_case** naming — the name should clearly convey what the skill does or is for
 - Prefer action-object (verb_noun) where it reads naturally: `draft_comms`, `schedule_meeting`, `confluence_create_page`
 - Use noun phrases where they are clearer: `sprint_planning_dpe_team`, `warehouse_design`, `weekly_one_to_one_prep`
 - snake_case, lowercase only — no hyphens
-- Where a skill is clearly associated with a tool or domain, prefix the filename with that domain — e.g. `confluence_`, `jira_`, `git_`
+- Where three or more skills share a domain, prefix each with that domain name — e.g. `confluence_`, `jira_`, `git_`. Do not prefix a standalone skill.
 
 **Why (descriptive naming):** Originally codified as strict action-object (sprint 61) after observing the first cohort of skills followed that pattern organically. Relaxed after noun-phrase names like `sprint_planning_dpe_team` and `warehouse_design` proved equally clear as invocations. The constraint is descriptiveness and consistency — not word order.
 
-**Why (domain prefix):** Skills are installed into `~/.claude/skills/`, a flat directory — subdirectories are not supported. Domain prefixes are the only way to visually cluster related skills as the library grows. This prefix applies to the skill's invocation name (the filename and `/skill-name` command), not to the source directory (`_<domain>_skills/` in the repo, which is for housekeeping only).
+**Why (domain prefix):** Skills are installed into `~/.claude/skills/`, a flat directory — subdirectories are not supported. Domain prefixes are the only way to visually cluster related skills once a family forms. Apply only when the family exists (three or more skills sharing a domain) — do not prefix a standalone skill like `ansible_playbook_creation` just because an `ansible_` domain could theoretically exist. This prefix applies to the skill's invocation name (the filename and `/skill-name` command), not to the source directory (`_<domain>_skills/` in the repo, which is for housekeeping only).
 
 | Domain | Prefix | Examples |
 |---|---|---|
@@ -38,9 +38,9 @@ All Claude components — agents, skills, rules, process files, hooks, commands,
 
 > **Note:** Examples show target names — currently installed skills retain their existing names until next edited. The table is not exhaustive — apply the same pattern for any domain with multiple related skills.
 
-The domain prefix is a recommendation, not a hard rule. Rename existing skills opportunistically when editing them for another reason.
+Do not prefix a standalone skill. Rename existing skills to add a prefix opportunistically once the family reaches three.
 
-### `SKILL.md` frontmatter
+### 📋 `SKILL.md` frontmatter
 
 Every skill must have a frontmatter block with exactly these two fields:
 
@@ -56,7 +56,7 @@ description: One sentence — what the skill does and when to use it.
 
 **Why:** The frontmatter mirrors the pattern used by Claude Code's built-in skill discovery. A consistent, machine-readable name and description allows the skills README to be kept in sync and makes it easier to surface the right skill at invocation time.
 
-### Scope
+### ✂️ Scope
 
 A skill should do one thing. If a skill requires the user to choose between multiple unrelated
 operations, it is likely too broad and should be split.
@@ -75,21 +75,9 @@ the dispatcher — not a Phase 1 menu inside the skill; group related skills in 
 
 ---
 
-## Commands
+## 🤖 Agents
 
-### Naming
-
-- Single **imperative verb**, lowercase: `debug`, `review`, `commit`
-- No underscores or hyphens — commands are brief and action-focused
-- Name should be the verb a user would naturally say: "let's `/review`", "run `/debug`"
-
-**Why:** Commands are mid-session prompts — they interrupt flow and need to be typed quickly. All existing commands (`debug`, `review`, `commit`) follow this pattern. A single verb is also semantically distinct from skills (action-object), making it immediately clear whether you are invoking a short prompt or a multi-step workflow.
-
----
-
-## Agents
-
-### Directory structure
+### 🗂️ Directory structure
 
 Agents are grouped under `agents/` by role:
 
@@ -102,7 +90,7 @@ Agents are grouped under `agents/` by role:
 
 **Why:** The four-directory structure was introduced during the agent refactor (sprint 60) to replace a flat layout that made it hard to distinguish full-session personas from narrow-scope tools. Grouping by role makes it clear which agent to reach for and prevents the directory from becoming an unsorted list as new agents are added.
 
-### Naming
+### 📛 Naming
 
 - Lowercase descriptive noun or noun phrase: `architect`, `code_reviewer`, `technical_writer`
 - snake_case for multi-word names
@@ -111,9 +99,9 @@ Agents are grouped under `agents/` by role:
 
 ---
 
-## Rules
+## 📏 Rules
 
-### Naming
+### 📛 Naming
 
 - Lowercase noun or noun phrase: `git.md`, `security.md`, `file_standards.md`
 - Name the file after the domain it governs, not the actions it prescribes
@@ -122,9 +110,9 @@ Agents are grouped under `agents/` by role:
 
 ---
 
-## Memory files
+## 🧠 Memory files
 
-### Naming
+### 📛 Naming
 
 - Pattern: `{type}_{topic}.md` — e.g. `feedback_pr_template.md`, `project_sprint61.md`
 - `type` must be one of: `user`, `feedback`, `project`, `reference`
@@ -134,7 +122,7 @@ Agents are grouped under `agents/` by role:
 
 ---
 
-## Skill development
+## 🔧 Skill development
 
 When creating or improving a skill, use the `/skill-creator` skill (from the `skill-creator` plugin). It covers the full cycle:
 
@@ -149,7 +137,7 @@ Invoke with `/skill-creator` and describe the skill you want to create or improv
 
 ---
 
-## Instruction file authoring
+## ✏️ Instruction file authoring
 
 - Keep files under ~100 lines. Beyond that, split into a parent index + child files.
 - Use `@import` for modular content rather than duplicating it inline.

@@ -14,9 +14,9 @@ triggers:
     - /git_review_pr <number>
   contextual:
     - user asks to review a PR or post a Claude review
-    - auto-triggered at end of /create_pr when user opts in
+    - auto-triggered at end of /git_create_pr when user opts in
 not_for:
-  - creating a PR — use /create_pr instead
+  - creating a PR — use /git_create_pr instead
   - general code review not tied to a GitHub PR
 output:
   type: mixed

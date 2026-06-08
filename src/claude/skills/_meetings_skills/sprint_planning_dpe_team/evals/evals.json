@@ -12,7 +12,9 @@
         "Claude queries Jira using searchJiraIssuesUsingJql with the sprint filter",
         "Claude presents a capacity summary table grouped by assignee with Committed vs Capacity delta",
         "Claude flags over-capacity assignees and tickets with no story points",
-        "Claude asks before creating any new Jira tickets or updating any Confluence page"
+        "Claude asks before creating any new Jira tickets or updating any Confluence page",
+        "Claude asks for the team/area name for ticket titles as part of the Step 1 questions",
+        "Claude uses the user-provided area prefix (not 'Data Platform') when formatting ticket summaries in Step 5"
       ]
     },
     {
