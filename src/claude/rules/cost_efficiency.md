@@ -21,6 +21,29 @@ All users operate under a $200/month Claude credit limit. Every interaction cons
 
 ---
 
+## 🎯 Model routing
+
+Match model capability to task complexity — do not default every sub-agent call to the same model:
+
+- Use `haiku` for lightweight sub-agents: exploration, lookups, file reads, and classification tasks.
+- Use `sonnet` (default) for standard work — code generation, multi-step reasoning, and editing tasks.
+- Reserve `opus` for the most complex architectural or analytical work where quality is paramount.
+
+Set the `model` parameter on the Agent tool: `"haiku"`, `"sonnet"`, or `"opus"`.
+
+---
+
+## 💾 Prompt caching
+
+When building Claude API integrations, apply `cache_control` markers to repeated context —
+system prompts, large reference documents, and tool definitions. A well-placed cache breakpoint
+reduces token cost by up to 80% on subsequent calls that share the same context prefix.
+
+Use the `claude-api` skill (`/claude-api`) for any Claude API / Anthropic SDK work — it
+enforces prompt caching by default.
+
+---
+
 ## ✂️ Response conciseness
 
 - Keep responses concise — do not pad output or restate what a diff or tool result already shows.

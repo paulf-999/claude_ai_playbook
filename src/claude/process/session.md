@@ -21,6 +21,7 @@ Read `~/.claude/process/session_input.md`. If the `## Sub-agent` section contain
 > - `ops/new_user` — simulates a first-time user; use for onboarding validation
 > - `ops/claude_reviewer` — reviews Claude configuration artefacts against best practices
 > - `ops/mac_user` — reviews shell scripts for macOS compatibility (bash 3.2, BSD coreutils)
+> - `ops/skill_auditor` — audits all installed skills against authoring standards and produces a prioritised gap report
 >
 > **Custom sub-agents — tools** (focused work or automated code review per technology):
 > - `tools/python`, `tools/sql`, `tools/unix`, `tools/makefile`, `tools/dbt`, `tools/docker`, `tools/cicd`, `tools/ansible`, `tools/airflow`, `tools/terraform`, `tools/jira`, `tools/payroc_engineering_naming_standards`, `tools/codeowners`

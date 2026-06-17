@@ -95,3 +95,6 @@ See [phase3.md](phase3.md) — reviewer handle lookup, window-based selection, a
 ## Phase 4 — Build message and post
 
 See [phase4.md](phase4.md) — message assembly, Adaptive Card / MessageCard format, and Teams webhook POST.
+
+- Do NOT post without explicit user approval — show the proposed message first and wait for confirmation.
+- Do NOT proceed if any reviewer's Teams AAD ID could not be resolved — report the gap and ask how to proceed.

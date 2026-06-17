@@ -48,7 +48,7 @@ See [phase2.md](phase2.md) — fetches page content, space, author, version, and
 Use the Agent tool with `subagent_type: technical_writer`. Pass:
 - Page title, space key, author, last modified date
 - Page body content (truncate to 3000 words if longer; note truncation in the review)
-- The output format and scoring guidance from [comment_format.md](comment_format.md)
+- The output format and scoring guidance from [comment_format.md](comment_format.md) — structured comment template and scoring rubric for the 5 review dimensions (structure, completeness, clarity, consistency, links & references)
 
 Instruct the agent to produce **only** the structured output defined in `comment_format.md` — no preamble, no trailing commentary.
 

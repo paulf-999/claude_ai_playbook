@@ -9,6 +9,7 @@ Defines the team's SQL coding standards, formatting conventions, and SQLFluff co
 | [`sql/formatting.md`](sql/formatting.md) | Keywords, structure, joins, aliases, and indentation rules |
 | [`sql/cte_style_guide.md`](sql/cte_style_guide.md) | CTE grouping pattern (Import → Logical → Final → SELECT) |
 | [`sql/snowflake_data_type_standards.md`](sql/snowflake_data_type_standards.md) | Preferred Snowflake data types and rationale |
+| [`sql/snowflake_performance.md`](sql/snowflake_performance.md) | Clustering keys, Query Profile, warehouse sizing, and auto-suspend |
 | [`sql/sqlfluff.md`](sql/sqlfluff.md) | SQLFluff dialect/templater settings and excluded rules |
 
 ---
@@ -32,4 +33,5 @@ SQL style is enforced by SQLFluff — see [`sql/sqlfluff.md`](sql/sqlfluff.md) f
 @./sql/formatting.md
 @./sql/cte_style_guide.md
 @./sql/snowflake_data_type_standards.md
+@./sql/snowflake_performance.md
 @./sql/sqlfluff.md

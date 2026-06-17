@@ -44,6 +44,45 @@ These principles apply across all languages and tools used by the team (Python, 
 - Python: use structured log levels consistently — `DEBUG` for flow, `INFO` for outcomes, `WARNING` for recoverable issues, `ERROR`/`CRITICAL` for failures.
 - SQL / dbt: surface row counts and merge outcomes in logs or run results. Use Snowflake query tags to attribute queries to the owning pipeline or model.
 - Do not log sensitive data (credentials, PII, tokens) — see `security.md`.
+- Set threshold-based alerts on job duration, record count, and data freshness — silent failures (a table that stopped updating) are harder to catch than exceptions.
+- Track row counts at each pipeline stage; unexpected drops or spikes are early signals of upstream problems.
+- Define freshness SLAs per dataset and monitor them; a table that hasn't loaded in 25 hours when it runs daily is a failure even if no exception was raised.
+
+---
+
+## ⚡ Incremental processing
+
+- Process only new or changed records — never reload full datasets when a delta pattern is available.
+- SQL / dbt: prefer `incremental` over `table` materialisation for large or frequently-loaded tables; set `unique_key` and choose `strategy` (`merge` / `delete+insert` / `append`) to match data characteristics.
+- Airflow: parameterise DAGs on execution date to process bounded time windows; use watermark patterns, not full scans.
+- Late-arriving data: define and document a lookback window; do not assume data arrives in strict order.
+
+---
+
+## 🗂️ Data partitioning
+
+- Partition large tables on natural time or business keys so queries scan only what is needed.
+- Snowflake: define clustering keys on high-cardinality filter columns (`DATE_TRUNC('day', ...)`, merchant/entity IDs); review clustering health periodically via `SYSTEM$CLUSTERING_INFORMATION`.
+- dbt: set partition filter conditions in incremental models to prune micro-partitions on every run — aligning filter columns with cluster keys eliminates full-table scans.
+- Avoid cross-partition joins; structure transformations so filters push down naturally.
+
+---
+
+## 🔗 Data lineage
+
+- Every transformation must be traceable from source to final output — if you cannot trace it, you cannot debug or audit it.
+- SQL / dbt: always use `ref()` and `source()` — never hardcode schema or table names; this is how lineage is automatically captured and surfaced in the dbt DAG.
+- Airflow: declare explicit task dependencies so the DAG graph accurately represents the data flow; do not create implicit dependencies via shared state.
+- For transformations that are not self-evident from the code, document upstream dependencies and the business logic applied — a comment at the model or DAG level is sufficient.
+
+---
+
+## 💸 Pipeline cost optimisation
+
+- Analyse expensive queries using Snowflake's Query Profile; attribute pipeline queries via Snowflake query tags (see Logging and observability above).
+- Prefer incremental loads over full refreshes — compute cost scales with table size; a full reload that was acceptable at 10M rows is not at 1B rows.
+- Right-size Snowflake warehouses: use the smallest warehouse that meets the SLA; configure auto-suspend on all warehouses.
+- Choose materialisations deliberately: views incur no write cost but pay at query time; tables invert this — match the choice to query frequency and table size.
 
 ---
 

@@ -4,6 +4,14 @@ These rules apply whenever interacting with external services via MCP servers (A
 
 ---
 
+## 🔎 Resolve before asking
+
+- Before asking the user for a name, handle, URL, or ID — attempt to resolve it from available tools and context first: GitHub user search, CODEOWNERS, `teams_config.json`, local config files, or cached session results.
+- Ask only when the lookup fails, the result is ambiguous, or no source exists.
+- Do not ask for information already visible in the current session's context or prior tool results.
+
+---
+
 ## ♻️ Reuse before querying
 
 - Before making a new MCP call, check whether the data is already available locally:

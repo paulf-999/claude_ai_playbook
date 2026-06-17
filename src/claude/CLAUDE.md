@@ -17,6 +17,7 @@
 @~/.claude/rules/behaviour/decision_logging.md
 @~/.claude/rules/behaviour/playbook.md
 @~/.claude/rules/development.md
+@~/.claude/rules/documentation.md
 @~/.claude/rules/git.md
 @~/.claude/rules/file_standards.md
 @~/.claude/rules/testing.md
@@ -34,7 +35,9 @@
 @~/.claude/style_guide_standards/jira.md
 @~/.claude/style_guide_standards/payroc_engineering_naming_standards.md
 @~/.claude/style_guide_standards/mermaid.md
+@~/.claude/style_guide_standards/data_pipeline.md
 @~/.claude/memory/MEMORY.md
+@~/.claude/process/graphify.md
 
 @./agents/core/architect.md
 
@@ -58,6 +61,7 @@ Available sub-agents:
 | ops | new_user | `agents/ops/new_user.md` |
 | ops | claude_reviewer | `agents/ops/claude_reviewer.md` |
 | ops | mac_user | `agents/ops/mac_user.md` |
+| ops | skill_auditor | `agents/ops/skill_auditor.md` |
 | tools | python / sql / unix / makefile / dbt / docker / cicd / ansible / airflow / terraform / jira / payroc_engineering_naming_standards / codeowners *(one per style guide)* | `agents/tools/<name>.md` |
 | pipeline *(files live in `core/`)* | data-project-manager / requirements-consolidator / payroc-data-architect / dbt-warehouse-engineer / dbt-pr-reviewer / dbt-uat-test-planner / dbt-uat-evaluator / data-docs-writer / airflow-dag-engineer / omni-semantic-engineer | `agents/core/<name>.md` |
 

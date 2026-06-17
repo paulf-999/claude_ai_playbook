@@ -1,0 +1,30 @@
+default: true
+
+# --- Permanently disabled ---
+# These rules conflict with conventions used consistently across the playbook.
+MD013: false   # line-length — tables and code blocks routinely exceed 100 chars
+MD033: false   # inline HTML — used in Mermaid diagrams and skill content
+MD041: false   # first-line heading — many files open with YAML frontmatter
+MD024: false   # duplicate headings — skills use repeated phase headings across child files
+
+# --- Temporarily disabled (pre-existing violations — re-enable progressively) ---
+MD004: false   # unordered list style — mixed bullet chars across the repo
+MD022: false   # blanks around headings — 200+ violations in existing agent/skill files
+MD025: false   # multiple top-level headings — intentional in some agent files
+MD026: false   # trailing punctuation in headings
+MD028: false   # blank line inside blockquote
+MD029: false   # ordered list prefix style
+MD031: false   # blanks around fences — 100+ violations in existing files
+MD032: false   # blanks around lists — 300+ violations in existing files
+MD034: false   # bare URLs
+MD036: false   # emphasis used as heading
+MD037: false   # spaces inside emphasis markers
+MD038: false   # spaces inside code spans
+MD040: false   # fenced code blocks without language — 140+ violations in existing files
+MD047: false   # single trailing newline — already enforced by end-of-file-fixer hook
+MD049: false   # italic style — mixed * and _ across the repo
+MD051: false   # link fragments — broken anchors in existing docs/best_practices files
+MD055: false   # table pipe style
+MD056: false   # table column count
+MD058: false   # blanks around tables — 30+ violations in existing files
+MD007: false   # unordered list indentation — pre-existing in issue templates

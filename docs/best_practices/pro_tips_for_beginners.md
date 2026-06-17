@@ -1,12 +1,13 @@
 # 💡 Pro tips for beginners
 
-Four quick habits from Anthropic's quickstart guide that improve results from day one.
+Five quick habits that improve results from day one — four from Anthropic's quickstart guide, plus one team addition.
 
 Source: [Anthropic Claude Code Quickstart — Pro tips for beginners](https://code.claude.com/docs/en/quickstart#pro-tips-for-beginners)
 
 | Tip | Description | Example |
 |---|---|---|
 | 🎯 Be specific with your requests | Include model paths, column names, and constraints upfront. Precise instructions reduce corrections. | [prompt examples](#be-specific-examples) |
+| 👤 Describe the end user | Tell Claude who will use or consume the output. "This is for a new team member" leads to different results than "This is for the engineering team." | `"This runbook is for an on-call engineer who has never seen this pipeline before."` |
 | 📋 Use step-by-step instructions | For complex tasks, break them into an explicit sequence rather than asking for everything at once. | Instead of `"Refactor the Access One staging models, add tests, and update the YAML docs"` — try `"First, refactor staging_access_one_merchant_list.sql. Once I've confirmed that looks right, we'll update the tests."` |
 | 🔍 Let Claude explore first | Ask Claude to read and explain code before making changes. Prevents solving the wrong problem. | `"Read prod_analytics/models/staging/salesforce/ and explain how deduplication works — don't change anything yet."` |
 | ⌨️ Save time with shortcuts | Built-in shortcuts reduce friction for common interactions. | [shortcut reference](#shortcuts-reference) |

@@ -54,3 +54,8 @@ Do not proceed to Phase 1 without a successful MCP connection.
 Read the pattern file and follow the instructions within it exactly:
 
 `~/.claude/skills/_atlassian_skills/jira_update/patterns/bulk_update.md`
+
+- Do NOT apply any edits until the scope confirmation step in the pattern has been completed and the user has explicitly confirmed — even if only one ticket is matched.
+- Do NOT modify the `parent` field unless explicitly requested — changing parent breaks epic hierarchies.
+- Do NOT strip existing labels — append new ones only; preserve all current label values.
+- Do NOT set `customfield_10028` (story points) on sub-tasks — story points belong on user stories only.

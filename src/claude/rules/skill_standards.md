@@ -63,6 +63,19 @@ Use Option B when the skill:
 
 ---
 
+## 🚫 Negative constraints
+
+Any skill phase that calls an external API or modifies a structured file must include at least one explicit "do not" statement covering its known failure modes. These belong inline in the phase step, not in a separate section.
+
+Examples:
+- `Do NOT include sprint field when creating sub-tasks.`
+- `Do NOT modify the parent ticket.`
+- `Do NOT add CODEOWNERS entries for paths that were not explicitly requested.`
+
+If a skill has no known failure modes, no statement is required. Apply on new skills and when revising existing ones.
+
+---
+
 ## 😀 Emojis
 
 Use emojis on all major headings, table rows where appropriate, and callout blocks. They aid scannability and are consistent with the style of the rest of the playbook.

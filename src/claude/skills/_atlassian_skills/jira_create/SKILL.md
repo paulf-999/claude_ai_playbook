@@ -69,3 +69,8 @@ Wait for the user's response before proceeding.
 Read the pattern file and follow the instructions within it exactly:
 
 `~/.claude/skills/_atlassian_skills/jira_create/patterns/<pattern_name>.md`
+
+- Do NOT start creating tickets before the pattern's scope confirmation step has been completed and the user has explicitly confirmed.
+- Do NOT create any ticket without the `dm-claude-created` label — required on all Claude-created tickets.
+- Do NOT set story points to `0` — minimum is `0.5` for admin tasks.
+- Do NOT leave created tickets in `Triage` status — transition each to `Backlog` immediately after creation.

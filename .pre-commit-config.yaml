@@ -53,6 +53,13 @@ repos:
       hooks:
           - id: yamlfmt # yamlfmt - fix input yaml files
             name: YAML fixes
+    # Markdown linter
+    - repo: https://github.com/igorshubovych/markdownlint-cli
+      rev: v0.43.0
+      hooks:
+          - id: markdownlint
+            name: Markdown checks — linter
+            args: [--config, .markdownlint.yaml]
   # Python - fixes
   # 🧹 Ruff — fast linter, formatter, and import sorter
     - repo: https://github.com/astral-sh/ruff-pre-commit
@@ -61,7 +68,7 @@ repos:
           - id: ruff
             name: Python fixes & lint — Ruff
         # Enable complexity checks
-            args: ["--line-length=120", "--select=E,F,W,C90"]
+            args: [--line-length=120, '--select=E,F,W,C90']
 
   # 🔁 Pyupgrade — automatically modernise syntax
     - repo: https://github.com/asottile/pyupgrade

@@ -54,3 +54,5 @@ Do not proceed to Phase 1 without a successful MCP connection.
 Read the pattern file and follow the instructions within it exactly:
 
 `~/.claude/skills/_atlassian_skills/jira_hygiene/patterns/hygiene_check.md`
+
+Do NOT apply auto-fixes without explicitly listing all proposed changes and waiting for user confirmation — even when the user selected auto-fix mode.

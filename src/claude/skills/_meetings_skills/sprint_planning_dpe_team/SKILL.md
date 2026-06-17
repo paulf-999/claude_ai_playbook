@@ -112,6 +112,9 @@ For each item, collect:
 
 Create each issue using `createJiraIssue` in project `DM` with type `Story`. Confirm each ticket key back to the user.
 
+Do NOT create a ticket without setting `labels: ["dm-claude-created"]` — every ticket created by this skill must carry this label.
+Do NOT set story points unless the user provided a value — never infer or default them.
+
 ---
 
 ## Step 6 — Update Confluence page (optional)

@@ -32,6 +32,9 @@
 - Validate assumptions about grain, nulls, and deduplication before finalising a query.
 - Flag unexpected row counts, distributions, or nulls encountered during development.
 - Do not assume referential integrity unless it is enforced or tested.
+- Validate schema expectations at the pipeline boundary before processing: check that expected columns are present, data types match, and non-nullable fields are populated — do not rely on downstream dbt tests to catch ingestion schema drift.
+- Apply business-rule validation at the source boundary: reject or quarantine records that violate domain rules (negative amounts, future-dated transactions, orphaned foreign keys) before they propagate downstream.
+- Schema validity does not imply data validity — a source can be structurally correct while containing logically corrupt data; both layers of validation are required.
 
 ---
 

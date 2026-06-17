@@ -12,3 +12,4 @@ Instructions that govern how Claude structures its work within a session.
 | [`session_input.md`](session_input.md) | ⚙️ Pre-session configuration — set sub-agent and task before launching Claude to skip interactive prompts | no | active |
 | [`task_brief.md`](task_brief.md) | 📋 Lean orchestration convention — task brief and output summary templates for delegating heavy file work to sub-agents | no | active |
 | [`drafts.md`](drafts.md) | 📝 Draft file convention — root path `~/_drafts/`, subdirectory layout by type, and filename format | yes | active |
+| [`graphify.md`](graphify.md) | 🔬 Graphify skill trigger — ensures `/graphify` invokes the Skill tool; persisted here so it survives playbook syncs | yes | active |

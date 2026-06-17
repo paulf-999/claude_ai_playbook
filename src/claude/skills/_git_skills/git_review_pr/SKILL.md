@@ -63,7 +63,7 @@ Use the Agent tool with `subagent_type: code_reviewer`. Pass it:
 - The full diff (or truncated diff with a note)
 - The list of file paths changed in the PR
 - The `repo_url` and `headRefName` so it can construct file links
-- The output format and scoring guidance from [comment_format.md](comment_format.md)
+- The output format and scoring guidance from [comment_format.md](comment_format.md) — structured comment template and scoring rubric for the 6 review themes (code quality, complexity, testing, security, documentation, standards)
 
 Instruct the agent to produce **only** the structured output defined in the format section — no preamble, no trailing commentary. The scorecard covers **6 themes**: code quality, code complexity, testing, security, documentation, and standards.
 

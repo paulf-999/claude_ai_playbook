@@ -2,7 +2,10 @@
 
 ## ✅ Before trivial work
 
-For simple, low-risk tasks, plan mode is still the minimum requirement — state what you are about to do and wait for confirmation before proceeding.
+For simple, low-risk tasks, distinguish by scope:
+
+- **Single-action** (one file, one change, outcome describable in one sentence): announce inline and execute immediately — no confirmation turn required.
+- **Multi-step or multi-file simple tasks**: state what you are about to do and wait for confirmation before proceeding. For changes to config files, CODEOWNERS, or structured multi-line files, explicitly include what will NOT be modified.
 
 ---
 
@@ -13,6 +16,7 @@ For any non-trivial task, plan mode is the minimum requirement — do not make c
 - Use plan mode to outline your approach before touching any file or running any command.
 - Outline your approach in plain English.
 - List assumptions you are making.
+- For changes to config files, CODEOWNERS, or structured multi-line files: explicitly state what will NOT be modified alongside what will — name the exact entries or lines affected.
 - Flag risks, tech debt, or security concerns.
 - For complex or uncertain designs, run `/grill_me` to stress-test the plan — walks down the decision tree one question at a time before any code is written.
 - Wait for my go-ahead before proceeding.

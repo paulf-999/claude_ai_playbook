@@ -22,3 +22,4 @@ Language, tool, and platform-specific style guides enforced across all projects.
 | [`terraform.md`](terraform.md) | 🏗️ Terraform standards: directory structure, naming, variables, providers, modules, and CI |
 | [`codeowners.md`](codeowners.md) | 🔑 CODEOWNERS standards: file location, rule ordering (last-wins), team handle conventions, section structure, and self-ownership rules |
 | [`unix.md`](unix.md) | 🐧 Unix shell standards: Oh My Zsh setup, Powerlevel10k, plugins, and Bash scripting |
+| [`data_pipeline.md`](data_pipeline.md) | 🔁 Generic data pipeline patterns: incremental processing, partitioning, lineage, monitoring, validation, and cost management |

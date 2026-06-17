@@ -56,6 +56,9 @@ See [phase1.md](phase1.md) — repo state inspection, branch naming, commit mess
 
 See [phase2.md](phase2.md) — title confirmation, full plan presentation, and sequential git/gh execution.
 
+- Do NOT raise a PR against a branch other than `main` unless the user explicitly specifies a different base.
+- Do NOT proceed if the diff spans more than 20 files — stop and ask the user to split the change.
+
 ---
 
 ## ✅ Phase 3 — Verify

@@ -72,6 +72,11 @@ Read the pattern file and follow the instructions within it exactly:
 
 Every pattern ends with a **"Create the Confluence page"** step. Do not execute that step directly. Instead, follow the **Local Draft Review** phase below first, and only proceed to Confluence creation once the user has approved the draft.
 
+- Do NOT skip the Local Draft Review phase — never call `createConfluencePage` or `updateConfluencePage` without first completing the draft review loop below.
+- Do NOT publish at the space root — all pages must have a parent page confirmed by the pattern or the user.
+- Do NOT infer the target Confluence space — confirm it with the user if not stated in the request.
+- Do NOT include names of individuals in the page — use generic role descriptors throughout.
+
 ---
 
 ## 🖊️ Local Draft Review (mandatory — all patterns)
