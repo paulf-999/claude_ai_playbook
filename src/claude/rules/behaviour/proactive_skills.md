@@ -12,7 +12,9 @@ rather than answering inline. Skill output is more structured and consistent tha
 | Wants to surface implementation traps, hidden risks, or what they might be missing | `/pitfalls` |
 | Is choosing between two or more options, tools, or approaches | `/compare` |
 | Wants to question inherited assumptions or rebuild reasoning from scratch | `/first-principles` |
+| Faces a complex or ambiguous problem and needs a structured path from information to action | `/ooda` |
 | Needs a short stakeholder-ready summary for Slack, email, or Confluence | `/exec-summary` |
+| Needs to explain a technical concept to a non-technical audience | `/eli5` |
 
 ## ⚠️ When not to dispatch
 
