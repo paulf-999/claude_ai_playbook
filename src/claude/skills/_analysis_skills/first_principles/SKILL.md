@@ -9,7 +9,7 @@ tags:
   tested: true
 triggers:
   explicit:
-    - /first-principles
+    - /first_principles
     - "first principles"
     - "strip the assumptions"
     - "start from scratch"
