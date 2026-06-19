@@ -46,7 +46,7 @@ Hard constraints that Claude must follow in every session, covering:
 - file hygiene
 - git
 - managed files (index files that must not be edited directly)
-- proactive skill dispatch (analysis and communication skills invoked automatically when context matches)
+- proactive skill dispatch (skills across all groups invoked automatically when context matches)
 - MCP discipline
 - security
 - skill authoring standards
