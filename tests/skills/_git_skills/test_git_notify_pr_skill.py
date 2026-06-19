@@ -10,6 +10,7 @@ Tests the deterministic, rule-based components that Claude must follow:
 
 import re
 from pathlib import Path
+from typing import Optional
 
 import pytest
 
@@ -20,7 +21,7 @@ import pytest
 CHANGE_TYPE_REGEX = re.compile(r"-\s+\[x\].*?\*\*([^*]+)\*\*")
 
 
-def detect_change_type(pr_body: str) -> str | None:
+def detect_change_type(pr_body: str) -> Optional[str]:
     """Extract the change type from a PR body by finding the checked checkbox.
 
     Mimics the rule in notify_pr/SKILL.md Phase 2:
@@ -30,7 +31,7 @@ def detect_change_type(pr_body: str) -> str | None:
     :param pr_body: Full PR body markdown string.
     :type pr_body: str
     :return: Plain-text change type label, or None.
-    :rtype: str | None
+    :rtype: Optional[str]
     """
     for line in pr_body.splitlines():
         if "- [x]" in line or "- [X]" in line:
@@ -122,13 +123,13 @@ def _skill_content() -> str:
         None,
     ),
 ])
-def test_change_type_detection(body: str, expected: str | None) -> None:
+def test_change_type_detection(body: str, expected: Optional[str]) -> None:
     """Change type must be extracted from the checked checkbox in the PR body.
 
     :param body: PR body markdown.
     :type body: str
     :param expected: Expected change type string or None.
-    :type expected: str | None
+    :type expected: Optional[str]
     """
     assert detect_change_type(body) == expected
 
