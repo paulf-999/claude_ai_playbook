@@ -9,7 +9,7 @@ Structural validation tests run automatically on every commit (via pre-commit ho
 | Test module | What it covers |
 |---|---|
 | `test_agents.py` | Valid frontmatter, required sections, `EnterPlanMode` present |
-| `test_skills.py` | `SKILL.md` exists, valid frontmatter, name matches directory, file references resolve |
+| `test_skills_structural.py` | `SKILL.md` exists, valid frontmatter, name matches directory, file references resolve |
 | `test_process.py` | Required process files exist, key content present (`EnterPlanMode`, `## Sub-agent`, `## Task`) |
 | `test_commands.py` | Command files non-empty, README links resolve |
 | `test_rules.py` | Rule files non-empty, README links resolve |
