@@ -13,3 +13,4 @@ Instructions that govern how Claude structures its work within a session.
 | [`task_brief.md`](task_brief.md) | 📋 Lean orchestration convention — task brief and output summary templates for delegating heavy file work to sub-agents | no | active |
 | [`drafts.md`](drafts.md) | 📝 Draft file convention — root path `~/_drafts/`, subdirectory layout by type, and filename format | yes | active |
 | [`graphify.md`](graphify.md) | 🔬 Graphify skill trigger — ensures `/graphify` invokes the Skill tool; persisted here so it survives playbook syncs | yes | active |
+| [`sub_agent_selection.md`](sub_agent_selection.md) | 🤖 Sub-agent selection guidance — default agent, how to switch, and the full table of available sub-agents | yes | active |
