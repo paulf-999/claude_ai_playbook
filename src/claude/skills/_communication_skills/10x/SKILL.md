@@ -17,7 +17,7 @@ triggers:
   contextual: []
 not_for:
   - generating new content from scratch — this skill rewrites existing text only
-  - stakeholder summaries — use /exec-summary
+  - stakeholder summaries — use /exec_summary
   - making text sound human — use /ghost (if installed)
 output:
   type: conversational

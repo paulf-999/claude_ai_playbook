@@ -48,7 +48,7 @@ rather than answering inline. Skill output is more structured and consistent tha
 
 | If the user... | Invoke |
 |---|---|
-| Needs a short stakeholder-ready summary for Slack, email, or Confluence | `/exec-summary` |
+| Needs a short stakeholder-ready summary for Slack, email, or Confluence | `/exec_summary` |
 | Needs to explain a technical concept to a non-technical audience | `/eli5` |
 | Wants to draft or review a Teams message or email | `/draft_comms` |
 

@@ -9,7 +9,7 @@ tags:
   tested: false
 triggers:
   explicit:
-    - /exec-summary
+    - /exec_summary
     - "exec summary"
     - "executive summary"
     - "summarise for stakeholders"

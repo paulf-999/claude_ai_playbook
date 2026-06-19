@@ -18,7 +18,7 @@ triggers:
     - user needs to explain a technical concept to a non-technical audience
     - user asks how to describe something to their manager or stakeholders
 not_for:
-  - stakeholder-ready event summaries — use /exec-summary
+  - stakeholder-ready event summaries — use /exec_summary
   - full technical documentation — out of scope for this skill
 output:
   type: conversational
