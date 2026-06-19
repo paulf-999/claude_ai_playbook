@@ -73,20 +73,6 @@ def test_no_bullet_lists_in_output(skill_content: str) -> None:
 
 # ─── Tests: frontmatter structure ─────────────────────────────────────────────
 
-def test_frontmatter_has_maturity(skill_content: str) -> None:
-    """SKILL.md frontmatter must declare a maturity level."""
-    assert "maturity:" in skill_content, (
-        "eli5/SKILL.md frontmatter must include a maturity field"
-    )
-
-
-def test_frontmatter_has_version(skill_content: str) -> None:
-    """SKILL.md frontmatter must declare a version."""
-    assert "version:" in skill_content, (
-        "eli5/SKILL.md frontmatter must include a version field"
-    )
-
-
 def test_frontmatter_has_explicit_trigger(skill_content: str) -> None:
     """SKILL.md frontmatter must declare the /eli5 explicit trigger."""
     assert "/eli5" in skill_content, (

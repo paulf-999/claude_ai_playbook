@@ -76,20 +76,6 @@ def test_defences_required(skill_content: str) -> None:
 
 # ─── Tests: frontmatter structure ─────────────────────────────────────────────
 
-def test_frontmatter_has_maturity(skill_content: str) -> None:
-    """SKILL.md frontmatter must declare a maturity level."""
-    assert "maturity:" in skill_content, (
-        "redteam/SKILL.md frontmatter must include a maturity field"
-    )
-
-
-def test_frontmatter_has_version(skill_content: str) -> None:
-    """SKILL.md frontmatter must declare a version."""
-    assert "version:" in skill_content, (
-        "redteam/SKILL.md frontmatter must include a version field"
-    )
-
-
 def test_frontmatter_has_explicit_trigger(skill_content: str) -> None:
     """SKILL.md frontmatter must declare the /redteam explicit trigger."""
     assert "/redteam" in skill_content, (

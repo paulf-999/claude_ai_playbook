@@ -3,8 +3,6 @@
 When a user request matches the contextual trigger of an installed skill, invoke the skill
 rather than answering inline. Skill output is more structured and consistent than ad hoc prose.
 
----
-
 ## ⚙️ Admin
 
 | If the user... | Invoke |
@@ -14,8 +12,6 @@ rather than answering inline. Skill output is more structured and consistent tha
 | Wants to audit agents for quality or gaps | `/audit_agents` |
 | Wants to audit installed skills for standards compliance | `/audit_skills` |
 | Wants to set up Graphify on a repo | `/setup_graphify` |
-
----
 
 ## 🔍 Analysis
 
@@ -27,8 +23,6 @@ rather than answering inline. Skill output is more structured and consistent tha
 | Is choosing between two or more options, tools, or approaches | `/compare` |
 | Wants to question inherited assumptions or rebuild reasoning from scratch | `/first_principles` |
 | Faces a complex or ambiguous problem and needs a structured path from information to action | `/ooda` |
-
----
 
 ## 🔗 Atlassian *(requires Atlassian MCP)*
 
@@ -42,8 +36,6 @@ rather than answering inline. Skill output is more structured and consistent tha
 | Wants to check Jira tickets for missing or incorrect fields | `/jira_hygiene` |
 | Wants to populate or score Business Value fields on Jira tickets | `/populate_jira_business_value` |
 
----
-
 ## 💬 Communication
 
 | If the user... | Invoke |
@@ -52,15 +44,11 @@ rather than answering inline. Skill output is more structured and consistent tha
 | Needs to explain a technical concept to a non-technical audience | `/eli5` |
 | Wants to draft or review a Teams message or email | `/draft_comms` |
 
----
-
 ## 🛠️ Dev
 
 | If the user... | Invoke |
 |---|---|
 | Wants to stress-test a plan or design via structured interview before implementation | `/grill_me` |
-
----
 
 ## 🌿 Git
 
@@ -72,16 +60,12 @@ rather than answering inline. Skill output is more structured and consistent tha
 | Wants to formally request changes on a PR with inline comments | `/git_request_changes_pr` |
 | Wants to notify the team on Teams after raising a PR | `/git_notify_pr` |
 
----
-
 ## 🏗️ Infrastructure
 
 | If the user... | Invoke |
 |---|---|
 | Wants to create a new Ansible role or playbook | `/ansible_playbook_creation` |
 | Wants to provision a new VM via Terraform | `/provision_vm` |
-
----
 
 ## 📅 Meetings
 
@@ -90,8 +74,6 @@ rather than answering inline. Skill output is more structured and consistent tha
 | Is preparing for a 1-to-1 or weekly manager catch-up | `/weekly_one_to_one_prep` |
 | Is doing sprint planning for the DPE team | `/sprint_planning_dpe_team` |
 | Wants to schedule a meeting or draft a meeting invite | `/schedule_meeting` |
-
----
 
 ## ⚠️ When not to dispatch
 

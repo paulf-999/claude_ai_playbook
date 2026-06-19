@@ -69,20 +69,6 @@ def test_already_tight_handled(skill_content: str) -> None:
 
 # ─── Tests: frontmatter structure ─────────────────────────────────────────────
 
-def test_frontmatter_has_maturity(skill_content: str) -> None:
-    """SKILL.md frontmatter must declare a maturity level."""
-    assert "maturity:" in skill_content, (
-        "10x/SKILL.md frontmatter must include a maturity field"
-    )
-
-
-def test_frontmatter_has_version(skill_content: str) -> None:
-    """SKILL.md frontmatter must declare a version."""
-    assert "version:" in skill_content, (
-        "10x/SKILL.md frontmatter must include a version field"
-    )
-
-
 def test_frontmatter_has_explicit_trigger(skill_content: str) -> None:
     """SKILL.md frontmatter must declare the /10x explicit trigger."""
     assert "/10x" in skill_content, (

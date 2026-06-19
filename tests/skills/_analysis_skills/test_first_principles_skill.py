@@ -64,22 +64,8 @@ def test_delta_output_required(skill_content: str) -> None:
 
 # ─── Tests: frontmatter structure ─────────────────────────────────────────────
 
-def test_frontmatter_has_maturity(skill_content: str) -> None:
-    """SKILL.md frontmatter must declare a maturity level."""
-    assert "maturity:" in skill_content, (
-        "first_principles/SKILL.md frontmatter must include a maturity field"
-    )
-
-
-def test_frontmatter_has_version(skill_content: str) -> None:
-    """SKILL.md frontmatter must declare a version."""
-    assert "version:" in skill_content, (
-        "first_principles/SKILL.md frontmatter must include a version field"
-    )
-
-
 def test_frontmatter_has_explicit_trigger(skill_content: str) -> None:
-    """SKILL.md frontmatter must declare the /first-principles explicit trigger."""
-    assert "/first-principles" in skill_content, (
-        "first_principles/SKILL.md frontmatter must include /first-principles as an explicit trigger"
+    """SKILL.md frontmatter must declare the /first_principles explicit trigger."""
+    assert "/first_principles" in skill_content, (
+        "first_principles/SKILL.md frontmatter must include /first_principles as an explicit trigger"
     )

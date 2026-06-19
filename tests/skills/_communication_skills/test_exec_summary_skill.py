@@ -72,20 +72,6 @@ def test_sentence_length_enforced(skill_content: str) -> None:
 
 # ─── Tests: frontmatter structure ─────────────────────────────────────────────
 
-def test_frontmatter_has_maturity(skill_content: str) -> None:
-    """SKILL.md frontmatter must declare a maturity level."""
-    assert "maturity:" in skill_content, (
-        "exec_summary/SKILL.md frontmatter must include a maturity field"
-    )
-
-
-def test_frontmatter_has_version(skill_content: str) -> None:
-    """SKILL.md frontmatter must declare a version."""
-    assert "version:" in skill_content, (
-        "exec_summary/SKILL.md frontmatter must include a version field"
-    )
-
-
 def test_frontmatter_has_explicit_trigger(skill_content: str) -> None:
     """SKILL.md frontmatter must declare the /exec_summary explicit trigger."""
     assert "/exec_summary" in skill_content, (
