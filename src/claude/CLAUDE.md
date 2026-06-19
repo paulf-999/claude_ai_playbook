@@ -16,6 +16,7 @@
 @~/.claude/rules/behaviour/memory.md
 @~/.claude/rules/behaviour/decision_logging.md
 @~/.claude/rules/behaviour/playbook.md
+@~/.claude/rules/behaviour/proactive_skills.md
 @~/.claude/rules/development.md
 @~/.claude/rules/documentation.md
 @~/.claude/rules/git.md
