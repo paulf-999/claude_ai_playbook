@@ -9,3 +9,4 @@ Rules governing Claude's general conduct and caution level.
 | [`memory.md`](memory.md) | 🧠 Memory scoping: when to use global vs project-scoped memory, and how to save to each |
 | [`decision_logging.md`](decision_logging.md) | 🗂️ Decision logging: grain criteria and format for proactive `decision` memory entries |
 | [`playbook.md`](playbook.md) | 🗂️ Playbook management: how to sync src/claude/ to ~/.claude/ without clobbering personal content |
+| [`proactive_skills.md`](proactive_skills.md) | 🎯 Proactive skill dispatch: when to invoke an analysis or communication skill instead of answering inline |
