@@ -6,7 +6,7 @@ maturity: draft
 tags:
   criticality: could
   status: active
-  tested: false
+  tested: true
 triggers:
   explicit:
     - /compare
