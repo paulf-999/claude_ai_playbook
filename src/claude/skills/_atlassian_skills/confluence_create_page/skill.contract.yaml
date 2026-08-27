@@ -1,0 +1,85 @@
+---
+# ═══════════════════════════════════════════════════════════════════════════════
+# skill.contract.yaml — Confluence Create Page
+# ═══════════════════════════════════════════════════════════════════════════════
+
+name: confluence_create_page
+  # Unique identifier in kebab-case
+  # Must match the directory name and SKILL.md frontmatter name field.
+
+version: 1.0.0
+  # Semantic versioning: 0.x.x (draft), 1.x.x (tactical), 2+.x.x (strategic)
+  # MVP for Phase 1 is at tactical maturity with one pattern (general_page)
+
+summary: Interactively create a Confluence page from a team-approved template
+  # Max 80 characters. Immediately clear what the skill accomplishes.
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Lifecycle & Maintenance
+# ═══════════════════════════════════════════════════════════════════════════════
+
+maturity: tactical
+  # draft     = happy path only; error handling incomplete; TODOs allowed
+  # tactical  = main path + light error handling; edge cases documented
+  # strategic = full coverage incl. edge cases; production-ready
+
+test_coverage_level: comprehensive
+  # none           = no tests exist
+  # basic          = 1–2 happy path tests
+  # comprehensive  = main path + error cases + edge cases
+  # Phase 1 MVP focuses on general_page pattern; other patterns in Phase 2
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Usage
+# ═══════════════════════════════════════════════════════════════════════════════
+
+when:
+  # Explicit triggers: phrases that invoke this skill
+    - /confluence_create_page
+    - /confluence_create_page general_page
+    - /confluence_create_page general_page --title "..." --creator "..."
+    - create a Confluence page
+  # Contextual triggers: conditions where Claude should suggest this skill
+    - when user wants to draft a Confluence page locally before publishing
+    - when user provides page metadata and wants to skip interactive prompts
+
+dont_use_for:
+  # Anti-patterns: scenarios where this skill should NOT be used
+    - editing existing Confluence pages in place
+    - creating pages for patterns not yet ported (see Phase 2 of plan)
+    - publishing directly to Confluence without local draft review
+    - bypassing draft review even when arguments are provided (draft review is always mandatory)
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Requirements
+# ═══════════════════════════════════════════════════════════════════════════════
+
+requires:
+    tools:
+    # Claude tools this skill uses
+        - Read
+        - Bash
+
+    mcp_servers:
+    # MCP servers this skill integrates with
+        - Atlassian
+
+    external:
+    # External system access or files required
+        - Atlassian (Confluence) workspace with write access
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Output & Safety
+# ═══════════════════════════════════════════════════════════════════════════════
+
+output: external_service
+  # conversational   = responds with text/prose
+  # file             = creates/modifies files
+  # external_service = makes API calls or external changes (Jira, GitHub, etc.)
+  # mixed            = combines the above
+  # This skill creates pages in Confluence (external service) but drafts locally first
+
+reversible: false
+  # true  = skill's actions can be undone/rolled back
+  # false = skill's actions are permanent (e.g., deletion, published posts)
+  # Creating a Confluence page is permanent; local draft is reversible

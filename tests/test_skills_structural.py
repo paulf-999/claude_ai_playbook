@@ -16,6 +16,7 @@ from pathlib import Path
 
 import frontmatter
 import pytest
+import yaml
 
 SKILLS_DIR = Path(__file__).parent.parent / "src" / "claude" / "skills"
 SKILLS_WIP_DIR = Path(__file__).parent.parent / "src" / "claude" / "wip" / "skills"
@@ -70,6 +71,31 @@ def _load_skill_md(skill_dir: Path) -> frontmatter.Post:
     return frontmatter.load(str(skill_dir / "SKILL.md"))
 
 
+def _effective_metadata(skill_dir: Path) -> dict:
+    """Resolve a skill's name/description metadata, contract-first.
+
+    New-format skills document metadata in ``skill.contract.yaml`` and keep
+    SKILL.md frontmatter-free (a metadata table instead) per the authoring
+    gate's end-user-first rule. Fall back to SKILL.md frontmatter for skills
+    that still use it.
+
+    :param skill_dir: Path to the skill directory.
+    :type skill_dir: Path
+    :return: Metadata dict with at least 'name' and 'description' when available.
+    :rtype: dict
+    """
+    post = _load_skill_md(skill_dir)
+    if post.metadata:
+        return post.metadata
+
+    contract_path = skill_dir / "skill.contract.yaml"
+    if contract_path.exists():
+        contract = yaml.safe_load(contract_path.read_text(encoding="utf-8")) or {}
+        return {"name": contract.get("name"), "description": contract.get("summary")}
+
+    return {}
+
+
 def _extract_claude_home_references(content: str) -> list[str]:
     """Extract all ~/.claude/... file path references from skill content.
 
@@ -108,39 +134,39 @@ def test_skill_has_skill_md(skill_dir: Path) -> None:
 
 @pytest.mark.parametrize("skill_dir", skill_dirs, ids=skill_ids)
 def test_skill_md_has_valid_frontmatter(skill_dir: Path) -> None:
-    """SKILL.md must have parseable YAML frontmatter.
+    """SKILL.md must have parseable frontmatter, or a skill.contract.yaml fallback.
 
     :param skill_dir: Path to the skill directory.
     :type skill_dir: Path
     """
-    post = _load_skill_md(skill_dir)
-    assert post.metadata, f"{skill_dir.name}/SKILL.md: missing or empty frontmatter"
+    metadata = _effective_metadata(skill_dir)
+    assert metadata, f"{skill_dir.name}/SKILL.md: missing or empty frontmatter (and no skill.contract.yaml fallback)"
 
 
 @pytest.mark.parametrize("skill_dir", skill_dirs, ids=skill_ids)
 def test_skill_md_frontmatter_has_name_and_description(skill_dir: Path) -> None:
-    """SKILL.md frontmatter must have non-empty name and description fields.
+    """SKILL.md frontmatter (or its skill.contract.yaml fallback) must have non-empty name and description.
 
     :param skill_dir: Path to the skill directory.
     :type skill_dir: Path
     """
-    post = _load_skill_md(skill_dir)
-    assert "name" in post.metadata, f"{skill_dir.name}/SKILL.md: frontmatter missing 'name'"
-    assert post.metadata["name"], f"{skill_dir.name}/SKILL.md: frontmatter 'name' is empty"
-    assert "description" in post.metadata, f"{skill_dir.name}/SKILL.md: frontmatter missing 'description'"
-    assert post.metadata["description"], f"{skill_dir.name}/SKILL.md: frontmatter 'description' is empty"
+    metadata = _effective_metadata(skill_dir)
+    assert "name" in metadata, f"{skill_dir.name}/SKILL.md: frontmatter missing 'name'"
+    assert metadata["name"], f"{skill_dir.name}/SKILL.md: frontmatter 'name' is empty"
+    assert "description" in metadata, f"{skill_dir.name}/SKILL.md: frontmatter missing 'description'"
+    assert metadata["description"], f"{skill_dir.name}/SKILL.md: frontmatter 'description' is empty"
 
 
 @pytest.mark.parametrize("skill_dir", skill_dirs, ids=skill_ids)
 def test_skill_name_matches_directory(skill_dir: Path) -> None:
-    """SKILL.md frontmatter name must match the skill directory name.
+    """SKILL.md frontmatter (or its skill.contract.yaml fallback) name must match the skill directory name.
 
     :param skill_dir: Path to the skill directory.
     :type skill_dir: Path
     """
-    post = _load_skill_md(skill_dir)
-    assert post.metadata.get("name") == skill_dir.name, (
-        f"{skill_dir.name}/SKILL.md: frontmatter name '{post.metadata.get('name')}' "
+    metadata = _effective_metadata(skill_dir)
+    assert metadata.get("name") == skill_dir.name, (
+        f"{skill_dir.name}/SKILL.md: frontmatter name '{metadata.get('name')}' "
         f"does not match directory name '{skill_dir.name}'"
     )
 
@@ -216,11 +242,15 @@ def test_tested_true_implies_test_file_exists(skill_dir: Path) -> None:
     if skill_id in _TEST_COVERAGE_EXEMPT:
         pytest.skip(f"{skill_dir.name}: grandfathered in _TEST_COVERAGE_EXEMPT — skipping")
 
-    expected_filename = f"test_{skill_dir.name}_skill.py"
-    matches = list(TESTS_SKILLS_DIR.rglob(expected_filename))
+    # Bespoke behavioural tests use the '_skill.py' suffix and live under tests/skills/;
+    # code-backed skills with a handler module (e.g. confluence_create_page_handler.py)
+    # test it as '_handler.py', co-located inside the skill's own directory.
+    candidate_names = [f"test_{skill_dir.name}_skill.py", f"test_{skill_dir.name}_handler.py"]
+    matches = [m for name in candidate_names for m in TESTS_SKILLS_DIR.rglob(name)]
+    matches += [m for name in candidate_names for m in skill_dir.rglob(name)]
 
     assert matches, (
         f"{skill_dir.name}/SKILL.md sets tags.tested: true but no test file found.\n"
-        f"Expected a file named '{expected_filename}' somewhere under tests/skills/.\n"
+        f"Expected one of {candidate_names} somewhere under tests/skills/ or {skill_dir}/.\n"
         f"Either add the test file or set tags.tested: false in SKILL.md."
     )

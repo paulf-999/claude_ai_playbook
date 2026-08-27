@@ -1,0 +1,93 @@
+---
+# ═══════════════════════════════════════════════════════════════════════════════
+# skill.contract.yaml — Jira Create Ticket/Epic
+# ═══════════════════════════════════════════════════════════════════════════════
+
+name: jira_create
+  # Unique identifier in kebab-case
+  # Must match the directory name and SKILL.md frontmatter name field.
+
+version: 0.1.0
+  # Semantic versioning: 0.x.x (draft), 1.x.x (tactical), 2+.x.x (strategic)
+  # Phase 1 focuses on individual ticket/epic creation only
+
+summary: Create Jira tickets and epics with full field configuration
+  # Max 80 characters. Immediately clear what the skill accomplishes.
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Lifecycle & Maintenance
+# ═══════════════════════════════════════════════════════════════════════════════
+
+maturity: draft
+  # draft     = happy path only; error handling incomplete; TODOs allowed
+  # tactical  = main path + light error handling; edge cases documented
+  # strategic = full coverage incl. edge cases; production-ready
+
+test_coverage_level: comprehensive
+  # none           = no tests exist
+  # basic          = 1–2 happy path tests
+  # comprehensive  = main path + error cases + edge cases
+  # 10 tests: happy path, epic creation, MCP errors (timeout/403/404), transitions, optional fields, label enforcement
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Usage
+# ═══════════════════════════════════════════════════════════════════════════════
+
+when:
+  # Explicit triggers: phrases that invoke this skill
+    - /jira_create
+    - /jira_create ticket
+    - /jira_create epic
+    - /jira_create bug
+    - /jira_create task
+    - /jira_create improvement
+    - create a Jira ticket
+    - create a Jira epic
+    - create a bug in Jira
+    - log this as a Jira ticket
+  # Contextual triggers: conditions where Claude should suggest this skill
+    - when user wants to create a new Jira ticket with field configuration
+    - when user wants to create a new Jira epic
+    - when user wants to log a bug with story points
+    - when user wants to track a task in Jira
+
+dont_use_for:
+  # Anti-patterns: scenarios where this skill should NOT be used
+    - updating existing Jira tickets (edit workflows)
+    - batch-creating tickets from templates (not implemented in Phase 1)
+    - managing sprints or assigning to sprints
+    - creating issue links or child issues
+    - complex field customization beyond required constraints
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Requirements
+# ═══════════════════════════════════════════════════════════════════════════════
+
+requires:
+    tools:
+    # Claude tools this skill uses
+        - Read
+
+    mcp_servers:
+    # MCP servers this skill integrates with
+        - Atlassian
+
+    external:
+    # External system access or files required
+        - Atlassian (Jira) workspace with write access
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Output & Safety
+# ═══════════════════════════════════════════════════════════════════════════════
+
+output: external_service
+  # conversational   = responds with text/prose
+  # file             = creates/modifies files
+  # external_service = makes API calls or external changes (Jira, GitHub, etc.)
+  # mixed            = combines the above
+  # This skill creates tickets/epics in Jira (external service)
+
+reversible: false
+  # true  = skill's actions can be undone/rolled back
+  # false = skill's actions are permanent (e.g., creation, deletion, published posts)
+  # Creating a Jira ticket is permanent; cannot be directly undone

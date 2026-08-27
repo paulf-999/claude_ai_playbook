@@ -1,33 +1,18 @@
 ---
 name: jira_create
-description: Create Jira tickets or epics for the Data Platform team — batch-create from a template or create a standalone epic. Requires the Atlassian MCP server (`make enable_mcp server=Atlassian`, then restart Claude Code).
-version: 1.0.0
-maturity: tactical
+description: Create Jira tickets and epics with full field configuration. Requires Atlassian MCP enabled.
+version: 0.1.0
+maturity: draft
 tags:
   criticality: should
   status: active
   tested: true
-tools: Read, mcp__claude_ai_Atlassian__getAccessibleAtlassianResources, mcp__claude_ai_Atlassian__searchJiraIssuesUsingJql, mcp__claude_ai_Atlassian__getJiraIssue, mcp__claude_ai_Atlassian__createJiraIssue, mcp__claude_ai_Atlassian__transitionJiraIssue
-triggers:
-  explicit:
-    - /jira_create
-    - "create jira tickets"
-    - "batch create tickets"
-    - "create an epic"
-  contextual:
-    - user wants to create one or more Jira tickets from a template
-    - user wants to create a Jira epic
-not_for:
-  - updating existing tickets (/jira_update)
-  - hygiene checks on existing tickets (/jira_hygiene)
-output:
-  type: external_service
-  confirmation_required: true
+tools: Read, mcp__atlassian__createJiraIssue
 ---
 
 ## Scope gate
 
-This skill is at **tactical** maturity. Claude behaviour is constrained accordingly:
+This skill is at **draft** maturity. Claude behaviour is constrained accordingly:
 
 | Maturity | Allowed |
 |---|---|
@@ -37,40 +22,44 @@ This skill is at **tactical** maturity. Claude behaviour is constrained accordin
 
 ---
 
-You are acting as the **project manager** agent. Adopt that persona fully.
+## 📋 What This Skill Can Do
+
+✅ **Create individual Jira tickets:** Title, description, assignee, story points
+✅ **Create Jira epics:** Name, description, assignee
+✅ **Validate constraints:** Story points ≥0.5
 
 ---
 
-## ⚠️ Pre-check — Atlassian MCP
+## 🚫 What This Skill Can't Do
 
-Before proceeding, verify the Atlassian MCP is available by calling `getAccessibleAtlassianResources`. If the call fails or returns a permission error, stop immediately and tell the user:
-
-> "This skill requires the Atlassian MCP server. Run `make enable_mcp server=Atlassian` and restart Claude Code, then try again."
-
-Do not proceed to Phase 1 without a successful MCP connection.
-
----
-
-## 🔍 Phase 1 — Identify the operation
-
-Ask the user which operation they want to perform:
-
-| Pattern | Description |
-|---|---|
-| `batch_create_from_template` | Create multiple tickets from a defined template, with per-ticket field overrides |
-| `epic_create` | Create an epic with standard DM fields, components, and parent hierarchy |
-
-Wait for the user's response before proceeding.
+❌ **Update existing tickets** — Only creates new ones
+❌ **Batch-create from templates** — One ticket at a time
+❌ **Manage sprints or components** — Not supported yet
+❌ **Create issue links** — Child issues not supported
 
 ---
 
-## 🏗️ Phase 2 — Follow the pattern
+## 📌 Prerequisites
 
-Read the pattern file and follow the instructions within it exactly:
+- **Atlassian MCP enabled:** `make enable_mcp server=Atlassian` and Claude Code restarted
+- **Jira project access:** Write permission to target project
 
-`~/.claude/skills/_atlassian_skills/jira_create/patterns/<pattern_name>.md`
+---
 
-- Do NOT start creating tickets before the pattern's scope confirmation step has been completed and the user has explicitly confirmed.
-- Do NOT create any ticket without the `dm-claude-created` label — required on all Claude-created tickets.
-- Do NOT set story points to `0` — minimum is `0.5` for admin tasks.
-- Do NOT leave created tickets in `Triage` status — transition each to `Backlog` immediately after creation.
+## 🔧 How it works
+
+**Phase 1: Gather details** → Ask for ticket type, title, description, assignee, story points
+
+**Phase 2: Validate & create** → Validate story points ≥0.5, call `createJiraIssue` MCP method
+
+**Phase 3: Report result** → Display issue ID and link
+
+---
+
+## 🧠 Known Gaps
+
+- **No template system:** Must provide details for each ticket individually.
+- **No sprint/component caching:** Recent selections not remembered.
+- **No labels/components:** Cannot assign labels or components yet.
+
+---
