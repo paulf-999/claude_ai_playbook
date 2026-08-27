@@ -20,6 +20,27 @@ my_service_password: >-
 
 ---
 
+## 🔒 Secrets passed to external tools
+
+When a secret or sensitive value must be passed to an external CLI tool (`kubectl apply`, `helm upgrade --values`, etc.), pipe it via `stdin` rather than writing it to a file on the target host. Writing credentials to disk — even to a temp file — risks leaving them behind if the task fails mid-execution.
+
+```yaml
+- name: Apply credentials secret
+  ansible.builtin.shell: |    # shell required — heredoc (<<EOF) is a shell feature
+    kubectl apply -f - <<EOF
+    apiVersion: v1
+    kind: Secret
+    ...
+    EOF
+  no_log: true
+  register: result
+  changed_when: "'configured' in result.stdout or 'created' in result.stdout"
+```
+
+For `helm upgrade --values`, pass values inline using `--set` flags or pipe a rendered template via `--values -` (stdin). Never write a values file containing secrets to the target host filesystem.
+
+---
+
 ## 🗃️ Inventory layout
 
 Inventories are organised under `inventory/` with one subdirectory per scope:

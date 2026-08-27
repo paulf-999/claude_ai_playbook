@@ -33,12 +33,12 @@ Always combine the quarter component with the year-level component `Data Platfor
 
 ## 🏆 Parent epics (2026)
 
-| Epic | Jira key | Internal ID | Covers |
-|---|---|---|---|
-| Data Platform - Planning (2026 - H1) | DM-33889 | `444372` | Sprints 63–65 (Q2) |
-| Data Platform - Planning (2026 - H2) | DM-?? | `495840` | Sprints 66–73 (Q3–Q4) |
+Parent epics are **initiative-specific** — there is no single shared planning epic to default to. Select the parent epic based on the work being done:
 
-If uncertain, fetch the epic using `getJiraIssue` on the key to confirm the ID before setting the parent.
+- For feature or delivery work: use the relevant initiative or project epic
+- For planning prep or admin work: use the assignee's own planning epic — ask the user to provide it, do not assume
+
+Confirm the epic ID via `getJiraIssue` before setting the parent. Do not hardcode or default to a personal planning epic.
 
 ---
 

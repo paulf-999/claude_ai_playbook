@@ -4,6 +4,16 @@ Guidance on which Claude Code permission prompts to suppress, which to keep, and
 
 ---
 
+## ⚠️ Deny and confirmation are behavioural controls, not a sandbox boundary
+
+**Risk:** Pattern-based bypass.
+
+Permission checks — both `permissions.allow`/`permissions.deny` entries and confirmation prompts — match against the literal command string. This is a prefix/pattern check, not semantic understanding of intent. Chaining commands (`true && sudo -i`), wrapping in a subshell, or rephrasing a blocked command can evade a deny pattern that only matches one specific literal form. A denied `git reset --hard` prefix does not guarantee the same effect can't be reached through a different invocation.
+
+**Mitigation:** Treat deny entries and confirmation prompts as a strong deterrent and an audit trail — not a hard technical boundary. For anything that must never execute regardless of phrasing (e.g. `sudo` on a shared or production host), enforce it at the OS/user-privilege level (non-sudo user, container isolation) rather than relying solely on Claude Code's permission layer.
+
+---
+
 ## The core principle
 
 **Read-only operations** — no state is modified, no side effects. Safe to suppress.

@@ -74,6 +74,8 @@ Add the new role path and assign the appropriate owner or team.
 - Use `no_log: true` on any task that handles secrets or sensitive values.
 - Roles must be self-contained and reusable — no hardcoded environment-specific values inside a role.
 - In `rescue` blocks: surface logs inline rather than referencing a file path; include in-cluster diagnostics (port bindings, pod logs, events); use `failed_when: false` on all diagnostic tasks so a missing resource does not mask the original error; do not auto-uninstall — preserve state for post-failure investigation.
+- Prefer `ansible.builtin.command` over `ansible.builtin.shell` unless the task genuinely requires shell features (pipes, redirects, glob expansion). `command` avoids shell injection risk and satisfies ansible-lint's `command-instead-of-shell` rule.
+- Set `changed_when` explicitly on every `ansible.builtin.command` or `ansible.builtin.shell` task. Many external tools always exit 0 regardless of whether state changed — without `changed_when`, Ansible reports spurious `changed` on every run. Derive the condition from stdout/stderr content where possible (e.g. `"'already exists' not in result.stdout"`).
 
 ---
 
