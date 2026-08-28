@@ -66,6 +66,8 @@ while IFS= read -r file; do
         tests/skills/* | tests/test_skills_structural.py)
             add_test "tests/skills/"
             add_test "tests/test_skills_structural.py" ;;
+        tests/test_process.py)
+            add_test "tests/test_process.py" ;;
         tests/hooks/*)
             add_test "tests/hooks/" ;;
         tests/tooling/*)
