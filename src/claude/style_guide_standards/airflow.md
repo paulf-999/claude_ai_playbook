@@ -13,6 +13,7 @@ Defines the team's standards for writing and structuring Apache Airflow DAGs and
 | [`airflow/tasks_and_operators.md`](airflow/tasks_and_operators.md) | Task design, operator selection, and DAG boilerplate |
 | [`airflow/task_dependencies_and_grouping.md`](airflow/task_dependencies_and_grouping.md) | Helper files, task dependencies, TaskGroups, and XComs |
 | [`airflow/best_practices.md`](airflow/best_practices.md) | Idempotency, catchup, retries, error handling, Variables, and testing |
+| [`airflow/connections_and_variables.md`](airflow/connections_and_variables.md) | AKV-backed connections and variables — naming conventions, derivation rules, and provisioning |
 
 ---
 
@@ -32,3 +33,4 @@ Defines the team's standards for writing and structuring Apache Airflow DAGs and
 @./airflow/tasks_and_operators.md
 @./airflow/task_dependencies_and_grouping.md
 @./airflow/best_practices.md
+@./airflow/connections_and_variables.md
