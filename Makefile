@@ -7,18 +7,18 @@ SHELL = /bin/bash
 # make test             # run structural validation tests
 # make lint_tags        # validate Tier 1 tags on all Claude components (run before committing)
 # make audit_components # run periodic health audit on the Claude component library
-# make install          # install Claude config files, Claude CLI, core MCP servers, and plugins
+# make install          # [DISABLED] install Claude config files into ~/.claude/ (use make update instead)
 # make update           # update Claude config files in ~/.claude/ (WSL)
 # make clean_plans      # archive executed/superseded plans to ~/.claude/plans/archive/
 # make clean_backups    # move old ~/.claude_backup_* dirs to ~/.claude_backup_archive/
 # make install_windows  # sync Claude config files to Windows .claude (run from WSL2)
 # make update_windows   # alias for install_windows
-# make sync             # update WSL + Windows .claude in one step (run from WSL2)
+# make sync             # [DISABLED] update WSL + Windows .claude in one step (run from WSL2)
 # make install_plugins  # install Claude Code plugins only (runs install_plugins.sh)
 # make patch_plugins    # apply team patches to installed plugins (run after install_plugins)
 #
-# MCP server targets (install_core_mcp_servers, install_mcp_server_*, enable_mcp,
-# disable_mcp) are defined in src/make/mcp.mk.
+# MCP server targets (install_core_mcp_servers, install_mcp_server_*, enable_mcp)
+# are defined in src/make/mcp.mk.
 #================================================================
 
 #=======================================================================
@@ -30,15 +30,15 @@ include src/make/mcp.mk
 #=======================================================================
 # Targets
 #=======================================================================
-all: install
+all: update
 
 deps:
 	@echo "${INFO}\nInstalling Python test dependencies${COLOUR_OFF}"
 	@pip install -r requirements.txt
 
-install:
-	@echo "${INFO}\nInstalling Claude config files into ~/.claude/${COLOUR_OFF}"
-	@bash src/sh/claude/install_claude_files.sh
+# install:
+# 	@echo "${INFO}\nInstalling Claude config files into ~/.claude/${COLOUR_OFF}"
+# 	@bash src/sh/claude/install_claude_files.sh
 
 update:
 	@echo "${INFO}\nUpdating Claude config files in ~/.claude/${COLOUR_OFF}"
@@ -50,7 +50,7 @@ install_windows:
 
 update_windows: install_windows
 
-sync: update install_windows
+# sync: update_windows
 
 install_plugins:
 	@echo "${INFO}\nInstalling Claude Code plugins${COLOUR_OFF}"
@@ -68,6 +68,13 @@ lint_tags:
 	@echo "${INFO}\nValidating Tier 1 tags on Claude components${COLOUR_OFF}"
 	@python3 src/sh/claude/claude_tag_lint.py
 
+lint_skills:
+	@echo "${INFO}\nValidating skill authoring gate (crawl criteria)${COLOUR_OFF}"
+	@python3 src/sh/claude/skill_authoring_gate_lint.py
+
+lint: lint_tags lint_skills
+	@echo "${INFO}\nLinting complete${COLOUR_OFF}"
+
 audit_components:
 	@echo "${INFO}\nRunning Claude component health audit${COLOUR_OFF}"
 	@python3 src/sh/claude/claude_component_audit.py
@@ -80,5 +87,7 @@ clean_backups:
 	@echo "${INFO}\nMoving old ~/.claude_backup_* dirs to ~/.claude_backup_archive/${COLOUR_OFF}"
 	@python3 src/sh/claude/clean_backups.py
 
+clean: clean_plans clean_backups
+
 # .PHONY tells Make that these targets don't represent files
-.PHONY: all deps install update install_windows update_windows sync install_plugins patch_plugins test lint_tags audit_components clean_plans clean_backups
+.PHONY: all clean deps update install_windows update_windows install_plugins patch_plugins test lint lint_tags lint_skills audit_components clean_plans clean_backups

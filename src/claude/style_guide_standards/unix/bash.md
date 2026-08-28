@@ -123,4 +123,4 @@ print_section_header "${DEBUG}" "Script execution completed." && echo
 
 - Use absolute paths where the working directory may vary.
 - Do not parse `ls` output — use globs or `find` instead.
-- Comment non-obvious logic inline; keep comments accurate and up to date.
+- Comment non-obvious logic; place comments on the line above the code they describe, not at the end of a line. When in doubt, add a comment. Keep comments accurate and up to date.

@@ -31,6 +31,7 @@ Instructions that shape how Claude works within a session:
 - the task brief convention for lean sub-agent orchestration (see [`docs/reference/claude_config/orchestration.md`](reference/claude_config/orchestration.md))
 - the draft file convention (`~/_drafts/`, organised by type)
 - the Graphify skill trigger (`graphify.md`) — persisted here so it survives playbook syncs
+- the sub-agent selection guidance — default agent, available sub-agents, and how to switch
 
 ---
 
@@ -46,7 +47,6 @@ Hard constraints that Claude must follow in every session, covering:
 - file hygiene
 - git
 - managed files (index files that must not be edited directly)
-- proactive skill dispatch (skills across all groups invoked automatically when context matches)
 - MCP discipline
 - security
 - skill authoring standards
@@ -115,3 +115,5 @@ See [`src/claude/hooks/README.md`](../src/claude/hooks/README.md)
 
 * Shell and Python scripts wired to Claude Code lifecycle events via `settings.json`.
 * Run automatically — no manual invocation required.
+
+**WIP hooks** (`src/claude/_wip/hooks/`) contain experimental hooks not yet registered in `settings.json`. See [`_wip/hooks/README.md`](../src/claude/_wip/hooks/README.md) for status and activation instructions.

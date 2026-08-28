@@ -29,6 +29,13 @@ repos:
             entry: src/sh/pre_commit_hooks/run_targeted_tests.sh
             language: script
             pass_filenames: false
+          - id: skill_authoring_gate # Validate against C0-C7 (crawl), W1-W6 (walk), R1-R5 (run); blocks on crawl failures, warns on walk/run
+            name: Skill validation - authoring gate (all levels)
+            description: Validates SKILL.md against authoring gate criteria.
+            entry: src/sh/pre_commit_hooks/skill_authoring_gate.sh
+            language: script
+            files: ^src/claude/skills/
+            pass_filenames: false
     # Shell script validation hook - ensures shell scripts conform to shellcheck
     - repo: https://github.com/jumanjihouse/pre-commit-hooks
       rev: 3.0.0

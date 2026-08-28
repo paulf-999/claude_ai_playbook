@@ -1,6 +1,8 @@
+# 🤖 Sub-agent selection
+
 ## Sub-agent selection
 
-The `architect` sub-agent is loaded by default via the import above.
+The `architect` sub-agent is the default — imported in `CLAUDE.md`.
 
 At the start of each session, read `~/.claude/process/session_input.md`. If the `## Sub-agent` section contains a non-comment value, load that sub-agent instead by importing the corresponding file from `~/.claude/agents/`. If no sub-agent is specified, continue with `architect`.
 

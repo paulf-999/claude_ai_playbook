@@ -63,3 +63,21 @@ Source systems each have a corresponding folder under both `staging/` and `base/
 | **CTEs over subqueries** | Use CTEs — never subqueries. See [`../sql/cte_style_guide.md`](../sql/cte_style_guide.md). |
 | **Row limiting** | Always append `{{ limit_rows() }}` to the final SELECT and to major intermediate CTEs. This is a no-op in production and limits rows in dev/CI targets. |
 | **Audit fields** | Staging models must include audit fields via `{{ dbt_last_modified_field() }}` or the relevant audit macro. |
+
+---
+
+## ⚡ Incremental model configuration
+
+When a model uses `materialized='incremental'`, configure these properties explicitly — never leave them at implicit defaults:
+
+**`unique_key`** — the column(s) that uniquely identify a row. dbt uses this to match incoming records against existing ones. Use the model's surrogate key (`KEY`) unless the source has a reliable natural key.
+
+**Partition filter (`is_incremental()` block)** — always include a filter that bounds the incremental run to a time window. Align the filter column with the table's clustering key:
+
+```sql
+{% if is_incremental() %}
+  WHERE event_date >= DATE_TRUNC('day', DATEADD('day', -3, CURRENT_DATE))
+{% endif %}
+```
+
+The lookback window (3 days above) must accommodate late-arriving data. Document the chosen window in a model comment if it deviates from the team default.

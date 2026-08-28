@@ -16,6 +16,7 @@ For the normative rules underpinning these patterns, see `rules/development.md` 
 | [`data_pipeline/monitoring.md`](data_pipeline/monitoring.md) | Freshness SLAs; threshold alerting; silent failure detection |
 | [`data_pipeline/data_validation.md`](data_pipeline/data_validation.md) | Schema boundary validation; business-rule validation; two-layer model |
 | [`data_pipeline/cost_management.md`](data_pipeline/cost_management.md) | Materialisation tradeoffs; compute sizing; full refresh cost scaling |
+| [`data_pipeline/provenance.md`](data_pipeline/provenance.md) | Provenance footer format for data-derived answers; source tier, freshness, model owner |
 
 ---
 
@@ -27,3 +28,4 @@ For the normative rules underpinning these patterns, see `rules/development.md` 
 @./data_pipeline/monitoring.md
 @./data_pipeline/data_validation.md
 @./data_pipeline/cost_management.md
+@./data_pipeline/provenance.md

@@ -12,6 +12,7 @@ Defines the team's standards for writing and structuring Ansible projects. Sourc
 | [`ansible/roles_and_tasks.md`](ansible/roles_and_tasks.md) | Role layout, capability categories, task conventions, and versioning |
 | [`ansible/secrets_and_inventory.md`](ansible/secrets_and_inventory.md) | Vault secrets, dynamic inventory plugins, and scope layout |
 | [`ansible/variables.md`](ansible/variables.md) | `l1`–`l6` group_vars hierarchy, precedence, and variable naming |
+| [`ansible/air_gapped_deployment.md`](ansible/air_gapped_deployment.md) | Air-gapped constraints, Cloudsmith artefact sourcing, kind+helm image handling, and Helm chart deployment |
 
 ---
 
@@ -89,3 +90,4 @@ Use FQCN for all modules: `ansible.builtin.apt`, not `apt`.
 @./ansible/roles_and_tasks.md
 @./ansible/secrets_and_inventory.md
 @./ansible/variables.md
+@./ansible/air_gapped_deployment.md
