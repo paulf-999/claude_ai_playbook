@@ -77,4 +77,4 @@ Escalating adds cost but prevents:
 ## 🔗 Related
 
 - Parent: `behaviour.md` — safe defaults and decision-making patterns
-- Reference: `context_management.md` — context management principles (related but separate concern)
+- Reference: `claude_operational_efficiency.md` — context management principles (related but separate concern)

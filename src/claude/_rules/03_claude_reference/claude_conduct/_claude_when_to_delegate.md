@@ -168,5 +168,5 @@ When spawning a sub-agent, apply these constraints:
 
 ## 🔗 Related
 
-- Parent: `context_management.md` — context management principles and constraints
+- Parent: `claude_operational_efficiency.md` — context management principles and constraints
 - Sibling: `behaviour/_model_selection_strategy.md` — when to use which Claude model
