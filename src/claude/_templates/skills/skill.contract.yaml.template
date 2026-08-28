@@ -1,0 +1,28 @@
+# Skill Contract Template
+#
+# Define the contract for this skill. Fields are required unless marked (optional).
+# Use this as your starting point when creating a new skill.
+
+name: <domain>_<action>          # Skill identifier: kebab-case, must match directory prefix
+                                 # Example: git_create_pr, confluence_create_page
+version: 0.1.0                   # Semantic versioning: 0.x (draft) · 1.x (tactical) · 2.x+ (strategic)
+summary: One-line description    # Plain-language description (e.g., "Create a pull request with auto-populated description")
+
+maturity: draft                  # Lifecycle stage: draft, tactical, or strategic
+test_coverage_level: none        # Testing depth: none, basic, or comprehensive
+
+when:                            # Command triggers that invoke this skill
+  - /<skill_name>                # Slash command (e.g., /git_create_pr)
+  - "phrase that triggers"       # Optional: phrase trigger (e.g., "create a PR")
+
+dont_use_for:                    # Anti-patterns — when NOT to use this skill
+  - "anti-pattern 1"             # Example: ["batch PRs", "force pushes"]
+
+requires:
+  tools: [Bash, Read, Agent]     # Tools needed (Bash, Read, Write, Agent, etc.)
+  mcp_servers: [GitHub]          # MCP servers accessed (empty list if none)
+  external: []                   # External system APIs accessed (empty if none)
+                                 # Example: ["GitHub API", "Slack API"]
+
+output: conversational           # Output type: conversational, file, external_service, or mixed
+reversible: true                 # Whether actions can be undone (false if permanent/destructive)

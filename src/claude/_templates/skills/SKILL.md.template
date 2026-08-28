@@ -1,0 +1,120 @@
+---
+name: <domain>_<action>
+description: One-line description of what the skill does
+version: 0.1.0
+maturity: draft
+tags:
+  criticality: should
+  status: active
+  tested: false
+---
+
+## 📖 Overview
+
+One plain-language sentence answering: "What is this?" Use active voice and avoid jargon. Readers should understand the skill's purpose in under 10 seconds.
+
+Example: "Creates Jira issues with full field configuration, validation, and error recovery."
+
+---
+
+## 📊 Quality Scorecard
+
+| Dimension | Score | Notes |
+|---|---|---|
+| **Design** | X/10 | [Brief assessment of architecture, UX clarity, API design] |
+| **Complexity** | X/10 | [Code size, phases, dependencies, conceptual difficulty] |
+| **Test Coverage** | X/10 | [Test count, breadth, depth] |
+| **Code Quality** | X/10 | [Maintainability, clarity, error handling] |
+| **Security** | X/10 | [Input validation, secret handling, permission guardrails] |
+| **Documentation** | X/10 | [SKILL.md clarity, examples, known gaps] |
+| **Standards Compliance** | X/10 | [Naming, file structure, style guide adherence] |
+| **Overall** | X/10 | [Weighted average] |
+
+---
+
+## 🎯 Scope
+
+This skill is at **draft** maturity. Claude behaviour is constrained accordingly:
+
+| Maturity | Allowed |
+|---|---|
+| draft | Happy path only. Log gaps as TODOs, do not solve them. No refactoring. |
+| tactical | Main path + light error handling. No gold-plating. |
+| strategic | Full coverage, edge cases, documentation, evals expected. |
+
+---
+
+## ✅ Capabilities
+
+### Can do
+
+- **[Capability 1]** — [one-line explanation]
+- **[Capability 2]** — [one-line explanation]
+
+### Can't do
+
+- **[Limitation 1]** — [why it's out of scope]
+- **[Limitation 2]** — [why it's out of scope]
+
+---
+
+## 🔐 Security
+
+- **Data handling:** Explain what data the skill processes and how it's handled (e.g., "does not log credentials", "sanitises user input before API calls")
+- **Access:** List what resources or APIs the skill accesses (e.g., "reads ~/.claude/, writes to GitHub")
+- **Reversibility:** Is this skill's action reversible? (e.g., "moves files with `mv`, reversible with `git revert`" or "creates resources in external systems, not reversible without manual deletion")
+
+---
+
+## 📝 Prerequisites
+
+- **[Requirement 1]** — [why needed, how to check]
+- **[Requirement 2]** — [why needed, how to check]
+
+Example prerequisites:
+- **Bash tool available** — required for running shell commands
+- **Read tool available** — required for reading config files
+- **GitHub MCP enabled** — run `/enable_mcp server=GitHub` before using
+
+---
+
+## 🛠️ Workflow
+
+Describe the skill's execution as a series of phases. Each phase should be 2–4 lines.
+
+### Phase 1 — [Description]
+
+[Step-by-step execution details, 2–4 bullets]
+
+### Phase 2 — [Description]
+
+[Step-by-step execution details, 2–4 bullets]
+
+---
+
+## 🚨 Error Recovery
+
+Common failures and how to fix them:
+
+| Failure | Recovery |
+|---|---|
+| **[Error scenario 1]** | 1. Check [precondition] <br> 2. If missing, [action] <br> 3. Retry |
+| **[Error scenario 2]** | 1. Verify [resource] exists <br> 2. Fix [issue] <br> 3. Re-run skill |
+
+---
+
+## 🛣️ Known Gaps
+
+Limitations and planned roadmap:
+
+- **[Limitation 1]** — Currently [why it's not implemented]. Planned for v1.0 when [condition].
+- **[Limitation 2]** — Workaround: [temporary solution].
+
+---
+
+**Notes:**
+- This template is ~110 lines (fits ~100-line target + buffer)
+- Add optional sections after "Known Gaps" only if needed (Roadmap, Examples, Walkthrough)
+- Keep descriptions concise — one sentence per bullet, 2–4 bullets per section
+- Use emojis on all `##` headers for scannability
+- Use bold keywords (`**Why:**`, `**Note:**`) when explaining bullets
