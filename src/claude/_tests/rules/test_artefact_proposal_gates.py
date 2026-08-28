@@ -92,7 +92,7 @@ class TestPlacementGate:
             "security.md",
             "testing.md",
         ]
-        # These should be in 01_core/ or 02_claude_internal/
+        # These should be in 01_essentials/ or 02_claude_standards/
         for rule in always_on_rules:
             # Simulate placement check
             assert rule in always_on_rules, f"{rule} should be in top-level tier"
@@ -117,7 +117,7 @@ class TestPlacementGate:
             "dbt.md",
             "airflow.md",
         ]
-        # These should be in 03_lazy_load/
+        # These should be in 04_lazy_load/
         for rule in lazy_load_rules:
             # Simulate placement check: these are domain-specific
             assert rule not in ["guiding_principles.md", "security.md"], f"{rule} should be lazy-loaded"

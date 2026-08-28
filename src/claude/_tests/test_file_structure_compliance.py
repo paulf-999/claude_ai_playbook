@@ -7,7 +7,8 @@ Checks:
 1. **Naming compliance:** snake_case for files, underscore prefix for user-created dirs
 2. **Location compliance:** Files in correct directories (_rules/, _tests/, hooks/, skills/, etc.)
 3. **Child file prefixes:** Child files start with underscore (_child.md)
-4. **Directory depth:** Rules organized properly by tier (01_core/, 02_claude_internal/, 03_lazy_load/)
+4. **Directory depth:** Rules organized properly by tier (01_essentials/, 02_claude_standards/,
+   03_claude_reference/, 04_lazy_load/)
 
 This test is parametrized to scan all files at once and report violations.
 """
@@ -46,10 +47,10 @@ USER_CREATED_DIRS = {
 # Directory-specific validation rules
 DIR_RULES = {
     "_rules": {
-        "subdirs": ["01_core", "02_claude_internal", "03_lazy_load"],
+        "subdirs": ["01_essentials", "02_claude_standards", "03_claude_reference", "04_lazy_load"],
         "rule": (
-            "Rules organized by tier (01_core=blocking, 02_claude_internal=how Claude works, "
-            "03_lazy_load=domain-specific)"
+            "Rules organized by tier (01_essentials=foundational, 02_claude_standards=blocking, "
+            "03_claude_reference=system knowledge, 04_lazy_load=domain-specific)"
         ),
     },
     "hooks": {

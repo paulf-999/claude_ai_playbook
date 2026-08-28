@@ -1,7 +1,7 @@
 """Tests for _rules/ directory structure and content standards.
 
 Verifies the design goals for the ~/.claude/_rules/ layout:
-- Human-readable files at root, Claude-specific internals in claude_internal/
+- Only README.md at root; all rule content lives under a numbered tier directory
 - All @import paths resolve to real files
 - File quality standards (line limits, H1 headings, trailing newlines)
 - CLAUDE.md import priority order
@@ -13,22 +13,19 @@ CLAUDE_DIR = Path.home() / ".claude"
 RULES_DIR = CLAUDE_DIR / "_rules"
 CLAUDE_MD = CLAUDE_DIR / "CLAUDE.md"
 
-# Human-readable theme files permitted at _rules/ root — no others allowed
+# Files permitted directly at _rules/ root — no others allowed. All rule content lives
+# under a tier directory (01_essentials/, 02_claude_standards/, 03_claude_reference/,
+# 04_lazy_load/); root holds only the index.
 EXPECTED_ROOT_FILES = {
-    "behaviour.md",
-    "naming_standards.md",
-    "security.md",
-    "writing_style.md",
     "README.md",
 }
 
-# Claude Code-specific files expected in claude_internal/ — no others allowed
-EXPECTED_INTERNAL_FILES = {
-    "automation_controls.md",
-    "claude_efficiency.md",
-    "git.md",
-    "memory.md",
-    "security_guardrails.md",
+# Tier directories expected directly under _rules/
+EXPECTED_TIER_DIRS = {
+    "01_essentials",
+    "02_claude_standards",
+    "03_claude_reference",
+    "04_lazy_load",
 }
 
 # Paths removed during the 2026-08 restructure that must never reappear
@@ -41,26 +38,28 @@ DISSOLVED_PATHS = [
     RULES_DIR / "git.md",
     RULES_DIR / "optimisation.md",
     RULES_DIR / "aliases.md",
-    RULES_DIR / "lazy_load" / "security.md",
-    RULES_DIR / "lazy_load" / "speculative_features.md",
-    RULES_DIR / "lazy_load" / "style_guide_standards" / "payroc_engineering_naming_standards.md",
-    RULES_DIR / "speculative_features.md",
+    RULES_DIR / "lazy_load",
     RULES_DIR / "claude_internal.md",
+    RULES_DIR / "01_core",
+    RULES_DIR / "02_claude_internal",
 ]
 
 # Imports in CLAUDE.md must appear in this exact priority order
 EXPECTED_IMPORT_ORDER = [
     "MEMORY.md",
-    "behaviour.md",
-    "security.md",
-    "claude_efficiency.md",
-    "automation_controls.md",
-    "memory.md",
-    "security_guardrails.md",
-    "git.md",
-    "writing_style.md",
-    "naming_standards.md",
     "aliases.md",
+    "authoring_rules.md",
+    "authoring_skills.md",
+    "claude_directory_structure.md",
+    "naming_standards.md",
+    "writing_style.md",
+    "guiding_principles.md",
+    "behaviour.md",
+    "git.md",
+    "security.md",
+    "testing.md",
+    "claude_operational_efficiency.md",
+    "claude_rule_loading_strategy.md",
 ]
 
 
@@ -84,14 +83,14 @@ def rule_files() -> list[Path]:
     """Return all .md files in _rules/ eligible for quality checks.
 
     Excludes README.md (documentation, not a rule file) and anything
-    under lazy_load/ (different standards apply there).
+    under 04_lazy_load/ (different standards apply there).
 
     :return: List of rule markdown files to validate.
     :rtype: list[Path]
     """
     return [
         f for f in RULES_DIR.rglob("*.md")
-        if f.name != "README.md" and "lazy_load" not in f.parts
+        if f.name != "README.md" and "04_lazy_load" not in f.parts
     ]
 
 
@@ -100,7 +99,7 @@ def rule_files() -> list[Path]:
 def test_all_imports_resolve():
     """Every @import path in any ~/.claude/ .md file must point to a real file."""
     for md_file in CLAUDE_DIR.rglob("*.md"):
-        if "lazy_load" in md_file.parts:
+        if "04_lazy_load" in md_file.parts:
             continue
         for path in extract_import_paths(md_file):
             assert path.exists(), (
@@ -111,19 +110,18 @@ def test_all_imports_resolve():
 # --- Structure ---
 
 def test_rules_root_contains_only_expected_files():
-    """_rules/ root must only contain human-readable theme files."""
+    """_rules/ root must only contain the README index — all rule content lives under a tier."""
     actual = {f.name for f in RULES_DIR.iterdir() if f.is_file()}
     assert actual == EXPECTED_ROOT_FILES, (
         f"_rules/ root mismatch — expected: {EXPECTED_ROOT_FILES}, got: {actual}"
     )
 
 
-def test_claude_internal_contains_expected_files():
-    """02_claude_internal/ must contain exactly the expected files."""
-    internal_dir = RULES_DIR / "02_claude_internal"
-    actual = {f.name for f in internal_dir.iterdir() if f.is_file()}
-    assert actual == EXPECTED_INTERNAL_FILES, (
-        f"claude_internal/ mismatch — expected: {EXPECTED_INTERNAL_FILES}, got: {actual}"
+def test_rules_root_has_only_tier_directories():
+    """_rules/ root must only contain the four numbered tier directories."""
+    actual = {f.name for f in RULES_DIR.iterdir() if f.is_dir()}
+    assert actual == EXPECTED_TIER_DIRS, (
+        f"_rules/ tier directories mismatch — expected: {EXPECTED_TIER_DIRS}, got: {actual}"
     )
 
 
@@ -134,7 +132,7 @@ def test_aliases_at_claude_root():
 
 
 def test_behaviour_subdir_dissolved():
-    """_rules/behaviour/ subdir was dissolved and must not exist."""
+    """_rules/behaviour/ subdir was dissolved and must not exist at root."""
     assert not (RULES_DIR / "behaviour").is_dir(), "_rules/behaviour/ should not exist"
 
 
@@ -144,10 +142,27 @@ def test_dissolved_paths_absent():
         assert not path.exists(), f"Dissolved path has reappeared: {path}"
 
 
+def test_no_duplicate_files_across_tiers():
+    """No two rule files (excluding 04_lazy_load) should be byte-identical.
+
+    A duplicate usually means content was copied into two tiers instead of
+    being placed once and cross-referenced.
+    """
+    seen: dict[str, Path] = {}
+    for f in rule_files():
+        content = f.read_text()
+        if content in seen:
+            raise AssertionError(
+                f"Duplicate content: {f.relative_to(RULES_DIR)} is identical to "
+                f"{seen[content].relative_to(RULES_DIR)}"
+            )
+        seen[content] = f
+
+
 # --- File quality ---
 
 def test_line_limits():
-    """No _rules/ file (excluding README and lazy_load) may exceed 110 lines."""
+    """No _rules/ file (excluding README and 04_lazy_load) may exceed 110 lines."""
     for f in rule_files():
         lines = f.read_text().splitlines()
         assert len(lines) <= 110, f"{f.name}: {len(lines)} lines exceeds 110-line limit"
