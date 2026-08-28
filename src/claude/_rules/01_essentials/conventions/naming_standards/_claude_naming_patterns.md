@@ -38,9 +38,9 @@
 - **Format:** lowercase only, words separated by underscores (e.g. `naming_standards.md`, `security.md`, `mcp_trust_model.md`)
 - **Location:**
   - `01_essentials/` — blocking/safety rules (always-on imports; e.g. behaviour, security, testing, guiding_principles)
-  - `02_claude_internal/` — how Claude operates (always-on imports; e.g. efficiency, git, memory)
-  - `03_lazy_load/` — domain-specific rules (lazy-loaded on-demand; e.g. style guides, tool guides)
-  - `03_lazy_load/<domain>/` — group related rules by subdomain (e.g. `style_guide_standards/sql.md`, `style_guide_standards/dbt.md`)
+  - `02_claude_standards/` — how Claude operates (always-on imports; e.g. efficiency, git, memory)
+  - `04_lazy_load/` — domain-specific rules (lazy-loaded on-demand; e.g. style guides, tool guides)
+  - `04_lazy_load/<domain>/` — group related rules by subdomain (e.g. `style_guide_standards/sql.md`, `style_guide_standards/dbt.md`)
 - **Name for scale:** choose a name that fits the likely higher grouping, not just today's problem — e.g. `naming_standards.md` over `hook_naming.md` (other identifiers will need naming guidance too)
 
 **Load details on-demand:** See `~/.claude/_rules/01_essentials/authoring_rules.md` for full rule creation checklist, directory placement, and testing requirements.
@@ -54,4 +54,4 @@
 
 **Detailed authoring guides:**
 - **authoring_skills.md** — Full skill naming convention, domain list, skill_domains_future.yaml reference, examples
-- **authoring_rules.md** — Rule naming standards, directory placement (01_essentials, 02_claude_internal, 03_lazy_load), pre-creation checklist
+- **authoring_rules.md** — Rule naming standards, directory placement (01_essentials, 02_claude_standards, 04_lazy_load), pre-creation checklist

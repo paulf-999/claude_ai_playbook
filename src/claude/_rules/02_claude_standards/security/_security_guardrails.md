@@ -4,7 +4,7 @@
 
 > **Scope:** Claude's own conduct — prompt injection defence and secret handling.
 > For secure coding standards (input validation, auth, dependencies), see `_rules/security.md`.
-> For MCP server trust boundaries, see `_rules/03_lazy_load/mcp_trust_model.md` (lazy-loaded when using MCP tools).
+> For MCP server trust boundaries, see `_rules/04_lazy_load/mcp_trust_model.md` (lazy-loaded when using MCP tools).
 
 ## 🎯 Prompt injection
 

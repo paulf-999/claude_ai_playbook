@@ -68,8 +68,8 @@
 - **Format:** lowercase only, words separated by underscores (e.g. `naming_standards.md`, `security.md`)
 - **Location:**
   - `01_essentials/` — blocking/safety rules (always-on imports)
-  - `02_claude_internal/` — how Claude operates (always-on imports)
-  - `03_lazy_load/` — domain-specific rules (lazy-loaded on-demand)
+  - `02_claude_standards/` — how Claude operates (always-on imports)
+  - `04_lazy_load/` — domain-specific rules (lazy-loaded on-demand)
 - **Name for scale:** `naming_standards.md` (applies to all identifiers) over `hook_naming.md` (only hooks)
 
 ---

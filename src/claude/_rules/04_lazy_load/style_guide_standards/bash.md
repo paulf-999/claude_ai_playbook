@@ -18,7 +18,7 @@
 
 All new scripts must start from the canonical template for correct section order (shebang, safety flags, shell_utils source, section headers, trap, logging):
 
-- **Template location:** `~/.claude/_rules/03_lazy_load/style_guide_standards/unix/templates/template_bash_script.sh`
+- **Template location:** `~/.claude/_rules/04_lazy_load/style_guide_standards/unix/templates/template_bash_script.sh`
 - **Always reference:** read the template before writing a new script
 
 ## 🛡️ Safety flags
