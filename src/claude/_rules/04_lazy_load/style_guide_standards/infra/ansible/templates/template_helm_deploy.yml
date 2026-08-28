@@ -1,0 +1,15 @@
+---
+# Air-gapped Helm deployment — pass local .tgz path, never a public repo URL
+
+- name: Deploy application via Helm
+  ansible.builtin.command:
+    cmd: >
+      helm upgrade --install {{ helm_release_name }}
+      {{ myapp_download_cache_dir }}/myapp-{{ myapp_chart_version }}.tgz
+      --namespace {{ myapp_namespace }}
+      --values -
+  args:
+    stdin: '{{ myapp_helm_values | to_yaml }}'
+  register: result
+  changed_when: "'STATUS: deployed' in result.stdout"
+  no_log: true # values may contain secrets
