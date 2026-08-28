@@ -16,6 +16,7 @@
 *.json
 !src/claude/settings.json
 !src/claude/skills/**/evals/*.json
+!.claude/settings.json
 *.csv
 *.csv.gz
 *.tsv
@@ -46,6 +47,13 @@ downloads/
 htmlcov/
 
 #=======================================================================
+# Graphify
+#=======================================================================
+
+# Graphify — generated knowledge graph output (do not commit)
+graphify-out/
+
+#=======================================================================
 # Environments
 #=======================================================================
 .env
@@ -72,3 +80,4 @@ pids/
 # Tool caches
 #=======================================================================
 .sqlfluff_cache
+src/claude/wip/skills/togaf_prep/

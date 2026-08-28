@@ -84,19 +84,29 @@ Do not use Google-style or NumPy-style docstrings.
 
 ## 💬 Inline comments
 
-Add inline comments only where the code is not self-evident — non-obvious logic, non-trivial regex, fallback behaviour, or constraints that are not apparent from the code itself. Do not comment obvious operations.
+Add inline comments where the code is not self-evident — non-obvious logic, non-trivial regex, fallback behaviour, or constraints that are not apparent from the code itself. When in doubt, add a comment. Do not comment obvious operations.
+
+Also label groups of related module-level constants or config values with a one-line comment stating what the group represents — even when each individual line is simple. This orients a reader scanning the file without them needing to infer the group's purpose from names alone; the "obvious operations" exception below applies to single simple statements, not to grouped declarations.
 
 ```python
 # Strips the leading '@' but preserves './' for relative path resolution
 relative = line[1:]
 
-pattern = r"~/.claude/[^\s`'\"\)>]+"  # exclude whitespace and common delimiters
+# Exclude whitespace and common delimiters
+pattern = r"~/.claude/[^\s`'\"\)>]+"
 
-if report.when != "call":  # skip setup/teardown phases; only record the test body result
+# Skip setup/teardown phases; only record the test body result
+if report.when != "call":
     return
+
+# The four possible actions a planned change can resolve to
+CREATE = "CREATE"
+UPDATE = "UPDATE"
+DISABLE = "DISABLE"
+NOOP = "NOOP"
 ```
 
-- Place the comment on the line above for multi-line explanations, or inline at the end for brief notes.
+- Always place comments on the line above the code they describe — never at the end of a line.
 - Keep comments accurate — stale comments are worse than none.
 - Do not restate what the code does in plain English (`i += 1  # increment i`).
 

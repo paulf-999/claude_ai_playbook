@@ -10,12 +10,6 @@ For the full machine-readable output contract schema, see [`skill_schema.yaml.te
 
 ---
 
-## 🔍 Analysis (`skills/_analysis_skills/`)
-
-See [_analysis_skills/README.md](_analysis_skills/README.md).
-
----
-
 ## ⚙️ Admin (`skills/_admin_skills/`)
 
 See [_admin_skills/README.md](_admin_skills/README.md).
@@ -25,6 +19,12 @@ See [_admin_skills/README.md](_admin_skills/README.md).
 ## 🔗 Atlassian (`skills/_atlassian_skills/`)
 
 See [_atlassian_skills/README.md](_atlassian_skills/README.md).
+
+---
+
+## 🔁 CI/CD (`skills/_cicd_skills/`)
+
+See [_cicd_skills/README.md](_cicd_skills/README.md).
 
 ---
 

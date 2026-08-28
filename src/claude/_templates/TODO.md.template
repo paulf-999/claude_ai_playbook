@@ -1,0 +1,97 @@
+# TODO
+
+## Active Month: YYYY-MM
+
+---
+
+## 📋 Pending Items
+
+| # | Created | Updated | Domain | Item | Group | Priority | Effort | Value | Description |
+|---|---------|---------|--------|------|-------|----------|--------|-------|-------------|
+|   |          |          |        |      |       |          |        |       | Start by adding items here. Created date (YYYY-MM-DD), Updated date, Domain (e.g., "Naming Audit", "File Structure"), Item title, Group (Foundation/Quick Win/Core Work/High Effort), Priority emoji (🔴 High / 🟡 Medium / 🟢 Low), Effort emoji (🟢 Low / 🟡 Medium / 🔴 High), Value emoji (💎 High / 💰 Medium / 💵 Low), and multi-line description with bullets. |
+
+---
+
+## ✅ Completed Items
+
+| # | Created | Updated | Domain | Item | Group | Priority | Effort | Value | Description |
+|---|---------|---------|--------|------|-------|----------|--------|-------|-------------|
+|   |          |          |        |      |       |          |        |       | Completed items appear here after moving from Pending. Use strikethrough (`~~text~~`) for all columns to mark as complete. Keep completed items for historical reference; they will be archived at month end. |
+
+---
+
+## Summary (YYYY-MM)
+
+**Pending:** [N] items
+
+**Completed:** [N] items
+
+**Next priority:**
+- [List top 2-3 priorities for the month]
+
+**Notes:**
+- [Any meta-notes about this month's work]
+- [Dependencies or blockers]
+- [Scheduling notes]
+
+---
+
+## How to Use This Template
+
+1. **Copy for a new project:** `cp ~/.claude/_templates/TODO.md.template <project>/.claude/TODO.md`
+2. **Update Active Month:** Replace YYYY-MM with current month (e.g., 2026-09)
+3. **Add items:** Start filling in pending items as they emerge
+4. **Mark as done:** Move items to Completed table and apply strikethrough
+5. **Auto-archive:** At month boundary, current TODO.md is archived and fresh file created
+
+---
+
+## Format Rules
+
+**Columns:**
+- `#` — Item number (sequential; reuse after archival)
+- `Created` — Date item was added (YYYY-MM-DD)
+- `Updated` — Date status last changed (YYYY-MM-DD)
+- `Theme` — Category: Rules, Config, Skills, Process, Infrastructure, Other
+- `Subject` — Specific area (e.g., "File Naming Audit", "Hook Framework")
+- `Item` — Descriptive title of the task
+- `Group` — Grouping strategy: Foundation, Quick Win, Core Work, High Effort
+- `Priority` — High, Medium, Low
+- `Effort` — Estimate: Low, Medium, High
+- `Value` — Impact if completed: High, Medium, Low
+- `Description` — Bullet-pointed details, context, success criteria, resolution notes
+
+**Status indicators:**
+- `📋 Pending` — Not started
+- `🔄 In Progress` — Currently being worked
+- `✅ Done` — Completed (with strikethrough on entire row: `~~text~~`)
+
+**Strikethrough completed items:**
+```markdown
+| ~~1~~ | ~~2026-08-20~~ | ~~2026-08-20~~ | ~~Rules~~ | ~~X~~ | ~~Y~~ | ~~Z~~ | ~~High~~ | ~~Low~~ | ~~High~~ | ~~Description~~ |
+```
+
+---
+
+## Automation
+
+**Monthly rotation:** At 00:00 UTC on 1st of each month:
+1. Current TODO.md → `~/.claude/_archives/TODO/YYYY-MM.md`
+2. Fresh TODO.md created for new month
+3. Archive index updated
+
+**Manual rotation:**
+```bash
+~/.claude/scripts/rotate_todo.sh --force
+```
+
+---
+
+## Reference
+
+- **Format guide:** This file (`_templates/TODO.md.template`)
+- **Rotation process:** `~/.claude/_reference/TODO_rotation_process.md`
+- **Active TODO:** `~/.claude/TODO.md`
+- **Archive index:** `~/.claude/_archives/TODO_archive.md`
+
+---

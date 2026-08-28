@@ -3,9 +3,9 @@
 
 Patches applied:
   1. Adds maturity tier question (question 5) to the Capture Intent phase.
-  2. Adds Tier 1 tag stamping and scope gate injection instructions before
-     the Skill Writing Guide section.
-  3. Copies claude-tag-schema.md into the plugin's references/ directory.
+  2. Updates Skill Writing Guide to generate skill.contract.yaml (contract-first design).
+  3. Updates SKILL.md template to use new structure: metadata table → can/can't do → prerequisites → phases.
+  4. Copies claude-tag-schema.md and prereqs_checklist.md into plugin's references/.
 
 Idempotent: safe to re-run. Uses an HTML comment marker to detect whether
 the patch has already been applied.
@@ -18,9 +18,11 @@ import sys
 from pathlib import Path
 
 
-PATCH_MARKER = "<!-- [TEAM-PATCH:maturity-tags-scope-gate] -->"
+PATCH_MARKER = "<!-- [TEAM-PATCH:skill-contract-first-design] -->"
 PLUGIN_CACHE_ROOT = Path.home() / ".claude" / "plugins" / "cache" / "claude-plugins-official" / "skill-creator"
 SCHEMA_SRC = Path(__file__).parent / "claude-tag-schema.md"
+CHECKLIST_SRC = Path.home() / ".claude" / "skills" / "prereqs_checklist.md"
+TEMPLATE_SRC = Path.home() / ".claude" / "_templates" / "skills" / "skill.contract.yaml.template"
 
 # Inserted before "### Interview and Research"
 MATURITY_QUESTION = """\
@@ -34,36 +36,74 @@ MATURITY_QUESTION = """\
 """
 
 # Inserted before "### Skill Writing Guide"
-TIER1_TAGS_INSTRUCTION = """\
-### Tier 1 tags and scope gate
+SKILL_CONTRACT_INSTRUCTION = """\
+### Contract-first skill design
 
-<!-- [TEAM-PATCH:maturity-tags-scope-gate] -->
+<!-- [TEAM-PATCH:skill-contract-first-design] -->
 
-Every generated SKILL.md must include the following additions based on what you collected
-in Capture Intent (question 5).
+Before writing SKILL.md, generate skill.contract.yaml — the formal contract for the skill.
 
-**Frontmatter** — after `name`, `description`, and `version`, stamp these Tier 1 tags:
+**Create skill.contract.yaml** in the skill directory with this structure:
 
-    maturity: <draft|tactical|strategic>   # from question 5
-    tags:
-      criticality: <must|should|could|want>
-      status: wip
-      tested: false
+    name: <skill-identifier>
+    version: 0.1.0
+    summary: <one-line description of what the skill does>
 
-**Skill body** — add a `## Scope gate` section immediately after the YAML frontmatter,
-before the first heading in the skill content:
+    maturity: <draft|tactical|strategic>  # from your Capture Intent answer
+    test_coverage_level: none
 
-    ## Scope gate
+    when:
+      - /<skill-name>
+      - "phrase that triggers this skill"
 
-    This skill is at **<maturity>** maturity. Claude behaviour is constrained accordingly:
+    dont_use_for:
+      - "anti-pattern 1"
+      - "anti-pattern 2"
 
-    | Maturity | Allowed |
+    requires:
+      tools: [Bash, Read, Agent, ...]  # tools this skill uses
+      mcp_servers: []                   # MCP servers (GitHub, Atlassian, etc.)
+      external: []                      # external system access needed
+
+    output: conversational              # or: file, external_service, mixed
+    reversible: true                    # false if actions are permanent
+
+See `references/prereqs_checklist.md` for field definitions and examples.
+
+**Update SKILL.md** with the contract-first structure:
+
+    # Skill: `<skill-name>`
+
+    | | |
     |---|---|
-    | draft | Happy path only. Log gaps as TODOs, do not solve them. No refactoring. |
-    | tactical | Main path + light error handling. No gold-plating. |
-    | strategic | Full coverage, edge cases, documentation, evals expected. |
+    | **Description** | <one-line summary from contract> |
+    | **Version** | 0.1.0 |
+    | **Tested** | No |
 
-Full tag schema: `references/claude-tag-schema.md`
+    ## 🎯 What this skill can and can't do
+
+    **This skill does:**
+    - <capability 1>
+    - <capability 2>
+
+    **This skill doesn't do:**
+    - <limitation 1>
+    - <limitation 2>
+
+    ## ✅ Prerequisites
+
+    [List what's needed before using: tools, auth, permissions, etc.]
+
+    ## 📋 How it works
+
+    [Brief overview of phases; reference phase1.md, phase2.md, etc. for detail]
+
+    ## ⚠️ Known gaps
+
+    [List limitations and workarounds]
+
+The SKILL.md is for end users; the contract declares what the skill needs and does.
+See `references/prereqs_checklist.md` for the author checklist.
 
 """
 
@@ -119,27 +159,37 @@ def patch_skill_md(skill_md: Path) -> bool:
             )
 
     content = content.replace(interview_anchor, MATURITY_QUESTION + interview_anchor, 1)
-    content = content.replace(writing_guide_anchor, TIER1_TAGS_INSTRUCTION + writing_guide_anchor, 1)
+    content = content.replace(writing_guide_anchor, SKILL_CONTRACT_INSTRUCTION + writing_guide_anchor, 1)
 
     skill_md.write_text(content, encoding="utf-8")
     return True
 
 
-def copy_tag_schema(skill_md: Path) -> None:
-    """Copy claude-tag-schema.md into the plugin's references/ directory.
+def copy_reference_files(skill_md: Path) -> None:
+    """Copy reference files into the plugin's references/ directory.
+
+    Copies:
+      - claude-tag-schema.md (tag definitions)
+      - prereqs_checklist.md (skill authoring checklist)
 
     :param skill_md: Path to the SKILL.md (used to resolve references/).
     :type skill_md: Path
     """
-    if not SCHEMA_SRC.exists():
-        raise FileNotFoundError(
-            f"Tag schema source not found: {SCHEMA_SRC}. "
-            "Ensure the repo is up to date and `make install` has been run."
-        )
     references_dir = skill_md.parent / "references"
     references_dir.mkdir(exist_ok=True)
-    shutil.copy2(SCHEMA_SRC, references_dir / "claude-tag-schema.md")
-    print(f"  Copied claude-tag-schema.md → {references_dir}/")
+
+    if SCHEMA_SRC.exists():
+        shutil.copy2(SCHEMA_SRC, references_dir / "claude-tag-schema.md")
+        print(f"  Copied claude-tag-schema.md → {references_dir}/")
+    else:
+        print(f"  WARNING: Tag schema not found at {SCHEMA_SRC}")
+
+    if CHECKLIST_SRC.exists():
+        shutil.copy2(CHECKLIST_SRC, references_dir / "prereqs_checklist.md")
+        print(f"  Copied prereqs_checklist.md → {references_dir}/")
+    else:
+        print(f"  WARNING: Skill prerequisites checklist not found at {CHECKLIST_SRC}")
+        print(f"           Ensure {CHECKLIST_SRC} exists in global config")
 
 
 def main() -> None:
@@ -162,11 +212,7 @@ def main() -> None:
         print(f"ERROR: {exc}", file=sys.stderr)
         sys.exit(1)
 
-    try:
-        copy_tag_schema(skill_md)
-    except FileNotFoundError as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        sys.exit(1)
+    copy_reference_files(skill_md)
 
     print("skill-creator-patch: done.")
 
