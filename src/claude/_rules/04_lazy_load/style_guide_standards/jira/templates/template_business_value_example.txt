@@ -1,0 +1,18 @@
+DM-38936 — Airflow: Git Migration Impact - Discovery - Cloudsmith Docker Image Integration
+Framework: 7-category (Platform reliability ticket)
+Score calculation: 5 × 0.15 + 4 × 0.20 = 0.75 + 0.80 = 1.55
+
+---
+
+A mandatory company-wide system change (GitHub Enterprise migration) will prevent the
+data platform from running its automated processes unless addressed before the deadline.
+
+- All data reports and dashboards will stop receiving updates
+- Non-negotiable timeline — driven by a migration outside the team's control
+- Scope: identify the solution now; implementation follows as a separate piece of work
+
+Impact Rating (per Data Team Prioritization Framework):
+* a. Prioritization Matrix: https://payroc.atlassian.net/wiki/x/k4DcRQE
+* b. Priority Value Driver: Platform Reliability & Technical Risk – Score: 5
+* c. Secondary Value Driver: Transaction Integrity – Score: 4
+* d. Calculated Score: 1.55

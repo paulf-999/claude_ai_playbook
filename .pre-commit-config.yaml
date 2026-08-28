@@ -53,6 +53,10 @@ repos:
       hooks:
           - id: yamlfmt # yamlfmt - fix input yaml files
             name: YAML fixes
+            # Excludes root-level (unkeyed) sequence examples: yamlfmt always indents
+            # sequences, even at document root, which conflicts with yamllint's
+            # expectation that root-level sequences start at column 0.
+            exclude: ^src/claude/_rules/04_lazy_load/style_guide_standards/infra/ansible/templates/
     # Markdown linter
     - repo: https://github.com/igorshubovych/markdownlint-cli
       rev: v0.43.0
