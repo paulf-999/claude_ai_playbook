@@ -63,32 +63,18 @@ while IFS= read -r file; do
             add_test "tests/test_rules.py" ;;
         src/claude/style_guide_standards/*)
             add_test "tests/test_style_guide_standards.py" ;;
-        tests/skills/_analysis_skills/*)
-            add_test "tests/test_skills_structural.py"
-            add_test "tests/skills/_analysis_skills/" ;;
-        tests/skills/_admin_skills/*)
-            add_test "tests/test_skills_structural.py"
-            add_test "tests/skills/_admin_skills/" ;;
-        tests/skills/_atlassian_skills/*)
-            add_test "tests/test_skills_structural.py"
-            add_test "tests/skills/_atlassian_skills/" ;;
-        tests/skills/_dev_skills/*)
-            add_test "tests/test_skills_structural.py"
-            add_test "tests/skills/_dev_skills/" ;;
-        tests/skills/_communication_skills/*)
-            add_test "tests/test_skills_structural.py"
-            add_test "tests/skills/_communication_skills/" ;;
-        tests/skills/_git_skills/*)
-            add_test "tests/test_skills_structural.py"
-            add_test "tests/skills/_git_skills/" ;;
-        tests/skills/*.py)
-            add_test "tests/test_skills_structural.py"
-            add_test "$file" ;;
+        tests/skills/* | tests/test_skills_structural.py)
+            add_test "tests/skills/"
+            add_test "tests/test_skills_structural.py" ;;
+        tests/test_process.py)
+            add_test "tests/test_process.py" ;;
         tests/hooks/*)
             add_test "tests/hooks/" ;;
         tests/tooling/*)
             add_test "tests/tooling/" ;;
-        tests/*.py | requirements.txt | pytest.ini)
+        requirements.txt | pytest.ini)
+            add_test "tests/" ;;
+        tests/*.py)
             add_test "tests/" ;;
     esac
 done <<< "$STAGED_FILES"

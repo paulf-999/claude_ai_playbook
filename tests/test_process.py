@@ -13,7 +13,6 @@ PROCESS_DIR = Path(__file__).parent.parent / "src" / "claude" / "process"
 SETTINGS_PATH = Path(__file__).parent.parent / "src" / "claude" / "settings.json"
 
 REQUIRED_FILES = [
-    "session.md",
     "planning.md",
     "environment.md",
     "session_input.md",
