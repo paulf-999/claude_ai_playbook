@@ -1,13 +1,13 @@
 ---
 name: confluence_create_page
-description: Interactively create a Confluence page for a known DM team pattern (sprint goals, design decision, initiative idea, platform assessment, requirements, incident report, how-to, general page). Requires the Atlassian MCP server to be enabled (`make enable_mcp server=Atlassian`, then restart Claude Code).
+description: Create a Confluence page using the general_page pattern. Requires Atlassian MCP enabled.
 version: 1.0.0
 maturity: tactical
 tags:
   criticality: should
   status: active
   tested: true
-tools: Read, mcp__claude_ai_Atlassian__getAccessibleAtlassianResources, mcp__claude_ai_Atlassian__createConfluencePage, mcp__claude_ai_Atlassian__updateConfluencePage, mcp__claude_ai_Atlassian__getConfluencePage
+tools: Read, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
 
 ## Scope gate
@@ -22,79 +22,62 @@ This skill is at **tactical** maturity. Claude behaviour is constrained accordin
 
 ---
 
-You are acting as the **technical writer** agent. Adopt that persona fully.
+## 🚀 How it works
+
+**Phase 1 — Gather page details:** Title, creator, status, purpose, sections
+
+**Phase 2 — Local Draft Review:** Generate markdown draft, request approval, iterate
+
+**Phase 3 — Publish to Confluence:** Create and publish after explicit approval
 
 ---
 
-## ⚠️ Pre-check — Atlassian MCP
+## 📚 Documentation
 
-Before proceeding, verify the Atlassian MCP is available by calling `getAccessibleAtlassianResources`. If the call fails or returns a permission error, stop immediately and tell the user:
-
-> "This skill requires the Atlassian MCP server. Run `make enable_mcp server=Atlassian` and restart Claude Code, then try again."
-
-Do not proceed to Phase 1 without a successful MCP connection.
+- **`_phases.md`** — Interactive phases and draft review process
+- **`_testing.md`** — Test cases validating core skill behavior
+- **`_roadmap.md`** — Phase 2+ planned enhancements (more patterns)
 
 ---
 
-## 🔍 Phase 1 — Identify the page type
+## ⏱️ Timeout Protection
 
-Ask the user which type of Confluence page they want to create. Present the known patterns:
+This skill includes protection against Confluence API hangs. If a publish takes too long, you'll see a timeout dialog:
 
-**Generic patterns:**
+**Default behavior:**
+- Normal publish: 30–40 seconds
+- 2-minute timeout: If still publishing after 120 seconds, shows dialog
+- Maximum 6-minute wait: Total elapsed time capped at 360 seconds
 
-| Pattern | Description |
-|---|---|
-| `general_page` | General-purpose page — free-form sections using the standard DM page template |
-| `how_to` | How-to guide — prerequisites table, numbered steps or structured table, notes & considerations |
-| `requirements` | Requirements document — MoSCoW priorities, user stories, acceptance criteria |
-| `incident_report` | Incident report — timeline, cause, resolution, actions, next steps |
-| `claude_component` | Claude Code component page — documents a hook, skill, agent, command, or MCP server for team knowledge sharing |
-| `design_decision` | Design decision document — problem statement, options, recommendation, action items |
+**When timeout occurs:**
 
-**Data platform team patterns:**
+```
+⏱️  CONFLUENCE PUBLISH TIMEOUT
 
-| Pattern | Description |
-|---|---|
-| `data_platform_sprint_goals` | DM sprint goals page — Must / Should / Blocked table, built from the previous sprint's page |
-| `platform_risk_assessment` | Platform risk and maturity assessment — scored by theme |
-| `initiative_idea` | Lightweight idea/initiative log — one-pager to capture and prioritise an idea |
+Your page has been publishing for 2 minutes (120 seconds).
+Confluence is not responding. Choose an action:
 
-Wait for the user's response before proceeding.
+[A]bort   — Cancel now, preserve draft in ~/.claude/_drafts/confluence/
+[R]etry   — Cancel and start a fresh publish attempt
+[C]ontinue — Wait 4 more minutes (max 6 minutes total)
 
----
+Enter your choice (A/R/C):
+```
 
-## 🏗️ Phase 2 — Follow the pattern
-
-Read the pattern file and follow the instructions within it exactly:
-
-- **Generic patterns** — `~/.claude/skills/_atlassian_skills/confluence_create_page/patterns/<pattern_name>.md`
-- **Data platform patterns** — `~/.claude/skills/_atlassian_skills/confluence_create_page/patterns/data_platform/<pattern_name>.md`
-
-Every pattern ends with a **"Create the Confluence page"** step. Do not execute that step directly. Instead, follow the **Local Draft Review** phase below first, and only proceed to Confluence creation once the user has approved the draft.
-
-- Do NOT skip the Local Draft Review phase — never call `createConfluencePage` or `updateConfluencePage` without first completing the draft review loop below.
-- Do NOT publish at the space root — all pages must have a parent page confirmed by the pattern or the user.
-- Do NOT infer the target Confluence space — confirm it with the user if not stated in the request.
-- Do NOT include names of individuals in the page — use generic role descriptors throughout.
+**Customization:**
+- Use `--timeout-seconds N` to set custom timeout (e.g., `--timeout-seconds 60` for 1 minute)
+- Default: 120 seconds (2 minutes)
 
 ---
 
-## 🖊️ Local Draft Review (mandatory — all patterns)
+## ⚠️ Known gaps
 
-After gathering all page content, before creating anything in Confluence:
+- Only general_page pattern (MVP) — Additional patterns deferred to Phase 2
+- Wide view toggle must be done manually in Confluence (API limitation)
 
-1. **Write the draft** — Save the page content as a markdown file:
-   - Directory: `~/_drafts/confluence/`
-   - Filename: `<slug>_YYYY-MMM-DD.md` (slug: lowercase, words separated by underscores, no special characters)
-   - Render the content faithfully — use markdown equivalents of ADF components (e.g. `> ℹ️` for info panels, `> 📝` for note panels, `**bold**` for labels, tables for structured data)
+---
 
-2. **Ask for feedback** — Inform the user of the file path and request review:
-   > "Draft written to `~/_drafts/confluence/<filename>`. Please review and let me know any changes before I publish to Confluence."
+## 📌 Prerequisites
 
-3. **Iterate** — Apply feedback and rewrite the file until the user explicitly approves.
-
-4. **Publish** — Once approved, proceed with the pattern's original "Create the Confluence page" step, building the ADF from the approved draft content.
-
-5. **Optional review** — After publishing, ask:
-   > "Page published. Would you like a Claude review posted as a comment? (y/n)"
-   If yes, invoke `/confluence_review_page` with the newly published page ID.
+- Atlassian MCP server enabled: `make enable_mcp server=Atlassian` + restart Claude Code
+- Confluence space `DA` exists and is accessible

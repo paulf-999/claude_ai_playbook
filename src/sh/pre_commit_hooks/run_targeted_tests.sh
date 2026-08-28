@@ -54,7 +54,7 @@ while IFS= read -r file; do
         src/claude/agents/*)
             add_test "tests/test_agents.py" ;;
         src/claude/skills/*)
-            add_test "tests/test_skills.py" ;;
+            add_test "tests/test_skills_structural.py" ;;
         src/claude/process/*)
             add_test "tests/test_process.py" ;;
         src/claude/commands/*)
@@ -63,7 +63,16 @@ while IFS= read -r file; do
             add_test "tests/test_rules.py" ;;
         src/claude/style_guide_standards/*)
             add_test "tests/test_style_guide_standards.py" ;;
-        tests/* | requirements.txt | pytest.ini)
+        tests/skills/* | tests/test_skills_structural.py)
+            add_test "tests/skills/"
+            add_test "tests/test_skills_structural.py" ;;
+        tests/hooks/*)
+            add_test "tests/hooks/" ;;
+        tests/tooling/*)
+            add_test "tests/tooling/" ;;
+        requirements.txt | pytest.ini)
+            add_test "tests/" ;;
+        tests/*.py)
             add_test "tests/" ;;
     esac
 done <<< "$STAGED_FILES"

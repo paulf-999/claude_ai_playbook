@@ -33,15 +33,16 @@ Components and parent epic are derived from the sprint number via the quarter ma
 
 ## Quarter mapping
 
-Map the sprint number to the correct component IDs and parent epic:
+Map the sprint number to the correct component IDs:
 
-| Sprints | Components | Parent epic |
-|---|---|---|
-| 63–65 (H1) | `13377`, `13444` | `444372` |
-| 66–69 (H2 Q3) | `13377`, `13445` | `495840` |
-| 70–73 (H2 Q4) | `13377`, `13446` | `495840` |
+| Sprints | Components |
+|---|---|
+| 66–69 (H2 Q3) | `13377`, `13445` |
+| 70–73 (H2 Q4) | `13377`, `13446` |
 
-> ⚠️ Component IDs and epic IDs are year-specific. Verify before use — these reflect 2026 H1/H2 values.
+> ⚠️ Component IDs are year-specific. Verify before use — these reflect 2026 H2 values.
+
+**Parent epic:** ask the user to provide the relevant initiative or project epic ID — do not default to any hardcoded value. Confirm via `getJiraIssue` before setting the parent.
 
 ---
 

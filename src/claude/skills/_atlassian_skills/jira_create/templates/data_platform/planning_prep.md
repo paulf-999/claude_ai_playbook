@@ -30,15 +30,16 @@ Sprint planning prep ticket for the Data Platform team. Modelled on DM-37980.
 
 ## Quarter mapping
 
-Map the sprint number (N) to the correct component IDs and parent epic:
+Map the sprint number (N) to the correct component IDs:
 
-| Sprints | Components | Parent epic |
-|---|---|---|
-| 63–65 (H1) | `13377`, `13444` | `444372` |
-| 66–69 (H2 Q3) | `13377`, `13445` | `495840` |
-| 70–73 (H2 Q4) | `13377`, `13446` | `495840` |
+| Sprints | Components |
+|---|---|
+| 66–69 (H2 Q3) | `13377`, `13445` |
+| 70–73 (H2 Q4) | `13377`, `13446` |
 
-> ⚠️ Component IDs and epic IDs are year-specific. Verify before use — these reflect 2026 H1/H2 values.
+> ⚠️ Component IDs are year-specific. Verify before use — these reflect 2026 H2 values.
+
+**Parent epic:** planning prep tickets are assignee-specific. Ask the user to provide their planning epic ID — do not default to any hardcoded value. Confirm via `getJiraIssue` before setting the parent.
 
 ---
 

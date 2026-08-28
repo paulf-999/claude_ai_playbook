@@ -1,0 +1,42 @@
+---
+name: git_create_pr
+version: 1.0.0
+summary: Create GitHub PR from staged changes
+maturity: tactical
+test_coverage_level: comprehensive
+
+dispatch:
+    triggers:
+        explicit:
+            - /git_create_pr
+            - create a pr
+            - make a pr
+    not_for:
+        - complex merge conflict scenarios
+        - non-main branch PRs
+
+output:
+    type: conversational
+    confirmation_required: true
+    reversible: false
+    returns:
+        - GitHub PR URL
+        - PR number
+        - PR title, body, labels
+
+requires:
+    tools:
+        - Bash
+        - gh CLI (authenticated)
+    resources:
+        - .github/pull_request_template.md
+        - git repo with origin remote
+        - <20 staged files
+
+dependencies:
+    external:
+        - git
+        - gh
+    permissions:
+        - write access to repo
+        - GitHub token (gh auth)
