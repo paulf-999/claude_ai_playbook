@@ -143,11 +143,11 @@ Regular maintenance cycles ensure the config stays intentional and focused on cu
 Use this decision tree:
 
 1. **Does it apply to EVERY session** (regardless of project type)?
-   - **Yes** → Place in `_rules/01_essentials/` or `_rules/02_claude_internal/`; add to CLAUDE.md
+   - **Yes** → Place in `_rules/01_essentials/` or `_rules/02_claude_standards/`; add to CLAUDE.md
    - **No** → Go to step 2
 
 2. **Is it domain-specific** (SQL, dbt, Terraform, etc.)?
-   - **Yes** → Place in `_rules/03_lazy_load/`; document in README
+   - **Yes** → Place in `_rules/04_lazy_load/`; document in README
    - **No** → Reconsider whether it's needed at all
 
 3. **Will you use this 5+ times/month**?
