@@ -34,6 +34,8 @@ Applies to **all** content Claude produces — responses, drafts, Confluence pag
 
 Lead with what things do, not how they work. Assume no prior familiarity with the domain. Explain jargon or use plain language instead. Readers should understand core idea in 60 seconds. Structure for progressive disclosure: heading + opening = complete idea; first section = enough to use; later sections = advanced cases.
 
+- **Lead with TL;DR:** open every response with a one- to two-sentence high-level summary before any supporting detail — the reader should get the answer before the reasoning.
+
 ### ✍️ Writing Style for Skills
 
 When writing SKILL.md files, apply these conventions specific to skill documentation:

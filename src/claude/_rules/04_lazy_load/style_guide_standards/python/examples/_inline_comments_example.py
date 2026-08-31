@@ -1,4 +1,3 @@
-# ruff: noqa: F821  # illustrative example; referenced handlers are not meant to be defined here
 """
 Example: Inline commenting style for Python code.
 

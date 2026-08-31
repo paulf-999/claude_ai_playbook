@@ -27,8 +27,8 @@ Use targeted Grep and Glob rather than reading files broadly:
 
 | Goal | Tool |
 |---|---|
-| Find a rule | `Glob src/claude/_rules/**/<rule_name>.md` |
-| Find rules importing another | `Grep "<import_name>" src/claude/_rules/` |
+| Find a rule | `Glob src/claude/rules/**/<rule_name>.md` |
+| Find rules importing another | `Grep "<import_name>" src/claude/rules/` |
 | Find skills in a group | `Glob src/claude/skills/_<group>_skills/**/SKILL.md` |
 | Find a style guide | `Glob src/claude/style_guide_standards/<name>.md` |
 

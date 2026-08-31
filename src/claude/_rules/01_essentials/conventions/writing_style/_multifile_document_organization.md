@@ -14,7 +14,7 @@ Documents follow a **size-based organization principle**:
 **Condition:** One document covering a complete topic, ≤110 lines, self-contained.
 
 ```
-_rules/04_lazy_load/
+_rules/03_lazy_load/
 ├── rule_one.md           ← single file, stays at top level
 ├── rule_two.md           ← single file, stays at top level
 └── rule_three.md         ← single file, stays at top level

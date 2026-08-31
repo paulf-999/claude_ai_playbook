@@ -38,5 +38,5 @@ This file provides the overview and entry point for naming conventions across al
 ## 🔗 Related rules
 
 - `claude_directory_structure.md` — Directory organization and naming conventions for `~/.claude/`
-- `authoring_rules.md` — Rule naming standards and directory placement (01_essentials, 02_claude_standards, 04_lazy_load)
+- `authoring_rules.md` — Rule naming standards and directory placement (01_essentials, 02_claude_internal, 03_lazy_load)
 - `writing_style.md` → `_multifile_document_organization.md` — File organization conventions; when to split into parent + child files

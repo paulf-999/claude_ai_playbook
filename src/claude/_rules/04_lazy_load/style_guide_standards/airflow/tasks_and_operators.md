@@ -61,7 +61,7 @@ Prefer purpose-built operators over generic ones. Common patterns:
 | Wait for condition | `Sensor` with `mode="reschedule"` | avoid holding worker slots |
 | Branching | `BranchPythonOperator` | conditional task routing |
 
-- **Templates:** see `~/.claude/_rules/04_lazy_load/style_guide_standards/airflow/templates/` for Snowflake and TriggerDagRun examples
+- **Templates:** see `~/.claude/_rules/03_lazy_load/style_guide_standards/airflow/templates/` for Snowflake and TriggerDagRun examples
 
 ---
 
@@ -95,7 +95,7 @@ Both files are auto-imported by `common.get_default_dag_params()` if they exist 
 
 Use `TaskGroup` to visually group related tasks in the Airflow UI. Common patterns (Airbyte, dbt) are wrapped in reusable TaskGroup generators in `includes/airflow_tasks/`.
 
-- **Template:** see `~/.claude/_rules/04_lazy_load/style_guide_standards/airflow/templates/template_dag_parent.py`
+- **Template:** see `~/.claude/_rules/03_lazy_load/style_guide_standards/airflow/templates/template_dag_parent.py`
 
 ---
 

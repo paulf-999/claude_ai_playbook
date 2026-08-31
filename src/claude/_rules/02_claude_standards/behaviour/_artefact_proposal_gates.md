@@ -39,8 +39,8 @@ Before proposing any new artefact, run these gates in order:
 **Check:** Is the artefact placed in the correct directory?
 
 - **01_essentials/** — blocking/safety rules (always-on imports); security-critical artefacts
-- **02_claude_standards/** — how Claude operates; efficiency/memory/git guidance
-- **04_lazy_load/** — domain-specific; loaded on-demand only
+- **02_claude_internal/** — how Claude operates; efficiency/memory/git guidance
+- **03_lazy_load/** — domain-specific; loaded on-demand only
 - **skills/** — reusable skills (single domain per subdirectory: `_confluence_skills/`, `_git_skills/`, etc.)
 - **hooks/** — enforcement and style-guide hooks
 - **agents/** — custom sub-agents (domain-grouped subdirectories: `agents/core/`, `agents/tools/`, etc.)
@@ -90,7 +90,7 @@ Before proposing any new artefact, run these gates in order:
 Present options *only* in these scenarios:
 
 - **Gate 1 (Naming):** Standard is ambiguous or multiple valid patterns exist for the artefact type (rare)
-- **Gate 2 (Placement):** Scope is genuinely unclear (e.g., "is this 01_essentials or 04_lazy_load?") — present placement options with token cost / scope tradeoffs
+- **Gate 2 (Placement):** Scope is genuinely unclear (e.g., "is this 01_essentials or 03_lazy_load?") — present placement options with token cost / scope tradeoffs
 - **Gate 3 (Duplication):** Similar artefact exists; present integration options (extend existing + cost, vs. create new + maintenance)
 
 **Otherwise:** Gates pass and proposal proceeds without options.

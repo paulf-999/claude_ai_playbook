@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# ruff: noqa: F401, F841  # illustrative example; some imports/vars are intentionally unused
 """
 Example: Testing patterns from testing/*.md
 

@@ -55,7 +55,7 @@
 │   │   └── writing_style/
 │   │       └── _multifile_document_organization.md
 │   │
-│   ├── 02_claude_standards/      # How Claude operates (always-on imports)
+│   ├── 02_claude_internal/      # How Claude operates (always-on imports)
 │   │   ├── claude_efficiency.md
 │   │   ├── external_system_access.md
 │   │   ├── git.md
@@ -64,7 +64,7 @@
 │   │   ├── security_guardrails.md
 │   │   └── mcp_trust_model.md
 │   │
-│   └── 04_lazy_load/            # Domain-specific rules (loaded on-demand)
+│   └── 03_lazy_load/            # Domain-specific rules (loaded on-demand)
 │       ├── style_guide_standards/
 │       │   ├── sql.md
 │       │   ├── airflow.md
@@ -134,4 +134,4 @@ Create a subdirectory when **two or more related files** share the same theme an
 - **Parent:** `claude_directory_structure.md` — entry point; organization and naming overview
 - **Sibling:** `_claude_directory_naming.md` — naming patterns for files and directories
 - **Related:** `writing_style.md` → `_multifile_document_organization.md` — when to split documents into parent + child files
-- **Related:** `authoring_rules.md` — directory placement for new rules (01_essentials, 02_claude_standards, 04_lazy_load)
+- **Related:** `authoring_rules.md` — directory placement for new rules (01_essentials, 02_claude_internal, 03_lazy_load)

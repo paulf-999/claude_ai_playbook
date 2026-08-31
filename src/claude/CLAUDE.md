@@ -46,7 +46,7 @@ constraints are harder to bypass silently.
 
 <!-- Tier 3: 03_claude_reference/ — system knowledge and platform guidance -->
 @~/.claude/_rules/03_claude_reference/claude_operational_efficiency.md
-@~/.claude/_rules/03_claude_reference/claude_rule_system/claude_rule_loading_strategy.md
+@~/.claude/_rules/03_claude_reference/_claude_rule_system/claude_rule_loading_strategy.md
 
 ---
 
