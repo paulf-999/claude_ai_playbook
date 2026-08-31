@@ -81,7 +81,6 @@ trap handle_interruption INT
 print_section_header "${DEBUG}" "Claude file installation started."
 
 install_claude_files
-merge_skills_wip
 print_operation_summary "installation"
 install_claude_cli
 update_npm_path

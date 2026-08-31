@@ -7,7 +7,7 @@ the linter (skill_authoring_gate_lint.py) which runs as a pre-commit hook.
 Walk tests (W1–W6): Validate readability, style compliance, test coverage, and clarity.
 Run tests (R1–R5): Validate semantic versioning, maturity progression, and completeness.
 
-Only stable skills (src/claude/skills/, not src/claude/wip/skills/) are validated here.
+Only skills under src/claude/skills/ are validated here.
 """
 
 import re

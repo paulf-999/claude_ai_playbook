@@ -80,4 +80,3 @@ pids/
 # Tool caches
 #=======================================================================
 .sqlfluff_cache
-src/claude/wip/skills/togaf_prep/
