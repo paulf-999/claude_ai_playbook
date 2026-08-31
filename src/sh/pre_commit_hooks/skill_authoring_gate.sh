@@ -26,6 +26,7 @@ echo ""
 # Track exit codes
 CRAWL_EXIT=0
 WALK_EXIT=0
+RUN_EXIT=0
 
 # ── Crawl Level (C0–C7): Hard Gate ──────────────────────────────────────────
 

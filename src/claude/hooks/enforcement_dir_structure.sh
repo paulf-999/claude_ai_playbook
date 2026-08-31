@@ -4,7 +4,6 @@
 # the proposed directory name and placement follows the standard before proceeding.
 set -e
 
-# shellcheck source=/dev/null
 source ~/.claude/_lib/shell_utils.sh 2>/dev/null || true
 
 #=======================================================================

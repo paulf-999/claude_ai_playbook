@@ -310,21 +310,21 @@ def main() -> int:
         print(f"Complexity Score: {score}/10 ({maturity} skill, limit: {limit})")
         print()
         print("Breakdown:")
-        b = result["breakdown"]
         print(
-            f"  Concepts:      {b['concepts']['points']}/{b['concepts']['max']} pts ({b['concepts']['count']} concepts)"
+            f"  Concepts:      {result['breakdown']['concepts']['points']}/{result['breakdown']['concepts']['max']} pts "
+            f"({result['breakdown']['concepts']['count']} concepts)"
         )
         print(
-            f"  Scope:         {b['scope']['points']}/{b['scope']['max']} pts "
-            f"({b['scope']['phases']} phases, {b['scope']['lines']} lines)"
+            f"  Scope:         {result['breakdown']['scope']['points']}/{result['breakdown']['scope']['max']} pts "
+            f"({result['breakdown']['scope']['phases']} phases, {result['breakdown']['scope']['lines']} lines)"
         )
         print(
-            f"  Dependencies:  {b['dependencies']['points']}/{b['dependencies']['max']} pts "
-            f"({b['dependencies']['count']} dependencies)"
+            f"  Dependencies:  {result['breakdown']['dependencies']['points']}/{result['breakdown']['dependencies']['max']} pts "
+            f"({result['breakdown']['dependencies']['count']} dependencies)"
         )
         print(
-            f"  Prerequisites: {b['prerequisites']['points']}/{b['prerequisites']['max']} pts "
-            f"({b['prerequisites']['domains']} domains)"
+            f"  Prerequisites: {result['breakdown']['prerequisites']['points']}/{result['breakdown']['prerequisites']['max']} pts "
+            f"({result['breakdown']['prerequisites']['domains']} domains)"
         )
         print()
         if exceeds:

@@ -30,8 +30,6 @@ include src/make/mcp.mk
 #=======================================================================
 # Targets
 #=======================================================================
-all: update
-
 deps:
 	@echo "${INFO}\nInstalling Python test dependencies${COLOUR_OFF}"
 	@pip install -r requirements.txt
@@ -87,7 +85,5 @@ clean_backups:
 	@echo "${INFO}\nMoving old ~/.claude_backup_* dirs to ~/.claude_backup_archive/${COLOUR_OFF}"
 	@python3 src/sh/claude/clean_backups.py
 
-clean: clean_plans clean_backups
-
 # .PHONY tells Make that these targets don't represent files
-.PHONY: all clean deps update install_windows update_windows install_plugins patch_plugins test lint lint_tags lint_skills audit_components clean_plans clean_backups
+.PHONY: deps update install_windows update_windows install_plugins patch_plugins test lint lint_tags lint_skills audit_components clean_plans clean_backups
