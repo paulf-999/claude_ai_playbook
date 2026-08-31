@@ -6,7 +6,7 @@ maturity: draft
 tags:
   criticality: could
   status: active
-  tested: true
+  tested: false
 tools: Bash, Read, Edit
 triggers:
   explicit:
@@ -54,8 +54,8 @@ Generates a local AST-based knowledge graph for a codebase, enabling structural 
 
 ## 🔒 Security
 
-**Data handling:** Local AST graph in `graphify-out/` (generated, non-sensitive)  
-**Access:** Reads repo files; writes to `graphify-out/` and `.gitignore`  
+**Data handling:** Local AST graph in `graphify-out/` (generated, non-sensitive)
+**Access:** Reads repo files; writes to `graphify-out/` and `.gitignore`
 **Reversibility:** Fully reversible — delete output, remove entries, uninstall hook
 
 ## 📋 Prerequisites

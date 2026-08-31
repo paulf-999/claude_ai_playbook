@@ -21,7 +21,7 @@ Claude Code loads `CLAUDE.md` on startup — it composes all rules, style guides
 
 ## 🔄 Process
 
-See [`src/claude/process/README.md`](../src/claude/process/README.md)
+Session-conduct rules now live under [`src/claude/_rules/`](../src/claude/_rules/) (`02_claude_standards/` and `03_claude_reference/`).
 
 Instructions that shape how Claude works within a session:
 - the runtime environment declaration
@@ -30,7 +30,6 @@ Instructions that shape how Claude works within a session:
 - the permission model
 - the task brief convention for lean sub-agent orchestration (see [`docs/reference/claude_config/orchestration.md`](reference/claude_config/orchestration.md))
 - the draft file convention (`~/_drafts/`, organised by type)
-- the Graphify skill trigger (`graphify.md`) — persisted here so it survives playbook syncs
 - the sub-agent selection guidance — default agent, available sub-agents, and how to switch
 
 ---
@@ -75,17 +74,15 @@ Sub-agents are specialised Claude personas selected at the start of each session
 See [`src/claude/skills/README.md`](../src/claude/skills/README.md)
 
 * Multi-step reusable workflows invoked via `/skill-name`.
-* All skills — including WIP — are installed by `make install` and invokable in any session.
+* All skills are installed by `make install` and invokable in any session.
 
 ---
 
 ## 🎨 Style guides
 
-See [`src/claude/style_guide_standards/README.md`](../src/claude/style_guide_standards/README.md)
+See [`src/claude/_rules/04_lazy_load/style_guide_standards/`](../src/claude/_rules/04_lazy_load/style_guide_standards/)
 
-Coding standards and platform conventions for all technologies used by the team.
-
-**`claude.md` is the meta-guide for the playbook itself** — it defines naming and structural conventions for all Claude components: skills, agents, rules, and memory files. Read this before adding or renaming any playbook component. Loaded globally in every session via `CLAUDE.md`.
+Coding standards and platform conventions for all technologies used by the team. Loaded on demand when domain work begins — never imported.
 
 ---
 
@@ -115,5 +112,3 @@ See [`src/claude/hooks/README.md`](../src/claude/hooks/README.md)
 
 * Shell and Python scripts wired to Claude Code lifecycle events via `settings.json`.
 * Run automatically — no manual invocation required.
-
-**WIP hooks** (`src/claude/_wip/hooks/`) contain experimental hooks not yet registered in `settings.json`. See [`_wip/hooks/README.md`](../src/claude/_wip/hooks/README.md) for status and activation instructions.

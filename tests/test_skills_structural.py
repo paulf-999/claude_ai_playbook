@@ -1,14 +1,12 @@
 """Structural tests for Claude skill definition files.
 
-Validates that every skill directory in src/claude/skills/ and src/claude/wip/skills/ has:
+Validates that every skill directory in src/claude/skills/ has:
 - A SKILL.md file
 - Valid YAML frontmatter with non-empty name and description
 - A name that matches the directory name
 - All referenced ~/.claude/skills/... file paths exist in the repo
 
-Discovers skills by finding all SKILL.md files at any depth under both directories,
-so both stable skills and WIP skills (which are merged into ~/.claude/skills/ at install time)
-are covered. Archived skills under wip/skills/archive/ are excluded from discovery.
+Discovers skills by finding all SKILL.md files at any depth under src/claude/skills/.
 """
 
 import re
@@ -18,35 +16,20 @@ import frontmatter
 import pytest
 
 SKILLS_DIR = Path(__file__).parent.parent / "src" / "claude" / "skills"
-SKILLS_WIP_DIR = Path(__file__).parent.parent / "src" / "claude" / "wip" / "skills"
 CLAUDE_CONFIG_DIR = Path(__file__).parent.parent / "src" / "claude"
 TESTS_SKILLS_DIR = Path(__file__).parent / "skills"
 
 CLAUDE_HOME_ALIAS = "~/.claude/"
 CLAUDE_HOME_REPO = str(CLAUDE_CONFIG_DIR) + "/"
 
-# Discover all skill directories by locating every SKILL.md at any depth under both trees
-_stable_skill_dirs = [(d, SKILLS_DIR) for d in (skill_md.parent for skill_md in SKILLS_DIR.rglob("SKILL.md"))]
-_wip_skill_dirs = [
-    (d, SKILLS_WIP_DIR)
-    for d in (skill_md.parent for skill_md in SKILLS_WIP_DIR.rglob("SKILL.md"))
-    if SKILLS_WIP_DIR / "archive" not in d.parents and d != SKILLS_WIP_DIR / "archive"
-]
-_all_skill_entries = _stable_skill_dirs + _wip_skill_dirs
+# Discover all skill directories by locating every SKILL.md at any depth
+skill_dirs = [skill_md.parent for skill_md in SKILLS_DIR.rglob("SKILL.md")]
 
-skill_dirs = [entry[0] for entry in _all_skill_entries]
-
-# Stable-only lists — used where WIP skills should be excluded (e.g. test file enforcement)
-stable_skill_dirs = [entry[0] for entry in _stable_skill_dirs]
+stable_skill_dirs = list(skill_dirs)
 stable_skill_ids = [str(d.relative_to(SKILLS_DIR)) for d in stable_skill_dirs]
 
-# Use relative paths as IDs (e.g. "commit", "wip/manage_jira") for clear test output
-skill_ids = [
-    str(d.relative_to(root))
-    if d.is_relative_to(SKILLS_DIR)
-    else "wip/" + str(d.relative_to(SKILLS_WIP_DIR))
-    for d, root in _all_skill_entries
-]
+# Use relative paths as IDs (e.g. "commit", "_git_skills/git_create_pr") for clear test output
+skill_ids = [str(d.relative_to(SKILLS_DIR)) for d in skill_dirs]
 
 # Skills that pre-date the test-file enforcement rule and have not yet had tests written.
 # Remove a skill from this set when its test file is added — the structural test will then
@@ -146,36 +129,19 @@ def test_skill_name_matches_directory(skill_dir: Path) -> None:
 
 
 def _path_exists_in_repo(path_str: str) -> bool:
-    """Check whether a resolved repo path exists, with a wip/skills/ fallback.
-
-    WIP skills reference ``~/.claude/skills/<name>/...`` at runtime because ``merge_skills_wip``
-    copies them into ``skills/`` at install time. In the repo, those files live under
-    ``wip/skills/``. Resolve against ``wip/skills/`` as a fallback before reporting missing.
+    """Check whether a resolved repo path exists.
 
     :param path_str: Absolute repo-relative path (``CLAUDE_HOME_ALIAS`` already substituted).
     :type path_str: str
-    :return: True if the path exists under ``skills/`` or ``wip/skills/`` fallback.
+    :return: True if the path exists.
     :rtype: bool
     """
-    primary = Path(path_str)
-    if primary.exists():
-        return True
-    # WIP fallback: swap skills/ for wip/skills/ when the primary path is absent
-    skills_prefix = CLAUDE_HOME_REPO + "skills/"
-    if path_str.startswith(skills_prefix):
-        wip_fallback = Path(path_str.replace(skills_prefix, CLAUDE_HOME_REPO + "wip/skills/", 1))
-        if wip_fallback.exists():
-            return True
-    return False
+    return Path(path_str).exists()
 
 
 @pytest.mark.parametrize("skill_dir", skill_dirs, ids=skill_ids)
 def test_skill_file_references_exist(skill_dir: Path) -> None:
     """All ~/.claude/skills/... paths referenced in SKILL.md must exist in the repo.
-
-    WIP skills that reference ``~/.claude/skills/<name>/...`` are resolved against
-    ``wip/skills/`` as a fallback, since those files are merged into ``skills/`` at install
-    time but live under ``wip/skills/`` in the source tree.
 
     :param skill_dir: Path to the skill directory.
     :type skill_dir: Path
