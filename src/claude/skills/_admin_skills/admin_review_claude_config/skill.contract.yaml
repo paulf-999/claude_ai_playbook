@@ -1,7 +1,8 @@
 ---
 name: admin_review_claude_config
 version: 0.1.0
-summary: Audit your global Claude config for quality issues; get an A-F scorecard with recommendations.
+summary: Audit your global Claude config for quality issues across six dimensions. Receive a scorecard with A-F grade, gap analysis, and actionable
+    recommendations.
 maturity: draft
 test_coverage_level: comprehensive
 

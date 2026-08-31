@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# ruff: noqa: E501  # fixture markdown table rows are inherently wide and must match real TODO.md format
 
 """
 Test suite for TODO rotation automation.
@@ -136,9 +135,10 @@ class TestTODORotation:
 
     def test_archive_index_updated_after_rotation(self):
         """Verify archive index is created/updated after rotation."""
+        current_month = datetime.now().strftime("%Y-%m")
         past_month = (datetime.now() - timedelta(days=30)).strftime("%Y-%m")
 
-        self.create_test_todo(past_month)
+        todo_file = self.create_test_todo(past_month)
         archive_index = self.claude_dir / "_archives" / "TODO_archive.md"
 
         # Run rotation
@@ -158,6 +158,7 @@ class TestTODORotation:
 
     def test_fresh_todo_has_empty_tables(self):
         """Verify fresh TODO.md has correct structure with empty tables."""
+        current_month = datetime.now().strftime("%Y-%m")
         past_month = (datetime.now() - timedelta(days=30)).strftime("%Y-%m")
 
         todo_file = self.create_test_todo(past_month)
@@ -218,7 +219,7 @@ class TestTODORotation:
         archive_file = self.archives_dir / f"{past_month}.md"
         archive_file.write_text("Original archive content")
 
-        self.create_test_todo(past_month)
+        todo_file = self.create_test_todo(past_month)
 
         # Run rotation
         subprocess.run(

@@ -5,6 +5,7 @@ Validates: config validation, dimension scoring, grade calculation, JSON trail.
 
 import pytest
 import json
+import tempfile
 from pathlib import Path
 from audit_scoring_handler import (
     validate_config,
@@ -15,6 +16,8 @@ from audit_scoring_handler import (
     calculate_overall_grade,
     audit_claude_config,
     MIN_SCORE,
+    MAX_SCORE,
+    GRADE_THRESHOLDS,
 )
 
 

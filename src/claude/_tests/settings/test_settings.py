@@ -157,6 +157,9 @@ def test_no_hardcoded_secrets():
         "password", # Password
     ]
 
+    # Convert to lowercase for search (case-insensitive check)
+    content_lower = content.lower()
+
     # Note: This is a best-effort check; it won't catch all secret formats
     # but catches common mistakes
     for pattern in secret_patterns:

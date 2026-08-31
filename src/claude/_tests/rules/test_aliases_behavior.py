@@ -5,6 +5,7 @@ Spot-checks 3-5 representative aliases to ensure:
 - They are invocable (either as commands, skills, or modes)
 - Their documented behavior matches their implementation
 """
+import json
 from pathlib import Path
 
 CLAUDE_DIR = Path.home() / ".claude"
@@ -28,7 +29,7 @@ def _parse_aliases_table():
         if in_table and line.startswith("|"):
             # Parse table row: | input | theme | status | meaning |
             parts = [p.strip() for p in line.split("|")[1:-1]]  # Remove empty first/last
-            if len(parts) >= 4 and "---" not in line:
+            if len(parts) >= 4 and not "---" in line:
                 # Remove backticks from input field
                 input_val = parts[0].replace("`", "")
                 aliases.append({

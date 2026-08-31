@@ -18,6 +18,10 @@ Implementation tests (Phase 2+):
 """
 
 from pathlib import Path
+from datetime import datetime
+import json
+import tempfile
+import shutil
 
 # ─── Constants ─────────────────────────────────────────────────────────────────
 
@@ -546,6 +550,7 @@ def test_skill_maturity_matches_test_coverage_claim() -> None:
 
     Draft (0.x) with comprehensive test coverage claim should eventually upgrade to tactical.
     """
+    content = _skill_content()
     # Contract claims "comprehensive" test coverage
     contract_path = SKILL_DIR / "skill.contract.yaml"
     contract_text = contract_path.read_text()

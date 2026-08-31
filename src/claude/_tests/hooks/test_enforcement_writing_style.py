@@ -11,6 +11,7 @@ Mode: blocking (returns exit code 1 for invalid paths)
 """
 
 import subprocess
+import os
 from pathlib import Path
 
 
@@ -84,7 +85,7 @@ class TestMarkdownFileLocationHook:
         code, stderr = run_hook(path)
         assert code == 1, f"Hook should block invalid path (exit 1), got {code}"
         assert "❌" in stderr, f"Expected error marker in stderr:\n{stderr}"
-        assert "writing_style.md" in stderr, "Expected reference to writing_style.md"
+        assert "writing_style.md" in stderr, f"Expected reference to writing_style.md"
 
     def test_invalid_draft_missing_domain(self):
         """Draft without domain should be blocked."""
@@ -139,10 +140,7 @@ class TestMarkdownFileLocationHook:
 
     def test_valid_all_draft_domains(self):
         """Draft paths with all valid domains should be ALLOWED."""
-        domains = [
-            "1on1", "confluence", "email", "general", "important",
-            "jira", "meetings", "plans", "reference", "teams",
-        ]
+        domains = ["1on1", "confluence", "email", "general", "important", "jira", "meetings", "plans", "reference", "teams"]
         for domain in domains:
             path = f"{Path.home()}/.claude/_drafts/{domain}/2026-08-19_test.md"
             code, stderr = run_hook(path)

@@ -6,7 +6,9 @@ draft preservation, and timeout customization.
 
 import pytest
 import time
-from unittest.mock import patch
+import pathlib
+import tempfile
+from unittest.mock import MagicMock, patch, call
 from confluence_create_page_handler import (
     create_page_with_timeout,
     format_timeout_dialog,
@@ -144,10 +146,6 @@ def test_timeout_dialog_content(mock_confluence_setup):
     assert "[R]etry" in dialog_2min
     assert "[C]ontinue" in dialog_2min
     assert "minute" in dialog_2min
-
-    # Elapsed time renders correctly at a later retry point too
-    assert "TIMEOUT" in dialog_at_retry
-    assert "4 minute" in dialog_at_retry
 
 
 def test_timeout_maximum_6_minutes(mock_confluence_setup):

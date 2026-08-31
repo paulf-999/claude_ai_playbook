@@ -13,6 +13,7 @@ Example usage:
 """
 
 import pathlib
+import sys
 import time
 import threading
 from typing import Any, Callable, Dict, List, Optional, Tuple
@@ -254,13 +255,13 @@ def phase_3_publish_page(
             parentPageId=None,
         )
         return {"success": True, "result": result}
-    except TimeoutError:
+    except TimeoutError as e:
         return {
             "success": False,
             "error": "Confluence API timeout after 120 seconds. Try publishing again.",
             "type": "timeout",
         }
-    except PermissionError:
+    except PermissionError as e:
         return {
             "success": False,
             "error": f"Permission denied: You lack write access to space {details.get('space')}",
@@ -275,7 +276,7 @@ def phase_3_publish_page(
                 "type": "invalid_space",
             }
         return {"success": False, "error": str(e), "type": "validation_error"}
-    except ConnectionError:
+    except ConnectionError as e:
         return {
             "success": False,
             "error": "Network error: Cannot reach Confluence. Check your internet connection.",
@@ -432,7 +433,7 @@ def parse_timeout_arg(args: List[str]) -> int:
     return default_timeout
 
 
-def create_page_with_timeout(  # noqa: C901
+def create_page_with_timeout(
     tool_call: Callable[[], Dict[str, Any]],
     timeout_seconds: int = 120,
     draft_path: Optional[pathlib.Path] = None,

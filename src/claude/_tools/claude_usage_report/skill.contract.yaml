@@ -1,0 +1,59 @@
+name: claude_usage_report
+version: "0.2.0"
+maturity: draft
+
+summary: |
+  Analyze Claude Code usage patterns with filtering to validate model choice.
+  Generates self-contained HTML with cost efficiency, activity intensity, and comparison metrics.
+
+description: |
+  Parses ~/.claude/projects/**/*.jsonl logs to reveal interaction efficiency:
+  - Cost per turn (efficiency: $ ÷ interactions)
+  - Turns per hour (activity intensity per model per day)
+  - Time span analysis (first to last interaction per model per day)
+
+  Supports flexible filtering:
+  - Date ranges (--start YYYY-MM-DD, --end YYYY-MM-DD)
+  - Specific weeks (--week YYYY-Www or --week-of YYYY-MM-DD)
+  - Model filtering (--model haiku|sonnet|opus)
+  - Custom output paths (--out path.html)
+
+  Generates self-contained offline-friendly HTML with SVG charts.
+
+when: |
+  When you want to understand whether your Claude Code model mix is efficient
+  for your workflows. Compare periods (e.g., "Opus last week vs Haiku this week")
+  to validate model switch hypotheses. Filters enable side-by-side cost analysis.
+
+author: claude
+keywords:
+  - analytics
+  - usage
+  - cost
+  - efficiency
+  - reporting
+  - filtering
+  - comparison
+
+requires: []
+output: |
+  Self-contained HTML file, auto-saved to ~/.claude/_reports/
+  Filename auto-generated based on filters: usage_DATE_FILTERS.html
+  Examples:
+    - usage_2026-08-21_30d.html (last 30 days)
+    - usage_2026-08-14-2026-08-20_opus.html (date range + model)
+    - usage_2026-W34_haiku.html (week + model)
+
+reversible: true
+test_coverage_level: draft
+estimated_time_to_use: 2 minutes
+
+commands:
+  - name: claude_usage_report
+    args: "[--days N | --start DATE --end DATE | --week YYYY-Www] [--model haiku|sonnet|opus] [--out path.html]"
+    help: Generate usage report with flexible date/model filtering
+    examples:
+      - "claude_usage_report --days 30"
+      - "claude_usage_report --start 2026-08-14 --end 2026-08-20 --model opus"
+      - "claude_usage_report --week 2026-W34 --model haiku"
+      - "claude_usage_report --week-of 2026-08-19"

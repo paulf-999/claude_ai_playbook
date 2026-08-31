@@ -163,13 +163,13 @@ def phase_3_create_ticket(
             customFields={STORY_POINTS_FIELD_ID: details.get("story_points")} if details.get("story_points") else {}
         )
         return {"success": True, "result": result}
-    except TimeoutError:
+    except TimeoutError as e:
         return {
             "success": False,
-            "error": "Jira API timeout after 30 seconds. Try again with --timeout-seconds 60.",
+            "error": f"Jira API timeout after 30 seconds. Try again with --timeout-seconds 60.",
             "type": "timeout",
         }
-    except PermissionError:
+    except PermissionError as e:
         return {
             "success": False,
             "error": f"Permission denied: You lack write access to project {details.get('project')}",
@@ -184,7 +184,7 @@ def phase_3_create_ticket(
                 "type": "invalid_project",
             }
         return {"success": False, "error": str(e), "type": "validation_error"}
-    except ConnectionError:
+    except ConnectionError as e:
         return {
             "success": False,
             "error": "Network error: Cannot reach Jira. Check your internet connection.",

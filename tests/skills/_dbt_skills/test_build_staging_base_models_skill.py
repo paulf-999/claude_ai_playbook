@@ -13,8 +13,6 @@ Rule areas covered:
 - file naming conventions (staging and base)
 """
 
-from __future__ import annotations
-
 import pytest
 
 # ─── source_folder derivation ──────────────────────────────────────────────────
