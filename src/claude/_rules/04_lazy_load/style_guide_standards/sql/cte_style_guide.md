@@ -17,7 +17,7 @@ Use four logical grouping layers for all CTEs:
 3. **Final CTE:** join together all logical CTEs
 4. **Simple SELECT:** final SELECT statement from the final CTE
 
-See working example: `~/.claude/_rules/04_lazy_load/style_guide_standards/sql/templates/template_cte.sql`
+See working example: `~/.claude/_rules/03_lazy_load/style_guide_standards/sql/templates/template_cte.sql`
 
 ## 📋 Contents
 

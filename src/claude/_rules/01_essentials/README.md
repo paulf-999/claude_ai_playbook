@@ -38,6 +38,6 @@ Each rule follows a consistent format:
 - **`testing/`** — Child files for testing standards
 - **`conventions/`** — Child files for naming standards, writing style, directory structure
 - **`skill_authoring/`** — Child files for skill authoring standards
-- **`04_lazy_load/`** — Domain-specific rules (SQL, Airflow, Terraform, etc.)
+- **`03_lazy_load/`** — Domain-specific rules (SQL, Airflow, Terraform, etc.)
 - **`02_claude_standards/`** — Quality gates and operational standards (includes behaviour/)
-- **`02_claude_standards/`** — Claude Code operational rules (not for general audience)
+- **`02_claude_internal/`** — Claude Code operational rules (not for general audience)

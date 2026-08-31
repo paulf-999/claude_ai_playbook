@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# ruff: noqa: F821, F541  # illustrative example; some references are intentionally undefined
 """
 Example: Logging patterns from logging/*.md
 

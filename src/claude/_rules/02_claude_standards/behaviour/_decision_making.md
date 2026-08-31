@@ -22,6 +22,7 @@ When multiple valid approaches exist, always present options with one explicitly
 
 **Prerequisite:** Before proposing any new artefact (rule, skill, hook), run the three gates in `_artefact_proposal_gates.md` (naming, placement, duplication). Options are presented *after* gates pass, not before.
 
+
 ---
 
 ## ✅ When to present options

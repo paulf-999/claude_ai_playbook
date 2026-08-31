@@ -1,4 +1,3 @@
-# ruff: noqa: F821  # illustrative template fragment; imports/vars from the surrounding DAG file are assumed
 from airflow.utils.task_group import TaskGroup
 from dmt_airflow_dags.includes import common  # ruff: isort: skip
 

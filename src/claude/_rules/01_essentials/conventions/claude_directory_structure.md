@@ -34,7 +34,7 @@ Applies to all file and directory creation in `~/.claude/` and the playbook repo
 ## 🔗 Related rules
 
 - `naming_standards.md` — General naming principles for all identifiers; see child file `_naming_principles.md` for foundational concepts
-- `authoring_rules.md` — Directory placement rules for new rules (01_essentials, 02_claude_standards, 04_lazy_load)
+- `authoring_rules.md` — Directory placement rules for new rules (01_essentials, 02_claude_internal, 03_lazy_load)
 - `writing_style.md` → `_multifile_document_organization.md` — When to create subdirectories for multi-file documents
 
 ## 📖 Reference (architectural overview)

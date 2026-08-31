@@ -4,6 +4,7 @@
 
 PEP 8 is the baseline. One override: maximum line length is **120 characters** (enforced by `ruff`).
 
+
 ## 📋 Contents
 
 - [🗂️ Code layout](#-code-layout)

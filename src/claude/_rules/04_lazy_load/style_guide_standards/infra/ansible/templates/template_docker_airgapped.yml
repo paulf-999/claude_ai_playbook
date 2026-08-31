@@ -2,26 +2,26 @@
 # Air-gapped Docker image sequence: pull from Cloudsmith → re-tag → load into kind
 
 # 1. Pull from Cloudsmith to the host Docker daemon
-- name: Pull images from Cloudsmith
-  community.docker.docker_image:
-    name: '{{ item.cloudsmith_name }}'
-    source: pull
-  loop: '{{ myapp_images }}'
-  no_log: true # if item contains credentials
+    - name: Pull images from Cloudsmith
+      community.docker.docker_image:
+          name: '{{ item.cloudsmith_name }}'
+          source: pull
+      loop: '{{ myapp_images }}'
+      no_log: true # if item contains credentials
 
 # 2. Re-tag to canonical names
 # Images pulled from Cloudsmith carry the Cloudsmith registry URL as their name.
 # Tools like kind and Kubernetes resolve images by canonical name — re-tag after pulling.
-- name: Re-tag images to canonical names
-  ansible.builtin.command:
-    cmd: docker tag {{ item.cloudsmith_name }} {{ item.canonical_name }}
-  loop: '{{ myapp_images }}'
-  changed_when: false # tag is idempotent; docker tag always exits 0
+    - name: Re-tag images to canonical names
+      ansible.builtin.command:
+          cmd: docker tag {{ item.cloudsmith_name }} {{ item.canonical_name }}
+      loop: '{{ myapp_images }}'
+      changed_when: false # tag is idempotent; docker tag always exits 0
 
 # 3. Load into kind (if deploying to a kind cluster)
-- name: Load images into kind cluster
-  ansible.builtin.command:
-    cmd: kind load docker-image {{ item.canonical_name }} --name {{ kind_cluster_name }}
-  loop: '{{ myapp_images }}'
-  register: result
-  changed_when: "'Image loaded' in result.stdout"
+    - name: Load images into kind cluster
+      ansible.builtin.command:
+          cmd: kind load docker-image {{ item.canonical_name }} --name {{ kind_cluster_name }}
+      loop: '{{ myapp_images }}'
+      register: result
+      changed_when: "'Image loaded' in result.stdout"

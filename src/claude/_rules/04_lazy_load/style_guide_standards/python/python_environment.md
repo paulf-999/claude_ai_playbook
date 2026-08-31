@@ -1,5 +1,6 @@
 # 🐍 Python — environment & tooling
 
+
 ## 📋 Contents
 
 - [🐍 Python version](#-python-version)

@@ -1,21 +1,21 @@
 ---
-- name: Assert required vars are provided
-  ansible.builtin.assert:
-    that:
-      - webserver_port is defined
-      - webserver_port | int > 0
-    fail_msg: webserver_port must be defined and non-zero.
+    - name: Assert required vars are provided
+      ansible.builtin.assert:
+          that:
+              - webserver_port is defined
+              - webserver_port | int > 0
+          fail_msg: webserver_port must be defined and non-zero.
 
-- name: Install nginx package
-  ansible.builtin.package:
-    name: nginx
-    state: present
+    - name: Install nginx package
+      ansible.builtin.package:
+          name: nginx
+          state: present
 
-- name: Deploy nginx configuration
-  ansible.builtin.template:
-    src: nginx.conf.j2
-    dest: /etc/nginx/nginx.conf
-    owner: root
-    group: root
-    mode: '0644'
-  notify: Restart nginx
+    - name: Deploy nginx configuration
+      ansible.builtin.template:
+          src: nginx.conf.j2
+          dest: /etc/nginx/nginx.conf
+          owner: root
+          group: root
+          mode: '0644'
+      notify: Restart nginx

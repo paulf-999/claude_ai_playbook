@@ -42,5 +42,5 @@ Unbounded turns are a known source of significant cost overrun. Always cap turns
 
 ## 🔗 Related
 
-- `claude_operational_efficiency.md` — automation and delegation context
+- `context_management.md` — automation and delegation context
 - `behaviour/_session_conduct.md` — how Claude conducts itself in sessions

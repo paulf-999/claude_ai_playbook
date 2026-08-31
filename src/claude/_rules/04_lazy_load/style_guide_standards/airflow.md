@@ -81,7 +81,7 @@
 ## 📚 Related Rules
 
 - **style_guide_standards/sql.md** — SQL standards within Airflow tasks
-- **style_guide_standards/utilities/makefile_style_guide.md** — DAG testing and invocation patterns
+- **style_guide_standards/utilities/makefile.md** — DAG testing and invocation patterns
 - **testing.md** — How to test Airflow DAGs locally
 
 ---

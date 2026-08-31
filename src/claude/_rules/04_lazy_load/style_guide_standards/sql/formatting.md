@@ -2,6 +2,7 @@
 
 **Purpose:** Establish formatting and style conventions for SQL queries and dbt models to ensure readability, consistency, and maintainability.
 
+
 ## 📋 Contents
 
 - [🔠 Keywords and capitalisation](#-keywords-and-capitalisation)
