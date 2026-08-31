@@ -222,7 +222,7 @@ def test_w6_phase_files_focused(skill_dir):
     for phase_file in phase_files:
         content = phase_file.read_text(encoding="utf-8")
         assert len(content) > 100, f"{phase_file.name} is too short (<100 chars) — should be focused but complete"
-        assert phase_file.name.lower().startswith("phase"), "Phase file should be named phase1.md, phase2.md, etc."
+        assert phase_file.name.lower().startswith("phase"), f"Phase file should be named phase1.md, phase2.md, etc."
 
 
 # ── Run tests (R1–R5) ─────────────────────────────────────────────────────────
@@ -289,6 +289,7 @@ def test_r3_maturity_progression_documented(skill_dir):
     skill_md_content = load_skill_md(skill_dir)
 
     maturity = contract.get("maturity", "draft")
+    version = contract.get("version", "0.0.0")
 
     if maturity in ("tactical", "strategic"):
         # Tactical/strategic skills should have a version section documenting progression
@@ -335,4 +336,4 @@ def test_r5_complex_skills_have_schema(skill_dir):
 
     schema_path = skill_dir / "skill_schema.yaml"
     if not schema_path.exists():
-        pytest.skip("R5: External service skill lacks skill_schema.yaml — optional but recommended")
+        pytest.skip(f"R5: External service skill lacks skill_schema.yaml — optional but recommended")

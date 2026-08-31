@@ -7,8 +7,6 @@ allows, a different offset/limit window allows, and malformed input always
 fails open).
 """
 
-from __future__ import annotations
-
 import io
 import json
 import sys

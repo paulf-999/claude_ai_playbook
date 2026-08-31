@@ -4,6 +4,7 @@ Test artefact proposal gates: naming, placement, duplication.
 Validates that the three gates establish clear rules before proposing new artefacts.
 """
 
+import pytest
 
 
 class TestNamingGate:
@@ -92,7 +93,7 @@ class TestPlacementGate:
             "security.md",
             "testing.md",
         ]
-        # These should be in 01_essentials/ or 02_claude_standards/
+        # These should be in 01_core/ or 02_claude_internal/
         for rule in always_on_rules:
             # Simulate placement check
             assert rule in always_on_rules, f"{rule} should be in top-level tier"
@@ -117,7 +118,7 @@ class TestPlacementGate:
             "dbt.md",
             "airflow.md",
         ]
-        # These should be in 04_lazy_load/
+        # These should be in 03_lazy_load/
         for rule in lazy_load_rules:
             # Simulate placement check: these are domain-specific
             assert rule not in ["guiding_principles.md", "security.md"], f"{rule} should be lazy-loaded"
@@ -135,6 +136,7 @@ class TestDuplicationGate:
         }
 
         # If proposing a new rule on naming, should detect naming_standards exists
+        new_proposal = "naming_convention"
         assert any("naming" in existing.lower() for existing in existing_rules.keys()), \
             "New naming rule conflicts with existing"
 

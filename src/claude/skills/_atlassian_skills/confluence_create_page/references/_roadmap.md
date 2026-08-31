@@ -8,7 +8,7 @@ See Linear or GitHub issues for detailed planning.
 5. **Determine skip logic** — if all metadata fields provided, skip pattern phases 1-2; if sections provided, skip phase 3
 6. **Mandatory draft review** — always run, even with full bypass
 
-## Test plan
+### Test plan
 
 See `_testing.md` for Phase 1 tests. Phase 2 tests to add:
 
@@ -17,7 +17,7 @@ See `_testing.md` for Phase 1 tests. Phase 2 tests to add:
 - **Test 6:** Malformed JSON sections — verify error handling
 - **Test 7:** Config file bypass — verify merge logic
 
-## Success criteria
+### Success criteria
 
 ✅ Pattern argument correctly skips Phase 1
 ✅ Metadata args correctly skip pattern phases

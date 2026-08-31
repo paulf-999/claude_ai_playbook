@@ -1,16 +1,16 @@
 ---
-name: setup_graphify
+name: claude_setup_graphify
 description: Set up Graphify on a repo to generate a local AST-based knowledge graph, reducing token cost for codebase exploration.
 version: 0.1.0
 maturity: draft
 tags:
   criticality: could
   status: active
-  tested: false
+  tested: true
 tools: Bash, Read, Edit
 triggers:
   explicit:
-    - /setup_graphify
+    - /claude_setup_graphify
   contextual:
     - user wants to set up Graphify on a repo
     - user wants to reduce token usage for codebase exploration
@@ -54,8 +54,8 @@ Generates a local AST-based knowledge graph for a codebase, enabling structural 
 
 ## 🔒 Security
 
-**Data handling:** Local AST graph in `graphify-out/` (generated, non-sensitive)
-**Access:** Reads repo files; writes to `graphify-out/` and `.gitignore`
+**Data handling:** Local AST graph in `graphify-out/` (generated, non-sensitive)  
+**Access:** Reads repo files; writes to `graphify-out/` and `.gitignore`  
 **Reversibility:** Fully reversible — delete output, remove entries, uninstall hook
 
 ## 📋 Prerequisites

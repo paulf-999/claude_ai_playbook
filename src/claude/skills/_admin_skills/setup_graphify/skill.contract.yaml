@@ -1,7 +1,8 @@
 ---
 name: setup_graphify
 version: 0.1.0
-summary: Set up Graphify on a repo to generate a local AST-based knowledge graph, reducing token cost for codebase exploration.
+summary: Set up Graphify on a repo to generate a local AST-based knowledge graph,
+    reducing token cost for codebase exploration.
 maturity: draft
 test_coverage_level: basic
 

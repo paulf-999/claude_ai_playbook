@@ -13,6 +13,7 @@ For conventions (bare words like 'bullets'):
 - Spot-checks that the convention is applied consistently
 """
 
+import subprocess
 import sys
 from pathlib import Path
 from typing import Dict, List, Tuple
@@ -29,7 +30,7 @@ def parse_aliases_table() -> List[Dict]:
         content = f.read()
 
     lines = content.split('\n')
-    table_lines = [line for line in lines if line.strip().startswith('|')]
+    table_lines = [l for l in lines if l.strip().startswith('|')]
 
     aliases = []
     for line in table_lines[2:]:  # Skip header and separator
@@ -131,6 +132,7 @@ def test_alias_executable(alias_entry: Dict) -> Tuple[bool, str]:
 
     if inp.startswith('/'):
         # Skill or command
+        skill_name = inp.lstrip('/')
         exists, msg = test_skill_exists(inp)
         if exists:
             return True, msg
@@ -189,7 +191,7 @@ def test_meaning_matches_behavior():
         'bullets': 'keyword',  # Should describe keyword: style
     }
 
-    print("\n🧪 Spot-checking meaning accuracy...\n")
+    print(f"\n🧪 Spot-checking meaning accuracy...\n")
 
     for alias_input, expected_keyword in test_cases.items():
         matching = [a for a in aliases if a['input'] == alias_input]

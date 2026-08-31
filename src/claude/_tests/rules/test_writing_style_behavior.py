@@ -14,6 +14,7 @@ Quarterly behavioral audit (manual):
 - Cadence: Quarterly (per guiding_principles.md reset cycles)
 """
 
+import pytest
 from pathlib import Path
 
 
@@ -100,9 +101,7 @@ def test_writing_style_file_structure():
     lines = content.split('\n')
 
     # Check line count
-    assert len(lines) <= 110, (
-        f"writing_style.md exceeds 110 lines ({len(lines)}). Split into parent + children if needed."
-    )
+    assert len(lines) <= 110, f"writing_style.md exceeds 110 lines ({len(lines)}). Split into parent + children if needed."
 
     # Check trailing newline
     assert content.endswith('\n'), "File must end with trailing newline"

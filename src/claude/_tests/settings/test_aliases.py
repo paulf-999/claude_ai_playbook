@@ -9,6 +9,7 @@ Validates that each alias entry:
 4. Meaning accurately describes the feature
 """
 
+import re
 import sys
 from pathlib import Path
 
@@ -23,7 +24,7 @@ def parse_aliases_table():
 
     # Extract table rows (skip header)
     lines = content.split('\n')
-    table_lines = [line for line in lines if line.strip().startswith('|')]
+    table_lines = [l for l in lines if l.strip().startswith('|')]
 
     if len(table_lines) < 3:  # header, separator, at least one row
         raise ValueError(f"Invalid aliases table in {ALIASES_PATH}")
@@ -66,7 +67,7 @@ def test_valid_status():
         assert alias['status'] in VALID_STATUSES, \
             f"{alias['input']}: Invalid status '{alias['status']}'. Must be one of: {VALID_STATUSES}"
 
-    print("✅ All aliases have valid status (Ready or Testing)")
+    print(f"✅ All aliases have valid status (Ready or Testing)")
 
 
 def test_no_duplicate_inputs():
@@ -77,7 +78,7 @@ def test_no_duplicate_inputs():
     assert len(inputs) == len(set(inputs)), \
         f"Duplicate alias inputs found: {[x for x in inputs if inputs.count(x) > 1]}"
 
-    print("✅ No duplicate alias inputs")
+    print(f"✅ No duplicate alias inputs")
 
 
 def test_meaning_not_empty():
@@ -89,7 +90,7 @@ def test_meaning_not_empty():
         assert len(meaning) > 10, \
             f"{alias['input']}: Meaning too brief or empty ('{meaning}')"
 
-    print("✅ All meanings are substantive (>10 chars)")
+    print(f"✅ All meanings are substantive (>10 chars)")
 
 
 def test_input_format():
@@ -102,12 +103,18 @@ def test_input_format():
         assert inp.startswith('/') or inp.startswith('`') or '_' not in inp or inp[0].isalpha(), \
             f"Invalid input format: '{inp}' (expected /command or bare word)"
 
-    print("✅ All inputs are properly formatted")
+    print(f"✅ All inputs are properly formatted")
 
 
 def test_no_orphaned_references():
     """Test: Referenced skills/commands are not stubs (at least documented somewhere)."""
     aliases = parse_aliases_table()
+
+    # Skills/commands that are expected to exist
+    known_skills = {
+        'batch', 'goal', 'loop', 'fewer-permission-prompts',
+        'plan', 'draft', 'bullets'
+    }
 
     for alias in aliases:
         inp = alias['input'].lstrip('/').lstrip('`').rstrip('`')
@@ -118,12 +125,13 @@ def test_no_orphaned_references():
         if alias['status'] == 'Ready' or alias['status'] == 'Testing':
             assert alias['meaning'], f"{inp}: No meaning provided"
 
-    print("✅ All aliases are documented (have meaning)")
+    print(f"✅ All aliases are documented (have meaning)")
 
 
 def test_consistency():
     """Test: Related aliases have consistent documentation."""
     aliases = parse_aliases_table()
+    alias_dict = {a['input']: a for a in aliases}
 
     # Automation-related aliases should reference controls
     automation_aliases = [a for a in aliases if a['theme'] == 'Automation']
@@ -133,7 +141,7 @@ def test_consistency():
             assert 'claude_efficiency.md' in alias['meaning'] or 'automation_controls.md' in alias['meaning'], \
                 f"{alias['input']}: Automation Testing alias should reference control docs"
 
-    print("✅ Automation aliases reference control documentation")
+    print(f"✅ Automation aliases reference control documentation")
 
 
 def main():
