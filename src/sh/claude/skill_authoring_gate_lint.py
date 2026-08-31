@@ -20,6 +20,7 @@ import re
 import sys
 from pathlib import Path
 
+import frontmatter
 import yaml
 
 # ── script location ───────────────────────────────────────────────────────────
@@ -32,7 +33,7 @@ DEFAULT_ROOT = _REPO_ROOT / "src" / "claude" / "skills"
 # ── validation logic ──────────────────────────────────────────────────────────
 
 
-def validate_skill(skill_dir: Path) -> tuple[list[str], list[str]]:  # noqa: C901
+def validate_skill(skill_dir: Path) -> tuple[list[str], list[str]]:
     """Validate a skill against crawl criteria (C0–C7).
 
     :param skill_dir: Path to the skill directory.
@@ -74,9 +75,7 @@ def validate_skill(skill_dir: Path) -> tuple[list[str], list[str]]:  # noqa: C90
     has_new_format = any(k in contract for k in ["when", "requires"])
     has_legacy_format = any(k in contract for k in ["dispatch", "dependencies"])
     if not has_new_format and not has_legacy_format:
-        failures.append(
-            "C1: skill.contract.yaml missing trigger/dependency fields (when/requires or dispatch/dependencies)"
-        )
+        failures.append("C1: skill.contract.yaml missing trigger/dependency fields (when/requires or dispatch/dependencies)")
 
     # C3: Version is semantic and matches maturity
     version = contract.get("version", "")

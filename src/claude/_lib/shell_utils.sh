@@ -15,7 +15,6 @@ export COLOUR_OFF='\033[0m'
 
 ROOT_DIR="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 TIMESTAMP="$(date +%Y%m%d_%H%M%S)"
-export ROOT_DIR TIMESTAMP
 
 #=======================================================================
 # Functions

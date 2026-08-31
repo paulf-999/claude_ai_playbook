@@ -55,7 +55,7 @@ for pattern in "${VALID_PATTERNS[@]}"; do
 done
 
 # If we get here, file doesn't match valid conventions — block write
-RELATIVE_PATH="${FILE_PATH#"$HOME"/}"
+RELATIVE_PATH="${FILE_PATH#$HOME/}"
 cat >&2 << EOF
 ❌ Error: Markdown file location does not follow writing_style.md conventions:
    Path: $RELATIVE_PATH

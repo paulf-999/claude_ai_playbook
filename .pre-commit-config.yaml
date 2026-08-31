@@ -29,9 +29,10 @@ repos:
             entry: src/sh/pre_commit_hooks/run_targeted_tests.sh
             language: script
             pass_filenames: false
-          - id: skill_authoring_gate # Validate against C0-C7 (crawl), W1-W6 (walk), R1-R5 (run); blocks on crawl failures, warns on walk/run
+          - id: skill_authoring_gate # Validate skill authoring gate (crawl + walk + run)
             name: Skill validation - authoring gate (all levels)
-            description: Validates SKILL.md against authoring gate criteria.
+            description: Validates skill.contract.yaml and SKILL.md against C0–C7 (crawl), W1–W6 (walk), R1–R5 (run) criteria. Blocks on crawl
+                failures; warns on walk/run issues.
             entry: src/sh/pre_commit_hooks/skill_authoring_gate.sh
             language: script
             files: ^src/claude/skills/
@@ -60,10 +61,6 @@ repos:
       hooks:
           - id: yamlfmt # yamlfmt - fix input yaml files
             name: YAML fixes
-            # Excludes root-level (unkeyed) sequence examples: yamlfmt always indents
-            # sequences, even at document root, which conflicts with yamllint's
-            # expectation that root-level sequences start at column 0.
-            exclude: ^src/claude/_rules/04_lazy_load/style_guide_standards/infra/ansible/templates/
     # Markdown linter
     - repo: https://github.com/igorshubovych/markdownlint-cli
       rev: v0.43.0

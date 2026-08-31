@@ -19,8 +19,6 @@ fix landed). Read is the one case where a byte-identical re-read is always
 safe to block outright.
 """
 
-from __future__ import annotations
-
 import hashlib
 import json
 import os
