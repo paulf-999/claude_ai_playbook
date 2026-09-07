@@ -1,0 +1,54 @@
+---
+name: claude_capture_session_prompts
+version: 0.1.0
+summary: Generate structured prompts table from session history with theme, status, and MoSCoW categorization
+maturity: draft
+test_coverage_level: comprehensive
+
+dispatch:
+  triggers:
+    explicit:
+      - /capture_session_prompts
+      - capture session prompts
+      - audit session prompts
+      - audit my claude prompts
+      - audit claude prompts
+      - audit my claude session prompts
+      - summarize this session
+    contextual:
+      - user wants to audit session prompts
+      - user wants to track session activity
+      - user wants to plan next steps based on pending items
+
+  not_for:
+    - Querying existing prompts tables (edit manually or re-generate)
+    - Automatic categorization refinement (manual markdown editing required)
+    - Cross-session prompt aggregation (one date at a time)
+
+output:
+  type: conversational
+  confirmation_required: false
+  reversible: true
+  artifacts:
+    - type: markdown
+      location: ~/.claude/sessions/YYYY-MM-DD_prompts.md
+      description: Structured table with prompts, categorization, and summary statistics
+
+waives_response_standards: true
+# Heuristic categorization workflow requires iterative refinement and free-form prompts
+# incompatible with response standards Summary + Next steps format
+
+dependencies:
+  tools:
+    - Bash (to run Python script)
+    - Read (to inspect history.jsonl)
+    - Edit (to refine output markdown)
+  external:
+    - history.jsonl (auto-maintained by Claude Code; typically at ~/.claude/history.jsonl)
+
+requires:
+  resources:
+    - Python 3.6+ (must be installed and accessible via python3 command)
+    - ~/.claude/scripts/capture_session_prompts.py (skill script)
+    - ~/.claude/history.jsonl (Claude Code session history)
+    - Write access to ~/.claude/sessions/ (output directory)
