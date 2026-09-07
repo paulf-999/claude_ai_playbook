@@ -1,0 +1,173 @@
+---
+name: <domain>_<purpose>
+description: One-sentence value prop, user-focused (what does this agent do for users?)
+version: 0.1.0
+maturity: draft  # draft | tactical | strategic
+triggers:
+  - /agent_name
+  - "invoke agent_name"
+  - "use agent_name"
+model: inherit  # inherit (use active model) or specific override (e.g., claude-opus-4-8)
+isolation: worktree  # worktree (recommended) or none
+---
+
+# 🎯 [Agent name]
+
+**Frontmatter guide:**
+- `name` — identifier matching `<domain>_<purpose>` pattern (e.g., `technical_writer`, `code_analyzer`)
+- `description` — one sentence, user-focused, non-technical (what value does this agent provide?)
+- `version` — semantic versioning (0.x = draft, 1.x = tactical, 2.x = strategic)
+- `maturity` — draft | tactical | strategic (same model as skills)
+- `triggers` — how users invoke: `/agent_name`, natural language variants
+- `model` — `inherit` (use session model) or specific model name
+- `isolation` — `worktree` (isolates file modifications) or none
+
+---
+
+## Purpose
+
+**What:** One-liner explaining what this agent does and why it matters.
+
+**Format:** 1 sentence max. 2 sentences only if critical context would be lost. Non-technical. End-user readable.
+
+**Example (too long):**
+> This agent helps write documentation by understanding the audience and structuring content clearly with appropriate detail levels.
+
+**Example (good):**
+> Clear, precise writer for technical documentation — PR bodies and Confluence pages.
+
+---
+
+## When to use
+
+**Scenarios where this agent is invoked:**
+- Scenario 1: concrete situation
+- Scenario 2: concrete situation
+- Scenario 3: concrete situation
+
+**When NOT to use:**
+- Edge case 1: why this agent isn't appropriate
+- Edge case 2: why this agent isn't appropriate
+
+**Example (too vague):**
+```
+Use for: Documentation tasks
+Do not use for: Non-documentation tasks
+```
+
+**Example (good):**
+```
+Use for:
+- Drafting PR/MR descriptions following repo templates
+- Creating Confluence pages for technical and non-technical audiences
+
+Do not use for:
+- Improving existing documentation (separate concern)
+- Writing ADRs or runbooks (v1.0)
+```
+
+---
+
+## Role & Principles
+
+### Role
+
+**Who the agent is and how it approaches work (3-5 lines max).**
+
+Describe the persona, tone, and core approach. Be specific about audience awareness and baseline assumptions.
+
+**Example (too detailed):**
+> You are a technical writer with deep expertise in cloud infrastructure, Kubernetes, Docker, distributed systems, microservices, API design, and container orchestration. You understand both engineers and business stakeholders...
+
+**Example (good):**
+> You are a clear, precise technical writer. You produce documentation that is accurate, appropriately detailed, and suited to its audience. You write for engineers and non-engineers alike, adjusting tone and depth accordingly.
+
+### Principles
+
+**Core behavioral guidelines (5-7 principles max). How the agent makes decisions.**
+
+Format: `**Principle name:** [1-2 sentence description]`
+
+**Example:**
+```markdown
+- **Audience-aware writing:** Always ask about intended audience before writing — tone and depth differ significantly.
+- **Scannability first:** Use headings, bullets, and tables liberally. Never write consecutive prose paragraphs.
+- **Plain English:** Avoid jargon unless audience is technical and familiar with terms.
+- **Lead with importance:** Structure top-down; most important information first.
+- **Concise over comprehensive:** Correct and brief beats exhaustive and vague.
+```
+
+---
+
+## Constraints
+
+**What this agent does NOT do. Explicit scope boundaries.**
+
+Format:
+```markdown
+This agent:
+- Does NOT [boundary 1] (reason: prevents scope creep / technical limitation / future enhancement)
+- Does NOT [boundary 2]
+- Works in [isolation mode]
+- Uses [model] model
+- Requires [specific tools, if any]
+```
+
+**Example (too vague):**
+```markdown
+This agent handles documentation and adapts as needed.
+```
+
+**Example (good):**
+```markdown
+This agent:
+- Does NOT write ADRs or runbooks (v1.0)
+- Does NOT improve existing documentation (separate concern)
+- Does NOT provide diagram guidance or architecture visualization (v1.0)
+- Works in worktree isolation
+- Inherits the active Claude model
+```
+
+---
+
+## [Optional] References
+
+Link to supporting documentation:
+- `reference/_quality_scorecard.md` — Maturity justification and dimensions
+- `reference/_implementation.md` — Workflow phases and behavioral details
+- `evals.yaml` — Test scenarios validating agent behavior
+
+---
+
+## Creating your agent — Next steps
+
+1. **Fill in frontmatter** — name, description, version, maturity, triggers
+2. **Write Purpose** — one-liner value prop
+3. **Write When to use** — concrete scenarios + NOT use cases
+4. **Write Role & Principles** — persona (3-5 lines) + 5-7 core principles
+5. **Write Constraints** — explicit boundaries (what agent does NOT do)
+6. **Create evals.yaml** — 8–12 test scenarios (by maturity level)
+7. **Justify maturity** — document why this maturity level, with evidence
+
+**See also:** `authoring_agents.md` for comprehensive creation guidelines, hard gates checklist, and common mistakes to avoid.
+
+---
+
+## Quality checklist
+
+Before finalizing:
+- [ ] Frontmatter complete (name, description, version, maturity, triggers, model, isolation)
+- [ ] Purpose: one-liner, non-technical, user-focused
+- [ ] When to use: 3+ concrete scenarios + 2+ NOT use cases
+- [ ] Role: 3-5 lines describing persona
+- [ ] Principles: 5-7 core behavioral guidelines
+- [ ] Constraints: explicit boundaries (what agent does NOT do)
+- [ ] Total length: ~40-60 lines (lean, scannable)
+- [ ] evals.yaml created (5-8 for Draft, 8-12 for Tactical, 12+ for Strategic)
+- [ ] Maturity justified with evidence
+
+**Resources:**
+- Full guidance: `authoring_agents.md`
+- Hard gates: `authoring_agents.md` → Hard Gates Checklist section
+- Testing: `testing.md` → evals.yaml patterns
+- Template issues?: Reference `authoring_agents.md` → Common Mistakes section

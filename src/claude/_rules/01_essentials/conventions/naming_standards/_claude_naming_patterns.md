@@ -55,3 +55,4 @@
 **Detailed authoring guides:**
 - **authoring_skills.md** — Full skill naming convention, domain list, skill_domains_future.yaml reference, examples
 - **authoring_rules.md** — Rule naming standards, directory placement (01_essentials, 02_claude_internal, 03_lazy_load), pre-creation checklist
+

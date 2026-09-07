@@ -15,96 +15,29 @@
 
 ---
 
-## 📂 The Full Tree
+## 📂 Directory Tiers
 
-```
-~/.claude/
-├── CLAUDE.md                    # Entry point: config imports and comments
-├── aliases.md                   # Quick reference for shortcuts
-├── settings.json                # Claude Code settings (permissions, hooks, etc.)
-├── keybindings.json             # Keyboard binding customization
-│
-├── _rules/                      # Core rules (always-on or lazy-load)
-│   ├── 01_essentials/                 # Blocking/safety rules (always-on imports)
-│   │   ├── behaviour.md
-│   │   ├── guiding_principles.md
-│   │   ├── naming_standards.md
-│   │   ├── security.md
-│   │   ├── testing.md
-│   │   ├── writing_style.md
-│   │   ├── authoring_skills.md
-│   │   ├── authoring_rules.md
-│   │   ├── claude_directory_structure.md
-│   │   ├── claude_directory_structure/
-│   │   │   ├── _claude_directory_organization.md
-│   │   │   └── _claude_directory_naming.md
-│   │   ├── naming_standards/
-│   │   │   ├── _naming_principles.md
-│   │   │   └── _claude_naming_patterns.md
-│   │   ├── behaviour/
-│   │   │   └── _decision_making.md
-│   │   ├── skill_authoring/
-│   │   │   ├── _skill_structure_contract.md
-│   │   │   ├── _skill_quality_checklist.md
-│   │   │   └── _skill_review_framework.md
-│   │   ├── testing/
-│   │   │   ├── _testing_design_pattern.md
-│   │   │   ├── _testing_anti_patterns.md
-│   │   │   ├── _testing_file_organization.md
-│   │   │   └── _testing_maintenance.md
-│   │   └── writing_style/
-│   │       └── _multifile_document_organization.md
-│   │
-│   ├── 02_claude_internal/      # How Claude operates (always-on imports)
-│   │   ├── claude_efficiency.md
-│   │   ├── external_system_access.md
-│   │   ├── git.md
-│   │   ├── loading_strategy_rules.md
-│   │   ├── memory.md
-│   │   ├── security_guardrails.md
-│   │   └── mcp_trust_model.md
-│   │
-│   └── 03_lazy_load/            # Domain-specific rules (loaded on-demand)
-│       ├── style_guide_standards/
-│       │   ├── sql.md
-│       │   ├── airflow.md
-│       │   ├── dbt.md
-│       │   └── [other domain style guides]
-│       ├── automation_controls.md
-│       ├── [other domain-specific rules]
-│
-├── _tests/                      # Test files for validation
-│   ├── rules/                   # Tests for rule enforcement
-│   ├── hooks/                   # Tests for hook behavior
-│   ├── skills/                  # Tests for skill functionality
-│   └── test_file_structure_compliance.py
-│
-├── _templates/                  # Templates for creating new artefacts
-│   ├── skills/
-│   │   ├── SKILL.md.template
-│   │   └── skill.contract.yaml.template
-│   └── RULE.md.template
-│
-├── _reference/                  # Reference documentation (evergreen, no date prefix)
-│   ├── claude_config_architecture.md
-│   ├── claude_config_architecture/
-│   │   ├── _security.md
-│   │   ├── _testing.md
-│   │   ├── _adding_rules.md
-│   │   └── [other deep-dive docs]
-│   └── [other reference docs]
-│
-├── _docs/                       # Additional documentation
-├── agents/                      # Custom sub-agents for specific tasks
-├── hooks/                       # Enforcement and style-guide hooks
-├── skills/                      # Reusable skills (slash commands)
-├── wip/                         # Work-in-progress features
-│
-├── backups/                     # 🔧 Auto-generated: backup files
-├── memory/                      # 🔧 Auto-generated: persistent memory/knowledge graph
-├── projects/                    # 🔧 Auto-generated: per-project context
-└── sessions/                    # 🔧 Auto-generated: session transcripts
-```
+`~/.claude/` is organized into four tiers by purpose and audience:
+
+**Tier 1: Top-level config files**
+- `CLAUDE.md`, `aliases.md`, `settings.json`, `keybindings.json` — entry points and user-facing configuration
+
+**Tier 2: Core rules (_rules/)**
+- `01_essentials/` — blocking/safety rules (always-on imports; user-facing guidance)
+- `02_claude_standards/` — quality gates and operational standards (always-on imports)
+- `03_claude_reference/` — system knowledge and reference docs (always-on imports)
+- `04_lazy_load/` — domain-specific rules (loaded on-demand; token-efficient)
+
+**Tier 3: Infrastructure (_tests/, _templates/, _reference/, _docs/)**
+- Tests, templates, evergreen reference docs, and additional documentation
+
+**Tier 4: Domain-specific (agents/, hooks/, skills/, wip/)**
+- Custom sub-agents, enforcement/style-guide hooks, reusable skills, work-in-progress features
+
+**Tier 5: Auto-generated (backups/, memory/, projects/, sessions/)**
+- Claude Code-managed; excluded from version control; never manually edited
+
+**Authoritative source:** For the current, always-up-to-date directory listing, consult the README.md in each tier (e.g., `_rules/README.md`, `agents/README.md`, `hooks/README.md`). These are maintained by humans and tools; this document describes the organizational *principle*, not a comprehensive inventory.
 
 ---
 
