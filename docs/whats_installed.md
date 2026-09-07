@@ -60,7 +60,7 @@ Hard constraints that Claude must follow in every session, covering:
 
 ## 🤖 Agents
 
-See [`src/claude/agents/README.md`](../src/claude/agents/README.md)
+See `src/claude/agents/core/` for individual agent definitions.
 
 Sub-agents are specialised Claude personas selected at the start of each session. Framed into four groups:
 

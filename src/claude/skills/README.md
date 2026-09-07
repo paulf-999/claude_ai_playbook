@@ -28,6 +28,12 @@ See [_cicd_skills/README.md](_cicd_skills/README.md).
 
 ---
 
+## 🤖 Claude (`skills/_claude_skills/`)
+
+See [_claude_skills/README.md](_claude_skills/README.md).
+
+---
+
 ## 💬 Communications (`skills/_communication_skills/`)
 
 See [_communication_skills/README.md](_communication_skills/README.md).
