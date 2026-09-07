@@ -1,0 +1,255 @@
+---
+name: technical_writer
+description: Test scenarios validating technical_writer agent behavior (tactical maturity)
+version: 1.0.0
+scenario_count: 12
+---
+
+# Technical Writer Agent — Evals
+
+**Purpose:** Validate that the technical_writer agent drafts PR bodies and Confluence pages following core principles (audience-aware, scannability, clarity, plain English, concise).
+
+**Maturity:** Tactical (12 scenarios covering happy paths, error cases, edge cases, user interactions)
+
+---
+
+## Phase 1: PR Body Drafting (Happy Paths)
+
+### Eval 1.1: Draft PR body with clear template + context
+
+**Goal:** Agent drafts PR body following `.github/pull_request_template.md` exactly, with concise summary.
+
+**Input:**
+```
+Repo template (from .github/pull_request_template.md):
+## Summary
+[One sentence summary of changes]
+
+## Type of change
+- [ ] Feature
+- [ ] Bug fix
+- [ ] Refactoring
+- [ ] Documentation
+
+## Related Jira Issue
+[Issue link if applicable]
+
+## Testing
+[Description of testing performed]
+```
+
+Commit message: `feat(auth): add JWT token refresh`
+Files changed: src/auth/token.py, tests/auth/test_token.py (15 lines added, 3 removed)
+
+**Expected output:**
+- ✅ Follows template structure exactly
+- ✅ Summary: 1 sentence max, plain English, non-technical ("adds automatic token refresh" not "implements refresh token logic")
+- ✅ Type: Feature checkbox ticked
+- ✅ Testing section: brief description of test coverage
+- ✅ No fluff or excessive detail
+
+---
+
+### Eval 1.2: Draft PR body with implicit Jira ticket
+
+**Goal:** Agent infers Jira ticket from context and formats link correctly.
+
+**Input:**
+Commit message references: `feat(api): DM-12345 - fix rate limiting`
+User context: Working on rate limiting improvements
+
+**Expected output:**
+- ✅ Recognizes DM-12345 and formats as `[DM-12345](https://payroc.atlassian.net/browse/DM-12345)`
+- ✅ Summary doesn't repeat the ticket ID (uses "Fixes rate limiting" not "Fixes DM-12345")
+
+---
+
+### Eval 1.3: Ask for clarification when template is missing
+
+**Goal:** Agent stops and asks user to provide or create template instead of inventing one.
+
+**Input:**
+Repo has no `.github/pull_request_template.md`
+User asks: "Draft a PR body for my changes"
+
+**Expected output:**
+- ✅ Agent asks: "I don't see a `.github/pull_request_template.md` in this repo. Please provide one, or describe what sections you'd like in the PR body."
+- ✅ Does NOT invent a PR body structure
+
+---
+
+## Phase 2: Confluence Page Creation (Happy Paths)
+
+### Eval 2.1: Create Confluence page for technical audience
+
+**Goal:** Agent drafts Confluence page with appropriate depth and technical terminology.
+
+**Input:**
+Title: "Airflow DAG Architecture"
+Audience: Data engineers
+Content areas: Overview, Key components, Execution flow, Monitoring
+
+**Expected output:**
+- ✅ Opens with one-sentence summary
+- ✅ Uses technical terminology appropriately (DAG, scheduler, executor, task dependencies)
+- ✅ Includes structure: headings, bullet points for components, organized sections
+- ✅ No hand-holding or over-explanation
+
+---
+
+### Eval 2.2: Create Confluence page for mixed audience
+
+**Goal:** Agent adjusts tone and depth when audience includes non-technical stakeholders.
+
+**Input:**
+Title: "Data Pipeline Status Dashboard"
+Audience: Data engineers + business stakeholders
+Content areas: What it is, How to use it, Current status, Troubleshooting
+
+**Expected output:**
+- ✅ Overview section: plain English explanation of "data pipeline" without jargon
+- ✅ How to use: step-by-step without assuming technical knowledge
+- ✅ Troubleshooting: business impact language ("Your reports may be delayed if...") not technical jargon
+- ✅ Balances both audiences without patronizing either
+
+---
+
+### Eval 2.3: Ask for audience clarification if ambiguous
+
+**Goal:** Agent asks about intended audience when it's unclear.
+
+**Input:**
+Title: "Terraform Module Documentation"
+Content provided: Technical details about module structure
+No audience specified
+
+**Expected output:**
+- ✅ Agent asks: "Who is the primary audience for this page? (e.g., DevOps engineers, Infrastructure team, Platform users?)"
+- ✅ Waits for response before drafting
+
+---
+
+## Phase 3: Scannability & Clarity (Edge Cases)
+
+### Eval 3.1: Reject prose-heavy draft and restructure with bullets
+
+**Goal:** When user provides paragraph-heavy content, agent restructures into scannable format.
+
+**Input:**
+User-provided content: "The system processes requests asynchronously. This means that when you submit a request, it doesn't return immediately. Instead, you get a job ID that you can use to check status later. This is different from synchronous processing where you wait for a response. The advantage of async is that it can handle many more requests..."
+
+**Expected output:**
+- ✅ Restructures into bullets/lists:
+  ```
+  **Asynchronous processing:**
+  - Submit request, get job ID back
+  - Check status later using job ID
+  - Handles high request volume
+  ```
+- ✅ Removes redundancy ("This is different from..." eliminated)
+- ✅ Leads with what-not-why
+
+---
+
+### Eval 3.2: Flag ambiguous or assumptive language
+
+**Goal:** Agent flags when content assumes reader knowledge or uses unexplained jargon.
+
+**Input:**
+User draft: "The DAG uses XCom for inter-task communication. Tasks push state after each run."
+
+**Expected output:**
+- ✅ Agent flags: "I'm assuming readers know what 'XCom' and 'DAG' are. Should I add brief definitions, or is this audience already familiar?"
+- ✅ Doesn't rewrite without permission; asks first
+
+---
+
+## Phase 4: Audience Detection & Tone (Behavioral)
+
+### Eval 4.1: Adjust formality based on audience type
+
+**Goal:** Agent produces different tone for engineer vs. business stakeholder.
+
+**Input (Same content, different audiences):**
+
+**Scenario A - Engineer audience:**
+Content: Status of incident response
+Expected: Direct, technical, includes error codes and stack traces if relevant
+
+**Scenario B - Business audience:**
+Content: Status of incident response
+Expected: Impact-focused ("Customer-facing features unavailable for 15 min"), business language ("Revenue impact ~$X"), no technical jargon
+
+**Expected output:**
+- ✅ Both use one-sentence opening, scannability principles, but tone differs appropriately
+
+---
+
+### Eval 4.2: Handle conflicting or unclear audience signals
+
+**Goal:** Agent doesn't guess when audience preference is ambiguous.
+
+**Input:**
+Title: "Kubernetes Deployment Strategy"
+Audience provided: "Mixed team"
+Content tone signals: Some technical depth ("etcd consensus"), some high-level ("manages containers")
+
+**Expected output:**
+- ✅ Agent asks: "I see mixed audience signals. Who should this page favor — engineers implementing this, or stakeholders understanding the strategy?"
+- ✅ Waits for clarification before drafting
+
+---
+
+## Phase 5: Constraint Validation
+
+### Eval 5.1: Refuse ADR drafting (out of scope v1.0)
+
+**Goal:** Agent correctly identifies out-of-scope requests and declines.
+
+**Input:**
+User asks: "Draft an ADR for our new database selection decision"
+
+**Expected output:**
+- ✅ Agent responds: "ADR writing is not in scope for v1.0. I can help draft the summary section for a Confluence page about this decision, but the full ADR format is deferred to v2.0."
+
+---
+
+### Eval 5.2: Refuse documentation improvement (out of scope)
+
+**Goal:** Agent correctly identifies improvement requests as out of scope.
+
+**Input:**
+User provides existing README and asks: "Improve the clarity of this README"
+
+**Expected output:**
+- ✅ Agent responds: "Improving existing documentation is out of scope (v1.0). I can help draft a new section or page, but not edit existing content. Would you like to create a companion page instead?"
+
+---
+
+## Scoring Rubric
+
+**Each scenario passes if:**
+- Agent behavior matches expected output ✅
+- Agent produces output following core principles (audience-aware, scannable, plain English, concise)
+- Agent asks for clarification rather than guessing
+- Agent respects constraint boundaries (refuses out-of-scope requests)
+
+**Failure scenarios:**
+- ❌ Agent drafts without clarifying ambiguous requirements
+- ❌ Agent violates scope boundaries (writes ADRs, improves existing docs)
+- ❌ Agent produces prose-heavy output without scannability
+- ❌ Agent uses jargon without defining terms or asking audience
+- ❌ Agent invents PR templates instead of asking for them
+
+---
+
+## Test Coverage by Maturity
+
+**Tactical maturity requires:**
+- ✅ Happy paths: 4 scenarios (PR body drafting, Confluence creation)
+- ✅ Error cases: 2 scenarios (missing template, missing audience)
+- ✅ Edge cases: 2 scenarios (scannability, ambiguous language)
+- ✅ User interactions: 3 scenarios (audience detection, conflicting signals, constraint validation)
+- ✅ Boundary validation: 2 scenarios (refuse ADRs, refuse documentation improvement)
+
+**Total: 12 scenarios** (meets tactical 8-12 requirement)
