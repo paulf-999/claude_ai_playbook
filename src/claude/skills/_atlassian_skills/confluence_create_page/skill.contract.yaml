@@ -1,0 +1,44 @@
+name: confluence_create_page
+version: 1.0.0
+summary: Create Confluence pages using the general_page pattern with local draft review and explicit approval
+maturity: tactical
+
+dispatch:
+  triggers:
+    explicit:
+      - /confluence_create_page
+      - create confluence page
+      - create a confluence page
+      - add a confluence page
+      - add to confluence
+      - write a confluence page
+      - create a page in confluence
+  not_for:
+    - Bulk page creation (planned for v2.0)
+    - Page updates or editing (use /confluence_update_page in v2.0)
+    - Multiple page patterns beyond general_page (v2.0+)
+    - Complex ADF formatting beyond standard sections
+
+output:
+  type: conversational
+  confirmation_required: true
+  reversible: true
+  returns:
+    - Page URL in Confluence
+    - Page ID
+    - Confirmation message
+
+waives_response_standards: true
+
+requires:
+  tools:
+    - Atlassian MCP server enabled (mcp__atlassian__createConfluencePage)
+  resources:
+    - Confluence space "DA" (accessible)
+
+dependencies:
+  external:
+    - Confluence API (stable, v4+)
+  permissions:
+    - confluence:create_page
+    - confluence:view_pages
