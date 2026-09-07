@@ -28,3 +28,4 @@ The template shows all sections with placeholder content and inline examples. **
 ## skill.contract.yaml Contract Fields
 
 Use `~/.claude/_templates/skills/skill.contract.yaml.template` as your starting point. It contains all required fields with detailed inline comments explaining purpose and examples for each one.
+

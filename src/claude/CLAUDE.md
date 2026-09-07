@@ -1,6 +1,6 @@
 # Global Claude configuration
 
-> ⚠️ **Managed file** — do not edit directly.
+> 🚫 **Managed file** — do not edit directly. All changes belong in imported rule files, not here.
 > - **Rule:** add behaviour by editing imported files only — never inline
 > - **Lazy load by default:** domain-specific rules go in `_rules/04_lazy_load/` — never imported, read on demand. `_rules/04_lazy_load/` is the only subdirectory that is never imported. **Why:** every imported rule consumes ~100-200 tokens per session regardless of task type. Load domain-specific rules only when actually needed to preserve context for the current task.
 > - **Reset cadence:** Boris Cherny recommends resetting `~/.claude/` every ~6 months to prevent config bloat. Archive to `~/.claude_releases/` before resetting.
@@ -31,11 +31,11 @@ constraints are harder to bypass silently.
 @~/.claude/aliases.md
 
 <!-- Tier 1: 01_essentials/ — foundational principles and user-facing conventions -->
+@~/.claude/_rules/01_essentials/authoring_agents.md
 @~/.claude/_rules/01_essentials/authoring_rules.md
 @~/.claude/_rules/01_essentials/authoring_skills.md
-@~/.claude/_rules/01_essentials/conventions/claude_directory_structure.md
-@~/.claude/_rules/01_essentials/conventions/naming_standards.md
-@~/.claude/_rules/01_essentials/conventions/writing_style.md
+@~/.claude/_rules/01_essentials/claude_response_standards.md
+@~/.claude/_rules/01_essentials/claude_usage_standards.md
 @~/.claude/_rules/01_essentials/guiding_principles.md
 
 <!-- Tier 2: 02_claude_standards/ — blocking standards and enforcement -->
