@@ -1,0 +1,39 @@
+name: claude_review_config
+version: 0.1.0
+summary: Audit your global Claude config for quality issues across six dimensions. Receive a scorecard with A-F grade, gap analysis, and actionable recommendations.
+maturity: draft
+test_coverage_level: comprehensive
+
+dispatch:
+  triggers:
+    explicit:
+      - /claude_review_config
+      - "review my claude config"
+      - "score my claude config"
+      - "audit my global config"
+      - "config health check"
+    contextual:
+      - user wants a quality score or gap analysis of their global Claude configuration
+
+  not_for:
+    - reviewing a single rule file in isolation
+    - reviewing playbook repo structure
+
+output:
+  type: conversational
+  confirmation_required: false
+  reversible: true
+  artifacts:
+    - ~/.claude_config_review.md
+
+waives_response_standards: true
+# Multi-phase audit workflow (scan → score → recommend) requires free-form prompts
+# incompatible with response standards Summary + Next steps format
+
+dependencies:
+  tools:
+    - Read
+    - Bash
+    - Agent
+  mcp_servers: []
+  external: []
