@@ -71,7 +71,7 @@
 
 5. Production backfill
    └─ Run DAG for past N days; verify results identical across runs
-
+   
 6. Scheduling
    └─ Enable schedule_interval; monitor first week
 ```

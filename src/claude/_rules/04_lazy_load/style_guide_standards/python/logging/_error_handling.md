@@ -20,7 +20,7 @@ except yaml.YAMLError as e:
     raise
 ```
 
-**Why:**
+**Why:** 
 - Logs provide debugging context (which file, why it failed)
 - Re-raising preserves the stack trace for the caller
 - Caller can decide how to handle the error (retry, fallback, fail)

@@ -99,7 +99,7 @@ def _sub_env_var(match) -> str:
     var_name = match.group(1)
     value = os.environ.get(var_name)
     if value is None:
-        raise OSError(
+        raise EnvironmentError(
             f"Environment variable '{var_name}' is not set (referenced in YAML config)"
         )
     return value

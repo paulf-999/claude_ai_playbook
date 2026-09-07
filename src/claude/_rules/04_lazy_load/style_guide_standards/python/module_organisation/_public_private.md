@@ -13,14 +13,14 @@ Use underscore prefix to signal whether a function is part of the module's publi
 ```python
 def load_config(path: str) -> dict:
     """Load YAML config and interpolate ${ENV_VAR} references.
-
+    
     This is the main API for users of this module.
     """
     ...
 
 def validate_config(config: dict) -> None:
     """Validate config structure and required keys.
-
+    
     Raises ValueError if config is invalid.
     """
     ...

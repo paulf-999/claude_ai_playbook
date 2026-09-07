@@ -27,10 +27,10 @@ When exceeding complexity thresholds, document like this:
 ```python
 def complex_operation():
     """Brief description of what it does.
-
+    
     NOTE: Cyclomatic complexity is X due to [reason].
     This is acceptable because [justification: business logic / performance / etc].
-
+    
     Phases:
     1. [Phase A]: Describe what happens here
     2. [Phase B]: Describe what happens here

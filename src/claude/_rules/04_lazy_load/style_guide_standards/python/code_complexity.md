@@ -48,10 +48,10 @@ def process_data(items, config, output_dir):
     for item in items:
         if not validate(item):
             raise ValueError(...)
-
+    
     # Transform items
     transformed = [transform(item) for item in items]
-
+    
     # Write output
     write_results(transformed, output_dir)
 ```
