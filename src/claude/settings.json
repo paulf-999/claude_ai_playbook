@@ -66,6 +66,16 @@
   "showClearContextOnPlanAccept": true,
   "autoMemoryEnabled": true,
   "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/hook_style_guide_response_standards_inject.sh"
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
