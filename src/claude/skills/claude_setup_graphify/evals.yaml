@@ -1,0 +1,98 @@
+---
+name: claude_setup_graphify_evals
+description: 15 evaluation scenarios for claude_setup_graphify (v0.1.0 - Draft)
+
+evals:
+  # Pre-flight validation (linear checks)
+  - name: validate_git_repo
+    description: validate we're in git repository
+    input: "/claude_setup_graphify" (in git repo)
+    setup: directory is git repo
+    expected_output: [git repo confirmed, continue]
+
+  - name: validate_not_git_repo
+    description: fail gracefully if not in git repo
+    input: "/claude_setup_graphify" (not in git repo)
+    setup: regular directory (no .git)
+    expected_output: [error: "not in git repo", clear msg]
+
+  - name: validate_python_version
+    description: validate Python 3.8+ available
+    input: "/claude_setup_graphify"
+    setup: Python 3.8+ installed
+    expected_output: [python version confirmed]
+
+  - name: validate_python_too_old
+    description: fail gracefully on Python 3.6
+    input: "/claude_setup_graphify" (with Python 3.6)
+    setup: Python 3.6 or 3.7
+    expected_output: [error: "Python 3.8+ required", clear msg]
+
+  - name: validate_writable_directory
+    description: validate target directory writable
+    input: "/claude_setup_graphify"
+    setup: graphify-out/ writable
+    expected_output: [write permission confirmed]
+
+  - name: validate_readonly_directory
+    description: fail gracefully on read-only directory
+    input: "/claude_setup_graphify"
+    setup: graphify-out/ read-only
+    expected_output: [error: "directory not writable", clear msg]
+
+  # Happy path: Installation (after validation passes)
+  - name: install_graphifyy_package
+    description: pip install graphifyy succeeds
+    input: "/claude_setup_graphify"
+    setup: all validations pass, internet
+    expected_output: [installed, success]
+
+  - name: install_graphify_claude_skill
+    description: graphify install --platform claude succeeds
+    input: after pip install
+    setup: graphifyy installed
+    expected_output: [skill callable]
+
+  # Happy path: Extraction to verification
+  - name: extract_knowledge_graph
+    description: graphify extract generates graph.json
+    input: graphify extract
+    setup: graphifyy installed, repo with code
+    expected_output: [graph created, cost noted]
+
+  - name: add_gitignore_entry
+    description: append graphify-out/ to .gitignore
+    input: add .gitignore entry
+    setup: graphify-out/ exists
+    expected_output: [.gitignore updated]
+
+  - name: update_claude_md
+    description: CLAUDE.md updated with Graphify section
+    input: edit CLAUDE.md
+    setup: CLAUDE.md exists
+    expected_output: [section added]
+
+  - name: verify_graphify_skill_callable
+    description: /graphify queries graph successfully
+    input: structural question
+    setup: all phases complete
+    expected_output: [results returned, no file reads]
+
+  # Critical errors (after validation passes)
+  - name: error_install_fails
+    description: handle pip/graphify install failure
+    input: "/claude_setup_graphify"
+    setup: validations pass, internet disabled
+    expected_output: [install fails, clear error, retry suggested]
+
+  - name: error_extraction_fails
+    description: handle graphify extract failure
+    input: graphify extract
+    setup: validations pass, no code files
+    expected_output: [extraction fails, error reported, retry suggested]
+
+  - name: error_skill_not_callable
+    description: /graphify verification fails
+    input: test query to /graphify
+    setup: all phases done, skill error
+    expected_output: [error detected, manual verify suggested]

@@ -1,0 +1,108 @@
+---
+name: claude_review_config_evals
+description: 11 evaluation scenarios for claude_review_config skill
+
+evals:
+  # Phase 1: Audit & Score
+  - name: phase1_read_config
+    description: Phase 1 reads config files without errors
+    input: "/claude_review_config"
+    setup: Global config exists (~/.claude/CLAUDE.md + _rules/)
+    expected_output:
+      - Config files read successfully
+      - No parsing errors
+      - All imported rules identified
+
+  - name: phase1_score_dimensions
+    description: Phase 1 scores all 6 dimensions on 1-10 scale
+    input: "/claude_review_config"
+    setup: Config files present in _rules/ directory
+    expected_output:
+      - All 6 dimensions scored (1-10)
+      - Overall grade calculated (A-F)
+      - Each dimension has reasoning
+
+  - name: phase1_generate_scorecard
+    description: Phase 1 generates complete scorecard output
+    input: Phase 1 audit complete
+    setup: Config audit finished with dimension scores
+    expected_output:
+      - Scorecard table (6 dimensions + overall)
+      - Per-dimension scores with notes
+      - Overall grade mapping (A=9+, B=8, C=7, etc.)
+
+  - name: phase1_error_missing_claude_md
+    description: Phase 1 handles missing CLAUDE.md gracefully
+    input: "/claude_review_config"
+    setup: ~/.claude/CLAUDE.md does not exist
+    expected_output:
+      - Clear error message (file not found)
+      - Graceful exit (no crash)
+      - Suggestion to verify config directory
+
+  # Phase 2: Analyze Gaps
+  - name: phase2_moscow_table
+    description: Phase 2 generates MoSCoW prioritization table
+    input: Phase 1 scorecard with gaps
+    setup: Scorecard complete with identified gaps
+    expected_output:
+      - MoSCoW table (Must/Should only)
+      - Gaps listed with priority
+      - Clear descriptions
+
+  - name: phase2_recommendations_with_severity
+    description: Phase 2 creates severity-rated recommendations
+    input: Phase 1 scorecard + MoSCoW gaps
+    setup: Multiple gaps across dimensions
+    expected_output:
+      - Recommendations table (Critical/High/Medium/Low)
+      - Actionable next steps
+      - Must items prioritized
+
+  # Phase 3: Offer Fixes
+  - name: phase3_propose_fixes_for_must_items
+    description: Phase 3 proposes fixes for Must items
+    input: User selects "yes" to fixes
+    setup: MoSCoW table with Must items, user at fix proposal
+    expected_output:
+      - Fixes proposed per Must item
+      - User approval prompt per fix
+      - Clear explanation of changes
+
+  # Phase 4: Apply Fixes
+  - name: phase4_apply_fixes_to_config
+    description: Phase 4 applies approved fixes to ~/.claude/
+    input: User approves fix
+    setup: Fix proposed, user approval given
+    expected_output:
+      - Fix applied to config file
+      - File modified and saved
+      - Confirmation message shown
+
+  - name: phase4_sync_to_playbook_repo
+    description: Phase 4 syncs fixes to playbook repo
+    input: Phase 4 applying fixes
+    setup: Playbook repo available at ~/git_repos/core/dmt-scripts-claude_ai_playbook/
+    expected_output:
+      - Changes synced to src/claude/
+      - Both ~/.claude/ and src/claude/ updated
+      - Consistent state
+
+  # Error Cases
+  - name: error_malformed_yaml_in_rules
+    description: Handles malformed YAML in rule files gracefully
+    input: "/claude_review_config"
+    setup: One rule file contains invalid YAML
+    expected_output:
+      - Error caught (no crash)
+      - User notified of problematic file
+      - Manual fix suggestion
+
+  - name: error_missing_rules_directory
+    description: Handles missing ~/.claude/_rules/ directory
+    input: "/claude_review_config"
+    setup: ~/.claude/_rules/ directory missing
+    expected_output:
+      - Error message (_rules/ not found)
+      - Graceful exit
+      - Config structure verification suggestion

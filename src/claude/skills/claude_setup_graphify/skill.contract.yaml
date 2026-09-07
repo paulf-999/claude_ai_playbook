@@ -1,15 +1,18 @@
 ---
-name: setup_graphify
+name: claude_setup_graphify
 version: 0.1.0
 summary: Set up Graphify on a repo to generate a local AST-based knowledge graph,
     reducing token cost for codebase exploration.
 maturity: draft
-test_coverage_level: basic
+test_coverage_level: comprehensive
 
 dispatch:
     triggers:
         explicit:
-            - /setup_graphify
+            - /claude_setup_graphify
+            - set up graphify
+            - setup graphify
+            - enable graphify
         contextual:
             - user wants to set up Graphify on a repo
             - user wants to reduce token usage for codebase exploration
@@ -22,6 +25,10 @@ output:
     confirmation_required: false
     reversible: true
     artifacts: []
+
+waives_response_standards: true
+# Multi-phase setup workflow (validate → configure → build → verify) requires free-form prompts
+# incompatible with response standards Summary + Next steps format
 
 dependencies:
     tools:
