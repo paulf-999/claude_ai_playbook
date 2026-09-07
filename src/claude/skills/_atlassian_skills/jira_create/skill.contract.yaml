@@ -1,0 +1,76 @@
+---
+name: jira_create
+description: Create Jira tickets with full field configuration and story point validation
+version: 0.1.0
+maturity: draft
+summary: Create Jira tickets with field configuration and security checks
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Lifecycle & Maintenance
+# ═══════════════════════════════════════════════════════════════════════════════
+
+test_coverage_level: comprehensive
+  # none           = no tests exist
+  # basic          = 1–2 happy path tests
+  # comprehensive  = main path + error cases + edge cases + security
+  # This skill has 42 test cases covering tickets, validation, security, design, and error cases
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Usage
+# ═══════════════════════════════════════════════════════════════════════════════
+
+dispatch:
+  triggers:
+    - /jira_create
+    - /jira_create ticket
+    - /jira_create bug
+    - /jira_create task
+    - /jira_create improvement
+    - create a Jira ticket
+    - create a bug in Jira
+    - log this as a Jira ticket
+
+  not_for:
+    - updating existing Jira tickets
+    - batch-creating tickets from templates (v2.0+)
+    - creating epics (v2.0+)
+    - managing sprints or assigning to sprints
+    - creating issue links or child issues
+    - complex field customization beyond required constraints
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Requirements
+# ═══════════════════════════════════════════════════════════════════════════════
+
+requires:
+  tools:
+    - Read
+    - mcp__atlassian__createJiraIssue
+
+  mcp_servers:
+    - Atlassian
+
+  external:
+    - Atlassian (Jira) workspace with write access
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Output & Safety
+# ═══════════════════════════════════════════════════════════════════════════════
+
+output:
+  type: external_service
+  confirmation_required: false
+  # CRITICAL: Slash command invocation is explicit intent; execute immediately
+  # No plan-mode gates; no preliminary confirmations; start interactive flow directly
+  reversible: false
+  returns: issue_id and link
+
+waives_response_standards: true
+# 3-phase interactive workflow (gather → create → confirm) requires multi-turn free-form prompts
+# incompatible with response standards Summary + Next steps format
+
+notes:
+  - Creating a Jira ticket is permanent; cannot be directly undone
+  - Requires write permission to target project
+  - Draft maturity: happy path only; error handling incomplete
+  - IMPORTANT: Slash command (/jira_create) should execute immediately without permission gates

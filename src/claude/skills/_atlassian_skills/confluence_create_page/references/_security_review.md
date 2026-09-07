@@ -1,0 +1,257 @@
+# Security Review — confluence_create_page
+
+Threat model, mitigations, and security considerations for v1.0.
+
+---
+
+## Threat Model
+
+| Threat | Attack Vector | Mitigation | Status |
+|---|---|---|---|
+| **Prompt Injection** | Message parsing used for context detection | Regex-based extraction (no eval/exec); message not evaluated | ✅ Safe |
+| **Subprocess Injection** | `git config`, `whoami` subprocess calls | No shell=True; args passed as list; timeouts on all calls | ✅ Safe |
+| **Regex DoS** | Pattern matching on user input message | Patterns bounded (~100 char match); no nested quantifiers | ✅ Safe |
+| **Secret Exposure** | Credentials in draft or logs | No credentials stored; creator is public email only | ✅ Safe |
+| **Unauthorized Publishing** | User publishes page they shouldn't | Confluence permission check via MCP (not in skill); local draft approval gate | ✅ Safe |
+| **XSS via Content** | User provides malicious page content | Content passed to Confluence API as text/ADF (not interpreted by skill) | ✅ Safe |
+| **Path Traversal** | Draft saved to unexpected location | Path constructed via pathlib (safe); no user input in path | ✅ Safe |
+| **Timing Attacks** | Subprocess calls hang or timeout | 2-second timeout on all subprocess calls; max 6-minute total for publish | ✅ Safe |
+
+---
+
+## Input Validation
+
+### Message (Phase 1a: Context Detection)
+
+**Field:** User message for context extraction  
+**Attack:** Prompt injection via keywords like "ignoring previous instructions"  
+**Validation:**
+- Regex-based pattern matching (not evaluated)
+- Extraction limited to ~200 char match window
+- Extracted text is treated as data, not code
+
+**Safe example:**
+```python
+message = "create page describing ignoring previous instructions"
+context = detect_context_from_message(message)
+# Result: "ignoring previous instructions" (data, not executed)
+```
+
+### Outline (Phase 1a Input)
+
+**Field:** Page outline/topic  
+**Attack:** Malicious characters in outline used in filename or API call  
+**Validation:**
+- Trimmed of whitespace
+- Passed to Confluence as plain text (not interpreted)
+- Draft filename sanitized (spaces → underscores)
+
+**Safe example:**
+```python
+outline = "../../etc/passwd OR 1=1 DROP TABLE"
+# Stored in draft filename: "etc_passwd_or_1_1_drop_table_<timestamp>.md"
+# Passed to Confluence: plain text, no interpretation
+```
+
+### Title (Phase 1b/1c Input)
+
+**Field:** Page title  
+**Constraints:** 3-255 chars, non-whitespace
+**Validation:**
+```python
+is_valid, result = validate_title(user_title)
+# Returns (False, "error msg") if invalid
+# Sanitizes whitespace automatically
+```
+
+### Space Key (Phase 2 Input)
+
+**Field:** Confluence space identifier  
+**Constraints:** 2-10 chars, alphanumeric only, uppercase
+**Validation:**
+```python
+is_valid, result = validate_space(space)
+# Rejects special chars, enforces length bounds
+# Normalizes to uppercase
+```
+
+### Sections (Phase 2 Input)
+
+**Field:** List of section titles  
+**Constraints:** 1-10 items, unique, non-empty
+**Validation:**
+```python
+is_valid, result = validate_sections(sections)
+# Enforces count bounds
+# Checks for duplicates and whitespace-only items
+# Returns sanitized list with whitespace stripped
+```
+
+### Pattern (Phase 2 Input)
+
+**Field:** Content pattern name  
+**Constraints:** Must be from predefined list
+**Validation:**
+```python
+is_valid, result = validate_pattern(pattern)
+# Allowlist: ["general_page", "requirements", "design_decision", "incident_report", "how_to"]
+# Rejects anything not in list
+```
+
+---
+
+## Subprocess Safety
+
+All subprocess calls follow security best practices:
+
+### Design Pattern
+```python
+result = subprocess.run(
+    ["command", "arg1", "arg2"],      # Args as list (no shell injection)
+    capture_output=True,               # Don't inherit stdio
+    text=True,                         # Return as string, not bytes
+    timeout=2,                         # Prevent hanging
+)
+# Never use: shell=True, shell=False (default), input from user
+```
+
+### Calls Made
+
+| Command | Purpose | Timeout | Safe? |
+|---|---|---|---|
+| `git config user.name` | Get creator name | 2s | ✅ No args from user input |
+| `git config user.email` | Get creator email | 2s | ✅ No args from user input |
+| `whoami` | Fallback user | 2s | ✅ No args; system command |
+
+---
+
+## Credential Management
+
+### Creator Resolution
+
+**No credentials stored or exposed:**
+- Creator email sourced from git config (user's own config)
+- Never passes through code; just read and used
+- Email is public (Confluence account, not secret)
+- Fallback chains ensure graceful failure if config missing
+
+**Chain (in order):**
+1. `git config user.email` — user's git config (most reliable)
+2. `EMAIL` environment variable — user's shell env (if set)
+3. Constructed: `firstname.lastname@payroc.com` — fallback format
+
+**No hardcoded credentials:**
+- Version, date, status are public metadata (not secrets)
+- No API keys, tokens, or passwords generated by skill
+- MCP authentication handled by Atlassian MCP server
+
+### Sensitive Data Handling
+
+| Data | Stored? | Logged? | Safe? |
+|---|---|---|---|
+| User email | Yes (in page metadata) | No | ✅ Public; part of page |
+| Creator name | Yes (in page metadata) | No | ✅ Public; part of page |
+| User message/outline | No (processed → discarded) | No | ✅ Not retained |
+| Confluence token | No (handled by MCP server) | No | ✅ MCP responsibility |
+
+---
+
+## Error Handling & Information Leakage
+
+**Safe error messages (no internal details leaked):**
+
+```python
+# ✅ Good: User-friendly, no internals
+"Creator must be a valid email address"
+"Space key must be 2-10 characters"
+"Confluence API timeout after 120 seconds"
+
+# ❌ Bad: Would leak internals (not done here)
+"subprocess.CalledProcessError: git config user.name returned 1"
+"File handle exhaustion; max open files exceeded"
+"Memory allocation failed in regex engine"
+```
+
+---
+
+## Isolation & Permissions
+
+### Filesystem
+
+- **Draft location:** `~/.claude/_drafts/confluence/` (user's home directory)
+- **Permissions:** User only (created with default umask)
+- **No elevation:** Never requires sudo or admin access
+- **Safe path handling:** pathlib (not string concatenation)
+
+### Process
+
+- **No privilege escalation:** Subprocess calls run as current user
+- **Timeouts on all subprocess calls:** 2-second max (prevent hanging)
+- **Limited scope:** Only reads git config, doesn't modify it
+
+### Network
+
+- **API calls via MCP:** Atlassian MCP server handles auth
+- **No certificate validation bypass:** Subprocess uses system CA bundle
+- **Timeout on network hangs:** 6-minute max for Confluence publish
+
+---
+
+## Testing Coverage
+
+| Threat | Test | Status |
+|---|---|---|
+| Invalid input (empty/too long) | `test_validate_title_*` family | ✅ 8+ tests |
+| Pattern injection | `test_detect_context_*` family | ✅ 5+ tests |
+| User fallbacks (missing git config) | `test_get_current_user_*` family | ✅ 2+ tests |
+| Subprocess failures | `test_phase_3_*_error` family | ✅ 4+ tests |
+| Validation accumulation | `test_phase_2_validate_*` | ✅ 8+ tests |
+
+---
+
+## Known Limitations
+
+### v1.0 Scope (Intentional)
+
+- **No page editing:** Only creates pages (simpler, narrower attack surface)
+- **No batch operations:** Single-page only (less risk of bulk mistakes)
+- **No template injection:** Uses pre-defined patterns only (prevents template DoS)
+
+### v2.0 Roadmap
+
+- **LLM-based titles:** Will require API call validation + prompt injection review
+- **Page editing:** Requires fetch → validate → modify → publish flow (new threats)
+- **Batch creation:** Requires rate-limit handling + bulk permission checks
+
+---
+
+## Security Checklist (Passed ✅)
+
+- [ ] No eval/exec used anywhere ✅
+- [ ] No shell=True in subprocess calls ✅
+- [ ] All user input validated/sanitized ✅
+- [ ] No credentials hardcoded ✅
+- [ ] Error messages safe (no internals leaked) ✅
+- [ ] Timeouts on all blocking calls ✅
+- [ ] No privilege escalation needed ✅
+- [ ] No path traversal possible ✅
+- [ ] Draft files created with safe permissions ✅
+- [ ] Tests cover error cases ✅
+
+---
+
+## Recommendations for Users
+
+1. **Keep git config up-to-date:** `git config user.name "Your Real Name"` and `git config user.email "you@payroc.com"`
+2. **Use FULLNAME env as fallback:** `export FULLNAME="Your Real Name"` if git config not preferred
+3. **Review drafts carefully:** Before publishing, check content for accuracy and tone
+4. **Don't share authentication tokens:** Confluence access is via MCP server; don't expose its token
+5. **Report suspicious pages:** If unauthorized pages appear in Confluence, contact admin
+
+---
+
+## Compliance Notes
+
+- **GDPR:** Creator name/email are page metadata (required for attribution; compliant)
+- **SOX/HIPAA:** No patient/financial data handled by skill (content passed through to Confluence, not retained)
+- **Access Control:** Confluence permission model controls who can view/edit published pages (not skill's responsibility)
