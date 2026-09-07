@@ -52,7 +52,7 @@ Perform preparation and transforms on base tables:
 
 ```sql
 customers as (
-    SELECT
+    SELECT 
         first_name || ' ' || last_name AS name,
         *
     FROM base_customers
@@ -73,7 +73,7 @@ Join together all logical CTEs into a single result set:
 
 ```sql
 final_cte as (
-    SELECT
+    SELECT 
         c.name,
         o.order_id,
         o.total

@@ -26,14 +26,14 @@ def test_run_dry_run_plans_but_does_not_create(tmp_path):
     inventory_path = tmp_path / "connection_inventory.yaml"
     log_path = tmp_path / "connection_migration_log.yaml"
     inventory_path.write_text("...")
-
+    
     # Run the function
     ConnectionMigrator(client).run(
         apply=False,
         inventory_path=str(inventory_path),
         log_path=str(log_path),
     )
-
+    
     # Assert log file was not created
     assert not log_path.exists()
 ```
@@ -66,7 +66,7 @@ def test_migrate_creates_source(tmp_path):
     # Setup: use helper to create consistent test data
     client = _make_client()
     entry = _entry(source_system="salesforce_prod")
-
+    
     # Execute and assert
     ConnectionMigrator(client).process(entry)
     client.create_source.assert_called_once()
@@ -86,10 +86,10 @@ from unittest.mock import MagicMock
 def test_migrate_calls_client_create_source(tmp_path):
     client = MagicMock()
     client.create_source.return_value = {"sourceId": "s1"}
-
+    
     # When we call migrate, it should call client.create_source
     ConnectionMigrator(client).migrate(entry)
-
+    
     # Assert the mock was called
     client.create_source.assert_called_once()
 ```

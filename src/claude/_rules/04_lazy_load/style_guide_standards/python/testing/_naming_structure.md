@@ -43,10 +43,10 @@ def test_parse_args_config_and_apply(monkeypatch):
         "sys.argv",
         ["airbyte_connection_creator.py", "--config", "foo.yaml", "--apply"],
     )
-
+    
     # Execute: call the function being tested
     args = parse_args()
-
+    
     # Assert: verify the expected behaviour
     assert args.config == "foo.yaml"
     assert args.apply is True

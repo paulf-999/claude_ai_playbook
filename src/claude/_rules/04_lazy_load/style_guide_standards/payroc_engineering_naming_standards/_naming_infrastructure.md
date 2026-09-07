@@ -25,7 +25,7 @@ VM hostnames follow this pattern:
 ### Example VMs
 
 | VM | Breakdown | Purpose |
-|----|-----------|---------|
+|----|-----------|---------| 
 | `prd-us-app-01.payroc.io` | prod + US + application server + #1 | Production app server |
 | `stg-eu-db-01.payroc.io` | staging + EU + database + #1 | Staging database |
 | `dev-us-web-01.payroc.io` | dev + US + web server + #1 | Development web tier |

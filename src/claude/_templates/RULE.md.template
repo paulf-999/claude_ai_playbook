@@ -119,3 +119,4 @@ Link to related rules or guidance.
 - [ ] **Trailing newline:** File ends with exactly one `\n`
 - [ ] **No H1 duplicates:** Only one `#` header per file
 - [ ] **Clear scope:** One concept per file, related patterns grouped
+

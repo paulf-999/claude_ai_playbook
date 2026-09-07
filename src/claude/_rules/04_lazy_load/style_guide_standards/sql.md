@@ -65,7 +65,7 @@ SQL style is enforced by **SQLFluff** in dialect mode `snowflake`:
 ## ⚠️ Common Mistakes & Recovery
 
 **Hardcoding table references in dbt models**
-- ❌ `FROM schema.my_table`
+- ❌ `FROM schema.my_table` 
 - ✅ `FROM {{ source('raw', 'my_table') }}`
 - **Recovery:** Search and replace all hardcoded refs; document source ownership
 
