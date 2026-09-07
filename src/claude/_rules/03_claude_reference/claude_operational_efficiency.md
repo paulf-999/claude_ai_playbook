@@ -4,10 +4,20 @@
 
 ## 📋 Contents
 
-- [Default behaviours](#-default-behaviours)
-- [Intervention mode](#-intervention-mode)
-- [When to delegate](#-when-to-delegate) — `_claude_when_to_delegate.md`
 - [Token awareness](#-token-awareness)
+- [Default behaviours](#-default-behaviours)
+- [When to delegate](#-when-to-delegate) — `claude_when_to_delegate.md`
+- [Turn budgets](#-turn-budgets) — automation turn constraints; `turn_budgets.md`
+- [Intervention mode](#-intervention-mode)
+- [External system access](#-external-system-access)
+- [Task request conventions](#-task-request-conventions)
+
+---
+
+## ⚖️ Token awareness
+
+- **Don't parallelise for its own sake:** prefer targeted, scoped operations over broad sweeps where the output would be equivalent.
+  - **Note:** parallelise only where it reduces real wait time or produces meaningfully better results.
 
 ---
 
@@ -19,20 +29,37 @@
 - **No context restating:** do not summarise content already visible in the conversation window.
 - **Sub-agent justification:** the primary justification for spawning a sub-agent is context isolation — protecting the main window from large or irrelevant content; parallelism alone is not sufficient.
 
+---
+
+## 🤝 When to delegate
+
+@~/.claude/_rules/03_claude_reference/claude_conduct/claude_when_to_delegate.md
+
+---
+
+## 🔄 Turn budgets
+
+@~/.claude/_rules/03_claude_reference/claude_conduct/turn_budgets.md
+
+---
+
 ## 🚩 Intervention mode
 
 - **Flag, don't block:** when inefficiency is detected, flag it but do not block execution.
   - **Example:** "Flagging: this read duplicates one already in context — skipping."
   - **Note:** intervene only where the waste is clear and material — re-reading a file just read, spawning a sub-agent for a single tool call, re-summarising context already in the window.
 
-## 🤝 When to delegate
+---
 
-@~/.claude/_rules/03_claude_reference/claude_conduct/_claude_when_to_delegate.md
+## 🔐 External system access
 
-## ⚖️ Token awareness
+@~/.claude/_rules/03_claude_reference/claude_conduct/external_system_access.md
 
-- **Don't parallelise for its own sake:** prefer targeted, scoped operations over broad sweeps where the output would be equivalent.
-  - **Note:** parallelise only where it reduces real wait time or produces meaningfully better results.
+---
+
+## 📋 Task request conventions
+
+@~/.claude/_rules/03_claude_reference/claude_conduct/task_request_conventions.md
 
 ---
 
@@ -41,6 +68,3 @@
 - `behaviour.md` — safe defaults and decision-making patterns
   - `_session_conduct.md` — interpersonal honesty and responsiveness
   - `_model_selection_strategy.md` — when to escalate models
-- `claude_conduct/` — operational conduct and decision-making
-  - `_when_to_delegate.md` — when to delegate vs. handle directly
-  - `_turn_budgets.md` — automation turn constraints
