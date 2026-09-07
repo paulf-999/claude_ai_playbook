@@ -133,7 +133,7 @@ This document replaces the prior five-tier classification system (Tier 1–5) wi
 
 - **Loading strategy decision tree:** `claude_rule_loading_strategy.md` — Authoritative guide for always-on vs. lazy-load placement
 - **Rule registries:** `claude_rule_loading_strategy.md` (parent index) + children files (`_always_on_rules.md`, `_lazy_loaded_rules.md`)
-- **Tier-specific guidance:**
+- **Tier-specific guidance:** 
   - `01_essentials/` — Foundational rules (safety, user-facing, quality)
   - `02_claude_standards/` — Standard enforcement and quality gates
   - `03_claude_reference/` — This directory; system knowledge and platform guidance

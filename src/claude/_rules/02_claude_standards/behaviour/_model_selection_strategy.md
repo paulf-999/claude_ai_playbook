@@ -69,7 +69,7 @@ Escalating adds cost but prevents:
 
 **Rough heuristic:**
 - Task under 5 minutes of reasoning → Haiku
-- Task 5–15 minutes of reasoning → Sonnet
+- Task 5–15 minutes of reasoning → Sonnet  
 - Task >15 minutes of complex thinking → Opus
 
 ---
@@ -78,3 +78,4 @@ Escalating adds cost but prevents:
 
 - Parent: `behaviour.md` — safe defaults and decision-making patterns
 - Reference: `context_management.md` — context management principles (related but separate concern)
+

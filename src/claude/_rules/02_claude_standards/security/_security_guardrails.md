@@ -26,7 +26,7 @@ When recommending permissions (settings.json allowlist or similar):
   - ❌ Bad: `Bash(git:*)` — permits any git command including force pushes
   - ✅ Good: `Bash(git status:*)`, `Bash(git log:*)`, `Bash(git diff:*)` — read-only, safe
 - **Least privilege by default:** only recommend permissions for operations actually needed, not "might be useful"
-- **Auto-allow read-only commands; gate writes:**
+- **Auto-allow read-only commands; gate writes:** 
   - Read-only commands (git status, log, diff, show; find, grep, cat) are safe to auto-allow — they don't modify state
   - Write commands (git add, commit, push, rm, rm -rf) must remain gated for explicit per-use approval — they're destructive
   - Rationale: read-only operations can't harm the repo or filesystem; write operations require user awareness
