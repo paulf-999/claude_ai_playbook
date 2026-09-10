@@ -7,8 +7,8 @@ SHELL = /bin/bash
 # make test             # run structural validation tests
 # make lint_tags        # validate Tier 1 tags on all Claude components (run before committing)
 # make audit_components # run periodic health audit on the Claude component library
-# make install          # [DISABLED] install Claude config files into ~/.claude/ (use make update instead)
-# make update           # update Claude config files in ~/.claude/ (WSL)
+# make install          # [DISABLED] install Claude config files into ~/.claude/ (edit ~/.claude directly)
+# make update           # [DISABLED] update Claude config files in ~/.claude/ (WSL)
 # make clean_plans      # archive executed/superseded plans to ~/.claude/plans/archive/
 # make clean_backups    # move old ~/.claude_backup_* dirs to ~/.claude_backup_archive/
 # make install_windows  # sync Claude config files to Windows .claude (run from WSL2)
@@ -38,9 +38,9 @@ deps:
 # 	@echo "${INFO}\nInstalling Claude config files into ~/.claude/${COLOUR_OFF}"
 # 	@bash src/sh/claude/install_claude_files.sh
 
-update:
-	@echo "${INFO}\nUpdating Claude config files in ~/.claude/${COLOUR_OFF}"
-	@bash src/sh/claude/update_claude_files.sh
+# update:
+# 	@echo "${INFO}\nUpdating Claude config files in ~/.claude/${COLOUR_OFF}"
+# 	@bash src/sh/claude/update_claude_files.sh
 
 install_windows:
 	@echo "${INFO}\nSyncing Claude config files to Windows .claude (requires WSL2)${COLOUR_OFF}"
@@ -86,4 +86,4 @@ clean_backups:
 	@python3 src/sh/claude/clean_backups.py
 
 # .PHONY tells Make that these targets don't represent files
-.PHONY: deps update install_windows update_windows install_plugins patch_plugins test lint lint_tags lint_skills audit_components clean_plans clean_backups
+.PHONY: deps install_windows update_windows install_plugins patch_plugins test lint lint_tags lint_skills audit_components clean_plans clean_backups
