@@ -20,11 +20,12 @@ Test organization:
   - Semantic tests (consistency between SKILL.md and contract)
 """
 
-import os
 import re
 from pathlib import Path
 from typing import Dict, List
 import yaml
+
+from src.claude._tests._claude_dir import CLAUDE_DIR
 
 # Canonical skill structure
 CANONICAL_SECTIONS = [
@@ -436,8 +437,7 @@ class SkillComplianceValidator:
 
 def get_all_skills() -> List[Path]:
     """Collect all installed skills from the configured Claude directory's skills/."""
-    claude_dir = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
-    skills_dir = claude_dir / "skills"
+    skills_dir = CLAUDE_DIR / "skills"
     if not skills_dir.exists():
         return []
 

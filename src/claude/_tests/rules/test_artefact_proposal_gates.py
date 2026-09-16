@@ -4,7 +4,7 @@ Test artefact proposal gates: naming, placement, duplication.
 Validates that the three gates establish clear rules before proposing new artefacts.
 """
 
-import os
+from src.claude._tests._claude_dir import CLAUDE_DIR
 
 
 class TestNamingGate:
@@ -179,18 +179,12 @@ class TestGateDocumentation:
 
     def test_gates_file_exists(self):
         """Validates that _artefact_proposal_gates.md exists and is accessible."""
-        from pathlib import Path
-        default_dir = str(Path.home() / ".claude")
-        claude_dir = Path(os.environ.get("CLAUDE_CONFIG_DIR", default_dir))
-        gate_file = claude_dir / "_rules" / "02_claude_standards" / "behaviour" / "_artefact_proposal_gates.md"
+        gate_file = CLAUDE_DIR / "_rules" / "02_claude_standards" / "behaviour" / "_artefact_proposal_gates.md"
         assert gate_file.exists(), f"Gates file should exist at {gate_file}"
 
     def test_gates_file_has_all_three_gates(self):
         """Validates that gates file documents all three gates."""
-        from pathlib import Path
-        default_dir = str(Path.home() / ".claude")
-        claude_dir = Path(os.environ.get("CLAUDE_CONFIG_DIR", default_dir))
-        gate_file = claude_dir / "_rules" / "02_claude_standards" / "behaviour" / "_artefact_proposal_gates.md"
+        gate_file = CLAUDE_DIR / "_rules" / "02_claude_standards" / "behaviour" / "_artefact_proposal_gates.md"
         content = gate_file.read_text()
 
         assert "Gate 1" in content or "Naming" in content, "Gates file should document naming gate"

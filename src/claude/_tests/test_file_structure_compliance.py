@@ -14,12 +14,11 @@ Checks:
 This test is parametrized to scan all files at once and report violations.
 """
 
-import os
 import re
 from pathlib import Path
 
 
-CLAUDE_HOME = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+from src.claude._tests._claude_dir import CLAUDE_DIR as CLAUDE_HOME
 
 # Directories that are auto-generated and should be skipped
 AUTO_GENERATED_DIRS = {

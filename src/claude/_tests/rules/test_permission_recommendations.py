@@ -5,10 +5,9 @@ Ensures:
 - Permission recommendations follow least-privilege principle
 - Read-only operations are distinguished from write operations
 """
-import os
-from pathlib import Path
 
-CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+from src.claude._tests._claude_dir import CLAUDE_DIR
+
 SECURITY_GUARDRAILS_FILE = CLAUDE_DIR / "_rules/claude_internal/security_guardrails.md"
 
 

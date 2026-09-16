@@ -11,13 +11,12 @@ independent of CLAUDE_CONFIG_DIR.
 Mode: blocking (blocks Write tool and injects naming rules for review)
 """
 
-import os
 import json
-from pathlib import Path
 from src.claude._tests.hooks.hook_test_utils import run_hook
 
 
-CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+from src.claude._tests._claude_dir import CLAUDE_DIR
+
 HOOK_PATH = CLAUDE_DIR / "hooks" / "enforcement_naming_convention.sh"
 
 

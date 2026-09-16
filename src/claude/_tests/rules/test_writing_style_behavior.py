@@ -14,10 +14,9 @@ Quarterly behavioral audit (manual):
 - Cadence: Quarterly (per guiding_principles.md reset cycles)
 """
 
-import os
-from pathlib import Path
 
-CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+from src.claude._tests._claude_dir import CLAUDE_DIR
+
 RULE_FILE = CLAUDE_DIR / "_rules" / "01_essentials" / "conventions" / "writing_style.md"
 
 

@@ -6,11 +6,11 @@ Verifies the design goals for the _rules/ layout in the configured Claude direct
 - File quality standards (line limits, H1 headings, trailing newlines)
 - CLAUDE.md import priority order
 """
-import os
 import re
 from pathlib import Path
 
-CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+from src.claude._tests._claude_dir import CLAUDE_DIR
+
 RULES_DIR = CLAUDE_DIR / "_rules"
 CLAUDE_MD = CLAUDE_DIR / "CLAUDE.md"
 
