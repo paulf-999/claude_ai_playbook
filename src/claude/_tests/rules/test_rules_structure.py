@@ -1,6 +1,6 @@
 """Tests for _rules/ directory structure and content standards.
 
-Verifies the design goals for the ~/.claude/_rules/ layout:
+Verifies the design goals for the _rules/ layout in the configured Claude directory:
 - Human-readable files at root, Claude-specific internals in claude_internal/
 - All @import paths resolve to real files
 - File quality standards (line limits, H1 headings, trailing newlines)
@@ -129,8 +129,8 @@ def test_claude_internal_contains_expected_files():
 
 
 def test_aliases_at_claude_root():
-    """aliases.md must exist at ~/.claude/ root, not inside _rules/."""
-    assert (CLAUDE_DIR / "aliases.md").exists(), "aliases.md missing from ~/.claude/ root"
+    """aliases.md must exist at the Claude directory root, not inside _rules/."""
+    assert (CLAUDE_DIR / "aliases.md").exists(), f"aliases.md missing from {CLAUDE_DIR} root"
     assert not (RULES_DIR / "aliases.md").exists(), "aliases.md must not be inside _rules/"
 
 

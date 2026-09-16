@@ -1,7 +1,9 @@
 """
 Test: enforcement_markdown_file_locations hook
 
-Validates that markdown files written to ~/.claude/ follow writing_style.md conventions.
+Validates that markdown files written to the Claude config directory follow
+writing_style.md conventions. The hook itself matches on a literal ".claude/"
+path segment, independent of CLAUDE_CONFIG_DIR.
 - Drafts: ~/.claude/_drafts/<domain>/YYYY-MM-DD_<topic>.md
 - Errors: ~/.claude/_errors/<domain>/YYYY-MM-DD_<topic>.md
 - Reference: ~/.claude/_reference/<topic>.md

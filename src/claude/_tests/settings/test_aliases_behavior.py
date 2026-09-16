@@ -13,7 +13,6 @@ For conventions (bare words like 'bullets'):
 - Spot-checks that the convention is applied consistently
 """
 
-import subprocess
 import sys
 from pathlib import Path
 from typing import Dict, List, Tuple
@@ -30,7 +29,7 @@ def parse_aliases_table() -> List[Dict]:
         content = f.read()
 
     lines = content.split('\n')
-    table_lines = [l for l in lines if l.strip().startswith('|')]
+    table_lines = [line for line in lines if line.strip().startswith('|')]
 
     aliases = []
     for line in table_lines[2:]:  # Skip header and separator
@@ -55,7 +54,9 @@ def test_skill_exists(skill_name: str) -> Tuple[bool, str]:
     """
     Test: Skill/command exists and is callable.
 
-    For /skills: checks if the skill file exists in ~/.claude/skills/ or src/claude/skills/
+    For /skills: checks if the skill file exists in the configured Claude
+    directory's skills/ (CLAUDE_CONFIG_DIR; defaults to ~/.claude) or this
+    repo's src/claude/skills/
     For /commands: checks if it's documented or exists as a Claude Code built-in
     """
     # Remove leading slash
@@ -132,7 +133,6 @@ def test_alias_executable(alias_entry: Dict) -> Tuple[bool, str]:
 
     if inp.startswith('/'):
         # Skill or command
-        skill_name = inp.lstrip('/')
         exists, msg = test_skill_exists(inp)
         if exists:
             return True, msg
@@ -191,7 +191,7 @@ def test_meaning_matches_behavior():
         'bullets': 'keyword',  # Should describe keyword: style
     }
 
-    print(f"\n🧪 Spot-checking meaning accuracy...\n")
+    print("\n🧪 Spot-checking meaning accuracy...\n")
 
     for alias_input, expected_keyword in test_cases.items():
         matching = [a for a in aliases if a['input'] == alias_input]

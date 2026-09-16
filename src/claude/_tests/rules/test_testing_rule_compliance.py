@@ -66,7 +66,7 @@ def test_all_hooks_have_tests():
     assert not missing_tests, (
         "Enforcement hooks without tests:\n" +
         "\n".join(f"  {hook} → missing {test}" for hook, test in missing_tests) +
-        "\n\nAdd tests in ~/.claude/_tests/hooks/ per testing.md."
+        "\n\nAdd tests in _tests/hooks/ per testing.md."
     )
 
 

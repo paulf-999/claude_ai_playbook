@@ -1,7 +1,9 @@
 """
 Test: enforcement_dir_structure hook
 
-Validates that new directories created under ~/.claude/ follow directory structure rules.
+Validates that new directories created under the Claude config directory follow
+directory structure rules. The hook itself matches on a literal ".claude/" path
+segment, independent of CLAUDE_CONFIG_DIR.
 - User-created directories: start with underscore prefix (_rules/, _tests/, _templates/, etc.)
 - Auto-generated directories: no prefix (backups/, memory/, sessions/)
 - Subdirectories: created only when grouping 2+ related files
