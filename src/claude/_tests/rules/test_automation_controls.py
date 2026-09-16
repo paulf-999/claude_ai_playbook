@@ -6,11 +6,10 @@ Ensures:
 - Controls are documented and enforceable
 - Aliases reference documented controls
 """
-import os
 import re
-from pathlib import Path
 
-CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+from src.claude._tests._claude_dir import CLAUDE_DIR
+
 AUTOMATION_CONTROLS_FILE = CLAUDE_DIR / "_rules/claude_internal/automation_controls.md"
 ALIASES_FILE = CLAUDE_DIR / "aliases.md"
 

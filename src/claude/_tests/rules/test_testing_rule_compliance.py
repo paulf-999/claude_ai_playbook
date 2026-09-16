@@ -7,10 +7,9 @@ Validates that enforcement hooks and behavior-modifying rules have tests:
 
 This is a linting test enforcing the "rules require tests" constraint.
 """
-import os
-from pathlib import Path
 
-CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+from src.claude._tests._claude_dir import CLAUDE_DIR
+
 HOOKS_DIR = CLAUDE_DIR / "hooks"
 TESTS_HOOKS_DIR = CLAUDE_DIR / "_tests/hooks"
 RULES_DIR = CLAUDE_DIR / "_rules"

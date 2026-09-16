@@ -13,11 +13,11 @@ Mode: blocking (returns exit code 1 for invalid paths)
 """
 
 import subprocess
-import os
 from pathlib import Path
 
 
-CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+from src.claude._tests._claude_dir import CLAUDE_DIR
+
 HOOK_PATH = CLAUDE_DIR / "hooks" / "enforcement_writing_style.sh"
 
 

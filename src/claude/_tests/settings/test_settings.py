@@ -6,11 +6,10 @@ Ensures:
 - Broad wildcard permissions are intentional and documented
 - Configuration aligns with guiding principles (least privilege)
 """
-import os
 import json
-from pathlib import Path
 
-CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+from src.claude._tests._claude_dir import CLAUDE_DIR
+
 SETTINGS_FILE = CLAUDE_DIR / "settings.json"
 
 

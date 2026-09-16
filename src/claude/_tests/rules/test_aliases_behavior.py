@@ -5,10 +5,9 @@ Spot-checks 3-5 representative aliases to ensure:
 - They are invocable (either as commands, skills, or modes)
 - Their documented behavior matches their implementation
 """
-import os
-from pathlib import Path
 
-CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+from src.claude._tests._claude_dir import CLAUDE_DIR
+
 ALIASES_FILE = CLAUDE_DIR / "aliases.md"
 SKILLS_DIR = CLAUDE_DIR / "skills"
 SETTINGS_FILE = CLAUDE_DIR / "settings.json"

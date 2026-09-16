@@ -3,11 +3,10 @@
 Verifies that the git rules file is present, well-formed, and contains
 the expected section headings that give the file its mechanical value.
 """
-import os
 import re
-from pathlib import Path
 
-CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+from src.claude._tests._claude_dir import CLAUDE_DIR
+
 GIT_RULES = CLAUDE_DIR / "_rules" / "02_claude_standards" / "git.md"
 
 EXPECTED_SECTIONS = [
