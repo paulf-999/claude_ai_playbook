@@ -9,12 +9,14 @@ Validates that new files written to ~/.claude/ follow naming conventions.
 Mode: blocking (blocks Write tool and injects naming rules for review)
 """
 
+import os
 import json
 from pathlib import Path
 from src.claude._tests.hooks.hook_test_utils import run_hook
 
 
-HOOK_PATH = Path.home() / ".claude" / "hooks" / "enforcement_naming_convention.sh"
+CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+HOOK_PATH = CLAUDE_DIR / "hooks" / "enforcement_naming_convention.sh"
 
 
 def test_valid_snake_case_rule_file():
@@ -22,7 +24,7 @@ def test_valid_snake_case_rule_file():
     payload = {
         "tool_name": "Write",
         "tool_input": {
-            "file_path": str(Path.home() / ".claude" / "_rules" / "01_core" / "new_rule.md")
+            "file_path": str(CLAUDE_DIR / "_rules" / "01_core" / "new_rule.md")
         }
     }
     result = run_hook(HOOK_PATH, payload)
@@ -37,7 +39,7 @@ def test_invalid_kebab_case_file():
     payload = {
         "tool_name": "Write",
         "tool_input": {
-            "file_path": str(Path.home() / ".claude" / "_rules" / "01_core" / "new-rule.md")
+            "file_path": str(CLAUDE_DIR / "_rules" / "01_core" / "new-rule.md")
         }
     }
     result = run_hook(HOOK_PATH, payload)
@@ -50,7 +52,7 @@ def test_missing_underscore_prefix_for_child():
     payload = {
         "tool_name": "Write",
         "tool_input": {
-            "file_path": str(Path.home() / ".claude" / "_rules" / "01_core" / "naming_standards" / "child_file.md")
+            "file_path": str(CLAUDE_DIR / "_rules" / "01_core" / "naming_standards" / "child_file.md")
         }
     }
     result = run_hook(HOOK_PATH, payload)
@@ -77,7 +79,7 @@ def test_non_claude_directory_skipped():
 def test_existing_file_skipped():
     """Existing files should be skipped (no rename enforcement)."""
     # Create a temporary file
-    test_file = Path.home() / ".claude" / "_tests" / "test_existing.md"
+    test_file = CLAUDE_DIR / "_tests" / "test_existing.md"
     test_file.parent.mkdir(parents=True, exist_ok=True)
     test_file.touch()
 
@@ -117,7 +119,7 @@ def test_hook_reads_naming_rules():
     payload = {
         "tool_name": "Write",
         "tool_input": {
-            "file_path": str(Path.home() / ".claude" / "_rules" / "01_core" / "test_new_rule.md")
+            "file_path": str(CLAUDE_DIR / "_rules" / "01_core" / "test_new_rule.md")
         }
     }
     result = run_hook(HOOK_PATH, payload)

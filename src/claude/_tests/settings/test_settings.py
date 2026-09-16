@@ -6,10 +6,11 @@ Ensures:
 - Broad wildcard permissions are intentional and documented
 - Configuration aligns with guiding principles (least privilege)
 """
+import os
 import json
 from pathlib import Path
 
-CLAUDE_DIR = Path.home() / ".claude"
+CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
 SETTINGS_FILE = CLAUDE_DIR / "settings.json"
 
 
@@ -156,9 +157,6 @@ def test_no_hardcoded_secrets():
         "secret",   # Secret value
         "password", # Password
     ]
-
-    # Convert to lowercase for search (case-insensitive check)
-    content_lower = content.lower()
 
     # Note: This is a best-effort check; it won't catch all secret formats
     # but catches common mistakes

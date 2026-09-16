@@ -7,10 +7,10 @@ Validates that enforcement hooks and behavior-modifying rules have tests:
 
 This is a linting test enforcing the "rules require tests" constraint.
 """
-import re
+import os
 from pathlib import Path
 
-CLAUDE_DIR = Path.home() / ".claude"
+CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
 HOOKS_DIR = CLAUDE_DIR / "hooks"
 TESTS_HOOKS_DIR = CLAUDE_DIR / "_tests/hooks"
 RULES_DIR = CLAUDE_DIR / "_rules"
@@ -64,7 +64,7 @@ def test_all_hooks_have_tests():
             missing_tests.append((hook, expected_test))
 
     assert not missing_tests, (
-        f"Enforcement hooks without tests:\n" +
+        "Enforcement hooks without tests:\n" +
         "\n".join(f"  {hook} → missing {test}" for hook, test in missing_tests) +
         "\n\nAdd tests in ~/.claude/_tests/hooks/ per testing.md."
     )
@@ -96,7 +96,7 @@ def test_no_orphaned_test_files():
             orphaned.append(test)
 
     assert not orphaned, (
-        f"Test files without corresponding hooks:\n" +
+        "Test files without corresponding hooks:\n" +
         "\n".join(f"  {test}" for test in orphaned) +
         "\n\nDelete orphaned tests or restore the hook they test."
     )

@@ -3,10 +3,12 @@
 Verifies that the rule authoring guide is present, well-formed, and contains
 the expected sections for pre-creation checklist and quality gates.
 """
+import os
 import re
 from pathlib import Path
 
-RULE_AUTHORING = Path.home() / ".claude" / "_rules" / "01_core" / "rule_authoring.md"
+CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+RULE_AUTHORING = CLAUDE_DIR / "_rules" / "01_essentials" / "authoring_rules.md"
 
 EXPECTED_SECTIONS = [
     "Pre-Creation Checklist",

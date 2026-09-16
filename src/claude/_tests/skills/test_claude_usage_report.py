@@ -8,23 +8,23 @@ Validates:
 - HTML report generation and SVG charts
 """
 
-import json
+import os
 import tempfile
 from pathlib import Path
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 import sys
 
 # Add tool path to import
-sys.path.insert(0, str(Path.home() / ".claude" / "_tools" / "claude_usage_report"))
+CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+sys.path.insert(0, str(CLAUDE_DIR / "_tools" / "claude_usage_report"))
 
-from claude_usage_report import (
+from claude_usage_report import (  # noqa: E402
     normalize_model,
     parse_timestamp,
     parse_cli_date,
     parse_cli_week,
     generate_report_filename,
     get_model_css_class,
-    parse_logs,
     aggregate_by_day,
     calculate_summary,
     render_html,
@@ -189,7 +189,8 @@ def test_summary_calculation():
     assert "claude-opus-4-8" in summary["avg_cost_per_turn_by_model"]
 
     # Opus should have higher cost per turn
-    assert summary["avg_cost_per_turn_by_model"]["claude-opus-4-8"] > summary["avg_cost_per_turn_by_model"]["claude-haiku-4-5"]
+    per_model = summary["avg_cost_per_turn_by_model"]
+    assert per_model["claude-opus-4-8"] > per_model["claude-haiku-4-5"]
     print("✓ test_summary_calculation passed")
 
 

@@ -9,12 +9,14 @@ Validates that new directories created under ~/.claude/ follow directory structu
 Mode: soft injection (injects directory structure reminder without blocking)
 """
 
+import os
 import json
 from pathlib import Path
 from src.claude._tests.hooks.hook_test_utils import run_hook
 
 
-HOOK_PATH = Path.home() / ".claude" / "hooks" / "enforcement_dir_structure.sh"
+CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+HOOK_PATH = CLAUDE_DIR / "hooks" / "enforcement_dir_structure.sh"
 
 
 def test_valid_user_created_dir_underscore_prefix():
@@ -69,7 +71,7 @@ def test_non_bash_tool_skipped():
     payload = {
         "tool_name": "Write",
         "tool_input": {
-            "file_path": str(Path.home() / ".claude" / "_rules" / "new_rule.md")
+            "file_path": str(CLAUDE_DIR / "_rules" / "new_rule.md")
         }
     }
     result = run_hook(HOOK_PATH, payload)

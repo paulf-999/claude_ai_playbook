@@ -9,10 +9,11 @@ reachable from at least one enforcement hook:
 Also verifies the inverse: every lazy_load/ path referenced by a hook
 resolves to a real file on disk, so hooks cannot silently load nothing.
 """
+import os
 import re
 from pathlib import Path
 
-CLAUDE_DIR = Path.home() / ".claude"
+CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
 HOOKS_DIR = CLAUDE_DIR / "hooks"
 LAZY_LOAD_DIR = CLAUDE_DIR / "_rules/lazy_load"
 

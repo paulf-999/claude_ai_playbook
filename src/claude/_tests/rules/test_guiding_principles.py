@@ -5,10 +5,11 @@ Validates that lazy-load and context-efficiency principles are being followed:
 - Explicit over implicit: all imports have clear purpose comments
 - Intentionality gates everything: every import in CLAUDE.md is documented
 """
+import os
 import re
 from pathlib import Path
 
-CLAUDE_DIR = Path.home() / ".claude"
+CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
 CLAUDE_MD = CLAUDE_DIR / "CLAUDE.md"
 LAZY_LOAD_DIR = CLAUDE_DIR / "_rules/lazy_load"
 

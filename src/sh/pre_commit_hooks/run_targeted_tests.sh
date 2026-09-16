@@ -51,16 +51,14 @@ fi
 # Map staged paths to test modules
 while IFS= read -r file; do
     case "$file" in
-        src/claude/agents/*)
-            add_test "tests/test_agents.py" ;;
         src/claude/skills/*)
-            add_test "tests/test_skills.py" ;;
-        src/claude/commands/*)
-            add_test "tests/test_commands.py" ;;
-        src/claude/rules/*)
-            add_test "tests/test_rules.py" ;;
-        tests/* | requirements.txt | pytest.ini)
-            add_test "tests/" ;;
+            add_test "src/claude/_tests/skills/" ;;
+        src/claude/hooks/*)
+            add_test "src/claude/_tests/hooks/" ;;
+        src/claude/_rules/*)
+            add_test "src/claude/_tests/rules/" ;;
+        src/claude/_tests/* | requirements.txt | pytest.ini)
+            add_test "src/claude/_tests/" ;;
     esac
 done <<< "$STAGED_FILES"
 
@@ -69,6 +67,11 @@ if [[ ${#TESTS_TO_RUN[@]} -eq 0 ]]; then
 fi
 
 echo -e "\nRunning targeted tests for staged files: ${TESTS_TO_RUN[*]}\n"
+
+# Validate the repo's own src/claude (what's being committed), not whatever
+# config directory happens to be installed locally at ~/.claude.
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+export CLAUDE_CONFIG_DIR="${REPO_ROOT}/src/claude"
 
 if pytest "${TESTS_TO_RUN[@]}"; then
     echo -e "\n${GREEN}Claude config validation passed.${COLOUR_OFF}\n"
