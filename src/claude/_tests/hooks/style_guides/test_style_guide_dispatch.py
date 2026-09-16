@@ -6,11 +6,11 @@ tested exhaustively in test_style_guides.py — this file tests dispatcher
 behaviour only.
 """
 import json
-from pathlib import Path
 
-from hook_test_utils import run_hook
+from _claude_dir import CLAUDE_DIR
+from hooks.hook_test_utils import run_hook
 
-HOOK = Path.home() / ".claude/hooks/hook_style_guide_dispatch.sh"
+HOOK = CLAUDE_DIR / "hooks" / "hook_style_guide_dispatch.sh"
 
 
 def test_dispatches_sql_for_sql_file():

@@ -12,7 +12,7 @@ Mode: blocking (blocks Write tool and injects naming rules for review)
 """
 
 import json
-from src.claude._tests.hooks.hook_test_utils import run_hook
+from hooks.hook_test_utils import run_hook
 
 
 from _claude_dir import CLAUDE_DIR

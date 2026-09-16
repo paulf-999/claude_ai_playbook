@@ -13,9 +13,10 @@ from pathlib import Path
 
 import pytest
 
-from hook_test_utils import run_hook
+from _claude_dir import CLAUDE_DIR
+from hooks.hook_test_utils import run_hook
 
-HOOKS_DIR = Path.home() / ".claude/hooks/style_guides"
+HOOKS_DIR = CLAUDE_DIR / "hooks" / "style_guides"
 
 
 @dataclass

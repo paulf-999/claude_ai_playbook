@@ -25,10 +25,14 @@ def _get_hook_files() -> set[str]:
 
 
 def _get_test_files() -> set[str]:
-    """Return the set of test file names (e.g., 'test_enforcement_dir_structure.py')."""
+    """Return the set of test file names (e.g., 'test_enforcement_dir_structure.py').
+
+    Recursive: test files are grouped into subdirectories (enforcement/,
+    style_guides/, response_standards/), not flat under hooks/.
+    """
     if not TESTS_HOOKS_DIR.exists():
         return set()
-    return {f.name for f in TESTS_HOOKS_DIR.glob("test_*.py")}
+    return {f.name for f in TESTS_HOOKS_DIR.rglob("test_*.py")}
 
 
 def _hook_to_test_name(hook_name: str) -> str:
