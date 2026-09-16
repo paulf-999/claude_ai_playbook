@@ -1,7 +1,8 @@
 """
 Test: File Structure Compliance Scan
 
-Validates that all files and directories in ~/.claude/ follow naming and location conventions.
+Validates that all files and directories in the configured Claude directory
+(CLAUDE_CONFIG_DIR; defaults to ~/.claude) follow naming and location conventions.
 
 Checks:
 1. **Naming compliance:** snake_case for files, underscore prefix for user-created dirs
@@ -83,7 +84,7 @@ FILE_NAMING_RULES = {
 
 
 class FileStructureValidator:
-    """Validates file structure compliance in ~/.claude/."""
+    """Validates file structure compliance in the configured Claude directory."""
 
     def __init__(self, claude_home: Path = CLAUDE_HOME):
         """Initialize validator with Claude home directory."""
@@ -92,7 +93,7 @@ class FileStructureValidator:
 
     def scan(self) -> list[dict]:
         """
-        Scan ~/.claude/ and collect all violations.
+        Scan the configured Claude directory and collect all violations.
 
         Returns:
             List of violation dicts with keys: path, rule, severity
@@ -215,7 +216,7 @@ class FileStructureValidator:
 
 def test_file_structure_compliance():
     """
-    Validate that all files and directories in ~/.claude/ follow conventions.
+    Validate that all files and directories in the configured Claude directory follow conventions.
     """
     validator = FileStructureValidator()
     violations = validator.scan()

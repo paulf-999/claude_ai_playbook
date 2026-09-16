@@ -2,7 +2,8 @@
 """
 Skill Template Compliance Test Suite
 
-Validates all installed skills in ~/.claude/skills/ comply with canonical structure:
+Validates all installed skills in the configured Claude directory's skills/
+(CLAUDE_CONFIG_DIR; defaults to ~/.claude) comply with canonical structure:
 - SKILL.md structure (8 sections with canonical emoji headers)
 - skill.contract.yaml schema (Variant A: when/dont_use_for/requires)
 - Frontmatter field consistency
@@ -434,7 +435,7 @@ class SkillComplianceValidator:
 
 
 def get_all_skills() -> List[Path]:
-    """Collect all installed skills from ~/.claude/skills/."""
+    """Collect all installed skills from the configured Claude directory's skills/."""
     claude_dir = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
     skills_dir = claude_dir / "skills"
     if not skills_dir.exists():
@@ -497,7 +498,7 @@ def generate_compliance_report(results: List[Dict]) -> str:
 def test_all_skills_compliance():
     """Master test: validate all skills against canonical structure."""
     skills = get_all_skills()
-    assert len(skills) > 0, "No skills found in ~/.claude/skills/"
+    assert len(skills) > 0, "No skills found in the configured Claude directory's skills/"
 
     results = []
     for skill_path in skills:

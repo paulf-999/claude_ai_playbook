@@ -1,7 +1,9 @@
 """
 Test: enforcement_naming_convention hook
 
-Validates that new files written to ~/.claude/ follow naming conventions.
+Validates that new files written to the Claude config directory follow naming
+conventions. The hook itself matches on a literal ".claude/" path segment,
+independent of CLAUDE_CONFIG_DIR.
 - snake_case: lowercase, words separated by underscores
 - User-created directories: start with underscore prefix (_rules/, _tests/, etc.)
 - Child files: start with underscore to distinguish from top-level files
