@@ -51,16 +51,14 @@ fi
 # Map staged paths to test modules
 while IFS= read -r file; do
     case "$file" in
-        src/claude/agents/*)
-            add_test "tests/test_agents.py" ;;
         src/claude/skills/*)
-            add_test "tests/test_skills.py" ;;
-        src/claude/commands/*)
-            add_test "tests/test_commands.py" ;;
-        src/claude/rules/*)
-            add_test "tests/test_rules.py" ;;
-        tests/* | requirements.txt | pytest.ini)
-            add_test "tests/" ;;
+            add_test "src/claude/_tests/skills/" ;;
+        src/claude/hooks/*)
+            add_test "src/claude/_tests/hooks/" ;;
+        src/claude/_rules/*)
+            add_test "src/claude/_tests/rules/" ;;
+        src/claude/_tests/* | requirements.txt | pytest.ini)
+            add_test "src/claude/_tests/" ;;
     esac
 done <<< "$STAGED_FILES"
 
