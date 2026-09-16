@@ -68,6 +68,11 @@ fi
 
 echo -e "\nRunning targeted tests for staged files: ${TESTS_TO_RUN[*]}\n"
 
+# Validate the repo's own src/claude (what's being committed), not whatever
+# config directory happens to be installed locally at ~/.claude.
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+export CLAUDE_CONFIG_DIR="${REPO_ROOT}/src/claude"
+
 if pytest "${TESTS_TO_RUN[@]}"; then
     echo -e "\n${GREEN}Claude config validation passed.${COLOUR_OFF}\n"
 else

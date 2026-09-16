@@ -10,6 +10,8 @@ Run tests (R1–R5): Validate semantic versioning, maturity progression, and com
 Only stable skills (src/claude/skills/, not src/claude/wip/skills/) are validated here.
 """
 
+from __future__ import annotations
+
 import re
 from pathlib import Path
 

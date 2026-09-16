@@ -19,10 +19,10 @@ Test organization:
   - Semantic tests (consistency between SKILL.md and contract)
 """
 
-import json
+import os
 import re
 from pathlib import Path
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List
 import yaml
 
 # Canonical skill structure
@@ -196,7 +196,7 @@ class SkillComplianceValidator:
                     f"Emoji-section mismatch: {emoji} maps to '{CANONICAL_EMOJI_MAP[emoji]}', found '{section}'"
                 )
 
-    def _check_contract(self) -> None:
+    def _check_contract(self) -> None:  # noqa: C901
         """Validate skill.contract.yaml structure."""
         contract_path = self.skill_path / "skill.contract.yaml"
 
@@ -223,7 +223,8 @@ class SkillComplianceValidator:
         # Check for deprecated Variant B fields
         if "dispatch" in self.contract:
             self.violations.append(
-                "Contract uses deprecated Variant B schema (dispatch:). Use canonical Variant A (when:, dont_use_for:, requires:)"
+                "Contract uses deprecated Variant B schema (dispatch:). "
+                "Use canonical Variant A (when:, dont_use_for:, requires:)"
             )
         if "dependencies" in self.contract:
             self.violations.append(
@@ -292,7 +293,7 @@ class SkillComplianceValidator:
                 f"Strategic skills must have version 2.x.x or higher; found {version}"
             )
 
-    def _check_frontmatter_consistency(self) -> None:
+    def _check_frontmatter_consistency(self) -> None:  # noqa: C901
         """Validate frontmatter fields and consistency with contract."""
         if not hasattr(self, "frontmatter") or not self.frontmatter:
             return
@@ -329,20 +330,23 @@ class SkillComplianceValidator:
         if hasattr(self, "contract"):
             if "name" in self.frontmatter and "name" in self.contract:
                 if self.frontmatter["name"] != self.contract["name"]:
+                    md_name, contract_name = self.frontmatter["name"], self.contract["name"]
                     self.violations.append(
-                        f"Name mismatch: SKILL.md has '{self.frontmatter['name']}', contract has '{self.contract['name']}'"
+                        f"Name mismatch: SKILL.md has '{md_name}', contract has '{contract_name}'"
                     )
 
             if "maturity" in self.frontmatter and "maturity" in self.contract:
                 if self.frontmatter["maturity"] != self.contract["maturity"]:
+                    md_maturity, contract_maturity = self.frontmatter["maturity"], self.contract["maturity"]
                     self.violations.append(
-                        f"Maturity mismatch: SKILL.md has '{self.frontmatter['maturity']}', contract has '{self.contract['maturity']}'"
+                        f"Maturity mismatch: SKILL.md has '{md_maturity}', contract has '{contract_maturity}'"
                     )
 
             if "version" in self.frontmatter and "version" in self.contract:
                 if self.frontmatter["version"] != self.contract["version"]:
+                    md_version, contract_version = self.frontmatter["version"], self.contract["version"]
                     self.violations.append(
-                        f"Version mismatch: SKILL.md has '{self.frontmatter['version']}', contract has '{self.contract['version']}'"
+                        f"Version mismatch: SKILL.md has '{md_version}', contract has '{contract_version}'"
                     )
 
     def _check_quality_scorecard(self) -> None:
@@ -380,7 +384,7 @@ class SkillComplianceValidator:
                     f"{maturity.capitalize()} skill quality scorecard has {dimension_count} dimensions; should have 8"
                 )
 
-    def _check_semantic_consistency(self) -> None:
+    def _check_semantic_consistency(self) -> None:  # noqa: C901
         """Validate consistency between SKILL.md and contract."""
         if not hasattr(self, "skill_content") or not hasattr(self, "contract"):
             return
@@ -414,8 +418,8 @@ class SkillComplianceValidator:
                         re.DOTALL
                     )
                     if security_match:
-                        security_content = security_match.group(1)
-                        if "reversible" not in security_content.lower() and "irreversible" not in security_content.lower():
+                        security_content = security_match.group(1).lower()
+                        if "reversible" not in security_content and "irreversible" not in security_content:
                             self.warnings.append(
                                 "Contract declares reversible:false but Security section doesn't justify why"
                             )
@@ -431,7 +435,8 @@ class SkillComplianceValidator:
 
 def get_all_skills() -> List[Path]:
     """Collect all installed skills from ~/.claude/skills/."""
-    skills_dir = Path.home() / ".claude" / "skills"
+    claude_dir = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+    skills_dir = claude_dir / "skills"
     if not skills_dir.exists():
         return []
 

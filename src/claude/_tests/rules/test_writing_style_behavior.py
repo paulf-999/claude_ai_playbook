@@ -14,23 +14,24 @@ Quarterly behavioral audit (manual):
 - Cadence: Quarterly (per guiding_principles.md reset cycles)
 """
 
-import pytest
+import os
 from pathlib import Path
+
+CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+RULE_FILE = CLAUDE_DIR / "_rules" / "01_essentials" / "conventions" / "writing_style.md"
 
 
 def test_writing_style_tables_rule_exists():
     """Tables rule is documented in writing_style.md."""
-    rule_file = Path.home() / ".claude" / "_rules" / "01_essentials" / "conventions" / "writing_style.md"
-    assert rule_file.exists(), f"writing_style.md not found at {rule_file}"
+    assert RULE_FILE.exists(), f"writing_style.md not found at {RULE_FILE}"
 
-    content = rule_file.read_text()
+    content = RULE_FILE.read_text()
     assert "Tables for structured content" in content, "Tables rule not documented"
 
 
 def test_writing_style_tables_rule_defines_threshold():
     """Tables rule defines threshold: 'two or more categories'."""
-    rule_file = Path.home() / ".claude" / "_rules" / "01_essentials" / "conventions" / "writing_style.md"
-    content = rule_file.read_text()
+    content = RULE_FILE.read_text()
 
     # Should define threshold explicitly
     assert "two or more categories" in content, (
@@ -41,8 +42,7 @@ def test_writing_style_tables_rule_defines_threshold():
 
 def test_writing_style_tables_rule_defines_structure():
     """Tables rule defines structure: 'identical column structures'."""
-    rule_file = Path.home() / ".claude" / "_rules" / "01_essentials" / "conventions" / "writing_style.md"
-    content = rule_file.read_text()
+    content = RULE_FILE.read_text()
 
     # Should define what "identical structure" means
     assert "identical column structures" in content, (
@@ -53,8 +53,7 @@ def test_writing_style_tables_rule_defines_structure():
 
 def test_writing_style_tables_rule_has_signal():
     """Tables rule includes a 'Signal' section that explains the pattern."""
-    rule_file = Path.home() / ".claude" / "_rules" / "01_essentials" / "conventions" / "writing_style.md"
-    content = rule_file.read_text()
+    content = RULE_FILE.read_text()
 
     # Should have clear signal for when to apply the rule
     assert "**Signal:**" in content, (
@@ -68,8 +67,7 @@ def test_writing_style_tables_rule_has_signal():
 
 def test_writing_style_tables_rule_has_example():
     """Tables rule includes a concrete Example."""
-    rule_file = Path.home() / ".claude" / "_rules" / "01_essentials" / "conventions" / "writing_style.md"
-    content = rule_file.read_text()
+    content = RULE_FILE.read_text()
 
     assert "**Example:**" in content, (
         "Rule should include a concrete Example showing table usage"
@@ -81,8 +79,7 @@ def test_writing_style_tables_rule_has_example():
 
 def test_writing_style_tables_rule_has_counter_example():
     """Tables rule includes a Counter-example showing boundary case."""
-    rule_file = Path.home() / ".claude" / "_rules" / "01_essentials" / "conventions" / "writing_style.md"
-    content = rule_file.read_text()
+    content = RULE_FILE.read_text()
 
     assert "**Counter-example:**" in content, (
         "Rule should include a Counter-example clarifying when NOT to use tables — "
@@ -96,12 +93,13 @@ def test_writing_style_tables_rule_has_counter_example():
 
 def test_writing_style_file_structure():
     """writing_style.md follows format constraints."""
-    rule_file = Path.home() / ".claude" / "_rules" / "01_essentials" / "conventions" / "writing_style.md"
-    content = rule_file.read_text()
+    content = RULE_FILE.read_text()
     lines = content.split('\n')
 
     # Check line count
-    assert len(lines) <= 110, f"writing_style.md exceeds 110 lines ({len(lines)}). Split into parent + children if needed."
+    assert len(lines) <= 110, (
+        f"writing_style.md exceeds 110 lines ({len(lines)}). Split into parent + children if needed."
+    )
 
     # Check trailing newline
     assert content.endswith('\n'), "File must end with trailing newline"

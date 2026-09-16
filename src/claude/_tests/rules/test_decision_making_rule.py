@@ -3,10 +3,12 @@
 Verifies that the decision-making rule is present, well-formed, and contains
 the expected section headings and patterns that establish the intentionality gate.
 """
+import os
 import re
 from pathlib import Path
 
-DECISION_MAKING_RULE = Path.home() / ".claude" / "_rules" / "01_core" / "behaviour" / "_decision_making.md"
+CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+DECISION_MAKING_RULE = CLAUDE_DIR / "_rules" / "02_claude_standards" / "behaviour" / "_decision_making.md"
 
 EXPECTED_SECTIONS = [
     "Core principle",
