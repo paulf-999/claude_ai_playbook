@@ -47,7 +47,7 @@ Before writing any rule, answer these five essential questions:
 - **One concept per rule** — related patterns grouped, not split across files
 - **~100-line limit** — split into parent + child files if needed (see writing_style.md)
 - **Trailing newline** — exactly one `\n` at EOF
-- **Related rules section** — links to dependencies via `@~/.claude/_rules/...` or `[[memory-slug]]`
+- **Related rules section** — links to dependencies via `@~/claude/_rules/...` or `[[memory-slug]]`
 - **Test validation** — enforcement rules pass custom tests; all rules pass test_rules_structure.py
 
 ## 📚 References & Related Rules
@@ -69,6 +69,6 @@ Before writing any rule, answer these five essential questions:
 ## 📖 Reference (Claude's design patterns)
 
 <!-- Rule architecture: scope decisions, design patterns, and creation processes -->
-@~/.claude/_reference/claude_design_patterns/rules/_adding_rules.md
+@~/claude/_reference/claude_design_patterns/rules/_adding_rules.md
 
 ---

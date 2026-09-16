@@ -13,17 +13,17 @@
 
 Standards for secure code generation. Covers secrets management, authentication, input validation, and dependency security.
 
-@~/.claude/_rules/02_claude_standards/security/_code_security.md
+@~/claude/_rules/02_claude_standards/security/_code_security.md
 
 ---
 
 ## 🔐 Claude's security guardrails
 
-@~/.claude/_rules/02_claude_standards/security/_security_guardrails.md
+@~/claude/_rules/02_claude_standards/security/_security_guardrails.md
 
 ---
 
 ## 📖 Reference (Claude's design patterns)
 
 <!-- Security architecture: four independent security layers, threat models, and design rationale -->
-@~/.claude/_reference/claude_design_patterns/_security.md
+@~/claude/_reference/claude_design_patterns/_security.md

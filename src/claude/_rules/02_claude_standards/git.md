@@ -15,13 +15,13 @@
 
 ## 🔒 Safe Git Patterns
 
-@~/.claude/_rules/02_claude_standards/git/_safe_patterns.md
+@~/claude/_rules/02_claude_standards/git/_safe_patterns.md
 
 ---
 
 ## 📝 Commits
 
-@~/.claude/_rules/02_claude_standards/git/_commits.md
+@~/claude/_rules/02_claude_standards/git/_commits.md
 
 ---
 

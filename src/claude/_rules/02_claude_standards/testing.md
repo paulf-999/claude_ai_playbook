@@ -47,27 +47,27 @@ Define the goal before writing the test. Tests validate *intended behavior*, not
 
 ## 📐 Test Design Pattern
 
-@~/.claude/_rules/02_claude_standards/testing/_testing_design_pattern.md
+@~/claude/_rules/02_claude_standards/testing/_testing_design_pattern.md
 
 ## 🚫 Anti-Patterns
 
-@~/.claude/_rules/02_claude_standards/testing/_testing_anti_patterns.md
+@~/claude/_rules/02_claude_standards/testing/_testing_anti_patterns.md
 
 ## 📁 File Organization
 
-@~/.claude/_rules/02_claude_standards/testing/_testing_file_organization.md
+@~/claude/_rules/02_claude_standards/testing/_testing_file_organization.md
 
 ## 🔄 Maintenance
 
-@~/.claude/_rules/02_claude_standards/testing/_testing_maintenance.md
+@~/claude/_rules/02_claude_standards/testing/_testing_maintenance.md
 
 ---
 
 ## ⚡ Quick Reference
 
-**Rule of thumb:** If you added code, write a test.  
-**Goal statement:** One sentence explaining what the test validates.  
-**Location:** Tests adjacent to code (`_tests/<domain>/test_<feature>.py`).  
+**Rule of thumb:** If you added code, write a test.
+**Goal statement:** One sentence explaining what the test validates.
+**Location:** Tests adjacent to code (`_tests/<domain>/test_<feature>.py`).
 **Assertion messages:** Explain what went wrong and how to fix it.
 
 ---
@@ -75,11 +75,10 @@ Define the goal before writing the test. Tests validate *intended behavior*, not
 ## 📖 Reference (Claude's design patterns)
 
 <!-- Testing principles overview -->
-@~/.claude/_reference/claude_design_patterns/testing/_testing.md
+@~/claude/_reference/claude_design_patterns/testing/_testing.md
 
 <!-- Advanced testing patterns and strategies -->
-@~/.claude/_reference/claude_design_patterns/testing/_testing_strategy.md
+@~/claude/_reference/claude_design_patterns/testing/_testing_strategy.md
 
 <!-- How to add tests to new features -->
-@~/.claude/_reference/claude_design_patterns/testing/_adding_tests.md
-
+@~/claude/_reference/claude_design_patterns/testing/_adding_tests.md

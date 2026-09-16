@@ -15,19 +15,19 @@ Applies to all file and directory creation in `~/.claude/` and the playbook repo
 
 ## 🏗️ Directory organization
 
-@~/.claude/_rules/01_essentials/conventions/claude_directory_structure/_claude_directory_organization.md
+@~/claude/_rules/01_essentials/conventions/claude_directory_structure/_claude_directory_organization.md
 
 ## 🏷️ Naming conventions
 
-@~/.claude/_rules/01_essentials/conventions/claude_directory_structure/_claude_directory_naming.md
+@~/claude/_rules/01_essentials/conventions/claude_directory_structure/_claude_directory_naming.md
 
 ## ✅ Validation
 
-@~/.claude/_rules/01_essentials/conventions/claude_directory_structure/_file_structure_validation.md
+@~/claude/_rules/01_essentials/conventions/claude_directory_structure/_file_structure_validation.md
 
 ## 📐 Rule Directory Organization Patterns
 
-@~/.claude/_rules/01_essentials/conventions/claude_directory_structure/_rule_directory_patterns.md
+@~/claude/_rules/01_essentials/conventions/claude_directory_structure/_rule_directory_patterns.md
 
 ---
 
@@ -40,4 +40,4 @@ Applies to all file and directory creation in `~/.claude/` and the playbook repo
 ## 📖 Reference (architectural overview)
 
 <!-- Architectural overview, design principles, and rationale for directory organization -->
-@~/.claude/_reference/claude_config_architecture.md
+@~/claude/_reference/claude_config_architecture.md

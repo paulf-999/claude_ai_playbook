@@ -31,12 +31,12 @@ When a user makes a specific request type, Claude should follow the documented c
 Each child file documents a specific user request pattern and the expected Claude behavior.
 
 ### Task Logging Convention
-@~/.claude/_rules/03_claude_reference/claude_conduct/task_request_conventions/_task_logging.md
+@~/claude/_rules/03_claude_reference/claude_conduct/task_request_conventions/_task_logging.md
 
 Convention for "add to TODOs" requests. When a user says "add to TODOs" or "add a TODO", Claude should edit `~/.claude/TODO.md` with a new entry in the Items table.
 
 ### Hooks Decision Framework
-@~/.claude/_rules/03_claude_reference/claude_conduct/task_request_conventions/_hooks_decision_framework.md
+@~/claude/_rules/03_claude_reference/claude_conduct/task_request_conventions/_hooks_decision_framework.md
 
 ROI criteria and guardrails before proposing automation. When considering hook proposals, evaluate using the framework to prevent low-ROI automation.
 

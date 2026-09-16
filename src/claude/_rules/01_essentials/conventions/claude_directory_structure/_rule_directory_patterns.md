@@ -137,7 +137,7 @@ When creating a multi-concept rule structure:
 1. **Parent rule:** Explain purpose, link to all children, guide reader to start with parent
 2. **Child rules:** Reference parent and siblings clearly; use relative links
 3. **README:** Update `_rules/<tier>/README.md` to show new parent+child structure
-4. **CLAUDE.md:** If rule is top-level import, update path from `@~/.claude/_rules/<tier>/<concept>.md` to match parent location
+4. **CLAUDE.md:** If rule is top-level import, update path from `@~/claude/_rules/<tier>/<concept>.md` to match parent location
 
 ---
 

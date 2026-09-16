@@ -43,7 +43,7 @@ Rules governing how Claude acts safely and approaches tasks.
 
 Apply proportional gates based on task complexity — heavier scrutiny for riskier tasks, no overhead for trivial work.
 
-@~/.claude/_rules/02_claude_standards/behaviour/_before_acting.md
+@~/claude/_rules/02_claude_standards/behaviour/_before_acting.md
 
 ---
 
@@ -85,11 +85,11 @@ Flag any of the following before writing code — surface cost, maintenance impa
 
 ## 🚪 Artefact proposal gates
 
-@~/.claude/_rules/02_claude_standards/behaviour/_artefact_proposal_gates.md
+@~/claude/_rules/02_claude_standards/behaviour/_artefact_proposal_gates.md
 
 ## 🚪 Multi-phase implementation gates
 
-@~/.claude/_rules/01_essentials/behaviour/_multi_phase_implementation_gates.md
+@~/claude/_rules/01_essentials/behaviour/_multi_phase_implementation_gates.md
 
 ## 🚨 Risky actions
 
@@ -102,7 +102,7 @@ Flag any of the following before writing code — surface cost, maintenance impa
 
 ## 🤔 Decision-Making
 
-@~/.claude/_rules/02_claude_standards/behaviour/_decision_making.md
+@~/claude/_rules/02_claude_standards/behaviour/_decision_making.md
 
 ---
 

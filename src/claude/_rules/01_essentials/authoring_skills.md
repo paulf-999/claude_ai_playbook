@@ -405,7 +405,7 @@ Document in `reference/_quality_scorecard.md`:
 **❌ Mistake 1: Too much detail in SKILL.md**
 ```markdown
 ## Purpose
-This skill creates Confluence pages with formatting, validation, error handling, 
+This skill creates Confluence pages with formatting, validation, error handling,
 retry logic, permission checking, and extensive documentation...
 [continues for 80+ lines]
 ```
@@ -539,11 +539,11 @@ When authoring skills, prioritize security:
 
 ## 📚 Reference
 
-@~/.claude/_rules/01_essentials/authoring_skills/_skill_structure_contract.md
+@~/claude/_rules/01_essentials/authoring_skills/_skill_structure_contract.md
 
-@~/.claude/_rules/01_essentials/authoring_skills/_skill_quality_checklist.md
+@~/claude/_rules/01_essentials/authoring_skills/_skill_quality_checklist.md
 
-@~/.claude/_rules/01_essentials/authoring_skills/_skill_review_framework.md
+@~/claude/_rules/01_essentials/authoring_skills/_skill_review_framework.md
 
 ---
 

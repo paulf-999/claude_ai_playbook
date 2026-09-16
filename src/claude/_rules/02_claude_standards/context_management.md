@@ -27,7 +27,7 @@
 
 ## 🤝 When to delegate
 
-@~/.claude/_rules/02_claude_standards/context_management/_claude_when_to_delegate.md
+@~/claude/_rules/02_claude_standards/context_management/_claude_when_to_delegate.md
 
 ## ⚖️ Token awareness
 

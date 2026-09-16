@@ -33,13 +33,13 @@
 
 ## 🤝 When to delegate
 
-@~/.claude/_rules/03_claude_reference/claude_conduct/claude_when_to_delegate.md
+@~/claude/_rules/03_claude_reference/claude_conduct/claude_when_to_delegate.md
 
 ---
 
 ## 🔄 Turn budgets
 
-@~/.claude/_rules/03_claude_reference/claude_conduct/turn_budgets.md
+@~/claude/_rules/03_claude_reference/claude_conduct/turn_budgets.md
 
 ---
 
@@ -53,13 +53,13 @@
 
 ## 🔐 External system access
 
-@~/.claude/_rules/03_claude_reference/claude_conduct/external_system_access.md
+@~/claude/_rules/03_claude_reference/claude_conduct/external_system_access.md
 
 ---
 
 ## 📋 Task request conventions
 
-@~/.claude/_rules/03_claude_reference/claude_conduct/task_request_conventions.md
+@~/claude/_rules/03_claude_reference/claude_conduct/task_request_conventions.md
 
 ---
 
