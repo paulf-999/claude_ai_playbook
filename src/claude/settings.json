@@ -64,6 +64,7 @@
     }
   },
   "showClearContextOnPlanAccept": true,
+  "plansDirectory": "~/claude/_plans",
   "autoMemoryEnabled": true,
   "hooks": {
     "UserPromptSubmit": [
