@@ -14,7 +14,7 @@ HOOKS_DIR = CLAUDE_DIR / "hooks"
 TESTS_HOOKS_DIR = CLAUDE_DIR / "_tests/hooks"
 RULES_DIR = CLAUDE_DIR / "_rules"
 TESTS_RULES_DIR = CLAUDE_DIR / "_tests/rules"
-TESTING_MD = RULES_DIR / "testing.md"
+TESTING_MD = RULES_DIR / "02_claude_standards" / "testing.md"
 
 
 def _get_hook_files() -> set[str]:

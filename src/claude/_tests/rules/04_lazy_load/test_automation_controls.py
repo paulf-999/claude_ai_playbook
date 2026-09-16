@@ -10,7 +10,7 @@ import re
 
 from _claude_dir import CLAUDE_DIR
 
-AUTOMATION_CONTROLS_FILE = CLAUDE_DIR / "_rules/claude_internal/automation_controls.md"
+AUTOMATION_CONTROLS_FILE = CLAUDE_DIR / "_rules" / "04_lazy_load" / "automation_controls.md"
 ALIASES_FILE = CLAUDE_DIR / "aliases.md"
 
 
