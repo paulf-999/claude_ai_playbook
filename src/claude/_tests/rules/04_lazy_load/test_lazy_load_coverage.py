@@ -15,7 +15,7 @@ from pathlib import Path
 from _claude_dir import CLAUDE_DIR
 
 HOOKS_DIR = CLAUDE_DIR / "hooks"
-LAZY_LOAD_DIR = CLAUDE_DIR / "_rules/lazy_load"
+LAZY_LOAD_DIR = CLAUDE_DIR / "_rules" / "04_lazy_load"
 
 
 def _hook_lazy_load_refs() -> set[Path]:

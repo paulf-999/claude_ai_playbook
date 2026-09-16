@@ -10,7 +10,7 @@ import re
 from _claude_dir import CLAUDE_DIR
 
 CLAUDE_MD = CLAUDE_DIR / "CLAUDE.md"
-LAZY_LOAD_DIR = CLAUDE_DIR / "_rules/lazy_load"
+LAZY_LOAD_DIR = CLAUDE_DIR / "_rules" / "04_lazy_load"
 
 
 def test_no_lazy_load_imports_at_top_level():
