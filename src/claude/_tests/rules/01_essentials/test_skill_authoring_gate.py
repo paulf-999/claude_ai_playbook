@@ -18,7 +18,9 @@ from pathlib import Path
 import pytest
 import yaml
 
-SKILLS_DIR = Path(__file__).parent.parent / "src" / "claude" / "skills"
+from _claude_dir import CLAUDE_DIR
+
+SKILLS_DIR = CLAUDE_DIR / "skills"
 
 # Discover all stable skill directories
 _stable_skill_dirs = [d for d in (skill_md.parent for skill_md in SKILLS_DIR.rglob("SKILL.md"))]
@@ -48,7 +50,7 @@ def load_skill_md(skill_dir: Path) -> str:
 
 def find_test_file(skill_dir: Path) -> Path | None:
     """Locate the test file for the skill."""
-    test_files_dir = Path(__file__).parent / "skills"
+    test_files_dir = CLAUDE_DIR / "_tests" / "skills"
     skill_name = skill_dir.name
     for test_file in test_files_dir.glob(f"test_{skill_name}*.py"):
         return test_file
@@ -224,7 +226,7 @@ def test_w6_phase_files_focused(skill_dir):
     for phase_file in phase_files:
         content = phase_file.read_text(encoding="utf-8")
         assert len(content) > 100, f"{phase_file.name} is too short (<100 chars) — should be focused but complete"
-        assert phase_file.name.lower().startswith("phase"), f"Phase file should be named phase1.md, phase2.md, etc."
+        assert phase_file.name.lower().startswith("phase"), "Phase file should be named phase1.md, phase2.md, etc."
 
 
 # ── Run tests (R1–R5) ─────────────────────────────────────────────────────────
@@ -338,4 +340,4 @@ def test_r5_complex_skills_have_schema(skill_dir):
 
     schema_path = skill_dir / "skill_schema.yaml"
     if not schema_path.exists():
-        pytest.skip(f"R5: External service skill lacks skill_schema.yaml — optional but recommended")
+        pytest.skip("R5: External service skill lacks skill_schema.yaml — optional but recommended")

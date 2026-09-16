@@ -9,15 +9,11 @@ Validates:
 5. All top-level files imported in CLAUDE.md
 """
 
-import os
-from pathlib import Path
+from _claude_dir import CLAUDE_DIR
 
-
-# Use project repo paths
-PROJECT_ROOT = Path(__file__).parent.parent.parent.parent.parent  # Go up to project root
-RULES_DIR = PROJECT_ROOT / "src" / "claude" / "_rules"
+RULES_DIR = CLAUDE_DIR / "_rules"
 ESSENTIALS_DIR = RULES_DIR / "01_essentials"
-CLAUDE_MD = PROJECT_ROOT / "src" / "claude" / "CLAUDE.md"
+CLAUDE_MD = CLAUDE_DIR / "CLAUDE.md"
 
 # Top-level files expected in 01_essentials
 # These are parent files that are imported in CLAUDE.md
@@ -145,7 +141,7 @@ def test_child_files_have_underscore_prefix():
             if not md_file.name.startswith("_"):
                 errors.append(f"Child file missing underscore prefix: {md_file.relative_to(ESSENTIALS_DIR)}")
 
-    assert not errors, f"Child file naming violations:\n" + "\n".join(errors)
+    assert not errors, "Child file naming violations:\n" + "\n".join(errors)
 
 
 def test_no_orphaned_child_files():
@@ -155,7 +151,7 @@ def test_no_orphaned_child_files():
     for md_file in ESSENTIALS_DIR.glob("_*.md"):
         errors.append(f"Orphaned child file at top level: {md_file.name}")
 
-    assert not errors, f"Orphaned child files found:\n" + "\n".join(errors)
+    assert not errors, "Orphaned child files found:\n" + "\n".join(errors)
 
 
 def test_two_plus_rule_for_subdirectories():
@@ -173,7 +169,7 @@ def test_two_plus_rule_for_subdirectories():
         if len(child_files) == 1:
             errors.append(f"Subdirectory with only 1 child file violates 2+ rule: {subdir.name}/ (contains {child_files[0].name})")
 
-    assert not errors, f"2+ rule violations:\n" + "\n".join(errors)
+    assert not errors, "2+ rule violations:\n" + "\n".join(errors)
 
 
 def test_claude_md_imports():
@@ -193,7 +189,7 @@ def test_claude_md_imports():
         if import_pattern not in claude_content:
             errors.append(f"Missing import for {file}: expected pattern like {import_pattern}")
 
-    assert not errors, f"Missing imports in CLAUDE.md:\n" + "\n".join(errors)
+    assert not errors, "Missing imports in CLAUDE.md:\n" + "\n".join(errors)
 
 
 def test_conventions_parent_files_imported():
@@ -216,7 +212,7 @@ def test_conventions_parent_files_imported():
         if pattern not in claude_content:
             errors.append(f"Missing import for conventions/{import_name}: expected pattern {pattern}")
 
-    assert not errors, f"Missing convention imports in CLAUDE.md:\n" + "\n".join(errors)
+    assert not errors, "Missing convention imports in CLAUDE.md:\n" + "\n".join(errors)
 
 
 if __name__ == "__main__":

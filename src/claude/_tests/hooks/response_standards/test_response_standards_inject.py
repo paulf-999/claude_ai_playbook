@@ -177,7 +177,7 @@ class TestResponseStandardsInjectHook:
 
         # Normal: directive output
         assert len(result_normal.stdout) > 0, \
-            f"Normal response should have directive output. Got empty string"
+            "Normal response should have directive output. Got empty string"
 
         # Verify they're different (waiver genuinely changes behavior)
         assert result_waived.stdout != result_normal.stdout, \

@@ -7,7 +7,9 @@ hook with no error — Claude Code simply would not fire it.
 import json
 from pathlib import Path
 
-SETTINGS = Path.home() / ".claude/settings.json"
+from _claude_dir import CLAUDE_DIR
+
+SETTINGS = CLAUDE_DIR / "settings.json"
 
 
 def _registered_hook_paths() -> list[Path]:

@@ -4,13 +4,13 @@ Verifies the hook injects writing_style.md after edits to _rules/ files,
 and passes through silently for all other paths.
 """
 import json
-from pathlib import Path
 
-from hook_test_utils import run_hook
+from _claude_dir import CLAUDE_DIR
+from hooks.hook_test_utils import run_hook
 
-HOOK = Path.home() / ".claude/hooks/style_guides/hook_style_guide_writing.sh"
-RULES_FILE = str(Path.home() / ".claude/_rules/behaviour.md")
-NON_RULES_FILE = str(Path.home() / ".claude/CLAUDE.md")
+HOOK = CLAUDE_DIR / "hooks" / "style_guides" / "hook_style_guide_writing.sh"
+RULES_FILE = str(CLAUDE_DIR / "_rules" / "behaviour.md")
+NON_RULES_FILE = str(CLAUDE_DIR / "CLAUDE.md")
 
 
 def test_injects_style_reminder_for_rules_file():

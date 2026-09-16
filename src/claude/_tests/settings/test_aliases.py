@@ -9,7 +9,6 @@ Validates that each alias entry:
 4. Meaning accurately describes the feature
 """
 
-import re
 import sys
 from pathlib import Path
 
@@ -67,7 +66,7 @@ def test_valid_status():
         assert alias['status'] in VALID_STATUSES, \
             f"{alias['input']}: Invalid status '{alias['status']}'. Must be one of: {VALID_STATUSES}"
 
-    print(f"✅ All aliases have valid status (Ready or Testing)")
+    print("✅ All aliases have valid status (Ready or Testing)")
 
 
 def test_no_duplicate_inputs():
@@ -78,7 +77,7 @@ def test_no_duplicate_inputs():
     assert len(inputs) == len(set(inputs)), \
         f"Duplicate alias inputs found: {[x for x in inputs if inputs.count(x) > 1]}"
 
-    print(f"✅ No duplicate alias inputs")
+    print("✅ No duplicate alias inputs")
 
 
 def test_meaning_not_empty():
@@ -90,7 +89,7 @@ def test_meaning_not_empty():
         assert len(meaning) > 10, \
             f"{alias['input']}: Meaning too brief or empty ('{meaning}')"
 
-    print(f"✅ All meanings are substantive (>10 chars)")
+    print("✅ All meanings are substantive (>10 chars)")
 
 
 def test_input_format():
@@ -103,7 +102,7 @@ def test_input_format():
         assert inp.startswith('/') or inp.startswith('`') or '_' not in inp or inp[0].isalpha(), \
             f"Invalid input format: '{inp}' (expected /command or bare word)"
 
-    print(f"✅ All inputs are properly formatted")
+    print("✅ All inputs are properly formatted")
 
 
 def test_no_orphaned_references():
@@ -125,7 +124,7 @@ def test_no_orphaned_references():
         if alias['status'] == 'Ready' or alias['status'] == 'Testing':
             assert alias['meaning'], f"{inp}: No meaning provided"
 
-    print(f"✅ All aliases are documented (have meaning)")
+    print("✅ All aliases are documented (have meaning)")
 
 
 def test_consistency():
@@ -141,7 +140,7 @@ def test_consistency():
             assert 'claude_efficiency.md' in alias['meaning'] or 'automation_controls.md' in alias['meaning'], \
                 f"{alias['input']}: Automation Testing alias should reference control docs"
 
-    print(f"✅ Automation aliases reference control documentation")
+    print("✅ Automation aliases reference control documentation")
 
 
 def main():
