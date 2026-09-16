@@ -18,7 +18,7 @@ import re
 from pathlib import Path
 
 
-from src.claude._tests._claude_dir import CLAUDE_DIR as CLAUDE_HOME
+from _claude_dir import CLAUDE_DIR as CLAUDE_HOME
 
 # Directories that are auto-generated and should be skipped
 AUTO_GENERATED_DIRS = {

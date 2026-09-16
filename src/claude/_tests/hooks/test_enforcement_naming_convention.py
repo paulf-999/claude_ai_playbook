@@ -15,7 +15,7 @@ import json
 from src.claude._tests.hooks.hook_test_utils import run_hook
 
 
-from src.claude._tests._claude_dir import CLAUDE_DIR
+from _claude_dir import CLAUDE_DIR
 
 HOOK_PATH = CLAUDE_DIR / "hooks" / "enforcement_naming_convention.sh"
 

@@ -25,7 +25,7 @@ from pathlib import Path
 from typing import Dict, List
 import yaml
 
-from src.claude._tests._claude_dir import CLAUDE_DIR
+from _claude_dir import CLAUDE_DIR
 
 # Canonical skill structure
 CANONICAL_SECTIONS = [
