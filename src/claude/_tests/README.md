@@ -39,7 +39,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_lazy_load_coverage.py` | Every `lazy_load/` file is reachable from at least one hook (direct or via a parent index file) |
 | `test_guiding_principles.py` | Enforcement of lazy-load defaults and intentionality gates — no lazy_load/ imports in CLAUDE.md, all imports documented |
 | `test_aliases_behavior.py` | Aliases are documented, properly formatted, and validated as functional (spot-check representative aliases) |
-| `test_testing_rule_compliance.py` | Self-consistency check: enforcement hooks have tests, and testing.md documents the enforcement pattern |
+| `test_testing.py` | Self-consistency check: enforcement hooks have tests, and testing.md documents the enforcement pattern |
 
 ---
 

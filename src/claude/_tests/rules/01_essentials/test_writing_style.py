@@ -10,7 +10,7 @@ Quarterly behavioral audit (manual):
 - Review recent skill/doc files for correct table application
 - Check: when 2+ categories with identical structure exist, tables are used
 - Check: single lists with no categorical breakout stay as bullets
-- Run: pytest test_writing_style_behavior.py to verify rule documentation
+- Run: pytest test_writing_style.py to verify rule documentation
 - Cadence: Quarterly (per guiding_principles.md reset cycles)
 """
 
