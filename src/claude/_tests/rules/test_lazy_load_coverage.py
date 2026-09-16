@@ -12,7 +12,7 @@ resolves to a real file on disk, so hooks cannot silently load nothing.
 import re
 from pathlib import Path
 
-from src.claude._tests._claude_dir import CLAUDE_DIR
+from _claude_dir import CLAUDE_DIR
 
 HOOKS_DIR = CLAUDE_DIR / "hooks"
 LAZY_LOAD_DIR = CLAUDE_DIR / "_rules/lazy_load"

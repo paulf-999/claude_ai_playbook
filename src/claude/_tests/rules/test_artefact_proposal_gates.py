@@ -4,7 +4,7 @@ Test artefact proposal gates: naming, placement, duplication.
 Validates that the three gates establish clear rules before proposing new artefacts.
 """
 
-from src.claude._tests._claude_dir import CLAUDE_DIR
+from _claude_dir import CLAUDE_DIR
 
 
 class TestNamingGate:

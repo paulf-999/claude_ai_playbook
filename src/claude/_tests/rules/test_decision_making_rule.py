@@ -5,7 +5,7 @@ the expected section headings and patterns that establish the intentionality gat
 """
 import re
 
-from src.claude._tests._claude_dir import CLAUDE_DIR
+from _claude_dir import CLAUDE_DIR
 
 DECISION_MAKING_RULE = CLAUDE_DIR / "_rules" / "02_claude_standards" / "behaviour" / "_decision_making.md"
 

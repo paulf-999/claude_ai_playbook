@@ -8,7 +8,7 @@ Validates that enforcement hooks and behavior-modifying rules have tests:
 This is a linting test enforcing the "rules require tests" constraint.
 """
 
-from src.claude._tests._claude_dir import CLAUDE_DIR
+from _claude_dir import CLAUDE_DIR
 
 HOOKS_DIR = CLAUDE_DIR / "hooks"
 TESTS_HOOKS_DIR = CLAUDE_DIR / "_tests/hooks"

@@ -8,7 +8,7 @@ Ensures:
 """
 import re
 
-from src.claude._tests._claude_dir import CLAUDE_DIR
+from _claude_dir import CLAUDE_DIR
 
 AUTOMATION_CONTROLS_FILE = CLAUDE_DIR / "_rules/claude_internal/automation_controls.md"
 ALIASES_FILE = CLAUDE_DIR / "aliases.md"

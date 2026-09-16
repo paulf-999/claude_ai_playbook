@@ -6,7 +6,7 @@ Ensures:
 - Read-only operations are distinguished from write operations
 """
 
-from src.claude._tests._claude_dir import CLAUDE_DIR
+from _claude_dir import CLAUDE_DIR
 
 SECURITY_GUARDRAILS_FILE = CLAUDE_DIR / "_rules/claude_internal/security_guardrails.md"
 

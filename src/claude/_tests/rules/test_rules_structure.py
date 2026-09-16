@@ -9,7 +9,7 @@ Verifies the design goals for the _rules/ layout in the configured Claude direct
 import re
 from pathlib import Path
 
-from src.claude._tests._claude_dir import CLAUDE_DIR
+from _claude_dir import CLAUDE_DIR
 
 RULES_DIR = CLAUDE_DIR / "_rules"
 CLAUDE_MD = CLAUDE_DIR / "CLAUDE.md"

@@ -7,7 +7,7 @@ Validates that lazy-load and context-efficiency principles are being followed:
 """
 import re
 
-from src.claude._tests._claude_dir import CLAUDE_DIR
+from _claude_dir import CLAUDE_DIR
 
 CLAUDE_MD = CLAUDE_DIR / "CLAUDE.md"
 LAZY_LOAD_DIR = CLAUDE_DIR / "_rules/lazy_load"

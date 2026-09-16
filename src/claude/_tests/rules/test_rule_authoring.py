@@ -5,7 +5,7 @@ the expected sections for pre-creation checklist and quality gates.
 """
 import re
 
-from src.claude._tests._claude_dir import CLAUDE_DIR
+from _claude_dir import CLAUDE_DIR
 
 RULE_AUTHORING = CLAUDE_DIR / "_rules" / "01_essentials" / "authoring_rules.md"
 

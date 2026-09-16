@@ -16,7 +16,7 @@ import subprocess
 from pathlib import Path
 
 
-from src.claude._tests._claude_dir import CLAUDE_DIR
+from _claude_dir import CLAUDE_DIR
 
 HOOK_PATH = CLAUDE_DIR / "hooks" / "enforcement_writing_style.sh"
 
