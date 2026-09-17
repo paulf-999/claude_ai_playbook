@@ -26,4 +26,4 @@ Standards for secure code generation. Covers secrets management, authentication,
 ## 📖 Reference (Claude's design patterns)
 
 <!-- Security architecture: four independent security layers, threat models, and design rationale -->
-@~/.claude/_reference/claude_design_patterns/_security.md
+@~/.claude/_reference/claude_config_architecture/_security.md

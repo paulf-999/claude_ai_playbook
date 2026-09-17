@@ -65,21 +65,14 @@ Define the goal before writing the test. Tests validate *intended behavior*, not
 
 ## ⚡ Quick Reference
 
-**Rule of thumb:** If you added code, write a test.  
-**Goal statement:** One sentence explaining what the test validates.  
-**Location:** Tests adjacent to code (`_tests/<domain>/test_<feature>.py`).  
+**Rule of thumb:** If you added code, write a test.
+**Goal statement:** One sentence explaining what the test validates.
+**Location:** Tests adjacent to code (`_tests/<domain>/test_<feature>.py`).
 **Assertion messages:** Explain what went wrong and how to fix it.
 
 ---
 
 ## 📖 Reference (Claude's design patterns)
 
-<!-- Testing principles overview -->
-@~/.claude/_reference/claude_design_patterns/testing/_testing.md
-
-<!-- Advanced testing patterns and strategies -->
-@~/.claude/_reference/claude_design_patterns/testing/_testing_strategy.md
-
-<!-- How to add tests to new features -->
-@~/.claude/_reference/claude_design_patterns/testing/_adding_tests.md
-
+<!-- Testing strategy: test layers, coverage, integration patterns -->
+@~/.claude/_reference/claude_config_architecture/_testing.md

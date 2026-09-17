@@ -31,9 +31,12 @@ If unsure, lazy-load it. Always-on rules are the exception, not the default.
 
 ---
 
+## Tier Classification
+
+@~/.claude/_rules/04_claude_reference/claude_rule_system/claude_rule_classification.md
+
 ## Related References
 
-- **Tier classification:** `claude_rule_classification.md` — explains the four-tier directory structure
 - **CLAUDE.md** — authoritative source of always-on imports and their rationale
 
 ---

@@ -9,8 +9,8 @@ repos:
     - repo: https://github.com/pre-commit/pre-commit-hooks
       rev: v4.4.0
       hooks:
-          - id: no-commit-to-branch # prevents users from pushing changes to specific (protected) branches
-            args: [--branch, develop, --branch, main, --pattern, release/.*]
+          - id: no-commit-to-branch # prevents users from pushing changes to specific (protected) branches; release/ branches are allowed since git.md scopes them for bulk changes spanning 20+ files
+            args: [--branch, develop, --branch, main]
             name: Git checks - committed to protected Git branch?
           - id: check-merge-conflict # checks for files that contain merge conflict strings.
             name: Git checks - any merge conflicts?

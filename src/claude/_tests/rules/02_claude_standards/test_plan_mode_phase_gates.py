@@ -6,16 +6,18 @@
 # Date updated:      [placeholder]
 # ─────────────────────────────────────────────────────────
 
-"""Tests for plan-mode phase approval gates in _multi_phase_implementation_gates.md.
+"""Tests for plan-mode phase approval gates in claude_plans/_plan_mode_phase_gates.md.
 
-Verifies that the expanded rule includes mandatory plan-mode phase gates with
-clear examples and blocking requirements.
+Verifies that the rule includes mandatory plan-mode phase gates with
+clear examples and blocking requirements. Content moved here from the old
+merged _multi_phase_implementation_gates.md when that file was split into
+claude_plans.md + 2 children (2026-09-17).
 """
 import re
 
 from _claude_dir import CLAUDE_DIR
 
-RULE_FILE = CLAUDE_DIR / "_rules" / "02_claude_standards" / "behaviour" / "_multi_phase_implementation_gates.md"
+RULE_FILE = CLAUDE_DIR / "_rules" / "02_claude_standards" / "claude_plans" / "_plan_mode_phase_gates.md"
 
 EXPECTED_SECTIONS = [
     "Plan-Mode Phase Gates",
@@ -33,7 +35,7 @@ EXPECTED_PATTERNS = [
     r"BLOCKING",
 ]
 
-PLAN_MODE_MARKER = "## 🗂️ Plan-Mode Phase Gates (MANDATORY)"
+PLAN_MODE_MARKER = "# 🗂️ Plan-Mode Phase Gates (MANDATORY)"
 
 
 def test_plan_mode_gates_section_exists():
@@ -106,10 +108,10 @@ def test_plan_mode_gates_emphasizes_no_auto_proceed():
 
 
 def test_rule_line_limit():
-    """Rule must not exceed 200 lines (expanded from 96 to accommodate plan-mode gates)."""
+    """Rule must stay within the ~110-line rule-file limit (writing_style.md)."""
     lines = RULE_FILE.read_text().splitlines()
-    assert len(lines) <= 200, (
-        f"Rule exceeds 200 lines ({len(lines)}). Split into parent + child if needed."
+    assert len(lines) <= 110, (
+        f"Rule exceeds 110 lines ({len(lines)}). Split into parent + child if needed."
     )
 
 
