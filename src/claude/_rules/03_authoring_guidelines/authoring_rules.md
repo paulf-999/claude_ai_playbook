@@ -66,9 +66,4 @@ Before writing any rule, answer these five essential questions:
 
 **Staleness & reviews:** Per `guiding_principles.md` reset cycles, audit all rules every ~6 months. Archive unused rules; update evidence for kept rules.
 
-## 📖 Reference (Claude's design patterns)
-
-<!-- Rule architecture: scope decisions, design patterns, and creation processes -->
-@~/.claude/_reference/claude_design_patterns/rules/_adding_rules.md
-
 ---

@@ -11,6 +11,7 @@
 - [Intervention mode](#-intervention-mode)
 - [External system access](#-external-system-access)
 - [Task request conventions](#-task-request-conventions)
+- [MCP server toggling](#-mcp-server-toggling) — restart requirements after enabling/disabling servers; `mcp_server_toggling.md`
 
 ---
 
@@ -60,6 +61,12 @@
 ## 📋 Task request conventions
 
 @~/.claude/_rules/04_claude_reference/claude_conduct/task_request_conventions.md
+
+---
+
+## 🔌 MCP server toggling
+
+@~/.claude/_rules/04_claude_reference/claude_conduct/mcp_server_toggling.md
 
 ---
 

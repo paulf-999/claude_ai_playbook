@@ -17,21 +17,19 @@ These principles apply across all artefacts: files, directories, hooks, skills, 
 ## 📋 Contents
 
 - [Overview](#-overview)
-- [Load details on-demand](#-load-details-on-demand)
+- [Foundational Principles](#-foundational-principles)
+- [Naming Patterns](#-naming-patterns)
 - [Related rules](#-related-rules)
 
 ---
 
-## 📚 Load details on-demand
+## 🎯 Foundational Principles
 
-This file provides the overview and entry point for naming conventions across all Claude config artefacts. Detailed guidance is organized into child files by topic:
+@~/.claude/_rules/01_essentials/conventions/naming_standards/_naming_principles.md
 
-- **🎯 Foundational Principles** — Self-describing, offer options, snake_case, name for scale
-  - `_naming_principles.md` — Core concepts that apply to all naming
-- **🏷️ Naming Patterns** — Detailed patterns for specific artefact types (hooks, skills, rules)
-  - `_claude_naming_patterns.md` — Detailed patterns for hooks, skills, and rules
-- **🗂️ Directory Structure & Naming** — Directory organization, user-created vs. auto-generated, directory naming
-  - `~/.claude/_rules/01_essentials/conventions/claude_directory_structure.md` — Full directory structure and naming conventions for directories
+## 🏷️ Naming Patterns
+
+@~/.claude/_rules/01_essentials/conventions/naming_standards/_claude_naming_patterns.md
 
 ---
 

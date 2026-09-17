@@ -11,33 +11,17 @@ Rules governing how Claude acts safely and approaches tasks.
 - [Before claiming completion](#-before-claiming-completion) — verify against requirements before saying "Done"
 - [Before proposing](#-before-proposing)
 - [Artefact proposal gates](#-artefact-proposal-gates) — validate naming, placement, and duplication before proposing (see `_artefact_proposal_gates.md`)
-- [Multi-phase implementation gates](#-multi-phase-implementation-gates) — review/approval after each phase (see `_multi_phase_implementation_gates.md`)
 - [Risky actions](#-risky-actions)
 - [Decision-making](#-decision-making) — when to present options vs. decide unilaterally (see `_decision_making.md`)
+- [Pre-existing issue disclosure](#-pre-existing-issue-disclosure) — always surface findings that predate the current task (see `_pre_existing_issue_disclosure.md`)
+- [Model selection strategy](#-model-selection-strategy) — when to use which Claude model (see `_model_selection_strategy.md`)
+- [Session conduct](#-session-conduct) — honesty and responsiveness within sessions (see `_session_conduct.md`)
 
 ---
 
 ## 🔬 How to approach
 
-- 🎯 **Simplest approach:** try the simplest solution first — diagnose root causes, don't brute-force past blockers.
-  - **Note:** if a search fails twice, stop and ask; a clarifying question is cheaper than five failed tool calls.
-- 🎯 **Colleague test:** before finalizing a prompt, show it to someone with minimal context on the task and ask them to follow it. If they'd be confused, Claude will be too.
-- 🔬 **Narrow scope:** treat a narrow request as narrow — don't refactor or restructure unless explicitly asked.
-  - **Note:** when asked to modify specific files or a PR, state the exact files and target branch before editing; don't touch anything outside that scope.
-- 📄 **Offload to files:** proactively write a checkpoint to `TODO.md` in the project root at task completion and whenever context is accumulating — never write session state to `CLAUDE.md`.
-  - **Include:** active decisions, file paths, build commands, constraints, and open items.
-  - **Why:** Claude reads the file on demand — the conversation doesn't need to carry it.
-- ✅ **No best-effort:** only propose solutions with a guaranteed, verifiable outcome — if no such solution exists, say so and ask how to proceed rather than proposing a workaround that relies on convention, trust, or hope.
-- 📐 **Same quality bar:** apply the same standards to agent-generated code as to human-written code — same linting, same test coverage, same review rigour; speed of generation is not a reason to lower the bar.
-  <!-- Source: Boris Cherny — Steps of AI Adoption https://claude.ai/code/artifact/bfdfaef9-bc62-4dfe-ba9e-c58a26c9accf -->
-- 🧪 **Rules require tests:** adding or modifying an **enforcement rule** in `_rules/` is not complete until a corresponding test exists in `_tests/rules/` or `_tests/hooks/` — propose the test alongside the rule, not as a follow-up.
-  - **Note:** instructional guidance (rules Claude reads and follows, with no mechanical trigger) does not require a test — structural tests in `test_rules_structure.py` already cover file quality for all `_rules/` files.
-- 📋 **Session checkpoints:** proactively write a checkpoint to `~/_sessions/YYYY-MM-DD_<domain>_<topic>.md` at task completion and whenever context is accumulating (long tool-call sequences, many files touched).
-  - **Include:** decisions made, files modified, open items, and current task state.
-  - **Why:** Claude Code auto-compression can drop critical context — an explicit checkpoint ensures continuity across context windows.
-- 🧠 **Tune exploration for current models:** newer models explore more than older ones by default. Replace blanket "be thorough" defaults with targeted instructions.
-  - ❌ "Default to using [tool]" (causes overtriggering)
-  - ✅ "Use [tool] when it would enhance understanding of the problem"
+@~/.claude/_rules/02_claude_standards/behaviour/_how_to_approach.md
 
 ## 🚦 Before acting
 
@@ -65,9 +49,7 @@ Apply proportional gates based on task complexity — heavier scrutiny for riski
   - ✅ Right: treat "confluence_create_page" as stated; confirm if genuinely uncertain
   - **When NOT to apply:** User says "create a page" (no tool named) → you choose the best tool
   - **Related:** See _decision_making.md "User explicitly directs" — don't present options when direction is clear
-- 🗂️ **Plan approval:** "Implement the following plan:" is not confirmation — wait for an explicit go-ahead before making any changes.
-  - ⚠️ **Exception 1:** `~/.claude/TODO.md` is pre-authorized for editing during plan mode (task logging; non-risky bookkeeping; no permission needed). **Why:** Read-only content; editing doesn't risk the task.
-  - ⚠️ **Exception 2:** Explicit slash commands (`/skill_name` or `/command_name`) bypass plan-mode gates entirely — NEVER ask permission, execute immediately. **Why:** Slash command IS user's explicit intent; asking for confirmation defeats the entire purpose of direct invocation. Do NOT show any confirmation prompts or options.
+- 🗂️ **Plan approval:** see `claude_plans.md` for the full plan-approval and phase-gate rules.
 
 ## ⚠️ Before proposing
 
@@ -87,10 +69,6 @@ Flag any of the following before writing code — surface cost, maintenance impa
 
 @~/.claude/_rules/02_claude_standards/behaviour/_artefact_proposal_gates.md
 
-## 🚪 Multi-phase implementation gates
-
-@~/.claude/_rules/02_claude_standards/behaviour/_multi_phase_implementation_gates.md
-
 ## 🚨 Risky actions
 
 - 🗑️ **Delete:** files, branches, or data
@@ -104,10 +82,23 @@ Flag any of the following before writing code — surface cost, maintenance impa
 
 @~/.claude/_rules/02_claude_standards/behaviour/_decision_making.md
 
+## 🚩 Pre-Existing Issue Disclosure
+
+@~/.claude/_rules/02_claude_standards/behaviour/_pre_existing_issue_disclosure.md
+
+## 🎛️ Model Selection Strategy
+
+@~/.claude/_rules/02_claude_standards/behaviour/_model_selection_strategy.md
+
+## 🤝 Session Conduct
+
+@~/.claude/_rules/02_claude_standards/behaviour/_session_conduct.md
+
 ---
 
 ## 🔗 Related rules
 
 - `guiding_principles.md` — Intentionality principle; decide before proceeding
 - `decision_making.md` (child: `_decision_making.md`) — When to present options vs. decide unilaterally
+- `claude_plans.md` — Sibling; phase gates, plan-mode rules, and plan-file format
 - `writing_style.md` — Clarity principles; progressive disclosure

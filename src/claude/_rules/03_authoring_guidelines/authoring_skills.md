@@ -539,11 +539,11 @@ When authoring skills, prioritize security:
 
 ## 📚 Reference
 
-@~/.claude/_rules/01_essentials/authoring_skills/_skill_structure_contract.md
+@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_skill_structure_contract.md
 
-@~/.claude/_rules/01_essentials/authoring_skills/_skill_quality_checklist.md
+@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_skill_quality_checklist.md
 
-@~/.claude/_rules/01_essentials/authoring_skills/_skill_review_framework.md
+@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_skill_review_framework.md
 
 ---
 
