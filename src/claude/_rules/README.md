@@ -1,15 +1,16 @@
 # _rules/
 
-Documentation for the rules directory — describes the four-tier system for how rules are organized by audience and purpose, and the distinction between instructional and enforcement rules.
+Documentation for the rules directory — describes the five-tier system for how rules are organized by audience and purpose, and the distinction between instructional and enforcement rules.
 
 ## 🎯 Directory structure
 
-Rules are organized into four numbered tiers, each with a distinct purpose and audience:
+Rules are organized into five numbered tiers, each with a distinct purpose and audience:
 
-- **`01_essentials/`** — Foundational principles and conventions meant for **user/stakeholder understanding** (behaviour, naming, writing standards, authoring skills/rules)
+- **`01_essentials/`** — Foundational principles and conventions meant for **user/stakeholder understanding** (behaviour, naming, writing standards)
 - **`02_claude_standards/`** — Foundational quality gates that **Claude must apply** to all work (security, testing) — NOT user-facing
-- **`03_claude_reference/`** — Technical/meta-knowledge about **how the system works** (efficiency, git workflow, loading strategy, external systems) — reference material
-- **`04_lazy_load/`** — Domain-specific rules loaded on demand; never imported into the main context (SQL, Airflow, dbt, Terraform, etc.)
+- **`03_authoring_guidelines/`** — Meta-guidance for authoring **rules, skills, agents** (how to create and maintain config artifacts)
+- **`04_claude_reference/`** — Technical/meta-knowledge about **how the system works** (efficiency, git workflow, loading strategy, external systems) — reference material
+- **`05_lazy_load/`** — Domain-specific rules loaded on demand; never imported into the main context (SQL, Airflow, dbt, Terraform, etc.)
 
 ## 🎯 Design principle: Audience-based organization
 
@@ -19,10 +20,11 @@ Rules are organized by **who they're for and what they do**, not by enforcement 
 |---|---|---|---|
 | **01_essentials** | Users & stakeholders | Conventions and principles they need to understand | ~150/session |
 | **02_claude_standards** | Claude (internally) | Foundational quality gates Claude applies to all work | ~150/session |
-| **03_claude_reference** | Claude (internally) | Technical reference material about the system | ~150/session |
-| **04_lazy_load** | Domain-specific | Rules loaded only when needed in that domain | ~0 baseline |
+| **03_authoring_guidelines** | Claude (internally) | Meta-guidance for authoring rules, skills, agents | ~100/session |
+| **04_claude_reference** | Claude (internally) | Technical reference material about the system | ~150/session |
+| **05_lazy_load** | Domain-specific | Rules loaded only when needed in that domain | ~0 baseline |
 
-**Key insight:** 01, 02, and 03 are always-on (justifiable baseline cost). 04 is lazy-loaded to preserve context.
+**Key insight:** 01, 02, 03, and 04 are always-on (justifiable baseline cost). 05 is lazy-loaded to preserve context.
 
 ## 🔄 Instructional vs. Enforcement Rules
 
@@ -55,19 +57,25 @@ Not all rules have mechanical triggers. Understand the difference:
 - **Examples:** security.md (secure coding + prompt injection defence), testing.md (test requirements)
 - **Imported:** Yes, always-on (~150 tokens/session)
 
-### **03_claude_reference/** — System/platform knowledge and reference material
+### **03_authoring_guidelines/** — Meta-guidance for authoring config artifacts
+- **Who it's for:** Claude when creating or maintaining rules, skills, agents, hooks
+- **Scope:** Standards for authoring; structure, naming, testing, maturity levels for artifacts
+- **Examples:** authoring_rules.md, authoring_skills.md, authoring_agents.md
+- **Imported:** Yes, always-on (~100 tokens/session)
+
+### **04_claude_reference/** — System/platform knowledge and reference material
 - **Who it's for:** Claude's reference when implementing standards; understanding the system
 - **Scope:** How the config system works, git workflow patterns, efficiency guidance, external system access
 - **Examples:** loading_strategy_rules.md, git.md, external_system_access.md, claude_efficiency.md
 - **Imported:** Yes, always-on (~150 tokens/session)
 
-### **04_lazy_load/** — Domain-specific rules (lazy-loaded)
+### **05_lazy_load/** — Domain-specific rules (lazy-loaded)
 - **Who it's for:** Domain specialists (SQL, Airflow, dbt, Terraform, etc.)
 - **Scope:** Rules specific to a single language, tool, or domain
 - **Examples:** style_guide_standards/sql.md, style_guide_standards/airflow.md, latency_optimization.md
 - **Imported:** No, loaded on-demand only
-- **Note:** if a rule applies in most sessions regardless of task type, it belongs in tier 01/02/03 — not here.
-- **Hook required:** every file in 04_lazy_load/ should have a corresponding enforcement hook or be a pure reference document (consulted explicitly, not auto-triggered)
+- **Note:** if a rule applies in most sessions regardless of task type, it belongs in tier 01/02/03/04 — not here.
+- **Hook required:** every file in 05_lazy_load/ should have a corresponding enforcement hook or be a pure reference document (consulted explicitly, not auto-triggered)
 
 ## 🎚️ Tier placement decision tree
 
@@ -75,21 +83,26 @@ Use this decision tree when deciding where a new rule belongs.
 
 ```
 Is this rule domain-specific?
-├─ YES  → 04_lazy_load/
+├─ YES  → 05_lazy_load/
 │  (SQL, Airflow, dbt, Terraform, language-specific style guides)
 │
 └─ NO   → Continue...
-   Is it meant for users/stakeholders to understand?
-   ├─ YES → 01_essentials/
-   │  (Naming conventions, behaviour principles, writing standards, authoring guidance)
+   Is it meta-guidance for authoring artifacts (rules, skills, agents)?
+   ├─ YES → 03_authoring_guidelines/
+   │  (How to create/maintain rules, skills, agents, hooks)
    │
    └─ NO  → Continue...
-      Is it a foundational quality gate Claude must enforce?
-      ├─ YES → 02_claude_standards/
-      │  (Security, testing, prompt injection defence, code safety)
+      Is it meant for users/stakeholders to understand?
+      ├─ YES → 01_essentials/
+      │  (Naming conventions, behaviour principles, writing standards)
       │
-      └─ NO  → 03_claude_reference/
-         (System knowledge: how config works, efficiency patterns, workflow guidance)
+      └─ NO  → Continue...
+         Is it a foundational quality gate Claude must enforce?
+         ├─ YES → 02_claude_standards/
+         │  (Security, testing, prompt injection defence, code safety)
+         │
+         └─ NO  → 04_claude_reference/
+            (System knowledge: how config works, efficiency patterns, workflow guidance)
 ```
 
-**Default:** when in doubt, prefer lazy-load or 03_claude_reference — every always-on file (01/02/03) grows the base context (~150 tokens/session).
+**Default:** when in doubt, prefer lazy-load or 04_claude_reference — every always-on file (01/02/03/04) grows the base context (~150 tokens/session).

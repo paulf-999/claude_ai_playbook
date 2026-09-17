@@ -1,3 +1,11 @@
+# Test Metadata
+# ─────────────────────────────────────────────────────────
+# Test quality score: 5/10
+# Date created:      2026-08-28
+# Version:           1.0.0
+# Date updated:      2026-09-17
+# ─────────────────────────────────────────────────────────
+
 """Tests for hook_style_guide_dispatch.sh.
 
 Verifies the dispatcher correctly routes to individual style_guide hooks and

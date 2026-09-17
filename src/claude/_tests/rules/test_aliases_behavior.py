@@ -1,3 +1,11 @@
+# Test Metadata
+# ─────────────────────────────────────────────────────────
+# Test quality score: 5/10
+# Date created:      2026-08-28
+# Version:           1.0.0
+# Date updated:      2026-09-17
+# ─────────────────────────────────────────────────────────
+
 """Tests for aliases.md — validates that documented aliases actually work.
 
 Spot-checks 3-5 representative aliases to ensure:

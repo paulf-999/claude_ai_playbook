@@ -1,3 +1,11 @@
+# Test Metadata
+# ─────────────────────────────────────────────────────────
+# Test quality score: 3/10
+# Date created:      2026-08-28
+# Version:           1.0.0
+# Date updated:      2026-09-17
+# ─────────────────────────────────────────────────────────
+
 """
 Test: File Structure Compliance Scan
 
@@ -9,7 +17,7 @@ Checks:
 2. **Location compliance:** Files in correct directories (_rules/, _tests/, hooks/, skills/, etc.)
 3. **Child file prefixes:** Child files start with underscore (_child.md)
 4. **Directory depth:** Rules organized properly by tier
-   (01_essentials/, 02_claude_standards/, 03_claude_reference/, 04_lazy_load/)
+   (01_essentials/, 02_claude_standards/, 04_claude_reference/, 05_lazy_load/)
 
 This test is parametrized to scan all files at once and report violations.
 """
@@ -48,10 +56,10 @@ USER_CREATED_DIRS = {
 # Directory-specific validation rules
 DIR_RULES = {
     "_rules": {
-        "subdirs": ["01_essentials", "02_claude_standards", "03_claude_reference", "04_lazy_load"],
+        "subdirs": ["01_essentials", "02_claude_standards", "04_claude_reference", "05_lazy_load"],
         "rule": (
             "Rules organized by tier (01_essentials=blocking, 02_claude_standards=how Claude works, "
-            "03_claude_reference=reference material, 04_lazy_load=domain-specific)"
+            "04_claude_reference=reference material, 05_lazy_load=domain-specific)"
         ),
     },
     "hooks": {

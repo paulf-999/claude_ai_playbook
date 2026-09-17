@@ -1,3 +1,11 @@
+# Test Metadata
+# ─────────────────────────────────────────────────────────
+# Test quality score: 3/10
+# Date created:      2026-08-28
+# Version:           1.0.0
+# Date updated:      2026-09-17
+# ─────────────────────────────────────────────────────────
+
 """Tests for guiding_principles.md enforcement.
 
 Validates that lazy-load and context-efficiency principles are being followed:
@@ -10,7 +18,7 @@ import re
 from _claude_dir import CLAUDE_DIR
 
 CLAUDE_MD = CLAUDE_DIR / "CLAUDE.md"
-LAZY_LOAD_DIR = CLAUDE_DIR / "_rules" / "04_lazy_load"
+LAZY_LOAD_DIR = CLAUDE_DIR / "_rules" / "05_lazy_load"
 
 
 def test_no_lazy_load_imports_at_top_level():

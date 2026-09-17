@@ -89,7 +89,7 @@ Flag any of the following before writing code — surface cost, maintenance impa
 
 ## 🚪 Multi-phase implementation gates
 
-@~/.claude/_rules/01_essentials/behaviour/_multi_phase_implementation_gates.md
+@~/.claude/_rules/02_claude_standards/behaviour/_multi_phase_implementation_gates.md
 
 ## 🚨 Risky actions
 

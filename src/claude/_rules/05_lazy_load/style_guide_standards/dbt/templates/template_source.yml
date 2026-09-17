@@ -1,0 +1,13 @@
+---
+sources:
+    - name: ACCESS_ONE_SOURCE
+      database: &db_name |
+          {%- if 'dev' in target.name -%} src_dev
+          {%- elif 'uat' in target.name -%} src_uat
+          {%- elif 'prod' in target.name -%} src_prd
+          {%- endif -%}
+      schema: ACCESS_ONE_SOURCE
+      tables:
+          - name: MERCHANT_LIST
+          - name: MERCHANT_PROFILE_OMAHA
+          - name: MERCHANT_PROFILE_NORTH

@@ -1,3 +1,11 @@
+# Test Metadata
+# ─────────────────────────────────────────────────────────
+# Test quality score: 5/10
+# Date created:      2026-08-28
+# Version:           1.0.0
+# Date updated:      2026-09-17
+# ─────────────────────────────────────────────────────────
+
 """Structural tests for _rules/claude_internal/git.md.
 
 Verifies that the git rules file is present, well-formed, and contains

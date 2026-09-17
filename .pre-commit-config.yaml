@@ -49,6 +49,8 @@ repos:
       hooks:
           - id: checkmake
             name: Makefile check - linter
+        # Skip doc files whose name happens to match (e.g. makefile.md style guides)
+            exclude: \.md$
     # YAML hooks
     - repo: https://github.com/adrienverge/yamllint.git
       rev: v1.30.0
@@ -56,6 +58,8 @@ repos:
           - id: yamllint # Lint YAML files using rules specified in .yamllint
             args: [-c=.yamllint]
             name: YAML checks - linter (using yamllint)
+        # Illustrative style-guide templates, not real deployable YAML
+            exclude: style_guide_standards/.*/templates/.*\.ya?ml$
     - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
       rev: 0.2.1
       hooks:
@@ -77,6 +81,8 @@ repos:
             name: Python fixes & lint — Ruff
         # Enable complexity checks
             args: [--line-length=120, '--select=E,F,W,C90']
+        # Illustrative style-guide snippets, not executable code — not meant to pass linting
+            exclude: style_guide_standards/.*/(examples|templates)/.*\.py$
 
   # 🔁 Pyupgrade — automatically modernise syntax
     - repo: https://github.com/asottile/pyupgrade

@@ -1,3 +1,11 @@
+# Test Metadata
+# ─────────────────────────────────────────────────────────
+# Test quality score: 5/10
+# Date created:      2026-08-28
+# Version:           1.0.0
+# Date updated:      2026-09-17
+# ─────────────────────────────────────────────────────────
+
 #!/usr/bin/env python3
 """
 Tests for aliases.md
@@ -23,7 +31,7 @@ def parse_aliases_table():
 
     # Extract table rows (skip header)
     lines = content.split('\n')
-    table_lines = [l for l in lines if l.strip().startswith('|')]
+    table_lines = [line for line in lines if line.strip().startswith('|')]
 
     if len(table_lines) < 3:  # header, separator, at least one row
         raise ValueError(f"Invalid aliases table in {ALIASES_PATH}")
@@ -109,12 +117,6 @@ def test_no_orphaned_references():
     """Test: Referenced skills/commands are not stubs (at least documented somewhere)."""
     aliases = parse_aliases_table()
 
-    # Skills/commands that are expected to exist
-    known_skills = {
-        'batch', 'goal', 'loop', 'fewer-permission-prompts',
-        'plan', 'draft', 'bullets'
-    }
-
     for alias in aliases:
         inp = alias['input'].lstrip('/').lstrip('`').rstrip('`')
         if inp.startswith('_'):
@@ -130,7 +132,6 @@ def test_no_orphaned_references():
 def test_consistency():
     """Test: Related aliases have consistent documentation."""
     aliases = parse_aliases_table()
-    alias_dict = {a['input']: a for a in aliases}
 
     # Automation-related aliases should reference controls
     automation_aliases = [a for a in aliases if a['theme'] == 'Automation']

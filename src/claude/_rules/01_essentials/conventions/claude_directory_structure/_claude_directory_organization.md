@@ -25,8 +25,8 @@
 **Tier 2: Core rules (_rules/)**
 - `01_essentials/` — blocking/safety rules (always-on imports; user-facing guidance)
 - `02_claude_standards/` — quality gates and operational standards (always-on imports)
-- `03_claude_reference/` — system knowledge and reference docs (always-on imports)
-- `04_lazy_load/` — domain-specific rules (loaded on-demand; token-efficient)
+- `04_claude_reference/` — system knowledge and reference docs (always-on imports)
+- `05_lazy_load/` — domain-specific rules (loaded on-demand; token-efficient)
 
 **Tier 3: Infrastructure (_tests/, _templates/, _reference/, _docs/)**
 - Tests, templates, evergreen reference docs, and additional documentation
