@@ -24,12 +24,30 @@ COLOUR_OFF='\033[0m'
 
 TESTS_TO_RUN=()
 
+# The whole-suite path. Passing it alongside a more specific subdirectory
+# (e.g. "src/claude/_tests/rules/" and "src/claude/_tests/") as separate
+# pytest args silently drops execution of tests outside the subdirectory —
+# only ever pass one or the other.
+WHOLE_SUITE="src/claude/_tests/"
+
 #=======================================================================
 # Functions
 #=======================================================================
 
 add_test() {
     local test_file="$1"
+
+    # Whole suite already queued — every more specific path is redundant.
+    for existing in "${TESTS_TO_RUN[@]+"${TESTS_TO_RUN[@]}"}"; do
+        [[ "$existing" == "$WHOLE_SUITE" ]] && return
+    done
+
+    # Adding the whole suite now — it supersedes every specific path queued so far.
+    if [[ "$test_file" == "$WHOLE_SUITE" ]]; then
+        TESTS_TO_RUN=("$WHOLE_SUITE")
+        return
+    fi
+
     # Only add if not already in the list
     for existing in "${TESTS_TO_RUN[@]+"${TESTS_TO_RUN[@]}"}"; do
         [[ "$existing" == "$test_file" ]] && return

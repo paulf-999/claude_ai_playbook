@@ -1,0 +1,69 @@
+---
+# Skill Domain Roadmap
+#
+# Planned/aspirational domains for future skill development.
+# Separate from skill_domains.yaml (active domains) to clarify:
+# - What we have: active, in-use domains with existing skills
+# - What we plan: future domains with intended use cases
+#
+# When creating a skill in a planned domain, promote it to skill_domains.yaml
+# and remove it from here.
+#
+# Legend: roadmap=true indicates this domain is on the planned roadmap
+
+future_domains:
+    - id: cicd
+      prefix: cicd_
+      directory: _cicd_skills
+      description: GitHub Actions, CI/CD pipelines, automation
+      roadmap: true
+      justification: Needed for GitHub Actions workflows, CI/CD pipeline management, and deployment automation
+
+    - id: communication
+      prefix: communication_
+      directory: _communication_skills
+      description: Slack, Teams, email, notifications
+      roadmap: true
+      justification: Needed for Slack/Teams integration skills once messaging APIs are available
+
+    - id: data_engineering
+      prefix: data_engineering_
+      directory: _data_engineering_skills
+      description: Data pipelines, ETL, orchestration
+      roadmap: true
+      justification: Needed for Airflow DAG management and data pipeline operations
+
+    - id: dbt
+      prefix: dbt_
+      directory: _dbt_skills
+      description: dbt-specific operations and model management
+      roadmap: true
+      justification: Needed for dbt model testing, documentation, and lineage exploration
+
+    - id: dev
+      prefix: dev_
+      directory: _dev_skills
+      description: General development utilities, linting, testing
+      roadmap: true
+      justification: Needed for linting, test-running, and development workflow skills
+
+    - id: git
+      prefix: git_
+      directory: _git_skills
+      description: Git operations, branch management, PR workflows
+      roadmap: true
+      justification: Planned for future git-specific skills; currently no active skills in this domain
+
+    - id: infrastructure
+      prefix: infrastructure_
+      directory: _infrastructure_skills
+      description: Cloud resources, IaC, deployment
+      roadmap: true
+      justification: Needed for Terraform, CloudFormation, and infrastructure management skills
+
+    - id: meetings
+      prefix: meetings_
+      directory: _meetings_skills
+      description: Calendar, scheduling, meeting notes
+      roadmap: true
+      justification: Needed for calendar and meeting management skills once calendar APIs are available

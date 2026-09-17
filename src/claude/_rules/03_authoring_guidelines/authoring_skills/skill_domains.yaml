@@ -1,0 +1,32 @@
+---
+# Skill Domain Configuration
+#
+# Defines valid skill domain prefixes and their metadata.
+# Used by skill naming validation and Claude review tool.
+#
+# To add a new domain:
+# 1. Add entry below with id, prefix, directory, description
+# 2. Create _<id>_skills/ directory in skills/
+# 3. Update skill_naming_guide.md with new domain
+# 4. Validation automatically picks up the new domain
+#
+# Active domains (match existing skills): confluence, jira, claude
+
+domains:
+    - id: confluence
+      prefix: confluence_
+      directory: _confluence_skills
+      description: Confluence page creation and management
+      stable: false
+
+    - id: jira
+      prefix: jira_
+      directory: _jira_skills
+      description: Jira issue and epic creation
+      stable: false
+
+    - id: claude
+      prefix: claude_
+      directory: _claude_skills
+      description: Claude optimization tools (config review, Graphify setup, audits)
+      stable: false

@@ -46,13 +46,13 @@ Add to this tier only when:
 
 Otherwise, place in:
 - **01_essentials/** — user-facing conventions (naming, writing, authoring)
-- **03_claude_reference/** — system/meta knowledge about how the config works
-- **04_lazy_load/** — domain-specific, load on-demand only
+- **04_claude_reference/** — system/meta knowledge about how the config works
+- **05_lazy_load/** — domain-specific, load on-demand only
 
 ---
 
 ## Related
 
 - **01_essentials/** — User-facing principles and conventions (guiding_principles, authoring, naming, writing)
-- **03_claude_reference/** — System knowledge and reference material (git, efficiency, external systems)
-- **04_lazy_load/** — Domain-specific rules (lazy-loaded)
+- **04_claude_reference/** — System knowledge and reference material (git, efficiency, external systems)
+- **05_lazy_load/** — Domain-specific rules (lazy-loaded)

@@ -37,24 +37,19 @@ Instructions that shape how Claude works within a session:
 
 ## 📏 Rules
 
-See [`src/claude/rules/README.md`](../src/claude/rules/README.md)
+See [`src/claude/_rules/README.md`](../src/claude/_rules/README.md)
 
-Hard constraints that Claude must follow in every session, covering:
+Rules are organized into five numbered tiers by audience and purpose (see `_rules/README.md` for the full tier breakdown and placement decision tree):
 
-- behaviour
-- credit efficiency
-- documentation updates (minimal diff, self-validation checklist, diff-first presentation)
-- file hygiene
-- git
-- managed files (index files that must not be edited directly)
-- MCP discipline
-- response standards (format, delivery cadence, timing measurement) — enforced per turn via a `UserPromptSubmit` salience-injection hook (`hooks/hook_style_guide_response_standards_inject.sh`)
-- security
-- skill authoring standards
-- testing
-- transparency
+- **`01_essentials/`** — foundational principles and conventions (response standards, usage standards, guiding principles)
+- **`02_claude_standards/`** — quality gates Claude applies to all work (behaviour, git, security, testing, test metadata)
+- **`03_authoring_guidelines/`** — meta-guidance for authoring rules, skills, and agents
+- **`04_claude_reference/`** — technical/system knowledge (operational efficiency, rule loading strategy)
+- **`05_lazy_load/`** — domain-specific rules loaded on demand (style guides, automation controls, etc.) — never imported into the main context
 
-**Proactive decision logging** (`rules/behaviour/decision_logging.md`) — Claude automatically logs non-obvious choices to memory as they are made, using a two-part grain test to keep signal-to-noise high. Contributor-relevant decisions are also written to `docs/decisions/<theme>/` in the repo and staged alongside the change that prompted them.
+`01_essentials/`, `02_claude_standards/`, `03_authoring_guidelines/`, and `04_claude_reference/` are always-on, imported via `CLAUDE.md`; `05_lazy_load/` is consulted on demand only.
+
+Response standards (format, delivery cadence, timing measurement) are enforced per turn via a `UserPromptSubmit` salience-injection hook (`hooks/hook_style_guide_response_standards_inject.sh`).
 
 ---
 

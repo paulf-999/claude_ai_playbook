@@ -1,0 +1,14 @@
+---
+description: |
+    Orchestrates the execution of HOURLY dbt staging & base models for Salesforce.
+schedule: 40 7-23 * * *
+schedule_comment: Runs hourly at minute 40 from 7 AM to 11:59 PM UTC.
+start_date: '2025-04-09'
+tags:
+    - airbyte
+    - dbt
+    - hourly
+    - parent_dag
+    - salesforce
+data_src: salesforce
+airbyte_conn_name: [salesforce, salesforce_airbyte_job]

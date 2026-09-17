@@ -1,3 +1,11 @@
+# Test Metadata
+# ─────────────────────────────────────────────────────────
+# Test quality score: 9/10
+# Date created:      2026-08-28
+# Version:           1.0.0
+# Date updated:      2026-09-17
+# ─────────────────────────────────────────────────────────
+
 """Skill authoring gate tests — validates walk (W1–W6) and run (R1–R5) criteria.
 
 This test suite validates that skills meet quality (walk) and comprehensive (run)
@@ -293,7 +301,6 @@ def test_r3_maturity_progression_documented(skill_dir):
     skill_md_content = load_skill_md(skill_dir)
 
     maturity = contract.get("maturity", "draft")
-    version = contract.get("version", "0.0.0")
 
     if maturity in ("tactical", "strategic"):
         # Tactical/strategic skills should have a version section documenting progression

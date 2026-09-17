@@ -1,3 +1,11 @@
+# Test Metadata
+# ─────────────────────────────────────────────────────────
+# Test quality score: 5/10
+# Date created:      2026-08-28
+# Version:           1.0.0
+# Date updated:      2026-09-17
+# ─────────────────────────────────────────────────────────
+
 """Structural tests for _rules/01_core/behaviour/_decision_making.md.
 
 Verifies that the decision-making rule is present, well-formed, and contains
