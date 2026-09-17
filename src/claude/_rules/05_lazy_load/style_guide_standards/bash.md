@@ -38,7 +38,7 @@ All scripts must source the shared utilities file at the top:
 source src/sh/shell_utils.sh
 ```
 
-- **Canonical source:** `~/.claude/_lib/shell_utils.sh` — copy into `src/sh/` for each project
+- **Canonical source:** `~/.claude/_templates/utils/shell_utils.sh` — copy into `src/sh/` for each project
 - **Provides:** `log_message`, `print_section_header`, `dir_exists`, `file_exists`, `handle_interruption`
 - **Log levels:** use the correct constant for the severity:
   - `${DEBUG}` (cyan) — script start/end, general flow
