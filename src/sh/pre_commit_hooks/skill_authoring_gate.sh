@@ -13,9 +13,10 @@
 set -e
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../" && pwd)"
+export CLAUDE_CONFIG_DIR="${REPO_ROOT}/src/claude"
 LINTER="$REPO_ROOT/src/sh/claude/skill_authoring_gate_lint.py"
 COMPLEXITY_SCORER="$REPO_ROOT/src/sh/claude/skill_complexity_scorer.py"
-TEST_SUITE="$REPO_ROOT/src/claude/_tests/rules/test_skill_authoring_gate.py"
+TEST_SUITE="$REPO_ROOT/src/claude/_tests/rules/01_essentials/test_skill_authoring_gate.py"
 SKILLS_ROOT="$REPO_ROOT/src/claude/skills"
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -26,7 +27,6 @@ echo ""
 # Track exit codes
 CRAWL_EXIT=0
 WALK_EXIT=0
-RUN_EXIT=0
 
 # ── Crawl Level (C0–C7): Hard Gate ──────────────────────────────────────────
 
