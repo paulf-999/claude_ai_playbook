@@ -15,6 +15,8 @@ Validates response format compliance: Summary structure, offer line, timing foot
 import subprocess
 import pytest
 
+from _claude_dir import CLAUDE_DIR
+
 
 class TestResponseStandardsHook:
     """Test response standards enforcement hook."""
@@ -22,7 +24,7 @@ class TestResponseStandardsHook:
     @staticmethod
     def run_hook(response: str) -> str:
         """Run the hook with given response content and return output."""
-        hook_script = "/home/paul/.claude/hooks/hook_style_guide_response_standards.sh"
+        hook_script = str(CLAUDE_DIR / "hooks" / "hook_style_guide_response_standards.sh")
         result = subprocess.run(
             [hook_script],
             input=response,

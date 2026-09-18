@@ -4,8 +4,11 @@
 # the proposed directory name and placement follows the standard before proceeding.
 set -e
 
+CLAUDE_HOOKS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CLAUDE_ROOT_DIR="$(dirname "${CLAUDE_HOOKS_DIR}")"
+
 # shellcheck source=/dev/null
-source ~/.claude/_templates/utils/shell_utils.sh 2>/dev/null || true
+source "${CLAUDE_ROOT_DIR}/_templates/utils/shell_utils.sh" 2>/dev/null || true
 
 #=======================================================================
 # Variables
@@ -36,17 +39,17 @@ CMD=$(echo "${INPUT}" | jq -r '.tool_input.command // empty' 2>/dev/null)
 # Load directory structure rules from the appropriate file.
 DIR_STRUCTURE_RULES=""
 
-if [[ -f ~/.claude/_rules/01_core/claude_directory_structure/_claude_directory_organization.md ]]; then
-  DIR_STRUCTURE_RULES=$(cat ~/.claude/_rules/01_core/claude_directory_structure/_claude_directory_organization.md)
-elif [[ -f ~/.claude/_rules/01_core/claude_directory_structure.md ]]; then
-  DIR_STRUCTURE_RULES=$(cat ~/.claude/_rules/01_core/claude_directory_structure.md)
+if [[ -f "${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/claude_directory_structure/_claude_directory_organization.md" ]]; then
+  DIR_STRUCTURE_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/claude_directory_structure/_claude_directory_organization.md")
+elif [[ -f "${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/claude_directory_structure.md" ]]; then
+  DIR_STRUCTURE_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/claude_directory_structure.md")
 else
-  DIR_STRUCTURE_RULES="Directory structure rules not found. Check ~/.claude/_rules/01_core/claude_directory_structure.md"
+  DIR_STRUCTURE_RULES="Directory structure rules not found. Check ${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/claude_directory_structure.md"
 fi
 
 # Inject dir structure rules as context — soft reminder, does not block the mkdir.
 jq -n \
-  --rawfile rules "$DIR_STRUCTURE_RULES" \
+  --arg rules "$DIR_STRUCTURE_RULES" \
   '{"hookSpecificOutput":{"hookEventName":"PreToolUse","additionalContext":("Directory structure reminder — confirm this mkdir follows ~/.claude/ conventions:\n\n" + $rules)}}'
 
 print_section_header "${DEBUG}" "Enforcement: dir_structure.sh completed" >&2 2>/dev/null || true

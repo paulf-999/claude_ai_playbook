@@ -25,7 +25,7 @@ from hooks.hook_test_utils import run_hook
 
 from _claude_dir import CLAUDE_DIR
 
-HOOK_PATH = CLAUDE_DIR / "hooks" / "enforcement_dir_structure.sh"
+HOOK_PATH = CLAUDE_DIR / "hooks" / "hook_enforcement_dir_structure.sh"
 
 
 def test_valid_user_created_dir_underscore_prefix():

@@ -35,18 +35,19 @@ constraints are harder to bypass silently.
 @~/.claude/_rules/01_essentials/claude_usage_standards.md
 @~/.claude/_rules/01_essentials/guiding_principles.md
 
-<!-- Tier 3: 03_authoring_guidelines/ — meta-guidance for authoring rules, skills, agents -->
-@~/.claude/_rules/03_authoring_guidelines/authoring_agents.md
-@~/.claude/_rules/03_authoring_guidelines/authoring_rules.md
-@~/.claude/_rules/03_authoring_guidelines/authoring_skills.md
-
 <!-- Tier 2: 02_claude_standards/ — blocking standards and enforcement -->
 @~/.claude/_rules/02_claude_standards/behaviour.md
 @~/.claude/_rules/02_claude_standards/claude_plans.md
 @~/.claude/_rules/02_claude_standards/git.md
+@~/.claude/_rules/02_claude_standards/portable_paths.md
 @~/.claude/_rules/02_claude_standards/security.md
 @~/.claude/_rules/02_claude_standards/test_metadata.md
 @~/.claude/_rules/02_claude_standards/testing.md
+
+<!-- Tier 3: 03_authoring_guidelines/ — meta-guidance for authoring rules, skills, agents -->
+@~/.claude/_rules/03_authoring_guidelines/authoring_agents.md
+@~/.claude/_rules/03_authoring_guidelines/authoring_rules.md
+@~/.claude/_rules/03_authoring_guidelines/authoring_skills.md
 
 <!-- Tier 4: 04_claude_reference/ — system knowledge and platform guidance -->
 @~/.claude/_rules/04_claude_reference/claude_operational_efficiency.md

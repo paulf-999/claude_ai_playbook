@@ -24,7 +24,9 @@ import os
 import re
 import subprocess
 
-HOOK_SCRIPT = "/home/paul/.claude/hooks/hook_style_guide_response_standards_inject.sh"
+from _claude_dir import CLAUDE_DIR
+
+HOOK_SCRIPT = str(CLAUDE_DIR / "hooks" / "hook_style_guide_response_standards_inject.sh")
 
 
 class TestResponseStandardsInjectHook:

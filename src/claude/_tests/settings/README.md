@@ -25,34 +25,6 @@ python3 src/claude/_tests/settings/test_aliases.py
 
 ---
 
-### `test_aliases_behavior.py`
-
-**Integration tests** — validates that aliases actually work as described:
-
-- ✅ Skills exist (check `src/claude/skills/`) or are built-in Claude Code commands
-- ✅ Conventions are documented in rules
-- ✅ Meaning descriptions match actual behavior (spot-checks)
-- ✅ All aliases are executable/callable or documented
-
-Tests both:
-- **Skills/Commands** (e.g., `/fewer-permission-prompts`, `/plan`) — verifies skill files exist or command is built-in
-- **Conventions** (e.g., `bullets`, `draft`) — verifies documented in `_rules/writing_style.md`
-
-**Run:**
-```bash
-python3 src/claude/_tests/settings/test_aliases_behavior.py
-```
-
-**Example output:**
-```
-✅ /batch                         | ✅ Built-in command: batch automation
-✅ bullets                        | ✅ Documented in _rules/writing_style.md
-✅ /fewer-permission-prompts      | ✅ Documented command: transcript auditing
-✅ plan                           | ✅ Meaning matches behavior
-```
-
----
-
 ### `test_settings.py`
 
 Validates `src/claude/settings.json` and enforces guiding principles:

@@ -4,8 +4,11 @@
 # the proposed filename follows the standard before proceeding.
 set -e
 
+CLAUDE_HOOKS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CLAUDE_ROOT_DIR="$(dirname "${CLAUDE_HOOKS_DIR}")"
+
 # shellcheck source=/dev/null
-source ~/.claude/_templates/utils/shell_utils.sh 2>/dev/null || true
+source "${CLAUDE_ROOT_DIR}/_templates/utils/shell_utils.sh" 2>/dev/null || true
 
 #=======================================================================
 # Variables
@@ -26,9 +29,11 @@ print_section_header "${DEBUG}" "Enforcement: naming_convention.sh started" >&2 
 TOOL_NAME=$(echo "${INPUT}" | jq -r '.tool_name // empty' 2>/dev/null)
 [[ "${TOOL_NAME}" != "Write" ]] && exit 0
 
-# Only enforce within ~/.claude/ — project files follow their own conventions.
+# Only enforce within the Claude config dir — project files follow their own conventions.
+# Checked against CLAUDE_ROOT_DIR (resolved relative to this script), not a hardcoded
+# string, so this works whether the config lives at ~/.claude/, ~/claude/, or a repo checkout.
 FILE_PATH=$(echo "${INPUT}" | jq -r '.tool_input.file_path // empty' 2>/dev/null)
-[[ "${FILE_PATH}" != *".claude/"* ]] && exit 0
+[[ "${FILE_PATH}" != "${CLAUDE_ROOT_DIR}"* ]] && exit 0
 
 # Skip existing files — naming is only a concern at creation time.
 [[ -e "${FILE_PATH}" ]] && exit 0
@@ -37,18 +42,19 @@ FILE_PATH=$(echo "${INPUT}" | jq -r '.tool_input.file_path // empty' 2>/dev/null
 # Prefer reading the specific child file for focused context.
 NAMING_RULES=""
 
-if [[ -f ~/.claude/_rules/01_core/claude_directory_structure/_claude_directory_naming.md ]]; then
-  NAMING_RULES=$(cat ~/.claude/_rules/01_core/claude_directory_structure/_claude_directory_naming.md)
-elif [[ -f ~/.claude/_rules/01_core/naming_standards/_naming_principles.md ]]; then
-  NAMING_RULES=$(cat ~/.claude/_rules/01_core/naming_standards/_naming_principles.md)
+if [[ -f "${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/claude_directory_structure/_claude_directory_naming.md" ]]; then
+  NAMING_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/claude_directory_structure/_claude_directory_naming.md")
+elif [[ -f "${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/naming_standards/_naming_principles.md" ]]; then
+  NAMING_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/naming_standards/_naming_principles.md")
 else
   # Fallback to parent rules if child files not found
-  NAMING_RULES=$(cat ~/.claude/_rules/01_core/naming_standards.md 2>/dev/null || echo "Naming standards rule file not found. Check ~/.claude/_rules/01_core/naming_standards.md")
+  NAMING_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/naming_standards.md" 2>/dev/null || echo "Naming standards rule file not found. Check ${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/naming_standards.md")
 fi
 
 # Block and surface the naming conventions so Claude reviews the proposed name.
 jq -n \
-  --rawfile conventions "$NAMING_RULES" \
-  '{"decision":"block","reason":("New file detected under ~/.claude/. Review naming conventions before proceeding.\n\nFile: " + $ENV.FILE_PATH + "\n\n" + $conventions)}'
+  --arg conventions "$NAMING_RULES" \
+  --arg file_path "$FILE_PATH" \
+  '{"decision":"block","reason":("New file detected under ~/.claude/. Review naming conventions before proceeding.\n\nFile: " + $file_path + "\n\n" + $conventions)}'
 
 print_section_header "${DEBUG}" "Enforcement: naming_convention.sh completed" >&2 2>/dev/null || true

@@ -48,6 +48,7 @@ Before writing any rule, answer these five essential questions:
 - **~100-line limit** — split into parent + child files if needed (see writing_style.md)
 - **Trailing newline** — exactly one `\n` at EOF
 - **Related rules section** — links to dependencies via `@~/.claude/_rules/...` or `[[memory-slug]]`
+- **Wire up every documented child** — if a parent rule describes child files (e.g. under a "Load details on-demand" section), each one needs a real `@import` line, not just prose naming it. A file mentioned but never imported is silently unreachable — see `test_always_on_reachability.py`, which fails the build if any file under `01_essentials/`–`04_claude_reference/` exists on disk but isn't reachable from `CLAUDE.md`.
 - **Test validation** — enforcement rules pass custom tests; all rules pass test_rules_structure.py
 
 ## 📚 References & Related Rules

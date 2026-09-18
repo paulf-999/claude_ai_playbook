@@ -74,7 +74,7 @@ def test_no_orphaned_lazy_load_files():
     """Every .md in lazy_load/ must be directly or transitively covered by a hook."""
     covered = _hook_lazy_load_refs()
     for md_file in LAZY_LOAD_DIR.rglob("*.md"):
-        if md_file in covered:
+        if md_file.name == "README.md" or md_file in covered:
             continue
         assert _has_covered_ancestor(md_file, covered), (
             f"Orphaned lazy_load file — no hook and no covered ancestor index: "

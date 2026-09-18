@@ -57,24 +57,22 @@ DISSOLVED_PATHS = [
     RULES_DIR / "claude_internal.md",
 ]
 
-# Imports in CLAUDE.md must appear in this exact priority order
-EXPECTED_IMPORT_ORDER = [
-    "MEMORY.md",
-    "behaviour.md",
-    "security.md",
-    "claude_efficiency.md",
-    "automation_controls.md",
-    "memory.md",
-    "security_guardrails.md",
-    "git.md",
-    "writing_style.md",
-    "naming_standards.md",
-    "aliases.md",
+# CLAUDE.md's _rules/ imports must appear in ascending tier order (01 before 02 before 03 before 04).
+# Tier-based rather than a fixed filename list, so adding/removing files within a tier
+# never requires updating this test — only a tier reassignment would.
+TIER_ORDER = [
+    "01_essentials",
+    "02_claude_standards",
+    "03_authoring_guidelines",
+    "04_claude_reference",
 ]
 
 
 def extract_import_paths(md_file: Path) -> list[Path]:
-    """Return resolved paths for all @~/.claude/ imports in a markdown file.
+    """Return resolved paths for all @import lines in a markdown file.
+
+    Detects any "@~/<config-dir-name>/" prefix generically (.claude, claude, a
+    repo checkout) rather than hardcoding one convention — see portable_paths.md.
 
     :param md_file: The markdown file to parse for import lines.
     :type md_file: Path
@@ -84,8 +82,10 @@ def extract_import_paths(md_file: Path) -> list[Path]:
     paths = []
     for line in md_file.read_text().splitlines():
         stripped = line.strip()
-        if stripped.startswith("@~/.claude/"):
-            paths.append(Path(stripped[1:]).expanduser())
+        if not stripped.startswith("@~/") or "/" not in stripped[len("@~/"):]:
+            continue
+        rest = stripped[len("@~/"):].split("/", 1)[1]
+        paths.append(CLAUDE_DIR / rest)
     return paths
 
 
@@ -192,18 +192,24 @@ def test_files_end_with_single_newline():
 # --- Import order ---
 
 def test_claude_md_import_order():
-    """CLAUDE.md imports must appear in the defined priority order."""
+    """CLAUDE.md's _rules/ imports must appear in ascending tier order (01 → 02 → 03 → 04)."""
     content = CLAUDE_MD.read_text()
-    import_names = [
-        Path(line.strip()[1:]).expanduser().name
-        for line in content.splitlines()
-        if line.strip().startswith("@~/.claude/")
-    ]
-    positions = []
-    for name in EXPECTED_IMPORT_ORDER:
-        assert name in import_names, f"Expected import missing from CLAUDE.md: {name}"
-        positions.append(import_names.index(name))
-    assert positions == sorted(positions), (
-        f"CLAUDE.md imports out of priority order — expected: {EXPECTED_IMPORT_ORDER}, "
-        f"found sequence: {import_names}"
+    tier_sequence = []
+    for line in content.splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("@~/") or "/" not in stripped[len("@~/"):]:
+            continue
+        # "@~/<config-dir-name>/_rules/<tier>/..." — skip both leading segments
+        # generically (see portable_paths.md), then require a _rules/ import.
+        after_config_dir = stripped[len("@~/"):].split("/", 1)[1]
+        if not after_config_dir.startswith("_rules/"):
+            continue
+        tier = after_config_dir[len("_rules/"):].split("/")[0]
+        if tier in TIER_ORDER:
+            tier_sequence.append(tier)
+
+    tier_positions = [TIER_ORDER.index(t) for t in tier_sequence]
+    assert tier_positions == sorted(tier_positions), (
+        f"CLAUDE.md _rules/ imports out of tier order — expected ascending {TIER_ORDER}, "
+        f"found sequence: {tier_sequence}"
     )

@@ -26,7 +26,7 @@ from pathlib import Path
 
 from _claude_dir import CLAUDE_DIR
 
-HOOK_PATH = CLAUDE_DIR / "hooks" / "enforcement_writing_style.sh"
+HOOK_PATH = CLAUDE_DIR / "hooks" / "hook_enforcement_writing_style.sh"
 
 
 def run_hook(file_path):
