@@ -1,5 +1,5 @@
 ---
-name: latency_optimization
+name: latency_optimisation
 description: Temperature tuning and API-level latency strategies for faster, more focused responses
 metadata:
   type: feedback
