@@ -1,4 +1,12 @@
-"""Structural tests for _rules/01_core/rule_authoring.md.
+# Test Metadata
+# ─────────────────────────────────────────────────────────
+# Test quality score: 5/10
+# Date created:      2026-08-28
+# Version:           1.0.0
+# Date updated:      2026-09-16
+# ─────────────────────────────────────────────────────────
+
+"""Structural tests for _rules/03_authoring_guidelines/authoring_rules.md.
 
 Verifies that the rule authoring guide is present, well-formed, and contains
 the expected sections for pre-creation checklist and quality gates.

@@ -22,5 +22,5 @@
 
 - **Why this matters:** a hook named `principle_guard.py` was proposed without
   consulting `naming_conventions.md` first — too vague, not self-describing.
-- **Fix:** `enforcement_naming_convention.sh` now blocks new `~/.claude/` file
+- **Fix:** `hook_enforcement_naming_convention.sh` now blocks new `~/.claude/` file
   creation and injects `naming_conventions.md` for review before proceeding.

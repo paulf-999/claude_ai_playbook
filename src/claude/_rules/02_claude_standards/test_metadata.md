@@ -8,9 +8,9 @@
 
 - [Format](#-format)
 - [Quality Scoring](#-quality-scoring-1-10)
-- [Maintenance Gates](#-maintenance-gates)
-- [Quarterly Audit Cadence](#-quarterly-audit-cadence)
-- [Maintenance Protocol](#-maintenance-protocol)
+- [New Tests Must Score ≥9/10](#-new-tests-must-score-910)
+- [Complexity Scoring](#-complexity-scoring) — reward simplicity, cap quality by complexity (see `_complexity_scoring.md`)
+- [Maintenance](#-maintenance) — gates, quarterly audit, protocol (see `_maintenance.md`)
 
 ---
 
@@ -22,13 +22,17 @@ Every test file in `~/.claude/_tests/` must open with this metadata header:
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Test quality score: X/10
+# Test complexity score: Y/10
+# Python style compliant: Yes/No
 # Date created:      YYYY-MM-DD
 # Version:           1.0.0
 # Date updated:      [placeholder] or YYYY-MM-DD
 # ─────────────────────────────────────────────────────────
 ```
 
-**Placement:** Line 1–6, before any docstring or code.
+**Placement:** Line 1–7, before any docstring or code.
+
+**Python style compliant:** `Yes` only if the file follows every rule in `~/.claude/_rules/05_lazy_load/style_guide_standards/python.md` (f-strings only, reST docstrings, no bare `except`, `pathlib.Path` not `os.path`, etc.) — check before setting; don't assume.
 
 ---
 
@@ -46,80 +50,28 @@ Every test file in `~/.claude/_tests/` must open with this metadata header:
 
 ---
 
-## ⚙️ Maintenance Gates
+## 🎯 New tests must score ≥9/10
 
-### When to update metadata
+**Any test Claude writes from now on must be built to reach quality ≥9/10** — not scored honestly after the fact at whatever level it lands. Design for 15+ assertions and 10+ test functions up front; a test that only reaches 5/10 or 6/10 wasn't finished.
 
-- **File is modified:** Update `Date updated:` to today's date
-- **Test is refactored:** Re-score if coverage improves (e.g., 5/10 → 7/10)
-- **Feature deprecated:** Mark quality as 1–2, document reason in comment
-- **Quarterly audit:** Review all tests ≤5/10 for relevance and staleness
-
-### Never skip metadata
-
-- ❌ Don't remove or reuse metadata from another test
-- ❌ Don't update `Date created:` (frozen once created)
-- ❌ Don't leave `Date updated: [placeholder]` if you've modified the file
+**Existing tests keep their current score** — this floor applies going forward, not retroactively. A 6/10 test written before this rule existed isn't a violation; a new 6/10 test is.
 
 ---
 
-## 📅 Quarterly Audit Cadence
+## 🧮 Complexity Scoring
 
-Every 3 months, audit all tests in `~/.claude/_tests/`:
-
-1. **Identify:** Find all files with quality score ≤5
-2. **Assess:** Do they test active features? Any stale references?
-3. **Update:** Re-score if coverage improved; mark deprecated tests 1–2
-4. **Archive:** Move deprecated tests to `~/.claude/_tests/_archived/` with `# Archived: [reason] [date]` comment
-5. **Verify:** Run full test suite `pytest ~/.claude/_tests/` — confirm no regressions
+@~/.claude/_rules/02_claude_standards/test_metadata/_complexity_scoring.md
 
 ---
 
-## 📖 Maintenance Protocol
+## ⚙️ Maintenance
 
-### Example: Updating a Test
-
-```python
-# Before (unchanged)
-# Test Metadata
-# ─────────────────────────────────────────────────────────
-# Test quality score: 5/10
-# Date created:      2026-09-16
-# Version:           1.0.0
-# Date updated:      [placeholder]
-# ─────────────────────────────────────────────────────────
-
-# After (refactored; +3 assertions, +2 test funcs)
-# Test Metadata
-# ─────────────────────────────────────────────────────────
-# Test quality score: 7/10
-# Date created:      2026-09-16
-# Version:           1.0.0
-# Date updated:      2026-09-20
-# ─────────────────────────────────────────────────────────
-```
-
-### Metadata Fields Explained
-
-- **Test quality score:** 1–10 rating (frozen until audit or refactor)
-- **Date created:** When test was first written (never update)
-- **Version:** Semver for test contract; increment on breaking changes
-- **Date updated:** When test was last modified; update on any change
-
-### Archival Workflow
-
-When deprecating a test:
-
-1. Move file to `~/.claude/_tests/_archived/`
-2. Update metadata: `# Test quality score: 0/10`
-3. Add comment: `# Archived: [feature_removed] [date]`
-4. Update playbook repo if test is tracked there
-5. Remove from any CI/CD that runs the test
+@~/.claude/_rules/02_claude_standards/test_metadata/_maintenance.md
 
 ---
 
 ## 🔗 Related Rules
 
 - `testing.md` — When tests are required; test design pattern and gates
-- `behaviour.md` → `_multi_phase_implementation_gates.md` — Gate testing before merging
+- `claude_plans.md` — Gate testing before merging
 - `~/.claude/_tests/` — Location of all test files and metadata headers

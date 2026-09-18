@@ -96,7 +96,7 @@ Do not propose the hook if any of these apply:
 
 ## ✅ Success example
 
-**enforcement_writing_style.sh** (active):
+**hook_enforcement_writing_style.sh** (active):
 - Real problem: many sessions produce output violating writing style
 - Frequency: ~40+ times/month across all sessions
 - Manual alternative: user would review, ask Claude to rewrite (~15 min/violation)

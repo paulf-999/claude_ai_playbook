@@ -34,7 +34,16 @@ def _registered_hook_paths() -> list[Path]:
                 command = hook.get("command", "")
                 parts = command.split()
                 if len(parts) >= 2 and parts[-1].endswith(".sh"):
-                    paths.append(Path(parts[-1]).expanduser())
+                    hook_ref = parts[-1]
+                    if hook_ref.startswith("~/"):
+                        # "~/<config-dir-name>/rest" — strip both segments and resolve
+                        # against CLAUDE_DIR. Never .expanduser(): the config dir name
+                        # varies (.claude, claude, a repo checkout), and expanduser()
+                        # only resolves correctly when it happens to match the real $HOME.
+                        rest = hook_ref.split("/", 2)[2] if hook_ref.count("/") >= 2 else ""
+                        paths.append(CLAUDE_DIR / rest)
+                    else:
+                        paths.append(Path(hook_ref))
     return paths
 
 

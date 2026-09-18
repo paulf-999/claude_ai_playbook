@@ -24,7 +24,8 @@ is_substantive() {
     local response="$1"
 
     # Waive short answers (<50 words)
-    local word_count=$(echo "$response" | wc -w)
+    local word_count
+    word_count=$(echo "$response" | wc -w)
     if [[ $word_count -lt 50 ]]; then
         return 1  # Not substantive
     fi
@@ -94,7 +95,8 @@ has_timing_footer() {
 has_content_after_timing() {
     local response="$1"
     # Extract everything after timing footer
-    local after_timing=$(echo "$response" | sed -n '/Response time.*[0-9]*s/,$p' | tail -n +2)
+    local after_timing
+    after_timing=$(echo "$response" | sed -n '/Response time.*[0-9]*s/,$p' | tail -n +2)
     if [[ -n "$after_timing" ]] && [[ ! "$after_timing" =~ ^[[:space:]]*$ ]]; then
         return 0  # Has content after timing (violation)
     fi

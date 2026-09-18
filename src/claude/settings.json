@@ -83,7 +83,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ~/.claude/hooks/enforcement_writing_style.sh"
+            "command": "bash ~/.claude/hooks/hook_enforcement_writing_style.sh"
           }
         ]
       }
