@@ -20,7 +20,6 @@ import re
 import sys
 from pathlib import Path
 
-import frontmatter
 import yaml
 
 # ── script location ───────────────────────────────────────────────────────────
@@ -33,6 +32,116 @@ DEFAULT_ROOT = _REPO_ROOT / "src" / "claude" / "skills"
 # ── validation logic ──────────────────────────────────────────────────────────
 
 
+def _check_c1_contract_fields(contract: dict) -> list[str]:
+    """C1: skill.contract.yaml has all required core fields and a trigger/dependency block.
+
+    Supports both new format (when, requires) and legacy format (dispatch, dependencies).
+
+    :param contract: Parsed skill.contract.yaml content.
+    :type contract: dict
+    :return: List of failure messages (empty if the contract is complete).
+    :rtype: list[str]
+    """
+    failures = []
+    core_required = ["name", "version", "summary", "maturity", "test_coverage_level"]
+    for field in core_required:
+        if field not in contract or contract[field] is None:
+            failures.append(f"C1: skill.contract.yaml missing required field: {field}")
+
+    has_new_format = any(k in contract for k in ["when", "requires"])
+    has_legacy_format = any(k in contract for k in ["dispatch", "dependencies"])
+    if not has_new_format and not has_legacy_format:
+        failures.append(
+            "C1: skill.contract.yaml missing trigger/dependency fields "
+            "(when/requires or dispatch/dependencies)"
+        )
+    return failures
+
+
+def _check_c3_version_maturity(contract: dict) -> list[str]:
+    """C3: version is semantic (X.Y.Z) and its major aligns with maturity.
+
+    :param contract: Parsed skill.contract.yaml content.
+    :type contract: dict
+    :return: List of failure messages (empty if version/maturity are aligned).
+    :rtype: list[str]
+    """
+    version = contract.get("version", "")
+    if not version:
+        return []
+
+    if not _is_semantic_version(version):
+        return [f"C3: version '{version}' is not semantic (X.Y.Z)"]
+
+    maturity = contract.get("maturity")
+    if not maturity:
+        return []
+
+    version_major = int(version.split(".")[0])
+    if not _check_maturity_version_alignment(version_major, maturity):
+        return [
+            f"C3: version major {version_major} doesn't match maturity '{maturity}' "
+            "(draft=0.x, tactical=1.x, strategic=2+.x)"
+        ]
+    return []
+
+
+def _check_c2_and_c4_and_c5_skill_md(skill_dir: Path) -> list[str]:
+    """C2/C4/C5: SKILL.md exists, has no hardcoded skill names, has the canonical
+    5-section structure, and opens with valid YAML frontmatter.
+
+    :param skill_dir: Path to the skill directory.
+    :type skill_dir: Path
+    :return: List of failure messages.
+    :rtype: list[str]
+    """
+    failures = []
+    skill_md_path = skill_dir / "SKILL.md"
+
+    if not skill_md_path.exists():
+        return ["C4: SKILL.md missing"]
+
+    try:
+        skill_md_content = skill_md_path.read_text(encoding="utf-8")
+        name_issues = _check_hardcoded_skill_names(skill_md_content, skill_dir.name)
+        failures.extend([f"C2: {issue}" for issue in name_issues])
+    except Exception as exc:
+        failures.append(f"C2: SKILL.md read error: {exc}")
+
+    try:
+        structure_issues = _check_skill_md_structure(skill_md_path)
+        failures.extend([f"C4: {issue}" for issue in structure_issues])
+    except Exception as exc:
+        failures.append(f"C4: SKILL.md structure check failed: {exc}")
+
+    try:
+        frontmatter_issues = _has_valid_frontmatter(skill_md_path)
+        failures.extend([f"C5: {issue}" for issue in frontmatter_issues])
+    except Exception as exc:
+        failures.append(f"C5: SKILL.md frontmatter check failed: {exc}")
+
+    return failures
+
+
+def _check_c7_requires_section(contract: dict) -> list[str]:
+    """C7: requires section documents tools/mcp_servers/external (advisory only).
+
+    :param contract: Parsed skill.contract.yaml content.
+    :type contract: dict
+    :return: List of warning messages.
+    :rtype: list[str]
+    """
+    requires = contract.get("requires", {})
+    if not isinstance(requires, dict):
+        return ["C7: requires field must be a dict with tools, mcp_servers, external keys"]
+
+    warnings = []
+    for key in ["tools", "mcp_servers", "external"]:
+        if key not in requires:
+            warnings.append(f"C7: requires.{key} is empty or missing")
+    return warnings
+
+
 def validate_skill(skill_dir: Path) -> tuple[list[str], list[str]]:
     """Validate a skill against crawl criteria (C0–C7).
 
@@ -41,107 +150,29 @@ def validate_skill(skill_dir: Path) -> tuple[list[str], list[str]]:
     :return: Tuple of (failures, warnings).
     :rtype: tuple[list[str], list[str]]
     """
-    failures: list[str] = []
-    warnings: list[str] = []
-
     # C0: Skill directory exists (implicit in discovery)
-    skill_name = skill_dir.name
-
-    # Read files
     contract_path = skill_dir / "skill.contract.yaml"
-    skill_md_path = skill_dir / "SKILL.md"
 
-    # C1: skill.contract.yaml exists and has all required fields
+    # C1: skill.contract.yaml exists and parses
     if not contract_path.exists():
-        failures.append("C1: skill.contract.yaml missing")
-        return failures, warnings  # Can't validate further without contract
+        return ["C1: skill.contract.yaml missing"], []
 
     try:
         with open(contract_path, encoding="utf-8") as f:
             contract = yaml.safe_load(f) or {}
     except Exception as exc:
-        failures.append(f"C1: skill.contract.yaml parse error: {exc}")
-        return failures, warnings
+        return [f"C1: skill.contract.yaml parse error: {exc}"], []
 
-    # Validate required core fields (flexible format support)
-    # Supports both new format (when, dont_use_for, requires, output, reversible)
-    # and legacy format (dispatch, dependencies, output)
-    core_required = ["name", "version", "summary", "maturity", "test_coverage_level"]
-    for field in core_required:
-        if field not in contract or contract[field] is None:
-            failures.append(f"C1: skill.contract.yaml missing required field: {field}")
-
-    # Check for either new or legacy format fields (at least one must exist)
-    has_new_format = any(k in contract for k in ["when", "requires"])
-    has_legacy_format = any(k in contract for k in ["dispatch", "dependencies"])
-    if not has_new_format and not has_legacy_format:
-        failures.append("C1: skill.contract.yaml missing trigger/dependency fields (when/requires or dispatch/dependencies)")
-
-    # C3: Version is semantic and matches maturity
-    version = contract.get("version", "")
-    if version:
-        if not _is_semantic_version(version):
-            failures.append(f"C3: version '{version}' is not semantic (X.Y.Z)")
-        else:
-            maturity = contract.get("maturity")
-            if maturity:
-                version_major = int(version.split(".")[0])
-                maturity_check = _check_maturity_version_alignment(version_major, maturity)
-                if not maturity_check:
-                    failures.append(
-                        f"C3: version major {version_major} doesn't match maturity '{maturity}' "
-                        "(draft=0.x, tactical=1.x, strategic=2+.x)"
-                    )
+    failures: list[str] = []
+    failures.extend(_check_c1_contract_fields(contract))
+    failures.extend(_check_c3_version_maturity(contract))
 
     # C6: No hardcoded paths or personal references
-    contract_str = yaml.dump(contract)
-    path_issues = _check_hardcoded_paths(contract_str)
-    if path_issues:
-        failures.extend([f"C6: {issue}" for issue in path_issues])
+    failures.extend(f"C6: {issue}" for issue in _check_hardcoded_paths(yaml.dump(contract)))
 
-    # C2: No hardcoded skill names in SKILL.md
-    if skill_md_path.exists():
-        try:
-            skill_md_content = skill_md_path.read_text(encoding="utf-8")
-            skill_name_issues = _check_hardcoded_skill_names(skill_md_content, skill_name)
-            if skill_name_issues:
-                failures.extend([f"C2: {issue}" for issue in skill_name_issues])
-        except Exception as exc:
-            failures.append(f"C2: SKILL.md read error: {exc}")
-    else:
-        failures.append("C4: SKILL.md missing")
+    failures.extend(_check_c2_and_c4_and_c5_skill_md(skill_dir))
 
-    # C4: SKILL.md has required structure
-    if skill_md_path.exists():
-        try:
-            structure_issues = _check_skill_md_structure(skill_md_path)
-            if structure_issues:
-                failures.extend([f"C4: {issue}" for issue in structure_issues])
-        except Exception as exc:
-            failures.append(f"C4: SKILL.md structure check failed: {exc}")
-
-    # C5: SKILL.md is end-user-first (metadata table comes first)
-    if skill_md_path.exists():
-        try:
-            if not _is_end_user_first(skill_md_path):
-                failures.append(
-                    "C5: SKILL.md should start with metadata table, not YAML frontmatter or prose"
-                )
-        except Exception as exc:
-            failures.append(f"C5: SKILL.md readability check failed: {exc}")
-
-    # C7: All tools/MCP/external listed in requires section
-    requires = contract.get("requires", {})
-    if not isinstance(requires, dict):
-        failures.append("C7: requires field must be a dict with tools, mcp_servers, external keys")
-    else:
-        # This is documented in contract but not enforced mechanically (requires code analysis)
-        if "tools" not in requires:
-            warnings.append("C7: requires.tools is empty or missing (list tools this skill uses)")
-        if "mcp_servers" not in requires:
-            warnings.append("C7: requires.mcp_servers is empty or missing")
-        if "external" not in requires:
-            warnings.append("C7: requires.external is empty or missing")
+    warnings = _check_c7_requires_section(contract)
 
     return failures, warnings
 
@@ -227,24 +258,17 @@ def _check_hardcoded_skill_names(skill_md: str, skill_name: str) -> list[str]:
 
 
 def _check_skill_md_structure(skill_md_path: Path) -> list[str]:
-    """Check if SKILL.md has core required sections.
+    """Check if SKILL.md has the canonical 5-section structure.
 
-    New standard requires 8 sections in canonical order:
-      1. 📖 Overview — one-sentence plain-language description
-      2. 🎯 Scope — maturity level + constraints
-      3. ✅ Capabilities — can/can't do
-      4. 🔐 Security — data handling + access
-      5. 📝 Prerequisites — required setup
-      6. 🛠️ Workflow — step-by-step phases
-      7. 🚨 Error Recovery — common failures + fixes
-      8. 🛣️ Known Gaps — limitations + roadmap
-
-    Legacy sections (still acceptable, but new skills should use canonical naming):
-    - "What this skill does", "Description" → Overview
-    - "Can do" (without emoji) → Capabilities
-    - "Prerequisites" → Prerequisites
-    - "How it works", "Phases" → Workflow
-    - "Known gaps" (without emoji) → Known Gaps
+    Per authoring_skills.md's Core Standards, every skill is:
+      1. Frontmatter — name, version, maturity, description, tags (checked by C5)
+      2. Purpose — 1 sentence value prop + 3-4 bullets
+      3. Example Usage — realistic end-to-end scenario
+      4. Best For — use cases + caveats (an H2 heading, or a "**Best for:**"
+         bold lead-in — both are used by current skills)
+      5. References — pointers to reference/ files (an H2 heading, a
+         "**...see:**" bold lead-in, or a bare reference/_*.md path — all
+         three are used by current skills)
 
     :param skill_md_path: Path to SKILL.md.
     :type skill_md_path: Path
@@ -254,59 +278,55 @@ def _check_skill_md_structure(skill_md_path: Path) -> list[str]:
     issues = []
     content = skill_md_path.read_text(encoding="utf-8")
 
-    # Check for core sections (allow both new canonical names and legacy names)
-    # Quality Scorecard moved to new-standard-only to avoid breaking legacy skills
     required_sections = {
-        r"## .*(📖|overview|what.*does|description)": "Overview/Description section",
-        r"## .*(✅|capabilities|can\w*.*do)": "Capabilities/Can do section",
-        r"## .*(📝|prerequisites)": "Prerequisites section",
-        r"## .*(🛠️|workflow|how it works|phases)": "Workflow/How it works/Phases section",
-        r"## .*(🛣️|known gaps)": "Known Gaps section",
+        r"^##.*\bpurpose\b": "Purpose section",
+        r"^##.*\bexample usage\b": "Example Usage section",
+        r"(^##.*\bbest for\b)|(\*\*best for:?\*\*)": "Best For section",
+        r"(^##.*\breferences\b)|(\*\*[^*]*see:?\*\*)|(reference/_)": "References section",
     }
 
     for pattern, description in required_sections.items():
-        if not re.search(pattern, content, re.IGNORECASE):
+        if not re.search(pattern, content, re.IGNORECASE | re.MULTILINE):
             issues.append(f"missing {description}")
-
-    # New standard sections: Quality Scorecard, Scope, Security, Error Recovery
-    # These are required for new skills (with emoji headers) but warned for legacy skills
-    new_standard_sections = {
-        r"## .*(📊|quality.*scorecard)": "Quality Scorecard section (new standard)",
-        r"## .*(🎯|scope)": "Scope section (new standard)",
-        r"## .*(🔐|security)": "Security section (new standard)",
-        r"## .*(🚨|error recovery)": "Error Recovery section (new standard)",
-    }
-
-    # Only require new standard sections if file uses the new canonical structure
-    # Detection: has 📖 Overview section (the canonical first section)
-    has_new_overview = bool(re.search(r"^## 📖\s+overview", content, re.IGNORECASE | re.MULTILINE))
-    if has_new_overview:
-        # New-style skill; check for all new standard sections
-        for pattern, description in new_standard_sections.items():
-            if not re.search(pattern, content, re.IGNORECASE):
-                issues.append(f"missing {description}")
 
     return issues
 
 
-def _is_end_user_first(skill_md_path: Path) -> bool:
-    """Check if SKILL.md opens with end-user content (not frontmatter).
+def _has_valid_frontmatter(skill_md_path: Path) -> list[str]:
+    """Check that SKILL.md opens with YAML frontmatter carrying required fields.
 
-    Should start with metadata table or heading, not YAML frontmatter block.
+    Per authoring_skills.md, frontmatter (not a metadata table or prose) is
+    section 1 of the canonical structure, and must declare name, description,
+    version, and maturity.
 
     :param skill_md_path: Path to SKILL.md.
     :type skill_md_path: Path
-    :return: True if structure is end-user-first.
-    :rtype: bool
+    :return: List of issues found (empty if frontmatter is valid).
+    :rtype: list[str]
     """
-    content = skill_md_path.read_text(encoding="utf-8").strip()
+    issues = []
+    content = skill_md_path.read_text(encoding="utf-8")
 
-    # Skip frontmatter if present
-    if content.startswith("---"):
-        return False  # frontmatter is not end-user-first
+    if not content.startswith("---"):
+        issues.append("SKILL.md must start with YAML frontmatter (---) as section 1")
+        return issues
 
-    # Should start with heading or table
-    return content.startswith("#") or content.startswith("|")
+    parts = content.split("---", 2)
+    if len(parts) < 3:
+        issues.append("SKILL.md frontmatter block is not closed with a second ---")
+        return issues
+
+    try:
+        data = yaml.safe_load(parts[1]) or {}
+    except Exception as exc:
+        issues.append(f"SKILL.md frontmatter is not valid YAML: {exc}")
+        return issues
+
+    for field in ["name", "description", "version", "maturity"]:
+        if field not in data or data[field] is None:
+            issues.append(f"SKILL.md frontmatter missing required field: {field}")
+
+    return issues
 
 
 # ── file discovery ────────────────────────────────────────────────────────────
