@@ -14,7 +14,7 @@ Documents follow a **size-based organization principle**:
 **Condition:** One document covering a complete topic, ≤110 lines, self-contained.
 
 ```
-_rules/03_lazy_load/
+_rules/05_lazy_load/
 ├── rule_one.md           ← single file, stays at top level
 ├── rule_two.md           ← single file, stays at top level
 └── rule_three.md         ← single file, stays at top level
@@ -83,16 +83,6 @@ some_rule.md                             ← complete, self-contained rule
 ```
 
 **Why:** One concept, <110 lines, no need for child pages.
-
-### ❌ Wrong: Flat-level sprawl (Anti-pattern)
-
-```
-_rules/01_essentials/
-├── _decision_making.md                 ← ❌ orphaned child at flat level
-└── behaviour.md                        ← ❌ parent created after child scattered
-```
-
-**Why:** Child files at flat level create clutter. No clear grouping. Difficult to maintain and extend.
 
 ---
 

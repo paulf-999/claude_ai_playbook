@@ -10,15 +10,15 @@ tags:
 tools: Read, mcp__atlassian__createJiraIssue
 ---
 
-## Scope gate
+## Development stage
 
-This skill is at **draft** maturity. Claude behaviour is constrained accordingly:
+This skill is currently at the **draft** stage — early, happy-path-only. What Claude does is limited accordingly:
 
-| Maturity | Allowed |
+| Stage | Allowed |
 |---|---|
-| draft | Happy path only. Log gaps as TODOs, do not solve them. No refactoring. |
-| tactical | Main path + light error handling. No gold-plating. |
-| strategic | Full coverage, edge cases, documentation, evals expected. |
+| Early (draft) | Happy path only. Log gaps as TODOs, do not solve them. No refactoring. |
+| Stable (tactical) | Main path + light error handling. No gold-plating. |
+| Production-ready (strategic) | Full coverage, edge cases, documentation, evals expected. |
 
 ---
 

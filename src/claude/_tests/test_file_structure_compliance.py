@@ -1,9 +1,9 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
-# Test quality score: 3/10
+# Test quality score: 5/10
 # Date created:      2026-08-28
-# Version:           1.0.0
-# Date updated:      2026-09-17
+# Version:           1.1.0
+# Date updated:      2026-09-18
 # ─────────────────────────────────────────────────────────
 
 """
@@ -28,7 +28,8 @@ from pathlib import Path
 
 from _claude_dir import CLAUDE_DIR as CLAUDE_HOME
 
-# Directories that are auto-generated and should be skipped
+# Directories that are auto-generated, third-party, or out-of-scope and
+# should be skipped entirely (not scanned for naming compliance)
 AUTO_GENERATED_DIRS = {
     "backups",
     "memory",
@@ -37,6 +38,8 @@ AUTO_GENERATED_DIRS = {
     "plugins",
     ".git",
     "__pycache__",
+    "graphify-out",  # third-party tool's own generated cache/output, not Claude-authored
+    "_admin",  # personal audit/decision-log scratch area with its own ALL-CAPS convention
 }
 
 # User-created directories that should exist (with underscore prefix)
@@ -182,8 +185,29 @@ class FileStructureValidator:
         filename = file.name
 
         # Check if filename is valid (exceptions for special files)
-        if filename in ["CLAUDE.md", "README.md", "SKILL.md", "settings.json", "aliases.md", "keybindings.json"]:
+        if filename in [
+            "CLAUDE.md", "README.md", "SKILL.md", "AGENT.md", "TODO.md",
+            "settings.json", "aliases.md", "keybindings.json",
+            "skill.contract.yaml",  # required exact name, see authoring_skills.md
+            "__init__.py",  # Python package marker, not a naming-convention target
+            # Eval fixture deliberately named after a real external repo slug
+            # (Payroc's own repos use hyphens) — see payroc_engineering_naming_standards.md
+            "dmt-scripts-claude_ai_playbook.yaml",
+        ]:
             return
+
+        # Dotfiles (.gitkeep, .coverage, etc.) are tooling artifacts, not
+        # naming-convention targets
+        if filename.startswith("."):
+            return
+
+        # Template files mirror the exact target filename they template
+        # (e.g. AGENT.md.template, skill.contract.yaml.template) — validate
+        # the part before ".template" instead of the literal template name
+        if filename.endswith(".template"):
+            filename = filename[: -len(".template")]
+            if filename in ["AGENT.md", "RULE.md", "SKILL.md", "TODO.md", "skill.contract.yaml", "skill_schema.yaml"]:
+                return
 
         # Check if child file (should start with underscore)
         is_child_file = depth > 1 and filename.startswith("_")
@@ -216,8 +240,10 @@ class FileStructureValidator:
         if filename in ["CLAUDE.md", "README.md", "SKILL.md", "settings.json", "keybindings.json"]:
             return True
 
-        # Check pattern: lowercase, underscore-separated, valid extension
-        pattern = r"^[a-z0-9][a-z0-9_]*(\.[a-z0-9]+)$"
+        # Check pattern: lowercase, underscore-separated, valid extension.
+        # A leading underscore is allowed and expected for child files
+        # (see _claude_directory_naming.md: "_<aspect>.md" for children).
+        pattern = r"^_?[a-z0-9][a-z0-9_]*(\.[a-z0-9]+)$"
         return bool(re.match(pattern, filename))
 
 

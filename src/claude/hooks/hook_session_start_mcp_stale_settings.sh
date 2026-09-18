@@ -1,22 +1,26 @@
 #!/bin/bash
 # Hook: Detect stale MCP settings after toggle changes.
 #
-# Purpose: Remind user if ~/.claude/settings.json was modified in a recent
-# session but the current session hasn't restarted yet. Helps catch cases
-# where the mcp_toggle.py exit code signal was missed.
+# Purpose: Remind user if settings.json was modified in a recent session but
+# the current session hasn't restarted yet. Helps catch cases where the
+# mcp_toggle.py exit code signal was missed.
 #
 # Lifecycle: onSessionStart
 #
 # How it works:
-# 1. On session start, check if ~/.claude/settings.json exists
+# 1. On session start, check if settings.json exists (resolved relative to
+#    this script's own location — never hardcode ~/.claude/, see portable_paths.md)
 # 2. Compare file mtime against session start time
 # 3. If modified < 5 minutes ago, show a gentle reminder
 # 4. Only show once per session to avoid spam
 
 set -eu
 
-SETTINGS_FILE="${HOME}/.claude/settings.json"
-STALE_FLAG_FILE="${HOME}/.claude/.stale_settings_warning_shown"
+CLAUDE_HOOKS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CLAUDE_ROOT_DIR="$(dirname "${CLAUDE_HOOKS_DIR}")"
+
+SETTINGS_FILE="${CLAUDE_ROOT_DIR}/settings.json"
+STALE_FLAG_FILE="${CLAUDE_ROOT_DIR}/.stale_settings_warning_shown"
 
 # Settings file must exist
 if [[ ! -f "$SETTINGS_FILE" ]]; then
@@ -42,7 +46,7 @@ if [[ $TIME_DIFF -lt 300 ]]; then
 
 EOF
     # Mark that we've shown the warning so we don't spam this session
-    # The flag file will persist for the session (Claude Code clears ~/.claude on exit)
+    # The flag file will persist for the session (Claude Code clears the config dir on exit)
     touch "$STALE_FLAG_FILE"
 fi
 
