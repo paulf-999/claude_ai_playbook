@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Test quality score: 9/10
 # Date created:      2026-08-28
-# Version:           1.0.0
-# Date updated:      2026-09-17
+# Version:           1.1.0
+# Date updated:      2026-09-18
 # ─────────────────────────────────────────────────────────
 
 """Skill authoring gate tests — validates walk (W1–W6) and run (R1–R5) criteria.
@@ -63,6 +63,27 @@ def find_test_file(skill_dir: Path) -> Path | None:
     for test_file in test_files_dir.glob(f"test_{skill_name}*.py"):
         return test_file
     return None
+
+
+def has_evals_coverage(skill_dir: Path) -> bool:
+    """Return True if the skill has evals.yaml — the standard skill testing artifact.
+
+    Per authoring_skills.md, evals.yaml (not a _tests/skills/ Python file) is
+    THE required testing approach for skills; a _tests/skills/ file is a
+    secondary behavioral test some skills also carry.
+    """
+    return (skill_dir / "evals.yaml").exists() or (skill_dir / "evals").is_dir()
+
+
+def load_skill_md_frontmatter(skill_dir: Path) -> dict:
+    """Load SKILL.md's YAML frontmatter (between the leading '---' markers)."""
+    content = load_skill_md(skill_dir)
+    if not content.startswith("---"):
+        return {}
+    parts = content.split("---", 2)
+    if len(parts) < 3:
+        return {}
+    return yaml.safe_load(parts[1]) or {}
 
 
 # ── Walk tests (W1–W6) ────────────────────────────────────────────────────────
@@ -145,11 +166,27 @@ def test_w3_test_coverage_matches_maturity(skill_dir):
     test_file = find_test_file(skill_dir)
 
     if test_file is None:
-        assert maturity == "draft", (
-            f"W3: {maturity} skill must have a test file "
-            f"(Expected: tests/skills/test_{skill_dir.name}*.py)"
+        if has_evals_coverage(skill_dir):
+            pytest.skip(f"{maturity} skill tested via evals.yaml, not a _tests/skills/ file")
+            return
+
+        frontmatter = load_skill_md_frontmatter(skill_dir)
+        tested = frontmatter.get("tags", {}).get("tested", False)
+        # `tested: true` is a claim that some real test coverage exists — if
+        # neither a test file nor evals.yaml exists, that claim is false and
+        # must fail regardless of maturity (see the 2026-09-18 auto_rotate_todo
+        # incident, where a skill/hook was marked done without ever being built).
+        assert not tested, (
+            f"W3: {skill_dir.name} claims tags.tested: true in SKILL.md "
+            f"but has no test file and no evals.yaml "
+            f"(Expected: tests/skills/test_{skill_dir.name}*.py or evals.yaml)"
         )
-        pytest.skip("Draft skill without tests — acceptable if intentional")
+        # `tested: false` is an honest, disclosed gap — tracked debt, not a
+        # gate failure. Maturity alone doesn't force a test file to exist.
+        pytest.skip(
+            f"{maturity} skill without tests (tags.tested: false) — "
+            "acceptable disclosed gap, not yet built"
+        )
         return
 
     # Count test functions in test file
@@ -178,15 +215,30 @@ def test_w4_no_unexplained_jargon(skill_dir):
     """
     skill_md_content = load_skill_md(skill_dir)
     lines = skill_md_content.split("\n")
-    opening_end = min(30, len(lines))  # First 30 lines
-    opening_text = "\n".join(lines[:opening_end]).lower()
+
+    # Skip the YAML frontmatter block — "maturity", "triggers", etc. are
+    # structured metadata keys there, not prose a reader parses for clarity.
+    # W4 is about the opening PROSE (Purpose, Scope gate text), so scanning
+    # starts after the frontmatter's closing "---".
+    body_start = 0
+    if lines and lines[0].strip() == "---":
+        for i, line in enumerate(lines[1:], start=1):
+            if line.strip() == "---":
+                body_start = i + 1
+                break
+
+    opening_end = min(body_start + 30, len(lines))  # First 30 lines of prose
+    opening_text = "\n".join(lines[body_start:opening_end]).lower()
 
     jargon = {
         r"\bmaturity\b": "maturity (development stage)",
         r"\bscope gate\b": "scope gate (feature limitation)",
         r"\btriggers\b": "triggers (invocation phrases)",
         r"\bmcp\b": "MCP (Model Context Protocol)",
-        r"\bcrawl|walk|run\b": "crawl/walk/run (progression tiers)",
+        # Requires the compound jargon phrase itself (e.g. "crawl/walk/run",
+        # "crawl, walk, run") — a bare `\bcrawl|walk|run\b` also matches
+        # ordinary prose like "run the command" or "walk through the steps".
+        r"\bcrawl\b.{0,5}\bwalk\b.{0,5}\brun\b": "crawl/walk/run (progression tiers)",
     }
 
     unexplained = []

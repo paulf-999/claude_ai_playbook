@@ -55,4 +55,3 @@
 - Parent: `security.md` — security overview and guardrails
 - Sibling: `_security_guardrails.md` — Claude's conduct and prompt injection defence
 - Reference: `~/.claude/_reference/claude_design_patterns/_security.md` — security architecture
-

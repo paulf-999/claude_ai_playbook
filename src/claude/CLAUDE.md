@@ -26,31 +26,47 @@ constraints are harder to bypass silently.
 
 ## Imports
 
-<!-- Root level: personal context and shortcuts -->
+<!-- User context: cross-project memories (preferences, corrections, project facts) -->
 @~/.claude/memory/MEMORY.md
+<!-- Quick-reference command/skill shortcuts table -->
 @~/.claude/aliases.md
 
 <!-- Tier 1: 01_essentials/ — foundational principles and user-facing conventions -->
+<!-- Response format, delivery cadence, and timing footer — user-facing output contract -->
 @~/.claude/_rules/01_essentials/claude_response_standards.md
+<!-- Entry point for naming, writing style, and directory structure conventions -->
 @~/.claude/_rules/01_essentials/claude_usage_standards.md
+<!-- Foundational decision-making principles: lazy-load, intentionality, context efficiency -->
 @~/.claude/_rules/01_essentials/guiding_principles.md
 
 <!-- Tier 2: 02_claude_standards/ — blocking standards and enforcement -->
+<!-- Safety-critical: ask-first gates, decision-making, risky-action handling -->
 @~/.claude/_rules/02_claude_standards/behaviour.md
+<!-- Phase-gate rules for multi-phase plans and plan-mode execution -->
 @~/.claude/_rules/02_claude_standards/claude_plans.md
+<!-- Git workflow: commits, branch naming, PR standards, safe patterns -->
 @~/.claude/_rules/02_claude_standards/git.md
+<!-- Blocks hardcoded filesystem paths in hooks/tests that silently break on other configs -->
 @~/.claude/_rules/02_claude_standards/portable_paths.md
+<!-- Secure coding practices and Claude's own prompt-injection/secret-handling guardrails -->
 @~/.claude/_rules/02_claude_standards/security.md
+<!-- Test quality/complexity scoring standard required on every test file -->
 @~/.claude/_rules/02_claude_standards/test_metadata.md
+<!-- Requires tests for all new features and enforcement rules -->
 @~/.claude/_rules/02_claude_standards/testing.md
 
 <!-- Tier 3: 03_authoring_guidelines/ — meta-guidance for authoring rules, skills, agents -->
+<!-- Standards for creating new sub-agents (naming, structure, maturity) -->
 @~/.claude/_rules/03_authoring_guidelines/authoring_agents.md
+<!-- Standards for creating new rule files (placement, testing, scope) -->
 @~/.claude/_rules/03_authoring_guidelines/authoring_rules.md
+<!-- Standards for creating new skills (contract, triggers, maturity) -->
 @~/.claude/_rules/03_authoring_guidelines/authoring_skills.md
 
 <!-- Tier 4: 04_claude_reference/ — system knowledge and platform guidance -->
+<!-- Token/turn discipline: when to delegate, parallelize, or spawn sub-agents -->
 @~/.claude/_rules/04_claude_reference/claude_operational_efficiency.md
+<!-- Decision tree for always-on vs. lazy-load rule placement -->
 @~/.claude/_rules/04_claude_reference/claude_rule_system/claude_rule_loading_strategy.md
 
 ---

@@ -17,6 +17,8 @@ Validates:
 5. All top-level files imported in CLAUDE.md
 """
 
+import re
+
 from _claude_dir import CLAUDE_DIR
 
 RULES_DIR = CLAUDE_DIR / "_rules"
@@ -24,24 +26,21 @@ ESSENTIALS_DIR = RULES_DIR / "01_essentials"
 CLAUDE_MD = CLAUDE_DIR / "CLAUDE.md"
 
 # Top-level files expected in 01_essentials
-# These are parent files that are imported in CLAUDE.md
+# These are parent files that are imported in CLAUDE.md. Per the 5-tier reorg,
+# behaviour.md/security.md/testing.md moved to 02_claude_standards/, and
+# authoring_rules.md/authoring_skills.md moved to 03_authoring_guidelines/ —
+# 01_essentials now holds only the foundational, user-facing files.
 EXPECTED_TOP_LEVEL = {
     "README.md",
-    "authoring_rules.md",
-    "authoring_skills.md",
-    "behaviour.md",
-    "conventions.md",
+    "claude_response_standards.md",
+    "claude_usage_standards.md",
     "guiding_principles.md",
-    "security.md",
-    "testing.md",
 }
 
 # Top-level directories expected (compound rules with children)
 EXPECTED_DIRECTORIES = {
-    "behaviour",  # Has children
+    "claude_response_standards",  # Has children (_enforcement.md, _response_timing.md)
     "conventions",  # Grouping directory for naming, writing_style, claude_directory_structure
-    "skill_authoring",  # Has children
-    "testing",  # Has children
 }
 
 # Parent files within conventions/ subdirectory
@@ -195,23 +194,32 @@ def test_claude_md_imports():
         if file == "README.md":
             continue  # README is not imported
 
-        # Check for import pattern: @~/.claude/_rules/01_essentials/<file>
-        import_pattern = f"@~/.claude/_rules/01_essentials/{file.replace('.md', '')}"
-        if import_pattern not in claude_content:
-            errors.append(f"Missing import for {file}: expected pattern like {import_pattern}")
+        # Match any "@~/<config-dir-name>/_rules/01_essentials/<file>" import,
+        # regardless of whether the config-dir is named .claude or claude.
+        stem = file.replace(".md", "")
+        import_pattern = re.compile(
+            rf"@~/[^/]+/_rules/01_essentials/{re.escape(stem)}(?:\.md)?\b"
+        )
+        if not import_pattern.search(claude_content):
+            errors.append(f"Missing import for {file}: expected a pattern like .../01_essentials/{stem}")
 
     assert not errors, "Missing imports in CLAUDE.md:\n" + "\n".join(errors)
 
 
 def test_conventions_parent_files_imported():
-    """Verify conventions parent files are referenced in CLAUDE.md."""
-    if not CLAUDE_MD.exists():
-        return  # Skip if CLAUDE.md doesn't exist
+    """Verify conventions parent files are reachable from CLAUDE.md (directly or via a hub file).
 
-    claude_content = CLAUDE_MD.read_text()
+    CLAUDE.md imports claude_usage_standards.md, which is the actual entry
+    point for these 3 conventions — not CLAUDE.md directly. Checking only
+    CLAUDE.md's own text would miss this legitimate indirection.
+    """
+    usage_standards = CLAUDE_DIR / "_rules" / "01_essentials" / "claude_usage_standards.md"
+    if not CLAUDE_MD.exists() or not usage_standards.exists():
+        return  # Skip if either entry point doesn't exist
+
+    combined_content = CLAUDE_MD.read_text() + "\n" + usage_standards.read_text()
     errors = []
 
-    # Check that convention files are imported via their new conventions/ path
     expected_imports = [
         "naming_standards",
         "writing_style",
@@ -219,11 +227,16 @@ def test_conventions_parent_files_imported():
     ]
 
     for import_name in expected_imports:
-        pattern = f"@~/.claude/_rules/01_essentials/conventions/{import_name}"
-        if pattern not in claude_content:
-            errors.append(f"Missing import for conventions/{import_name}: expected pattern {pattern}")
+        pattern = re.compile(
+            rf"@~/[^/]+/_rules/01_essentials/conventions/{re.escape(import_name)}(?:\.md)?\b"
+        )
+        if not pattern.search(combined_content):
+            errors.append(f"Missing import for conventions/{import_name}")
 
-    assert not errors, "Missing convention imports in CLAUDE.md:\n" + "\n".join(errors)
+    assert not errors, (
+        "Missing convention imports in CLAUDE.md or claude_usage_standards.md:\n" +
+        "\n".join(errors)
+    )
 
 
 if __name__ == "__main__":

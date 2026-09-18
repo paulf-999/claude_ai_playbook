@@ -10,6 +10,7 @@
 - [Response Format & Style](#-response-format--style)
 - [Delivery Cadence](#-delivery-cadence)
 - [Response Timing](#-response-timing)
+- [Enforcement & Implementation](#-enforcement--implementation) — see `_enforcement.md`
 
 ---
 
@@ -85,56 +86,13 @@
 
 ## ⏱️ Response Timing
 
-- **Start is injected:** The `UserPromptSubmit` hook fires before any reasoning and injects the submission time as `PROMPT_SUBMITTED_AT=<epoch>` — this is the timer start, so elapsed includes reasoning.
-- **End timestamp:** As the very last action before finalizing, run a real `date +%s` and compute elapsed = end − `PROMPT_SUBMITTED_AT`. Never mention the check in the visible response.
-- **Mandatory in all modes:** Always emit the footer, including in plan mode — never skip it and never fabricate the number; always run the real end timestamp.
-- **Real numbers only:** The duration must be real — never fabricate or use a placeholder like "checking...".
-- **Human-readable format:** Under 60 seconds show `Ss` (e.g. `45s`); 60 seconds or more show `Mmin Ss` (e.g. `1min 15s`).
-- **Format:** On its own line after the offer line:
-  ```
-  Response time: 1min 15s
-  ```
-- **Skip for:** Short, single-fact answers or casual exchanges.
+@~/.claude/_rules/01_essentials/claude_response_standards/_response_timing.md
 
 ---
 
-## 🔒 Enforcement
+## 🔒 Enforcement & Implementation
 
-This standard is enforced by **per-turn salience injection** (the "crawl" mechanism). A `UserPromptSubmit` hook re-emits a compact, imperative version of this directive as `additionalContext` before every response — placing it at high salience right next to generation, mirroring how the same text enforces reliably in Desktop/Cowork.
-
-**Why injection, not post-response validation:**
-- **Root cause:** ⚠️ The always-on rule import is diluted to low-salience background by response time.
-- **Same text, opposite outcome:** 📊 Desktop enforces reliably with near-identical wording, purely from salient placement.
-- **Cheapest faithful mirror:** 💸 Injection reproduces the Desktop position at zero LLM cost — no model call per turn.
-
-**When the standard is waived (Claude self-applies):**
-- ❌ Short answers (<50 words) — single fact, direct reply, casual exchange
-- ❌ Skill invocation output — skill determines format, not this standard
-- ❌ Code output, command results — raw pass-through, no validation
-- ❌ Error messages or debugging output — brief, unstructured content is OK
-- ❌ Inline code blocks or raw data — validation applies only to prose responses
-
-**Decision rule:** If a response is substantive AND involves tool calls OR extends beyond a few sentences, the standard applies — unless explicitly waived above.
-
----
-
-## 🛠️ Implementation
-
-Enforcement is implemented via the injection hook: `~/.claude/hooks/hook_style_guide_response_standards_inject.sh`
-
-- **Event:** `UserPromptSubmit` — fires before Claude responds (the high-salience slot).
-- **Behaviour:** Emits the compact directive (Summary format, offer line, timing footer) as `hookSpecificOutput.additionalContext` on stdout.
-- **Timing start:** Injects `PROMPT_SUBMITTED_AT=<epoch>` captured at prompt submission (pre-reasoning) so the footer spans reasoning time; the model runs only the end timestamp.
-- **Cost:** Zero LLM cost; a small per-turn context injection — salience, not volume, is what makes it work.
-
-**Test coverage:** `_tests/hooks/test_response_standards_inject.py` — asserts the hook exits 0 and emits valid JSON whose `additionalContext` contains the required markers (`**Summary**`, `More detail? (Y/N)`, `Response time: Xs`) plus a real injected `PROMPT_SUBMITTED_AT` start timestamp.
-
-**Future path (the "walk" escalation) — build only if injection proves insufficient:**
-- **Mechanism:** 🚪 A `type:"prompt"` `Stop` hook that runs an LLM to validate each finished response and force correction.
-- **Trade-off:** ⚖️ Hard mechanical guarantee, but incurs a model call on every substantive turn (cost + latency).
-- **Reserved asset:** 🧪 The post-response validator `hook_style_guide_response_standards.sh` (+ its test) is retained for this path — it is not wired into `settings.json` today.
-
----
+@~/.claude/_rules/01_essentials/claude_response_standards/_enforcement.md
 
 ## 🔗 Related Rules
 

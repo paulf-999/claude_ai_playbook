@@ -29,6 +29,10 @@ Applies to **all** content Claude produces — responses, drafts, Confluence pag
 - **One sentence per bullet:** if a bullet needs more than one sentence, use child bullets — never run multiple sentences in a single bullet.
 - **Brevity:** if a sentence can be cut without losing meaning, cut it.
 - **No transposition exemption:** moving, copying, or splitting existing content into new files does not exempt the output — apply house style on the first draft, never as a later pass.
+- **Tables for structured content:** use a table when comparing two or more categories that share identical column structures — not for a single list with no comparison dimension.
+  - **Signal:** you're writing `**Category A:**` then `**Category B:**`, repeating the same fields for each — that's a table, not a bullet list.
+  - **Example:** comparing tools by capability — a `| Tool | Can do | Can't do |` table beats separate bullet lists per tool.
+  - **Counter-example:** a single capabilities list with no categorical breakout stays as bullets — one dimension, no comparison, no table needed.
 
 ## 👥 Clarity principles — all content
 

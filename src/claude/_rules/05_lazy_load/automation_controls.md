@@ -18,8 +18,9 @@ Automation features are powerful but risky — these rules protect against costl
 
 Run a prompt or command repeatedly at a fixed interval (e.g., poll for deploy status every 5 minutes).
 
-- **Minimum interval:** 5 minutes (prevent hammering endpoints)
+- **Minimum interval:** 5-minute interval floor — sub-minute intervals are not allowed (prevent hammering endpoints and wasting tokens on overhead)
 - **Default interval:** 10 minutes (conservative baseline)
+- **Turn budget:** stop after 10 turns per iteration by default; higher requires explicit approval
 - **Max runtime:** 2 hours before manual re-approval required
 - **Termination:** use `TaskStop` or `/stop_loop` to kill
   - **Note:** always confirm the task is actually complete before stopping; don't interrupt mid-work
@@ -38,7 +39,8 @@ Work in a loop until a verifiable condition is satisfied. The condition gates al
 
 - **Define success upfront:** explicit, measurable condition required before starting
   - **Example:** "Run tests until all pass" or "Code coverage reaches 90%"
-- **Turn budget:** capped at 20 turns by default; higher requires explicit approval
+- **Turn budget:** capped at 20 turns by default, or stop after 20 turns if the condition isn't met; higher requires explicit approval
+- **Pair with auto mode:** run `/goal` under auto mode so it doesn't stop for clarifying questions mid-iteration
 - **Fallback condition:** stop and report if no progress after 3 consecutive iterations
 - **Timeout:** stop and hand off if total runtime exceeds 30 minutes
 

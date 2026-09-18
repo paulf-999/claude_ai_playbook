@@ -24,20 +24,13 @@ CLAUDE_MD = CLAUDE_DIR / "CLAUDE.md"
 
 # Human-readable theme files permitted at _rules/ root — no others allowed
 EXPECTED_ROOT_FILES = {
-    "behaviour.md",
-    "naming_standards.md",
-    "security.md",
-    "writing_style.md",
     "README.md",
 }
 
 # Claude Code-specific files expected in claude_internal/ — no others allowed
-EXPECTED_INTERNAL_FILES = {
-    "automation_controls.md",
-    "claude_efficiency.md",
-    "git.md",
-    "memory.md",
-    "security_guardrails.md",
+EXPECTED_CLAUDE_REFERENCE_FILES = {
+    "claude_operational_efficiency.md",
+    "README.md",
 }
 
 # Paths removed during the 2026-08 restructure that must never reappear
@@ -93,14 +86,14 @@ def rule_files() -> list[Path]:
     """Return all .md files in _rules/ eligible for quality checks.
 
     Excludes README.md (documentation, not a rule file) and anything
-    under lazy_load/ (different standards apply there).
+    under 05_lazy_load/ (different standards apply there).
 
     :return: List of rule markdown files to validate.
     :rtype: list[Path]
     """
     return [
         f for f in RULES_DIR.rglob("*.md")
-        if f.name != "README.md" and "lazy_load" not in f.parts
+        if f.name != "README.md" and "05_lazy_load" not in f.parts
     ]
 
 
@@ -120,19 +113,26 @@ def test_all_imports_resolve():
 # --- Structure ---
 
 def test_rules_root_contains_only_expected_files():
-    """_rules/ root must only contain human-readable theme files."""
+    """_rules/ root must contain nothing but README.md — all rules live in tier subdirectories."""
     actual = {f.name for f in RULES_DIR.iterdir() if f.is_file()}
     assert actual == EXPECTED_ROOT_FILES, (
         f"_rules/ root mismatch — expected: {EXPECTED_ROOT_FILES}, got: {actual}"
     )
 
 
-def test_claude_internal_contains_expected_files():
-    """02_claude_internal/ must contain exactly the expected files."""
-    internal_dir = RULES_DIR / "02_claude_internal"
-    actual = {f.name for f in internal_dir.iterdir() if f.is_file()}
-    assert actual == EXPECTED_INTERNAL_FILES, (
-        f"claude_internal/ mismatch — expected: {EXPECTED_INTERNAL_FILES}, got: {actual}"
+def test_claude_reference_contains_expected_files():
+    """04_claude_reference/ top level must contain exactly the expected files.
+
+    02_claude_internal/ (this test's original target) was retired across two
+    reorgs — its contents were redistributed: git.md -> 02_claude_standards/,
+    claude_efficiency.md -> renamed and consolidated here as
+    claude_operational_efficiency.md, automation_controls.md -> 05_lazy_load/,
+    memory.md / security_guardrails.md -> folded into other files.
+    """
+    reference_dir = RULES_DIR / "04_claude_reference"
+    actual = {f.name for f in reference_dir.iterdir() if f.is_file()}
+    assert actual == EXPECTED_CLAUDE_REFERENCE_FILES, (
+        f"04_claude_reference/ mismatch — expected: {EXPECTED_CLAUDE_REFERENCE_FILES}, got: {actual}"
     )
 
 

@@ -32,7 +32,7 @@ Validates `src/claude/settings.json` and enforces guiding principles:
 - ✅ Valid JSON structure
 - ✅ Required top-level keys exist
 - ✅ No redundant/duplicate entries
-- ✅ Every setting documented in `settings.json.README.md`
+- ✅ Every setting documented in `settings_json_readme.md`
 - ✅ Settings align with guiding principles
 - ✅ Total context cost is reasonable (<500 tokens)
 
@@ -71,7 +71,7 @@ else:
 1. **Token cost <200** — no setting should consume excessive context
 2. **Align with ≥2 principles** — must be intentional + efficient
 3. **Clear justification** — explain the problem and solution
-4. **Document in README** — add entry to `settings.json.README.md`
+4. **Document in README** — add entry to `settings_json_readme.md`
 
 ---
 

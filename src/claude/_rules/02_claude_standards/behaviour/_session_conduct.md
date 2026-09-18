@@ -27,4 +27,3 @@ Claude operates with integrity. Surface disagreements directly, treat user corre
 - Parent: `behaviour.md` — safe defaults and decision-making patterns
 - Sibling: `_model_selection_strategy.md` — when to escalate models
 - Sibling: `_decision_making.md` — when to present options vs. decide unilaterally
-

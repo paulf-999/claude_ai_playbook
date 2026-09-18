@@ -39,6 +39,7 @@ Before proposing a hook, answer these questions in order:
 **Decision tree:**
 - ❌ **Stop proposing if:** frequency <5/month, manual cost <30 min/month, setup >4 hours, or simpler alternative exists
 - ✅ **Proceed if:** frequency >8/month, manual cost >1 hour/month, setup <3 hours, AND no simpler alternative
+- 🚩 **Red-flag phrases** (stop immediately, regardless of numbers): "might be useful someday", "could save time if...", "just saw this pattern once"
 
 ---
 
@@ -64,45 +65,9 @@ ROI threshold: Manual effort > (Setup + maintenance) × 3
 
 ---
 
-## 🚩 Red flags (stop proposing)
+## 📅 Precedent & Examples
 
-Do not propose the hook if any of these apply:
-
-- ❌ **"Might be useful someday"** — no real problem observed yet
-- ❌ **"Could save time if..."** — hypothetical benefit, not proven
-- ❌ **"Just saw this pattern once"** — insufficient frequency data
-- ❌ **Simpler alternative exists** — a rule, manual check, or code review would do
-- ❌ **Frequency <5/month** — likely not ROI-positive; keep manual
-- ❌ **Setup time >4 hours** — maintenance burden outweighs benefit
-
----
-
-## 📅 Precedent: 2026-08-07 hook removal
-
-**What happened:** 5 hooks were proposed without ROI evaluation:
-- `enforcement_task_tracking.sh`
-- `enforcement_naming_convention.sh`
-- `enforcement_dir_structure.sh`
-- `enforcement_subagent_reads.sh`
-- `style_guide_dispatch.sh`
-
-**Cost:** 5000+ tokens/session baseline, zero observed value.
-
-**Outcome:** All removed; user spent time auditing and removing low-value automation.
-
-**Lesson:** Without explicit ROI criteria, automation becomes silent debt.
-
----
-
-## ✅ Success example
-
-**hook_enforcement_writing_style.sh** (active):
-- Real problem: many sessions produce output violating writing style
-- Frequency: ~40+ times/month across all sessions
-- Manual alternative: user would review, ask Claude to rewrite (~15 min/violation)
-- ROI: Positive; hook saves ~10 hours/month; setup cost recouped in weeks
-
----
+@~/.claude/_rules/04_claude_reference/claude_conduct/task_request_conventions/_hooks_decision_framework/_precedent_and_examples.md
 
 ## 🧪 Testing & registration requirements
 

@@ -1,10 +1,19 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
-# Test quality score: 7/10
+# Test quality score: 0/10
 # Date created:      2026-08-28
 # Version:           1.0.0
-# Date updated:      2026-09-17
+# Date updated:      2026-09-18
 # ─────────────────────────────────────────────────────────
+# Archived: rotate_todo.sh and hook_auto_rotate_todo.sh were never built —
+# no script, hook, or settings.json registration exists anywhere in the repo
+# or the live config. Test predates the feature and the feature was never
+# implemented. No rule documents TODO rotation as an active convention
+# (task_logging.md only covers appending rows). Per guiding_principles.md
+# ("intentionality gates everything") and the hooks ROI framework, this is
+# speculative scope — archived rather than built out as a side effect of
+# fixing pre-existing test failures. Restore from here if the feature is
+# ever actually wanted, and build the script/hook alongside it. 2026-09-18
 
 #!/usr/bin/env python3
 
