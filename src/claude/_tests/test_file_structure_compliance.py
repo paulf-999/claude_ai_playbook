@@ -42,6 +42,20 @@ AUTO_GENERATED_DIRS = {
     "_admin",  # personal audit/decision-log scratch area with its own ALL-CAPS convention
     "file-history",  # Claude Code's own version-history store — UUID/hash@vN filenames
     ".trash",  # Claude Code's own sync-cleanup holding area (see syncClaudeAiSkills)
+    "cache",  # Claude Code's own cache (model catalog, GitHub issue exports, etc.)
+    "chrome",  # Claude Code's own Chrome extension host binary
+    "daemon",  # Claude Code's own background daemon state (roster.json, control.key)
+    "feedback",  # Claude Code's own feedback queue
+    "ide",  # Claude Code's own IDE integration lock files (PID-named)
+    "jobs",  # Claude Code's own scheduled-job state
+    "mcp",  # Claude Code's own MCP server state
+    "paste-cache",  # Claude Code's own pasted-content cache (hash-named)
+    "plans",  # Claude Code's own plan-mode scratch files (ephemeral; see claude_plans.md)
+    "security",  # Claude Code's own security-warning state (UUID-named)
+    "session-env",  # Claude Code's own per-session environment state
+    "shell-snapshots",  # Claude Code's own shell state snapshots
+    "tasks",  # Claude Code's own background-task state
+    "telemetry",  # Claude Code's own telemetry queue
 }
 
 # Root-level files Claude Code itself generates — not authored content
