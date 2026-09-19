@@ -1,3 +1,9 @@
+---
+date_created: "2026-08-28"
+date_updated: "2026-09-19"
+status: active
+---
+
 # Testing & validation
 
 The following test cases validate core skill behavior:

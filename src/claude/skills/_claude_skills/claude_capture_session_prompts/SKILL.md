@@ -62,6 +62,6 @@ Capturing end-of-session activity for review, planning, and auditing. Generates 
 - `evals.yaml` — 6 test scenarios covering all phases
 
 **Quality & Design:**
-- `reference/_quality_scorecard.md` — Quality assessment and Draft maturity justification
+- `_quality_scorecard.md` — Quality assessment and Draft maturity justification
 - `reference/_error_recovery.md` — Troubleshooting common issues
 - `reference/_examples.md` — Usage examples (daily capture, historical review, refinement)

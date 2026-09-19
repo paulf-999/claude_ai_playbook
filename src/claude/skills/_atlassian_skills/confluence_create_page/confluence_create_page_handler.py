@@ -1,3 +1,10 @@
+# Metadata
+# ─────────────────────────────────────────────────────────
+# Date created:  2026-08-28
+# Date updated:  2026-09-19
+# Status:        active
+# ─────────────────────────────────────────────────────────
+
 """Orchestration handler for confluence_create_page skill.
 
 Three-phase flow: gather details → draft review (local) → publish to Confluence.
@@ -22,7 +29,7 @@ MIN_TITLE_LENGTH = 3
 MAX_TITLE_LENGTH = 255
 MAX_SECTIONS = 10
 MIN_SECTIONS = 1
-VALID_PATTERNS = ["general_page", "requirements", "design_decision", "incident_report", "how_to"]
+VALID_PATTERNS = ["general_page"]
 VALID_STATUSES = ["draft", "published", "archived"]
 
 

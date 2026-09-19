@@ -1,3 +1,9 @@
+---
+date_created: "2026-08-28"
+date_updated: "2026-09-19"
+status: active
+---
+
 # Interactive phases
 
 ## 🔍 Phase 1 — Identify the page type
@@ -12,7 +18,7 @@
 |---|---|
 | `general_page` | General-purpose page — free-form sections using the standard DM page template |
 
-Additional patterns (how_to, requirements, incident_report, design_decision, and data platform patterns) will be available in Phase 2.
+Additional patterns may be added later — not part of this MVP.
 
 Wait for the user's response before proceeding.
 
@@ -22,8 +28,7 @@ Wait for the user's response before proceeding.
 
 Read the pattern file and follow the instructions within it exactly:
 
-- **Generic patterns** — `~/.claude/skills/confluence_create_page/templates/<pattern_name>.md`
-- **Data platform patterns** — `~/.claude/skills/confluence_create_page/templates/data_platform/<pattern_name>.md`
+- **Pattern file** — `~/.claude/skills/confluence_create_page/patterns/<pattern_name>.md`
 
 Every pattern includes its own phases (typically: gather page details, gather section content, clarify and confirm). Follow the pattern's instructions precisely, gathering all inputs interactively.
 

@@ -26,7 +26,7 @@ not_for:
   - release branch workflows (v2.0+)
 ```
 
-**In `reference/_quality_scorecard.md`, explain why:**
+**In `_quality_scorecard.md`, explain why:**
 - Why these boundaries? (design choice? technical limitation? future roadmap?)
 - What would v2.0 add?
 - What's the tradeoff? (keeps skill lean vs. limits applicability)
@@ -47,7 +47,7 @@ not_for:
 - Draft: speculative, one-time use only
 - Tactical: recurring problem, battle-tested, fully tested
 - Strategic: core workflow, heavy use, all edge cases covered
-- Justify maturity in `reference/_quality_scorecard.md` with evidence
+- Justify maturity in `_quality_scorecard.md` with evidence
 
 ---
 

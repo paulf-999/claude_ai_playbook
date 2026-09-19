@@ -7,6 +7,8 @@ test_coverage_level: comprehensive
   # comprehensive = _tests/skills/confluence_create_page/ covers validation,
   # phase orchestration, error handling, and the timeout mechanism (49 tests);
   # matches tags.tested: true in SKILL.md
+date_created: '2026-08-28'
+date_updated: '2026-09-19'
 
 dispatch:
     triggers:

@@ -72,14 +72,16 @@ Minimal, focused structure. Each skill directory contains **only**:
 
 ```
 skill_name/
-├── SKILL.md              # User-facing overview (5 sections, ~60 lines)
-├── skill.contract.yaml   # Machine-readable contract (scope, triggers, maturity)
-├── evals.yaml            # Test scenarios (10–15, organized by phase)
-└── reference/            # Supporting docs (keep SKILL.md lean)
-    ├── _quality_scorecard.md  # Dimensions, maturity justification, design rationale
-    ├── _implementation.md     # Phases, logic, error handling
-    └── _formats.md            # Standards, validation, examples (if applicable)
+├── SKILL.md               # User-facing overview (5 sections, ~60 lines)
+├── skill.contract.yaml    # Machine-readable contract (scope, triggers, maturity)
+├── evals.yaml             # Test scenarios (10–15, organized by phase)
+├── _quality_scorecard.md  # Dimensions, maturity justification, design rationale
+└── reference/             # Runtime docs Claude reads while executing (keep SKILL.md lean)
+    ├── _implementation.md # Phases, logic, error handling
+    └── _formats.md        # Standards, validation, examples (if applicable)
 ```
+
+**`_quality_scorecard.md` lives at skill root, not in `reference/`** — it's an authoring/review artifact (assessed when the skill is created or audited), not something Claude reads while executing the skill. Everything in `reference/` is runtime behavioral documentation.
 
 **Nothing else.** No `templates/`, `patterns/`, `references/`, or domain-specific subdirectories. Keep scope tight, keep structure clean.
 

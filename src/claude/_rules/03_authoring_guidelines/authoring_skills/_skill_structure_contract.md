@@ -26,14 +26,14 @@ All SKILL.md files use a **5-section ultra-lean structure (~50–60 lines)**. Th
 
 ## What Goes Where
 
-| Content | SKILL.md? | reference/ file? |
+| Content | SKILL.md? | Where else? |
 |---------|-----------|-----------------|
 | Purpose & capabilities | ✅ Yes (3–4 bullets) | ❌ No |
 | Example user journey | ✅ Yes (realistic scenario) | ❌ No |
 | Prerequisites & dependencies | ✅ Yes (brief) | ✅ reference/_implementation.md (detail) |
 | Error handling & recovery | ❌ No | ✅ reference/_implementation.md |
 | Validation rules & formats | ❌ No | ✅ reference/_formats.md |
-| Quality scorecard & design rationale | ❌ No | ✅ reference/_quality_scorecard.md |
+| Quality scorecard & design rationale | ❌ No | ✅ `_quality_scorecard.md` (skill root, not reference/ — an authoring artifact, not a runtime doc) |
 | Phases & workflow logic | ❌ No | ✅ reference/_implementation.md |
 
 ---

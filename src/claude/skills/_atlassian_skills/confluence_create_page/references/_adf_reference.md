@@ -1,3 +1,9 @@
+---
+date_created: "2026-04-11"
+date_updated: "2026-09-19"
+status: active
+---
+
 # ADF Reference — Page Header & Formatting
 
 All `confluence_create_page` patterns use these header structure and formatting rules consistently.

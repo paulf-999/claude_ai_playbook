@@ -7,6 +7,8 @@ tags:
   criticality: should
   status: active
   tested: true
+  date_created: "2026-06-07"
+  date_updated: "2026-09-19"
 tools: Read, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
 
@@ -41,6 +43,10 @@ Page created: https://yourteam.atlassian.net/wiki/spaces/DA/pages/12345
 - `references/_troubleshooting.md` — common issues, including publish timeouts
 - `references/_roadmap.md` — patterns and features planned beyond this MVP
 - `references/_adf_reference.md` — Atlassian Document Format details
+- `references/_arguments.md` — bypass arguments to skip pattern selection
+- `references/_examples.md` — example page requests and their sections
+- `references/_design_rationale.md` — why this skill is structured the way it is
+- `references/_security_review.md` — threat model and mitigations
 
 ## 📌 Prerequisites
 

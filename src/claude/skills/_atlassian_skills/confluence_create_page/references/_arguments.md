@@ -1,3 +1,9 @@
+---
+date_created: "2026-08-28"
+date_updated: "2026-09-19"
+status: active
+---
+
 # Bypass arguments
 
 This skill supports simple argument bypass: provide a pattern name to skip Phase 1 (pattern selection).
