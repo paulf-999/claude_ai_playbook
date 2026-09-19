@@ -38,10 +38,10 @@ Page created: https://yourteam.atlassian.net/wiki/spaces/DA/pages/12345
 ---
 
 **For detailed specifications, see:**
-- `references/_phases.md` — the three interactive phases in full
-- `references/_error_recovery.md` — what to do when Confluence access, drafts, or publishing fail
-- `references/_troubleshooting.md` — common issues, including publish timeouts
-- `references/_adf_reference.md` — Atlassian Document Format details
+- `reference/_phases.md` — the three interactive phases in full
+- `reference/_error_recovery.md` — what to do when Confluence access, drafts, or publishing fail
+- `reference/_troubleshooting.md` — common issues, including publish timeouts
+- `reference/_adf_reference.md` — Atlassian Document Format details
 
 ## 📌 Prerequisites
 
