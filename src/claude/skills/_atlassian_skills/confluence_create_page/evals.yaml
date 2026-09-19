@@ -1,0 +1,161 @@
+---
+_metadata:
+    date_created: '2026-06-07'
+    date_updated: '2026-09-19'
+    status: active
+
+skill_name: confluence_create_page
+
+evals:
+  # Phase 1 — gather details / happy path
+    - name: happy_path_general_page
+      description: Full flow — gather details, local draft review, publish only after approval
+      input:
+          prompt: create a confluence page about our Q3 roadmap
+      setup: {}
+      expected_output: >
+          Claude gathers page details for the general_page pattern, writes a local
+          draft to ~/_drafts/confluence/, asks for review, iterates on feedback,
+          then publishes to Confluence only after the user explicitly approves
+          the draft.
+      assertions:
+          - Claude reads reference/_phases.md and follows the general_page pattern inline (Phase 2)
+          - Claude writes a draft to ~/_drafts/confluence/ before creating anything in Confluence
+          - Draft filename uses lowercase with underscores (no spaces, no hyphens)
+          - Claude asks the user to review the draft and requests approval before publishing
+          - Claude does not call createConfluencePage until the user explicitly approves the draft
+
+    - name: mcp_unavailable
+      description: Atlassian MCP not connected — skill stops before pattern selection
+      input:
+          prompt: /confluence_create_page
+      setup:
+          mcp_available: false
+      expected_output: >
+          Claude verifies the Atlassian MCP is available, then presents the
+          pattern selection prompt. If the MCP is unavailable, Claude stops and
+          tells the user to enable it.
+      assertions:
+          - Claude calls getAccessibleAtlassianResources before proceeding to Phase 1
+          - Claude stops and tells the user to run 'make enable_mcp server=Atlassian' if the MCP is unavailable
+          - Claude does not proceed to pattern selection without a successful MCP connection
+
+  # Phase 2 — validation failures (one per validated field)
+    - name: validation_failure_title
+      description: Title too short — phase_2_validate rejects before any draft is written
+      input:
+          title: Q
+          space: DA
+          pattern: general_page
+          sections: [Overview]
+      setup: {}
+      expected_output: >
+          create_confluence_page returns {"success": False, "errors": [...]} with
+          a "Title too short (minimum 3 chars)" message; no draft is written and
+          no MCP call is made.
+      assertions:
+          - validate_title rejects a 1-character title with 'Title too short (minimum 3 chars)'
+          - phase_2_validate accumulates the error without calling phase_3_publish_page
+          - Claude surfaces the validation error to the user instead of silently retrying
+
+    - name: validation_failure_space
+      description: Space key fails the 2-10 char alnum-only check
+      input:
+          title: Data Platform Q4 Roadmap
+          space: D!
+          pattern: general_page
+          sections: [Overview]
+      setup: {}
+      expected_output: >
+          create_confluence_page returns {"success": False, "errors": [...]} with
+          a "Space key must contain only letters and numbers" message.
+      assertions:
+          - validate_space rejects a space key containing a non-alphanumeric character
+          - The error message names the specific constraint violated (alnum-only)
+          - Claude asks the user to confirm the correct space key rather than guessing one
+
+    - name: validation_failure_pattern
+      description: Pattern name outside VALID_PATTERNS (only general_page exists)
+      input:
+          title: Data Platform Q4 Roadmap
+          space: DA
+          pattern: requirements
+          sections: [Overview]
+      setup: {}
+      expected_output: >
+          create_confluence_page returns {"success": False, "errors": [...]} with
+          "Invalid pattern 'requirements'. Valid options: general_page".
+      assertions:
+          - validate_pattern rejects any pattern name not in VALID_PATTERNS
+          - The error message lists the actual valid options, not a generic refusal
+          - Claude falls back to offering the general_page pattern instead of failing silently
+
+    - name: validation_failure_sections
+      description: Duplicate section names — sections must be unique
+      input:
+          title: Data Platform Q4 Roadmap
+          space: DA
+          pattern: general_page
+          sections: [Overview, Overview]
+      setup: {}
+      expected_output: >
+          create_confluence_page returns {"success": False, "errors": [...]} with
+          "Sections must be unique (no duplicates)".
+      assertions:
+          - validate_sections rejects a sections list with duplicate entries after sanitization
+          - Claude asks the user to rename or merge the duplicate sections
+          - No draft is written while sections remain invalid
+
+  # Phase 3 — draft review and publish-time failure modes
+    - name: draft_review_iteration
+      description: User requests changes to the local draft before approving publish
+      input:
+          prompt: create a confluence page about our Q3 roadmap
+          review_response: change the Overview section, then show me again
+      setup: {}
+      expected_output: >
+          Claude rewrites the draft file in place, asks for review again, and
+          repeats until the user explicitly approves — createConfluencePage is
+          never called during iteration.
+      assertions:
+          - Claude applies the requested change and rewrites the same draft file (not a new one)
+          - Claude re-presents the draft path and asks for approval again after each revision
+          - Claude does not call createConfluencePage or updateConfluencePage during any iteration
+          - Iteration continues until an explicit approval is given, not a fixed number of rounds
+
+    - name: publish_timeout_all_choices
+      description: create_page_with_timeout's [A]bort/[R]etry/[C]ontinue dialog, each choice
+      input:
+          timeout_seconds: 1
+          choices_to_test: [A, R, C]
+      setup:
+          mcp_tool_call: slow_call_exceeding_timeout
+      expected_output: >
+          "A" returns {"status": "aborted", "draft_path": "..."} preserving the
+          draft; "R" returns {"status": "retry_requested"}; "C" extends the wait
+          by up to 240s (capped at 360s total) before re-prompting or completing.
+      assertions:
+          - format_timeout_dialog is shown once elapsed time reaches timeout_seconds
+          - Choosing 'A' preserves draft_path in the aborted result and does not retry
+          - Choosing 'R' returns status 'retry_requested' without touching the draft file
+          - Choosing 'C' increases the timeout by 240s but never exceeds max_total_wait (360s)
+          - An invalid keystroke at the prompt is treated the same as 'A' (abort)
+
+    - name: publish_permission_denied
+      description: mcp_tool_call raises PermissionError — user lacks write access to the space
+      input:
+          title: Data Platform Q4 Roadmap
+          space: DA
+          pattern: general_page
+          sections: [Overview]
+      setup:
+          mcp_tool_call: raises_PermissionError
+      expected_output: >
+          phase_3_publish_page catches PermissionError and returns
+          {"success": False, "error": "Permission denied: You lack write access
+          to space DA", "type": "permission_denied"}.
+      assertions:
+          - The returned error names the specific space the user lacks access to
+          - The error type is 'permission_denied', not 'unknown' or 'validation_error'
+          - Claude points the user to reference/_troubleshooting.md's Permission Denied section
+          - The local draft file is preserved (not deleted) after a publish failure
