@@ -95,7 +95,7 @@ dispatch:
 - Includes: Design, Complexity, Test Coverage, Code Quality, Security, Documentation, Standards, Overall
 
 **Reference files [REQUIRED]** — Keep SKILL.md lean by externalizing detail
-- `_quality_scorecard.md` — Dimensions, maturity justification, design rationale
+- `_quality_scorecard.md` — 7-dimension table only (justification lives in SKILL.md)
 - `_implementation.md` — Phases, logic, error handling
 - `_formats.md` [IF APPLICABLE] — Standards, validation rules, format examples
 

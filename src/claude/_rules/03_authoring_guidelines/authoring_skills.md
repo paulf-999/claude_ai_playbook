@@ -8,7 +8,7 @@
 
 **New skill author?** Start here in order:
 1. **Core Standards** — Naming pattern, SKILL.md structure, specification fields, testing standards
-2. **7-Step Process** — Workflow: name → specification → SKILL.md → reference/ → evals.yaml → score → submit
+2. **8-Step Process** — Workflow: name → specification → SKILL.md → scorecard → reference/ → evals.yaml → score → submit
 3. **Hard Gates Checklist** — Final validation before submitting
 
 **Experienced author, need to refresh?** Jump to specific child files:
@@ -79,7 +79,7 @@ skill_name/
 ├── SKILL.md               # User-facing overview (5 sections, ~60 lines)
 ├── skill.contract.yaml    # Machine-readable contract (scope, triggers, maturity)
 ├── evals.yaml             # Test scenarios (10–15, organized by phase)
-├── _quality_scorecard.md  # Dimensions, maturity justification, design rationale
+├── _quality_scorecard.md  # 7-dimension table only — justification goes in SKILL.md
 └── reference/             # Runtime docs Claude reads while executing (keep SKILL.md lean)
     ├── _implementation.md # Phases, logic, error handling
     └── _formats.md        # Standards, validation, examples (if applicable)
