@@ -42,13 +42,13 @@ FILE_PATH=$(echo "${INPUT}" | jq -r '.tool_input.file_path // empty' 2>/dev/null
 # Prefer reading the specific child file for focused context.
 NAMING_RULES=""
 
-if [[ -f "${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/claude_directory_structure/_claude_directory_naming.md" ]]; then
-  NAMING_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/claude_directory_structure/_claude_directory_naming.md")
-elif [[ -f "${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/naming_standards/_naming_principles.md" ]]; then
-  NAMING_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/naming_standards/_naming_principles.md")
+if [[ -f "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/claude_directory_structure/_claude_directory_naming.md" ]]; then
+  NAMING_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/claude_directory_structure/_claude_directory_naming.md")
+elif [[ -f "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/naming_standards/_naming_principles.md" ]]; then
+  NAMING_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/naming_standards/_naming_principles.md")
 else
   # Fallback to parent rules if child files not found
-  NAMING_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/naming_standards.md" 2>/dev/null || echo "Naming standards rule file not found. Check ${CLAUDE_ROOT_DIR}/_rules/01_essentials/conventions/naming_standards.md")
+  NAMING_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/naming_standards.md" 2>/dev/null || echo "Naming standards rule file not found. Check ${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/naming_standards.md")
 fi
 
 # Block and surface the naming conventions so Claude reviews the proposed name.

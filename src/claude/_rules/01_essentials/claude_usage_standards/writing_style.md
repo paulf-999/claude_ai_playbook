@@ -101,4 +101,4 @@ When writing SKILL.md files, apply these conventions specific to skill documenta
 
 ## 📚 Multifile Document Organization
 
-@~/.claude/_rules/01_essentials/conventions/writing_style/_multifile_document_organization.md
+@~/.claude/_rules/01_essentials/claude_usage_standards/writing_style/_multifile_document_organization.md

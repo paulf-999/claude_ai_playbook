@@ -40,18 +40,18 @@ EXPECTED_TOP_LEVEL = {
 # Top-level directories expected (compound rules with children)
 EXPECTED_DIRECTORIES = {
     "claude_response_standards",  # Has children (_enforcement.md, _response_timing.md)
-    "conventions",  # Grouping directory for naming, writing_style, claude_directory_structure
+    "claude_usage_standards",  # Grouping directory for naming, writing_style, claude_directory_structure
 }
 
-# Parent files within conventions/ subdirectory
-CONVENTIONS_PARENTS = {
+# Parent files within claude_usage_standards/ subdirectory
+CLAUDE_USAGE_STANDARDS_PARENTS = {
     "naming_standards.md",
     "writing_style.md",
     "claude_directory_structure.md",
 }
 
-# Subdirectories within conventions/
-CONVENTIONS_SUBDIRS = {
+# Subdirectories within claude_usage_standards/
+CLAUDE_USAGE_STANDARDS_SUBDIRS = {
     "naming_standards",
     "writing_style",
     "claude_directory_structure",
@@ -88,36 +88,36 @@ def test_top_level_directories_are_expected():
     )
 
 
-def test_conventions_directory_exists():
-    """Verify conventions/ subdirectory exists."""
-    conventions_dir = ESSENTIALS_DIR / "conventions"
-    assert conventions_dir.exists(), f"Directory not found: {conventions_dir}"
-    assert conventions_dir.is_dir(), f"Not a directory: {conventions_dir}"
+def test_claude_usage_standards_directory_exists():
+    """Verify claude_usage_standards/ subdirectory exists."""
+    claude_usage_standards_dir = ESSENTIALS_DIR / "claude_usage_standards"
+    assert claude_usage_standards_dir.exists(), f"Directory not found: {claude_usage_standards_dir}"
+    assert claude_usage_standards_dir.is_dir(), f"Not a directory: {claude_usage_standards_dir}"
 
 
-def test_conventions_parent_files():
-    """Verify parent files in conventions/ directory."""
-    conventions_dir = ESSENTIALS_DIR / "conventions"
-    files = {f.name for f in conventions_dir.glob("*.md")}
-    assert files == CONVENTIONS_PARENTS, (
-        f"Unexpected parent files in conventions/.\n"
-        f"Expected: {CONVENTIONS_PARENTS}\n"
+def test_claude_usage_standards_parent_files():
+    """Verify parent files in claude_usage_standards/ directory."""
+    claude_usage_standards_dir = ESSENTIALS_DIR / "claude_usage_standards"
+    files = {f.name for f in claude_usage_standards_dir.glob("*.md")}
+    assert files == CLAUDE_USAGE_STANDARDS_PARENTS, (
+        f"Unexpected parent files in claude_usage_standards/.\n"
+        f"Expected: {CLAUDE_USAGE_STANDARDS_PARENTS}\n"
         f"Got: {files}\n"
-        f"Missing: {CONVENTIONS_PARENTS - files}\n"
-        f"Extra: {files - CONVENTIONS_PARENTS}"
+        f"Missing: {CLAUDE_USAGE_STANDARDS_PARENTS - files}\n"
+        f"Extra: {files - CLAUDE_USAGE_STANDARDS_PARENTS}"
     )
 
 
-def test_conventions_subdirectories():
-    """Verify subdirectories in conventions/ match expected set."""
-    conventions_dir = ESSENTIALS_DIR / "conventions"
-    dirs = {d.name for d in conventions_dir.iterdir() if d.is_dir() and not d.name.startswith(".")}
-    assert dirs == CONVENTIONS_SUBDIRS, (
-        f"Unexpected subdirectories in conventions/.\n"
-        f"Expected: {CONVENTIONS_SUBDIRS}\n"
+def test_claude_usage_standards_subdirectories():
+    """Verify subdirectories in claude_usage_standards/ match expected set."""
+    claude_usage_standards_dir = ESSENTIALS_DIR / "claude_usage_standards"
+    dirs = {d.name for d in claude_usage_standards_dir.iterdir() if d.is_dir() and not d.name.startswith(".")}
+    assert dirs == CLAUDE_USAGE_STANDARDS_SUBDIRS, (
+        f"Unexpected subdirectories in claude_usage_standards/.\n"
+        f"Expected: {CLAUDE_USAGE_STANDARDS_SUBDIRS}\n"
         f"Got: {dirs}\n"
-        f"Missing: {CONVENTIONS_SUBDIRS - dirs}\n"
-        f"Extra: {dirs - CONVENTIONS_SUBDIRS}"
+        f"Missing: {CLAUDE_USAGE_STANDARDS_SUBDIRS - dirs}\n"
+        f"Extra: {dirs - CLAUDE_USAGE_STANDARDS_SUBDIRS}"
     )
 
 
@@ -126,8 +126,8 @@ def test_child_files_have_underscore_prefix():
     errors = []
 
     for subdir in EXPECTED_DIRECTORIES:
-        if subdir == "conventions":
-            continue  # conventions is a special case
+        if subdir == "claude_usage_standards":
+            continue  # claude_usage_standards is a special case
 
         subdir_path = ESSENTIALS_DIR / subdir
         if not subdir_path.exists():
@@ -137,10 +137,10 @@ def test_child_files_have_underscore_prefix():
             if not md_file.name.startswith("_"):
                 errors.append(f"Child file missing underscore prefix: {md_file.relative_to(ESSENTIALS_DIR)}")
 
-    # Check conventions subdirectory children
-    conventions_dir = ESSENTIALS_DIR / "conventions"
-    for subdir in CONVENTIONS_SUBDIRS:
-        subdir_path = conventions_dir / subdir
+    # Check claude_usage_standards subdirectory children
+    claude_usage_standards_dir = ESSENTIALS_DIR / "claude_usage_standards"
+    for subdir in CLAUDE_USAGE_STANDARDS_SUBDIRS:
+        subdir_path = claude_usage_standards_dir / subdir
         if not subdir_path.exists():
             continue
 
@@ -169,8 +169,8 @@ def test_two_plus_rule_for_subdirectories():
         if not subdir.is_dir() or subdir.name.startswith("."):
             continue
 
-        if subdir.name == "conventions":
-            continue  # conventions has special structure
+        if subdir.name == "claude_usage_standards":
+            continue  # claude_usage_standards has special structure
 
         child_files = list(subdir.glob("_*.md"))
         if len(child_files) == 1:
@@ -206,11 +206,11 @@ def test_claude_md_imports():
     assert not errors, "Missing imports in CLAUDE.md:\n" + "\n".join(errors)
 
 
-def test_conventions_parent_files_imported():
-    """Verify conventions parent files are reachable from CLAUDE.md (directly or via a hub file).
+def test_claude_usage_standards_parent_files_imported():
+    """Verify claude_usage_standards parent files are reachable from CLAUDE.md (directly or via a hub file).
 
     CLAUDE.md imports claude_usage_standards.md, which is the actual entry
-    point for these 3 conventions — not CLAUDE.md directly. Checking only
+    point for these 3 grouped files — not CLAUDE.md directly. Checking only
     CLAUDE.md's own text would miss this legitimate indirection.
     """
     usage_standards = CLAUDE_DIR / "_rules" / "01_essentials" / "claude_usage_standards.md"
@@ -228,13 +228,13 @@ def test_conventions_parent_files_imported():
 
     for import_name in expected_imports:
         pattern = re.compile(
-            rf"@~/[^/]+/_rules/01_essentials/conventions/{re.escape(import_name)}(?:\.md)?\b"
+            rf"@~/[^/]+/_rules/01_essentials/claude_usage_standards/{re.escape(import_name)}(?:\.md)?\b"
         )
         if not pattern.search(combined_content):
-            errors.append(f"Missing import for conventions/{import_name}")
+            errors.append(f"Missing import for claude_usage_standards/{import_name}")
 
     assert not errors, (
-        "Missing convention imports in CLAUDE.md or claude_usage_standards.md:\n" +
+        "Missing claude_usage_standards imports in CLAUDE.md or claude_usage_standards.md:\n" +
         "\n".join(errors)
     )
 
