@@ -50,9 +50,7 @@ constraints are harder to bypass silently.
 @~/.claude/_rules/02_claude_standards/portable_paths.md
 <!-- Secure coding practices and Claude's own prompt-injection/secret-handling guardrails -->
 @~/.claude/_rules/02_claude_standards/security.md
-<!-- Test quality/complexity scoring standard required on every test file -->
-@~/.claude/_rules/02_claude_standards/test_metadata.md
-<!-- Requires tests for all new features and enforcement rules -->
+<!-- Requires tests for all new features and enforcement rules; includes test metadata/scoring standard -->
 @~/.claude/_rules/02_claude_standards/testing.md
 
 <!-- Tier 3: 03_authoring_guidelines/ — meta-guidance for authoring rules, skills, agents -->

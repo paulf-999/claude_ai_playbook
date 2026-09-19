@@ -9,8 +9,8 @@
 - [Format](#-format)
 - [Quality Scoring](#-quality-scoring-1-10)
 - [New Tests Must Score ≥9/10](#-new-tests-must-score-910)
-- [Complexity Scoring](#-complexity-scoring) — reward simplicity, cap quality by complexity (see `_complexity_scoring.md`)
-- [Maintenance](#-maintenance) — gates, quarterly audit, protocol (see `_maintenance.md`)
+- [Complexity Scoring](#-complexity-scoring) — reward simplicity, cap quality by complexity (see `_test_metadata_complexity_scoring.md`)
+- [Maintenance](#-maintenance) — gates, quarterly audit, protocol (see `_test_metadata_maintenance.md`)
 
 ---
 
@@ -60,18 +60,18 @@ Every test file in `~/.claude/_tests/` must open with this metadata header:
 
 ## 🧮 Complexity Scoring
 
-@~/.claude/_rules/02_claude_standards/test_metadata/_complexity_scoring.md
+@~/.claude/_rules/02_claude_standards/testing/_test_metadata_complexity_scoring.md
 
 ---
 
 ## ⚙️ Maintenance
 
-@~/.claude/_rules/02_claude_standards/test_metadata/_maintenance.md
+@~/.claude/_rules/02_claude_standards/testing/_test_metadata_maintenance.md
 
 ---
 
 ## 🔗 Related Rules
 
-- `testing.md` — When tests are required; test design pattern and gates
+- Parent: `testing.md` — When tests are required; test design pattern and gates
 - `claude_plans.md` — Gate testing before merging
 - `~/.claude/_tests/` — Location of all test files and metadata headers

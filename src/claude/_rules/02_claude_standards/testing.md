@@ -61,6 +61,10 @@ Define the goal before writing the test. Tests validate *intended behavior*, not
 
 @~/.claude/_rules/02_claude_standards/testing/_testing_maintenance.md
 
+## 📊 Test Metadata Standard
+
+@~/.claude/_rules/02_claude_standards/testing/_test_metadata.md
+
 ---
 
 ## ⚡ Quick Reference

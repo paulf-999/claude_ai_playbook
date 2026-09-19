@@ -30,7 +30,7 @@ A complex test cannot claim excellence just by being thorough. Complexity sets a
 | **7–8** (complex) | 6 |
 | **9–10** (very complex) | 4 |
 
-**Why:** A 900-line test with 40 assertions scores high on the raw quality rubric (`test_metadata.md`) but is expensive to maintain and hard to reason about when it breaks. Capping by complexity forces the simpler design — split a complex test into several simple ones rather than write one comprehensive, tangled file.
+**Why:** A 900-line test with 40 assertions scores high on the raw quality rubric (`_test_metadata.md`) but is expensive to maintain and hard to reason about when it breaks. Capping by complexity forces the simpler design — split a complex test into several simple ones rather than write one comprehensive, tangled file.
 
 **Consequence:** since `testing.md` requires new tests to reach quality ≥9/10, they must also keep complexity ≤4 — both constraints apply together, not one or the other.
 
@@ -38,5 +38,5 @@ A complex test cannot claim excellence just by being thorough. Complexity sets a
 
 ## 🔗 Related
 
-- Parent: `test_metadata.md` — the quality-score rubric this complements
+- Parent: `_test_metadata.md` — the quality-score rubric this complements
 - Reference: `authoring_skills.md` — source of the Concepts/Scope/Dependencies/Prerequisites formula

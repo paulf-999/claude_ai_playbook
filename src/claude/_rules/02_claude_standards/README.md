@@ -32,7 +32,7 @@ Rules in this tier have a token cost (~150 tokens/session) and must justify thei
 
 - **`behaviour/`** — Child files covering decision-making and artefact proposal gates
 - **`git/`** — Child files covering safe git patterns, commits, and pull requests
-- **`testing/`** — Child files covering test design patterns, anti-patterns, and maintenance
+- **`testing/`** — Child files covering test design patterns, anti-patterns, maintenance, and the test metadata/scoring standard
 
 ---
 
