@@ -10,45 +10,6 @@ Common issues and how to resolve them.
 
 ---
 
-## Phase 1a: Context Detection Not Working
-
-**Symptom:** Message pattern like "create page describing X" not detected; Phase 1a asks for outline anyway.
-
-**Causes & Solutions:**
-
-| Issue | Check | Fix |
-|---|---|---|
-| Pattern not recognized | Use exact keywords: `describing`, `about`, `for`, `on` | Rephrase: "create page describing [topic]" |
-| Message too long | Pattern matches only first ~200 chars | Move topic closer to beginning |
-| Special characters | Regex may not match certain punctuation | Avoid excessive punctuation in topic name |
-| Colon before topic | "create page describing: X" (extra colon) | Remove colon: "create page describing X" |
-
-**Verify context detection:**
-```python
-from confluence_create_page_handler import detect_context_from_message
-msg = "create page describing Airflow environments"
-result = detect_context_from_message(msg)
-print(f"Detected: {result}")  # Should print: "Airflow environments"
-```
-
----
-
-## Phase 1b: Title Proposals Seem Generic
-
-**Symptom:** Generated titles don't capture nuance; all sound too similar.
-
-**Root cause:** Title generation uses only first 3-5 keywords from outline. Limited semantic understanding.
-
-**Workarounds:**
-
-- **Option 1:** Use `--title "Custom Title"` to bypass title proposal
-- **Option 2:** Accept auto-proposed title in Phase 1b, refine in Phase 3 purpose field
-- **Option 3:** Provide more specific outline (longer, keyword-rich)
-
-**Note:** Phase 2+ will add LLM-based title generation for more semantic richness.
-
----
-
 ## Phase 2: Creator Name Incorrect
 
 **Symptom:** Draft shows creator as "paulfry.payroc" or unexpected name; not your real name.

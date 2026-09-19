@@ -4,7 +4,7 @@
 # Test complexity score: 5/10
 # Python style compliant: Yes
 # Date created:      2026-09-19
-# Version:           1.0.0
+# Version:           1.1.0
 # Date updated:      2026-09-19
 # ─────────────────────────────────────────────────────────
 
@@ -85,18 +85,30 @@ def _is_exempt(file_path: Path, skill_root: Path) -> bool:
 def _combined_text(skill_root: Path) -> str:
     """Concatenate every content file's text under a skill directory.
 
+    Also includes the skill's out-of-tree test directory, if one exists at
+    _tests/skills/<skill_dir_name>/ — a handler.py moved out of the skill
+    directory (per the confluence_create_page precedent) is still clearly
+    referenced by the test file that imports it, even though that test no
+    longer lives inside skill_root.
+
     :param skill_root: The skill directory to scan.
     :type skill_root: Path
     :return: Combined text of all .md/.py/.yaml/.yml/.json files.
     :rtype: str
     """
+    roots = [skill_root]
+    external_tests = CLAUDE_DIR / "_tests" / "skills" / skill_root.name
+    if external_tests.is_dir():
+        roots.append(external_tests)
+
     combined = []
-    for f in skill_root.rglob("*"):
-        if f.is_file() and f.suffix in CONTENT_SUFFIXES and "__pycache__" not in f.parts:
-            try:
-                combined.append(f.read_text(encoding="utf-8", errors="ignore"))
-            except OSError:
-                pass
+    for root in roots:
+        for f in root.rglob("*"):
+            if f.is_file() and f.suffix in CONTENT_SUFFIXES and "__pycache__" not in f.parts:
+                try:
+                    combined.append(f.read_text(encoding="utf-8", errors="ignore"))
+                except OSError:
+                    pass
     return "\n".join(combined)
 
 
@@ -296,3 +308,27 @@ def test_skill_dirs_discovery_finds_nested_skills(tmp_path, monkeypatch):
     assert (tmp_path / "flat_skill") in found
     assert group in found
     assert len(found) == 2
+
+
+def test_handler_referenced_only_by_external_test_is_not_orphaned(tmp_path, monkeypatch):
+    """Regression: reproduces the exact 2026-09-19 confluence_create_page finding —
+    a handler.py only imported by a test file that lives in _tests/skills/<name>/
+    (moved out of the skill directory, per that same precedent) must not be
+    flagged as orphaned just because nothing inside the skill directory itself
+    mentions its name."""
+    monkeypatch.setattr(sys.modules[__name__], "CLAUDE_DIR", tmp_path)
+    skill_root = tmp_path / "skills" / "fake_skill"
+    skill_root.mkdir(parents=True)
+    (skill_root / "SKILL.md").write_text("# Fake skill\nNo mention of the handler here.")
+    (skill_root / "skill.contract.yaml").write_text("name: fake_skill")
+    (skill_root / "fake_skill_handler.py").write_text("def do_thing():\n    pass\n")
+
+    external_tests = tmp_path / "_tests" / "skills" / "fake_skill"
+    external_tests.mkdir(parents=True)
+    (external_tests / "test_fake_skill_handler.py").write_text(
+        "from fake_skill_handler import do_thing\n"
+    )
+
+    orphans = find_orphaned_files(skill_root)
+
+    assert orphans == []
