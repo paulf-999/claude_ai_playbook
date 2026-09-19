@@ -15,7 +15,7 @@ Validates response format compliance: Summary structure, offer line, timing foot
 import subprocess
 import pytest
 
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR
 
 
 class TestResponseStandardsHook:

@@ -23,7 +23,7 @@ Quarterly behavioral audit (manual):
 """
 
 
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR
 
 RULE_FILE = CLAUDE_DIR / "_rules" / "01_essentials" / "claude_usage_standards" / "writing_style.md"
 

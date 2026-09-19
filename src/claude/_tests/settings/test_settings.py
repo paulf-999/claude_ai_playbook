@@ -16,9 +16,7 @@ Ensures:
 """
 import json
 
-from _claude_dir import CLAUDE_DIR
-
-SETTINGS_FILE = CLAUDE_DIR / "settings.json"
+from _shared_paths import SETTINGS_FILE
 
 
 def _load_settings():

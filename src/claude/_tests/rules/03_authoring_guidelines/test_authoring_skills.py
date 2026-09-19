@@ -24,7 +24,7 @@ Run: pytest _tests/rules/test_authoring_skills_improvements.py -v
 
 import re
 
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR
 
 RULE_FILE = CLAUDE_DIR / "_rules" / "03_authoring_guidelines" / "authoring_skills.md"
 

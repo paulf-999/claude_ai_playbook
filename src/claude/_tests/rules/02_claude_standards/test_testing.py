@@ -16,11 +16,9 @@ Validates that enforcement hooks and behavior-modifying rules have tests:
 This is a linting test enforcing the "rules require tests" constraint.
 """
 
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR, HOOKS_DIR, RULES_DIR
 
-HOOKS_DIR = CLAUDE_DIR / "hooks"
 TESTS_HOOKS_DIR = CLAUDE_DIR / "_tests/hooks"
-RULES_DIR = CLAUDE_DIR / "_rules"
 TESTS_RULES_DIR = CLAUDE_DIR / "_tests/rules"
 TESTING_MD = RULES_DIR / "02_claude_standards" / "testing.md"
 

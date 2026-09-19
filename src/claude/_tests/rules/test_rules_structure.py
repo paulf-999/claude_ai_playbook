@@ -17,10 +17,7 @@ Verifies the design goals for the _rules/ layout in the configured Claude direct
 import re
 from pathlib import Path
 
-from _claude_dir import CLAUDE_DIR
-
-RULES_DIR = CLAUDE_DIR / "_rules"
-CLAUDE_MD = CLAUDE_DIR / "CLAUDE.md"
+from _shared_paths import CLAUDE_DIR, CLAUDE_MD, RULES_DIR
 
 # Human-readable theme files permitted at _rules/ root — no others allowed
 EXPECTED_ROOT_FILES = {

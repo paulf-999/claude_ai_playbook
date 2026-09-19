@@ -13,7 +13,7 @@ the expected section headings that give the file its mechanical value.
 """
 import re
 
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR
 
 GIT_RULES = CLAUDE_DIR / "_rules" / "02_claude_standards" / "git.md"
 

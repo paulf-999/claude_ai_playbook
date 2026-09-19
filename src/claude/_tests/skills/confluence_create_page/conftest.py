@@ -7,7 +7,7 @@ an explicit sys.path entry rather than relying on same-directory imports.
 
 import sys
 
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR
 
 _SKILL_DIR = CLAUDE_DIR / "skills" / "_atlassian_skills" / "confluence_create_page"
 if str(_SKILL_DIR) not in sys.path:

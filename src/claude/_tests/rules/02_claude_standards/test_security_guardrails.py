@@ -14,7 +14,7 @@ Ensures:
 - Read-only operations are distinguished from write operations
 """
 
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR
 
 SECURITY_GUARDRAILS_FILE = CLAUDE_DIR / "_rules" / "02_claude_standards" / "security" / "_security_guardrails.md"
 

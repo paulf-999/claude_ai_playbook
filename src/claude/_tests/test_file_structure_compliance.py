@@ -26,7 +26,7 @@ import re
 from pathlib import Path
 
 
-from _claude_dir import CLAUDE_DIR as CLAUDE_HOME
+from _shared_paths import CLAUDE_DIR as CLAUDE_HOME
 
 # Directories that are auto-generated, third-party, or out-of-scope and
 # should be skipped entirely (not scanned for naming compliance)
