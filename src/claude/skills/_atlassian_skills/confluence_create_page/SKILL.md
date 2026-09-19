@@ -42,6 +42,7 @@ Page created: https://yourteam.atlassian.net/wiki/spaces/DA/pages/12345
 - `reference/_error_recovery.md` — what to do when Confluence access, drafts, or publishing fail
 - `reference/_troubleshooting.md` — common issues, including publish timeouts
 - `reference/_adf_reference.md` — Atlassian Document Format details
+- `_quality_scorecard.md` — 7-dimension quality assessment
 
 ## 📌 Prerequisites
 
