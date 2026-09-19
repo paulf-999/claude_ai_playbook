@@ -25,7 +25,7 @@ Quarterly behavioral audit (manual):
 
 from _claude_dir import CLAUDE_DIR
 
-RULE_FILE = CLAUDE_DIR / "_rules" / "01_essentials" / "conventions" / "writing_style.md"
+RULE_FILE = CLAUDE_DIR / "_rules" / "01_essentials" / "claude_usage_standards" / "writing_style.md"
 
 
 def test_writing_style_tables_rule_exists():

@@ -74,7 +74,7 @@ ROI threshold: Manual effort > (Setup + maintenance) × 3
 Before proposing, confirm:
 
 - **Test exists:** Every hook needs a test — see `_rules/01_essentials/testing.md`
-- **Naming:** Use `hook_<type>_<domain>.sh` format — see `_rules/01_essentials/conventions/naming_standards.md`
+- **Naming:** Use `hook_<type>_<domain>.sh` format — see `_rules/01_essentials/claude_usage_standards/naming_standards.md`
 - **Registration:** Hook declared in settings.json with explicit event matcher
 - **No wildcards:** Register specific events, not broad matchers
 
@@ -94,7 +94,7 @@ After a hook is created:
 
 - `_rules/02_claude_standards/behaviour.md` → "Before proposing" section (hook risk flags)
 - `_rules/01_essentials/guiding_principles.md` → "Intentionality gates everything" + "Automation ROI"
-- `_rules/01_essentials/conventions/naming_standards.md` → Hook naming convention
+- `_rules/01_essentials/claude_usage_standards/naming_standards.md` → Hook naming convention
 - `_rules/01_essentials/testing.md` → Hook test requirements
 - Parent: `task_request_conventions.md` — Behavioral conventions for user request patterns
 

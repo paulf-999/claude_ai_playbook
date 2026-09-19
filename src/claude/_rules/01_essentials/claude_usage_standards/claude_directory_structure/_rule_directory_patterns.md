@@ -71,7 +71,7 @@ _rules/01_essentials/
 
 ## ✅ Examples & Checklist
 
-@~/.claude/_rules/01_essentials/conventions/claude_directory_structure/_rule_directory_patterns/_examples_and_checklist.md
+@~/.claude/_rules/01_essentials/claude_usage_standards/claude_directory_structure/_rule_directory_patterns/_examples_and_checklist.md
 
 ---
 

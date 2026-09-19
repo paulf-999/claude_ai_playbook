@@ -25,11 +25,11 @@ These principles apply across all artefacts: files, directories, hooks, skills, 
 
 ## 🎯 Foundational Principles
 
-@~/.claude/_rules/01_essentials/conventions/naming_standards/_naming_principles.md
+@~/.claude/_rules/01_essentials/claude_usage_standards/naming_standards/_naming_principles.md
 
 ## 🏷️ Naming Patterns
 
-@~/.claude/_rules/01_essentials/conventions/naming_standards/_claude_naming_patterns.md
+@~/.claude/_rules/01_essentials/claude_usage_standards/naming_standards/_claude_naming_patterns.md
 
 ---
 

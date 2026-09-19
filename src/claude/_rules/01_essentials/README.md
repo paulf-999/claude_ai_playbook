@@ -30,7 +30,7 @@ Each rule follows a consistent format:
 
 ## 🔗 Related
 
-- **`conventions/`** — Child files for naming standards, writing style, directory structure
+- **`claude_usage_standards/`** — Child files for naming standards, writing style, directory structure
 - **`behaviour/`** — Child files for implementation gates and behavioural guidance
 - **`03_authoring_guidelines/`** — Meta-guidance for authoring rules, skills, and agents
 - **`02_claude_standards/`** — Quality gates and operational standards (includes behaviour/, security.md, testing.md)

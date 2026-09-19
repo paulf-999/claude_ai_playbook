@@ -28,7 +28,7 @@ Before proposing any new artefact, run these gates in order:
 - **Agents:** `<name>_agent.py` or domain-grouped subdirectories
 - **Processes:** snake_case, descriptive (e.g., `session_kickoff.md`)
 
-**Reference:** `~/.claude/_rules/01_essentials/conventions/naming_standards.md` (parent) → `_claude_naming_patterns.md` (child file with detailed patterns)
+**Reference:** `~/.claude/_rules/01_essentials/claude_usage_standards/naming_standards.md` (parent) → `_claude_naming_patterns.md` (child file with detailed patterns)
 
 **Action:** If naming violates convention, **recommend the corrected name directly** (no options needed — the standard is clear).
 
@@ -45,7 +45,7 @@ Before proposing any new artefact, run these gates in order:
 - **hooks/** — enforcement and style-guide hooks
 - **agents/** — custom sub-agents (domain-grouped subdirectories: `agents/core/`, `agents/tools/`, etc.)
 
-**Reference:** `~/.claude/_rules/01_essentials/conventions/claude_directory_structure.md` (parent) → `_claude_directory_organization.md` (full tree) + `_claude_directory_naming.md` (naming patterns)
+**Reference:** `~/.claude/_rules/01_essentials/claude_usage_standards/claude_directory_structure.md` (parent) → `_claude_directory_organization.md` (full tree) + `_claude_directory_naming.md` (naming patterns)
 
 **Action:** If placement is wrong, **recommend the correct directory directly** (no options; the standard is clear).
 

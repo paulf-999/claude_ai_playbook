@@ -8,23 +8,23 @@
 
 ## 📋 Contents
 
-- [Directory structure](#-directory-structure) — where files and directories belong (see `conventions/claude_directory_structure.md`)
-- [Naming standards](#-naming-standards) — self-describing, unambiguous naming (see `conventions/naming_standards.md`)
-- [Writing style](#-writing-style) — scannable, user-friendly writing conventions (see `conventions/writing_style.md`)
+- [Directory structure](#-directory-structure) — where files and directories belong (see `claude_usage_standards/claude_directory_structure.md`)
+- [Naming standards](#-naming-standards) — self-describing, unambiguous naming (see `claude_usage_standards/naming_standards.md`)
+- [Writing style](#-writing-style) — scannable, user-friendly writing conventions (see `claude_usage_standards/writing_style.md`)
 
 ---
 
 ## 🗂️ Directory structure
 
-@~/.claude/_rules/01_essentials/conventions/claude_directory_structure.md
+@~/.claude/_rules/01_essentials/claude_usage_standards/claude_directory_structure.md
 
 ## 📛 Naming standards
 
-@~/.claude/_rules/01_essentials/conventions/naming_standards.md
+@~/.claude/_rules/01_essentials/claude_usage_standards/naming_standards.md
 
 ## ✏️ Writing style
 
-@~/.claude/_rules/01_essentials/conventions/writing_style.md
+@~/.claude/_rules/01_essentials/claude_usage_standards/writing_style.md
 
 ---
 

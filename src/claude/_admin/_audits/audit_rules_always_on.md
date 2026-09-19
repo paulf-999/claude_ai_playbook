@@ -18,8 +18,8 @@
 | **Must** | [**security.md**](~/.claude/_rules/01_essentials/security.md) | `01_essentials/` | 50 | 9 | 9 | 9 | 9 | 9 | 9 | **9.00** | 🌟 Exemplary | • Secrets would be hardcoded into commits<br>• Vulnerabilities (injection, SQL, auth) would be introduced<br>• Credential exposure risk increases |
 | **Must** | [**mcp_trust_model.md**](~/.claude/_rules/01_essentials/mcp_trust_model.md) | `01_essentials/` | 96 | 9 | 9 | 8 | 9 | 9 | 9 | **8.90** | ✅ Exemplary | • MCP responses treated as instructions<br>• Injection attacks would be undetected<br>• Data exfiltration risk via external sources |
 | **Must** | [**security_guardrails.md**](~/.claude/_rules/02_claude_internal/security_guardrails.md) | `02_claude_internal/` | 34 | 9 | 9 | 9 | 9 | 9 | 9 | **9.00** | 🌟 Exemplary | • Prompt injection attacks would be undetected<br>• External instructions treated as directives<br>• Secrets could leak via external content |
-| **Should** | [**writing_style.md**](~/.claude/_rules/01_essentials/conventions/writing_style.md) | `01_essentials/` | 73 | 9 | 9 | 8 | 8 | 9 | 9 | **8.70** | ✅ Exemplary | • Content would lack consistency across domains<br>• Readability would suffer; scannability lost<br>• Audience calibration would be lost |
-| **Should** | [**naming_standards.md**](~/.claude/_rules/01_essentials/conventions/naming_standards.md) | `01_essentials/` | 33 | 9 | 9 | 9 | 9 | 9 | 9 | **9.00** | 🌟 Exemplary | • Identifiers would be inconsistent and ambiguous<br>• Code readability and maintainability would suffer<br>• Onboarding cost for new contributors would increase |
+| **Should** | [**writing_style.md**](~/.claude/_rules/01_essentials/claude_usage_standards/writing_style.md) | `01_essentials/` | 73 | 9 | 9 | 8 | 8 | 9 | 9 | **8.70** | ✅ Exemplary | • Content would lack consistency across domains<br>• Readability would suffer; scannability lost<br>• Audience calibration would be lost |
+| **Should** | [**naming_standards.md**](~/.claude/_rules/01_essentials/claude_usage_standards/naming_standards.md) | `01_essentials/` | 33 | 9 | 9 | 9 | 9 | 9 | 9 | **9.00** | 🌟 Exemplary | • Identifiers would be inconsistent and ambiguous<br>• Code readability and maintainability would suffer<br>• Onboarding cost for new contributors would increase |
 | **Should** | [**skill_authoring.md**](~/.claude/_rules/01_essentials/skill_authoring.md) | `01_essentials/` | 41 | 9 | 9 | 9 | 9 | 8 | 10 | **8.95** | ✅ Exemplary | • Skills would lack quality enforcement<br>• Complexity could explode without bounds<br>• Scope creep would increase; validation would fail |
 | **Should** | [**memory/MEMORY.md**](~/.claude/memory/MEMORY.md) | `memory/` | 25 | 9 | 8 | 9 | 8 | 8 | 9 | **8.50** | ✅ Excellent | • Personal context and corrections lost<br>• Session-to-session memory would disappear<br>• Repeated guidance would be necessary |
 | **Should** | [**git.md**](~/.claude/_rules/02_claude_internal/git.md) | `02_claude_internal/` | 71 | 9 | 9 | 9 | 9 | 9 | 9 | **9.00** | 🌟 Exemplary | • Unsafe git patterns could execute silently<br>• Commits would lack standards and format<br>• Hook-execution attacks from untrusted repos possible |
@@ -156,7 +156,7 @@ All rules are in excellent condition. No critical improvements needed.
 
 ---
 
-**Audit status:** ✅ **Complete**  
-**All rules in excellent condition:** Yes  
-**Next review:** 2027-Q1 (Annual reset)  
+**Audit status:** ✅ **Complete**
+**All rules in excellent condition:** Yes
+**Next review:** 2027-Q1 (Annual reset)
 **Last updated:** 2026-08-19
