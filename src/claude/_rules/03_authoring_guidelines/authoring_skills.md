@@ -40,6 +40,10 @@
 
 @~/.claude/_rules/03_authoring_guidelines/authoring_skills/_scope_and_maintenance.md
 
+## 🧹 No Orphaned Files
+
+@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_no_orphaned_files.md
+
 ## 📈 Maturity Justification
 
 @~/.claude/_rules/03_authoring_guidelines/authoring_skills/_maturity_justification.md
