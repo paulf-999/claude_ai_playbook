@@ -13,10 +13,9 @@ Example usage:
 """
 
 import pathlib
-import sys
 import time
 import threading
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 # Field constraints
 MIN_TITLE_LENGTH = 3
@@ -55,7 +54,7 @@ def validate_title(title: Any) -> Tuple[bool, str]:
     return True, sanitized
 
 
-def validate_sections(sections: Any) -> Tuple[bool, str | List[str]]:
+def validate_sections(sections: Any) -> Tuple[bool, Union[str, List[str]]]:
     """Validate page sections: 1-10 unique sections, each non-empty.
 
     Args:
@@ -255,13 +254,13 @@ def phase_3_publish_page(
             parentPageId=None,
         )
         return {"success": True, "result": result}
-    except TimeoutError as e:
+    except TimeoutError:
         return {
             "success": False,
             "error": "Confluence API timeout after 120 seconds. Try publishing again.",
             "type": "timeout",
         }
-    except PermissionError as e:
+    except PermissionError:
         return {
             "success": False,
             "error": f"Permission denied: You lack write access to space {details.get('space')}",
@@ -276,7 +275,7 @@ def phase_3_publish_page(
                 "type": "invalid_space",
             }
         return {"success": False, "error": str(e), "type": "validation_error"}
-    except ConnectionError as e:
+    except ConnectionError:
         return {
             "success": False,
             "error": "Network error: Cannot reach Confluence. Check your internet connection.",
@@ -433,6 +432,36 @@ def parse_timeout_arg(args: List[str]) -> int:
     return default_timeout
 
 
+def _aborted_result(elapsed: int, draft_path: Optional[pathlib.Path]) -> Dict[str, Any]:
+    """Build the {"status": "aborted", ...} result shared by several exit paths."""
+    return {
+        "status": "aborted",
+        "elapsed": elapsed,
+        "draft_path": str(draft_path) if draft_path else None,
+    }
+
+
+def _handle_timeout_choice(
+    choice: str,
+    elapsed: int,
+    max_total_wait: int,
+    draft_path: Optional[pathlib.Path],
+) -> Tuple[Optional[Dict[str, Any]], Optional[int]]:
+    """Resolve the user's [A]bort/[R]etry/[C]ontinue response to the timeout dialog.
+
+    :return: (result, new_timeout) — result is set (and the caller should
+        return it) for abort/retry/invalid; new_timeout is set (and the
+        caller should keep polling) for continue.
+    :rtype: tuple
+    """
+    if choice == "R":
+        return {"status": "retry_requested", "elapsed": elapsed}, None
+    if choice == "C":
+        return None, min(elapsed + 240, max_total_wait)
+    # "A" and any invalid choice both abort.
+    return _aborted_result(elapsed, draft_path), None
+
+
 def create_page_with_timeout(
     tool_call: Callable[[], Dict[str, Any]],
     timeout_seconds: int = 120,
@@ -477,39 +506,20 @@ def create_page_with_timeout(
 
         # Check if we've exceeded max wait
         if elapsed >= max_total_wait:
-            return {
-                "status": "aborted",
-                "elapsed": elapsed,
-                "draft_path": str(draft_path) if draft_path else None,
-            }
+            return _aborted_result(elapsed, draft_path)
 
         # Check if we've exceeded current timeout
         if elapsed >= current_timeout:
-            # Show timeout dialog
             dialog = format_timeout_dialog(elapsed, remaining_attempts=1)
             try:
                 choice = input(dialog).strip().upper()
             except (EOFError, KeyboardInterrupt):
                 choice = "A"
 
-            if choice == "A":
-                return {
-                    "status": "aborted",
-                    "elapsed": elapsed,
-                    "draft_path": str(draft_path) if draft_path else None,
-                }
-            elif choice == "R":
-                return {"status": "retry_requested", "elapsed": elapsed}
-            elif choice == "C":
-                # Extend by 4 more minutes, but cap at 6 total
-                current_timeout = min(elapsed + 240, max_total_wait)
-            else:
-                # Invalid choice, default to abort
-                return {
-                    "status": "aborted",
-                    "elapsed": elapsed,
-                    "draft_path": str(draft_path) if draft_path else None,
-                }
+            result, new_timeout = _handle_timeout_choice(choice, elapsed, max_total_wait, draft_path)
+            if result is not None:
+                return result
+            current_timeout = new_timeout
 
         # Wait a bit before checking again
         time.sleep(1)
