@@ -39,7 +39,7 @@ Use this decision framework:
 
 ## Writing Your Maturity Justification
 
-Document in `reference/_quality_scorecard.md`:
+Document in `_quality_scorecard.md`:
 
 ```markdown
 ## Maturity Justification

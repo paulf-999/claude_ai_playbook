@@ -133,7 +133,7 @@ This agent:
 ## [Optional] References
 
 Link to supporting documentation:
-- `reference/_quality_scorecard.md` — Maturity justification and dimensions
+- `_quality_scorecard.md` — Maturity justification and dimensions
 - `reference/_implementation.md` — Workflow phases and behavioral details
 - `evals.yaml` — Test scenarios validating agent behavior
 

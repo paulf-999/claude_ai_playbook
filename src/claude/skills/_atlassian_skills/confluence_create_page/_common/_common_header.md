@@ -1,3 +1,9 @@
+---
+date_created: "2026-06-07"
+date_updated: "2026-09-19"
+status: active
+---
+
 # Standard ADF page header
 
 All `confluence_create_page` patterns must include this header at the start of every generated page. Read this file and include the nodes below — in order — as the first items in the ADF `content` array.

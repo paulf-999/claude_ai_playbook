@@ -1,3 +1,9 @@
+---
+date_created: "2026-09-07"
+date_updated: "2026-09-19"
+status: active
+---
+
 # Design Rationale — confluence_create_page
 
 Why we chose the Phase 1a/1b/2/3 architecture instead of alternatives.

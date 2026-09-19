@@ -77,4 +77,4 @@ Periodic config health checks (monthly/quarterly) to maintain quality standards 
 - `evals.yaml` — 34 test scenarios covering all phases and edge cases
 
 **Quality & Design:**
-- `reference/_quality_scorecard.md` — Quality assessment and Draft maturity justification
+- `_quality_scorecard.md` — Quality assessment and Draft maturity justification

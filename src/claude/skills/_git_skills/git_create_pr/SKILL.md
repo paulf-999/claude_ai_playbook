@@ -42,6 +42,4 @@ PR #1234 created: https://github.com/org/repo/pull/1234
 ---
 
 **For detailed specifications, see:**
-- `reference/_implementation.md` — Phase 1/2/3 logic, error handling, validation
-- `reference/_formats.md` — Conventional Commits rules, branch naming, PR formatting
-- `reference/_quality_scorecard.md` — Quality assessment and design rationale
+- `reference/_phase1_gather.md` — gather-info logic, branch/commit/PR-title/PR-body derivation, and label mapping

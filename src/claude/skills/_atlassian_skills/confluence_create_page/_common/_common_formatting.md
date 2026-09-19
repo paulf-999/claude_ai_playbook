@@ -1,3 +1,9 @@
+---
+date_created: "2026-06-07"
+date_updated: "2026-09-19"
+status: active
+---
+
 # Shared Confluence page formatting rules
 
 Apply these rules consistently to every page created by any `confluence_create_page` pattern.

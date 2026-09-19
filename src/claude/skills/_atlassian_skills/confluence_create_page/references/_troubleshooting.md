@@ -1,3 +1,9 @@
+---
+date_created: "2026-09-07"
+date_updated: "2026-09-19"
+status: active
+---
+
 # Troubleshooting — confluence_create_page
 
 Common issues and how to resolve them.

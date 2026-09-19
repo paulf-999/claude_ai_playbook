@@ -62,8 +62,9 @@ Creating knowledge graphs for large codebases where token cost for file reads is
 
 **Setup & Workflow:**
 - `reference/_workflow.md` — Five-phase setup procedure and recovery steps
+- `reference/_examples.md` — Example setup scenarios
 - `evals.yaml` — Six test scenarios covering all phases
 
 **Quality:**
-- `reference/_quality_scorecard.md` — Quality assessment and Draft maturity justification
-
+- `_quality_scorecard.md` — Quality assessment and Draft maturity justification
+- `reference/_security.md` — Input validation and file-permission safeguards

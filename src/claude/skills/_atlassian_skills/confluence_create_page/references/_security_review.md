@@ -1,3 +1,9 @@
+---
+date_created: "2026-09-07"
+date_updated: "2026-09-19"
+status: active
+---
+
 # Security Review — confluence_create_page
 
 Threat model, mitigations, and security considerations for v1.0.
@@ -23,8 +29,8 @@ Threat model, mitigations, and security considerations for v1.0.
 
 ### Message (Phase 1a: Context Detection)
 
-**Field:** User message for context extraction  
-**Attack:** Prompt injection via keywords like "ignoring previous instructions"  
+**Field:** User message for context extraction
+**Attack:** Prompt injection via keywords like "ignoring previous instructions"
 **Validation:**
 - Regex-based pattern matching (not evaluated)
 - Extraction limited to ~200 char match window
@@ -39,8 +45,8 @@ context = detect_context_from_message(message)
 
 ### Outline (Phase 1a Input)
 
-**Field:** Page outline/topic  
-**Attack:** Malicious characters in outline used in filename or API call  
+**Field:** Page outline/topic
+**Attack:** Malicious characters in outline used in filename or API call
 **Validation:**
 - Trimmed of whitespace
 - Passed to Confluence as plain text (not interpreted)
@@ -55,7 +61,7 @@ outline = "../../etc/passwd OR 1=1 DROP TABLE"
 
 ### Title (Phase 1b/1c Input)
 
-**Field:** Page title  
+**Field:** Page title
 **Constraints:** 3-255 chars, non-whitespace
 **Validation:**
 ```python
@@ -66,7 +72,7 @@ is_valid, result = validate_title(user_title)
 
 ### Space Key (Phase 2 Input)
 
-**Field:** Confluence space identifier  
+**Field:** Confluence space identifier
 **Constraints:** 2-10 chars, alphanumeric only, uppercase
 **Validation:**
 ```python
@@ -77,7 +83,7 @@ is_valid, result = validate_space(space)
 
 ### Sections (Phase 2 Input)
 
-**Field:** List of section titles  
+**Field:** List of section titles
 **Constraints:** 1-10 items, unique, non-empty
 **Validation:**
 ```python
@@ -89,7 +95,7 @@ is_valid, result = validate_sections(sections)
 
 ### Pattern (Phase 2 Input)
 
-**Field:** Content pattern name  
+**Field:** Content pattern name
 **Constraints:** Must be from predefined list
 **Validation:**
 ```python

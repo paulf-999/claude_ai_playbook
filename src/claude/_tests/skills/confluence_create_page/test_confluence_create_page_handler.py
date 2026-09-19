@@ -18,6 +18,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from confluence_create_page_handler import (
+    VALID_PATTERNS,
     validate_title,
     validate_sections,
     validate_pattern,
@@ -126,9 +127,9 @@ class TestValidation:
         assert "invalid" in message.lower()
 
     def test_validate_pattern_all_valid_options(self):
-        """All valid patterns pass."""
-        patterns = ["general_page", "requirements", "design_decision", "incident_report", "how_to"]
-        for p in patterns:
+        """All currently-valid patterns pass — derived from VALID_PATTERNS so this
+        test tracks additions/removals rather than hardcoding a stale list."""
+        for p in VALID_PATTERNS:
             is_valid, _ = validate_pattern(p)
             assert is_valid is True, f"Pattern '{p}' should be valid"
 
