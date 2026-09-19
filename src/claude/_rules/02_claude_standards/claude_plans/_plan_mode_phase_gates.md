@@ -79,7 +79,9 @@ Proceed? (yes/no/adjust)
 
 Claude Code's plan-mode harness assigns a scratch plan file under `~/.claude/plans/<slug>.md` — auto-generated, no underscore, not date-prefixed. That is the *only* file editable during plan mode, but it is not the durable plan archive.
 
-- 📤 **Copy on exit:** the moment `ExitPlanMode` is approved and before any implementation step begins, copy the finalized plan content into `~/.claude/_plans/<date>_<topic>.md`, date-prefixed per `writing_style.md`'s drafts/errors convention, formatted per `_plan_file_format.md`.
+- 📤 **Copy on exit:** the moment `ExitPlanMode` is approved and before any implementation step begins, copy the finalized plan content into `<resolved-home>/.claude/_plans/<date>_<topic>.md`, date-prefixed per `writing_style.md`'s drafts/errors convention, formatted per `_plan_file_format.md`.
+- ⚠️ **Resolve `~` before calling Write, every time:** the Write tool requires an absolute path and does not perform shell tilde-expansion — a literal `~` argument creates a real directory named `~` under whatever the current working directory happens to be, not the home directory. Always substitute the actual absolute home path (e.g. `/Users/<you>/.claude/_plans/...`) before the call.
+  - **Incident (2026-09-19):** exactly this happened — a prior session wrote the persisted plan to a literal `~/claude/_plans/...` path while the cwd was a project repo, creating `<repo>/~/claude/_plans/<slug>.md` inside that repo instead of the real archive. Confirmed via the stray file's content matching the plan actually being implemented in the following session.
 - 🗑️ **Scratch file is disposable:** once copied, the harness-assigned `~/.claude/plans/<slug>.md` file is no longer the source of truth — don't reference it in later turns or in the persisted plan's own content.
 - ✅ **Why:** the harness's plan-mode file lives in an auto-generated location outside version control and outside `_plans/`'s naming convention — without this step, approved plans never reach the durable, indexed archive.
 
