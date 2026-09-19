@@ -1,0 +1,106 @@
+---
+_metadata:
+    date_created: '2026-09-19'
+    date_updated: '2026-09-19'
+    status: active
+
+skill_name: jira_create
+
+evals:
+  # Phase 1 — gather details / happy path
+    - name: happy_path_task_ticket
+      description: Full flow — gather details, validate, create ticket via MCP
+      input:
+          prompt: create a ticket for the login bug, 2 story points
+      setup: {}
+      expected_output: >
+          Claude gathers type=Task (default), title, description, assignee, and
+          story points, validates story points against the 0.5 minimum, then
+          creates the ticket via mcp__atlassian__createJiraIssue and reports
+          the new issue's ID and link.
+      assertions:
+          - Claude gathers title, description, assignee, and story_points before validating
+          - phase_1_gather_details defaults issue type to Task when none is specified
+          - Claude does not call mcp__atlassian__createJiraIssue before Phase 2 validation passes
+
+    - name: mcp_unavailable
+      description: Atlassian MCP not enabled — skill stops before gathering details
+      input:
+          prompt: /jira_create
+      setup:
+          mcp_available: false
+      expected_output: >
+          Claude tells the user to run 'make enable_mcp server=Atlassian' and
+          restart Claude Code, per reference/error_handling.md's MCP Connection
+          Errors section, instead of attempting to gather ticket details.
+      assertions:
+          - Claude points the user to reference/error_handling.md's MCP Connection Errors section
+          - Claude does not proceed to Phase 1 (gather details) without a working MCP connection
+          - Claude does not fabricate a ticket ID or link when the MCP call cannot be made
+
+  # Phase 2 — validation
+    - name: validation_pass_story_points_minimum
+      description: Story points exactly at the 0.5 minimum boundary — passes validation
+      input:
+          title: Fix database timeout
+          description: Postgres queries timing out after 30s
+          story_points: 0.5
+          project: DATA
+      setup: {}
+      expected_output: >
+          phase_2_validate returns {"valid": True, "details": {...}} with
+          story_points coerced to 0.5; Phase 3 proceeds to call the MCP tool.
+      assertions:
+          - validate_story_points accepts a value exactly equal to MIN_STORY_POINTS (0.5)
+          - phase_2_validate does not add a story_points error when the boundary value is used
+          - Claude proceeds to ticket creation after validation passes
+
+    - name: validation_failure_story_points_below_minimum
+      description: Story points below 0.5 — phase_2_validate rejects before any MCP call
+      input:
+          title: Fix database timeout
+          description: Postgres queries timing out after 30s
+          story_points: 0.3
+          project: DATA
+      setup: {}
+      expected_output: >
+          create_jira_ticket returns {"success": False, "errors": [...]} with a
+          "Story points must be >= 0.5, got 0.3" message; no MCP call is made.
+      assertions:
+          - validate_story_points rejects 0.3 with a message naming MIN_STORY_POINTS
+          - phase_2_validate accumulates the error without calling phase_3_create_ticket
+          - Claude surfaces the validation error to the user instead of silently rounding up
+
+    - name: validation_failure_missing_title
+      description: Title missing entirely — required-field check fails
+      input:
+          description: Postgres queries timing out after 30s
+          story_points: 2
+          project: DATA
+      setup: {}
+      expected_output: >
+          create_jira_ticket returns {"success": False, "errors": ["Title is
+          required"]}; no MCP call is made.
+      assertions:
+          - validate_title rejects a missing (None) title with 'Title is required'
+          - phase_2_validate reports the title error even when story_points is valid
+          - Claude asks the user for a title rather than defaulting to a placeholder
+
+  # Phase 3 — ticket creation and reporting
+    - name: ticket_created_reports_id_and_link
+      description: Successful MCP call — Claude reports the new issue's ID and link
+      input:
+          title: Fix database timeout
+          description: Postgres queries timing out after 30s
+          story_points: 5
+          project: DATA
+      setup:
+          mcp_tool_call: returns_success_with_issue_key
+      expected_output: >
+          phase_3_create_ticket returns {"success": True, "result": {...}}
+          containing the issue key; Claude reports the issue ID and its Jira
+          browse link to the user.
+      assertions:
+          - phase_3_create_ticket passes the validated title as the summary field
+          - Claude reports both the issue ID and a browse link in its final response
+          - Claude does not report success if the MCP call raised an exception
