@@ -39,26 +39,23 @@ Use this decision framework:
 
 ## Writing Your Maturity Justification
 
-Document in `_quality_scorecard.md`:
+Document it in **SKILL.md's Best For line**, not in `_quality_scorecard.md` —
+that file is table-only (see `_quality_scorecard_template.md`); justification
+narrative belongs where a reader actually looks for it.
 
+Keep it to one sentence woven into the existing "Best for:" line: name the
+stage and the one or two things that stage doesn't yet cover.
+
+**Example:**
 ```markdown
-## Maturity Justification
-
-**Real problem solved:** <What recurring user need does this skill address?>
-
-**Use frequency:** <How often is this used per month? Data from sessions?>
-
-**Test coverage:** <# evals total; what's covered (happy paths, errors, edge cases)>
-
-**Dependency assessment:** <Battle-tested tools? Experimental?>
-
-**Scope assessment:** <Clear boundaries? Stable for v1.0? Future enhancements documented?>
-
-**Conclusion:** This skill justifies [Draft|Tactical|Strategic] maturity because:
-- [Evidence point 1]
-- [Evidence point 2]
-- [Evidence point 3]
+**Best for:** One-off pages using the general_page pattern. Currently at the
+**tactical** development stage — main path plus light error handling, not
+full edge-case coverage yet.
 ```
+
+Use the evidence table above (real problem, use frequency, test coverage,
+dependencies, scope maturity) to *choose* the stage — you don't need to write
+all five out per skill, just let them justify the one sentence you land on.
 
 ---
 

@@ -17,7 +17,7 @@ All new skills should follow this proven pattern:
 
 This pattern balances scannability (SKILL.md readable in <2 min) with comprehensive detail (reference/ files for implementation, formats, rationale).
 
-## 🚀 Create a Skill (7 Steps)
+## 🚀 Create a Skill (8 Steps)
 
 1. **Run `/skill_creator`** → answers questions → generates directory with template
 2. **Name it:** `<domain>_<action>` format (see `_core_standards.md` for naming rules and examples)
@@ -32,8 +32,9 @@ This pattern balances scannability (SKILL.md readable in <2 min) with comprehens
    - Reference: `~/.claude/_templates/skills/SKILL.md.template`
    - Keep to ~60 lines; externalize detail to `reference/` files
    - If SKILL.md exceeds 60 lines, detail belongs in reference/
-5. **Create `reference/` files** [REQUIRED]
-   - `_quality_scorecard.md` — dimensions + maturity justification
+5. **Create `_quality_scorecard.md`** [REQUIRED] — at skill root, not in `reference/`
+   - 7-dimension table only; maturity justification goes in SKILL.md's Best For line
+6. **Create `reference/` files** [REQUIRED]
    - `_implementation.md` — phases, logic, error handling
    - `_formats.md` (if applicable) — standards, validation, examples
 6. **Write `evals.yaml`** [REQUIRED] — THE standard testing approach
