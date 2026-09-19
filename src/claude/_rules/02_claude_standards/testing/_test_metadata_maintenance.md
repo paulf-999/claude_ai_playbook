@@ -64,7 +64,7 @@ Every 3 months, audit all tests in `~/.claude/_tests/`:
 ### Metadata Fields Explained
 
 - **Test quality score:** 1–10 rating (frozen until audit or refactor)
-- **Test complexity score:** 0–10 rating per `_complexity_scoring.md` — caps the achievable quality score
+- **Test complexity score:** 0–10 rating per `_test_metadata_complexity_scoring.md` — caps the achievable quality score
 - **Python style compliant:** Yes/No against `python.md` — re-check whenever the file is modified
 - **Date created:** When test was first written (never update)
 - **Version:** Semver for test contract; increment on breaking changes
@@ -84,5 +84,5 @@ When deprecating a test:
 
 ## 🔗 Related
 
-- Parent: `test_metadata.md` — format and scoring definitions
-- Sibling: `_complexity_scoring.md` — the complexity dimension referenced above
+- Parent: `_test_metadata.md` — format and scoring definitions
+- Sibling: `_test_metadata_complexity_scoring.md` — the complexity dimension referenced above

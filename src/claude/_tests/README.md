@@ -9,7 +9,8 @@ cd ~/.claude/_tests/rules && pytest -v
 ```
 
 Each table's **Quality**, **Created**, **Updated**, and **Version** columns are read directly from
-the test file's own metadata header — see `test_metadata.md` for the format and scoring rubric.
+the test file's own metadata header — see `testing.md`'s Test Metadata Standard section for the
+format and scoring rubric.
 
 ---
 
