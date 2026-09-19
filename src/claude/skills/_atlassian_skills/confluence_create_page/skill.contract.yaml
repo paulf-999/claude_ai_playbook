@@ -42,6 +42,9 @@ requires:
         - Atlassian MCP server enabled (mcp__atlassian__createConfluencePage)
     resources:
         - Confluence space "DA" (accessible)
+    mcp_servers:
+        - Atlassian
+    external: []
 
 dependencies:
     external:
