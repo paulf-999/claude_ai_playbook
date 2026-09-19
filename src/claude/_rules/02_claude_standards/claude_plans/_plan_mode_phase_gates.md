@@ -75,6 +75,14 @@ Proceed? (yes/no/adjust)
   - ⚠️ **Exception 1:** `~/.claude/TODO.md` is pre-authorized for editing during plan mode (task logging; non-risky bookkeeping; no permission needed). **Why:** Read-only content; editing doesn't risk the task.
   - ⚠️ **Exception 2:** Explicit slash commands (`/skill_name` or `/command_name`) bypass plan-mode gates entirely — NEVER ask permission, execute immediately. **Why:** Slash command IS user's explicit intent; asking for confirmation defeats the entire purpose of direct invocation. Do NOT show any confirmation prompts or options.
 
+## 📁 Persist the plan to `_plans/`
+
+Claude Code's plan-mode harness assigns a scratch plan file under `~/.claude/plans/<slug>.md` — auto-generated, no underscore, not date-prefixed. That is the *only* file editable during plan mode, but it is not the durable plan archive.
+
+- 📤 **Copy on exit:** the moment `ExitPlanMode` is approved and before any implementation step begins, copy the finalized plan content into `~/.claude/_plans/<date>_<topic>.md`, date-prefixed per `writing_style.md`'s drafts/errors convention, formatted per `_plan_file_format.md`.
+- 🗑️ **Scratch file is disposable:** once copied, the harness-assigned `~/.claude/plans/<slug>.md` file is no longer the source of truth — don't reference it in later turns or in the persisted plan's own content.
+- ✅ **Why:** the harness's plan-mode file lives in an auto-generated location outside version control and outside `_plans/`'s naming convention — without this step, approved plans never reach the durable, indexed archive.
+
 ## 🔗 Related
 
 - Parent: `claude_plans.md` — general phase-gate principle and chat-response format
