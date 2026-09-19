@@ -26,9 +26,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from _claude_dir import CLAUDE_DIR
-
-SKILLS_DIR = CLAUDE_DIR / "skills"
+from _shared_paths import CLAUDE_DIR, SKILLS_DIR
 
 # Discover all stable skill directories
 _stable_skill_dirs = [d for d in (skill_md.parent for skill_md in SKILLS_DIR.rglob("SKILL.md"))]

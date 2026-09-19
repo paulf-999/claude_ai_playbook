@@ -34,7 +34,7 @@ import subprocess
 import time
 from pathlib import Path
 
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR
 
 HOOK_SOURCE = CLAUDE_DIR / "hooks" / "hook_session_start_mcp_stale_settings.sh"
 

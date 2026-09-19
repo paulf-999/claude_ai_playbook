@@ -19,11 +19,9 @@ Validates:
 
 import re
 
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR, CLAUDE_MD, RULES_DIR
 
-RULES_DIR = CLAUDE_DIR / "_rules"
 ESSENTIALS_DIR = RULES_DIR / "01_essentials"
-CLAUDE_MD = CLAUDE_DIR / "CLAUDE.md"
 
 # Top-level files expected in 01_essentials
 # These are parent files that are imported in CLAUDE.md. Per the 5-tier reorg,

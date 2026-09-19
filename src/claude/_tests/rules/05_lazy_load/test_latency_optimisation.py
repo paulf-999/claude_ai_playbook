@@ -12,7 +12,7 @@ Validates that the rule file exists under its correct (British-spelled)
 name, its frontmatter matches, and it retains the key sections that guide
 temperature-based latency tuning.
 """
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR
 
 RULE_FILE = CLAUDE_DIR / "_rules" / "05_lazy_load" / "latency_optimisation.md"
 

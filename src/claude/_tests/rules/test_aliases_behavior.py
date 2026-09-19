@@ -14,11 +14,7 @@ Spot-checks 3-5 representative aliases to ensure:
 - Their documented behavior matches their implementation
 """
 
-from _claude_dir import CLAUDE_DIR
-
-ALIASES_FILE = CLAUDE_DIR / "aliases.md"
-SKILLS_DIR = CLAUDE_DIR / "skills"
-SETTINGS_FILE = CLAUDE_DIR / "settings.json"
+from _shared_paths import ALIASES_FILE
 
 
 def _parse_aliases_table():

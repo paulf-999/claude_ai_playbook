@@ -15,7 +15,7 @@ claude_plans.md + 2 children (2026-09-17).
 """
 import re
 
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR
 
 RULE_FILE = CLAUDE_DIR / "_rules" / "02_claude_standards" / "claude_plans" / "_plan_mode_phase_gates.md"
 

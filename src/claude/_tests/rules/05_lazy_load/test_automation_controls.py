@@ -16,10 +16,9 @@ Ensures:
 """
 import re
 
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import ALIASES_FILE, CLAUDE_DIR
 
 AUTOMATION_CONTROLS_FILE = CLAUDE_DIR / "_rules" / "05_lazy_load" / "automation_controls.md"
-ALIASES_FILE = CLAUDE_DIR / "aliases.md"
 
 
 def _read_automation_controls():

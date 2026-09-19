@@ -13,7 +13,7 @@
 Catches the exact bug classes found in the 2026-09-17/18 sessions:
 - Shell hooks hardcoding `~/.claude/...` or `~/claude/...` instead of resolving
   relative to the script's own location.
-- Python files calling `.expanduser()` outside `_claude_dir.py` (the one file
+- Python files calling `.expanduser()` outside `_shared_paths.py` (the one file
   whose job is real `~` resolution) instead of using `CLAUDE_DIR`.
 - Python module-level path constants hardcoding another machine's home
   directory (e.g. `/home/paul/...`, `/Users/someone/...`).
@@ -30,9 +30,8 @@ import re
 
 import pytest
 
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR, HOOKS_DIR
 
-HOOKS_DIR = CLAUDE_DIR / "hooks"
 TESTS_DIR = CLAUDE_DIR / "_tests"
 
 # Only real file-operation commands, not prose describing a convention (e.g. hook
@@ -51,7 +50,7 @@ HARDCODED_IMPORT_PREFIX = re.compile(r'\.startswith\(\s*["\']@~/(\.claude|claude
 # Files whose job is to talk *about* this rule, or to perform the one legitimate
 # ~-expansion (turning CLAUDE_CONFIG_DIR's default into a real path) — excluded
 # from the scans below so their own strings/calls aren't self-flagged.
-EXPANDUSER_EXEMPT = {"_claude_dir.py", "test_portable_paths.py"}
+EXPANDUSER_EXEMPT = {"_shared_paths.py", "test_portable_paths.py"}
 
 
 def test_no_hardcoded_home_in_hooks():
@@ -72,8 +71,8 @@ def test_no_hardcoded_home_in_hooks():
     )
 
 
-def test_no_expanduser_outside_claude_dir_py():
-    """Only _claude_dir.py may call .expanduser() — everywhere else should use CLAUDE_DIR."""
+def test_no_expanduser_outside_shared_paths_py():
+    """Only _shared_paths.py may call .expanduser() — everywhere else should use CLAUDE_DIR."""
     violations = []
     for py_file in TESTS_DIR.rglob("*.py"):
         if py_file.name in EXPANDUSER_EXEMPT:
@@ -85,7 +84,7 @@ def test_no_expanduser_outside_claude_dir_py():
                 violations.append(f"{py_file.relative_to(CLAUDE_DIR)}:{lineno}: {line.strip()}")
 
     assert not violations, (
-        "Files outside _claude_dir.py call .expanduser(), resolving ~ against the real "
+        "Files outside _shared_paths.py call .expanduser(), resolving ~ against the real "
         "$HOME instead of CLAUDE_DIR (see portable_paths.md):\n" + "\n".join(violations)
     )
 

@@ -12,6 +12,12 @@ Each table's **Quality**, **Created**, **Updated**, and **Version** columns are 
 the test file's own metadata header — see `testing.md`'s Test Metadata Standard section for the
 format and scoring rubric.
 
+**Utility (not a scored test):** `_shared_paths.py` — resolves `CLAUDE_DIR` (via `CLAUDE_CONFIG_DIR`,
+default `~/.claude`) plus the handful of path constants (`CLAUDE_MD`, `ALIASES_FILE`,
+`SETTINGS_FILE`, `SKILLS_DIR`, `HOOKS_DIR`, `RULES_DIR`) that were independently redeclared with
+identical values across multiple test files. Single-use, test-specific path constants stay local
+to their own test file.
+
 ---
 
 ## 📁 `hooks/`

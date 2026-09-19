@@ -15,9 +15,7 @@ Validates that lazy-load and context-efficiency principles are being followed:
 """
 import re
 
-from _claude_dir import CLAUDE_DIR
-
-CLAUDE_MD = CLAUDE_DIR / "CLAUDE.md"
+from _shared_paths import CLAUDE_DIR, CLAUDE_MD
 LAZY_LOAD_DIR = CLAUDE_DIR / "_rules" / "05_lazy_load"
 
 

@@ -20,7 +20,7 @@ from pathlib import Path
 
 import pytest
 
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import ALIASES_FILE, CLAUDE_DIR, CLAUDE_MD
 
 ALWAYS_ON_TIERS = [
     "01_essentials",
@@ -28,7 +28,7 @@ ALWAYS_ON_TIERS = [
     "03_authoring_guidelines",
     "04_claude_reference",
 ]
-ENTRY_FILES = [CLAUDE_DIR / "CLAUDE.md", CLAUDE_DIR / "aliases.md"]
+ENTRY_FILES = [CLAUDE_MD, ALIASES_FILE]
 
 
 def find_reachability_issues(rules_root: Path, entry_files: list[Path]) -> tuple[list[str], list[str]]:

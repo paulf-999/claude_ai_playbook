@@ -33,7 +33,7 @@ from pathlib import Path
 from typing import Dict, List
 import yaml
 
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import SKILLS_DIR
 
 # Canonical skill structure
 CANONICAL_SECTIONS = [
@@ -445,16 +445,15 @@ class SkillComplianceValidator:
 
 def get_all_skills() -> List[Path]:
     """Collect all installed skills from the configured Claude directory's skills/."""
-    skills_dir = CLAUDE_DIR / "skills"
-    if not skills_dir.exists():
+    if not SKILLS_DIR.exists():
         return []
 
     skills = []
-    for item in skills_dir.rglob("SKILL.md"):
+    for item in SKILLS_DIR.rglob("SKILL.md"):
         skill_path = item.parent
         # Skip templates, test directories, and dot-prefixed dirs (e.g. .trash/ —
         # Claude Code's own auto-managed sync/cleanup artifacts, not authored skills)
-        relative_parts = skill_path.relative_to(skills_dir).parts
+        relative_parts = skill_path.relative_to(SKILLS_DIR).parts
         if (
             "template" not in str(skill_path).lower()
             and "_tests" not in str(skill_path).lower()

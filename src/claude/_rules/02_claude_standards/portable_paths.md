@@ -26,9 +26,9 @@ Found in one session (2026-09-17), all three shipped without failing until teste
 ## ✅ How to apply
 
 **Python (tests, scripts):**
-- **Resolve via `CLAUDE_DIR`:** import `from _claude_dir import CLAUDE_DIR` and build paths as `CLAUDE_DIR / "hooks" / "x.sh"` — never `Path("~/.claude/hooks/x.sh").expanduser()`.
+- **Resolve via `CLAUDE_DIR`:** import `from _shared_paths import CLAUDE_DIR` and build paths as `CLAUDE_DIR / "hooks" / "x.sh"` — never `Path("~/.claude/hooks/x.sh").expanduser()`.
 - **Never hardcode a username or absolute path:** no `/home/<name>/...`, no `/Users/<name>/...` as a literal string used for real path resolution.
-- **`.expanduser()` is reserved for `_claude_dir.py` itself** — that's the one file whose job is turning `~` into a real path; nowhere else should call it.
+- **`.expanduser()` is reserved for `_shared_paths.py` itself** — that's the one file whose job is turning `~` into a real path; nowhere else should call it.
 - **Never hardcode the `@~/.claude/` or `@~/claude/` import-prefix string when parsing `@import` lines** — the config-dir name varies. Detect any `@~/<name>/` prefix generically and strip through the first two path segments; don't match on one literal convention.
 
 **Shell (hooks):**

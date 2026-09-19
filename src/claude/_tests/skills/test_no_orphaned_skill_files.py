@@ -33,9 +33,7 @@ import re
 import sys
 from pathlib import Path
 
-from _claude_dir import CLAUDE_DIR
-
-SKILLS_DIR = CLAUDE_DIR / "skills"
+from _shared_paths import CLAUDE_DIR, SKILLS_DIR
 
 EXEMPT_NAMES = {
     "SKILL.md",

@@ -13,7 +13,7 @@ the expected sections for pre-creation checklist and quality gates.
 """
 import re
 
-from _claude_dir import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR
 
 RULE_AUTHORING = CLAUDE_DIR / "_rules" / "03_authoring_guidelines" / "authoring_rules.md"
 
