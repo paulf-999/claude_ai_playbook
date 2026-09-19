@@ -104,4 +104,4 @@ See **[settings_json_recommendations/_tier2_3.md](settings_json_recommendations/
 - **Parent:** This doc
 - **Tier 2–3 settings:** [settings_json_recommendations/_tier2_3.md](settings_json_recommendations/_tier2_3.md)
 - **Enterprise settings:** [settings_json_recommendations/_enterprise.md](settings_json_recommendations/_enterprise.md)
-- **Security rules:** `~/.claude/_rules/security.md`
+- **Security rules:** `~/.claude/_rules/02_claude_standards/security.md`
