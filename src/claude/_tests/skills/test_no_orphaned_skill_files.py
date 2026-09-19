@@ -54,12 +54,21 @@ CONTENT_SUFFIXES = {".md", ".py", ".yaml", ".yml", ".json"}
 def _skill_dirs() -> list[Path]:
     """Return every skill directory (any directory containing a SKILL.md).
 
+    Skips dot-prefixed directories (e.g. ``.trash/``) — Claude Code's own
+    auto-managed sync/cleanup artifacts, not authored skills.
+
     :return: Sorted list of skill directory paths.
     :rtype: list[Path]
     """
     if not SKILLS_DIR.exists():
         return []
-    return sorted({p.parent for p in SKILLS_DIR.rglob("SKILL.md")})
+    return sorted(
+        {
+            p.parent
+            for p in SKILLS_DIR.rglob("SKILL.md")
+            if not any(part.startswith(".") for part in p.relative_to(SKILLS_DIR).parts)
+        }
+    )
 
 
 def _is_exempt(file_path: Path, skill_root: Path) -> bool:

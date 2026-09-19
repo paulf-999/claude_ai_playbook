@@ -17,7 +17,7 @@
   <!-- Source: Boris Cherny — Steps of AI Adoption https://claude.ai/code/artifact/bfdfaef9-bc62-4dfe-ba9e-c58a26c9accf -->
 - 🧪 **Rules require tests:** adding or modifying an **enforcement rule** in `_rules/` is not complete until a corresponding test exists in `_tests/rules/` or `_tests/hooks/` — propose the test alongside the rule, not as a follow-up.
   - **Note:** instructional guidance (rules Claude reads and follows, with no mechanical trigger) does not require a test — structural tests in `test_rules_structure.py` already cover file quality for all `_rules/` files.
-- 📋 **Session checkpoints:** proactively write a checkpoint to `~/_sessions/YYYY-MM-DD_<domain>_<topic>.md` at task completion and whenever context is accumulating (long tool-call sequences, many files touched).
+- 📋 **Session checkpoints:** proactively write a checkpoint to `~/_sessions/YYYY_MM_DD_<domain>_<topic>.md` at task completion and whenever context is accumulating (long tool-call sequences, many files touched).
   - **Include:** decisions made, files modified, open items, and current task state.
   - **Why:** Claude Code auto-compression can drop critical context — an explicit checkpoint ensures continuity across context windows.
 - 🧠 **Tune exploration for current models:** newer models explore more than older ones by default. Replace blanket "be thorough" defaults with targeted instructions.
