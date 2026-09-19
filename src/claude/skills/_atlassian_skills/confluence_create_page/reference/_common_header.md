@@ -8,7 +8,7 @@ status: active
 
 All `confluence_create_page` patterns must include this header at the start of every generated page. Read this file and include the nodes below — in order — as the first items in the ADF `content` array.
 
-Also read `~/.claude/skills/_atlassian_skills/confluence_create_page/_common/_common_formatting.md` and apply those formatting rules throughout the entire page body.
+Also read `~/.claude/skills/_atlassian_skills/confluence_create_page/reference/_common_formatting.md` and apply those formatting rules throughout the entire page body.
 
 ---
 

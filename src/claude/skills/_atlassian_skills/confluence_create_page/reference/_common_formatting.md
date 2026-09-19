@@ -13,7 +13,7 @@ Apply these rules consistently to every page created by any `confluence_create_p
 ## Section headings
 
 - All level-1 section headings must include an emoji prefix.
-- Use the standard emoji mapping in `_common/_common_header.md`. Choose a contextually appropriate emoji for any section not in the standard mapping.
+- Use the standard emoji mapping in `_common_header.md`. Choose a contextually appropriate emoji for any section not in the standard mapping.
 
 ---
 
