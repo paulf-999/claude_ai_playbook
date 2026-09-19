@@ -51,7 +51,7 @@ Self-improving development loop: capture recurring mistakes, promote only verifi
 
 ## References
 
-- `~/.claude/skills/claude_kaizen/evals/` — Test cases proving each rule works
+- `~/.claude/skills/_claude_skills/claude_kaizen/evals/` — Test cases proving each rule works
 - `~/.claude/_rules/learned/` — Auto-promoted rules with validation dates
 - `/claude_kaizen` handover plan — Complete architecture and 10-step build spec
 

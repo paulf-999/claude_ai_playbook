@@ -11,7 +11,7 @@ Example usage:
     )
 """
 
-from typing import Any, Callable, Dict, Optional, Tuple
+from typing import Any, Callable, Dict, Optional, Tuple, Union
 
 # Field constraints and Jira-specific mappings
 MIN_STORY_POINTS = 0.5
@@ -21,7 +21,7 @@ DEFAULT_ISSUE_TYPE = "Story"
 STORY_POINTS_FIELD_ID = "customfield_10016"
 
 
-def validate_story_points(points: Any) -> Tuple[bool, str | float]:
+def validate_story_points(points: Any) -> Tuple[bool, Union[str, float]]:
     """Validate story points >= 0.5.
 
     Args:
@@ -163,13 +163,13 @@ def phase_3_create_ticket(
             customFields={STORY_POINTS_FIELD_ID: details.get("story_points")} if details.get("story_points") else {}
         )
         return {"success": True, "result": result}
-    except TimeoutError as e:
+    except TimeoutError:
         return {
             "success": False,
-            "error": f"Jira API timeout after 30 seconds. Try again with --timeout-seconds 60.",
+            "error": "Jira API timeout after 30 seconds. Try again with --timeout-seconds 60.",
             "type": "timeout",
         }
-    except PermissionError as e:
+    except PermissionError:
         return {
             "success": False,
             "error": f"Permission denied: You lack write access to project {details.get('project')}",
@@ -184,7 +184,7 @@ def phase_3_create_ticket(
                 "type": "invalid_project",
             }
         return {"success": False, "error": str(e), "type": "validation_error"}
-    except ConnectionError as e:
+    except ConnectionError:
         return {
             "success": False,
             "error": "Network error: Cannot reach Jira. Check your internet connection.",

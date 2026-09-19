@@ -6,7 +6,7 @@ maturity: draft
 tags:
   criticality: should
   status: active
-  tested: false
+  tested: true
 tools: Read, mcp__atlassian__createJiraIssue
 ---
 
