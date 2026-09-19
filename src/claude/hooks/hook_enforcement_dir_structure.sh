@@ -33,8 +33,10 @@ TOOL_NAME=$(echo "${INPUT}" | jq -r '.tool_name // empty' 2>/dev/null)
 CMD=$(echo "${INPUT}" | jq -r '.tool_input.command // empty' 2>/dev/null)
 [[ "${CMD}" != *"mkdir"* ]] && exit 0
 
-# Only enforce within ~/.claude/ — project directories follow their own conventions.
-[[ "${CMD}" != *".claude"* ]] && exit 0
+# Only enforce within the Claude config dir — project directories follow their own conventions.
+# Checked against CLAUDE_ROOT_DIR (resolved relative to this script), not a hardcoded
+# string, so this works whether the config lives at ~/.claude/, ~/claude/, or a repo checkout.
+[[ "${CMD}" != *"${CLAUDE_ROOT_DIR}"* ]] && exit 0
 
 # Load directory structure rules from the appropriate file.
 DIR_STRUCTURE_RULES=""
