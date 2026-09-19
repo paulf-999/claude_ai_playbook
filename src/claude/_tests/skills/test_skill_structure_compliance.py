@@ -452,8 +452,14 @@ def get_all_skills() -> List[Path]:
     skills = []
     for item in skills_dir.rglob("SKILL.md"):
         skill_path = item.parent
-        # Skip if it's a template or test directory
-        if "template" not in str(skill_path).lower() and "_tests" not in str(skill_path).lower():
+        # Skip templates, test directories, and dot-prefixed dirs (e.g. .trash/ —
+        # Claude Code's own auto-managed sync/cleanup artifacts, not authored skills)
+        relative_parts = skill_path.relative_to(skills_dir).parts
+        if (
+            "template" not in str(skill_path).lower()
+            and "_tests" not in str(skill_path).lower()
+            and not any(part.startswith(".") for part in relative_parts)
+        ):
             skills.append(skill_path)
 
     return sorted(skills)

@@ -40,6 +40,13 @@ AUTO_GENERATED_DIRS = {
     "__pycache__",
     "graphify-out",  # third-party tool's own generated cache/output, not Claude-authored
     "_admin",  # personal audit/decision-log scratch area with its own ALL-CAPS convention
+    "file-history",  # Claude Code's own version-history store — UUID/hash@vN filenames
+    ".trash",  # Claude Code's own sync-cleanup holding area (see syncClaudeAiSkills)
+}
+
+# Root-level files Claude Code itself generates — not authored content
+AUTO_GENERATED_FILES = {
+    "mcp-needs-auth-cache.json",
 }
 
 # User-created directories that should exist (with underscore prefix)
@@ -193,7 +200,7 @@ class FileStructureValidator:
             # Eval fixture deliberately named after a real external repo slug
             # (Payroc's own repos use hyphens) — see payroc_engineering_naming_standards.md
             "dmt-scripts-claude_ai_playbook.yaml",
-        ]:
+        ] or filename in AUTO_GENERATED_FILES:
             return
 
         # Dotfiles (.gitkeep, .coverage, etc.) are tooling artifacts, not

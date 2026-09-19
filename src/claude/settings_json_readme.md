@@ -94,45 +94,11 @@ See `~/.claude/_rules/guiding_principles.md` for the decision framework applied 
 
 ---
 
-### `enabledPlugins`
+### Plugins
 
-**What it does:** Activates optional Claude Code plugins for specific workflows.
+**Current state:** No plugins enabled. `enabledPlugins` and `extraKnownMarketplaces` are intentionally absent from `settings.json` — not merely emptied, removed outright.
 
-**When set:** 2026-08-07 (pruned from 6 to 2 after context bloat audit)
-
-**Guiding principle:** Context efficiency is non-negotiable — removed plugins with zero observed value.
-
-**Current plugins (2):**
-
-| Plugin | Purpose | Enabled | Reason |
-|--------|---------|---------|--------|
-| `skill-creator` | Create/edit custom skills | ✅ Yes | Active use: custom skill creation (`/skill-creator`) |
-| `tokensave` | Token optimization (internal) | ✅ Yes | **Load-bearing** for token-aware workflows; governed by `_rules/claude_internal/claude_efficiency.md` |
-| `ralph-loop` | Loop automation (`/loop`, `/goal`) | ❌ Disabled | Not actively used; moved to `_wip/disabled_plugins.md` |
-| `security-guidance` | Security review prompts | ❌ Disabled | Ad-hoc tool only; moved to `_wip/disabled_plugins.md` |
-| `pyright-lsp` | Python LSP hints | ❌ Disabled | Convenience only; repos have own linting; moved to `_wip/disabled_plugins.md` |
-| `claude-md-management` | CLAUDE.md audits (`/claude-md-improver`) | ❌ Disabled | Manual editing works fine; moved to `_wip/disabled_plugins.md` |
-
-**To re-enable a plugin:** Edit `settings.json` and set the value to `true`, then run `claude --version` to reload config.
-
----
-
-### `extraKnownMarketplaces`
-
-**What it does:** Registers custom plugin registries so Claude Code can discover and install plugins from your internal sources.
-
-**When set:** 2026-08-07 (preserved during plugin audit)
-
-**Why:** Enables `tokensave@pyrc-agentic-context` plugin installation/updates. If removed, tokensave plugin updates will fail.
-
-**Guiding principle:** Reversible by design — trivial to add/remove; no downstream dependencies.
-
-**Registries:**
-
-| Registry | Repo | Purpose |
-|----------|------|---------|
-| `claude-plugins-official` | `anthropics/claude-plugins-official` | Official plugins (skill-creator, etc.) |
-| `pyrc-agentic-context` | `pyrc-ghe-engineering/pyrc-lib-agentic_context` | Payroc-internal plugins (tokensave) |
+**Guiding principle:** Reversible by design — if a plugin is needed again, add `enabledPlugins` (and, if it comes from a non-default registry, `extraKnownMarketplaces`) back with the specific entries required at that time, rather than reviving the removed audit history below.
 
 ---
 
@@ -194,6 +160,7 @@ See `~/.claude/_rules/guiding_principles.md` for the decision framework applied 
 | 2026-08-07 | `permissions.defaultMode` | Fixed placement (top-level → under `permissions`) | Claude Code expects it nested; was blocking plan mode activation |
 | 2026-08-07 | `hooks` | Removed entire section | 5 hooks (task_tracking, naming_convention, dir_structure, subagent_reads, style_guide_dispatch) were injecting 5000+ tokens/session with zero observed value |
 | 2026-08-07 | `enabledPlugins` | Removed 4 plugins | Context bloat audit: removed ralph-loop, security-guidance, pyright-lsp, claude-md-management; kept skill-creator + tokensave |
+| 2026-09-19 | `enabledPlugins`, `extraKnownMarketplaces` | Removed both keys entirely | Superseded the 2026-08-07 audit — no plugins are enabled |
 | 2026-08-07 | `permissions.allow` | Added `git show *`, `grep *` | Transcript analysis: 4 and 48 uses/session respectively; both read-only, safe |
 | 2026-08-07 | `permissions.deny` | Added 7-pattern secrets + destructive-op firewall | Backs advisory `security.md` rules with a mechanical guard; zero context cost. Adopted from `_reference/settings_json_recommendations.md` |
 | 2026-08-07 | `cleanupPeriodDays` | Set to `30` (explicit form of documented default) | Makes transcript retention an auditable choice. Adopted from `_reference/settings_json_recommendations.md` |

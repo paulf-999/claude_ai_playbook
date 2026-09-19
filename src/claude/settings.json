@@ -41,28 +41,6 @@
     ],
     "defaultMode": "plan"
   },
-  "enabledPlugins": {
-    "skill-creator@claude-plugins-official": true,
-    "tokensave@pyrc-agentic-context": true,
-    "ralph-loop@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true
-  },
-  "extraKnownMarketplaces": {
-    "claude-plugins-official": {
-      "source": {
-        "source": "github",
-        "repo": "anthropics/claude-plugins-official"
-      }
-    },
-    "pyrc-agentic-context": {
-      "source": {
-        "source": "github",
-        "repo": "pyrc-ghe-engineering/pyrc-lib-agentic_context"
-      }
-    }
-  },
   "showClearContextOnPlanAccept": true,
   "plansDirectory": "~/claude/_plans",
   "autoMemoryEnabled": true,

@@ -184,15 +184,16 @@ def test_no_hardcoded_secrets():
 
 
 def test_enabled_plugins_intentional():
-    """Enabled plugins should be documented and intentional."""
+    """If enabledPlugins is present, it must be a well-formed, non-empty dict.
+
+    No plugins are enabled by default (the intentional current state) — the
+    key is legitimately absent. This only guards against a malformed or
+    silently-empty block if one is ever added.
+    """
     settings = _load_settings()
-    assert "enabledPlugins" in settings, "settings.json should document enabled plugins"
+    if "enabledPlugins" not in settings:
+        return
 
     enabled = settings["enabledPlugins"]
     assert isinstance(enabled, dict), "enabledPlugins must be a dict"
-
-    # Plugins present should be intentional (not accumulated accidentally)
-    # Spot-check: skill-creator should be present (per config)
-    assert "skill-creator@claude-plugins-official" in enabled, (
-        "skill-creator plugin should be enabled per config"
-    )
+    assert enabled, "enabledPlugins should not be present if empty — remove the key instead"
