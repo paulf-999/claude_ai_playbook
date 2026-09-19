@@ -3,9 +3,10 @@ name: confluence_create_page
 version: 1.0.0
 summary: Create Confluence pages using the general_page pattern with local draft review and explicit approval
 maturity: tactical
-test_coverage_level: basic
-  # basic = evals/evals.json exists with a small number of scenarios, not yet
-  # comprehensive; matches tags.tested: false in SKILL.md
+test_coverage_level: comprehensive
+  # comprehensive = _tests/skills/confluence_create_page/ covers validation,
+  # phase orchestration, error handling, and the timeout mechanism (49 tests);
+  # matches tags.tested: true in SKILL.md
 
 dispatch:
     triggers:

@@ -6,7 +6,7 @@ maturity: tactical
 tags:
   criticality: should
   status: active
-  tested: false
+  tested: true
 tools: Read, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
 
@@ -31,7 +31,7 @@ $ /confluence_create_page create a page about the Q3 roadmap
 Page created: https://yourteam.atlassian.net/wiki/spaces/DA/pages/12345
 ```
 
-**Best for:** One-off pages using the general_page pattern in the `DA` space. Currently at the **tactical** development stage — main path plus light error handling, not full edge-case coverage. Only the general_page pattern is supported (more patterns are planned); the wide-view toggle still has to be set manually in Confluence. No automated test suite backs this yet (`tested: false`).
+**Best for:** One-off pages using the general_page pattern in the `DA` space. Currently at the **tactical** development stage — main path plus light error handling, not full edge-case coverage. Only the general_page pattern is supported (more patterns are planned); the wide-view toggle still has to be set manually in Confluence.
 
 ---
 

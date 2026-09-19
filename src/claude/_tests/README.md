@@ -111,6 +111,17 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 |---|---|---|---|---|---|
 | `test_skill_structure_compliance.py` | All installed skills follow the skill template structure | 3/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
 
+### `skills/confluence_create_page/`
+
+Behavioral tests for a code-backed skill — `confluence_create_page_handler.py` lives with
+the skill, not here; `conftest.py` adds the skill directory to `sys.path` so these tests
+can import it directly.
+
+| File | What it tests | Quality | Created | Updated | Version |
+|---|---|---|---|---|---|
+| `test_confluence_create_page_handler.py` | Validation, phase orchestration, and error handling in the handler | 9/10 | 2026-08-28 | 2026-09-19 | 1.0.0 |
+| `test_confluence_create_page_timeout.py` | The publish-timeout mechanism — trigger, abort/retry/continue, draft preservation, 6-minute cap | 8/10 | 2026-08-28 | 2026-09-19 | 1.1.0 |
+
 ---
 
 ## 📁 Top level
