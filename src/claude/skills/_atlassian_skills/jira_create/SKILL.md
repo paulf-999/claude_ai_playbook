@@ -10,56 +10,34 @@ tags:
 tools: Read, mcp__atlassian__createJiraIssue
 ---
 
-## Development stage
+## 🎯 Purpose
 
-This skill is currently at the **draft** stage — early, happy-path-only. What Claude does is limited accordingly:
+Create individual Jira tickets and epics with the fields your team actually needs:
+- **Gather details** — ticket type, title, description, assignee, story points
+- **Validate before creating** — story points must be ≥0.5
+- **Report the result** — displays the new issue's ID and link
 
-| Stage | Allowed |
-|---|---|
-| Early (draft) | Happy path only. Log gaps as TODOs, do not solve them. No refactoring. |
-| Stable (tactical) | Main path + light error handling. No gold-plating. |
-| Production-ready (strategic) | Full coverage, edge cases, documentation, evals expected. |
+## 💡 Example Usage
 
----
+```
+$ /jira_create create a ticket for the login bug, 2 story points
+[Phase 1] Gathering details: type=Task, title, description, assignee, story points
+[Phase 2] Validating: story points 2 ≥ 0.5 ✓
+          Creating ticket in Jira...
+[Phase 3] Ticket created: PROJ-1234
 
-## 📋 What This Skill Can Do
+PROJ-1234 created: https://yourteam.atlassian.net/browse/PROJ-1234
+```
 
-✅ **Create individual Jira tickets:** Title, description, assignee, story points
-✅ **Create Jira epics:** Name, description, assignee
-✅ **Validate constraints:** Story points ≥0.5
-
----
-
-## 🚫 What This Skill Can't Do
-
-❌ **Update existing tickets** — Only creates new ones
-❌ **Batch-create from templates** — One ticket at a time
-❌ **Manage sprints or components** — Not supported yet
-❌ **Create issue links** — Child issues not supported
+**Best for:** One ticket or epic at a time, with basic fields. Currently at the **draft** development stage — happy path only, gaps logged as TODOs rather than solved. Can't update existing tickets, batch-create from templates, manage sprints/components, assign labels, or create issue links between tickets yet.
 
 ---
+
+**For detailed specifications, see:**
+- `references/error_handling.md` — Atlassian connection errors and recovery steps
+- `references/field_constraints.md` — story point rules and other field validation
 
 ## 📌 Prerequisites
 
 - **Atlassian MCP enabled:** `make enable_mcp server=Atlassian` and Claude Code restarted
 - **Jira project access:** Write permission to target project
-
----
-
-## 🔧 How it works
-
-**Phase 1: Gather details** → Ask for ticket type, title, description, assignee, story points
-
-**Phase 2: Validate & create** → Validate story points ≥0.5, call `createJiraIssue` MCP method
-
-**Phase 3: Report result** → Display issue ID and link
-
----
-
-## 🧠 Known Gaps
-
-- **No template system:** Must provide details for each ticket individually.
-- **No sprint/component caching:** Recent selections not remembered.
-- **No labels/components:** Cannot assign labels or components yet.
-
----

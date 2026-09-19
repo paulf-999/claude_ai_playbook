@@ -10,72 +10,37 @@ tags:
 tools: Read, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
 
-## Development stage
+## 🎯 Purpose
 
-This skill is currently at the **tactical** stage — stable and battle-tested, but not the most comprehensive tier. What Claude does is limited accordingly:
+Create a Confluence page from a team-approved template, with a local draft you review and approve before anything is published:
+- **Gather details** — title, creator, status, purpose, and sections
+- **Local draft review** — generates a markdown draft, asks for approval, and iterates on your feedback before publishing
+- **Explicit publish** — only writes to Confluence after you approve the draft
+- **Timeout protection** — if Confluence hangs during publish, offers abort/retry/continue instead of waiting silently
 
-| Stage | Allowed |
-|---|---|
-| Early (draft) | Happy path only. Log gaps as TODOs, do not solve them. No refactoring. |
-| Stable (tactical) | Main path + light error handling. No gold-plating. |
-| Production-ready (strategic) | Full coverage, edge cases, documentation, evals expected. |
-
----
-
-## 🚀 How it works
-
-**Phase 1 — Gather page details:** Title, creator, status, purpose, sections
-
-**Phase 2 — Local Draft Review:** Generate markdown draft, request approval, iterate
-
-**Phase 3 — Publish to Confluence:** Create and publish after explicit approval
-
----
-
-## 📚 Documentation
-
-- **`_phases.md`** — Interactive phases and draft review process
-- **`_testing.md`** — Test cases validating core skill behavior
-- **`_roadmap.md`** — Phase 2+ planned enhancements (more patterns)
-
----
-
-## ⏱️ Timeout Protection
-
-This skill includes protection against Confluence API hangs. If a publish takes too long, you'll see a timeout dialog:
-
-**Default behavior:**
-- Normal publish: 30–40 seconds
-- 2-minute timeout: If still publishing after 120 seconds, shows dialog
-- Maximum 6-minute wait: Total elapsed time capped at 360 seconds
-
-**When timeout occurs:**
+## 💡 Example Usage
 
 ```
-⏱️  CONFLUENCE PUBLISH TIMEOUT
+$ /confluence_create_page create a page about the Q3 roadmap
+[Phase 1] Gathering details: title, creator, status, purpose, sections
+[Phase 2] Local draft ready — review at ~/.claude/_drafts/confluence/q3_roadmap.md
+          Approve, request changes, or cancel? (y/e/n): y
+[Phase 3] Publishing to Confluence...
+          ✓ Page created
 
-Your page has been publishing for 2 minutes (120 seconds).
-Confluence is not responding. Choose an action:
-
-[A]bort   — Cancel now, preserve draft in ~/.claude/_drafts/confluence/
-[R]etry   — Cancel and start a fresh publish attempt
-[C]ontinue — Wait 4 more minutes (max 6 minutes total)
-
-Enter your choice (A/R/C):
+Page created: https://yourteam.atlassian.net/wiki/spaces/DA/pages/12345
 ```
 
-**Customization:**
-- Use `--timeout-seconds N` to set custom timeout (e.g., `--timeout-seconds 60` for 1 minute)
-- Default: 120 seconds (2 minutes)
+**Best for:** One-off pages using the general_page pattern in the `DA` space. Currently at the **tactical** development stage — main path plus light error handling, not full edge-case coverage. Only the general_page pattern is supported (more patterns are planned); the wide-view toggle still has to be set manually in Confluence. No automated test suite backs this yet (`tested: false`).
 
 ---
 
-## ⚠️ Known gaps
-
-- Only general_page pattern (MVP) — Additional patterns deferred to Phase 2
-- Wide view toggle must be done manually in Confluence (API limitation)
-
----
+**For detailed specifications, see:**
+- `references/_phases.md` — the three interactive phases in full
+- `references/_error_recovery.md` — what to do when Confluence access, drafts, or publishing fail
+- `references/_troubleshooting.md` — common issues, including publish timeouts
+- `references/_roadmap.md` — patterns and features planned beyond this MVP
+- `references/_adf_reference.md` — Atlassian Document Format details
 
 ## 📌 Prerequisites
 
