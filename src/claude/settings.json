@@ -42,7 +42,7 @@
     "defaultMode": "plan"
   },
   "showClearContextOnPlanAccept": true,
-  "plansDirectory": "~/claude/_plans",
+  "plansDirectory": "/Users/paulfry/claude/_plans",
   "autoMemoryEnabled": true,
   "hooks": {
     "UserPromptSubmit": [
