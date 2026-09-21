@@ -74,7 +74,7 @@ Periodic config health checks (monthly/quarterly) to maintain quality standards 
 **Workflow & Implementation:**
 - `reference/_implementation.md` — 4-phase workflow (read → score → analyze → fix)
 - `reference/_scoring_guide.md` — Detailed scoring dimensions and criteria
-- `evals.yaml` — 34 test scenarios covering all phases and edge cases
+- `tests/evals.yaml` — 11 test scenarios covering all phases and edge cases
 
 **Quality & Design:**
 - `_quality_scorecard.md` — Quality assessment and Draft maturity justification

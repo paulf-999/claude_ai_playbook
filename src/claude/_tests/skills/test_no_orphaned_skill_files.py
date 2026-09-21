@@ -4,8 +4,8 @@
 # Test complexity score: 5/10
 # Python style compliant: Yes
 # Date created:      2026-09-19
-# Version:           1.1.0
-# Date updated:      2026-09-19
+# Version:           1.1.1
+# Date updated:      2026-09-21
 # ─────────────────────────────────────────────────────────
 
 """Generic orphaned-file detection for every skill under src/claude/skills/.
@@ -44,7 +44,7 @@ EXEMPT_NAMES = {
     "evals.yaml",
     ".coverage",
 }
-EXEMPT_DIR_NAMES = {"__pycache__", "evals", ".pytest_cache"}
+EXEMPT_DIR_NAMES = {"__pycache__", ".pytest_cache"}
 EXEMPT_SUFFIXES = {".pyc"}
 CONTENT_SUFFIXES = {".md", ".py", ".yaml", ".yml", ".json"}
 
