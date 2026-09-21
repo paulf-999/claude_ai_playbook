@@ -136,6 +136,6 @@ This ordering prioritizes active work, then surfaces quick wins (low-effort item
 - **Item 21** — /start-of-day skill (design complete, ready to implement)
 - **Item 33** — ponytail plugin ROI test (Phase 1 ready; metrics collection)
 
-**Archival note:** No rotation script exists — `rotate_todo.sh` and its hook wrapper were never built despite an earlier "Ready for production" claim in the completed items above (see `_tests/_archived/test_auto_rotate_todo.py` for the 2026-09-18 finding). Archive months manually for now by moving completed content into a dated file under `_archives/TODO/` until this is actually built.
+**Archival note:** No rotation script exists — `rotate_todo.sh` and its hook wrapper were never built despite an earlier "Ready for production" claim in the completed items above. Archive months manually for now by moving completed content into a dated file under `_archives/TODO/` until this is actually built.
 
 ---
