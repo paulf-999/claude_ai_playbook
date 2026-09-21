@@ -59,7 +59,7 @@ Capturing end-of-session activity for review, planning, and auditing. Generates 
 
 **Workflow & Implementation:**
 - `reference/_implementation.md` — 3-phase workflow (capture → review → plan)
-- `evals.yaml` — 6 test scenarios covering all phases
+- `tests/evals.yaml` — 6 test scenarios covering all phases
 
 **Quality & Design:**
 - `_quality_scorecard.md` — Quality assessment and Draft maturity justification

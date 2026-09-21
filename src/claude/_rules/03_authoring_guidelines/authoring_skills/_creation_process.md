@@ -37,13 +37,15 @@ This pattern balances scannability (SKILL.md readable in <2 min) with comprehens
 6. **Create `reference/` files** [REQUIRED]
    - `_implementation.md` — phases, logic, error handling
    - `_formats.md` (if applicable) — standards, validation, examples
-6. **Write `evals.yaml`** [REQUIRED] — THE standard testing approach
+7. **Write `tests/evals.yaml`** [REQUIRED] — THE standard testing approach
+   - Lives in `tests/`, never at skill root — "evals" is jargon to a non-technical reader
    - 10–15 scenarios organized by phase/feature
    - Each eval: name, description, input, setup, expected_output
    - Coverage: happy paths, error cases, edge cases
    - Count matches maturity level (Draft 5–8, Tactical 8–12, Strategic 12+)
    - Evals are THE source of truth; quality scorecard is scored *against* evals
-7. **Score complexity & submit**
+   - Also write `tests/README.md` — plain language: what the file is, how many scenarios, why
+8. **Score complexity & submit**
    - Complexity (0–10): Concepts (0–3) + Scope (0–3) + Dependencies (0–2) + Prerequisites (0–2)
    - Maturity gates: Draft ≤4, Tactical ≤6, Strategic ≤8, 9+ = must split
    - Pre-commit validates structure + naming + complexity

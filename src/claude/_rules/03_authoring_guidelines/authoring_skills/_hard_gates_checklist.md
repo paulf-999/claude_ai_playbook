@@ -23,11 +23,13 @@
 - [ ] **Complexity score [REQUIRED]:** 0–10 rating
   - [ ] Score ≤ maturity limit (Draft ≤4, Tactical ≤6, Strategic ≤8)
   - [ ] If over limit: reduce scope or split into multiple skills
-- [ ] **evals.yaml [REQUIRED]:** 10–15 scenarios organized by phase
+- [ ] **tests/evals.yaml [REQUIRED]:** 10–15 scenarios organized by phase
+  - [ ] Lives at `tests/evals.yaml`, not skill root
   - [ ] Each eval: name, description, input, setup, expected_output
   - [ ] Coverage: happy paths, error cases, edge cases, user interactions
   - [ ] Count matches maturity (Draft 5–8, Tactical 8–12, Strategic 12+)
   - [ ] evals.yaml is THE testing vehicle (not ad-hoc test_*_handler.py)
+- [ ] **tests/README.md [REQUIRED]:** plain-language explanation of what evals.yaml is
 - [ ] **Quality scorecard [REQUIRED]:** _quality_scorecard.md
   - [ ] 7 dimensions scored (Design, Complexity, Test Coverage, Code Quality, Security, Documentation, Standards)
   - [ ] Dimensions scored *against evals.yaml*, not independently

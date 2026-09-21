@@ -53,7 +53,7 @@ Wait for confirmation before proceeding.
 **Create the Confluence page** — do not execute this yet; proceed to the **Local Draft Review** phase below first. When you reach it (after draft approval): ask the user "Should the page title be prefixed with `WIP - `? (default: yes)", then create the page as a **draft** using `createConfluencePage` with `contentFormat: adf` and `status: draft` in the `DA` space.
 
 **ADF structure** — build the ADF body as a JSON document. Include the following nodes in the `content` array, in order:
-- **Header** — read `reference/_common_header.md` and include those nodes first.
+- **Header** — read `reference/common/_common_header.md` and include those nodes first.
 - **Body sections** — after the header, render each user-defined section as: a level-1 heading with an emoji prefix (choose a contextually appropriate emoji from the mapping in `_common_header.md`), followed by its content (`bulletList` for bullet points, `orderedList` for numbered steps, `table` for structured data, `paragraph` for prose), followed by a `rule` divider.
 
 Use the ADF conventions in `_common_header.md` throughout. Return the draft URL.

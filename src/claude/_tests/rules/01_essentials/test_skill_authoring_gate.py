@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Test quality score: 9/10
 # Date created:      2026-08-28
-# Version:           1.1.1
+# Version:           1.1.2
 # Date updated:      2026-09-21
 # ─────────────────────────────────────────────────────────
 
@@ -64,13 +64,14 @@ def find_test_file(skill_dir: Path) -> Path | None:
 
 
 def has_evals_coverage(skill_dir: Path) -> bool:
-    """Return True if the skill has evals.yaml — the standard skill testing artifact.
+    """Return True if the skill has tests/evals.yaml — the standard skill testing artifact.
 
     Per authoring_skills.md, evals.yaml (not a _tests/skills/ Python file) is
-    THE required testing approach for skills; a _tests/skills/ file is a
+    THE required testing approach for skills, and always lives at
+    <skill_dir>/tests/evals.yaml, not skill root; a _tests/skills/ file is a
     secondary behavioral test some skills also carry.
     """
-    return (skill_dir / "evals.yaml").exists() or (skill_dir / "evals").is_dir()
+    return (skill_dir / "tests" / "evals.yaml").exists()
 
 
 def load_skill_md_frontmatter(skill_dir: Path) -> dict:
@@ -165,7 +166,7 @@ def test_w3_test_coverage_matches_maturity(skill_dir):
 
     if test_file is None:
         if has_evals_coverage(skill_dir):
-            pytest.skip(f"{maturity} skill tested via evals.yaml, not a _tests/skills/ file")
+            pytest.skip(f"{maturity} skill tested via tests/evals.yaml, not a _tests/skills/ file")
             return
 
         frontmatter = load_skill_md_frontmatter(skill_dir)
@@ -176,8 +177,9 @@ def test_w3_test_coverage_matches_maturity(skill_dir):
         # incident, where a skill/hook was marked done without ever being built).
         assert not tested, (
             f"W3: {skill_dir.name} claims tags.tested: true in SKILL.md "
-            f"but has no test file and no evals.yaml "
-            f"(Expected: tests/skills/test_{skill_dir.name}*.py or evals.yaml)"
+            f"but has no test file and no tests/evals.yaml "
+            f"(Expected: _tests/skills/test_{skill_dir.name}*.py or "
+            f"{skill_dir.name}/tests/evals.yaml)"
         )
         # `tested: false` is an honest, disclosed gap — tracked debt, not a
         # gate failure. Maturity alone doesn't force a test file to exist.
