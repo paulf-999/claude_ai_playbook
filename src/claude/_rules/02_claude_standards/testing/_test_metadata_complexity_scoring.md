@@ -1,42 +1,30 @@
 # 🧮 Test Complexity Scoring (0–10)
 
-**Purpose:** Score how complex a test file is to write and maintain, using the same 0–10 formula `authoring_skills.md` already uses for skills — one consistent complexity model across the config, not two. Reward simplicity: a test can't claim top quality by being comprehensive at the cost of being complex.
+**Purpose:** Apply the config's shared complexity formula to tests — reward genuinely simple tests, and make "simple" and "thorough" achievable together rather than in tension.
 
 ---
 
 ## 📐 The formula
 
-**Complexity = Concepts (0–3) + Scope (0–3) + Dependencies (0–2) + Prerequisites (0–2)**
+@~/.claude/_rules/03_authoring_guidelines/_complexity_scoring.md
 
-| Dimension | 0 | 1 | 2 | 3 |
-|---|---|---|---|---|
-| **Concepts** — distinct behaviors/rules verified | 1 | 2–3 | 4–5 | 6+ |
-| **Scope** — how much of the config it touches | Single file | One directory | Multiple directories | Whole repo scan |
-| **Dependencies** — external tools beyond stdlib + pytest | None | 1 (e.g. `subprocess`, `jq`) | 2+ | — (capped at 2) |
-| **Prerequisites** — fixture/setup complexity | None | Simple fixture | Complex fixture/mocking | — (capped at 2) |
+Tests use the *inverted score* defined above: **complexity score = 10 − raw sum**, so a higher number means a simpler test — one concept, one file, no external dependencies, no fixtures scores 10; a sprawling, multi-directory, multi-dependency test scores near 0.
 
-**Example:** `test_portable_paths.md`'s test scans 2 directories (Scope 1), verifies 3 distinct patterns — hardcoded source, `.expanduser()`, home-dir constants (Concepts 1), uses no external tools (Dependencies 0), needs no fixtures (Prerequisites 0) → Complexity 2.
+**Example:** `test_portable_paths.md`'s test scans 2 directories (Scope 1), verifies 3 distinct patterns — hardcoded source, `.expanduser()`, home-dir constants (Concepts 1), uses no external tools (Dependencies 0), needs no fixtures (Prerequisites 0) → raw complexity 2 → **complexity score 8**.
 
 ---
 
-## 🔒 Complexity caps the achievable quality score
+## 🎯 Quality and complexity are independent, not opposed
 
-A complex test cannot claim excellence just by being thorough. Complexity sets a **ceiling** on quality score, independent of assertion/function counts:
+Assertion/function *count* (what the quality score measures) and structural complexity (Concepts/Scope/Dependencies/Prerequisites) are different axes. A test can run 20 assertions against a single file with no dependencies and still score complexity 8–10 — thoroughness doesn't require sprawl.
 
-| Complexity | Max quality score |
-|---|---|
-| **0–4** (simple) | 10 — no cap |
-| **5–6** (moderate) | 8 |
-| **7–8** (complex) | 6 |
-| **9–10** (very complex) | 4 |
+**New tests must reach quality ≥9 AND complexity score ≥7** (raw sum ≤3): write as many assertions and test functions as the artifact genuinely needs, but keep the test structurally simple — one concept, one file, minimal dependencies and fixtures. If hitting quality ≥9 seems to require raw complexity above 3, that's a signal to split the test, not to let complexity slide.
 
-**Why:** A 900-line test with 40 assertions scores high on the raw quality rubric (`_test_metadata.md`) but is expensive to maintain and hard to reason about when it breaks. Capping by complexity forces the simpler design — split a complex test into several simple ones rather than write one comprehensive, tangled file.
-
-**Consequence:** since `testing.md` requires new tests to reach quality ≥9/10, they must also keep complexity ≤4 — both constraints apply together, not one or the other.
+**Don't pad complexity to hit a number.** A single-file content-regression check (see `_concurrent_sessions.md`'s test) is *supposed* to be simple — its natural complexity score is already 8–10. Inflating its scope or dependencies just to move the number is the exact anti-pattern this scoring exists to catch.
 
 ---
 
 ## 🔗 Related
 
 - Parent: `_test_metadata.md` — the quality-score rubric this complements
-- Reference: `authoring_skills.md` — source of the Concepts/Scope/Dependencies/Prerequisites formula
+- `_complexity_scoring.md` (in `03_authoring_guidelines/`) — the shared formula this file applies

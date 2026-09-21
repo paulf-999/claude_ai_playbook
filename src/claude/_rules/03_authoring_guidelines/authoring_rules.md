@@ -60,6 +60,7 @@ Before writing any rule, answer these five essential questions:
 **Authoring & testing:**
 - `~/.claude/_templates/RULE.md.template` — two templates (principle-based vs. constraint-based)
 - `testing.md` — when tests are required; enforcement rules always need tests
+- `_complexity_scoring.md` (sibling file) — shared complexity formula; no maturity/complexity gate is defined for rules yet, but reference this rather than inventing a new formula if one is added
 
 **Principles & maintenance:**
 - `guiding_principles.md` — intentionality principle; evidence-gathering methods; review cadence (reset every ~6 months per Boris Cherny)

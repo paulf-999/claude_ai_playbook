@@ -18,7 +18,9 @@
 - **🔧 Breaking changes:** Changed behavior requires updated tests.
 - **🐛 Bug fixes:** Include regression test to prevent recurrence.
 
-**Exception:** Instructional content (README, documentation) does not require tests — `test_rules_structure.py` validates file quality.
+**Exception:** Instructional content (README, documentation) does not require *behavior-compliance* tests — whether Claude actually follows a rule isn't mechanically testable without an eval harness that grades a live session, which this repo doesn't have. `test_rules_structure.py` covers file quality for every rule by default.
+
+**But add a lightweight content-regression test** (assert key phrases survive, mirroring `test_git.py`'s pattern) when a rule documents a real incident or hard-won lesson — the value isn't proving compliance, it's catching silent loss of the rule's text in a future edit or merge. Don't add one reflexively for every rule; reserve it for content that would be costly to lose without anyone noticing.
 
 ---
 
