@@ -9,7 +9,7 @@
 - [Format](#-format)
 - [Quality Scoring](#-quality-scoring-1-10)
 - [New Tests Must Score ≥9/10](#-new-tests-must-score-910)
-- [Complexity Scoring](#-complexity-scoring) — reward simplicity, cap quality by complexity (see `_test_metadata_complexity_scoring.md`)
+- [Complexity Scoring](#-complexity-scoring) — reward simplicity; quality and complexity are independent floors, not a cap (see `_test_metadata_complexity_scoring.md`)
 - [Maintenance](#-maintenance) — gates, quarterly audit, protocol (see `_test_metadata_maintenance.md`)
 
 ---
@@ -52,7 +52,7 @@ Every test file in `~/.claude/_tests/` must open with this metadata header:
 
 ## 🎯 New tests must score ≥9/10
 
-**Any test Claude writes from now on must be built to reach quality ≥9/10** — not scored honestly after the fact at whatever level it lands. Design for 15+ assertions and 10+ test functions up front; a test that only reaches 5/10 or 6/10 wasn't finished.
+**Any test Claude writes from now on must be built to reach quality ≥9/10 AND complexity score ≥7/10** — not scored honestly after the fact at whatever level it lands. Design for 15+ assertions and 10+ test functions up front (quality), while keeping the test to one concept and one file with minimal dependencies/fixtures (complexity) — see `_test_metadata_complexity_scoring.md` for why these don't trade off against each other. A test that only reaches 5/10 or 6/10 quality wasn't finished; a test padded with unnecessary scope/dependencies just to look thorough missed the point.
 
 **Existing tests keep their current score** — this floor applies going forward, not retroactively. A 6/10 test written before this rule existed isn't a violation; a new 6/10 test is.
 

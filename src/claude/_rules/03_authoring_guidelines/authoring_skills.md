@@ -100,3 +100,4 @@ skill_name/
 - **naming_standards.md** — Foundational naming principles; skill naming patterns in child file
 - **testing.md** — Skill testing requirements by maturity level
 - **authoring_rules.md** — General rule authoring process (complementary to skill authoring)
+- **_complexity_scoring.md** (sibling file) — shared complexity formula this file's maturity gates and quality-scorecard dimension both draw from
