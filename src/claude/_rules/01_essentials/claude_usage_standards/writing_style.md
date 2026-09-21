@@ -28,6 +28,8 @@ Applies to **all** content Claude produces — responses, drafts, Confluence pag
   - `**Example:**` a concrete illustration
 - **One sentence per bullet:** if a bullet needs more than one sentence, use child bullets — never run multiple sentences in a single bullet.
 - **Brevity:** if a sentence can be cut without losing meaning, cut it.
+- **British English spelling:** use British spellings (organise, behaviour, centralise) over American (organize, behavior, centralize) throughout prose — matches this config's established house style (`behaviour.md`, not `behavior.md`).
+  - **Exception:** code identifiers, filenames, and function names that already use American spelling stay as-is (e.g. `test_aliases_behavior.py`) — don't rename real files or code to chase this.
 - **No transposition exemption:** moving, copying, or splitting existing content into new files does not exempt the output — apply house style on the first draft, never as a later pass.
 - **Tables for structured content:** use a table when comparing two or more categories that share identical column structures — not for a single list with no comparison dimension.
   - **Signal:** you're writing `**Category A:**` then `**Category B:**`, repeating the same fields for each — that's a table, not a bullet list.
