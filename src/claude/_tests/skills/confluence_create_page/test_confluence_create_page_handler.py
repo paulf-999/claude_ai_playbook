@@ -17,7 +17,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from confluence_create_page_handler import (
+from .confluence_create_page_handler import (
     VALID_PATTERNS,
     validate_title,
     validate_sections,

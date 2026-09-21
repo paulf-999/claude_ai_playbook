@@ -5,7 +5,7 @@ Validates: phase orchestration, input validation, MCP integration (mocked).
 
 import pytest
 from unittest.mock import MagicMock
-from jira_create_handler import (
+from .jira_create_handler import (
     validate_story_points,
     validate_title,
     phase_1_gather_details,
