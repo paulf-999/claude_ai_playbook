@@ -32,13 +32,14 @@ Before writing any rule, answer these five essential questions:
    - `02_claude_internal/` — how Claude operates (efficiency, git, memory, MCP trust)
    - `03_lazy_load/` — domain-specific or discretionary (style guides, tools, automation)
 
-## 🚀 Rule Creation (4 Steps)
+## 🚀 Rule Creation (5 Steps)
 
 1. **Answer the checklist above** — clarify scope before writing
 2. **Pick a template:** Use `~/.claude/_templates/RULE.md.template`
    - Template A (single principle, ~60 lines) vs. Template B (multiple patterns, ~100 lines)
 3. **Write the rule** — follow template structure, emoji headers, one sentence per bullet
 4. **Write tests:** Enforcement rules require tests in `_tests/rules/`. Instructional rules use structural checks.
+5. **Create a quality scorecard:** `_rules/quality_scorecards/<tier>/<rule_name>.md`, per `quality_scorecards/README.md`'s template — centralized, never `@import`ed.
 
 ## 📏 Quality Gates
 
@@ -61,6 +62,7 @@ Before writing any rule, answer these five essential questions:
 - `~/.claude/_templates/RULE.md.template` — two templates (principle-based vs. constraint-based)
 - `testing.md` — when tests are required; enforcement rules always need tests
 - `_complexity_scoring.md` (sibling file) — shared complexity formula; no maturity/complexity gate is defined for rules yet, but reference this rather than inventing a new formula if one is added
+- `_rules/quality_scorecards/README.md` — quality scorecard template and per-dimension criteria for rules
 
 **Principles & maintenance:**
 - `guiding_principles.md` — intentionality principle; evidence-gathering methods; review cadence (reset every ~6 months per Boris Cherny)
