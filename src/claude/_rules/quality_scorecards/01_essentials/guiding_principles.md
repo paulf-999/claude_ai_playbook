@@ -2,14 +2,14 @@
 
 | Dimension | Score | Notes |
 |---|---|---|
-| **Clarity** | 9/10 | Each principle has Description + Rationale + How-to-apply columns — actionable, not just aspirational. Table density is the only friction. |
-| **Complexity** | 7/10 | Raw complexity 3: 10 principles covers the whole Concepts range (capped at 6+), but single file, no dependencies, no fixtures. |
-| **Evidence of Need** | 9/10 | Actively cited by name across most other rules this session (`authoring_rules.md`, `_concurrent_sessions.md`, `_hooks_decision_framework.md`, etc.) — clearly in real use, not aspirational. |
-| **Token Cost Justification** | 10/10 | Tier 1, always-on, foundational — governs decision-making for every other rule in the config. Cost is unambiguously earned. |
-| **Structural Compliance** | 7/10 | Emoji header, Purpose statement, trailing newline, and table usage all correct per `writing_style.md` — but has no `## 🔗 Related` section, unlike almost every other rule file in this config. |
-| **Currency** | 9/10 | No stale references found; content matches how the config actually operates today. |
-| **Test Coverage** | 5/10 | `test_guiding_principles.py` exists and passes (3 behavioral tests), but self-rates 3/10 quality and hardcodes the `@~/.claude/` import prefix — a direct violation of `portable_paths.md`'s own rule against hardcoding that exact string. |
-| **Overall** | **8.0/10** | Strong, actively-used foundational rule; the two real gaps are a missing Related section and a pre-existing, unrelated quality issue in its test file. |
+| **Clarity** | 9/10 | • 📋 **Structure:** each principle has Description + Rationale + How-to-apply columns — actionable, not just aspirational<br>• 🔍 **Friction:** table density is the only drawback |
+| **Complexity** | 7/10 | • 🧮 **Raw complexity 3:** 10 principles covers the whole Concepts range (capped at 6+)<br>• 📄 **Everything else 0:** single file, no dependencies, no fixtures |
+| **Evidence of Need** | 9/10 | • 🔗 **Active use:** cited by name across most other rules this session (`authoring_rules.md`, `_concurrent_sessions.md`, `_hooks_decision_framework.md`, etc.)<br>• ✅ **Not aspirational:** clearly in real, ongoing use |
+| **Token Cost Justification** | 10/10 | • 🎯 **Scope:** Tier 1, always-on, foundational — governs decision-making for every other rule in the config<br>• 💰 **Verdict:** cost is unambiguously earned |
+| **Structural Compliance** | 7/10 | • ✅ **Compliant:** emoji header, Purpose statement, trailing newline, and table usage all correct per `writing_style.md`<br>• ❌ **Gap:** no `## 🔗 Related` section, unlike almost every other rule file in this config |
+| **Currency** | 9/10 | • 🔍 **Check:** no stale references found<br>• ✅ **Result:** content matches how the config actually operates today |
+| **Test Coverage** | 5/10 | • 🧪 **Exists:** `test_guiding_principles.py` has 3 behavioral tests, all passing<br>• 📉 **Self-rated:** the test file's own metadata says 3/10 quality<br>• 🚩 **Violation:** hardcodes the `@~/.claude/` import prefix, against `portable_paths.md`'s own rule |
+| **Overall** | **8.0/10** | • 💪 **Strength:** a strong, actively-used foundational rule<br>• ⚠️ **Gaps:** missing Related section, plus a pre-existing, unrelated quality issue in its test file |
 
 ---
 

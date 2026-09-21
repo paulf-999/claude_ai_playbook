@@ -23,15 +23,17 @@ One file per scored rule, mirroring the tier path: `_rules/quality_scorecards/<t
 
 | Dimension | Score | Notes |
 |---|---|---|
-| **Clarity** | X/10 | [Is the guidance unambiguous and actionable?] |
-| **Complexity** | X/10 | [Concepts+Scope+Dependencies+Prerequisites, inverted — see _complexity_scoring.md] |
-| **Evidence of Need** | X/10 | [Backed by real, recurring problems, or speculative?] |
-| **Token Cost Justification** | X/10 | [If always-on: is placement justified by session coverage?] |
-| **Structural Compliance** | X/10 | [writing_style.md / naming_standards.md adherence] |
-| **Currency** | X/10 | [Any stale references? Content still accurate?] |
-| **Test Coverage** | X/10 | [Structural test passes; content-regression test if it documents a real incident] |
-| **Overall** | **X.X/10** | [One-sentence assessment] |
+| **Clarity** | X/10 | • 🔍 **<keyword>:** is the guidance unambiguous and actionable?<br>• 🔍 **<keyword>:** [second point, if needed] |
+| **Complexity** | X/10 | • 🧮 **Raw complexity N:** Concepts+Scope+Dependencies+Prerequisites — see `_complexity_scoring.md` |
+| **Evidence of Need** | X/10 | • 🔗 **<keyword>:** backed by real, recurring problems, or speculative? |
+| **Token Cost Justification** | X/10 | • 🎯 **<keyword>:** if always-on, is placement justified by session coverage? |
+| **Structural Compliance** | X/10 | • ✅ **<keyword>:** writing_style.md / naming_standards.md adherence |
+| **Currency** | X/10 | • 🔍 **<keyword>:** any stale references? Content still accurate? |
+| **Test Coverage** | X/10 | • 🧪 **<keyword>:** structural test passes; content-regression test if it documents a real incident |
+| **Overall** | **X.X/10** | • 💪 **<keyword>:** [strength]<br>• ⚠️ **<keyword>:** [gap, if any] |
 ```
+
+**Notes column format:** bullet points, one per line, joined with `<br>` (standard markdown lists don't render inside table cells) — `• <emoji> **<bold keyword>:** <one point>`. Never a single run-on sentence. One point per bullet, matching `writing_style.md`'s general bullet convention and the same pattern used in `claude_plans/_plan_file_format.md`.
 
 ---
 
