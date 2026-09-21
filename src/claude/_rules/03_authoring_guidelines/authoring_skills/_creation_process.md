@@ -32,7 +32,7 @@ This pattern balances scannability (SKILL.md readable in <2 min) with comprehens
    - Reference: `~/.claude/_templates/skills/SKILL.md.template`
    - Keep to ~60 lines; externalize detail to `reference/` files
    - If SKILL.md exceeds 60 lines, detail belongs in reference/
-5. **Create `_quality_scorecard.md`** [REQUIRED] — at skill root, not in `reference/`
+5. **Create `quality_scorecard.md`** [REQUIRED] — at skill root, not in `reference/`
    - 7-dimension table only; maturity justification goes in SKILL.md's Best For line
 6. **Create `reference/` files** [REQUIRED]
    - `_implementation.md` — phases, logic, error handling

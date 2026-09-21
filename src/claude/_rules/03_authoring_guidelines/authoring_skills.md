@@ -78,7 +78,7 @@ Minimal, focused structure. Each skill directory contains **only**:
 skill_name/
 ├── SKILL.md               # User-facing overview (5 sections, ~60 lines)
 ├── skill.contract.yaml    # Machine-readable contract (scope, triggers, maturity)
-├── _quality_scorecard.md  # 7-dimension table only — justification goes in SKILL.md
+├── quality_scorecard.md   # 7-dimension table only — justification goes in SKILL.md
 ├── reference/             # Runtime docs Claude reads while executing (keep SKILL.md lean)
 │   ├── _implementation.md # Phases, logic, error handling
 │   └── _formats.md        # Standards, validation, examples (if applicable)
@@ -87,7 +87,7 @@ skill_name/
     └── README.md           # Plain-language: what evals.yaml is, how many scenarios, why
 ```
 
-**`_quality_scorecard.md` lives at skill root, not in `reference/`** — it's an authoring/review artifact (assessed when the skill is created or audited), not something Claude reads while executing the skill. Everything in `reference/` is runtime behavioral documentation.
+**`quality_scorecard.md` lives at skill root, not in `reference/`** — it's an authoring/review artifact (assessed when the skill is created or audited), not something Claude reads while executing the skill. Everything in `reference/` is runtime behavioral documentation.
 
 **`evals.yaml` always lives in `tests/`, never at skill root** — "evals" is jargon; a `tests/` folder reads as familiar to a non-technical browser of the skill directory. `tests/README.md` is mandatory alongside it, in plain language, so anyone who does open the folder isn't left guessing what the file is.
 

@@ -36,7 +36,7 @@ PROJ-1234 created: https://yourteam.atlassian.net/browse/PROJ-1234
 **For detailed specifications, see:**
 - `reference/error_handling.md` — Atlassian connection errors and recovery steps
 - `reference/field_constraints.md` — story point rules and other field validation
-- `_quality_scorecard.md` — 7-dimension quality assessment
+- `quality_scorecard.md` — 7-dimension quality assessment
 
 ## 📌 Prerequisites
 

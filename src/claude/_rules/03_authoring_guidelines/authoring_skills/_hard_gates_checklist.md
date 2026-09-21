@@ -30,13 +30,13 @@
   - [ ] Count matches maturity (Draft 5–8, Tactical 8–12, Strategic 12+)
   - [ ] evals.yaml is THE testing vehicle (not ad-hoc test_*_handler.py)
 - [ ] **tests/README.md [REQUIRED]:** plain-language explanation of what evals.yaml is
-- [ ] **Quality scorecard [REQUIRED]:** _quality_scorecard.md
+- [ ] **Quality scorecard [REQUIRED]:** quality_scorecard.md
   - [ ] 7 dimensions scored (Design, Complexity, Test Coverage, Code Quality, Security, Documentation, Standards)
   - [ ] Dimensions scored *against evals.yaml*, not independently
   - [ ] Maturity level justified with evidence
   - [ ] Design rationale explained
 - [ ] **Reference files [REQUIRED]:**
-  - [ ] _quality_scorecard.md exists with all 7 dimensions
+  - [ ] quality_scorecard.md exists with all 7 dimensions
   - [ ] reference/_implementation.md exists (phases, logic, error handling)
   - [ ] reference/_formats.md [IF APPLICABLE] (standards, validation, examples)
 - [ ] **Scope boundaries enforced:**
