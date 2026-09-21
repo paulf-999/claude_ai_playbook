@@ -1,6 +1,6 @@
 # Quality Scorecard — Template
 
-Every skill includes a `_quality_scorecard.md` containing only this table (no justification or rationale sections).
+Every skill includes a `quality_scorecard.md` containing only this table (no justification or rationale sections).
 
 ---
 

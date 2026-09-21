@@ -91,11 +91,11 @@ dispatch:
 - Count by maturity: **Draft 5–8** | **Tactical 8–12** | **Strategic 12+**
 
 **Quality scorecard [REQUIRED]** — 8 dimensions scored + maturity justification
-- Location: `_quality_scorecard.md`
+- Location: `quality_scorecard.md`
 - Includes: Design, Complexity, Test Coverage, Code Quality, Security, Documentation, Standards, Overall
 
 **Reference files [REQUIRED]** — Keep SKILL.md lean by externalizing detail
-- `_quality_scorecard.md` — 7-dimension table only (justification lives in SKILL.md)
+- `quality_scorecard.md` — 7-dimension table only (justification lives in SKILL.md)
 - `_implementation.md` — Phases, logic, error handling
 - `_formats.md` [IF APPLICABLE] — Standards, validation rules, format examples
 

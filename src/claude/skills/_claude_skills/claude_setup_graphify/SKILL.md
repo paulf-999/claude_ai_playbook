@@ -66,5 +66,5 @@ Creating knowledge graphs for large codebases where token cost for file reads is
 - `tests/evals.yaml` — 15 test scenarios covering all phases
 
 **Quality:**
-- `_quality_scorecard.md` — Quality assessment and Draft maturity justification
+- `quality_scorecard.md` — Quality assessment and Draft maturity justification
 - `reference/_security.md` — Input validation and file-permission safeguards

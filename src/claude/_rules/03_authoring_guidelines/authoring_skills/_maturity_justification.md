@@ -39,7 +39,7 @@ Use this decision framework:
 
 ## Writing Your Maturity Justification
 
-Document it in **SKILL.md's Best For line**, not in `_quality_scorecard.md` —
+Document it in **SKILL.md's Best For line**, not in `quality_scorecard.md` —
 that file is table-only (see `_quality_scorecard_template.md`); justification
 narrative belongs where a reader actually looks for it.
 

@@ -42,7 +42,7 @@ Page created: https://yourteam.atlassian.net/wiki/spaces/DA/pages/12345
 - `reference/_error_recovery.md` — what to do when Confluence access, drafts, or publishing fail
 - `reference/_troubleshooting.md` — common issues, including publish timeouts
 - `reference/_confluence_page_formatting.md` — page header structure and formatting rules
-- `_quality_scorecard.md` — 7-dimension quality assessment
+- `quality_scorecard.md` — 7-dimension quality assessment
 
 ## 📌 Prerequisites
 
