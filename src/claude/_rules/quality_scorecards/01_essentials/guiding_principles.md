@@ -11,8 +11,21 @@
 | **Test Coverage** | 5/10 | • 🧪 **Exists:** `test_guiding_principles.py` has 3 behavioral tests, all passing<br>• 📉 **Self-rated:** the test file's own metadata says 3/10 quality<br>• 🚩 **Violation:** hardcodes the `@~/.claude/` import prefix, against `portable_paths.md`'s own rule |
 | **Overall** | **8.0/10** | • 💪 **Strength:** a strong, actively-used foundational rule<br>• ⚠️ **Gaps:** missing Related section, plus a pre-existing, unrelated quality issue in its test file |
 
+## 🔗 Related files
+
+- `src/claude/_rules/01_essentials/guiding_principles.md` — the rule being scored
+- `src/claude/_tests/rules/01_essentials/test_guiding_principles.py` — Test Coverage dimension
+- `src/claude/_rules/03_authoring_guidelines/authoring_rules.md` — Evidence of Need dimension
+- `src/claude/_rules/02_claude_standards/git/_concurrent_sessions.md` — Evidence of Need dimension
+- `src/claude/_rules/04_claude_reference/claude_conduct/task_request_conventions/_hooks_decision_framework.md` — Evidence of Need dimension
+- `src/claude/_rules/01_essentials/claude_usage_standards/writing_style.md` — Structural Compliance dimension
+- `src/claude/_rules/02_claude_standards/portable_paths.md` — Test Coverage dimension (the disclosed violation)
+
 ---
 
 ## 🚩 Pre-existing issue disclosed, not fixed
 
-`test_guiding_principles.py` (line 32, 81) hardcodes `@~/.claude/` when parsing `@import` lines — `portable_paths.md` explicitly forbids this ("Never hardcode the `@~/.claude/` or `@~/claude/` import-prefix string when parsing `@import` lines"). Confirmed via the test's own metadata header (`Test quality score: 3/10`). Out of scope for this scorecard — flagged here per this config's pre-existing-issue disclosure rule, not silently fixed.
+- 🐛 **Violation:** `test_guiding_principles.py` (lines 32, 81) hardcodes `@~/.claude/` when parsing `@import` lines.
+- 🚫 **Rule broken:** `portable_paths.md` explicitly forbids this — "never hardcode the `@~/.claude/` or `@~/claude/` import-prefix string when parsing `@import` lines."
+- ✅ **Confirmed:** the test's own metadata header self-reports `Test quality score: 3/10`.
+- 📋 **Disposition:** out of scope for this scorecard — flagged here per this config's pre-existing-issue disclosure rule, not silently fixed.

@@ -31,9 +31,16 @@ One file per scored rule, mirroring the tier path: `_rules/quality_scorecards/<t
 | **Currency** | X/10 | • 🔍 **<keyword>:** any stale references? Content still accurate? |
 | **Test Coverage** | X/10 | • 🧪 **<keyword>:** structural test passes; content-regression test if it documents a real incident |
 | **Overall** | **X.X/10** | • 💪 **<keyword>:** [strength]<br>• ⚠️ **<keyword>:** [gap, if any] |
+
+## 🔗 Related files
+
+- `<full/repo-relative/path/to/rule_name.md>` — the rule being scored
+- `<full/repo-relative/path/to/anything/named/in/the/Notes/above>` — <which dimension it's relevant to>
 ```
 
 **Notes column format:** bullet points, one per line, joined with `<br>` (standard markdown lists don't render inside table cells) — `• <emoji> **<bold keyword>:** <one point>`. Never a single run-on sentence. One point per bullet, matching `writing_style.md`'s general bullet convention and the same pattern used in `claude_plans/_plan_file_format.md`.
+
+**Related files:** full repo-relative path (e.g. `src/claude/_tests/rules/01_essentials/test_guiding_principles.py`), never just a bare filename — a scorecard often outlives the memory of where things live, and a bare filename forces a search. List the rule file itself plus every other file named anywhere in the Notes column (tests, other rules cited as evidence, anything a reader would otherwise have to go find).
 
 ---
 
