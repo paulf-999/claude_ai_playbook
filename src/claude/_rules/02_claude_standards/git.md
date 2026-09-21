@@ -6,6 +6,7 @@
 
 - [Safe Git Patterns](#-safe-git-patterns) — `_safe_patterns.md`
 - [Commits](#-commits) — `_commits.md`
+- [Concurrent Sessions](#-concurrent-sessions) — `_concurrent_sessions.md`
 - [Complex Git Operations](#-complex-git-operations)
 - [Protected Branches](#-protected-branches)
 - [Branch Naming](#-branch-naming)
@@ -22,6 +23,12 @@
 ## 📝 Commits
 
 @~/.claude/_rules/02_claude_standards/git/_commits.md
+
+---
+
+## 🔀 Concurrent Sessions
+
+@~/.claude/_rules/02_claude_standards/git/_concurrent_sessions.md
 
 ---
 
