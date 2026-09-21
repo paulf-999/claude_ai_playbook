@@ -120,9 +120,8 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 ### `skills/confluence_create_page/`
 
-Behavioral tests for a code-backed skill — `confluence_create_page_handler.py` lives with
-the skill, not here; `conftest.py` adds the skill directory to `sys.path` so these tests
-can import it directly.
+Behavioral tests for a code-backed skill — `confluence_create_page_handler.py` lives
+alongside these tests and is imported directly via a relative import.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|

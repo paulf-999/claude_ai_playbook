@@ -20,7 +20,7 @@ from unittest.mock import patch
 
 import pytest
 
-from confluence_create_page_handler import (
+from .confluence_create_page_handler import (
     create_page_with_timeout,
     format_timeout_dialog,
     parse_timeout_arg,
