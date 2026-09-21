@@ -2,18 +2,18 @@
 # ─────────────────────────────────────────────────────────
 # Test quality score: 9/10
 # Date created:      2026-08-28
-# Version:           1.1.0
-# Date updated:      2026-09-18
+# Version:           1.1.1
+# Date updated:      2026-09-21
 # ─────────────────────────────────────────────────────────
 
-"""Skill authoring gate tests — validates walk (W1–W6) and run (R1–R5) criteria.
+"""Skill authoring gate tests — validates walk (W1–W6) and run (R1–R4) criteria.
 
 This test suite validates that skills meet quality (walk) and comprehensive (run)
 criteria of the skill authoring gate. Crawl criteria (C0–C7) are validated by
 the linter (skill_authoring_gate_lint.py) which runs as a pre-commit hook.
 
 Walk tests (W1–W6): Validate readability, style compliance, test coverage, and clarity.
-Run tests (R1–R5): Validate semantic versioning, maturity progression, and completeness.
+Run tests (R1–R4): Validate semantic versioning, maturity progression, and completeness.
 
 Only stable skills (src/claude/skills/, not src/claude/wip/skills/) are validated here.
 """
@@ -287,7 +287,7 @@ def test_w6_phase_files_focused(skill_dir):
         assert phase_file.name.lower().startswith("phase"), "Phase file should be named phase1.md, phase2.md, etc."
 
 
-# ── Run tests (R1–R5) ─────────────────────────────────────────────────────────
+# ── Run tests (R1–R4) ─────────────────────────────────────────────────────────
 
 
 @pytest.mark.parametrize("skill_dir", skill_dirs, ids=skill_ids)
@@ -381,20 +381,3 @@ def test_r4_no_unresolved_gaps_strategic(skill_dir):
     # Check for known gaps section with workarounds
     has_gaps_section = bool(re.search(r"##.*known gaps", skill_md_content, re.IGNORECASE))
     assert has_gaps_section, "Strategic skill should document known gaps and workarounds"
-
-
-@pytest.mark.parametrize("skill_dir", skill_dirs, ids=skill_ids)
-def test_r5_complex_skills_have_schema(skill_dir):
-    """R5: Complex skills (external_service output) have optional skill_schema.yaml.
-
-    Checks if output type is external_service; if so, skill_schema.yaml should exist
-    (optional but recommended for complex skills).
-    """
-    contract = load_contract(skill_dir)
-    output = contract.get("output", "conversational")
-    if output != "external_service":
-        return
-
-    schema_path = skill_dir / "skill_schema.yaml"
-    if not schema_path.exists():
-        pytest.skip("R5: External service skill lacks skill_schema.yaml — optional but recommended")

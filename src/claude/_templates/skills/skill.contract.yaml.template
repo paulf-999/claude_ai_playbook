@@ -1,28 +1,39 @@
 # Skill Contract Template
 #
-# Define the contract for this skill. Fields are required unless marked (optional).
+# Define the contract for this skill. Fields marked [REQUIRED] must be
+# populated; fields marked [IF APPLICABLE] may be omitted if not relevant.
 # Use this as your starting point when creating a new skill.
+# Populate this file BEFORE writing SKILL.md — the contract defines scope.
 
-name: <domain>_<action>          # Skill identifier: kebab-case, must match directory prefix
+name: <domain>_<action>          # [REQUIRED] must match directory prefix
                                  # Example: git_create_pr, confluence_create_page
-version: 0.1.0                   # Semantic versioning: 0.x (draft) · 1.x (tactical) · 2.x+ (strategic)
-summary: One-line description    # Plain-language description (e.g., "Create a pull request with auto-populated description")
+version: 0.1.0                   # [REQUIRED] semver: 0.x (draft) · 1.x (tactical) · 2.x+ (strategic)
+summary: One-line description    # [REQUIRED] plain-language description
+maturity: draft                  # [REQUIRED] draft, tactical, or strategic
+test_coverage_level: none        # [REQUIRED] none, basic, or comprehensive
 
-maturity: draft                  # Lifecycle stage: draft, tactical, or strategic
-test_coverage_level: none        # Testing depth: none, basic, or comprehensive
+dispatch:
+  triggers:
+    explicit:                    # [REQUIRED] slash commands and exact phrases that invoke this skill
+      - /<skill_name>
+      - "exact trigger phrase"
+    contextual:                  # [IF APPLICABLE] situational conditions that imply this skill
+      - user wants to <do X>
 
-when:                            # Command triggers that invoke this skill
-  - /<skill_name>                # Slash command (e.g., /git_create_pr)
-  - "phrase that triggers"       # Optional: phrase trigger (e.g., "create a PR")
-
-dont_use_for:                    # Anti-patterns — when NOT to use this skill
-  - "anti-pattern 1"             # Example: ["batch PRs", "force pushes"]
+  not_for:                       # [REQUIRED] explicit scope boundaries — MOST IMPORTANT FIELD
+    - "anti-pattern 1"           # Example: complex merge conflict scenarios, non-main branch PRs
 
 requires:
-  tools: [Bash, Read, Agent]     # Tools needed (Bash, Read, Write, Agent, etc.)
-  mcp_servers: [GitHub]          # MCP servers accessed (empty list if none)
-  external: []                   # External system APIs accessed (empty if none)
-                                 # Example: ["GitHub API", "Slack API"]
+  tools: [Bash, Read, Agent]     # [IF APPLICABLE] tools needed
+  resources: []                  # [IF APPLICABLE] files/permissions needed, e.g. .github/pull_request_template.md
+  mcp_servers: []                # [IF APPLICABLE] MCP servers accessed, e.g. GitHub, Atlassian
 
-output: conversational           # Output type: conversational, file, external_service, or mixed
-reversible: true                 # Whether actions can be undone (false if permanent/destructive)
+output:
+  type: conversational           # [REQUIRED] conversational, file, external_service, or mixed
+  confirmation_required: false   # [REQUIRED] true if the skill performs irreversible/externally-visible actions
+  reversible: true               # [REQUIRED] false if permanent (e.g. push to GitHub)
+  returns: []                    # [IF APPLICABLE] what the skill hands back, e.g. PR URL, PR number
+
+dependencies:
+  external: []                   # [IF APPLICABLE] external systems accessed, e.g. GitHub API, Slack API
+  permissions: []                # [IF APPLICABLE] special access required, e.g. write access to repo
