@@ -38,10 +38,10 @@ not_for:
 - Better: narrow scope (e.g., `confluence_create_page`, `confluence_update_page` as separate skills)
 - Use `not_for` to document explicit boundaries
 
-**❌ Don't use ad-hoc test_*_handler.py scripts**
-- Use `evals.yaml` (THE standard for all skills)
-- Ad-hoc test scripts become unmaintained and unreliable
-- evals.yaml is discoverable, testable, and documented
+**❌ Don't substitute `test_*_handler.py` for `evals.yaml` — match the test type to what's being tested**
+- `evals.yaml` is mandatory for every skill — it specifies the skill's prompt-driven behavior (what Claude should do reading `SKILL.md`), which isn't automatable in this repo's tooling since nothing invokes a live Claude session to grade it
+- `test_<handler>.py` (pytest) is a welcome *addition*, not a replacement, when a skill ships deterministic Python code (an MCP handler, validation logic) — automate what's automatable, since pytest runs unattended in pre-commit/CI
+- The anti-pattern is skipping `evals.yaml` in favour of pytest, not writing pytest at all — a skill with real code should have both; a skill that's pure prompt-following logic only needs `evals.yaml`
 
 **❌ Don't claim maturity without evidence**
 - Draft: speculative, one-time use only
