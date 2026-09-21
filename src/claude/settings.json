@@ -1,5 +1,6 @@
 {
   "cleanupPeriodDays": 30,
+  "syncClaudeAiSkills": false,
   "permissions": {
     "allow": [
       "Bash(bash -c:*)",
