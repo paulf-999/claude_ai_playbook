@@ -262,8 +262,7 @@ Skills can progress from draft → tactical → strategic. Here's how:
 3. Update version: `1.x.x` → `2.x.x`
 4. Update maturity in contract: `tactical` → `strategic`
 5. Add version history documenting the journey
-6. Optional: Create `skill_schema.yaml` for complex skills
-7. Submit PR for review
+6. Submit PR for review
 
 **Reviewer checks:** All C/W/R criteria
 

@@ -8,7 +8,7 @@ Skills follow a **three-level gate** as they mature from draft to production-rea
 |-------|------|----------|-------------|---|
 | 🏗️ | **Crawl** (C0–C7) | Foundation: structure, contract, no coupling | Auto-gate (pre-commit hook) | ✅ Must pass before commit |
 | 🚶 | **Walk** (W1–W6) | Quality: clarity, style, testing, documentation | Manual review + local tests | ⚠️ Test locally; reviewers spot-check |
-| 🏃 | **Run** (R1–R5) | Comprehensive: versioning, gap documentation, maturity progression | Manual review | ⚠️ Required for strategic skills only |
+| 🏃 | **Run** (R1–R4) | Comprehensive: versioning, gap documentation, maturity progression | Manual review | ⚠️ Required for strategic skills only |
 
 ---
 
@@ -109,7 +109,7 @@ These criteria ensure the skill is clear, well-tested, and follows style standar
 
 ---
 
-## 🏃 Run Level: Comprehensive (R1–R5)
+## 🏃 Run Level: Comprehensive (R1–R4)
 
 These criteria apply to **strategic skills only** — production-ready skills expected to be stable and complete.
 
@@ -131,11 +131,6 @@ These criteria apply to **strategic skills only** — production-ready skills ex
 - ❌ No TODO/FIXME (should have been resolved in tactical)
 - ✅ "Known gaps" section explicitly lists limitations
 - ✅ Gaps have documented workarounds
-
-### R5: Complex skills have optional skill_schema.yaml
-- If `output: external_service` (e.g., Jira, GitHub API calls):
-  - 💡 Optional: Create `skill_schema.yaml` documenting inputs/outputs
-  - This helps future maintainers understand the skill's surface area
 
 ---
 
@@ -206,7 +201,7 @@ These criteria apply to **strategic skills only** — production-ready skills ex
 |-------|------------------|---|
 | **Crawl (C0–C7)** | Pre-commit hook (`skill_authoring_gate_lint.py`) | ❌ Commit blocked; fix and retry |
 | **Walk (W1–W6)** | Local tests + manual review | ⚠️ Reviewer requests changes in PR |
-| **Run (R1–R5)** | Manual review (strategic skills) | ⚠️ Reviewer requests changes in PR |
+| **Run (R1–R4)** | Manual review (strategic skills) | ⚠️ Reviewer requests changes in PR |
 
 ---
 

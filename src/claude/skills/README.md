@@ -6,7 +6,7 @@
 
 See [`rules/skill_standards.md`](../rules/skill_standards.md) — active in every session via `CLAUDE.md` import.
 
-For the full machine-readable output contract schema, see [`skill_schema.yaml.template`](skill_schema.yaml.template) — copy and rename to `skill_schema.yaml` alongside any `SKILL.md`.
+For the full machine-readable trigger and output contract schema, see [`_templates/skills/skill.contract.yaml.template`](../_templates/skills/skill.contract.yaml.template) — copy and rename to `skill.contract.yaml` alongside any `SKILL.md`.
 
 ---
 

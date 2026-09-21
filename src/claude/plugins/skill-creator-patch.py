@@ -52,21 +52,31 @@ Before writing SKILL.md, generate skill.contract.yaml — the formal contract fo
     maturity: <draft|tactical|strategic>  # from your Capture Intent answer
     test_coverage_level: none
 
-    when:
-      - /<skill-name>
-      - "phrase that triggers this skill"
+    dispatch:
+      triggers:
+        explicit:
+          - /<skill-name>
+          - "phrase that triggers this skill"
+        contextual: []                  # situational conditions that imply this skill, if any
 
-    dont_use_for:
-      - "anti-pattern 1"
-      - "anti-pattern 2"
+      not_for:
+        - "anti-pattern 1"
+        - "anti-pattern 2"
 
     requires:
       tools: [Bash, Read, Agent, ...]  # tools this skill uses
+      resources: []                     # files/permissions needed, if any
       mcp_servers: []                   # MCP servers (GitHub, Atlassian, etc.)
-      external: []                      # external system access needed
 
-    output: conversational              # or: file, external_service, mixed
-    reversible: true                    # false if actions are permanent
+    output:
+      type: conversational              # or: file, external_service, mixed
+      confirmation_required: false      # true if the skill performs irreversible/externally-visible actions
+      reversible: true                  # false if actions are permanent
+      returns: []                       # what the skill hands back, if anything
+
+    dependencies:
+      external: []                      # external systems accessed, if any
+      permissions: []                   # special access required, if any
 
 See `references/prereqs_checklist.md` for field definitions and examples.
 
