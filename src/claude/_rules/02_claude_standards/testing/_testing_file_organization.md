@@ -15,6 +15,8 @@ Not every test belongs in `_tests/`. Choose based on what's being tested, not ha
 
 **Both apply within one artifact type:** skills demonstrate this directly — `evals.yaml` colocates inside each skill's own `tests/` folder, while `test_no_orphaned_skill_files.py` and `test_skill_structure_compliance.py` live centrally because they validate properties across all skills at once.
 
+**Caveat — spec files aren't code test files:** this principle was demonstrated with `evals.yaml`, a content/spec file with no test-runner dependency — moving it has zero tooling cost. A `.py` pytest module is different: it depends on shared collection config (`pytest.ini`'s `testpaths`, `pythonpath`, coverage setup), so relocating it changes shared infrastructure, not just a file's address. Don't extend "colocate when tightly coupled" to pytest files without also checking whether the test runner would still find them — see `authoring_skills.md` → `_scope_and_maintenance.md` for when a skill should have a `test_*_handler.py` file at all.
+
 ---
 
 ## Structure Pattern
