@@ -15,7 +15,7 @@
 | **Complexity** | 9/10 | • 🧮 **Raw complexity 1:** single file, ~3 concepts (fields, version bumps, placement), no dependencies or prerequisites |
 | **Evidence of Need** | 7/10 | • 🔗 **Real gap:** the live `~/claude/` copy carries no git history, so audits and 6-month resets had no created/updated signal<br>• ⚠️ **Unproven yet:** no audit has used the fields, since the backfill hasn't happened |
 | **Token Cost Justification** | 6/10 | • 🎯 **Always-on:** imported from `authoring_rules.md` so `test_always_on_reachability.py` can reach it<br>• ⚠️ **Narrow use:** only relevant while authoring or editing artefacts, yet costs ~400 tokens every session |
-| **Structural Compliance** | 9/10 | • ✅ **Compliant:** metadata header on line 1, emoji H1, Purpose statement, Related section, 42 lines, trailing newline |
+| **Structural Compliance** | 9/10 | • ✅ **Compliant:** metadata header on line 1, emoji H1, Purpose statement, Related section, 46 lines, trailing newline |
 | **Currency** | 10/10 | • 🔍 **New:** written 2026-09-28, all references resolve |
 | **Test Coverage** | 9/10 | • 🧪 **Dedicated test:** `test_claude_config_metadata.py`, 13 functions covering placement, format and value errors<br>• ⚠️ **Opt-in only:** header-less rules are skipped until the backfill makes the header mandatory |
 | **Overall** | **8.4/10** | • 💪 **Strength:** one lean, testable standard shared across rules, skills, agents and hooks<br>• ⚠️ **Gap:** always-on token cost for guidance used only while authoring |
