@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # 📋 Rules Loading Strategy
 
 **Principle:** Lazy-load by default. Always-on rules must block or apply everywhere.

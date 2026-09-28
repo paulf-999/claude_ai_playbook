@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-08-28 -->
 # 🔒 Safe Git Patterns
 
 **Purpose:** Protect against git hook execution risks when running commands in untrusted directories.

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # 🛡️ Behaviour
 
 **Purpose:** Establish safe defaults for how Claude approaches tasks, ensuring intentional action, minimal assumptions, and careful handling of risky operations.

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-06-07 -->
+<!-- updated: 2026-09-17 -->
 # 💼 Business Value Tab
 
 Standards for populating the Business Value tab (`customfield_10650`) on DM project Jira tickets — covering format, audience, scoring framework, and a worked example.

@@ -16,7 +16,9 @@ Use **Template B** (Constraint/Pattern-based) for multiple related patterns with
 Use when: one core concept, Why/How structure, ~50-60 lines.
 
 ```markdown
-<!-- version: 1.0.0 | created: YYYY-MM-DD | updated: YYYY-MM-DD -->
+<!-- version: 1.0.0 -->
+<!-- created: YYYY-MM-DD -->
+<!-- updated: YYYY-MM-DD -->
 # 🔄 [Principle Name]
 
 **Purpose:** One-line statement of what this principle establishes.
@@ -49,7 +51,7 @@ Link to related principles or rules via `[[memory-slug]]` or `@~/.claude/_rules/
 ```
 
 **Characteristics:**
-- Metadata header on line 1
+- Metadata header on lines 1–3
 - Purpose statement (one line)
 - H1 emoji header
 - 50–70 lines
@@ -63,7 +65,9 @@ Link to related principles or rules via `[[memory-slug]]` or `@~/.claude/_rules/
 Use when: multiple related patterns, enforcement-style, ~80-110 lines.
 
 ```markdown
-<!-- version: 1.0.0 | created: YYYY-MM-DD | updated: YYYY-MM-DD -->
+<!-- version: 1.0.0 -->
+<!-- created: YYYY-MM-DD -->
+<!-- updated: YYYY-MM-DD -->
 # 🛡️ [Domain] Rules
 
 **Purpose:** One-line statement of what these rules establish.
@@ -101,7 +105,7 @@ Link to related rules or guidance.
 ```
 
 **Characteristics:**
-- Metadata header on line 1
+- Metadata header on lines 1–3
 - Purpose statement (one line)
 - H1 emoji header
 - Section emoji headers (`##`)
@@ -114,7 +118,7 @@ Link to related rules or guidance.
 
 ## ✅ Quality Checklist — Both Templates
 
-- [ ] **Metadata header:** Line 1 is `<!-- version: X.Y.Z | created: YYYY-MM-DD | updated: YYYY-MM-DD -->`
+- [ ] **Metadata header:** Lines 1–3 are `<!-- version: X.Y.Z -->`, `<!-- created: YYYY-MM-DD -->`, `<!-- updated: YYYY-MM-DD -->`
   - **New rule:** version `1.0.0`, with `created` and `updated` both set to today.
   - **Every edit:** set `updated` to today and bump `version`.
   - **MAJOR:** guidance reversed or removed.

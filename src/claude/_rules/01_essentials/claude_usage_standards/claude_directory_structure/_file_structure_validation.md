@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-19 -->
 # 📋 File Structure Validation
 
 **Purpose:** Instruct Claude to validate `~/.claude/` naming and structure compliance after creating or modifying files, ensuring consistency and preventing configuration drift.

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-18 -->
 # 🔒 Response Standards Enforcement
 
 **Purpose:** Explain the mechanism that keeps response formatting reliable turn-to-turn, and where its implementation lives.

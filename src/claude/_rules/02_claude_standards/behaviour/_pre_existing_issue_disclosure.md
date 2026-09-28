@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-17 -->
+<!-- updated: 2026-09-17 -->
 # 🚩 Pre-Existing Issue Disclosure
 
 **Purpose:** Ensure pre-existing issues found during scoped work always reach the user, instead of being silently fixed (scope creep) or silently absorbed into "out of scope" (findings get lost).

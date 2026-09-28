@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-18 -->
 # 📅 Hooks ROI — Precedent & Examples
 
 **Purpose:** The real incidents behind the hooks decision framework — one negative (5 low-ROI hooks removed), one positive — grounding the framework in evidence, not theory.

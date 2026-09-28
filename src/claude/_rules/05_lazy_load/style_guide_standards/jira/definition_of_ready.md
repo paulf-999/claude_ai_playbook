@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-05-20 -->
+<!-- updated: 2026-09-17 -->
 # ✅ Definition of Ready
 
 Validation checklist for DM project Jira tickets before sprint entry. All blocking checks must pass before a ticket is moved into a sprint.

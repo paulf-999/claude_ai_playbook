@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-07 -->
+<!-- updated: 2026-09-28 -->
 # ✅ Quality Checklist (Author & Reviewer)
 
 **Purpose:** Define checkpoints for skill creation to ensure quality gates are met.

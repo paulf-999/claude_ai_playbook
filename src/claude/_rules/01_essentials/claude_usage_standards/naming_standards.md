@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # 📛 Naming
 
 **Purpose:** Establish self-describing, unambiguous naming conventions that enable readers to understand files and identifiers without additional context.

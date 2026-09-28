@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # ⚙️ Automation Controls
 
 **Purpose:** Establish guardrails for experimental automation features (`/loop`, `/batch`, `/goal`) to prevent runaway sessions, excessive token usage, and unintended side effects.

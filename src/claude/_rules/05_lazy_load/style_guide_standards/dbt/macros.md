@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-04-08 -->
+<!-- updated: 2026-09-17 -->
 # ⚙️ dbt Macros
 
 Documents the team's custom macros, third-party packages, and the macro directory structure — so engineers know what is available before writing equivalent logic from scratch.

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-18 -->
 # ⚠️ Common Mistakes & Security
 
 **Purpose:** The most frequent skill-authoring mistakes and their fixes, plus the security considerations every skill must address.

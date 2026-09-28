@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-04-08 -->
+<!-- updated: 2026-09-17 -->
 # 📄 YAML Resource Properties
 
 Standards for declaring dbt resource properties in YAML — covering file naming, formatting style, source definitions, tests, and sensitive data tagging.

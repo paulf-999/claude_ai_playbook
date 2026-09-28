@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-07 -->
+<!-- updated: 2026-09-28 -->
 # 📐 Structure & Contract
 
 **Purpose:** Define SKILL.md structure and skill.contract.yaml fields required for all skills.

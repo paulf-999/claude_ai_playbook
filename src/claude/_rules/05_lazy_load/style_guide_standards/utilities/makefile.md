@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # 🛠️ Makefile Style Guide & Standards
 
 Defines the team's standards for writing and structuring Makefiles.

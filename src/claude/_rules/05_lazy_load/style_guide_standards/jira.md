@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-05-20 -->
+<!-- updated: 2026-09-17 -->
 # 🎫 Jira Style Guide & Standards
 
 Defines standards for the DM Jira project — field requirements, ticket structure, component and sprint assignment, and hygiene expectations.

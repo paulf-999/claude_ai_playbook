@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # 📝 Python Logging Conventions
 
 **Purpose:** Establish logging standards for debugging, monitoring, and auditing — ensuring logs are useful, secure, and structured.

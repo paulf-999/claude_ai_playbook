@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-04-08 -->
+<!-- updated: 2026-09-17 -->
 # ❄️ Snowflake Data Type Standards
 
 ## 1. 🎯 Purpose

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # ✈️ Air-Gapped Deployment
 
 > **Scope:** Payroc-specific conventions for the `pyrc-cac-ans` estate — not generic Ansible guidance.

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-04-08 -->
+<!-- updated: 2026-09-17 -->
 # 📦 Ansible Style Guide & Standards
 
 Defines the team's standards for writing and structuring Ansible projects.

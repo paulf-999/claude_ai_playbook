@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-31 -->
+<!-- updated: 2026-09-17 -->
 # ⚠️ MCP Server Toggling — Restart Requirement
 
 **Purpose:** Explain why Claude Code must be restarted after toggling MCP servers and how to recover if you forget.

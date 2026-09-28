@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-18 -->
 # 📐 Agent Core Standards
 
 **Purpose:** The baseline every agent follows — 5-section structure, naming pattern, frontmatter fields, maturity levels, and testing requirements.

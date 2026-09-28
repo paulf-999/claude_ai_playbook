@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-05-20 -->
+<!-- updated: 2026-09-17 -->
 # 📅 Sprint Planning
 
 Sprint ID mapping, quarter-to-component mapping, parent epic references, and capacity conventions for the DM project (board 217).

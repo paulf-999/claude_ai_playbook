@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # 🏗️ Directory Organization — `~/.claude/`
 
 **Purpose:** Define what directories exist in the Claude config, their purpose, and the distinction between user-created and auto-generated directories.

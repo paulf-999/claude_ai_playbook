@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-19 -->
 # 🌍 Portable Paths
 
 **Purpose:** Prevent hooks and tests from hardcoding a specific machine's filesystem layout — the Claude config directory is not always at the OS default location, and code that assumes it is breaks silently elsewhere.

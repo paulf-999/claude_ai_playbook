@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-28 -->
 # 🎯 Trigger Design & Testing Standards
 
 **Purpose:** Define how to design comprehensive trigger phrase coverage, and the evals.yaml/quality-scorecard testing standard every skill must follow.

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-17 -->
+<!-- updated: 2026-09-17 -->
 # 🗂️ Claude Plans
 
 **Purpose:** Establish review/approval gates for multi-phase work — plans and any other 3+ phase implementation — preventing wasted effort and enabling course correction.

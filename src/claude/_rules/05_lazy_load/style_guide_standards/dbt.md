@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # 🔵 dbt Style Guide & Standards
 
 **Purpose:** Define standards for `da-etl-dbtanalytics` — covering model organization, naming, YAML properties, testing, snapshots, and macros. Standards ensure consistency, maintainability, and correctness across the dbt project.

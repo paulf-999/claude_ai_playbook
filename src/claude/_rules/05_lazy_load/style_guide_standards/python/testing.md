@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # 🧪 Python Testing Conventions
 
 **Purpose:** Establish pytest conventions for test naming, structure, fixtures, mocking, and assertions — preventing testing debt and validating intended behaviour.

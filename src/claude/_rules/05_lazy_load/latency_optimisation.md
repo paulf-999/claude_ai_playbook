@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # ⚡ Latency Optimization
 
 **Purpose:** Establish when and how to optimize API-level latency to reduce response time for cost-sensitive or interactive workflows.

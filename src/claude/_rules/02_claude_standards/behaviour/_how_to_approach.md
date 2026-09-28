@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-17 -->
+<!-- updated: 2026-09-19 -->
 # 🔬 How to Approach
 
 **Purpose:** Establish habits for approaching a task well — diagnosing root causes, scoping narrowly, and preserving context across long sessions.

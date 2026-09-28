@@ -1,3 +1,6 @@
+<!-- version: 1.1.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # 🛠️ Rule Authoring
 
 **Purpose:** Establish a standardized process for creating rules that ensures intentionality, proper scoping, and mechanical rigor.
@@ -53,7 +56,7 @@ Before writing any rule, answer these five essential questions:
 - **Related rules section** — links to dependencies via `@~/.claude/_rules/...` or `[[memory-slug]]`
 - **Wire up every documented child** — if a parent rule describes child files (e.g. under a "Load details on-demand" section), each one needs a real `@import` line, not just prose naming it. A file mentioned but never imported is silently unreachable — see `test_always_on_reachability.py`, which fails the build if any file under `01_essentials/`–`04_claude_reference/` exists on disk but isn't reachable from `CLAUDE.md`.
 - **Test validation** — enforcement rules pass custom tests; all rules pass test_rules_structure.py
-- **Metadata header** — line 1 carries `version`, `created` and `updated`; bump `updated` and `version` on every edit, per the standard below
+- **Metadata header** — lines 1–3 carry `version`, `created` and `updated`, one per line; bump `updated` and `version` on every edit, per the standard below
 
 @~/.claude/_rules/03_authoring_guidelines/_claude_config_metadata.md
 

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-18 -->
 # 📁 Tier Definitions
 
 **Purpose:** Define each of the 5 directory tiers — what belongs there, why, and its loading strategy.

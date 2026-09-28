@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # 🧪 Testing
 
 **Purpose:** Every new code artifact needs a test to prevent regressions and validate intended behavior.

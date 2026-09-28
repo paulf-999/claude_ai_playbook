@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-18 -->
 # 🚪 Agent Scope Boundaries & Maturity Justification
 
 **Purpose:** Every agent must declare what it does NOT do, and justify its maturity level with evidence, not aspiration.

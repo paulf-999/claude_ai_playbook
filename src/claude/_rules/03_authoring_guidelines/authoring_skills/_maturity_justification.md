@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-28 -->
 # 📈 Skill Maturity Justification
 
 **Purpose:** Maturity level (draft, tactical, strategic) must be justified with evidence, not aspirations.

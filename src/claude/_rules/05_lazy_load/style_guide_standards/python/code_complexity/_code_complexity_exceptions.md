@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # 🚪 Complexity Exceptions
 
 **Purpose:** Document when complex code is acceptable and how to justify it.

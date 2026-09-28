@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # 📊 Code Complexity
 
 **Purpose:** Establish metrics to identify and prevent overly complex Python code. Reduces mental load and improves maintainability.

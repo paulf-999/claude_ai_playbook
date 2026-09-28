@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-18 -->
 # 🤖 Delegating to Sub-Agent
 
 **Purpose:** Decision framework, constraints, and cost analysis for when to spawn a sub-agent vs. work directly.

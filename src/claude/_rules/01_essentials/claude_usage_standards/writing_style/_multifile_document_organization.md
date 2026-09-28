@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-19 -->
 # 📁 Multifile Document Organization
 
 **Purpose:** Establish a universal directory structure convention for multi-file documents across all Claude config directories — preventing flat-level sprawl and keeping related files organized into dedicated subdirectories.

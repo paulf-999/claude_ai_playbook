@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # 🔒 Public vs Private Functions & Constants
 
 **Purpose:** Establish conventions for distinguishing public API from internal helpers — ensuring module interfaces are clear and changes to internals don't break users.

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-19 -->
 # ✅ Rule Directory Patterns — Examples & Checklist
 
 **Purpose:** Worked examples, the "2+ rule", and a verification checklist for applying the parent+child rule directory pattern correctly.

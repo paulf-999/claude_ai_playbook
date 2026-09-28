@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-05-20 -->
+<!-- updated: 2026-09-17 -->
 # 🎫 Ticket Conventions
 
 Standards for summary naming, description structure, acceptance criteria format, and issue type usage across the DM Jira project.

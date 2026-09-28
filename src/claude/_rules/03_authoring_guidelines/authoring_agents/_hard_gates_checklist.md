@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-18 -->
 # ✅ Agent Hard Gates Checklist
 
 **Purpose:** Final validation checklist before finalizing an agent — verify naming, content quality, testing, scope, and integration.

@@ -4,7 +4,7 @@
 # Test complexity score: 4/10
 # Python style compliant: Yes
 # Date created:      2026-08-28
-# Version:           1.0.1
+# Version:           1.1.0
 # Date updated:      2026-09-28
 # ─────────────────────────────────────────────────────────
 
@@ -155,9 +155,14 @@ def test_dissolved_paths_absent():
 # --- File quality ---
 
 def test_line_limits():
-    """No _rules/ file (excluding README and lazy_load) may exceed 110 lines."""
+    """No _rules/ file (excluding README and lazy_load) may exceed 110 lines.
+
+    The 3-line metadata header doesn't count — see _claude_config_metadata.md.
+    """
     for rule_file in rule_files():
         lines = rule_file.read_text().splitlines()
+        if lines and lines[0].startswith("<!-- version:"):
+            lines = lines[3:]
         assert len(lines) <= 110, f"{rule_file.name}: {len(lines)} lines exceeds 110-line limit"
 
 

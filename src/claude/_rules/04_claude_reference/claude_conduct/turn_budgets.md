@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # 🔄 Turn Budgets
 
 **Purpose:** Establish constraints on turns for non-interactive automation to prevent runaway sessions and cost overrun.

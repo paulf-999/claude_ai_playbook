@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-18 -->
 # 🤝 Claude When to Delegate
 
 **Purpose:** Establish decision criteria for when Claude should handle a task directly vs. delegate to the user or spawn a sub-agent, reducing turns and context bloat while preserving reasoning capability.

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-21 -->
+<!-- updated: 2026-09-21 -->
 # 🔀 Concurrent Sessions — Shared Working Tree Safety
 
 **Purpose:** Prevent one Claude Code session from silently absorbing or corrupting another session's uncommitted work when both operate on the same git working tree at once.

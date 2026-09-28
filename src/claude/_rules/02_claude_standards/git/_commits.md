@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-08-28 -->
 # 📝 Commits
 
 **Purpose:** Establish commit boundaries, formatting, and staging discipline to maintain clean history and safe operations.

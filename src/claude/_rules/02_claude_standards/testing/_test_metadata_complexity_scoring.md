@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-21 -->
 # 🧮 Test Complexity Scoring (0–10)
 
 **Purpose:** Apply the config's shared complexity formula to tests — reward genuinely simple tests, and make "simple" and "thorough" achievable together rather than in tension.

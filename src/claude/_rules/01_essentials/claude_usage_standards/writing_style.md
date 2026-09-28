@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-21 -->
 # ✏️ Writing style
 
 **Purpose:** Establish consistent, scannable, and user-friendly writing conventions for all content Claude produces — ensuring clarity, respect for reader time, and professional presentation.
