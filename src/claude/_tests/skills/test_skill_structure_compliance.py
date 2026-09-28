@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Test quality score: 3/10
 # Date created:      2026-08-28
-# Version:           1.0.0
-# Date updated:      2026-09-17
+# Version:           1.1.0
+# Date updated:      2026-09-28
 # ─────────────────────────────────────────────────────────
 
 #!/usr/bin/env python3
@@ -62,10 +62,10 @@ CANONICAL_EMOJI_MAP = {
 }
 
 # Required frontmatter fields (in SKILL.md)
+# version lives in the metadata header after the frontmatter — see test_skill_metadata_header.py
 REQUIRED_FRONTMATTER_FIELDS = [
     "name",
     "description",
-    "version",
     "maturity",
     "tags",
 ]
@@ -352,11 +352,12 @@ class SkillComplianceValidator:
                         f"Maturity mismatch: SKILL.md has '{md_maturity}', contract has '{contract_maturity}'"
                     )
 
-            if "version" in self.frontmatter and "version" in self.contract:
-                if self.frontmatter["version"] != self.contract["version"]:
-                    md_version, contract_version = self.frontmatter["version"], self.contract["version"]
+            header_match = re.match(r"\s*<!-- version: (\S+) -->", getattr(self, "skill_content", ""))
+            if header_match and "version" in self.contract:
+                if header_match.group(1) != str(self.contract["version"]):
+                    md_version, contract_version = header_match.group(1), self.contract["version"]
                     self.violations.append(
-                        f"Version mismatch: SKILL.md has '{md_version}', contract has '{contract_version}'"
+                        f"Version mismatch: SKILL.md header has '{md_version}', contract has '{contract_version}'"
                     )
 
     def _check_quality_scorecard(self) -> None:

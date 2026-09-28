@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-28 -->
 # 📐 Skill Core Standards
 
 **Purpose:** Define the baseline every skill must follow — naming, SKILL.md's 5-section structure, and what `skill.contract.yaml` must declare.
@@ -18,7 +18,7 @@
 ## SKILL.md Structure [REQUIRED]
 
 5-section canonical structure, ~60 lines, scannable in <2 minutes:
-1. **Frontmatter** — name, description, version, maturity, tags
+1. **Frontmatter** — name, description, maturity, tags, followed by the three-line metadata header (version, created, updated)
 2. **Purpose** — 1 sentence value prop + 3–4 bullets of key capabilities
 3. **Example Usage** — Realistic scenario showing complete user journey end-to-end
 4. **Best For** — Use case guidance + explicit caveats/limitations
@@ -30,7 +30,6 @@
 ---
 name: git_create_pr
 description: Create a GitHub PR with auto-populated description, review checklist, and branch protection checks
-version: 2.1.0
 maturity: tactical
 tags:
   criticality: should
@@ -38,12 +37,15 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
+<!-- version: 2.1.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-19 -->
 ```
 
 **What makes this good:**
 - ✅ name matches `<domain>_<action>` pattern (git_create_pr)
 - ✅ description is 1 sentence, non-technical, shows user value
-- ✅ version follows semver
+- ✅ version sits in the metadata header straight after the frontmatter, follows semver, and matches `skill.contract.yaml` (see `_claude_config_metadata.md`)
 - ✅ maturity justified (tactical = battle-tested, widely used)
 - ✅ tags capture status + criticality for quick scanning
 

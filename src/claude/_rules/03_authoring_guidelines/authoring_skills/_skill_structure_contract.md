@@ -1,4 +1,4 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-09-07 -->
 <!-- updated: 2026-09-28 -->
 # 📐 Structure & Contract
@@ -15,7 +15,7 @@ All SKILL.md files use a **5-section ultra-lean structure (~50–60 lines)**. Th
 
 ### The 5 Sections
 
-1. **Frontmatter** (3 lines) — name, version, maturity, description, tags
+1. **Frontmatter + metadata header** — name, maturity, description, tags; then version, created, updated as three comment lines
 2. **Purpose** (3–4 bullets) — what it does + key capabilities (non-technical)
 3. **Example Usage** (10–15 lines) — realistic user journey end-to-end
 4. **Best For** (4–6 bullets) — use cases + explicit caveats (when NOT to use)

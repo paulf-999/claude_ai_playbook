@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Test quality score: 5/10
 # Date created:      2026-09-16
-# Version:           1.0.0
-# Date updated:      [placeholder]
+# Version:           1.1.0
+# Date updated:      2026-09-28
 # ─────────────────────────────────────────────────────────
 
 #!/usr/bin/env python3
@@ -183,12 +183,13 @@ class TestInlineExample:
         assert yaml_match, "YAML example block not found"
 
         example = yaml_match.group(1)
-        required_fields = ["name:", "description:", "version:", "maturity:", "tags:"]
+        # version moved out of frontmatter into the metadata header (_claude_config_metadata.md)
+        required_fields = ["name:", "description:", "maturity:", "tags:", "<!-- version:"]
 
         for field in required_fields:
             assert field in example, (
                 f"Frontmatter example missing field '{field}'. "
-                f"Example should show: name, description, version, maturity, tags"
+                f"Example should show: name, description, maturity, tags, then the version header"
             )
 
     def test_example_includes_explanatory_comment(self):
