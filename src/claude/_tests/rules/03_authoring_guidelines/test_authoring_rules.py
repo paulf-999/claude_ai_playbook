@@ -3,7 +3,7 @@
 # Test quality score: 5/10
 # Date created:      2026-08-28
 # Version:           1.0.0
-# Date updated:      2026-09-16
+# Date updated:      2026-09-28
 # ─────────────────────────────────────────────────────────
 
 """Structural tests for _rules/03_authoring_guidelines/authoring_rules.md.
@@ -21,6 +21,8 @@ EXPECTED_SECTIONS = [
     "Pre-Creation Checklist",
     "Rule Creation",
     "Quality Gates",
+    "Common Mistakes",
+    "Hard Gates Checklist",
 ]
 
 EXPECTED_PATTERNS = [

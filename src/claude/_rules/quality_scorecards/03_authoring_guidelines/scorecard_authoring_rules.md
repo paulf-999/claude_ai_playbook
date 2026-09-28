@@ -3,31 +3,26 @@
 **Date Created:** 2026-09-28
 **Date Updated:** 2026-09-28
 
-**Overall score:** 7.1/10
+**Overall score:** 7.9/10
 
 **Recommended improvements:**
-- Extend `test_authoring_rules.py` to check the checklist's tier names against the actual directory structure, so this kind of drift is caught mechanically.
+- Extend `test_authoring_rules.py` to check the checklist's tier names against the actual directory structure, so tier-name drift is caught mechanically.
+- Add content-regression checks for the two children, so the recorded mistakes and gates can't be lost silently in a later edit.
 
 | Dimension | Score | Notes |
 |---|---|---|
-| **Clarity** | 7/10 | • 📋 **Generally clear:** 5-question checklist plus a 5-step creation process<br>• 🚩 **Actively misleading in one spot:** step 5 of the checklist lists directory names that no longer exist (see Currency) |
-| **Complexity** | 8/10 | • 🧮 **Raw complexity 2:** single file, no children, ~4 concepts (checklist, creation steps, quality gates, references) |
-| **Evidence of Need** | 9/10 | • 🔗 **Heavily used this session:** its 5-step process and quality-gate checklist were followed repeatedly while building the scorecard convention itself |
-| **Token Cost Justification** | 9/10 | • 🎯 **Scope:** Tier 3, always-on — directly governs how every future rule (including these scorecards) gets created |
-| **Structural Compliance** | 7/10 | • ✅ **Compliant:** emoji header, Purpose statement, trailing newline, Related Rules section present<br>• 🚩 **Correctness issue bleeds into structure:** the guidance itself is factually wrong in one place (see Currency) |
-| **Currency** | 4/10 | • 🐛 **Stale tier names:** step 5 of the Pre-Creation Checklist lists `02_claude_internal/` and `03_lazy_load/` — the actual current tiers are `02_claude_standards/` and `05_lazy_load/`<br>• 🚫 **Actively wrong, not cosmetic:** a reader following this checklist today would place a new rule in a directory that doesn't exist |
-| **Test Coverage** | 6/10 | • 🧪 **Direct test exists:** `test_authoring_rules.py`, 5 functions<br>• ⚠️ **Doesn't catch this drift:** purely structural (checks sections/patterns exist), so it passed despite the stale tier names |
-| **Overall** | **7.1/10** | • 💪 **Strength:** actively followed, well-structured process<br>• ⚠️ **Gap:** its own directory-naming guidance has drifted from the real 5-tier structure |
+| **Clarity** | 8/10 | • 📋 **Clear flow:** 5-question checklist, 5-step creation process, quality gates, then mistakes and a tick-box checklist<br>• ✅ **Tier names current:** step 5 lists the real `01_essentials/`–`05_lazy_load/` directories |
+| **Complexity** | 6/10 | • 🧮 **Raw complexity 4:** one directory (parent plus 2 children), ~6 concepts (checklist, creation steps, quality gates, metadata, mistakes, hard gates) |
+| **Evidence of Need** | 9/10 | • 🔗 **Heavily used:** its process and gates were followed repeatedly while building the scorecard and metadata conventions<br>• 🧾 **Mistakes are real:** every entry in `_common_mistakes.md` cites a recorded incident or PR |
+| **Token Cost Justification** | 8/10 | • 🎯 **Scope:** Tier 3, always-on — governs how every future rule gets created<br>• ⚖️ **Cost grew:** the two children add ~130 always-on lines |
+| **Structural Compliance** | 9/10 | • ✅ **Compliant:** metadata header, emoji H1, Purpose statement, trailing newline and Related section in all three files<br>• 🔗 **Children wired:** both are `@import`ed and reachable from `CLAUDE.md` |
+| **Currency** | 9/10 | • ✅ **Matches the current config:** tier names, metadata standard and reachability test all reflect today's structure |
+| **Test Coverage** | 6/10 | • 🧪 **Direct test exists:** `test_authoring_rules.py`, 5 functions, now checking the two new sections<br>• ⚠️ **Structural only:** checks that sections and patterns exist, not that their content is correct |
+| **Overall** | **7.9/10** | • 💪 **Strength:** actively followed process, now with evidence-based mistakes and a finishing checklist<br>• ⚠️ **Gap:** tests remain structural, so content drift isn't caught |
 
 ## 🔗 Related files
 
 - `src/claude/_rules/03_authoring_guidelines/authoring_rules.md` — the rule being scored
+- `src/claude/_rules/03_authoring_guidelines/authoring_rules/_common_mistakes.md` — child, scored as part of this rule
+- `src/claude/_rules/03_authoring_guidelines/authoring_rules/_hard_gates_checklist.md` — child, scored as part of this rule
 - `src/claude/_tests/rules/03_authoring_guidelines/test_authoring_rules.py` — Test Coverage dimension
-
----
-
-## 🚩 Pre-existing issue disclosed, not fixed
-
-- 🐛 **Stale tier names:** the Pre-Creation Checklist's step 5 (line 32–33) reads `02_claude_internal/` and `03_lazy_load/` — neither directory exists in the current config, which uses `02_claude_standards/` and `05_lazy_load/`.
-- 🚫 **Impact:** this is the file that tells authors where to place a new rule — the exact guidance it gives for two of three tiers is currently wrong.
-- 📋 **Disposition:** out of scope for this scorecard — flagged here per this config's pre-existing-issue disclosure rule, not silently fixed.

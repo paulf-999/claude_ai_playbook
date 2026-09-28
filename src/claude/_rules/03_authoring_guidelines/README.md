@@ -7,7 +7,7 @@ Meta-guidance for authoring and maintaining Claude config artifacts — rules th
 | File | Purpose | Type |
 |------|---------|------|
 | **authoring_agents.md** | Standards for agent creation: naming, structure, maturity levels, testing, scope boundaries | Instructional |
-| **authoring_rules.md** | Standards for rule creation: naming, structure, directory placement, testing, scope boundaries | Instructional |
+| **authoring_rules.md** | Standards for rule creation: naming, structure, directory placement, testing, scope boundaries; children in `authoring_rules/` cover common mistakes and a hard-gates checklist | Instructional |
 | **authoring_skills.md** | Standards for skill creation: naming, contract fields, structure, complexity scoring, testing, maturity levels | Instructional |
 
 ## 🎯 Why authoring_guidelines?
