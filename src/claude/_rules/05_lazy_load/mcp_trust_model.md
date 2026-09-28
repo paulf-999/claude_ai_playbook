@@ -88,8 +88,8 @@ Common patterns used in MCP injection attempts:
 
 ## 🔗 Related rules
 
-- `security_guardrails.md` — Prompt injection defence and secret handling (applies globally)
+- `_security_guardrails.md` — Prompt injection defence and secret handling (applies globally)
 - `security.md` — Input validation at system boundaries
-- Playbook docs: `/docs/mcp_servers.md` — Which MCP servers are enabled and their threat model
+- Playbook docs: `docs/reference/claude_config/mcp/mcp_setup.md` — Which MCP servers are enabled and how to toggle them
 
 ---
