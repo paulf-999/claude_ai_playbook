@@ -15,14 +15,31 @@
 | `scorecard_guiding_principles.md` | 8.4/10 | • Raise `test_guiding_principles.py`'s assertion/function count |
 | `scorecard_git.md` | 8.1/10 | • Fix the stale `_rules/claude_internal/git.md` reference in `test_git.py`'s docstring |
 | `scorecard_claude_response_standards.md` | 7.9/10 | • Add a dedicated `test_claude_response_standards.py` structural test<br>• Cite a specific past incident that motivated this rule |
+| `scorecard_payroc_engineering_naming_standards.md` | 7.8/10 | • Add a dedicated structural test for this file and its 3 children |
 | `scorecard_behaviour.md` | 7.7/10 | • Add structural tests for the 5 untested children<br>• Document when a behavioral concept becomes its own child file vs. staying inline |
 | `scorecard_security.md` | 7.6/10 | • Add a "Related rules" section cross-linking to `behaviour.md`<br>• Add dedicated tests for `_code_security.md` and the parent file |
 | `scorecard_testing.md` | 7.6/10 | • Verify the content-regression-test recommendation this file makes is itself followed in the suite |
 | `scorecard_claude_plans.md` | 7.6/10 | • Add a "Right" example alongside the existing "Wrong" example<br>• Add a Contents section, matching sibling tier files<br>• Add a dedicated test for `_plan_file_format.md` and the parent's own format |
+| `scorecard_latency_optimisation.md` | 7.5/10 | • Remove or explain the leftover memory-style YAML frontmatter<br>• Cite a specific incident or observed need for this guidance |
+| `scorecard_automation_controls.md` | 7.5/10 | • Split into parent + child files — 162 lines with no children<br>• Fix the stale `claude_efficiency.md` reference |
+| `scorecard_airflow.md` | 7.5/10 | • Add a dedicated structural test<br>• Delete or reconcile the orphaned duplicate `airflow/airflow.md` |
+| `scorecard_datetime.md` | 7.3/10 | • Add a `**Purpose:**` statement<br>• Add a dedicated structural test |
+| `scorecard_ohmyzsh_setup.md` | 7.2/10 | • Add a `**Purpose:**` statement<br>• Add a lightweight structural test |
+| `scorecard_ansible.md` | 7.2/10 | • Add a `**Purpose:**` statement<br>• Add a dedicated structural test |
 | `scorecard_claude_operational_efficiency.md` | 7.1/10 | • Add structural tests for the parent and its 5 imported children<br>• Cite a specific incident that motivated this rule |
 | `scorecard_authoring_rules.md` | 7.1/10 | • Extend `test_authoring_rules.py` to check tier names against the real directory structure |
+| `scorecard_terraform.md` | 7.0/10 | • Add a `**Purpose:**` statement<br>• Add a dedicated structural test |
 | `scorecard_authoring_agents.md` | 6.9/10 | • Cite a specific incident or usage evidence for its always-on, Tier 3 placement |
+| `scorecard_mcp_trust_model.md` | 6.8/10 | • Fix the broken `/docs/mcp_servers.md` reference<br>• Fix the `security_guardrails.md` path reference<br>• Add a dedicated structural test |
+| `scorecard_dbt.md` | 6.7/10 | • Reconcile the redundant Child-pages-table + `@./` imports<br>• Delete or reconcile the orphaned duplicate `dbt/dbt.md`<br>• Add a dedicated structural test |
+| `scorecard_mermaid.md` | 6.5/10 | • Add a `**Purpose:**` statement<br>• Add a dedicated structural test |
+| `scorecard_docker.md` | 6.5/10 | • Add a `**Purpose:**` statement<br>• Expand beyond a bare 2-item routing list<br>• Add a dedicated structural test |
+| `scorecard_bash.md` | 6.5/10 | • Fix the stale template-location path (wrong tier and subdirectory)<br>• Add a dedicated structural test |
 | `scorecard_claude_rule_loading_strategy.md` | 6.4/10 | • Extend `test_rules_structure.py`'s emoji check to cover all `##` subheadings |
+| `scorecard_sql.md` | 6.3/10 | • Add an emoji to the "Imports" heading<br>• Reconcile the redundant Child-pages-table + `@./` imports<br>• Delete or reconcile the orphaned duplicate `sql/sql.md`<br>• Add a dedicated structural test |
+| `scorecard_jira.md` | 6.3/10 | • Add a `**Purpose:**` statement<br>• Delete or reconcile the orphaned duplicate `jira/jira.md`<br>• Add a dedicated structural test |
+| `scorecard_python.md` | 5.8/10 | • Fix the "Related" heading and its broken `[[python_environment]]` link<br>• Route to (or explain) 5 unreferenced sibling files in `python/`<br>• Delete or reconcile the orphaned duplicate `python/python.md`<br>• Add a dedicated structural test |
+| `scorecard_makefile.md` | 5.2/10 | • Fix or remove the broken `~/.claude/templates/makefile/` reference<br>• Add a `**Purpose:**` statement<br>• Add a dedicated structural test |
 
 ---
 
