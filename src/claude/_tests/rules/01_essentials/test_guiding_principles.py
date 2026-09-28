@@ -3,7 +3,7 @@
 # Test quality score: 3/10
 # Date created:      2026-08-28
 # Version:           1.0.0
-# Date updated:      2026-09-17
+# Date updated:      2026-09-21
 # ─────────────────────────────────────────────────────────
 
 """Tests for guiding_principles.md enforcement.
@@ -28,8 +28,8 @@ def test_no_lazy_load_imports_at_top_level():
     """
     claude_content = CLAUDE_MD.read_text()
 
-    # Find all @import references
-    imports = re.findall(r"@~/.claude/(.+?)(?:\s|$)", claude_content)
+    # Find all @import references (config-dir name varies: ~/.claude/, ~/claude/, etc.)
+    imports = re.findall(r"@~/[^/]+/(.+?)(?:\s|$)", claude_content)
 
     # Check that none reference lazy_load/
     lazy_load_imports = [imp for imp in imports if imp.startswith("_rules/lazy_load/")]
@@ -78,7 +78,7 @@ def test_no_speculative_imports():
 
     # For now, verify that the count of imports is reasonable (< 20).
     claude_content = CLAUDE_MD.read_text()
-    imports = re.findall(r"^@~/.claude/", claude_content, re.MULTILINE)
+    imports = re.findall(r"^@~/[^/]+/", claude_content, re.MULTILINE)
 
     assert len(imports) < 20, (
         f"CLAUDE.md has {len(imports)} imports. This is high and suggests "
