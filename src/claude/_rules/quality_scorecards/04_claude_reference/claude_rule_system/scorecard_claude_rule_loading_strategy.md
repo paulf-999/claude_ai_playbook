@@ -6,8 +6,6 @@
 **Overall score:** 6.4/10
 
 **Recommended improvements:**
-- Add emoji prefixes to the 4 subheadings missing one: "Source of Truth", "When Adding a Rule", "Tier Classification", "Related References".
-- Add `03_authoring_guidelines/` to the "Filesystem structure" tier list.
 - Extend `test_rules_structure.py`'s emoji check to cover all `##` subheadings, not just the H1, so this class of gap is caught mechanically.
 
 | Dimension | Score | Notes |

@@ -6,7 +6,6 @@
 **Overall score:** 6.9/10
 
 **Recommended improvements:**
-- Add dedicated structural tests for `authoring_agents.md` and its 4 children, matching the coverage `authoring_rules.md` and `authoring_skills.md` already have.
 - Cite a specific incident or usage evidence justifying this file's always-on, Tier 3 placement.
 
 | Dimension | Score | Notes |
