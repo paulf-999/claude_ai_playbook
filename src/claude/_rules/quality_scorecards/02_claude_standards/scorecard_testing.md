@@ -6,7 +6,6 @@
 **Overall score:** 7.6/10
 
 **Recommended improvements:**
-- Fix the Contents section's broken anchor link to "Child Files (Load As Needed)" — no such heading exists in the file.
 - Add a check to `test_testing.py` that verifies the content-regression-test recommendation this file makes is itself followed somewhere in the test suite.
 
 | Dimension | Score | Notes |
