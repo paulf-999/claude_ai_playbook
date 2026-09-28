@@ -1,7 +1,6 @@
 ---
 name: confluence_create_page
 description: Create a Confluence page using the general_page pattern. Requires Atlassian MCP enabled.
-version: 1.0.0
 maturity: tactical
 tags:
   criticality: should
@@ -11,6 +10,9 @@ tags:
   date_updated: "2026-09-19"
 tools: Read, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
+<!-- version: 1.0.0 -->
+<!-- created: 2026-04-08 -->
+<!-- updated: 2026-09-21 -->
 
 ## 🎯 Purpose
 

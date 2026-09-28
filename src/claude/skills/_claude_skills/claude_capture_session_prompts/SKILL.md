@@ -1,7 +1,6 @@
 ---
 name: claude_capture_session_prompts
 description: Capture session prompts from history.jsonl into a structured markdown table for review and planning
-version: 0.1.0
 maturity: draft
 tags:
   criticality: could
@@ -9,6 +8,9 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
+<!-- version: 0.1.0 -->
+<!-- created: 2026-09-07 -->
+<!-- updated: 2026-09-21 -->
 
 ## 🎯 Purpose
 

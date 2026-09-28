@@ -1,7 +1,6 @@
 ---
 name: claude_review_config
 description: Audit your global Claude config across six quality dimensions. Receive scorecard with A–F grade, gap analysis, and actionable recommendations
-version: 0.1.0
 maturity: draft
 tags:
   criticality: should
@@ -9,6 +8,9 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
+<!-- version: 0.1.0 -->
+<!-- created: 2026-09-07 -->
+<!-- updated: 2026-09-21 -->
 
 ## 🎯 Purpose
 

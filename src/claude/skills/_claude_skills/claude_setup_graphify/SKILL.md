@@ -1,7 +1,6 @@
 ---
 name: claude_setup_graphify
 description: Set up Graphify on a repo to generate a local AST-based knowledge graph, reducing token cost for codebase exploration
-version: 0.1.0
 maturity: draft
 tags:
   criticality: could
@@ -9,6 +8,9 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
+<!-- version: 0.1.0 -->
+<!-- created: 2026-09-07 -->
+<!-- updated: 2026-09-21 -->
 
 ## 🎯 Purpose
 

@@ -261,7 +261,7 @@ def _check_skill_md_structure(skill_md_path: Path) -> list[str]:
     """Check if SKILL.md has the canonical 5-section structure.
 
     Per authoring_skills.md's Core Standards, every skill is:
-      1. Frontmatter — name, version, maturity, description, tags (checked by C5)
+      1. Frontmatter — name, maturity, description, tags, then the version header (checked by C5)
       2. Purpose — 1 sentence value prop + 3-4 bullets
       3. Example Usage — realistic end-to-end scenario
       4. Best For — use cases + caveats (an H2 heading, or a "**Best for:**"
@@ -296,8 +296,9 @@ def _has_valid_frontmatter(skill_md_path: Path) -> list[str]:
     """Check that SKILL.md opens with YAML frontmatter carrying required fields.
 
     Per authoring_skills.md, frontmatter (not a metadata table or prose) is
-    section 1 of the canonical structure, and must declare name, description,
-    version, and maturity.
+    section 1 of the canonical structure, and must declare name, description
+    and maturity. Version lives in the three-line metadata header straight
+    after the frontmatter (see _claude_config_metadata.md).
 
     :param skill_md_path: Path to SKILL.md.
     :type skill_md_path: Path
@@ -322,9 +323,14 @@ def _has_valid_frontmatter(skill_md_path: Path) -> list[str]:
         issues.append(f"SKILL.md frontmatter is not valid YAML: {exc}")
         return issues
 
-    for field in ["name", "description", "version", "maturity"]:
+    for field in ["name", "description", "maturity"]:
         if field not in data or data[field] is None:
             issues.append(f"SKILL.md frontmatter missing required field: {field}")
+
+    if "version" in data:
+        issues.append("SKILL.md frontmatter must not carry version — it belongs in the metadata header")
+    if not parts[2].startswith("\n<!-- version:"):
+        issues.append("SKILL.md metadata header (<!-- version: X.Y.Z -->) must follow the frontmatter")
 
     return issues
 

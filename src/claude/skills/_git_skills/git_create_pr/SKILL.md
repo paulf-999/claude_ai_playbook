@@ -1,7 +1,6 @@
 ---
 name: git_create_pr
 description: Create GitHub PR with staged changes, commit message, and PR body
-version: 1.0.0
 maturity: tactical
 tags:
   criticality: should
@@ -9,6 +8,9 @@ tags:
   tested: false
   test_coverage_level: comprehensive
 ---
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-19 -->
 
 ## 🎯 Purpose
 

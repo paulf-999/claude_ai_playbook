@@ -1,7 +1,6 @@
 ---
 name: jira_create
 description: Create individual Jira tickets with full field configuration. Requires Atlassian MCP enabled.
-version: 0.1.0
 maturity: draft
 tags:
   criticality: should
@@ -9,6 +8,9 @@ tags:
   tested: true
 tools: Read, mcp__atlassian__createJiraIssue
 ---
+<!-- version: 0.1.0 -->
+<!-- created: 2026-04-11 -->
+<!-- updated: 2026-09-21 -->
 
 ## 🎯 Purpose
 

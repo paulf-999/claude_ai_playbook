@@ -1,13 +1,15 @@
 ---
 name: <domain>_<action>
 description: One-line description of what the skill does
-version: 0.1.0
 maturity: draft
 tags:
   criticality: should
   status: active
   tested: false
 ---
+<!-- version: 0.1.0 -->
+<!-- created: YYYY-MM-DD -->
+<!-- updated: YYYY-MM-DD -->
 
 ## 📖 Overview
 

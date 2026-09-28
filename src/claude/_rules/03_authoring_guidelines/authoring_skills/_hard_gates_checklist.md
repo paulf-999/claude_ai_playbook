@@ -1,4 +1,4 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-28 -->
 # ✅ Skill Hard Gates Checklist
@@ -17,7 +17,8 @@
   - [ ] requires [IF APPLICABLE] — tools, resources, permissions
   - [ ] dependencies [IF APPLICABLE] — external APIs or systems
 - [ ] **SKILL.md structure [REQUIRED]:** 5 sections only, ~60 lines max
-  - [ ] Frontmatter: name, description, version, maturity, tags
+  - [ ] Frontmatter: name, description, maturity, tags
+  - [ ] Metadata header straight after the frontmatter: version (matching the contract), created, updated
   - [ ] Purpose: 1 sentence value prop + 3–4 bullets
   - [ ] Example Usage: realistic scenario showing complete journey
   - [ ] Best For: use cases + explicit caveats (when NOT to use)
