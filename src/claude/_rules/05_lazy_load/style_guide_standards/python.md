@@ -112,4 +112,4 @@ NOOP = "NOOP"
 
 ## Related
 
-- `[[python_environment]]` — Virtual environment setup, dependency management, and tooling
+- [`python/python_environment.md`](python/python_environment.md) — Virtual environment setup, dependency management, and tooling
