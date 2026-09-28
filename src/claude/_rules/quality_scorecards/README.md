@@ -1,18 +1,18 @@
 # 📊 Rule Quality Scorecards
 
-**Purpose:** Apply the same quality-scorecard discipline skills already have (`quality_scorecard.md`) to `_rules/` files — centralized here rather than colocated, since rule audits happen *across* rules on a cadence, not per-rule at creation time.
+**Purpose:** Apply the same quality-scorecard discipline skills already have (`scorecard_<skill_name>.md`) to `_rules/` files — centralized here rather than colocated, since rule audits happen *across* rules on a cadence, not per-rule at creation time.
 
 ---
 
 ## 📁 Location convention
 
-One file per scored rule, mirroring the tier path: `_rules/quality_scorecards/<tier>/<rule_name>.md`.
+One file per scored rule, mirroring the tier path: `_rules/quality_scorecards/<tier>/scorecard_<rule_name>.md`.
 
-**Example:** `_rules/01_essentials/guiding_principles.md` → `_rules/quality_scorecards/01_essentials/guiding_principles.md`
+**Example:** `_rules/01_essentials/guiding_principles.md` → `_rules/quality_scorecards/01_essentials/scorecard_guiding_principles.md`
 
-**Never `@import` these files.** They're authoring/review artifacts, not content Claude reads while operating — the whole point is keeping always-on rule files free of scorecard token cost, the same reasoning that already keeps skills' `quality_scorecard.md` un-imported.
+**Never `@import` these files.** They're authoring/review artifacts, not content Claude reads while operating — the whole point is keeping always-on rule files free of scorecard token cost, the same reasoning that already keeps skills' `scorecard_<skill_name>.md` un-imported.
 
-**Child rules** (e.g. `git/_commits.md`) get their own scorecard file at the equivalent nested path: `quality_scorecards/02_claude_standards/git/_commits.md`.
+**Child rules** (e.g. `git/_commits.md`) get their own scorecard file at the equivalent nested path, dropping the child file's leading underscore per `_testing_file_organization.md`'s naming convention: `quality_scorecards/02_claude_standards/git/scorecard_commits.md`.
 
 ---
 
@@ -20,6 +20,9 @@ One file per scored rule, mirroring the tier path: `_rules/quality_scorecards/<t
 
 ```markdown
 # Quality Scorecard — <rule_name>.md
+
+**Date Created:** YYYY-MM-DD
+**Date Updated:** YYYY-MM-DD
 
 | Dimension | Score | Notes |
 |---|---|---|
@@ -41,6 +44,8 @@ One file per scored rule, mirroring the tier path: `_rules/quality_scorecards/<t
 **Notes column format:** bullet points, one per line, joined with `<br>` (standard markdown lists don't render inside table cells) — `• <emoji> **<bold keyword>:** <one point>`. Never a single run-on sentence. One point per bullet, matching `writing_style.md`'s general bullet convention and the same pattern used in `claude_plans/_plan_file_format.md`.
 
 **Related files:** full repo-relative path (e.g. `src/claude/_tests/rules/01_essentials/test_guiding_principles.py`), never just a bare filename — a scorecard often outlives the memory of where things live, and a bare filename forces a search. List the rule file itself plus every other file named anywhere in the Notes column (tests, other rules cited as evidence, anything a reader would otherwise have to go find).
+
+**Date Created / Date Updated:** `Date Created` is frozen once set; `Date Updated` bumps to today whenever the scorecard is re-scored — mirrors the test-metadata maintenance convention in `_test_metadata_maintenance.md`.
 
 ---
 
