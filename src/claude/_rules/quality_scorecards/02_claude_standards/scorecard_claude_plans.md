@@ -3,6 +3,13 @@
 **Date Created:** 2026-09-28
 **Date Updated:** 2026-09-28
 
+**Overall score:** 7.6/10
+
+**Recommended improvements:**
+- Add a "Right" example alongside the existing "Wrong" example in the Example section, per the heading's implied pairing.
+- Add a Contents section, matching the sibling files in this tier (`behaviour.md`, `git.md`, `testing.md`).
+- Add a dedicated test for the `_plan_file_format.md` child and the parent's own inline "How to apply" format.
+
 | Dimension | Score | Notes |
 |---|---|---|
 | **Clarity** | 7/10 | • 📋 **Core principle is crisp:** "pause after each phase" with a clear format template<br>• 🔍 **Asymmetric example:** "Example" section (line 78) shows only a "Wrong" case, no matching "Right" case despite the pairing implied by the heading |

@@ -3,6 +3,12 @@
 **Date Created:** 2026-09-28
 **Date Updated:** 2026-09-28
 
+**Overall score:** 7.9/10
+
+**Recommended improvements:**
+- Add a dedicated `test_claude_response_standards.py` structural test for the parent rule file itself, rather than relying only on the hook-injection test.
+- Cite a specific past incident or failure that motivated this rule, similar to how `portable_paths.md` documents its incidents.
+
 | Dimension | Score | Notes |
 |---|---|---|
 | **Clarity** | 8/10 | • 📋 **Detailed:** Summary/Next-steps/offer-line/timing rules are all concrete and example-backed<br>• 🔍 **Dense:** many nested bullet rules to hold in mind at once for one response format |

@@ -3,6 +3,8 @@
 **Date Created:** 2026-09-28
 **Date Updated:** 2026-09-28
 
+**Overall score:** 9.4/10
+
 | Dimension | Score | Notes |
 |---|---|---|
 | **Clarity** | 10/10 | • 📋 **Unambiguous:** concrete do/don't guidance for both Python and shell, with exact code patterns to use instead |

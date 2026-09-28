@@ -3,6 +3,12 @@
 **Date Created:** 2026-09-28
 **Date Updated:** 2026-09-28
 
+**Overall score:** 7.6/10
+
+**Recommended improvements:**
+- Add a "Related rules" section cross-linking to `behaviour.md` and other rules touching conduct/injection concerns.
+- Add dedicated tests for the `_code_security.md` child and the `security.md` parent file itself.
+
 | Dimension | Score | Notes |
 |---|---|---|
 | **Clarity** | 8/10 | • 📋 **Purpose is clear:** two concerns cleanly separated (secure coding vs. Claude's own conduct)<br>• 🔍 **Very thin:** 30 lines, almost entirely Contents + 3 imports, little independent substance of its own |

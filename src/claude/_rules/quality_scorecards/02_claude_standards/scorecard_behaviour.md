@@ -3,6 +3,12 @@
 **Date Created:** 2026-09-28
 **Date Updated:** 2026-09-28
 
+**Overall score:** 7.7/10
+
+**Recommended improvements:**
+- Add dedicated structural tests for the 5 untested children: `_how_to_approach.md`, `_before_acting.md`, `_pre_existing_issue_disclosure.md`, `_model_selection_strategy.md`, `_session_conduct.md`.
+- Document a clear criterion for when a behavioral concept is promoted to its own child file versus kept inline in the parent.
+
 | Dimension | Score | Notes |
 |---|---|---|
 | **Clarity** | 8/10 | • 📋 **Comprehensive:** covers proposing, acting, risky actions, and decision-making with concrete examples<br>• 🔍 **Mixed structure:** some concepts are inline (Before Claiming Completion, Risky Actions), others delegated to 7 children — no obvious rule for which |

@@ -3,6 +3,12 @@
 **Date Created:** 2026-09-28
 **Date Updated:** 2026-09-28
 
+**Overall score:** 7.1/10
+
+**Recommended improvements:**
+- Add dedicated structural tests for the parent and its imported children (`claude_when_to_delegate.md`, `turn_budgets.md`, `external_system_access.md`, `task_request_conventions.md`, `mcp_server_toggling.md`), rather than relying on adjacent hook/automation tests.
+- Cite a specific incident or recurring problem that motivated this rule.
+
 | Dimension | Score | Notes |
 |---|---|---|
 | **Clarity** | 8/10 | • 📋 **Concrete pattern:** "Flag, don't block" comes with a worked example ("Flagging: this read duplicates one already in context") |

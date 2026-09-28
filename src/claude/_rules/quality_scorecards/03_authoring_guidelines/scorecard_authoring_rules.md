@@ -3,6 +3,12 @@
 **Date Created:** 2026-09-28
 **Date Updated:** 2026-09-28
 
+**Overall score:** 7.1/10
+
+**Recommended improvements:**
+- Correct step 5 of the Pre-Creation Checklist: replace `02_claude_internal/` and `03_lazy_load/` with the real tier names `02_claude_standards/` and `05_lazy_load/`.
+- Extend `test_authoring_rules.py` to check the checklist's tier names against the actual directory structure, so this kind of drift is caught mechanically.
+
 | Dimension | Score | Notes |
 |---|---|---|
 | **Clarity** | 7/10 | • 📋 **Generally clear:** 5-question checklist plus a 5-step creation process<br>• 🚩 **Actively misleading in one spot:** step 5 of the checklist lists directory names that no longer exist (see Currency) |

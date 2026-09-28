@@ -3,6 +3,11 @@
 **Date Created:** 2026-09-28
 **Date Updated:** 2026-09-28
 
+**Overall score:** 8.1/10
+
+**Recommended improvements:**
+- Fix the stale `_rules/claude_internal/git.md` reference in `test_git.py`'s module docstring to `_rules/02_claude_standards/git.md`.
+
 | Dimension | Score | Notes |
 |---|---|---|
 | **Clarity** | 9/10 | • 📋 **Concrete:** branch-naming regex, PR file-count limit, and Conventional Commits format are all unambiguous |
