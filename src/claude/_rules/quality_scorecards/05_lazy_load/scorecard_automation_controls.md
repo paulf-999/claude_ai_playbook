@@ -7,7 +7,6 @@
 
 **Recommended improvements:**
 - Split into parent + child files — at 162 lines it's well past the ~100-line limit, with no children to absorb the detail.
-- Fix the stale `claude_efficiency.md` reference in "Related Rules" — the real file is `claude_operational_efficiency.md`.
 
 | Dimension | Score | Notes |
 |---|---|---|

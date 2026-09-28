@@ -16,7 +16,7 @@ PEP 8 is the baseline. One override: maximum line length is **120 characters** (
 - [🔖 Type hints](#-type-hints)
 - [💬 Inline comments](#-inline-comments)
 - [📌 General](#-general)
-- [Related](#-related)
+- [🔗 Related](#-related)
 
 ---
 ## 🗂️ Code layout
@@ -110,6 +110,10 @@ NOOP = "NOOP"
 - **File paths:** use `pathlib.Path` over `os.path`
 - **Mutable defaults:** avoid — use `None` and assign inside function
 
-## Related
+## 🔗 Related
 
-- `[[python_environment]]` — Virtual environment setup, dependency management, and tooling
+- [`python/python_environment.md`](python/python_environment.md) — Virtual environment setup, dependency management, and tooling
+- [`python/testing.md`](python/testing.md) — Pytest conventions: test naming, structure, fixtures, mocking, assertions
+- [`python/logging.md`](python/logging.md) — Logging standards for debugging, monitoring, and auditing
+- [`python/code_complexity.md`](python/code_complexity.md) — Metrics to identify and prevent overly complex code
+- [`python/module_organisation.md`](python/module_organisation.md) — Module docstrings, metadata, and public/private organisation

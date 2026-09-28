@@ -3,7 +3,7 @@
 # Test quality score: 5/10
 # Date created:      2026-09-17
 # Version:           1.0.0
-# Date updated:      [placeholder]
+# Date updated:      2026-09-28
 # ─────────────────────────────────────────────────────────
 
 """Tests for latency_optimisation.md structure and content.
@@ -36,11 +36,18 @@ def test_rule_file_exists_with_british_spelling():
     )
 
 
-def test_frontmatter_name_matches_filename():
-    """Frontmatter 'name:' field must match the file's own stem."""
+def test_no_stray_memory_frontmatter():
+    """Rule files must not carry memory-schema YAML frontmatter (name/description/metadata).
+
+    Regression test: this file previously opened with a `---`-delimited
+    block matching the personal-memory-file schema (name, description,
+    metadata: type), left over from an earlier migration. No other file
+    under _rules/ has this — rule files start directly with an emoji H1.
+    """
     content = RULE_FILE.read_text()
-    assert "name: latency_optimisation" in content, (
-        "Frontmatter 'name:' field must read 'latency_optimisation', matching the filename"
+    assert not content.startswith("---\n"), (
+        "latency_optimisation.md starts with a YAML frontmatter block — "
+        "rule files should open directly with an emoji H1, not memory-schema frontmatter"
     )
 
 

@@ -6,8 +6,6 @@
 **Overall score:** 6.8/10 (6-dimension average, Token Cost N/A)
 
 **Recommended improvements:**
-- Fix the "Playbook docs: `/docs/mcp_servers.md`" reference — no such file exists anywhere in this repo; point to a real doc (e.g. `docs/reference/claude_config/mcp/mcp_setup.md`) or remove the claim.
-- Fix the `security_guardrails.md` reference to its real path and filename: `_rules/02_claude_standards/security/_security_guardrails.md`.
 - Add a dedicated structural test for this file — it's security-relevant and currently has zero coverage.
 
 | Dimension | Score | Notes |

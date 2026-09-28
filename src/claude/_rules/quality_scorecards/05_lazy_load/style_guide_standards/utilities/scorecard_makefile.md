@@ -6,7 +6,6 @@
 **Overall score:** 5.2/10 (6-dimension average, Token Cost N/A)
 
 **Recommended improvements:**
-- Fix or remove the "Templates" reference to `~/.claude/templates/makefile/` — confirmed via `find` that no such directory exists anywhere in this repo.
 - Add a `**Purpose:**` statement at the top — this file opens with plain prose instead.
 - Add a dedicated structural test for this file and its 2 children.
 

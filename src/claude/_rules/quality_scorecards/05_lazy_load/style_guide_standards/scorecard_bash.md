@@ -6,7 +6,6 @@
 **Overall score:** 6.5/10 (6-dimension average, Token Cost N/A)
 
 **Recommended improvements:**
-- Fix the template-location path: it reads `03_lazy_load/style_guide_standards/unix/templates/template_bash_script.sh`, but the real path is `05_lazy_load/style_guide_standards/bash/templates/template_bash_script.sh` (wrong tier prefix and wrong subdirectory name).
 - Add a dedicated structural test for this file.
 
 | Dimension | Score | Notes |

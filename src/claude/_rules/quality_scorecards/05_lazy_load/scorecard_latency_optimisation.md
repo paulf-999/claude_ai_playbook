@@ -6,7 +6,6 @@
 **Overall score:** 7.5/10 (6-dimension average, Token Cost N/A)
 
 **Recommended improvements:**
-- Remove or explain the leftover memory-style YAML frontmatter (`name:`/`description:`/`metadata: type: feedback`) at the top — no other rule file in this config carries that schema.
 - Cite a specific incident or observed need for this guidance, rather than general LLM-parameter advice.
 
 | Dimension | Score | Notes |
