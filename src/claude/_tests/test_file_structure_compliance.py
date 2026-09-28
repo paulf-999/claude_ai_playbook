@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Test quality score: 5/10
 # Date created:      2026-08-28
-# Version:           1.1.0
-# Date updated:      2026-09-18
+# Version:           1.1.1
+# Date updated:      2026-09-28
 # ─────────────────────────────────────────────────────────
 
 """
@@ -54,6 +54,7 @@ AUTO_GENERATED_DIRS = {
     "security",  # Claude Code's own security-warning state (UUID-named)
     "session-env",  # Claude Code's own per-session environment state
     "shell-snapshots",  # Claude Code's own shell state snapshots
+    "state",  # Claude Code's own persisted state (e.g. mcp-discover-verdicts.json)
     "tasks",  # Claude Code's own background-task state
     "telemetry",  # Claude Code's own telemetry queue
 }
