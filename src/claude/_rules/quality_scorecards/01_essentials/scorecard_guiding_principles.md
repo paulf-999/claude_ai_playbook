@@ -3,6 +3,11 @@
 **Date Created:** 2026-09-21
 **Date Updated:** 2026-09-28
 
+**Overall score:** 8.4/10
+
+**Recommended improvements:**
+- Raise `test_guiding_principles.py`'s assertion/function count — its self-rated 3/10 quality is the main drag on this file's Test Coverage score.
+
 | Dimension | Score | Notes |
 |---|---|---|
 | **Clarity** | 9/10 | • 📋 **Structure:** each principle has Description + Rationale + How-to-apply columns — actionable, not just aspirational<br>• 🔍 **Friction:** table density is the only drawback |

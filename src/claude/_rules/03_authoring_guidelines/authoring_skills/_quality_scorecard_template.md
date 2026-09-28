@@ -12,6 +12,11 @@ Every skill includes a `scorecard_<skill_name>.md` containing only this table (n
 **Date Created:** YYYY-MM-DD
 **Date Updated:** YYYY-MM-DD
 
+**Overall score:** X.X/10
+
+**Recommended improvements:** [omit this line and the bullets below entirely when Overall ≥ 8.5]
+- <one imperative action per distinct gap found in the Notes column below>
+
 | Dimension | Score | Notes |
 |---|---|---|
 | **Design** | X/10 | [Brief note on design quality] |
@@ -94,3 +99,4 @@ Every skill includes a `scorecard_<skill_name>.md` containing only this table (n
 - Overall score is **not a grade** — a 9.5/10 skill is production-ready, not "A-"
 - Maturity justification and design rationale belong in SKILL.md or authoring_skills.md, not in the scorecard
 - **Date Created** is frozen once set; **Date Updated** bumps to today whenever the scorecard is re-scored
+- **Overall score** repeats the Overall row so it's readable without scanning the table; **Recommended improvements** turns each flagged gap into one imperative action, and is included only when Overall is below 8.5

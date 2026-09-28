@@ -28,6 +28,11 @@ One file per scored rule, mirroring the tier path: `_rules/quality_scorecards/<t
 **Date Created:** YYYY-MM-DD
 **Date Updated:** YYYY-MM-DD
 
+**Overall score:** X.X/10
+
+**Recommended improvements:** [omit this line and the bullets below entirely when Overall ≥ 8.5]
+- <one imperative action per distinct gap found in the Notes column below>
+
 | Dimension | Score | Notes |
 |---|---|---|
 | **Clarity** | X/10 | • 🔍 **<keyword>:** is the guidance unambiguous and actionable?<br>• 🔍 **<keyword>:** [second point, if needed] |
@@ -50,6 +55,8 @@ One file per scored rule, mirroring the tier path: `_rules/quality_scorecards/<t
 **Related files:** full repo-relative path (e.g. `src/claude/_tests/rules/01_essentials/test_guiding_principles.py`), never just a bare filename — a scorecard often outlives the memory of where things live, and a bare filename forces a search. List the rule file itself plus every other file named anywhere in the Notes column (tests, other rules cited as evidence, anything a reader would otherwise have to go find).
 
 **Date Created / Date Updated:** `Date Created` is frozen once set; `Date Updated` bumps to today whenever the scorecard is re-scored — mirrors the test-metadata maintenance convention in `_test_metadata_maintenance.md`.
+
+**Overall score / Recommended improvements:** the header line repeats the Overall row's score so it's readable without scanning the table. **Recommended improvements** turns each ⚠️/❌/🚩-flagged Notes bullet into one imperative action (e.g. "Add a `## 🔗 Related` section", not a restatement of the gap) — include the section only when Overall is below 8.5; omit it entirely otherwise, don't leave an empty bullet list.
 
 ---
 
