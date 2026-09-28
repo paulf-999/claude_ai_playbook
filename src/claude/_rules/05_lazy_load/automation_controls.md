@@ -143,7 +143,7 @@ Otherwise → Manual invocation (faster, clearer)
 
 ## 📚 Related Rules
 
-- **claude_efficiency.md** — When NOT to spawn subagents; when /batch is overkill
+- **claude_operational_efficiency.md** — When NOT to spawn subagents; when /batch is overkill
 - **behaviour.md** — Ask-first gates for risky operations
 - **testing.md** — How to verify automation-generated code
 
