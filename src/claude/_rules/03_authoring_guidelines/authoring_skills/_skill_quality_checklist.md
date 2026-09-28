@@ -6,7 +6,7 @@
 
 ## 📊 Quality Scorecard Dimensions
 
-Every skill includes a quality scorecard (quality_scorecard.md) scoring 7 dimensions on 1–10 scale. Dimensions are:
+Every skill includes a quality scorecard (`scorecard_<skill_name>.md`) scoring 7 dimensions on 1–10 scale. Dimensions are:
 
 | Dimension | What it measures | Scoring notes |
 |-----------|------------------|---------------|
@@ -40,12 +40,13 @@ Every skill includes a quality scorecard (quality_scorecard.md) scoring 7 dimens
   - [ ] Draft 5–8 evals | Tactical 8–12 evals | Strategic 12+ evals
   - [ ] Each eval: name, description, input, setup, expected_output
   - [ ] Organized by phase/feature
-- [ ] **Quality scorecard [REQUIRED]:** quality_scorecard.md
+- [ ] **Quality scorecard [REQUIRED]:** scorecard_<skill_name>.md
+  - [ ] Date Created and Date Updated fields present at the top
   - [ ] All 7 dimensions scored (Design, Complexity, Test Coverage, Code Quality, Security, Documentation, Standards)
   - [ ] Maturity level justified with evidence
   - [ ] Design rationale explained
 - [ ] **Reference files [REQUIRED]:**
-  - [ ] quality_scorecard.md exists
+  - [ ] scorecard_<skill_name>.md exists
   - [ ] reference/_implementation.md exists (phases, logic, error handling)
   - [ ] reference/_formats.md [IF APPLICABLE] (standards, validation, examples)
 

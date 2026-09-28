@@ -78,7 +78,7 @@ Minimal, focused structure. Each skill directory contains **only**:
 skill_name/
 ├── SKILL.md               # User-facing overview (5 sections, ~60 lines)
 ├── skill.contract.yaml    # Machine-readable contract (scope, triggers, maturity)
-├── quality_scorecard.md   # 7-dimension table only — justification goes in SKILL.md
+├── scorecard_skill_name.md # 7-dimension table only — justification goes in SKILL.md
 ├── reference/             # Runtime docs Claude reads while executing (keep SKILL.md lean)
 │   ├── _implementation.md # Phases, logic, error handling
 │   └── _formats.md        # Standards, validation, examples (if applicable)
@@ -87,11 +87,13 @@ skill_name/
     └── README.md           # Plain-language: what evals.yaml is, how many scenarios, why
 ```
 
-**`quality_scorecard.md` lives at skill root, not in `reference/`** — it's an authoring/review artifact (assessed when the skill is created or audited), not something Claude reads while executing the skill. Everything in `reference/` is runtime behavioral documentation.
+**`scorecard_<skill_name>.md` lives at skill root, not in `reference/`** — it's an authoring/review artifact (assessed when the skill is created or audited), not something Claude reads while executing the skill. Everything in `reference/` is runtime behavioral documentation.
 
 **`evals.yaml` always lives in `tests/`, never at skill root** — "evals" is jargon; a `tests/` folder reads as familiar to a non-technical browser of the skill directory. `tests/README.md` is mandatory alongside it, in plain language, so anyone who does open the folder isn't left guessing what the file is.
 
 **Nothing else.** No `templates/`, `patterns/`, `references/`, or domain-specific subdirectories. Keep scope tight, keep structure clean.
+
+**Naming applies going forward:** existing skills created before this naming change keep their `quality_scorecard.md` filename — rename to `scorecard_<skill_name>.md` only when that skill is next touched, not as a standalone rename-only pass.
 
 ---
 
