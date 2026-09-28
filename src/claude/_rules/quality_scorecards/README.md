@@ -14,6 +14,10 @@ One file per scored rule, mirroring the tier path: `_rules/quality_scorecards/<t
 
 **Child rules** (e.g. `git/_commits.md`) get their own scorecard file at the equivalent nested path, dropping the child file's leading underscore per `_testing_file_organization.md`'s naming convention: `quality_scorecards/02_claude_standards/git/scorecard_commits.md`.
 
+**Non-tiered top-level imports** (e.g. `aliases.md`, which lives at `src/claude/aliases.md` with no tier directory) get their scorecard directly under `quality_scorecards/`, with no tier subdirectory: `quality_scorecards/scorecard_aliases.md`.
+
+**`memory/MEMORY.md` is deliberately excluded** from this convention — it's auto-generated, per-user dynamic content, not a static authored artifact, so there's nothing fixed to score.
+
 ---
 
 ## 📋 Template
