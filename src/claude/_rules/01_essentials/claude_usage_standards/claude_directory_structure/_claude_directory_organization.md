@@ -67,4 +67,4 @@ Create a subdirectory when **two or more related files** share the same theme an
 - **Parent:** `claude_directory_structure.md` — entry point; organization and naming overview
 - **Sibling:** `_claude_directory_naming.md` — naming patterns for files and directories
 - **Related:** `writing_style.md` → `_multifile_document_organization.md` — when to split documents into parent + child files
-- **Related:** `authoring_rules.md` — directory placement for new rules (01_essentials, 02_claude_internal, 03_lazy_load)
+- **Related:** `authoring_rules.md` — directory placement for new rules (01_essentials, 02_claude_standards, 03_authoring_guidelines, 04_claude_reference, 05_lazy_load)

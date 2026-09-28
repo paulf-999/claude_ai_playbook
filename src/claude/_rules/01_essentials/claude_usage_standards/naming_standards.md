@@ -36,5 +36,5 @@ These principles apply across all artefacts: files, directories, hooks, skills, 
 ## 🔗 Related rules
 
 - `claude_directory_structure.md` — Directory organization and naming conventions for `~/.claude/`
-- `authoring_rules.md` — Rule naming standards and directory placement (01_essentials, 02_claude_internal, 03_lazy_load)
+- `authoring_rules.md` — Rule naming standards and directory placement (01_essentials, 02_claude_standards, 03_authoring_guidelines, 04_claude_reference, 05_lazy_load)
 - `writing_style.md` → `_multifile_document_organization.md` — File organization conventions; when to split into parent + child files

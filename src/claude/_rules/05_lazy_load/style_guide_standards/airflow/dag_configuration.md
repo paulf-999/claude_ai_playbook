@@ -16,7 +16,7 @@ All DAG parameters are read from `config.yaml` by `common.get_default_dag_params
 | `data_src` | Yes | Data source name |
 | `airbyte_conn_name` | Conditional | Airbyte connection name(s); required for Airbyte DAGs |
 
-- **Template:** see `~/.claude/_rules/03_lazy_load/style_guide_standards/airflow/templates/template_config.yaml` for working example
+- **Template:** see `~/.claude/_rules/05_lazy_load/style_guide_standards/airflow/templates/template_config.yaml` for working example
 
 ## 📋 Contents
 
