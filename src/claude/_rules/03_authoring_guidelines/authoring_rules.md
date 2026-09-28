@@ -14,7 +14,7 @@ Before writing any rule, answer these five essential questions:
 
 2. **Always-on or lazy-loaded?**
    - Always-on: import into CLAUDE.md (core safety rules, ~100–150 tokens/session cost)
-   - Lazy-load: `03_lazy_load/` (domain-specific, load on-demand only)
+   - Lazy-load: `05_lazy_load/` (domain-specific, load on-demand only)
    - Justify token cost if always-on
 
 3. **Evidence of need** (not hypothetical)
@@ -28,9 +28,11 @@ Before writing any rule, answer these five essential questions:
 
 5. **Which directory & how to name?**
    - Directory choice (per below); naming via `naming_standards.md` → children files for directory structure and naming patterns
-   - `01_essentials/` — blocking/safety rules (guiding_principles, behaviour, security, testing)
-   - `02_claude_internal/` — how Claude operates (efficiency, git, memory, MCP trust)
-   - `03_lazy_load/` — domain-specific or discretionary (style guides, tools, automation)
+   - `01_essentials/` — user-facing conventions and foundational principles (guiding_principles, response/usage standards)
+   - `02_claude_standards/` — blocking standards and enforcement (behaviour, security, testing, git)
+   - `03_authoring_guidelines/` — meta-guidance for authoring rules, skills, and agents
+   - `04_claude_reference/` — system knowledge and platform guidance (efficiency, rule loading strategy)
+   - `05_lazy_load/` — domain-specific or discretionary (style guides, tools, automation)
 
 ## 🚀 Rule Creation (4 Steps)
 
