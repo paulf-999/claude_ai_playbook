@@ -74,12 +74,17 @@ def build_skill(frontmatter: str = "name: demo_skill\nmaturity: draft", header: 
 
 
 def skill_dirs() -> list[Path]:
-    """Return every skill directory that contains a SKILL.md.
+    """Return every skill directory that contains a SKILL.md, skipping hidden folders.
+
+    Hidden folders such as Claude Code's own ``.trash/`` hold deleted third-party skills.
 
     :return: Skill directories under SKILLS_DIR.
     :rtype: list[Path]
     """
-    return sorted(path.parent for path in SKILLS_DIR.rglob("SKILL.md"))
+    return sorted(
+        path.parent for path in SKILLS_DIR.rglob("SKILL.md")
+        if not any(part.startswith(".") for part in path.relative_to(SKILLS_DIR).parts)
+    )
 
 
 # --- Validator: accepted ---
