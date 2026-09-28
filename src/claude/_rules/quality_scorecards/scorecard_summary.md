@@ -20,9 +20,9 @@
 | `scorecard_testing.md` | 7.6/10 | Yes — 2 bullets |
 | `scorecard_claude_plans.md` | 7.6/10 | Yes — 3 bullets |
 | `scorecard_claude_operational_efficiency.md` | 7.1/10 | Yes — 2 bullets |
-| `scorecard_authoring_rules.md` | 7.1/10 | Yes — 2 bullets |
-| `scorecard_authoring_agents.md` | 6.9/10 | Yes — 2 bullets |
-| `scorecard_claude_rule_loading_strategy.md` | 6.4/10 | Yes — 3 bullets |
+| `scorecard_authoring_rules.md` | 7.1/10 | Yes — 1 bullet |
+| `scorecard_authoring_agents.md` | 6.9/10 | Yes — 1 bullet |
+| `scorecard_claude_rule_loading_strategy.md` | 6.4/10 | Yes — 1 bullet |
 
 ---
 
