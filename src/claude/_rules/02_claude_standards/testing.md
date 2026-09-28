@@ -6,7 +6,11 @@
 
 - [When Tests Are Required](#-when-tests-are-required)
 - [Test Goals (What to Validate)](#-test-goals-what-to-validate)
-- [Child Files (Load As Needed)](#-child-files-load-as-needed)
+- [Test Design Pattern](#-test-design-pattern)
+- [Anti-Patterns](#-anti-patterns)
+- [File Organization](#-file-organization)
+- [Maintenance](#-maintenance)
+- [Test Metadata Standard](#-test-metadata-standard)
 - [Quick Reference](#-quick-reference)
 
 ---
