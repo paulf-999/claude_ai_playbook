@@ -82,13 +82,17 @@ def process_data(items, config, output_dir):
 
 ## 📐 Detailed Metrics
 
-@`_code_complexity_metrics.md` — Full explanation of each metric, thresholds, and examples.
+Full explanation of each metric, thresholds, and examples:
+
+@code_complexity/_code_complexity_metrics.md
 
 ---
 
 ## 🚪 Escape Hatches
 
-@`_code_complexity_exceptions.md` — When complex code is acceptable and how to document it.
+When complex code is acceptable and how to document it:
+
+@code_complexity/_code_complexity_exceptions.md
 
 ---
 

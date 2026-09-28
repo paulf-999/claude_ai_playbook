@@ -55,7 +55,7 @@ tags:
 
 Each DAG folder contains a `README.md` which is automatically read and rendered as `doc_md` in the Airflow UI by `common.get_default_dag_params()`. Do not write `doc_md` as a Python string in `dag.py`.
 
-- **Template:** see `~/.claude/_rules/03_lazy_load/style_guide_standards/airflow/templates/template_dag_readme.md`
+- **Template:** see `~/.claude/_rules/05_lazy_load/style_guide_standards/airflow/templates/template_dag_readme.md`
 
 ---
 
