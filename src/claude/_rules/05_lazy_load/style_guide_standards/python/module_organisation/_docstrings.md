@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # 📝 Module Docstrings & Metadata
 
 **Purpose:** Establish module docstring format and metadata conventions for self-documenting modules.

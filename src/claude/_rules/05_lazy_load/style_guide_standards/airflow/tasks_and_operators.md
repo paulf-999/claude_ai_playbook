@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # ⚙️ Tasks, Operators & Dependencies
 
 **Purpose:** Establish standards for DAG boilerplate, task design, operator selection, helper files, and task dependencies to ensure consistent and maintainable DAG structure.

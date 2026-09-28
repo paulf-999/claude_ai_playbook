@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-07 -->
+<!-- updated: 2026-09-18 -->
 # 🛠️ Agent Authoring
 
 **Purpose:** Establish standardized process for creating agents that ensures clarity, consistency, and intentionality. One concept per agent.

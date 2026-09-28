@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-04-11 -->
+<!-- updated: 2026-09-17 -->
 # 📅 Date & Time Standards
 
 ISO format applies to technical contexts (code, metadata, logs). Human-facing content uses

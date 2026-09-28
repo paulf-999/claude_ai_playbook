@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-04-08 -->
+<!-- updated: 2026-09-17 -->
 # 🔧 SQLFluff Configuration
 
 SQL style is enforced by SQLFluff. The canonical config lives in the dbt repo:

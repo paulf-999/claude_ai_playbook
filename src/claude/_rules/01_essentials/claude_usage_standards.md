@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-17 -->
+<!-- updated: 2026-09-19 -->
 # 📐 Claude Usage Standards
 
 **Purpose:** Index the conventions that govern how Claude names, structures, and writes everything it produces — directory structure, naming, and writing style.

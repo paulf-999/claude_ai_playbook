@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # 🚨 Logging in Error Handling
 
 **Purpose:** Establish logging patterns for exception handling — ensuring errors are logged with context before being raised or handled.

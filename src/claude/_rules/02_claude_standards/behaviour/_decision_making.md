@@ -1,3 +1,6 @@
+<!-- version: 1.0.1 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # 🤔 Decision-Making
 
 **Purpose:** Establish when and how Claude presents options to the user vs. deciding unilaterally, ensuring intentional action and preventing rework.
@@ -21,7 +24,6 @@ When multiple valid approaches exist, always present options with one explicitly
 **Why:** Decisions about architecture, scope, naming, and implementation approach are the user's call. Unilateral decisions lead to rework, wasted effort, and loss of intentionality. Presenting options ensures the user makes informed choices aligned with their goals.
 
 **Prerequisite:** Before proposing any new artefact (rule, skill, hook), run the three gates in `_artefact_proposal_gates.md` (naming, placement, duplication). Options are presented *after* gates pass, not before.
-
 
 ---
 

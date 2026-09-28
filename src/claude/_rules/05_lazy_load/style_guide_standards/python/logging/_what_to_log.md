@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # ✅ What to Log & What NOT to Log
 
 **Purpose:** Establish guidelines for useful, secure logging — what information should be logged for debugging, and what must be excluded for security.

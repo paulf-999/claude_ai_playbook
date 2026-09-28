@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-18 -->
 # 📐 Skill Core Standards
 
 **Purpose:** Define the baseline every skill must follow — naming, SKILL.md's 5-section structure, and what `skill.contract.yaml` must declare.

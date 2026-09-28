@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-08-28 -->
 # 🔄 Test Maintenance
 
 **Purpose:** Keep tests current, relevant, and free of technical debt as the codebase evolves.

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # 🗂️ Directory Structure — `~/.claude/`
 
 **Purpose:** Establish conventions for how the Claude config directory is organized, distinguishing user-created from auto-generated directories, and ensure files are placed in their appropriate locations.

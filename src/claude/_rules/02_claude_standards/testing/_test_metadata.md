@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-17 -->
+<!-- updated: 2026-09-21 -->
 # 📊 Test Metadata Standard
 
 **Purpose:** Track test quality, creation date, and maintenance status via structured metadata headers. Enable quick assessment of test staleness and coverage before running or updating.

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # 🔎 Skill Review Framework
 
 **Purpose:** Define the multi-layer review process that skills go through before and after creation.

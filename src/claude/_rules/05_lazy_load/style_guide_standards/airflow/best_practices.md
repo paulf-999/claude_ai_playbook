@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # ✅ Best Practices
 
 **Purpose:** Establish practices for idempotency, retries, error handling, testing, and configuration to ensure reliable and maintainable Airflow pipelines.

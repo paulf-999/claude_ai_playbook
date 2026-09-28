@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-19 -->
 # 🪝 Hooks Decision Framework
 
 **Purpose:** Behavioral guardrail for hook proposals — prevents low-ROI hooks by providing clear ROI criteria before suggesting any automation.

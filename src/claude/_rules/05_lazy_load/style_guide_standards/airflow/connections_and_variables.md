@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # 🔐 Connections & Variables
 
 **Purpose:** Establish naming and provisioning standards for Airflow connections and variables backed by Azure Key Vault.

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # 🏷️ Conventions
 
 Naming standards and declaration rules for Snowflake objects, Terraform resources, modules, variables, and outputs.

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # 🔗 MCP Server Trust Model
 
 **Purpose:** Establish trust boundaries for MCP server interactions, preventing prompt injection attacks and ensuring secure handling of external data by treating all MCP responses as untrusted input.

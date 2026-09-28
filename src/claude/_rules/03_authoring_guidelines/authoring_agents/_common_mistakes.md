@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-18 -->
 # 🚫 Agent Common Mistakes & Anti-Patterns
 
 **Purpose:** The most frequent agent-authoring mistakes, shown as wrong/right pairs.

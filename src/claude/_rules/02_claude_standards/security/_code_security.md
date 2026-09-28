@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-18 -->
 # 🔐 Secure Coding Practices
 
 **Purpose:** Establish secure coding standards for handling secrets, authentication, input validation, and dependencies to prevent common vulnerabilities.

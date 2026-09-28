@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # 🎛️ Model Selection Strategy
 
 **Purpose:** Establish when to use which Claude model (Haiku vs. Sonnet/Opus), reducing unnecessary API cost while matching task complexity to capability.

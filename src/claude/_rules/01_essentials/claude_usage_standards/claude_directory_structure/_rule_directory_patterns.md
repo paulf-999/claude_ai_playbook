@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-19 -->
 # 📐 Rule Directory Organization Patterns
 
 **Purpose:** Define when and how to organize related rules into parent+child directory structures, preventing flat-level sprawl while keeping rule discovery clear.

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-18 -->
 # ⏱️ Response Timing
 
 **Purpose:** Define the mandatory timing-footer mechanics — how the elapsed time is measured and formatted at the end of every substantive response.

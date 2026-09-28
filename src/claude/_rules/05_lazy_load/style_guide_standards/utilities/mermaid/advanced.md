@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-06-07 -->
+<!-- updated: 2026-09-17 -->
 # 🎨 Mermaid Advanced Techniques
 
 ## 📋 Contents

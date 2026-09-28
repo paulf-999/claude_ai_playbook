@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-28 -->
 # ✅ Skill Hard Gates Checklist
 
 **Purpose:** Final validation checklist before submitting a new skill — verify completeness and compliance across every required artifact.

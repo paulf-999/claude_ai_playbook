@@ -4,8 +4,8 @@
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # Date created:      2026-09-28
-# Version:           1.0.0
-# Date updated:      [placeholder]
+# Version:           1.0.1
+# Date updated:      2026-09-28
 # ─────────────────────────────────────────────────────────
 
 """Structural tests for _rules/03_authoring_guidelines/authoring_agents.md.
@@ -111,9 +111,11 @@ def test_no_undeclared_children_on_disk():
 
 
 def test_each_child_has_an_emoji_h1():
-    """Every child file must open with an emoji-prefixed H1, per writing_style.md."""
+    """Every child file must open with an emoji-prefixed H1 (after any metadata header)."""
     for child in EXPECTED_CHILDREN:
-        first_line = (CHILDREN_DIR / child).read_text().splitlines()[0]
+        lines = (CHILDREN_DIR / child).read_text().splitlines()
+        # Skip the metadata header, if present — see _claude_config_metadata.md
+        first_line = lines[3] if lines[0].startswith("<!-- version:") else lines[0]
         assert first_line.startswith("# "), f"{child}: first line is not an H1: {first_line!r}"
         assert len(first_line) > 2 and not first_line[2].isalnum(), (
             f"{child}: H1 does not appear to start with an emoji: {first_line!r}"

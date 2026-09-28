@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-21 -->
+<!-- updated: 2026-09-21 -->
 # 🧮 Complexity Scoring (0–10)
 
 **Purpose:** One shared complexity formula for every authored artefact type in this config — skills, agents, rules, hooks, and tests — defined once here so each new domain references it instead of redefining or drifting from it.

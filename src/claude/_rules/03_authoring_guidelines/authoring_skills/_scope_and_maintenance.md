@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-18 -->
+<!-- updated: 2026-09-21 -->
 # 🚪 Scope Boundaries & Low-Maintenance Design
 
 **Purpose:** Every skill must declare what it does NOT do, and be designed to minimize ongoing maintenance burden.

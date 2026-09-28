@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-07 -->
+<!-- updated: 2026-09-07 -->
 # 🚦 Before Acting — Task Complexity Gates
 
 **Purpose:** Apply proportional gates based on task complexity — heavier scrutiny for riskier tasks, no overhead for trivial work.

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-19 -->
+<!-- updated: 2026-09-19 -->
 # 🧹 No Orphaned Files
 
 **Purpose:** Every file in a skill directory must earn its place — referenced from `SKILL.md`, another reference doc, the handler, or evals. Files that aren't are dead weight nobody will notice until someone goes looking.

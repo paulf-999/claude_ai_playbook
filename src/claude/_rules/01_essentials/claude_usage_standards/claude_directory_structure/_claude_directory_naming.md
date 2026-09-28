@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # 🏷️ Naming — Directories and Files
 
 **Purpose:** Establish conventions for naming directories and files in the Claude config, ensuring self-describing, unambiguous names that follow consistent patterns.

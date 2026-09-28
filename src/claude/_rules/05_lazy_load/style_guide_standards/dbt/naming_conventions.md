@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-04-08 -->
+<!-- updated: 2026-09-17 -->
 # 🏷️ dbt Naming Conventions
 
 Naming standards for models, files, keys, data types, audit fields, CTEs, and null handling across all layers of the dbt project.

@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-17 -->
+<!-- updated: 2026-09-17 -->
 # 📊 Plan File Format
 
 **Purpose:** Define how the persisted plan document (not the chat response) presents its phase breakdown, so every plan is scannable at a glance.

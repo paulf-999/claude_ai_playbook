@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # ⚙️ DAG Configuration
 
 **Purpose:** Establish standards for configuring DAGs via `config.yaml`, defining schedules, tagging, and writing DAG documentation.

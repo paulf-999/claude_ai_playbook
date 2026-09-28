@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # 🔧 Pytest Fixtures & Mocking
 
 **Purpose:** Establish fixtures and mocking conventions for isolating code under test and reducing duplication.

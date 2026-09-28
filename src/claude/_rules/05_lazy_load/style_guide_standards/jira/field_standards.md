@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-05-20 -->
+<!-- updated: 2026-09-17 -->
 # 📋 Field Standards
 
 Required fields, default values, custom field IDs, component conventions, label rules, and the business value field format.

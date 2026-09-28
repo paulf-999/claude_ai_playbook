@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-28 -->
 # 🏷️ Naming patterns — files, objects, and artefacts
 
 **Purpose:** Establish self-describing naming patterns for hooks, skills, rules, and other Claude config artefacts.

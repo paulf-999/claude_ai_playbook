@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-04-08 -->
+<!-- updated: 2026-09-17 -->
 # 🔁 CI & Tooling
 
 Standards for pre-commit hooks, code formatting, and the Azure Pipelines CI/CD workflow.

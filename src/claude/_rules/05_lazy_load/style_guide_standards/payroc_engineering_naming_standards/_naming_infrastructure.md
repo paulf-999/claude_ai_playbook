@@ -1,3 +1,6 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-09-17 -->
 # 🖥️ Infrastructure & Resource Naming
 
 **Purpose:** Standards for naming virtual machines, cloud resources, and infrastructure assets.
