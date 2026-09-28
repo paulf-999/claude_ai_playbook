@@ -96,11 +96,13 @@ One file per scored rule, mirroring the tier path: `_rules/quality_scorecards/<t
 
 - **On creation** — every new rule gets a scorecard alongside it, same as skills
 - **During quarterly/6-month audits** — per `guiding_principles.md`'s existing audit cadence; this is the primary reason these live centralized, not colocated — an auditor sweeps `quality_scorecards/` in one pass instead of opening every rule file
+- **Update `scorecard_summary.md` in the same commit** — every score created or changed here must also update its row in the summary rollup, or the two drift out of sync
 
 ---
 
 ## 🔗 Related
 
+- `scorecard_summary.md` — one-glance rollup of every scored rule's Overall score
 - `authoring_rules.md` — rule creation process; references this convention
 - `authoring_skills/_quality_scorecard_template.md` — the skill-scorecard equivalent this mirrors
 - `authoring_guidelines/_complexity_scoring.md` — shared complexity formula used by the Complexity dimension
