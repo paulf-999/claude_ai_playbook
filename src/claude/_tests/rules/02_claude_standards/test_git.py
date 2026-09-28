@@ -3,10 +3,10 @@
 # Test quality score: 5/10
 # Date created:      2026-08-28
 # Version:           1.0.0
-# Date updated:      2026-09-17
+# Date updated:      2026-09-28
 # ─────────────────────────────────────────────────────────
 
-"""Structural tests for _rules/claude_internal/git.md.
+"""Structural tests for _rules/02_claude_standards/git.md.
 
 Verifies that the git rules file is present, well-formed, and contains
 the expected section headings that give the file its mechanical value.
