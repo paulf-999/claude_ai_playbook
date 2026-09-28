@@ -16,6 +16,7 @@ Use **Template B** (Constraint/Pattern-based) for multiple related patterns with
 Use when: one core concept, Why/How structure, ~50-60 lines.
 
 ```markdown
+<!-- version: 1.0.0 | created: YYYY-MM-DD | updated: YYYY-MM-DD -->
 # 🔄 [Principle Name]
 
 **Purpose:** One-line statement of what this principle establishes.
@@ -48,6 +49,7 @@ Link to related principles or rules via `[[memory-slug]]` or `@~/.claude/_rules/
 ```
 
 **Characteristics:**
+- Metadata header on line 1
 - Purpose statement (one line)
 - H1 emoji header
 - 50–70 lines
@@ -61,6 +63,7 @@ Link to related principles or rules via `[[memory-slug]]` or `@~/.claude/_rules/
 Use when: multiple related patterns, enforcement-style, ~80-110 lines.
 
 ```markdown
+<!-- version: 1.0.0 | created: YYYY-MM-DD | updated: YYYY-MM-DD -->
 # 🛡️ [Domain] Rules
 
 **Purpose:** One-line statement of what these rules establish.
@@ -98,6 +101,7 @@ Link to related rules or guidance.
 ```
 
 **Characteristics:**
+- Metadata header on line 1
 - Purpose statement (one line)
 - H1 emoji header
 - Section emoji headers (`##`)
@@ -110,6 +114,12 @@ Link to related rules or guidance.
 
 ## ✅ Quality Checklist — Both Templates
 
+- [ ] **Metadata header:** Line 1 is `<!-- version: X.Y.Z | created: YYYY-MM-DD | updated: YYYY-MM-DD -->`
+  - **New rule:** version `1.0.0`, with `created` and `updated` both set to today.
+  - **Every edit:** set `updated` to today and bump `version`.
+  - **MAJOR:** guidance reversed or removed.
+  - **MINOR:** guidance added.
+  - **PATCH:** wording or typo fix only.
 - [ ] **Purpose present:** One-line statement at top
 - [ ] **H1 emoji header:** File title with emoji
 - [ ] **H2 section headers:** All start with emoji (scannability)
@@ -119,4 +129,3 @@ Link to related rules or guidance.
 - [ ] **Trailing newline:** File ends with exactly one `\n`
 - [ ] **No H1 duplicates:** Only one `#` header per file
 - [ ] **Clear scope:** One concept per file, related patterns grouped
-

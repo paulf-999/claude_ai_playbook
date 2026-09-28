@@ -1,9 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Test quality score: 9/10
+# Test complexity score: 4/10
+# Python style compliant: Yes
 # Date created:      2026-08-28
-# Version:           1.0.0
-# Date updated:      2026-09-17
+# Version:           1.0.1
+# Date updated:      2026-09-28
 # ─────────────────────────────────────────────────────────
 
 """Tests for _rules/ directory structure and content standards.
@@ -89,8 +91,8 @@ def rule_files() -> list[Path]:
     :rtype: list[Path]
     """
     return [
-        f for f in RULES_DIR.rglob("*.md")
-        if f.name != "README.md" and "05_lazy_load" not in f.parts
+        rule_file for rule_file in RULES_DIR.rglob("*.md")
+        if rule_file.name != "README.md" and "05_lazy_load" not in rule_file.parts
     ]
 
 
@@ -111,7 +113,7 @@ def test_all_imports_resolve():
 
 def test_rules_root_contains_only_expected_files():
     """_rules/ root must contain nothing but README.md — all rules live in tier subdirectories."""
-    actual = {f.name for f in RULES_DIR.iterdir() if f.is_file()}
+    actual = {rule_file.name for rule_file in RULES_DIR.iterdir() if rule_file.is_file()}
     assert actual == EXPECTED_ROOT_FILES, (
         f"_rules/ root mismatch — expected: {EXPECTED_ROOT_FILES}, got: {actual}"
     )
@@ -127,7 +129,7 @@ def test_claude_reference_contains_expected_files():
     memory.md / security_guardrails.md -> folded into other files.
     """
     reference_dir = RULES_DIR / "04_claude_reference"
-    actual = {f.name for f in reference_dir.iterdir() if f.is_file()}
+    actual = {rule_file.name for rule_file in reference_dir.iterdir() if rule_file.is_file()}
     assert actual == EXPECTED_CLAUDE_REFERENCE_FILES, (
         f"04_claude_reference/ mismatch — expected: {EXPECTED_CLAUDE_REFERENCE_FILES}, got: {actual}"
     )
@@ -154,36 +156,36 @@ def test_dissolved_paths_absent():
 
 def test_line_limits():
     """No _rules/ file (excluding README and lazy_load) may exceed 110 lines."""
-    for f in rule_files():
-        lines = f.read_text().splitlines()
-        assert len(lines) <= 110, f"{f.name}: {len(lines)} lines exceeds 110-line limit"
+    for rule_file in rule_files():
+        lines = rule_file.read_text().splitlines()
+        assert len(lines) <= 110, f"{rule_file.name}: {len(lines)} lines exceeds 110-line limit"
 
 
 def test_h1_heading_present():
     """Every _rules/ file must have an H1 heading."""
-    for f in rule_files():
-        assert re.search(r"^# .+", f.read_text(), re.MULTILINE), (
-            f"{f.name}: missing H1 heading"
+    for rule_file in rule_files():
+        assert re.search(r"^# .+", rule_file.read_text(), re.MULTILINE), (
+            f"{rule_file.name}: missing H1 heading"
         )
 
 
 def test_h1_heading_has_emoji():
     """Every _rules/ file H1 heading must include an emoji."""
-    for f in rule_files():
-        content = f.read_text()
+    for rule_file in rule_files():
+        content = rule_file.read_text()
         h1_match = re.search(r"^# (.+)", content, re.MULTILINE)
-        assert h1_match, f"{f.name}: missing H1 heading"
+        assert h1_match, f"{rule_file.name}: missing H1 heading"
         heading_text = h1_match.group(1)
-        has_non_ascii = any(ord(c) > 127 for c in heading_text)
-        assert has_non_ascii, f"{f.name}: H1 heading has no emoji — got: '# {heading_text}'"
+        has_non_ascii = any(ord(char) > 127 for char in heading_text)
+        assert has_non_ascii, f"{rule_file.name}: H1 heading has no emoji — got: '# {heading_text}'"
 
 
 def test_files_end_with_single_newline():
     """Every _rules/ file must end with exactly one newline."""
-    for f in rule_files():
-        raw = f.read_bytes()
-        assert raw.endswith(b"\n"), f"{f.name}: does not end with a newline"
-        assert not raw.endswith(b"\n\n"), f"{f.name}: ends with multiple newlines"
+    for rule_file in rule_files():
+        raw = rule_file.read_bytes()
+        assert raw.endswith(b"\n"), f"{rule_file.name}: does not end with a newline"
+        assert not raw.endswith(b"\n\n"), f"{rule_file.name}: ends with multiple newlines"
 
 
 # --- Import order ---
@@ -205,7 +207,7 @@ def test_claude_md_import_order():
         if tier in TIER_ORDER:
             tier_sequence.append(tier)
 
-    tier_positions = [TIER_ORDER.index(t) for t in tier_sequence]
+    tier_positions = [TIER_ORDER.index(tier_name) for tier_name in tier_sequence]
     assert tier_positions == sorted(tier_positions), (
         f"CLAUDE.md _rules/ imports out of tier order — expected ascending {TIER_ORDER}, "
         f"found sequence: {tier_sequence}"
