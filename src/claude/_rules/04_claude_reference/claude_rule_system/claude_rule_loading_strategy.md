@@ -6,7 +6,7 @@ Every import costs ~100-200 tokens/session. Only rules that justify this cost st
 
 ---
 
-## Source of Truth
+## 🔍 Source of Truth
 
 Don't rely on a separate decision document. Check these directly:
 
@@ -14,13 +14,14 @@ Don't rely on a separate decision document. Check these directly:
 - **Filesystem structure:**
   - `01_essentials/` — foundational, user-facing, safety-critical rules
   - `02_claude_standards/` — quality gates and enforcement rules
+  - `03_authoring_guidelines/` — meta-guidance for authoring rules, skills, and agents
   - `04_claude_reference/` — system knowledge and platform guidance
   - `05_lazy_load/` — domain-specific rules (loaded on-demand)
 - **Individual rule files** — each rule's `Purpose` statement explains why it's placed where it is
 
 ---
 
-## When Adding a Rule
+## ➕ When Adding a Rule
 
 1. Read CLAUDE.md to see what's currently imported
 2. Check the directory structure to understand the tier system
@@ -31,11 +32,11 @@ If unsure, lazy-load it. Always-on rules are the exception, not the default.
 
 ---
 
-## Tier Classification
+## 📊 Tier Classification
 
 @~/.claude/_rules/04_claude_reference/claude_rule_system/claude_rule_classification.md
 
-## Related References
+## 🔗 Related References
 
 - **CLAUDE.md** — authoritative source of always-on imports and their rationale
 
