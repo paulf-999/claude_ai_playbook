@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 📋 Rules Loading Strategy
@@ -37,7 +37,7 @@ If unsure, lazy-load it. Always-on rules are the exception, not the default.
 
 ## 📊 Tier Classification
 
-@~/.claude/_rules/04_claude_reference/claude_rule_loading_strategy/claude_rule_classification.md
+@~/.claude/_rules/04_claude_reference/claude_rule_loading_strategy/_claude_rule_classification.md
 
 ## 🔗 Related References
 
