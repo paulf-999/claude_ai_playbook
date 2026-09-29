@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🏗️ Directory Organisation — `~/.claude/`
@@ -50,7 +50,7 @@
 Create a subdirectory when **two or more related files** share the same theme and benefit from grouping:
 
 - ✅ Create when: `naming_standards/` contains `_naming_principles.md` + `_claude_naming_patterns.md` (related, reusable grouping)
-- ✅ Create when: `claude_directory_structure/` contains `_claude_directory_organization.md` + `_claude_directory_naming.md` (organisation + naming are paired concerns)
+- ✅ Create when: `claude_directory_structure/` contains `_claude_directory_organisation.md` + `_claude_directory_naming.md` (organisation + naming are paired concerns)
 - ❌ Avoid when: one file stands alone (e.g. a single style guide doesn't need a folder)
 
 **Note:** Prefer flat `_rules/*.md` for standalone rules; introduce a subdir only when the grouping is clear and reusable.

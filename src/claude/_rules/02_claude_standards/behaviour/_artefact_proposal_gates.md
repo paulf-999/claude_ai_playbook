@@ -1,4 +1,4 @@
-<!-- version: 2.0.1 -->
+<!-- version: 2.0.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🚪 Artefact Proposal Gates
@@ -50,7 +50,7 @@ Before proposing any new artefact, run these gates in order:
 - **hooks/** — enforcement and style-guide hooks
 - **agents/** — custom sub-agents (domain-grouped subdirectories: `agents/core/`, `agents/tools/`, etc.)
 
-**Reference:** `~/.claude/_rules/01_essentials/claude_usage_standards/claude_directory_structure.md` (parent) → `_claude_directory_organization.md` (full tree) + `_claude_directory_naming.md` (naming patterns)
+**Reference:** `~/.claude/_rules/01_essentials/claude_usage_standards/claude_directory_structure.md` (parent) → `_claude_directory_organisation.md` (full tree) + `_claude_directory_naming.md` (naming patterns)
 
 **Action:** If placement is wrong, **recommend the correct directory directly** (no options; the standard is clear).
 

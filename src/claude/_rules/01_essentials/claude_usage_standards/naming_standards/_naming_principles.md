@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-19 -->
+<!-- updated: 2026-09-29 -->
 # 🎯 Naming Principles — Foundational Concepts
 
 **Purpose:** Establish the foundational principles that apply to ALL naming conventions — identifiers, files, directories, and artefacts.
@@ -60,4 +60,4 @@ Choose a name that fits the likely higher grouping, not just today's problem.
 - **Parent:** `naming_standards.md` — entry point; loads these principles + pattern details
 - **Sibling:** `_claude_naming_patterns.md` — detailed naming patterns for hooks, skills, rules
 - **Related:** `claude_directory_structure.md` → `_claude_directory_naming.md` — naming rules for directories and files
-- **Related:** `claude_directory_structure.md` → `_claude_directory_organization.md` — directory structure and prefix conventions
+- **Related:** `claude_directory_structure.md` → `_claude_directory_organisation.md` — directory structure and prefix conventions

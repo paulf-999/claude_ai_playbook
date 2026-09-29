@@ -1,4 +1,4 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🏷️ Naming — Directories and Files
@@ -29,7 +29,7 @@
 |---|---|---|---|
 | **User-created** | `_<name>/` | `_rules/`, `_templates/`, `_docs/` | Always underscore prefix |
 | **Auto-generated** | `<name>/` | `backups/`, `memory/`, `sessions/` | Never touch these |
-| **Child file** | `_<aspect>.md` | `_claude_directory_organization.md` | Prefix indicates child of parent |
+| **Child file** | `_<aspect>.md` | `_claude_directory_organisation.md` | Prefix indicates child of parent |
 
 ---
 
@@ -82,6 +82,6 @@
 ## 🔗 Related rules
 
 - **Parent:** `claude_directory_structure.md` — directory organization and naming overview
-- **Sibling:** `_claude_directory_organization.md` — the full directory tree and auto-generated vs. user-created distinction
+- **Sibling:** `_claude_directory_organisation.md` — the full directory tree and auto-generated vs. user-created distinction
 - **Related:** `naming_standards.md` → `_naming_principles.md` — foundational naming principles for all identifiers
 - **Related:** `naming_standards.md` → `_claude_naming_patterns.md` — detailed patterns for hooks, skills, and rules

@@ -1,7 +1,7 @@
 #!/bin/bash
-# version: 1.0.0
+# version: 1.0.1
 # created: 2026-08-28
-# updated: 2026-09-19
+# updated: 2026-09-29
 # PreToolUse hook — enforces directory structure rules for new dirs under ~/.claude/.
 # Injects directory structure rules as context before mkdir runs so Claude can confirm
 # the proposed directory name and placement follows the standard before proceeding.
@@ -44,8 +44,8 @@ CMD=$(echo "${INPUT}" | jq -r '.tool_input.command // empty' 2>/dev/null)
 # Load directory structure rules from the appropriate file.
 DIR_STRUCTURE_RULES=""
 
-if [[ -f "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/claude_directory_structure/_claude_directory_organization.md" ]]; then
-  DIR_STRUCTURE_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/claude_directory_structure/_claude_directory_organization.md")
+if [[ -f "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/claude_directory_structure/_claude_directory_organisation.md" ]]; then
+  DIR_STRUCTURE_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/claude_directory_structure/_claude_directory_organisation.md")
 elif [[ -f "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/claude_directory_structure.md" ]]; then
   DIR_STRUCTURE_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/claude_directory_structure.md")
 else
