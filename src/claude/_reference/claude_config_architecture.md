@@ -4,15 +4,15 @@
 
 ---
 
-## 🎯 Design Philosophy: Seven Guiding Principles
+## 🎯 Design philosophy
 
-The Claude config is built on **seven guiding principles** (from `guiding_principles.md`):
+The config is built on the principles in `guiding_principles.md` — read that file for the full, current list. These are the ones that most shape its layout:
 
 | Principle | How it shapes config |
 |---|---|
-| **Lazy-load by default** | Rules imported at session start are baselined; domain-specific rules loaded on-demand via `lazy_load/` |
-| **Explicit over implicit** | Every rule is listed in CLAUDE.md with a comment explaining its purpose; no silent automation |
-| **Context efficiency** | Token cost is tracked; broad imports are flagged during review; unused features are retired |
+| **Lazy-load by default** | Only tiers 01–04 load every session; domain-specific rules live in `_rules/05_lazy_load/` and are read on demand |
+| **Explicit over implicit** | Every always-on file is reached through an explicit `@import` chain from `CLAUDE.md`; no silent automation |
+| **Context efficiency** | Always-on size is measured, not estimated; broad imports are questioned in review; unused features are retired |
 | **Intentionality** | Features exist because they solve real, recurring problems — not "nice to have" |
 | **Reversible by design** | Rules are small, single-purpose; can be commented out or deleted without side effects |
 | **Goal-driven design** | Align config to current work goals, ruthlessly prune during 6-month resets; don't build for "all scenarios" |
@@ -20,9 +20,9 @@ The Claude config is built on **seven guiding principles** (from `guiding_princi
 
 ---
 
-## 🎯 New Principles: B & C (Goal-Driven Design + Automation ROI)
+## 🎯 Two principles in more depth
 
-### Principle B: Goal-Driven Design
+### Goal-driven design
 
 **Pattern:** Align config to current work goals; ruthlessly prune during 6-month resets.
 
@@ -36,7 +36,7 @@ The Claude config is built on **seven guiding principles** (from `guiding_princi
 
 **Gotcha:** Don't mistake "comprehensive" for "good." Lean config beats complete config.
 
-### Principle C: Automation ROI
+### Automation ROI
 
 **Pattern:** Only automate (hooks, skills, commands) when cost is justified by frequency.
 
@@ -57,55 +57,23 @@ The Claude config is built on **seven guiding principles** (from `guiding_princi
 
 ## 📂 Directory structure
 
-```
-~/.claude/
-├── CLAUDE.md                 # Entry point: 14 imports
-├── _rules/                   # Core rules (top-level)
-│   ├── guiding_principles.md · behaviour.md · security.md
-│   ├── testing.md · writing_style.md · naming_standards.md
-│   ├── mcp_trust_model.md
-│   └── claude_internal/      # 5 Claude Code specifics
-│       └── lazy_load/        # Domain-specific rules
-├── _tests/                   # 16 test files
-├── hooks/                    # Enforcement + style hooks
-├── skills/                   # Workflows
-└── _reference/               # Reference (this doc + children)
-```
+This page describes the principle, not an inventory — the README in each directory is the current source of truth, so nothing here goes stale when files are added or moved.
+
+| Path | What lives there | Current contents |
+|---|---|---|
+| `CLAUDE.md` | Entry point; `@import`s the always-on rules | Read the file itself |
+| `_rules/` | Rules, in five tiers (`01_essentials/` to `05_lazy_load/`) | `_rules/README.md` and each tier's README |
+| `_reference/` | Background docs like this one — never imported | `_reference/README.md` |
+| `_tests/` | pytest suite for rules, hooks, skills and settings | `_tests/README.md` |
+| `hooks/`, `skills/`, `agents/`, `_templates/` | Hooks, skills, sub-agents, authoring templates | Each directory's README |
 
 ---
 
-## 🔄 Import strategy
+## 🔄 What loads when
 
-### 1. Core imports (14 total, in CLAUDE.md)
-
-All imported at session start. Each rule is foundational:
-
-```
-CLAUDE.md imports:
-├── guiding_principles.md      (foundation)
-├── memory/MEMORY.md           (user context)
-├── behaviour.md               (safe defaults)
-├── security.md                (coding standards)
-├── testing.md                 (quality gate)
-├── claude_internal/           (5 files: efficiency, automation, git, memory, guardrails)
-├── mcp_trust_model.md         (security-critical)
-├── writing_style.md           (output standards)
-├── naming_standards.md        (identifier conventions)
-└── aliases.md                 (command reference)
-```
-
-**Estimated cost:** ~2,000–2,500 tokens baseline.
-
-### 2. Lazy-load imports (on-demand)
-
-Rules in `lazy_load/` are **not** imported by CLAUDE.md. Instead, they're loaded explicitly when needed:
-
-- **style_guide_standards/** — one per domain (SQL, Airflow, dbt, etc.)
-- **claude_config_naming.md** — config structure naming
-- **environment_setup/** — one-time setup guides (Oh My Zsh, etc.)
-- **standards/** — domain-specific standards
-
-**Cost:** ~50–150 tokens per file, only when needed.
+- **Always-on:** `CLAUDE.md` imports the entry file of each rule in tiers 01–04, and those files import their children — read `CLAUDE.md` for the current list.
+- **On demand:** `_rules/05_lazy_load/` and `_reference/` are never imported; Claude reads them when a task needs them.
+- **Cost:** measure it rather than estimate it — `_rules/README.md` records measured tier sizes, and each `@import` adds the full size of the imported file to every session.
 
 ---
 
@@ -115,9 +83,9 @@ Rules are organized by concern, creating clear separation that simplifies auditi
 
 | Interaction layer | Key files | Purpose |
 |---|---|---|
-| **Security** | behaviour.md → security_guardrails.md → security.md | Progressive gates from task approach to code standards |
-| **Quality** | testing.md + hook_enforcement_naming_convention.sh | Enforce tests and naming at commit time |
-| **Efficiency** | hook_style_guide_*.sh + lazy_load/ | Inject domain context on-demand, preserve baseline cost |
+| **Security** | `behaviour.md` → `security/_security_guardrails.md` → `security.md` | Progressive gates from task approach to code standards |
+| **Quality** | `testing.md` + `hook_enforcement_naming_convention.sh` | Naming checked as Claude creates files; tests run in pre-commit and CI |
+| **Efficiency** | `_rules/05_lazy_load/` + `_reference/` | Domain rules and background docs read on demand, keeping the baseline small |
 
 For detailed security architecture, see **[claude_config_architecture/_security.md](claude_config_architecture/_security.md)**.
 
@@ -143,11 +111,11 @@ Regular maintenance cycles ensure the config stays intentional and focused on cu
 Use this decision tree:
 
 1. **Does it apply to EVERY session** (regardless of project type)?
-   - **Yes** → Place in `_rules/01_essentials/` or `_rules/02_claude_internal/`; add to CLAUDE.md
+   - **Yes** → Place in the matching always-on tier (`01_essentials/` to `04_claude_reference/`, per `_rules/README.md`) and `@import` it from that tier's entry file
    - **No** → Go to step 2
 
 2. **Is it domain-specific** (SQL, dbt, Terraform, etc.)?
-   - **Yes** → Place in `_rules/03_lazy_load/`; document in README
+   - **Yes** → Place in `_rules/05_lazy_load/`; list it in that tier's README
    - **No** → Reconsider whether it's needed at all
 
 3. **Will you use this 5+ times/month**?

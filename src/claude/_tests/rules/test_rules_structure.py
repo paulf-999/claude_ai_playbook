@@ -4,7 +4,7 @@
 # Test complexity score: 4/10
 # Python style compliant: Yes
 # Date created:      2026-08-28
-# Version:           1.2.0
+# Version:           1.3.0
 # Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
@@ -16,9 +16,11 @@ Verifies the design goals for the _rules/ layout in the configured Claude direct
 - File quality standards (line limits, H1 headings, trailing newlines)
 - CLAUDE.md import priority order
 - No always-on bloat: no Related sections, Contents only when earned
+- _reference/ is never reached from CLAUDE.md's import graph
 """
 import re
 from pathlib import Path
+from typing import Optional
 
 from _shared_paths import CLAUDE_DIR, CLAUDE_MD, RULES_DIR
 
@@ -248,6 +250,41 @@ def test_contents_section_only_with_three_real_headings():
     assert not offenders, (
         f"Contents section on file(s) with fewer than {CONTENTS_MIN_HEADINGS} real ## headings "
         f"— drop the Contents block: {sorted(offenders)}"
+    )
+
+
+def always_on_import_graph() -> dict[Path, Optional[Path]]:
+    """Walk every @import chain from CLAUDE.md and return each reached file with its importer.
+
+    :return: Map of each reachable file to the file that imported it (None for CLAUDE.md).
+    :rtype: dict[Path, Optional[Path]]
+    """
+    reached: dict[Path, Optional[Path]] = {CLAUDE_MD: None}
+    queue = [CLAUDE_MD]
+    while queue:
+        current = queue.pop()
+        for target in extract_import_paths(current):
+            if target not in reached and target.exists():
+                reached[target] = current
+                queue.append(target)
+    return reached
+
+
+def test_always_on_files_do_not_import_reference():
+    """_reference/ is read on demand — no @import chain from CLAUDE.md may reach it.
+
+    Its architecture docs are background reading, and every import adds the full
+    file to every session's context.
+    """
+    reached = always_on_import_graph()
+    offenders = sorted(
+        f"{reached[path].relative_to(CLAUDE_DIR)} -> {path.relative_to(CLAUDE_DIR)}"
+        for path in reached
+        if REFERENCE_DIR in path.parents
+    )
+    assert not offenders, (
+        f"{len(offenders)} @import(s) pull _reference/ into every session — replace each with a "
+        f"'Read on demand' pointer: {offenders}"
     )
 
 
