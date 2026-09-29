@@ -20,12 +20,12 @@ evals:
       expected_output: >
           Claude reads git status, git diff and .github/pull_request_template.md,
           derives feature/add_user_authentication, a Conventional Commits message
-          and a plain-English PR title, commits and pushes, then shows the title
-          and body for confirmation before creating the PR and reporting its URL.
+          and a plain-English PR title, confirms the title, shows the full plan,
+          and only after approval commits, pushes, creates the PR and reports its URL.
       assertions:
           - Claude reads .github/pull_request_template.md before drafting the PR body
           - The derived branch matches ^(feature|hotfix)/[a-z0-9_]+$
-          - Claude asks for confirmation before running gh pr create
+          - Claude asks for confirmation of the title and the full plan before running any git-mutating command
           - Claude reports the new PR's number and URL
 
     - name: missing_pr_template_stops
@@ -139,40 +139,43 @@ evals:
           - The commit message starts with docs
           - The PR is created with the documentation label
 
-  # Phase 3 — confirmation
-    - name: user_edits_title_before_creation
-      description: User asks to edit the title at the confirmation step
+  # Phase 2 — confirmation
+    - name: user_requests_title_alternatives
+      description: User answers list at the title confirmation step
       input:
           prompt: /git_create_pr add user authentication
-          confirmation_reply: e
+          title_reply: list
       setup:
           current_branch: main
           changed_files:
               - src/auth/login.py
           pr_template_exists: true
       expected_output: >
-          Claude asks what to change, applies the edit to the title or body,
-          shows the result again and only creates the PR once the user approves.
+          Claude offers 2–3 numbered alternative titles with the same type and
+          scope, uses the one the user picks, then shows the full plan and
+          waits for approval before running anything.
       assertions:
-          - Claude does not run gh pr create until the user approves the edited version
-          - The created PR uses the edited title
+          - The alternatives keep the same Conventional Commits type and scope
+          - Claude runs no git or gh command before the plan is approved
+          - The created PR uses the title the user picked
 
-    - name: user_declines_creation
-      description: User answers n at the confirmation step
+    - name: user_declines_plan
+      description: User declines at the full-plan step
       input:
           prompt: /git_create_pr add user authentication
-          confirmation_reply: n
+          title_reply: y
+          plan_reply: n
       setup:
           current_branch: main
           changed_files:
               - src/auth/login.py
           pr_template_exists: true
       expected_output: >
-          Claude does not create the PR and tells the user the branch and
-          commit are already pushed, so they can open the PR manually or clean up.
+          Claude stops without running any of the planned commands, so no
+          branch, commit, push or PR is created.
       assertions:
-          - Claude does not run gh pr create
-          - Claude reports what was already pushed so nothing is left unexplained
+          - Claude does not run git checkout, git commit, git push or gh pr create
+          - The working tree is left exactly as it was
 
   # Edge case — PR size
     - name: too_many_changed_files
@@ -189,3 +192,23 @@ evals:
       assertions:
           - Claude does not commit all 24 files into one PR without asking
           - Claude suggests how the change could be split
+
+  # Phase 2 — error recovery
+    - name: push_rejected_stops
+      description: git push is rejected after the plan is approved
+      input:
+          prompt: /git_create_pr add user authentication
+          title_reply: y
+          plan_reply: y
+      setup:
+          current_branch: main
+          changed_files:
+              - src/auth/login.py
+          pr_template_exists: true
+          push_result: rejected
+      expected_output: >
+          Claude stops after the failed push, reports the rejection and asks
+          how to proceed instead of force-pushing or creating the PR.
+      assertions:
+          - Claude does not run git push --force
+          - Claude does not run gh pr create after the failed push

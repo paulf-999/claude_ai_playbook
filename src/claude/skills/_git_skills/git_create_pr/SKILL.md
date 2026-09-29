@@ -8,7 +8,7 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 
@@ -18,7 +18,7 @@ Automate the full PR creation workflow with minimal user intervention:
 - **Branch creation** — derive and create feature/hotfix branch from user input
 - **Commits** — stage, compose, and push changes with Conventional Commits format
 - **PR opening** — populate title, body, labels, and create PR on GitHub
-- **Confirmation** — preview before creation; allow title/body edits or manual cleanup
+- **Confirmation** — confirm the title, then the full plan, before anything is committed or pushed
 
 ## 💡 Example Usage
 
@@ -28,13 +28,12 @@ $ /git_create_pr add user authentication
           Commit message: feat: add user authentication
           PR title: feat: add user authentication
 
-[Phase 2] Executing...
-          ✓ Branch created
-          ✓ Changes committed
-          ✓ Pushed to origin
+[Phase 2a] Proposed PR title: feat: add user authentication
+           y to confirm · list for alternatives · or type your own: y
 
-[Phase 3] PR ready to create
-          Happy with title/body? (y/e/n): y
+[Phase 2b] Here is what I will run: checkout, add, commit, push, gh pr create
+           Confirm? y
+           ✓ Branch created  ✓ Committed  ✓ Pushed  ✓ PR created
 
 PR #1234 created: https://github.com/org/repo/pull/1234
 ```
@@ -46,5 +45,6 @@ Routine feature/hotfix PRs. Faster than manual git workflow; enforces Convention
 ## 📚 References
 
 - `reference/_phase1_gather.md` — gather-info logic, branch/commit/PR-title/PR-body derivation, and label mapping
-- `tests/evals.yaml` — 11 test scenarios covering every phase, both confirmation answers and the 20-file limit
+- `reference/_phase2_execute.md` — title and plan confirmation, execution rules and error recovery
+- `tests/evals.yaml` — 12 test scenarios covering every phase, both confirmation steps, a rejected push and the 20-file limit
 - `scorecard_git_create_pr.md` — 7-dimension quality scorecard
