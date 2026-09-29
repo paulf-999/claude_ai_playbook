@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🔐 Rules — Security
 
 **Purpose:** Establish security standards across two concerns: (1) secure coding practices for user-generated code, and (2) Claude's own conduct guardrails to prevent prompt injection and secret exposure.
@@ -28,5 +28,4 @@ Standards for secure code generation. Covers secrets management, authentication,
 
 ## 📖 Reference (Claude's design patterns)
 
-<!-- Security architecture: four independent security layers, threat models, and design rationale -->
-@~/.claude/_reference/claude_config_architecture/_security.md
+- **Read on demand:** `~/.claude/_reference/claude_config_architecture/_security.md` — the four security layers, threat model and design rationale

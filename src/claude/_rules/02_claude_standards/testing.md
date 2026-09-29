@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 🧪 Testing
 
 **Purpose:** Every new code artifact needs a test to prevent regressions and validate intended behavior.
@@ -87,5 +87,4 @@ Define the goal before writing the test. Tests validate *intended behavior*, not
 
 ## 📖 Reference (Claude's design patterns)
 
-<!-- Testing strategy: test layers, coverage, integration patterns -->
-@~/.claude/_reference/claude_config_architecture/_testing.md
+- **Read on demand:** `~/.claude/_reference/claude_config_architecture/_testing.md` — test layers, where each kind of test lives, and how to run the suite

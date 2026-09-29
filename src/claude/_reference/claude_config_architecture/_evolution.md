@@ -1,6 +1,6 @@
 ---
 created: 2025-11-15
-last_modified: 2026-08-19
+last_modified: 2026-09-29
 ---
 
 # 🔄 Evolution & Maintenance
@@ -23,12 +23,12 @@ Configuration requires periodic review to stay intentional:
 
 - Test coverage review — are new features tested?
 - Lazy-load candidates — any top-level rules used in <50% of sessions? Consider moving to lazy-load.
-- Token cost tracking — is baseline creeping up?
+- Always-on size — is the baseline creeping up? Re-measure it; `_rules/README.md` records the last measured tier sizes.
 
-### Annually
+### Every ~6 months
 
 Per Boris Cherny's recommendation, perform a **full reset**:
-1. Archive current `~/.claude/` to `~/.claude_releases/YYYY-MM-DD/`
+1. Archive current `~/.claude/` to `~/.claude_releases/YYYY_MM_DD/`
 2. Start fresh with essential rules only
 3. Force intentionality review for each rule as you re-add it
 
@@ -38,47 +38,30 @@ Per Boris Cherny's recommendation, perform a **full reset**:
 
 ### Step 1: Determine scope
 
-- **Core rule?** Used across multiple domains, or security-critical? → Top-level import
-- **Domain-specific?** Applies to one area (SQL, Airflow, dbt)? → `lazy_load/`
-- **Niche?** Referenced infrequently or only in specific projects? → `lazy_load/`
+- **Core rule?** Used across multiple domains, or security-critical? → an always-on tier (`01_essentials/` to `04_claude_reference/`, per `_rules/README.md`)
+- **Domain-specific?** Applies to one area (SQL, Airflow, dbt)? → `_rules/05_lazy_load/`
+- **Niche?** Referenced infrequently or only in specific projects? → `_rules/05_lazy_load/`
 
 ### Step 2: Write the rule
 
-- **Max 100 lines.** If longer, split into parent + child files.
+- **~100 lines, 110 at most.** If longer, split into parent + child files.
 - **One concept per file.** Don't bundle unrelated rules.
 - **Follow style:** Emoji headers, bold keywords, progressive disclosure.
-- **Reference related rules** with `[[name]]` links.
+- **Related links go in the tier README,** under "🔗 Related rules" — not in the rule, which is loaded every session.
 
 ### Step 3: Add tests
 
-- **Enforcement hook?** Write corresponding test in `_tests/hooks/`.
-- **Behavior rule?** Add behavior test to validate documented functionality.
-- **Structure rule?** Already covered by `test_rules_structure.py`.
-
-**No rule goes live without a test.**
+- **Enforcement rule or hook?** A test in `_tests/rules/` or `_tests/hooks/` is required.
+- **Instructional rule?** `test_rules_structure.py` already covers its format.
+- **Rule recording a real incident?** Add a content-regression test for its key phrases — see `testing.md`.
 
 ### Step 4: Update documentation
 
-Update all of the following (failing to update any is incomplete):
-
-| Document | What to update |
-|---|---|
-| `~/.claude/_rules/README.md` (if top-level) or `~/.claude/_rules/lazy_load/README.md` (if lazy) | Add entry to rule index |
-| `~/.claude/CLAUDE.md` | Add `@import` for top-level rules only |
-| `docs/whats_installed.md` | Add rule to the appropriate section |
-| `~/.claude/_tests/README.md` | Note new test file location |
-| Any related `_rules/*.md` files | Update cross-references |
+Work through the **Docs** and **Wiring** sections of `authoring_rules/_hard_gates_checklist.md` — that checklist is the current source of truth, so it isn't copied here.
 
 ### Step 5: Commit
 
-```bash
-git add <rule_file> <test_file> <doc_updates>
-git commit -m "feat(rules): add <rule_name>
-
-<One sentence explaining why this rule exists and what problem it solves.>
-
-Co-authored by Claude Code"
-```
+Commit per `git.md`: Conventional Commits (`feat(rules): add <rule_name>`), files staged by name.
 
 ---
 
@@ -88,7 +71,7 @@ Rare, but necessary when a rule becomes foundational.
 
 ### Promotion criteria
 
-A rule should move from `lazy_load/` to top-level (imported in CLAUDE.md) when:
+A rule should move from `_rules/05_lazy_load/` to an always-on tier when:
 
 1. **Used in most sessions** — audit transcripts show >70% of sessions reference it
 2. **Security-critical** — blocks risky actions or prevents vulnerabilities
@@ -96,17 +79,16 @@ A rule should move from `lazy_load/` to top-level (imported in CLAUDE.md) when:
 
 ### Promotion example
 
-**MCP trust model** (originally lazy) was promoted because:
-- Every MCP tool use references it
-- It's security-critical (prevents prompt injection)
-- Sessions using MCP tools form ~30–40% of all sessions; when MCP is used, the rule is always needed
+**MCP trust model** shows where the line sits: it stays lazy-loaded at `_rules/05_lazy_load/mcp_trust_model.md`.
+- It's security-critical (prevents prompt injection), so it meets criterion 2.
+- But it's only needed in sessions that use MCP tools, so it doesn't meet criterion 1 — reading it on demand covers it.
 
 ### Promotion process
 
 1. **Verify criteria** — audit transcripts; confirm usage patterns
-2. **Move file** — from `lazy_load/` to top-level `_rules/`
-3. **Add to CLAUDE.md** — add `@import` with token cost and justification
-4. **Update tests** — if compliance tests flag it as "should not be imported," update the test
+2. **Move file** — from `_rules/05_lazy_load/` into the matching tier (`01_essentials/` to `04_claude_reference/`)
+3. **Import it** — add an `@import` from that tier's entry file, or from `CLAUDE.md` if it's a new entry file, and note the size it adds
+4. **Run the suite** — `test_always_on_reachability.py` confirms the new import chain reaches it
 5. **Update docs** — remove from lazy-load index; add to top-level rule index
 6. **Commit** — `refactor(rules): promote <rule_name> from lazy to top-level`
 
@@ -130,7 +112,7 @@ Every config makes tradeoffs. Understanding them helps future decisions:
 
 ### Breadth vs. depth
 
-- **Breadth:** Many rules covering many domains (current: 14 top-level, 10+ lazy)
+- **Breadth:** Many rules covering many domains (see each tier's README for the current set)
 - **Depth:** Few rules, highly specific (fewer imports, but harder to find)
 - **Current choice:** Breadth with lazy-load — discover rules as needed, don't lose them
 - **If changed:** Would require consolidating rules or moving some to external docs
@@ -138,7 +120,7 @@ Every config makes tradeoffs. Understanding them helps future decisions:
 ### Automation vs. explicitness
 
 - **Automation:** Hooks silently enforce rules (reduces friction, but behavior is hidden)
-- **Explicitness:** All rules visible in CLAUDE.md (easier to audit, but more to read)
+- **Explicitness:** Every always-on rule reachable from an `@import` in CLAUDE.md (easier to audit, but more to read)
 - **Current choice:** Balance — enforcement hooks for safety-critical rules, explicit lists for others
 - **If changed:** More automation risks silent rule changes; less automation increases maintenance friction
 
@@ -156,17 +138,17 @@ Every config makes tradeoffs. Understanding them helps future decisions:
 ### Near-term (next 2–3 months)
 
 - Monitor which lazy-load rules are frequently loaded; consider promotion if >50% of sessions use them
-- Audit baseline import token cost; target <2,000 tokens
+- Audit always-on size against Claude Code's 150k-character warning
 - Add test coverage for new enforcement hooks as they're created
 
 ### Medium-term (6–12 months)
 
-- Evaluate whether `claude_internal/` can be split — may have rules infrequently used
+- Evaluate whether `03_authoring_guidelines/` and `04_claude_reference/` can be lazy-loaded — both are used in only some sessions
 - Consider a "seasonal" rule set (e.g., "quarterly planning rules" loaded only during planning season)
 - Review MCP trust model; consider whether additional MCP-specific rules are needed
 
 ### Long-term (>12 months)
 
-- Full reset per Boris Cherny's cycle (archive to `~/.claude_releases/2026-Q4/`, start fresh)
+- Full reset per Boris Cherny's ~6-month cycle (archive to `~/.claude_releases/YYYY_MM_DD/`, start fresh)
 - Evaluate whether new top-level imports are still justified
-- Consider whether lazy-load structure has natural groupings (e.g., `lazy_load/mcp/`, `lazy_load/infrastructure/`)
+- Consider whether lazy-load structure has natural groupings (e.g., `05_lazy_load/mcp/`, `05_lazy_load/infrastructure/`)

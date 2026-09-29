@@ -1,4 +1,4 @@
-<!-- version: 1.0.3 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🗂️ Directory Structure — `~/.claude/`
@@ -36,5 +36,4 @@ Applies to all file and directory creation in `~/.claude/` and the playbook repo
 
 ## 📖 Reference (architectural overview)
 
-<!-- Architectural overview, design principles, and rationale for directory organization -->
-@~/.claude/_reference/claude_config_architecture.md
+- **Read on demand:** `~/.claude/_reference/claude_config_architecture.md` — architectural overview, design principles and the rationale for the directory layout
