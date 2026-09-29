@@ -11,6 +11,9 @@
 | Rule | Purpose | Load when |
 |---|---|---|
 | **authoring_agents.md** | Standards for agent creation: naming, structure, maturity levels, testing, scope boundaries; children in `authoring_agents/` | Creating or reviewing a sub-agent |
+| **delegating_to_subagent.md** | When to spawn a sub-agent vs. work directly; constraints and token-cost breakeven | Before spawning a sub-agent |
+| **hooks_decision_framework.md** | ROI criteria for proposing hooks; child `hooks_decision_framework/` holds the 2026-08-07 precedent | Before proposing a hook or automation |
+| **turn_budgets.md** | `--max-turns` caps for non-interactive runs | Running skills, automation or CI non-interactively |
 | **mcp_trust_model.md** | MCP server trust boundaries; treating responses as data not instructions | Working with MCP tools (GitHub, Jira, etc.) and external APIs |
 | **latency_optimisation.md** | Temperature tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
 | **automation_controls.md** | Guardrails for `/loop`, `/batch`, `/goal` automation commands | Setting up recurring automation |
@@ -135,6 +138,22 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - `claude_plans.md` — Review gates after each implementation phase
 - `guiding_principles.md` — Intentionality; when to create new agents vs. enhance existing ones
 - `testing.md` — Testing requirements for all artifacts including agents
+
+### `delegating_to_subagent.md`
+
+- Pointer from: `04_claude_reference/claude_conduct/claude_when_to_delegate.md` — delegating to user vs. sub-agent overview
+
+### `hooks_decision_framework.md`
+
+- `_rules/02_claude_standards/behaviour.md` → "Before proposing" section (hook risk flags)
+- `_rules/01_essentials/guiding_principles.md` → "Intentionality gates everything" + "Automation ROI"
+- `_rules/01_essentials/claude_usage_standards/naming_standards.md` → Hook naming convention
+- `_rules/01_essentials/testing.md` → Hook test requirements
+- Pointer from: `task_request_conventions.md` and `behaviour.md` — Behavioral conventions for user request patterns
+
+### `hooks_decision_framework/_precedent_and_examples.md`
+
+- Parent: `hooks_decision_framework.md` — the decision framework and ROI formula this evidence supports
 
 ### `automation_controls.md`
 
@@ -275,3 +294,8 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - **style_guide_standards/dbt.md** — dbt-specific conventions (naming, macros, snapshots)
 - **style_guide_standards/airflow.md** — Airflow SQL task patterns
 - **testing.md** — How to test dbt models and raw sources
+
+### `turn_budgets.md`
+
+- Pointer from: `claude_operational_efficiency.md` and `automation_controls.md`
+- `behaviour/_session_conduct.md` — how Claude conducts itself in sessions

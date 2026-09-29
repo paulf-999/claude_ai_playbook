@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # ⚙️ Automation Controls
@@ -6,6 +6,8 @@
 **Purpose:** Establish guardrails for experimental automation features (`/loop`, `/batch`, `/goal`) to prevent runaway sessions, excessive token usage, and unintended side effects.
 
 Automation features are powerful but risky — these rules protect against costly mistakes.
+
+- **Turn caps for other non-interactive runs:** see [turn_budgets.md](turn_budgets.md).
 
 ## 📋 Contents
 

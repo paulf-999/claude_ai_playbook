@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🔧 Claude Operational Discipline
@@ -10,7 +10,7 @@
 - [Token awareness](#-token-awareness)
 - [Default behaviours](#-default-behaviours)
 - [When to delegate](#-when-to-delegate) — `claude_when_to_delegate.md`
-- [Turn budgets](#-turn-budgets) — automation turn constraints; `turn_budgets.md`
+- [Turn budgets](#-turn-budgets) — read on demand for non-interactive runs
 - [Intervention mode](#-intervention-mode)
 - [External system access](#-external-system-access)
 - [Task request conventions](#-task-request-conventions)
@@ -43,7 +43,7 @@
 
 ## 🔄 Turn budgets
 
-@~/.claude/_rules/04_claude_reference/claude_conduct/turn_budgets.md
+- **Read on demand:** `~/.claude/_rules/05_lazy_load/turn_budgets.md` — before any non-interactive run (skills, automation, CI) that needs a `--max-turns` cap.
 
 ---
 

@@ -4,7 +4,7 @@
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # Date created:      2026-09-16
-# Version:           1.2.0
+# Version:           1.3.0
 # Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
@@ -124,8 +124,11 @@ def test_no_orphaned_lazy_load_files():
 ENTRY_POINT_RELATIVE_PATHS = {
     "authoring_agents.md",
     "automation_controls.md",
+    "delegating_to_subagent.md",
+    "hooks_decision_framework.md",
     "latency_optimisation.md",
     "mcp_trust_model.md",
+    "turn_budgets.md",
     "environment_setup/ohmyzsh_setup.md",
     "style_guide_standards/airflow.md",
     "style_guide_standards/bash.md",

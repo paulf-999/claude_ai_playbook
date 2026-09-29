@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🪝 Hooks Decision Framework
@@ -72,7 +72,7 @@ ROI threshold: Manual effort > (Setup + maintenance) × 3
 
 ## 📅 Precedent & Examples
 
-@~/.claude/_rules/04_claude_reference/claude_conduct/task_request_conventions/_hooks_decision_framework/_precedent_and_examples.md
+@./hooks_decision_framework/_precedent_and_examples.md
 
 ## 🧪 Testing & registration requirements
 
