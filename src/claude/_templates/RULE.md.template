@@ -43,11 +43,6 @@ Use when: one core concept, Why/How structure, ~50-60 lines.
 
 [Guidance on when and how to follow the rule. Concrete examples welcome.]
 
----
-
-## Related
-
-Link to related principles or rules via `[[memory-slug]]` or `@~/.claude/_rules/<path>`.
 ```
 
 **Characteristics:**
@@ -97,11 +92,6 @@ Rules governing [domain/concern].
 | **[Case 1]** | [What to do and why] |
 | **[Case 2]** | [What to do and why] |
 
----
-
-## Related
-
-Link to related rules or guidance.
 ```
 
 **Characteristics:**
@@ -133,3 +123,6 @@ Link to related rules or guidance.
 - [ ] **Trailing newline:** File ends with exactly one `\n`
 - [ ] **No H1 duplicates:** Only one `#` header per file
 - [ ] **Clear scope:** One concept per file, related patterns grouped
+- [ ] **Contents only when earned:** Add a `## 📋 Contents` section only when the rule has 3 or more real `##` headings
+- [ ] **No Related section:** Put parent, sibling and dependency links in the tier's `README.md` under "🔗 Related rules", not in the rule
+  - **Why:** rule files are `@import`ed every session, so every line costs always-on context; READMEs are not imported.

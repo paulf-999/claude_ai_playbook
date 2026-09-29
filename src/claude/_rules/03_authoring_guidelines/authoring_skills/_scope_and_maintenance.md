@@ -1,4 +1,4 @@
-<!-- version: 3.0.0 -->
+<!-- version: 3.0.1 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
 # 🚪 Scope Boundaries & Low-Maintenance Design
@@ -48,9 +48,3 @@ Design skills to be stable and self-contained, so they rarely need changing.
 - **Battle-tested tools only:** proven APIs such as GitHub or Slack, never experimental tools.
 - **Freeze scope with `not_for`:** document any v2.0 ideas separately, not in the v1.0 contract.
 - **Evals are the contract:** run `evals.yaml` before any update, and don't merge if they break.
-
----
-
-## 🔗 Related
-
-- Parent: `authoring_skills.md` — child index and file organisation

@@ -1,19 +1,12 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🔧 SQLFluff Configuration
 
 SQL style is enforced by SQLFluff. The canonical config lives in the dbt repo:
 [`da-etl-dbtanalytics/.sqlfluff`](https://github.com/dmt-ghe-engineering/da-etl-dbtanalytics/blob/main/.sqlfluff)
 
 All SQLFluff violations must be resolved before committing.
-
-## 📋 Contents
-
-- [🗣️ Dialect and templater](#-dialect-and-templater)
-- [🚫 Excluded rules](#-excluded-rules)
-
----
 
 ## 🗣️ Dialect and templater
 

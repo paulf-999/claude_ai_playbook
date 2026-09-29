@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🖥️ Infrastructure & Resource Naming
 
 **Purpose:** Standards for naming virtual machines, cloud resources, and infrastructure assets.
@@ -106,10 +106,3 @@ When naming infrastructure:
 - [ ] PCI scope documented if applicable
 - [ ] Asset role matches actual purpose
 - [ ] Instance number used if multiple of same role in environment
-
----
-
-## 🔗 Related Standards
-
-- **[_naming_conventions.md](_naming_conventions.md)** — Core segment definitions
-- **[_naming_repositories.md](_naming_repositories.md)** — Repository naming standards

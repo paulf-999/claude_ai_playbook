@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🎛️ Model Selection Strategy
 
 **Purpose:** Establish when to use which Claude model (Haiku vs. Sonnet/Opus), reducing unnecessary API cost while matching task complexity to capability.
@@ -74,10 +74,3 @@ Escalating adds cost but prevents:
 - Task under 5 minutes of reasoning → Haiku
 - Task 5–15 minutes of reasoning → Sonnet
 - Task >15 minutes of complex thinking → Opus
-
----
-
-## 🔗 Related
-
-- Parent: `behaviour.md` — safe defaults and decision-making patterns
-- Reference: `claude_operational_efficiency.md` — context management principles (related but separate concern)

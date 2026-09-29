@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🚪 Complexity Exceptions
 
 **Purpose:** Document when complex code is acceptable and how to justify it.
@@ -53,10 +53,3 @@ Before submitting code for review:
 - [ ] Line length < 120 chars
 - [ ] One-sentence summary: Can you explain it?
 - [ ] If complex: Exception documented with reasoning
-
----
-
-## Related
-
-- Parent: `_code_complexity.md` — Overview and quick reference
-- Sibling: `_code_complexity_metrics.md` — Detailed metrics

@@ -1,4 +1,4 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.0.3 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🗂️ Directory Structure — `~/.claude/`
@@ -33,12 +33,6 @@ Applies to all file and directory creation in `~/.claude/` and the playbook repo
 @~/.claude/_rules/01_essentials/claude_usage_standards/claude_directory_structure/_rule_directory_patterns.md
 
 ---
-
-## 🔗 Related rules
-
-- `naming_standards.md` — General naming principles for all identifiers; see child file `_naming_principles.md` for foundational concepts
-- `authoring_rules.md` — Directory placement rules for new rules (01_essentials, 02_claude_standards, 03_authoring_guidelines, 04_claude_reference, 05_lazy_load)
-- `writing_style.md` → `_multifile_document_organisation.md` — When to create subdirectories for multi-file documents
 
 ## 📖 Reference (architectural overview)
 

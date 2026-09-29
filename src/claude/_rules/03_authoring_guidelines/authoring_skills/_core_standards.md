@@ -1,4 +1,4 @@
-<!-- version: 2.0.2 -->
+<!-- version: 2.0.3 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
 # 📐 Skill Core Standards
@@ -82,10 +82,3 @@ Choose the maturity level from evidence, not aspiration:
 - **Not in the scorecard:** `scorecard_<skill_name>.md` is table-only (see `~/.claude/_templates/skills/_quality_scorecard_template.md`).
 - **Example:** "Currently at the **tactical** stage — main path plus light error handling, not full edge-case coverage yet."
 - **Complexity formula:** see `_complexity_scoring.md` (sibling of `authoring_skills.md`).
-
----
-
-## 🔗 Related
-
-- Parent: `authoring_skills.md` — child index and file organisation
-- Sibling: `_trigger_design.md` — trigger phrase design

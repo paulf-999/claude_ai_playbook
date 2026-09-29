@@ -4,7 +4,7 @@
 # Test complexity score: 4/10
 # Python style compliant: Yes
 # Date created:      2026-08-28
-# Version:           1.1.1
+# Version:           1.2.0
 # Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
@@ -15,6 +15,7 @@ Verifies the design goals for the _rules/ layout in the configured Claude direct
 - All @import paths resolve to real files
 - File quality standards (line limits, H1 headings, trailing newlines)
 - CLAUDE.md import priority order
+- No always-on bloat: no Related sections, Contents only when earned
 """
 import re
 from pathlib import Path
@@ -192,6 +193,62 @@ def test_files_end_with_single_newline():
         raw = rule_file.read_bytes()
         assert raw.endswith(b"\n"), f"{rule_file.name}: does not end with a newline"
         assert not raw.endswith(b"\n\n"), f"{rule_file.name}: ends with multiple newlines"
+
+
+# --- Always-on context budget (#120, #121) ---
+
+REFERENCE_DIR = CLAUDE_DIR / "_reference"
+RELATED_HEADING = re.compile(r"^## .*Related", re.MULTILINE)
+H2_HEADING = re.compile(r"^## (.+)$", re.MULTILINE)
+CONTENTS_MIN_HEADINGS = 3
+
+
+def imported_content_files() -> list[Path]:
+    """Return every .md file under _rules/ and _reference/ that can be @import-ed.
+
+    Wider than rule_files(): includes 05_lazy_load/ and _reference/, since a
+    lazy-loaded rule costs the same context once it is read. Excludes READMEs
+    (never imported — they are where Related links now live) and
+    quality_scorecards/ (never imported).
+
+    :return: Markdown files subject to the context-budget checks.
+    :rtype: list[Path]
+    """
+    return [
+        md_file
+        for base in (RULES_DIR, REFERENCE_DIR)
+        for md_file in base.rglob("*.md")
+        if md_file.name != "README.md" and "quality_scorecards" not in md_file.parts
+    ]
+
+
+def test_no_related_section_outside_readmes():
+    """Related links live in the tier README, not the always-on rule file (#121)."""
+    offenders = [
+        str(md_file.relative_to(CLAUDE_DIR))
+        for md_file in imported_content_files()
+        if RELATED_HEADING.search(md_file.read_text())
+    ]
+    assert not offenders, (
+        f"{len(offenders)} file(s) have a '## ... Related' section — move the links to the "
+        f"tier README under '🔗 Related rules': {sorted(offenders)}"
+    )
+
+
+def test_contents_section_only_with_three_real_headings():
+    """A Contents section must only appear when the file has 3+ other ## headings (#120)."""
+    offenders = []
+    for md_file in imported_content_files():
+        headings = H2_HEADING.findall(md_file.read_text())
+        if not any("Contents" in heading for heading in headings):
+            continue
+        real = [h for h in headings if "Contents" not in h and "Related" not in h]
+        if len(real) < CONTENTS_MIN_HEADINGS:
+            offenders.append(f"{md_file.relative_to(CLAUDE_DIR)} ({len(real)} headings)")
+    assert not offenders, (
+        f"Contents section on file(s) with fewer than {CONTENTS_MIN_HEADINGS} real ## headings "
+        f"— drop the Contents block: {sorted(offenders)}"
+    )
 
 
 # --- Import order ---

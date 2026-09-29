@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-29 -->
 # 🔐 Secure Coding Practices
 
 **Purpose:** Establish secure coding standards for handling secrets, authentication, input validation, and dependencies to prevent common vulnerabilities.
@@ -50,11 +50,3 @@
 - **Least privilege:** request only the permissions the service or user actually needs.
 - **No sensitive logging:** do not log credentials, PII, or tokens.
 - **Flag PII handling:** flag any code that handles PII — ensure it is treated with appropriate care and documented.
-
----
-
-## 🔗 Related rules
-
-- Parent: `security.md` — security overview and guardrails
-- Sibling: `_security_guardrails.md` — Claude's conduct and prompt injection defence
-- Reference: `~/.claude/_reference/claude_design_patterns/_security.md` — security architecture

@@ -1,4 +1,4 @@
-<!-- version: 2.0.2 -->
+<!-- version: 2.0.3 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🚪 Artefact Proposal Gates
@@ -99,13 +99,3 @@ Present options *only* in these scenarios:
 - **Gate 3 (Duplication):** Similar artefact exists; present integration options (extend existing + cost, vs. create new + maintenance)
 
 **Otherwise:** Gates pass and proposal proceeds without options.
-
----
-
-## 🔗 Related rules
-
-- Parent: `behaviour.md` — Safe defaults and safe action guidelines
-- Sibling: `_decision_making.md` — When to present options vs. decide unilaterally; gates should pass before options are presented
-- Reference: `naming_standards.md`, `claude_directory_structure.md`, `~/.claude/_rules/04_claude_reference/claude_rule_loading_strategy.md`
-
----

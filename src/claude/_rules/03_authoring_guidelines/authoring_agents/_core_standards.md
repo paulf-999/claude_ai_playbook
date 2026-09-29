@@ -1,4 +1,4 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
 # 📐 Agent Core Standards
@@ -96,9 +96,3 @@ Agents follow the same maturity model as skills:
 - Agent produces expected output format
 - Agent respects constraints and scope boundaries
 - Agent handles errors gracefully
-
----
-
-## 🔗 Related
-
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist

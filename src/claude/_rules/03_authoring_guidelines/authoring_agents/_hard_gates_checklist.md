@@ -1,4 +1,4 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
 # ✅ Agent Hard Gates Checklist
@@ -40,9 +40,3 @@
 - [ ] Triggers defined (slash command + natural language variants)
 - [ ] Model and isolation mode specified
 - [ ] References or related rules linked (if applicable)
-
----
-
-## 🔗 Related
-
-- Parent: `authoring_agents.md` — quick navigation and core standards

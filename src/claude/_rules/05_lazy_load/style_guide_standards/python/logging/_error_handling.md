@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🚨 Logging in Error Handling
 
 **Purpose:** Establish logging patterns for exception handling — ensuring errors are logged with context before being raised or handled.
@@ -184,12 +184,3 @@ Exception occurs
        ├─ YES: Log and handle/exit (no re-raise)
        └─ NO: Log and re-raise (let caller handle)
 ```
-
----
-
-## 🔗 Related
-
-- Parent: `logging.md` — Logging overview and links
-- Sibling: `logging/_setup_and_levels.md` — Logger setup and log levels
-- Sibling: `logging/_what_to_log.md` — What to log and what NOT to log
-- Related: `python.md` (parent) → Error handling section

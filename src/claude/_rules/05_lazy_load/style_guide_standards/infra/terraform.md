@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🏗️ Terraform Style Guide & Standards
 
 Defines the team's standards for writing and structuring Terraform code.
@@ -13,12 +13,6 @@ Defines the team's standards for writing and structuring Terraform code.
 | [`terraform/conventions.md`](terraform/conventions.md) | Snowflake object naming, resource names, variable declarations, and outputs |
 | [`terraform/modules.md`](terraform/modules.md) | Module composition, layered resource pattern, iteration, and lifecycle |
 | [`terraform/ci_and_tooling.md`](terraform/ci_and_tooling.md) | Pre-commit hooks, Azure Pipelines, and sequential environment deployment |
-
-## 📋 Contents
-
-- [🏗️ Core principles](#-core-principles)
-
----
 
 ## 🏗️ Core principles
 

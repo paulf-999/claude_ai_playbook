@@ -101,18 +101,6 @@
 
 ---
 
-## 🔗 Related Rules
-
-These practices are integrated into the global Claude config:
-
-- **`behaviour.md`** — "colleague test", "never speculate about code", "tune exploration"
-- **`writing_style.md`** — "frame as positive actions"
-- **`claude_efficiency.md`** — "when NOT to spawn"
-
-For the full rules and additional context, see `~/.claude/_rules/`.
-
----
-
 ## 📚 External References
 
 - **Official Claude Prompt Engineering Guide:** https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices — Anthropic's official documentation on prompt engineering best practices

@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-29 -->
 # 📅 Hooks ROI — Precedent & Examples
 
 **Purpose:** The real incidents behind the hooks decision framework — one negative (5 low-ROI hooks removed), one positive — grounding the framework in evidence, not theory.
@@ -31,9 +31,3 @@
 - Frequency: ~40+ times/month across all sessions
 - Manual alternative: user would review, ask Claude to rewrite (~15 min/violation)
 - ROI: Positive; hook saves ~10 hours/month; setup cost recouped in weeks
-
----
-
-## 🔗 Related
-
-- Parent: `_hooks_decision_framework.md` — the decision framework and ROI formula this evidence supports

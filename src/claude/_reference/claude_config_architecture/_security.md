@@ -109,13 +109,3 @@ Each gate is independent — a pass at gate 1 doesn't imply a pass at gate 2.
 2. **Testability:** Each layer is independently testable
 3. **Clarity:** New contributors understand which rule covers which concern
 4. **Maintainability:** Changes to one concern don't accidentally affect another
-
----
-
-## Related documents
-
-- **How Claude behaves:** `~/.claude/_rules/behaviour.md`
-- **Prompt injection defence:** `~/.claude/_rules/security_guardrails.md`
-- **Code standards:** `~/.claude/_rules/security.md`
-- **MCP trust:** `~/.claude/_rules/mcp_trust_model.md`
-- **Parent doc:** `claude_config_architecture.md`

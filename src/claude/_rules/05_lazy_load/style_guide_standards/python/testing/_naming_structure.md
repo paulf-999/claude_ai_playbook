@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🏷️ Test Naming & Structure
 
 **Purpose:** Establish test naming conventions and test structure patterns for readable, maintainable tests.
@@ -56,11 +56,3 @@ def test_parse_args_config_and_apply(monkeypatch):
 ```
 
 **Why:** This pattern is instantly recognisable and keeps tests focused on one scenario.
-
----
-
-## 🔗 Related
-
-- Parent: `testing.md` — Testing conventions overview
-- Sibling: `testing/_fixtures_mocking.md` — Pytest fixtures and mocking
-- Sibling: `testing/_assertions.md` — Assertions and exception testing

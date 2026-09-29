@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # ⚙️ Automation Controls
 
 **Purpose:** Establish guardrails for experimental automation features (`/loop`, `/batch`, `/goal`) to prevent runaway sessions, excessive token usage, and unintended side effects.
@@ -141,14 +141,6 @@ Need to do the same change 10+ times in parallel?
 │
 Otherwise → Manual invocation (faster, clearer)
 ```
-
----
-
-## 📚 Related Rules
-
-- **claude_operational_efficiency.md** — When NOT to spawn subagents; when /batch is overkill
-- **behaviour.md** — Ask-first gates for risky operations
-- **testing.md** — How to verify automation-generated code
 
 ---
 

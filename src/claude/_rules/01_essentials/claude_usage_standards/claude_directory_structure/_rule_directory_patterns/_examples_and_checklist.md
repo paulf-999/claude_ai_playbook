@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.1.2 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-19 -->
+<!-- updated: 2026-09-29 -->
 # ✅ Rule Directory Patterns — Examples & Checklist
 
 **Purpose:** Worked examples, the "2+ rule", and a verification checklist for applying the parent+child rule directory pattern correctly.
@@ -60,8 +60,9 @@ Before organizing a rule into parent+child structure:
   - [ ] Parent rule at: `_rules/<tier>/<concept>.md`
   - [ ] Child rules at: `_rules/<tier>/<concept>/_<aspect>.md`
   - [ ] Child files use underscore prefix `_<aspect>.md`
-  - [ ] Parent rule has contents section with links to `<concept>/_<aspect>.md`
-  - [ ] Sibling links within subdirectory use relative paths: `[_file.md](_file.md)`
+  - [ ] Parent rule `@import`s each `<concept>/_<aspect>.md`, with a Contents section only if it has 3 or more real `##` headings
+  - [ ] Any inline link to a sibling in the rule body uses a relative path: `[_file.md](_file.md)`
+  - [ ] Parent and sibling link lists go in the tier `README.md` under "🔗 Related rules", not in the rule
 - [ ] **Is the parent rule >110 lines?** → Consider if splitting is justified
 - [ ] **Do you have only 1 child rule?** → Violates 2+ rule; flatten to top level instead
 - [ ] **Are all children directly related to parent concept?** → Avoid mixing unrelated rules in one subdirectory
@@ -73,12 +74,6 @@ Before organizing a rule into parent+child structure:
 When creating a multi-concept rule structure:
 
 1. **Parent rule:** Explain purpose, link to all children, guide reader to start with parent
-2. **Child rules:** Reference parent and siblings clearly; use relative links
-3. **README:** Update `_rules/<tier>/README.md` to show new parent+child structure
+2. **Child rules:** Keep parent and sibling links out of the rule file itself
+3. **README:** Update `_rules/<tier>/README.md` to show the new parent+child structure, and list each file's parent and siblings under "🔗 Related rules"
 4. **CLAUDE.md:** If rule is top-level import, update path from `@~/.claude/_rules/<tier>/<concept>.md` to match parent location
-
----
-
-## 🔗 Related
-
-- Parent: `_rule_directory_patterns.md` — the pattern itself, when to apply it

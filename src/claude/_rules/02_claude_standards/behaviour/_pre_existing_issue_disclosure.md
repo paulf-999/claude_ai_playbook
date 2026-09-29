@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🚩 Pre-Existing Issue Disclosure
 
 **Purpose:** Ensure pre-existing issues found during scoped work always reach the user, instead of being silently fixed (scope creep) or silently absorbed into "out of scope" (findings get lost).
@@ -51,13 +51,3 @@ Disposition: [fixed / flagged, not fixed — reason]
 - ❌ Deciding something is "out of scope" and moving on without telling the user it exists
 - ❌ Bundling a pre-existing fix into a commit/PR without calling it out separately in the description
 - ❌ Assuming something is pre-existing without checking a baseline — verify, don't guess
-
----
-
-## 🔗 Related rules
-
-- Parent: `behaviour.md` — safe action defaults; decision-making patterns
-- Sibling: `_decision_making.md` — when to present options vs. decide unilaterally
-- Sibling: `claude_plans.md` — phase reports are a natural place to disclose findings
-
----

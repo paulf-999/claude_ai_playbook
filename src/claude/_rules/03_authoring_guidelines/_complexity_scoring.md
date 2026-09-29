@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-21 -->
-<!-- updated: 2026-09-21 -->
+<!-- updated: 2026-09-29 -->
 # 🧮 Complexity Scoring (0–10)
 
 **Purpose:** One shared complexity formula for every authored artefact type in this config — skills, agents, rules, hooks, and tests — defined once here so each new domain references it instead of redefining or drifting from it.
@@ -36,13 +36,3 @@
 - **Agents** (`authoring_agents.md`): same raw-sum maturity gates as skills — reference this file rather than redefining the formula when agent authoring is built out further.
 - **Tests** (`testing.md`'s complexity scoring): uses the *inverted score* — see that file for how it relates to the required quality floor.
 - **Rules and hooks:** no maturity levels or complexity gates exist for these yet — this formula is here so that whenever one is designed, it starts from this definition rather than a new one. Don't invent gate thresholds for rules/hooks speculatively; wait until that design work is actually needed.
-
----
-
-## 🔗 Related
-
-- `authoring_skills.md` — skill maturity gates and quality scorecard, applying the raw sum and inverted score respectively
-- `authoring_agents.md` — agent maturity gates, same raw-sum convention as skills
-- `testing.md` — test complexity scoring, applying the inverted score
-- `authoring_rules.md` — rule authoring; no complexity gate defined yet
-- `authoring_skills/_hard_gates_checklist.md` and equivalents — where a domain's specific gate thresholds live once defined

@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🔐 Connections & Variables
 
 **Purpose:** Establish naming and provisioning standards for Airflow connections and variables backed by Azure Key Vault.
@@ -22,7 +22,6 @@ To use a connection or variable in code, strip the prefix, lowercase, and replac
 - [🔌 Connections](#-connections)
 - [📦 Variables](#-variables)
 - [🏗️ Provisioning](#-provisioning)
-- [Related](#-related)
 
 ---
 
@@ -60,10 +59,3 @@ Secret naming pattern: `AF-VARS-<NAME>`
 | UAT | `dmt-uat-uscn-oos-kv` | Raise a PlatOps ticket |
 
 - **Note:** KV names above are infrastructure identifiers, not secrets — included here for provisioning reference only
-
-## Related
-
-- [Airflow Connections](https://payroc.atlassian.net/wiki/spaces/DA/pages/3038347265)
-- [Airflow Variables](https://payroc.atlassian.net/wiki/spaces/DA/pages/3421929479)
-- [AKV Naming Standard](https://payroc.atlassian.net/wiki/spaces/DA/pages/3556671573)
-- [Secrets Backend](https://payroc.atlassian.net/wiki/spaces/DA/pages/3036774402)

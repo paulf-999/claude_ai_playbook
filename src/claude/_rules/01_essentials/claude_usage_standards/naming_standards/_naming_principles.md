@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🎯 Naming Principles — Foundational Concepts
@@ -52,12 +52,3 @@ Choose a name that fits the likely higher grouping, not just today's problem.
 | **Rule file** | `snake_case.md` | `naming_standards.md` | See `_claude_naming_patterns.md` |
 | **Directory (user-created)** | `_<name>/` | `_rules/`, `_templates/` | See `claude_directory_structure.md` |
 | **Directory (auto-generated)** | `<name>/` | `backups/`, `memory/` | See `claude_directory_structure.md` |
-
----
-
-## 🔗 Related rules
-
-- **Parent:** `naming_standards.md` — entry point; loads these principles + pattern details
-- **Sibling:** `_claude_naming_patterns.md` — detailed naming patterns for hooks, skills, rules
-- **Related:** `claude_directory_structure.md` → `_claude_directory_naming.md` — naming rules for directories and files
-- **Related:** `claude_directory_structure.md` → `_claude_directory_organisation.md` — directory structure and prefix conventions

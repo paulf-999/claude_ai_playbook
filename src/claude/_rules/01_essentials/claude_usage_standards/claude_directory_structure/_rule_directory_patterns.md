@@ -1,4 +1,4 @@
-<!-- version: 1.0.3 -->
+<!-- version: 1.0.4 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 📐 Rule Directory Organization Patterns
@@ -76,11 +76,3 @@ _rules/03_authoring_guidelines/
 ## ✅ Examples & Checklist
 
 @~/.claude/_rules/01_essentials/claude_usage_standards/claude_directory_structure/_rule_directory_patterns/_examples_and_checklist.md
-
----
-
-## 🔗 Related rules
-
-- **Parent:** `claude_directory_structure.md` — directory organization overview
-- **Sibling:** `_claude_directory_naming.md` — naming patterns for files and directories
-- **Related:** `writing_style.md` → `_multifile_document_organisation.md` — when to split documents into parent + child files (general principle, applies to rules too)

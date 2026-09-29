@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 🚫 Rule Common Mistakes & Anti-Patterns
 
 **Purpose:** The rule-authoring mistakes this config has actually shipped, shown as wrong/right pairs so they aren't repeated.
@@ -65,10 +65,3 @@
 **Right:** name the incident, PR or repeated failure that prompted the rule, and record it in the rule itself when it's worth keeping.
 
 - **Why:** speculative rules cost tokens every session without preventing anything (see `guiding_principles.md`, "Intentionality gates everything").
-
----
-
-## 🔗 Related
-
-- Parent: `authoring_rules.md` — pre-creation checklist, creation steps and quality gates
-- Sibling: `_hard_gates_checklist.md` — the tick-box check to run before finishing a rule

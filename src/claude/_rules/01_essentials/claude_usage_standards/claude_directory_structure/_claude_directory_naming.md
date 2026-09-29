@@ -1,4 +1,4 @@
-<!-- version: 2.0.1 -->
+<!-- version: 2.0.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🏷️ Naming — Directories and Files
@@ -76,12 +76,3 @@
   - `04_claude_reference/` — system knowledge and platform guidance
   - `05_lazy_load/` — domain-specific rules (lazy-loaded on-demand)
 - **Name for scale:** `naming_standards.md` (applies to all identifiers) over `hook_naming.md` (only hooks)
-
----
-
-## 🔗 Related rules
-
-- **Parent:** `claude_directory_structure.md` — directory organization and naming overview
-- **Sibling:** `_claude_directory_organisation.md` — the full directory tree and auto-generated vs. user-created distinction
-- **Related:** `naming_standards.md` → `_naming_principles.md` — foundational naming principles for all identifiers
-- **Related:** `naming_standards.md` → `_claude_naming_patterns.md` — detailed patterns for hooks, skills, and rules

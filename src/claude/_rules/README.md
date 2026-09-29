@@ -16,15 +16,17 @@ Rules are organized into five numbered tiers, each with a distinct purpose and a
 
 Rules are organized by **who they're for and what they do**, not by enforcement mechanism:
 
-| Tier | Audience | Purpose | Token cost |
+| Tier | Audience | Purpose | Size (≈ tokens) |
 |---|---|---|---|
-| **01_essentials** | Users & stakeholders | Conventions and principles they need to understand | ~150/session |
-| **02_claude_standards** | Claude (internally) | Foundational quality gates Claude applies to all work | ~150/session |
-| **03_authoring_guidelines** | Claude (internally) | Meta-guidance for authoring rules, skills, agents | ~100/session |
-| **04_claude_reference** | Claude (internally) | Technical reference material about the system | ~150/session |
-| **05_lazy_load** | Domain-specific | Rules loaded only when needed in that domain | ~0 baseline |
+| **01_essentials** | Users & stakeholders | Conventions and principles they need to understand | ≈13k every session (16 files) |
+| **02_claude_standards** | Claude (internally) | Foundational quality gates Claude applies to all work | ≈20k every session (27 files) |
+| **03_authoring_guidelines** | Claude (internally) | Meta-guidance for authoring rules, skills, agents | ≈11.5k every session (17 files) |
+| **04_claude_reference** | Claude (internally) | Technical reference material about the system | ≈8k every session (13 files) |
+| **05_lazy_load** | Domain-specific | Rules loaded only when needed in that domain | 0 baseline (≈49k if all read) |
 
-**Key insight:** 01, 02, 03, and 04 are always-on (justifiable baseline cost). 05 is lazy-loaded to preserve context.
+**Key insight:** 01, 02, 03, and 04 are always-on, about 53k tokens together before `_reference/` imports. 05 is lazy-loaded to preserve context.
+
+**Note:** sizes are characters ÷ 4, measured 2026-09-29 across each tier's non-README `.md` files — re-measure rather than trust them after big changes.
 
 ## 🔄 Instructional vs. Enforcement Rules
 
@@ -43,31 +45,42 @@ Not all rules have mechanical triggers. Understand the difference:
 - **Enforcement:** Automatic — can block operations or force corrections
 - **Per testing.md:** Adding or modifying an enforcement hook requires a corresponding test
 
+## 🔗 Where Related links live
+
+Rule files are `@import`ed every session, so every line in them costs always-on context. To keep that cost down:
+
+- **Related links:** each file's parent, sibling and dependency links sit in its tier `README.md` under "🔗 Related rules", one `###` per file — never in a `## Related` section inside the rule (#121).
+  - **Why:** READMEs aren't `@import`ed, so the links cost nothing until someone opens the README.
+  - **`_reference/`:** follows the same pattern, with its links in `_reference/README.md`.
+- **Contents sections:** add one only when the rule has 3 or more real `##` headings (#120).
+- **Child indexes:** a lazy-loaded parent that is the only route to its children keeps those links in the rule, under a non-Related heading (e.g. `python.md`'s "📂 Child files").
+- **Enforced by:** `test_rules_structure.py` — `test_no_related_section_outside_readmes` and `test_contents_section_only_with_three_real_headings`.
+
 ## 🏗️ Tier definitions
 
 ### **01_essentials/** — User-facing conventions and principles
 - **Who it's for:** Users, stakeholders, teams reading/implementing these standards
 - **Scope:** Naming conventions, behaviour principles, writing style, authoring guidance
 - **Examples:** naming_standards.md, behaviour.md, writing_style.md, authoring_skills.md
-- **Imported:** Yes, always-on (~150 tokens/session)
+- **Imported:** Yes, always-on (≈13k tokens/session)
 
 ### **02_claude_standards/** — Foundational quality gates (Claude-facing)
 - **Who it's for:** Claude's internal operation (not meant for stakeholder understanding)
 - **Scope:** Security practices, testing requirements — blocking standards Claude applies to all code
 - **Examples:** security.md (secure coding + prompt injection defence), testing.md (test requirements)
-- **Imported:** Yes, always-on (~150 tokens/session)
+- **Imported:** Yes, always-on (≈20k tokens/session)
 
 ### **03_authoring_guidelines/** — Meta-guidance for authoring config artifacts
 - **Who it's for:** Claude when creating or maintaining rules, skills, agents, hooks
 - **Scope:** Standards for authoring; structure, naming, testing, maturity levels, and per-file metadata headers for artifacts
 - **Examples:** authoring_rules.md (children: common mistakes, hard-gates checklist), authoring_skills.md, authoring_agents.md, _claude_config_metadata.md (shared version/created/updated standard)
-- **Imported:** Yes, always-on (~100 tokens/session)
+- **Imported:** Yes, always-on (≈11.5k tokens/session)
 
 ### **04_claude_reference/** — System/platform knowledge and reference material
 - **Who it's for:** Claude's reference when implementing standards; understanding the system
 - **Scope:** How the config system works, git workflow patterns, efficiency guidance, external system access
 - **Examples:** loading_strategy_rules.md, git.md, external_system_access.md, claude_efficiency.md
-- **Imported:** Yes, always-on (~150 tokens/session)
+- **Imported:** Yes, always-on (≈8k tokens/session)
 
 ### **05_lazy_load/** — Domain-specific rules (lazy-loaded)
 - **Who it's for:** Domain specialists (SQL, Airflow, dbt, Terraform, etc.)
@@ -105,4 +118,4 @@ Is this rule domain-specific?
             (System knowledge: how config works, efficiency patterns, workflow guidance)
 ```
 
-**Default:** when in doubt, prefer lazy-load or 04_claude_reference — every always-on file (01/02/03/04) grows the base context (~150 tokens/session).
+**Default:** when in doubt, prefer lazy-load or 04_claude_reference — every always-on file (01/02/03/04) adds its full size to every session.

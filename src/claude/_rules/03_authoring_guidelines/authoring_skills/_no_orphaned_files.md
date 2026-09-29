@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-09-19 -->
 <!-- updated: 2026-09-29 -->
 # 🧹 No Orphaned Files
@@ -28,10 +28,3 @@
 **Mechanically enforced by `test_no_orphaned_skill_files.py`** — scans every skill under `src/claude/skills/` for files whose name never appears in any of that skill's other content, and separately verifies every `reference/` path a `SKILL.md` names actually exists on disk. Both checks are generic: they run against all current and future skills, not any one skill by name.
 
 **Exempt by design:** `SKILL.md`, `skill.contract.yaml`, `README.md`, `__init__.py`, `conftest.py`, `evals.yaml`, `test_*.py`, and auto-generated artifacts (`__pycache__`, `.coverage`) — these don't need to be "referenced by name" to be legitimate.
-
----
-
-## 🔗 Related
-
-- Parent: `authoring_skills.md` — child index and file organisation
-- `guiding_principles.md` — "Reversible by design" and "no speculative work" — the same reasoning this rule mechanizes for skill files specifically

@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-29 -->
 # 🔒 Response Standards Enforcement
 
 **Purpose:** Explain the mechanism that keeps response formatting reliable turn-to-turn, and where its implementation lives.
@@ -42,9 +42,3 @@ Enforcement is implemented via the injection hook: `~/.claude/hooks/hook_style_g
 - **Mechanism:** 🚪 A `type:"prompt"` `Stop` hook that runs an LLM to validate each finished response and force correction.
 - **Trade-off:** ⚖️ Hard mechanical guarantee, but incurs a model call on every substantive turn (cost + latency).
 - **Reserved asset:** 🧪 The post-response validator `hook_style_guide_response_standards.sh` (+ its test) is retained for this path — it is not wired into `settings.json` today.
-
----
-
-## 🔗 Related
-
-- Parent: `claude_response_standards.md` — response format, delivery cadence, timing rules

@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-08-28 -->
+<!-- updated: 2026-09-29 -->
 # 🔒 Safe Git Patterns
 
 **Purpose:** Protect against git hook execution risks when running commands in untrusted directories.
@@ -22,9 +22,3 @@ When `cd /some/repo && git <command>` runs, git executes hooks from that directo
 - ✅ `git -C /repo status`
 
 This applies to all git commands, including destructive ones (`reset --hard`, `push --force`).
-
----
-
-## 🔗 Related
-
-- Parent: `git.md` — git workflow, commits, branch naming, pull requests

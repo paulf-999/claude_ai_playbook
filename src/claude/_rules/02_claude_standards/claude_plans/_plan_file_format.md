@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 📊 Plan File Format
 
 **Purpose:** Define how the persisted plan document (not the chat response) presents its phase breakdown, so every plan is scannable at a glance.
@@ -29,8 +29,3 @@
 **Why:** a table keeps the whole phase sequence scannable in one glance — what, how verified, how big, how dangerous, and where it stands — without a separate log to keep in sync. Bulleted, one-sentence cells follow `writing_style.md`'s "one sentence per bullet" rule, which already covers plans.
 
 **Not a replacement:** the "How to apply" format in the parent rule is the live chat progress report during execution — this table is the plan document's own record. `writing_style.md` still governs all other plan-file prose.
-
-## 🔗 Related
-
-- Parent: `_multi_phase_implementation_gates.md` — general phase-gate principle and chat-response format
-- Sibling: `_plan_mode_phase_gates.md` — mandatory gating specifically in plan mode

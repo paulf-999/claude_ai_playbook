@@ -163,11 +163,3 @@ Before creating a hook or skill:
 3. **Manual cost?** Minutes to do manually?
 4. **Automation cost?** Hours to build + test + register?
 5. **Payback period:** Calculate in months. If < 6: automate. Else: stay manual.
-
----
-
-## 📚 Related docs
-
-- **Guiding principles:** `~/.claude/_rules/guiding_principles.md`
-- **Test coverage:** `~/.claude/_tests/README.md`
-- **Lazy-load guide:** `~/.claude/_rules/lazy_load/README.md`

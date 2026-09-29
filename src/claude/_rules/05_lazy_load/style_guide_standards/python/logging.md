@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 📝 Python Logging Conventions
 
 **Purpose:** Establish logging standards for debugging, monitoring, and auditing — ensuring logs are useful, secure, and structured.
@@ -13,7 +13,6 @@
 - [What to log and what not to log](#-what-to-log-and-what-not-to-log) — `logging/_what_to_log.md`
 - [Logging in error handling](#-logging-in-error-handling) — `logging/_error_handling.md`
 - [Quick reference](#-quick-reference)
-- [Related](#-related)
 
 ---
 
@@ -45,11 +44,3 @@
 | **Unexpected but recoverable** | WARNING | `logger.warning(f"File not found, using default")` |
 | **Error before re-raise** | ERROR | `logger.error(f"Config invalid: {e}")` |
 | **Development debug info** | DEBUG | `logger.debug(f"Variable x = {x}")` |
-
----
-
-## 🔗 Related
-
-- Parent: `python.md` — Full Python style guide
-- Sibling: `python/testing.md` — Testing conventions
-- Sibling: `python/module_organisation.md` — Module docstrings and public/private functions

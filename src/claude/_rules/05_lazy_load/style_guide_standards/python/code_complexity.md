@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 📊 Code Complexity
 
 **Purpose:** Establish metrics to identify and prevent overly complex Python code. Reduces mental load and improves maintainability.
@@ -105,10 +105,3 @@ When complex code is acceptable and how to document it:
 2. **If metrics exceed thresholds:** Refactor or document exception
 3. **If documented:** Add comments explaining why complexity is necessary
 4. **Review checklist:** Use scorecard in exceptions doc
-
----
-
-## Related
-
-- Parent: `../python.md` — Python coding standards
-- Sibling: `../_inline_comments_example.py` — Commenting complex code

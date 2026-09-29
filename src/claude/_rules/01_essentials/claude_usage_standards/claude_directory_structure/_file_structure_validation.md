@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-19 -->
+<!-- updated: 2026-09-29 -->
 # 📋 File Structure Validation
 
 **Purpose:** Instruct Claude to validate `~/.claude/` naming and structure compliance after creating or modifying files, ensuring consistency and preventing configuration drift.
@@ -53,13 +53,3 @@ python3 ~/.claude/_tests/test_file_structure_compliance.py
 
 Fix: Rename _rules/my_new_file.md → _rules/_my_new_file.md
 ```
-
----
-
-## 🔗 Related rules
-
-- `claude_directory_structure.md` — Authoritative naming and placement rules
-- `naming_standards.md` — Foundational naming principles
-- `behaviour.md` → "Before acting" → "Plan approval" — validate structure before proceeding with complex changes
-
----

@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-29 -->
 # 🛠️ Agent Authoring
 
 **Purpose:** Establish standardized process for creating agents that ensures clarity, consistency, and intentionality. One concept per agent.
@@ -50,32 +50,3 @@
 ## 🚫 Common Mistakes & Anti-Patterns
 
 @~/.claude/_rules/03_authoring_guidelines/authoring_agents/_common_mistakes.md
-
----
-
-## 📚 References & Related Rules
-
-**Naming & placement:**
-- `naming_standards.md` — Self-describing naming principles
-- `claude_directory_structure.md` — Directory organization patterns
-
-**Authoring & testing:**
-- `~/.claude/_templates/AGENT.md.template` — Agent template with examples
-- `testing.md` — When tests are required; evals.yaml patterns
-
-**Principles & maintenance:**
-- `guiding_principles.md` — Intentionality principle; evidence-gathering methods
-- `behaviour.md` — Safe defaults and decision-making patterns
-- `claude_plans.md` — Review/approval gates during implementation
-
-**Related agent standards:**
-- `authoring_rules.md` — Rule creation standards (model for some agent patterns)
-- `authoring_skills.md` — Skill creation standards (model for maturity levels, testing)
-
----
-
-## 🔗 Related rules
-
-- `claude_plans.md` — Review gates after each implementation phase
-- `guiding_principles.md` — Intentionality; when to create new agents vs. enhance existing ones
-- `testing.md` — Testing requirements for all artifacts including agents

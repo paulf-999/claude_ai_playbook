@@ -1,11 +1,13 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-19 -->
+<!-- updated: 2026-09-29 -->
 # 🪝 Hooks Decision Framework
 
 **Purpose:** Behavioral guardrail for hook proposals — prevents low-ROI hooks by providing clear ROI criteria before suggesting any automation.
 
 Claude reads this whenever considering: "Should I propose a hook?", "This would be better as automation", "Let me add this feature."
+
+**Read this before proposing any automation feature.**
 
 ---
 
@@ -90,17 +92,3 @@ After a hook is created:
 - **Monthly:** Does this hook still solve the problem it was designed for?
 - **Quarterly:** Deep review — is ROI still positive? Are users benefiting?
 - **Remove if:** Frequency has dropped, ROI no longer holds, or maintenance cost has grown
-
----
-
-## 🔗 Related rules
-
-- `_rules/02_claude_standards/behaviour.md` → "Before proposing" section (hook risk flags)
-- `_rules/01_essentials/guiding_principles.md` → "Intentionality gates everything" + "Automation ROI"
-- `_rules/01_essentials/claude_usage_standards/naming_standards.md` → Hook naming convention
-- `_rules/01_essentials/testing.md` → Hook test requirements
-- Parent: `task_request_conventions.md` — Behavioral conventions for user request patterns
-
----
-
-**Read this before proposing any automation feature.**

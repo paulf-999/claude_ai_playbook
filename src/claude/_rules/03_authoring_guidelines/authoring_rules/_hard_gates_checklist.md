@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-09-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # ✅ Rule Hard Gates Checklist
 
 **Purpose:** Final tick-box check before finishing a rule — verify placement, content, testing, wiring and docs, then run the before-merging review.
@@ -20,6 +20,7 @@
 - [ ] H1 heading has an emoji
 - [ ] One-line **Purpose** statement sits directly under the H1
 - [ ] One concept per file
+- [ ] Contents section only if the rule has 3 or more real `##` headings
 - [ ] 110 lines or fewer; split into parent and children if longer
 - [ ] Bullets open with a bold keyword and hold one sentence each
 - [ ] Evidence of need is recorded (incident, PR or repeated failure), not a hypothetical
@@ -34,7 +35,7 @@
 ### 🔗 Wiring
 - [ ] Every child the parent describes has a real `@import` line, not just a mention in prose
 - [ ] Always-on rules are reachable from `CLAUDE.md`, and lazy-load rules are not imported
-- [ ] A **Related** section links the rule's parent, siblings and dependencies
+- [ ] The rule has no `## Related` section — its parent, sibling and dependency links sit in the tier `README.md` under "🔗 Related rules"
 
 ### 📚 Docs
 - [ ] Quality scorecard created or updated at `_rules/quality_scorecards/<tier>/scorecard_<rule_name>.md`
@@ -48,10 +49,3 @@
 1. **Run the suite:** `pytest src/claude/_tests/` passes, including `test_rules_structure.py`, `test_always_on_reachability.py` and `test_file_structure_compliance.py`.
 2. **Re-read the scorecard:** its scores still match the rule as written, not the first draft.
 3. **Scan the docs:** check `quickstart.md`, `training.md` and `docs/reference/` for pages that mention the area you changed.
-
----
-
-## 🔗 Related
-
-- Parent: `authoring_rules.md` — pre-creation checklist, creation steps and quality gates
-- Sibling: `_common_mistakes.md` — the mistakes these gates are designed to catch

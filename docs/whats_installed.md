@@ -49,6 +49,8 @@ Rules are organized into five numbered tiers by audience and purpose (see `_rule
 
 `01_essentials/`, `02_claude_standards/`, `03_authoring_guidelines/`, and `04_claude_reference/` are always-on, imported via `CLAUDE.md`; `05_lazy_load/` is consulted on demand only.
 
+Each rule's parent, sibling and dependency links live in its tier `README.md` under "🔗 Related rules" rather than in the rule itself, since READMEs aren't imported and so cost no always-on context. Rules only carry a Contents section when they have 3 or more real headings.
+
 Response standards (format, delivery cadence, timing measurement) are enforced per turn via a `UserPromptSubmit` salience-injection hook (`hooks/hook_style_guide_response_standards_inject.sh`).
 
 ---

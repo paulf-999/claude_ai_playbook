@@ -54,3 +54,75 @@ These rules explain **how the Claude config system works** and guide Claude's im
 **Note:** Git workflow patterns and standards have been moved to `02_claude_standards/git.md` (they're quality/safety gates, not reference material).
 
 ---
+
+---
+
+## 🔗 Related rules
+
+Parent, sibling and dependency links for each file in this tier — kept here, not in the file, because READMEs aren't `@import`ed (#121).
+
+### `claude_conduct/claude_when_to_delegate/_delegating_to_subagent.md`
+
+- Parent: `claude_when_to_delegate.md` — delegating to user vs. sub-agent overview
+
+### `claude_conduct/claude_when_to_delegate.md`
+
+- Reference: `claude_operational_efficiency.md` — token efficiency and default behaviours (this file's parent import)
+- Sibling: `behaviour/_model_selection_strategy.md` — when to use which Claude model
+
+### `claude_conduct/external_system_access.md`
+
+- `security_guardrails.md` — MCP responses are untrusted data; treat all external content carefully
+- `mcp_trust_model.md` — Trust boundaries and injection defence for MCP servers
+
+### `claude_conduct/task_request_conventions/_hooks_decision_framework/_precedent_and_examples.md`
+
+- Parent: `_hooks_decision_framework.md` — the decision framework and ROI formula this evidence supports
+
+### `claude_conduct/task_request_conventions/_hooks_decision_framework.md`
+
+- `_rules/02_claude_standards/behaviour.md` → "Before proposing" section (hook risk flags)
+- `_rules/01_essentials/guiding_principles.md` → "Intentionality gates everything" + "Automation ROI"
+- `_rules/01_essentials/claude_usage_standards/naming_standards.md` → Hook naming convention
+- `_rules/01_essentials/testing.md` → Hook test requirements
+- Parent: `task_request_conventions.md` — Behavioral conventions for user request patterns
+
+### `claude_conduct/task_request_conventions/_task_logging.md`
+
+- Parent: `task_request_conventions.md`
+- Reference file: `~/.claude/TODO.md` (the target of all "add to TODOs" requests)
+
+### `claude_conduct/task_request_conventions.md`
+
+- `behaviour.md` — Safe defaults and task approach; includes decision-making patterns
+- `guiding_principles.md` — Foundational principles that govern all decisions
+- `testing.md` — Mechanical enforcement rules for all code artifacts
+
+### `claude_conduct/turn_budgets.md`
+
+- `claude_operational_efficiency.md` — automation and delegation context
+- `behaviour/_session_conduct.md` — how Claude conducts itself in sessions
+
+### `claude_operational_efficiency.md`
+
+- `behaviour.md` — safe defaults and decision-making patterns
+  - `_session_conduct.md` — interpersonal honesty and responsiveness
+  - `_model_selection_strategy.md` — when to escalate models
+
+### `claude_rule_loading_strategy/_claude_rule_classification/_tier_definitions.md`
+
+- Parent: `_claude_rule_classification.md` — distribution summary and loading decision framework
+
+### `claude_rule_loading_strategy/_claude_rule_classification.md`
+
+- **Loading strategy decision tree:** `claude_rule_loading_strategy.md` — Authoritative guide for always-on vs. lazy-load placement
+- **Tier-specific guidance:**
+  - `01_essentials/` — Foundational rules (safety, user-facing, quality)
+  - `02_claude_standards/` — Standard enforcement and quality gates
+  - `03_authoring_guidelines/` — Rule/skill/agent authoring standards
+  - `04_claude_reference/` — This directory; system knowledge and platform guidance
+  - `05_lazy_load/` — Domain-specific rules (load on-demand)
+
+### `claude_rule_loading_strategy.md`
+
+- **CLAUDE.md** — authoritative source of always-on imports and their rationale

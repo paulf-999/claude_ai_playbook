@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-09-19 -->
+<!-- updated: 2026-09-29 -->
 # 📐 Claude Usage Standards
 
 **Purpose:** Index the conventions that govern how Claude names, structures, and writes everything it produces — directory structure, naming, and writing style.
@@ -28,10 +28,3 @@
 ## ✏️ Writing style
 
 @~/.claude/_rules/01_essentials/claude_usage_standards/writing_style.md
-
----
-
-## 🔗 Related rules
-
-- `guiding_principles.md` — foundational decision-making principles
-- `authoring_rules.md`, `authoring_skills.md` — apply these conventions when creating new rules/skills

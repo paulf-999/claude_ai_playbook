@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-29 -->
 # ⏱️ Response Timing
 
 **Purpose:** Define the mandatory timing-footer mechanics — how the elapsed time is measured and formatted at the end of every substantive response.
@@ -17,10 +17,3 @@
   Response time: 1min 15s
   ```
 - **Skip for:** Short, single-fact answers or casual exchanges.
-
----
-
-## 🔗 Related
-
-- Parent: `claude_response_standards.md` — response format, delivery cadence
-- Sibling: `_enforcement.md` — how this standard is enforced turn-to-turn

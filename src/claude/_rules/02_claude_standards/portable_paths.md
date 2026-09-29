@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-19 -->
+<!-- updated: 2026-09-29 -->
 # 🌍 Portable Paths
 
 **Purpose:** Prevent hooks and tests from hardcoding a specific machine's filesystem layout — the Claude config directory is not always at the OS default location, and code that assumes it is breaks silently elsewhere.
@@ -39,10 +39,3 @@ Found in one session (2026-09-17), all three shipped without failing until teste
 - **Guard clauses too:** a check like `[[ "$FILE_PATH" != *".claude/"* ]]` is the same anti-pattern — compare against the resolved `CLAUDE_ROOT_DIR`, not a hardcoded substring.
 
 **Both:** test data (example strings inside a fixture payload, illustrative comments) is not a violation — this rule is about paths actually used for file I/O or process execution, not text a test happens to contain.
-
----
-
-## 🔗 Related rules
-
-- `testing.md` — every hook and script needs a test; this rule is part of what "correct" looks like
-- `authoring_rules.md` / `authoring_skills.md` — apply this when writing any new hook, test, or script

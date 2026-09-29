@@ -41,11 +41,3 @@ If your use case falls into the categories above:
 1. **Check the official docs:** <https://code.claude.com/docs/en/settings> — enterprise keys may have changed
 2. **Consult your IT team or Claude Code admin** — they should provide the policy configuration
 3. **Test in a non-prod environment first** — managed settings can lock down the harness in surprising ways
-
----
-
-## 🔗 Related docs
-
-- **Parent (Tier 1 essentials):** `settings_json_recommendations.md`
-- **Tier 2–3 settings:** `_tier2_3.md`
-- **Official schema:** <https://code.claude.com/docs/en/settings>

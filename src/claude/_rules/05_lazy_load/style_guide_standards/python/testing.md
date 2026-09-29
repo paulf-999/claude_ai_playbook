@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🧪 Python Testing Conventions
 
 **Purpose:** Establish pytest conventions for test naming, structure, fixtures, mocking, and assertions — preventing testing debt and validating intended behaviour.
@@ -13,7 +13,6 @@
 - [Pytest fixtures & mocking](#-pytest-fixtures--mocking) — `testing/_fixtures_mocking.md`
 - [Assertions & exception testing](#-assertions--exception-testing) — `testing/_assertions.md`
 - [Quick reference](#-quick-reference)
-- [Related](#-related)
 
 ---
 
@@ -45,11 +44,3 @@
 | **Use temp files** | `tmp_path` fixture | `path = tmp_path / "file.txt"; path.write_text(...)` |
 | **Override env var** | `monkeypatch` fixture | `monkeypatch.setattr("os.environ", {"VAR": "value"})` |
 | **Setup helpers** | `_make_*()` functions | `def _make_client(): return MagicMock()` |
-
----
-
-## 🔗 Related
-
-- Parent: `python.md` — Full Python style guide including error handling, naming, imports
-- Sibling: `python/logging.md` — Logging conventions
-- Sibling: `python/module_organisation.md` — Module organisation and structure

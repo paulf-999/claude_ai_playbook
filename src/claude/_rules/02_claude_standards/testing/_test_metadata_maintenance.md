@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-09-19 -->
+<!-- updated: 2026-09-29 -->
 # ⚙️ Test Metadata Maintenance
 
 **Purpose:** Define when and how to update a test's metadata header, and the quarterly audit and archival procedures that keep it honest.
@@ -82,10 +82,3 @@ When deprecating a test:
 3. Add comment: `# Archived: [feature_removed] [date]`
 4. Update playbook repo if test is tracked there
 5. Remove from any CI/CD that runs the test
-
----
-
-## 🔗 Related
-
-- Parent: `_test_metadata.md` — format and scoring definitions
-- Sibling: `_test_metadata_complexity_scoring.md` — the complexity dimension referenced above

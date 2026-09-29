@@ -86,3 +86,149 @@ A rule should be promoted from lazy-load to top-level (`_rules/`) if:
 - **Annually:** As part of the 6-month config reset (per guiding_principles.md), audit lazy-load rules for relevance
 
 ---
+
+---
+
+## 🔗 Related rules
+
+Parent, sibling and dependency links for each file in this tier — kept here, not in the file, because READMEs aren't `@import`ed (#121).
+
+### `automation_controls.md`
+
+- **claude_operational_efficiency.md** — When NOT to spawn subagents; when /batch is overkill
+- **behaviour.md** — Ask-first gates for risky operations
+- **testing.md** — How to verify automation-generated code
+
+### `mcp_trust_model.md`
+
+- `_security_guardrails.md` — Prompt injection defence and secret handling (applies globally)
+- `security.md` — Input validation at system boundaries
+- Playbook docs: `docs/reference/claude_config/mcp/mcp_setup.md` — Which MCP servers are enabled and how to toggle them
+
+### `style_guide_standards/airflow/connections_and_variables.md`
+
+- [Airflow Connections](https://payroc.atlassian.net/wiki/spaces/DA/pages/3038347265)
+- [Airflow Variables](https://payroc.atlassian.net/wiki/spaces/DA/pages/3421929479)
+- [AKV Naming Standard](https://payroc.atlassian.net/wiki/spaces/DA/pages/3556671573)
+- [Secrets Backend](https://payroc.atlassian.net/wiki/spaces/DA/pages/3036774402)
+
+### `style_guide_standards/airflow.md`
+
+- **style_guide_standards/sql.md** — SQL standards within Airflow tasks
+- **style_guide_standards/utilities/makefile.md** — DAG testing and invocation patterns
+- **testing.md** — How to test Airflow DAGs locally
+
+### `style_guide_standards/dbt.md`
+
+- **style_guide_standards/sql.md** — SQL formatting and standards
+- **style_guide_standards/airflow.md** — Airflow orchestration of dbt runs
+- **testing.md** — dbt test strategy and best practices
+
+### `style_guide_standards/payroc_engineering_naming_standards/_naming_conventions.md`
+
+- **[_naming_repositories.md](style_guide_standards/payroc_engineering_naming_standards/_naming_repositories.md)** — Repository naming examples
+- **[_naming_infrastructure.md](style_guide_standards/payroc_engineering_naming_standards/_naming_infrastructure.md)** — VM and cloud resource naming
+
+### `style_guide_standards/payroc_engineering_naming_standards/_naming_infrastructure.md`
+
+- **[_naming_conventions.md](style_guide_standards/payroc_engineering_naming_standards/_naming_conventions.md)** — Core segment definitions
+- **[_naming_repositories.md](style_guide_standards/payroc_engineering_naming_standards/_naming_repositories.md)** — Repository naming standards
+
+### `style_guide_standards/payroc_engineering_naming_standards/_naming_repositories.md`
+
+- **[_naming_conventions.md](style_guide_standards/payroc_engineering_naming_standards/_naming_conventions.md)** — Full segment reference
+- **[_naming_infrastructure.md](style_guide_standards/payroc_engineering_naming_standards/_naming_infrastructure.md)** — VM and resource naming
+
+### `style_guide_standards/python/code_complexity/_code_complexity_exceptions.md`
+
+- Parent: `_code_complexity.md` — Overview and quick reference
+- Sibling: `_code_complexity_metrics.md` — Detailed metrics
+
+### `style_guide_standards/python/code_complexity/_code_complexity_metrics.md`
+
+- Parent: `_code_complexity.md` — Overview and quick reference
+- Sibling: `_code_complexity_exceptions.md` — When to make exceptions
+
+### `style_guide_standards/python/code_complexity.md`
+
+- Parent: `../python.md` — Python coding standards
+- Sibling: `../_inline_comments_example.py` — Commenting complex code
+
+### `style_guide_standards/python/logging/_error_handling.md`
+
+- Parent: `logging.md` — Logging overview and links
+- Sibling: `logging/_setup_and_levels.md` — Logger setup and log levels
+- Sibling: `logging/_what_to_log.md` — What to log and what NOT to log
+- Related: `python.md` (parent) → Error handling section
+
+### `style_guide_standards/python/logging/_setup_and_levels.md`
+
+- Parent: `logging.md` — Logging overview and links
+- Sibling: `logging/_what_to_log.md` — What to log and what NOT to log
+- Sibling: `logging/_error_handling.md` — Logging in error handling context
+
+### `style_guide_standards/python/logging/_what_to_log.md`
+
+- Parent: `logging.md` — Logging overview and links
+- Sibling: `logging/_setup_and_levels.md` — Logger setup and log levels
+- Sibling: `logging/_error_handling.md` — Logging in error handling context
+
+### `style_guide_standards/python/logging.md`
+
+- Parent: `python.md` — Full Python style guide
+- Sibling: `python/testing.md` — Testing conventions
+- Sibling: `python/module_organisation.md` — Module docstrings and public/private functions
+
+### `style_guide_standards/python/module_organisation/_docstrings.md`
+
+- Parent: `module_organisation.md` — Module organisation overview
+- Sibling: `module_organisation/_public_private.md` — Public vs private functions and constants
+
+### `style_guide_standards/python/module_organisation/_public_private.md`
+
+- Parent: `module_organisation.md` — Module organisation overview
+- Sibling: `module_organisation/_docstrings.md` — Module docstrings and metadata
+
+### `style_guide_standards/python/module_organisation.md`
+
+- Parent: `python.md` — Full Python style guide
+- Sibling: `python/testing.md` — Testing conventions
+- Sibling: `python/logging.md` — Logging conventions
+
+### `style_guide_standards/python/testing/_assertions.md`
+
+- Parent: `testing.md` — Testing conventions overview
+- Sibling: `testing/_naming_structure.md` — Test naming and structure
+- Sibling: `testing/_fixtures_mocking.md` — Pytest fixtures and mocking
+
+### `style_guide_standards/python/testing/_fixtures_mocking.md`
+
+- Parent: `testing.md` — Testing conventions overview
+- Sibling: `testing/_naming_structure.md` — Test naming and structure
+- Sibling: `testing/_assertions.md` — Assertions and exception testing
+
+### `style_guide_standards/python/testing/_naming_structure.md`
+
+- Parent: `testing.md` — Testing conventions overview
+- Sibling: `testing/_fixtures_mocking.md` — Pytest fixtures and mocking
+- Sibling: `testing/_assertions.md` — Assertions and exception testing
+
+### `style_guide_standards/python/testing.md`
+
+- Parent: `python.md` — Full Python style guide including error handling, naming, imports
+- Sibling: `python/logging.md` — Logging conventions
+- Sibling: `python/module_organisation.md` — Module organisation and structure
+
+### `style_guide_standards/python.md`
+
+- [`python/python_environment.md`](style_guide_standards/python/python_environment.md) — Virtual environment setup, dependency management, and tooling
+- [`python/testing.md`](style_guide_standards/python/testing.md) — Pytest conventions: test naming, structure, fixtures, mocking, assertions
+- [`python/logging.md`](style_guide_standards/python/logging.md) — Logging standards for debugging, monitoring, and auditing
+- [`python/code_complexity.md`](style_guide_standards/python/code_complexity.md) — Metrics to identify and prevent overly complex code
+- [`python/module_organisation.md`](style_guide_standards/python/module_organisation.md) — Module docstrings, metadata, and public/private organisation
+
+### `style_guide_standards/sql.md`
+
+- **style_guide_standards/dbt.md** — dbt-specific conventions (naming, macros, snapshots)
+- **style_guide_standards/airflow.md** — Airflow SQL task patterns
+- **testing.md** — How to test dbt models and raw sources

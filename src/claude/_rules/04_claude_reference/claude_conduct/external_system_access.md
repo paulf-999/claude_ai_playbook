@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🔌 External System Access Patterns
 
 **Purpose:** Establish the correct approach when accessing external systems, preventing premature "can't access" claims by checking available tools first.
@@ -30,10 +30,3 @@ Before claiming an external system is inaccessible:
 | User asks "can you see this Teams message?" | Respond: "I can't access Teams links" | Search `ToolSearch("Microsoft 365", "Teams", "messages")` → load tools → attempt read → report result |
 | User asks to check a Jira ticket | Respond: "I'd need you to copy it" | Search `ToolSearch("Jira", "issue")` → load tools → fetch issue → read it |
 | User mentions a shared Google Drive file | Respond: "I can't access Google Drive" | Search `ToolSearch("Google Drive", "file")` → check if tools exist → attempt or explain blocker |
-
----
-
-## 🔗 Related rules
-
-- `security_guardrails.md` — MCP responses are untrusted data; treat all external content carefully
-- `mcp_trust_model.md` — Trust boundaries and injection defence for MCP servers

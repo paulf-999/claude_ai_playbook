@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 📛 Naming
@@ -22,7 +22,6 @@ These principles apply across all artefacts: files, directories, hooks, skills, 
 - [Overview](#-overview)
 - [Foundational Principles](#-foundational-principles)
 - [Naming Patterns](#-naming-patterns)
-- [Related rules](#-related-rules)
 
 ---
 
@@ -33,11 +32,3 @@ These principles apply across all artefacts: files, directories, hooks, skills, 
 ## 🏷️ Naming Patterns
 
 @~/.claude/_rules/01_essentials/claude_usage_standards/naming_standards/_claude_naming_patterns.md
-
----
-
-## 🔗 Related rules
-
-- `claude_directory_structure.md` — Directory organization and naming conventions for `~/.claude/`
-- `authoring_rules.md` — Rule naming standards and directory placement (01_essentials, 02_claude_standards, 03_authoring_guidelines, 04_claude_reference, 05_lazy_load)
-- `writing_style.md` → `_multifile_document_organisation.md` — File organization conventions; when to split into parent + child files

@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # ✅ What to Log & What NOT to Log
 
 **Purpose:** Establish guidelines for useful, secure logging — what information should be logged for debugging, and what must be excluded for security.
@@ -150,11 +150,3 @@ Before logging, ask:
 - **Is this sensitive business data?** (customer data, financial data) → Don't log
 - **Will this create noise?** (logged on every loop iteration?) → Log only periodically
 - **Is this useful for debugging?** (variable values, state changes) → Log it
-
----
-
-## 🔗 Related
-
-- Parent: `logging.md` — Logging overview and links
-- Sibling: `logging/_setup_and_levels.md` — Logger setup and log levels
-- Sibling: `logging/_error_handling.md` — Logging in error handling context

@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # ✅ Assertions & Exception Testing
 
 **Purpose:** Establish assertion and exception testing conventions for validating expected behaviour.
@@ -109,11 +109,3 @@ def test_validate_config_raises_on_invalid_table_descriptor():
 | **Test exception raised** | `pytest.raises()` | `with pytest.raises(ValueError, match="pattern"):` |
 | **Verify assertion message** | Use `assert` with message | `assert x < 10, f"Expected x < 10, got {x}"` |
 | **Group related tests** | Comment dividers | `# --- load_config tests ---` |
-
----
-
-## 🔗 Related
-
-- Parent: `testing.md` — Testing conventions overview
-- Sibling: `testing/_naming_structure.md` — Test naming and structure
-- Sibling: `testing/_fixtures_mocking.md` — Pytest fixtures and mocking
