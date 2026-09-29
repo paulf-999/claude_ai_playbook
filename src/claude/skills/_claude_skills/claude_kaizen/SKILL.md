@@ -7,11 +7,9 @@ tags:
   tested: false
   disable_model_invocation: false
 ---
-<!-- version: 0.1.1 -->
+<!-- version: 0.1.2 -->
 <!-- created: 2026-09-07 -->
 <!-- updated: 2026-09-29 -->
-
-# 🌀 claude_kaizen
 
 ## 🎯 Purpose
 
@@ -53,12 +51,7 @@ Self-improving development loop: capture recurring mistakes, promote only verifi
 
 ## 📚 References
 
-- `~/.claude/skills/_claude_skills/claude_kaizen/evals/` — Test cases proving each rule works
+- `evals/runner.py` — scores eval cases before and after a proposed rule change
+- `evals/dmt-scripts-claude_ai_playbook.yaml` — seed eval cases proving each promoted rule works
 - `~/.claude/_rules/learned/` — Auto-promoted rules with validation dates
-- `/claude_kaizen` handover plan — Complete architecture and 10-step build spec
-
-## v2 Enhancements (Future)
-
-- **SessionStart hook** — Auto-trigger at session start (pending Claude Code hook support)
-- **Cross-repo global promotion** — Promote rules to global config after 2+ repo promotions
-- **Real eval harness** — Replace dummy runner with actual Claude prompting backend
+- `reference/_roadmap.md` — planned v2 enhancements
