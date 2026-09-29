@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 🏷️ Naming — Directories and Files
 
 **Purpose:** Establish conventions for naming directories and files in the Claude config, ensuring self-describing, unambiguous names that follow consistent patterns.
@@ -53,7 +53,7 @@
 
 **Pattern:** `<domain>_<action>`
 
-- **Domain prefix:** must match a domain ID from `skill_domains.yaml` (active) or `skill_domains_future.yaml` (roadmap)
+- **Domain prefix:** must match a domain ID from `skill_domains.yaml`
 - **Directory:** domain directory must exist and match the domain ID (e.g., `confluence_create_page` → `_confluence_skills/`)
 - **Action:** lowercase imperative verb describing what the skill does
 

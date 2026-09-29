@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 🏷️ Naming patterns — files, objects, and artefacts
 
 **Purpose:** Establish self-describing naming patterns for hooks, skills, rules, and other Claude config artefacts.
@@ -23,7 +23,7 @@
 
 **Pattern:** `<domain>_<action>`
 
-- **Domain prefix:** must match a domain ID from `skill_domains.yaml` (active) or `skill_domains_future.yaml` (roadmap)
+- **Domain prefix:** must match a domain ID from `skill_domains.yaml`
 - **Directory:** domain directory must exist and match the domain ID (e.g., `confluence_create_page` → `_confluence_skills/`)
 - **Action:** lowercase imperative verb describing what the skill does
 
@@ -58,5 +58,5 @@
 - **Related:** `claude_directory_structure.md` → `_claude_directory_naming.md` — directory and file naming conventions
 
 **Detailed authoring guides:**
-- **authoring_skills.md** — Full skill naming convention, domain list, skill_domains_future.yaml reference, examples
+- **authoring_skills.md** — Full skill naming convention, domain list, examples
 - **authoring_rules.md** — Rule naming standards, directory placement (01_essentials, 02_claude_standards, 03_authoring_guidelines, 04_claude_reference, 05_lazy_load), pre-creation checklist
