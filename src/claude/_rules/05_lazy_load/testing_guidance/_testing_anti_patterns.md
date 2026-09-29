@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-08-28 -->
+<!-- updated: 2026-09-29 -->
 # 🚫 Testing Anti-Patterns
 
 **Purpose:** Identify common testing mistakes and understand why they undermine confidence.

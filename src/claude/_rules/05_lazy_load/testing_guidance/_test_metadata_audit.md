@@ -1,26 +1,9 @@
-<!-- version: 1.0.1 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-09-17 -->
 <!-- updated: 2026-09-29 -->
-# ⚙️ Test Metadata Maintenance
+# 📅 Test Metadata Audit
 
-**Purpose:** Define when and how to update a test's metadata header, and the quarterly audit and archival procedures that keep it honest.
-
----
-
-## ⚙️ Maintenance Gates
-
-### When to update metadata
-
-- **File is modified:** Update `Date updated:` to today's date
-- **Test is refactored:** Re-score if coverage improves (e.g., 5/10 → 7/10)
-- **Feature deprecated:** Mark quality as 1–2, document reason in comment
-- **Quarterly audit:** Review all tests ≤5/10 for relevance and staleness
-
-### Never skip metadata
-
-- ❌ Don't remove or reuse metadata from another test
-- ❌ Don't update `Date created:` (frozen once created)
-- ❌ Don't leave `Date updated: [placeholder]` if you've modified the file
+**Purpose:** The quarterly audit, worked update example and archival workflow that keep test metadata headers honest — the per-edit update rules stay always-on in `_test_metadata.md`.
 
 ---
 

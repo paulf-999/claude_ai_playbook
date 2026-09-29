@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-09-17 -->
 <!-- updated: 2026-09-29 -->
 # 📊 Test Metadata Standard
@@ -13,7 +13,7 @@
 - [Quality Scoring](#-quality-scoring-1-10)
 - [New Tests Must Score ≥9/10](#-new-tests-must-score-910)
 - [Complexity Scoring](#-complexity-scoring) — reward simplicity; quality and complexity are independent floors, not a cap (see `_test_metadata_complexity_scoring.md`)
-- [Maintenance](#-maintenance) — gates, quarterly audit, protocol (see `_test_metadata_maintenance.md`)
+- [Maintenance](#-maintenance) — when to update the header
 
 ---
 
@@ -69,4 +69,8 @@ Every test file in `~/.claude/_tests/` must open with this metadata header:
 
 ## ⚙️ Maintenance
 
-@~/.claude/_rules/02_claude_standards/testing/_test_metadata_maintenance.md
+- **File modified:** set `Date updated:` to today.
+- **Test refactored:** re-score quality and complexity if coverage changed.
+- **Feature deprecated:** mark quality 1–2 and note the reason in a comment.
+- **Never:** change `Date created:`, copy another test's header, or leave `Date updated: [placeholder]` on a modified file.
+- **Read on demand:** `~/.claude/_rules/05_lazy_load/testing_guidance.md` — quarterly audit, archival workflow and a worked example.

@@ -14,6 +14,7 @@
 | **delegating_to_subagent.md** | When to spawn a sub-agent vs. work directly; constraints and token-cost breakeven | Before spawning a sub-agent |
 | **hooks_decision_framework.md** | ROI criteria for proposing hooks; child `hooks_decision_framework/` holds the 2026-08-07 precedent | Before proposing a hook or automation |
 | **response_standards_enforcement.md** | How the per-turn injection hook enforces the response format, and the reserved validator path | Changing the response-standards hook or its tests |
+| **testing_guidance.md** | Test design pattern, anti-patterns and the quarterly metadata audit; children in `testing_guidance/` | Writing a new test or auditing existing ones |
 | **turn_budgets.md** | `--max-turns` caps for non-interactive runs | Running skills, automation or CI non-interactively |
 | **mcp_trust_model.md** | MCP server trust boundaries; treating responses as data not instructions | Working with MCP tools (GitHub, Jira, etc.) and external APIs |
 | **latency_optimisation.md** | Temperature tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
@@ -299,6 +300,25 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - **style_guide_standards/dbt.md** — dbt-specific conventions (naming, macros, snapshots)
 - **style_guide_standards/airflow.md** — Airflow SQL task patterns
 - **testing.md** — How to test dbt models and raw sources
+
+### `testing_guidance/_test_metadata_audit.md`
+
+- Parent: `testing_guidance.md`
+- Always-on counterpart: `02_claude_standards/testing/_test_metadata.md` — header format and per-edit update rules
+
+### `testing_guidance/_testing_anti_patterns.md`
+
+- Parent: `testing_guidance.md`
+- Sibling: `_testing_design_pattern.md` — the pattern these anti-patterns violate
+
+### `testing_guidance/_testing_design_pattern.md`
+
+- Parent: `testing_guidance.md`
+- Sibling: `_testing_anti_patterns.md` — mistakes to avoid
+
+### `testing_guidance.md`
+
+- Pointer from: `02_claude_standards/testing.md` and `testing/_test_metadata.md`
 
 ### `turn_budgets.md`
 

@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-08-28 -->
+<!-- updated: 2026-09-29 -->
 # 🏗️ Test Design Pattern
 
 **Purpose:** Establish a standard pattern for writing tests that validate intended behavior and communicate goals clearly.

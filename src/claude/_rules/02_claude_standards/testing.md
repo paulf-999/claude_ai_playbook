@@ -1,4 +1,4 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🧪 Testing
@@ -9,8 +9,7 @@
 
 - [When Tests Are Required](#-when-tests-are-required)
 - [Test Goals (What to Validate)](#-test-goals-what-to-validate)
-- [Test Design Pattern](#-test-design-pattern)
-- [Anti-Patterns](#-anti-patterns)
+- [Test Design Pattern & Anti-Patterns](#-test-design-pattern--anti-patterns)
 - [File Organization](#-file-organization)
 - [Maintenance](#-maintenance)
 - [Test Metadata Standard](#-test-metadata-standard)
@@ -54,13 +53,9 @@ Define the goal before writing the test. Tests validate *intended behavior*, not
 
 ---
 
-## 📐 Test Design Pattern
+## 📐 Test Design Pattern & Anti-Patterns
 
-@~/.claude/_rules/02_claude_standards/testing/_testing_design_pattern.md
-
-## 🚫 Anti-Patterns
-
-@~/.claude/_rules/02_claude_standards/testing/_testing_anti_patterns.md
+- **Read on demand:** `~/.claude/_rules/05_lazy_load/testing_guidance.md` — before writing a new test: the 4-step design pattern, anti-patterns to avoid, and the quarterly test audit.
 
 ## 📁 File Organization
 
@@ -68,7 +63,8 @@ Define the goal before writing the test. Tests validate *intended behavior*, not
 
 ## 🔄 Maintenance
 
-@~/.claude/_rules/02_claude_standards/testing/_testing_maintenance.md
+- **Update tests with code:** change a test in the same commit as the behaviour it covers.
+- **Delete dead tests:** remove a feature's tests when the feature is removed.
 
 ## 📊 Test Metadata Standard
 
