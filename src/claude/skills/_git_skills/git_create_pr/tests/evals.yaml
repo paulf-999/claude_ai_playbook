@@ -1,0 +1,191 @@
+---
+_metadata:
+    date_created: '2026-09-29'
+    date_updated: '2026-09-29'
+    status: active
+
+skill_name: git_create_pr
+
+evals:
+  # Phase 1 — gather information / happy path
+    - name: happy_path_feature_pr
+      description: Full flow — gather state, derive names, commit, push, confirm, create PR
+      input:
+          prompt: /git_create_pr add user authentication
+      setup:
+          current_branch: main
+          changed_files:
+              - src/auth/login.py
+          pr_template_exists: true
+      expected_output: >
+          Claude reads git status, git diff and .github/pull_request_template.md,
+          derives feature/add_user_authentication, a Conventional Commits message
+          and a plain-English PR title, commits and pushes, then shows the title
+          and body for confirmation before creating the PR and reporting its URL.
+      assertions:
+          - Claude reads .github/pull_request_template.md before drafting the PR body
+          - The derived branch matches ^(feature|hotfix)/[a-z0-9_]+$
+          - Claude asks for confirmation before running gh pr create
+          - Claude reports the new PR's number and URL
+
+    - name: missing_pr_template_stops
+      description: No PR template in the repo — skill stops instead of inventing a body
+      input:
+          prompt: /git_create_pr fix typo in readme
+      setup:
+          pr_template_exists: false
+      expected_output: >
+          Claude stops in Phase 1 and asks the user to create
+          .github/pull_request_template.md, because the template is mandatory.
+      assertions:
+          - Claude does not create a branch, commit or PR
+          - Claude does not draft a PR body in a custom format
+
+    - name: clean_working_tree_stops
+      description: Nothing to commit — skill stops before deriving anything
+      input:
+          prompt: /git_create_pr tidy config
+      setup:
+          changed_files: []
+          pr_template_exists: true
+      expected_output: >
+          Claude reports that the working tree is clean and stops without
+          creating a branch, commit or PR.
+      assertions:
+          - Claude does not run git commit or gh pr create
+          - Claude tells the user there is nothing to commit
+
+  # Phase 1 — derivations
+    - name: reuses_existing_feature_branch
+      description: Already on a feature branch — skill keeps it instead of deriving a new one
+      input:
+          prompt: /git_create_pr add login form
+      setup:
+          current_branch: feature/login_form
+          changed_files:
+              - src/ui/login_form.tsx
+          pr_template_exists: true
+      expected_output: >
+          Claude uses the current feature/login_form branch rather than
+          deriving and creating a new branch from the arguments.
+      assertions:
+          - Claude does not run git checkout -b
+          - The PR is raised from feature/login_form
+
+    - name: branch_name_derived_in_snake_case
+      description: Arguments with capitals, hyphens and punctuation become a valid branch name
+      input:
+          prompt: /git_create_pr Add OAuth-2 support!
+      setup:
+          current_branch: main
+          changed_files:
+              - src/auth/oauth.py
+          pr_template_exists: true
+      expected_output: >
+          Claude derives a lowercase snake_case branch such as
+          feature/add_oauth_2_support that matches the branch naming pattern.
+      assertions:
+          - The branch name contains only lowercase letters, numbers and underscores after the prefix
+          - The branch name has no hyphens, capitals or punctuation
+
+    - name: pr_title_plain_english_no_filenames
+      description: A single-file change still gets a plain-English PR title without the filename
+      input:
+          prompt: /git_create_pr untrack local settings
+      setup:
+          current_branch: main
+          changed_files:
+              - .claude/settings.local.json
+          pr_template_exists: true
+      expected_output: >
+          Claude writes a PR title like "chore(settings): remove personal
+          configuration from version control", while the commit message may
+          still use the filename as its scope.
+      assertions:
+          - The PR title contains no filenames, path separators or backticks
+          - The PR title is 70 characters or fewer
+          - The PR title is lowercase after the colon
+
+  # Phase 1 — labels
+    - name: labels_mapped_from_paths_and_branch
+      description: Labels come from the changed paths and the branch prefix
+      input:
+          prompt: /git_create_pr fix broken skill trigger
+      setup:
+          current_branch: hotfix/fix_skill_trigger
+          changed_files:
+              - src/claude/skills/_git_skills/git_create_pr/SKILL.md
+          pr_template_exists: true
+      expected_output: >
+          Claude applies the claude-skill label for the skills path and the
+          hotfix label for the hotfix/ branch.
+      assertions:
+          - The PR is created with the claude-skill label
+          - The PR is created with the hotfix label
+          - Claude does not add labels that no mapping rule supports
+
+    - name: docs_only_change_labelled_documentation
+      description: A change touching only docs/ gets the documentation label
+      input:
+          prompt: /git_create_pr update quickstart guide
+      setup:
+          current_branch: main
+          changed_files:
+              - docs/quickstart.md
+          pr_template_exists: true
+      expected_output: >
+          Claude uses the docs commit type and applies the documentation label.
+      assertions:
+          - The commit message starts with docs
+          - The PR is created with the documentation label
+
+  # Phase 3 — confirmation
+    - name: user_edits_title_before_creation
+      description: User asks to edit the title at the confirmation step
+      input:
+          prompt: /git_create_pr add user authentication
+          confirmation_reply: e
+      setup:
+          current_branch: main
+          changed_files:
+              - src/auth/login.py
+          pr_template_exists: true
+      expected_output: >
+          Claude asks what to change, applies the edit to the title or body,
+          shows the result again and only creates the PR once the user approves.
+      assertions:
+          - Claude does not run gh pr create until the user approves the edited version
+          - The created PR uses the edited title
+
+    - name: user_declines_creation
+      description: User answers n at the confirmation step
+      input:
+          prompt: /git_create_pr add user authentication
+          confirmation_reply: n
+      setup:
+          current_branch: main
+          changed_files:
+              - src/auth/login.py
+          pr_template_exists: true
+      expected_output: >
+          Claude does not create the PR and tells the user the branch and
+          commit are already pushed, so they can open the PR manually or clean up.
+      assertions:
+          - Claude does not run gh pr create
+          - Claude reports what was already pushed so nothing is left unexplained
+
+  # Edge case — PR size
+    - name: too_many_changed_files
+      description: 20 or more changed files exceeds the skill's size limit
+      input:
+          prompt: /git_create_pr bulk rename
+      setup:
+          current_branch: main
+          changed_file_count: 24
+          pr_template_exists: true
+      expected_output: >
+          Claude flags that the change exceeds the fewer-than-20-files limit
+          and suggests splitting it into smaller PRs before going any further.
+      assertions:
+          - Claude does not commit all 24 files into one PR without asking
+          - Claude suggests how the change could be split

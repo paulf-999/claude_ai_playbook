@@ -5,10 +5,10 @@ maturity: tactical
 tags:
   criticality: should
   status: active
-  tested: false
+  tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 1.0.1 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 
@@ -46,3 +46,5 @@ Routine feature/hotfix PRs. Faster than manual git workflow; enforces Convention
 ## 📚 References
 
 - `reference/_phase1_gather.md` — gather-info logic, branch/commit/PR-title/PR-body derivation, and label mapping
+- `tests/evals.yaml` — 11 test scenarios covering every phase, both confirmation answers and the 20-file limit
+- `scorecard_git_create_pr.md` — 7-dimension quality scorecard
