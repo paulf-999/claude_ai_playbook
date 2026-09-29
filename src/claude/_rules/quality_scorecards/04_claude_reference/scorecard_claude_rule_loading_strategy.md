@@ -1,7 +1,7 @@
 # Quality Scorecard — claude_rule_loading_strategy.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-09-29
 
 **Overall score:** 6.4/10
 
@@ -21,7 +21,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/04_claude_reference/claude_rule_system/claude_rule_loading_strategy.md` — the rule being scored
+- `src/claude/_rules/04_claude_reference/claude_rule_loading_strategy.md` — the rule being scored
 - `src/claude/_tests/rules/02_claude_standards/test_always_on_reachability.py` — Test Coverage dimension
 - `src/claude/_tests/rules/05_lazy_load/test_lazy_load_coverage.py` — Test Coverage dimension
 - `src/claude/_rules/01_essentials/claude_usage_standards/writing_style.md` — Structural Compliance dimension (the emoji-heading rule being violated)

@@ -1,4 +1,4 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🚪 Artefact Proposal Gates
@@ -64,7 +64,7 @@ Before proposing any new artefact, run these gates in order:
 - Search for skills in `~/.claude/skills/` with matching domain or action
 - Search for hooks in `~/.claude/hooks/` with similar enforcement goal
 
-**Reference:** `~/.claude/_rules/04_claude_reference/claude_rule_system/claude_rule_loading_strategy.md` (full rule index table)
+**Reference:** `~/.claude/_rules/04_claude_reference/claude_rule_loading_strategy.md` (full rule index table)
 
 **Action:** If found, offer integration option: extend existing artefact vs. create new one (present options with rationale).
 
@@ -106,6 +106,6 @@ Present options *only* in these scenarios:
 
 - Parent: `behaviour.md` — Safe defaults and safe action guidelines
 - Sibling: `_decision_making.md` — When to present options vs. decide unilaterally; gates should pass before options are presented
-- Reference: `naming_standards.md`, `claude_directory_structure.md`, `~/.claude/_rules/04_claude_reference/claude_rule_system/claude_rule_loading_strategy.md`
+- Reference: `naming_standards.md`, `claude_directory_structure.md`, `~/.claude/_rules/04_claude_reference/claude_rule_loading_strategy.md`
 
 ---
