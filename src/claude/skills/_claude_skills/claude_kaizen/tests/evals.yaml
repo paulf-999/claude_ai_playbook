@@ -1,0 +1,117 @@
+---
+_metadata:
+    date_created: '2026-09-29'
+    date_updated: '2026-09-29'
+    status: active
+
+skill_name: claude_kaizen
+
+evals:
+  # Audit and promote / happy path
+    - name: happy_path_promotes_recurring_pattern
+      description: A mistake seen twice becomes a proposed rule with an eval, shown as a diff
+      input:
+          prompt: /claude_kaizen
+      setup:
+          errors_dir_exists: true
+          candidate: missing input validation
+          candidate_count: 2
+      expected_output: >
+          Claude audits ~/_errors/, finds the candidate in
+          _rules/learned/candidates.md at the promotion threshold, drafts a rule
+          and an eval case, runs the evals before and after, and presents a diff
+          proposal with the results for review.
+      assertions:
+          - The output is a diff proposal, not a file written to _rules/learned/
+          - The proposal includes the new rule, its eval case and the before/after results
+          - Claude waits for the user's approval before writing anything
+
+    - name: one_off_mistake_not_promoted
+      description: A mistake seen only once stays a candidate
+      input:
+          prompt: /claude_kaizen
+      setup:
+          errors_dir_exists: true
+          candidate: wrong date format
+          candidate_count: 1
+      expected_output: >
+          Claude records or updates the candidate's count in
+          _rules/learned/candidates.md but does not draft a rule, because it
+          hasn't recurred yet.
+      assertions:
+          - Claude does not propose a new rule for a pattern seen once
+          - Claude says the pattern will be promoted if it recurs
+
+    - name: declined_diff_writes_nothing
+      description: User rejects the diff proposal
+      input:
+          prompt: /claude_kaizen
+          approval_reply: n
+      setup:
+          errors_dir_exists: true
+          candidate: missing input validation
+          candidate_count: 2
+      expected_output: >
+          Claude discards the proposal and leaves _rules/learned/ unchanged.
+      assertions:
+          - No file under _rules/learned/ is created or modified
+          - Claude confirms that nothing was applied
+
+  # Validation
+    - name: regression_blocks_promotion
+      description: The after-run shows an eval that passed before now failing
+      input:
+          prompt: /claude_kaizen
+      setup:
+          errors_dir_exists: true
+          candidate: missing input validation
+          candidate_count: 2
+          after_run: one previously passing eval now fails
+      expected_output: >
+          Claude reports the regression in the proposal and does not present
+          the rule as ready to apply.
+      assertions:
+          - The proposal names the eval that regressed
+          - Claude does not recommend approving a rule that causes a regression
+
+  # Pruning
+    - name: stale_rule_flagged_not_removed
+      description: A learned rule older than 6 months is flagged for re-validation
+      input:
+          prompt: /claude_kaizen
+      setup:
+          errors_dir_exists: true
+          learned_rule_age_months: 7
+      expected_output: >
+          Claude flags the rule as stale and suggests re-validating it, without
+          deleting or editing it.
+      assertions:
+          - Claude does not delete or modify the stale rule
+          - The stale rule is listed with its age or last validation date
+
+  # Setup and scope
+    - name: missing_errors_dir
+      description: ~/_errors/ doesn't exist
+      input:
+          prompt: /claude_kaizen
+      setup:
+          errors_dir_exists: false
+      expected_output: >
+          Claude reports that there are no error logs to audit and stops,
+          instead of inventing patterns.
+      assertions:
+          - Claude does not propose any rule
+          - Claude names the missing ~/_errors/ directory
+
+    - name: cross_repo_request_out_of_scope
+      description: User asks for cross-repo pattern analysis, which is a v2 feature
+      input:
+          prompt: /claude_kaizen promote this across all my repos
+      setup:
+          errors_dir_exists: true
+      expected_output: >
+          Claude explains that cross-repo promotion isn't supported yet (it's on
+          the roadmap) and offers to run the audit for the current repo only.
+      assertions:
+          - Claude does not write rules to the global config
+          - Claude points to reference/_roadmap.md or says the feature is planned

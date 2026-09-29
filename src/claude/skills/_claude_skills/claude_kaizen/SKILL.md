@@ -4,10 +4,10 @@ description: Self-improving loop—audit recent corrections for recurring patter
 maturity: draft
 tags:
   status: active
-  tested: false
+  tested: true
   disable_model_invocation: false
 ---
-<!-- version: 0.1.2 -->
+<!-- version: 0.2.0 -->
 <!-- created: 2026-09-07 -->
 <!-- updated: 2026-09-29 -->
 
@@ -55,3 +55,5 @@ Self-improving development loop: capture recurring mistakes, promote only verifi
 - `evals/dmt-scripts-claude_ai_playbook.yaml` — seed eval cases proving each promoted rule works
 - `~/.claude/_rules/learned/` — Auto-promoted rules with validation dates
 - `reference/_roadmap.md` — planned v2 enhancements
+- `tests/evals.yaml` — 7 test scenarios covering promotion, validation, pruning and scope
+- `scorecard_claude_kaizen.md` — 7-dimension quality scorecard
