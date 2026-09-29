@@ -4,8 +4,8 @@
 # Test complexity score: 4/10
 # Python style compliant: Yes
 # Date created:      2026-08-28
-# Version:           1.1.0
-# Date updated:      2026-09-28
+# Version:           1.1.1
+# Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
 """Tests for _rules/ directory structure and content standards.
@@ -29,6 +29,7 @@ EXPECTED_ROOT_FILES = {
 # Claude Code-specific files expected in claude_internal/ — no others allowed
 EXPECTED_CLAUDE_REFERENCE_FILES = {
     "claude_operational_efficiency.md",
+    "claude_rule_loading_strategy.md",
     "README.md",
 }
 

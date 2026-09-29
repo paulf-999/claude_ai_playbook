@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 📋 Rules Loading Strategy
 
 **Principle:** Lazy-load by default. Always-on rules must block or apply everywhere.
@@ -37,7 +37,7 @@ If unsure, lazy-load it. Always-on rules are the exception, not the default.
 
 ## 📊 Tier Classification
 
-@~/.claude/_rules/04_claude_reference/claude_rule_system/claude_rule_classification.md
+@~/.claude/_rules/04_claude_reference/claude_rule_loading_strategy/claude_rule_classification.md
 
 ## 🔗 Related References
 

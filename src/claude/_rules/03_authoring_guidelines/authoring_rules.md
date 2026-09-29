@@ -1,6 +1,6 @@
-<!-- version: 1.2.0 -->
+<!-- version: 1.2.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 🛠️ Rule Authoring
 
 **Purpose:** Establish a standardized process for creating rules that ensures intentionality, proper scoping, and mechanical rigor.
@@ -25,7 +25,7 @@ Before writing any rule, answer these five essential questions:
    - If speculative: defer or rephrase as question/guidance instead (per `guiding_principles.md`)
 
 4. **Related/conflicting rules?**
-   - Check **full rule list** in `~/.claude/_rules/04_claude_reference/claude_rule_system/claude_rule_loading_strategy.md`
+   - Check **full rule list** in `~/.claude/_rules/04_claude_reference/claude_rule_loading_strategy.md`
    - Search codebase for similar guidance to prevent duplication
    - Clarify which rules this complements or overlaps with
 
@@ -72,7 +72,7 @@ Before writing any rule, answer these five essential questions:
 
 **Naming & placement:**
 - `naming_standards.md` — self-describing, unambiguous naming principles; see children for directory structure and object patterns
-- `~/.claude/_rules/04_claude_reference/claude_rule_system/claude_rule_loading_strategy.md` — full rule list; duplication detection + always-on vs. lazy-load placement
+- `~/.claude/_rules/04_claude_reference/claude_rule_loading_strategy.md` — full rule list; duplication detection + always-on vs. lazy-load placement
 
 **Authoring & testing:**
 - `~/.claude/_templates/RULE.md.template` — two templates (principle-based vs. constraint-based)

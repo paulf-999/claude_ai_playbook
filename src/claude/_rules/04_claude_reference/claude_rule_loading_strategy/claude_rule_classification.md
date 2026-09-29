@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-29 -->
 # 📐 Rule Directory Tier Classification
 
 **Purpose:** Explain how Claude rules are organized into five directory tiers (01_essentials through 05_lazy_load), each representing a distinct purpose and scope. Tier assignment determines loading strategy (always-on import vs. lazy-loaded on-demand).
@@ -17,7 +17,7 @@ This document has been through two reorganizations: an original five-tier classi
 
 ## 📁 Tier Definitions
 
-@~/.claude/_rules/04_claude_reference/claude_rule_system/claude_rule_classification/_tier_definitions.md
+@~/.claude/_rules/04_claude_reference/claude_rule_loading_strategy/claude_rule_classification/_tier_definitions.md
 
 ---
 
