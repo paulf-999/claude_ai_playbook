@@ -1,4 +1,7 @@
 #!/bin/bash
+# version: 1.0.0
+# created: 2026-09-07
+# updated: 2026-09-18
 # hook_style_guide_response_standards.sh
 #
 # Enforce Response Standards hook: validates response format compliance

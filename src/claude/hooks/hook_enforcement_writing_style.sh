@@ -1,4 +1,7 @@
 #!/bin/bash
+# version: 1.0.0
+# created: 2026-08-28
+# updated: 2026-09-18
 # enforcement_markdown_file_locations.sh
 # Validates .md files written to ~/.claude/ against writing_style.md conventions
 # Mode: blocking (returns exit code 1 for invalid paths)
