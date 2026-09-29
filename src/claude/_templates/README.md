@@ -17,8 +17,8 @@ _templates/
 ### Skills
 
 **`skills/SKILL.md.template`**
-- Standard skill documentation template with 8 sections
-- Maturity-gated design (draft → tactical → strategic)
+- Standard skill documentation template: frontmatter, metadata header and 4 sections (Purpose, Example Usage, Best For, References)
+- Maturity stage is stated in the Best For line (draft → tactical → strategic)
 - Used by: `/skill_creator` tool
 
 **`skills/skill.contract.yaml.template`**
