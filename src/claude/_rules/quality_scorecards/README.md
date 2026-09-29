@@ -104,6 +104,6 @@ One file per scored rule, mirroring the tier path: `_rules/quality_scorecards/<t
 
 - `scorecard_summary.md` — one-glance rollup of every scored rule's Overall score
 - `authoring_rules.md` — rule creation process; references this convention
-- `authoring_skills/_quality_scorecard_template.md` — the skill-scorecard equivalent this mirrors
+- `_templates/skills/_quality_scorecard_template.md` — the skill-scorecard equivalent this mirrors
 - `authoring_guidelines/_complexity_scoring.md` — shared complexity formula used by the Complexity dimension
 - `guiding_principles.md` — source of the Intentionality and Currency principles this scorecard operationalizes

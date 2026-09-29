@@ -1,4 +1,4 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
 # 🎯 Trigger Design & Testing Standards
@@ -38,7 +38,7 @@ Triggers determine how users invoke your skill. Comprehensive trigger coverage e
 - Coverage: happy paths, error cases, edge cases, user interactions
 - Count by maturity: **Draft 5–8 evals** | **Tactical 8–12 evals** | **Strategic 12+ evals**
 
-**Quality scorecard [REQUIRED]** — table-only, per `_quality_scorecard_template.md`
+**Quality scorecard [REQUIRED]** — table-only, per `~/.claude/_templates/skills/_quality_scorecard_template.md`
 - Location: `scorecard_<skill_name>.md` at skill root
 - Includes: Date Created, Date Updated, the 7 dimensions, Overall
 - Maturity justification lives in SKILL.md's Best For line, not here

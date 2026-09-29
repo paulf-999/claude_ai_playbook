@@ -1,4 +1,4 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
 # ✅ Skill Hard Gates Checklist
@@ -37,7 +37,7 @@
   - [ ] reference/_implementation.md exists (phases, logic, error handling)
   - [ ] reference/_formats.md [IF APPLICABLE] (standards, validation, examples)
 - [ ] **7. Quality scorecard [REQUIRED]:** `scorecard_<skill_name>.md` at skill root, table-only
-  - [ ] Follows `_quality_scorecard_template.md`, including Date Created and Date Updated
+  - [ ] Follows `~/.claude/_templates/skills/_quality_scorecard_template.md`, including Date Created and Date Updated
   - [ ] 7 dimensions scored *against evals.yaml*, not independently
 - [ ] **8. Complexity score [REQUIRED]:** raw sum per `_complexity_scoring.md`
   - [ ] Score ≤ maturity limit (Draft ≤4, Tactical ≤6, Strategic ≤8)
