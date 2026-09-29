@@ -4,8 +4,8 @@
 # Test complexity score: 3/10
 # Python style compliant: Yes
 # Date created:      2026-09-18
-# Version:           1.0.0
-# Date updated:      2026-09-18
+# Version:           1.0.1
+# Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
 """
@@ -143,10 +143,15 @@ def test_stale_settings_no_warning(tmp_path):
 
 
 def test_boundary_just_under_five_minutes_warns(tmp_path):
-    """A file modified 299 seconds ago is still within the stale window."""
+    """A file modified just under 300 seconds ago is still within the stale window.
+
+    Uses 290s, not 299s: the hook compares whole seconds (``stat`` mtime vs ``date +%s``), so a
+    clock tick between setting the mtime and the hook running adds up to ~1s of age — at 299s
+    that tipped the file to 300 and made this test fail intermittently.
+    """
     hook_path, settings_path, _flag_path = _hook_env(tmp_path)
     settings_path.write_text("{}")
-    just_inside = time.time() - 299
+    just_inside = time.time() - 290
     os.utime(settings_path, (just_inside, just_inside))
 
     result = _run(hook_path)
