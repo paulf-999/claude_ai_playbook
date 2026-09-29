@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Test quality score: 3/10
 # Date created:      2026-08-28
-# Version:           1.2.0
+# Version:           1.2.1
 # Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
@@ -29,6 +29,7 @@ Test organization:
 """
 
 import re
+import sys
 from pathlib import Path
 from typing import Dict, List
 import yaml
@@ -445,11 +446,14 @@ def get_all_skills() -> List[Path]:
     for item in SKILLS_DIR.rglob("SKILL.md"):
         skill_path = item.parent
         # Skip templates, test directories, and dot-prefixed dirs (e.g. .trash/ —
-        # Claude Code's own auto-managed sync/cleanup artifacts, not authored skills)
+        # Claude Code's own auto-managed sync/cleanup artifacts, not authored skills).
+        # Match only below SKILLS_DIR: a checkout path such as ~/git/repo_template/
+        # must not hide every skill.
         relative_parts = skill_path.relative_to(SKILLS_DIR).parts
+        relative_path = "/".join(relative_parts).lower()
         if (
-            "template" not in str(skill_path).lower()
-            and "_tests" not in str(skill_path).lower()
+            "template" not in relative_path
+            and "_tests" not in relative_path
             and not any(part.startswith(".") for part in relative_parts)
         ):
             skills.append(skill_path)
@@ -637,6 +641,48 @@ def test_frontmatter_consistency():
         print(f"\n⚠️  Found {len(violations)} frontmatter-contract mismatches:")
         for v in violations:
             print(f"  - {v}")
+
+
+def _make_skill(skills_dir: Path, relative: str) -> None:
+    """Create a minimal SKILL.md at skills_dir/relative for discovery tests.
+
+    :param skills_dir: The fake skills/ directory.
+    :type skills_dir: Path
+    :param relative: Skill folder path below skills_dir.
+    :type relative: str
+    """
+    skill_dir = skills_dir / relative
+    skill_dir.mkdir(parents=True)
+    (skill_dir / "SKILL.md").write_text("---\nname: demo\n---\n")
+
+
+def test_skill_discovery_ignores_words_above_skills_dir(tmp_path, monkeypatch):
+    """Skills are still found when the checkout path contains 'template' or '_tests'."""
+    skills_dir = tmp_path / "repo_skill_template" / "git_pr_tests" / "skills"
+    _make_skill(skills_dir, "_git_skills/git_create_pr")
+    monkeypatch.setattr(sys.modules[__name__], "SKILLS_DIR", skills_dir)
+
+    found = [path.name for path in get_all_skills()]
+
+    assert found == ["git_create_pr"], (
+        f"Words in the path above skills/ hid real skills — found {found}"
+    )
+
+
+def test_skill_discovery_still_skips_templates_tests_and_dot_dirs(tmp_path, monkeypatch):
+    """Template, _tests and dot-prefixed folders below skills/ are still skipped."""
+    skills_dir = tmp_path / "skills"
+    _make_skill(skills_dir, "_git_skills/git_create_pr")
+    _make_skill(skills_dir, "_templates/skill_template")
+    _make_skill(skills_dir, "_git_skills/_tests/fixture_skill")
+    _make_skill(skills_dir, ".trash/old_skill")
+    monkeypatch.setattr(sys.modules[__name__], "SKILLS_DIR", skills_dir)
+
+    found = [path.name for path in get_all_skills()]
+
+    assert found == ["git_create_pr"], (
+        f"Template, _tests or dot-prefixed folders were not skipped — found {found}"
+    )
 
 
 if __name__ == "__main__":
