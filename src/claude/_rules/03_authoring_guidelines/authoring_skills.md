@@ -1,29 +1,11 @@
-<!-- version: 2.0.0 -->
+<!-- version: 3.0.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🛠️ Skill Authoring
 
 **Purpose:** Create focused, well-documented, properly tested skills. One concept per skill.
 
----
-
-## 🧭 Quick Navigation
-
-**New skill author?** Start here in order:
-1. **Core Standards** — Naming pattern, SKILL.md structure, contract fields, maturity levels
-2. **Trigger Design & Testing** — Trigger phrases, evals.yaml, quality scorecard
-3. **Hard Gates Checklist** — The ordered creation checklist; tick every box before submitting
-
-**Experienced author, need to refresh?** Jump to specific child files:
-- **Scope Boundaries** — If designing what your skill does NOT do (`_scope_and_maintenance.md`)
-- **Maturity Justification** — If choosing Draft vs. Tactical vs. Strategic maturity (`_core_standards.md`)
-- **Low-Maintenance Design** — If designing a skill to stay stable once shipped (`_scope_and_maintenance.md`)
-- **Common Mistakes** — If you're stuck or uncertain about a choice (`_common_mistakes.md`)
-
-**Reviewing someone else's skill?** Use these child files:
-- **Hard Gates Checklist** (below) — Verify completeness and compliance
-- **Common Mistakes** — Catch anti-patterns and design flaws
-- **Maturity Justification** — Verify evidence-based maturity choice
+Work through the children in order, and finish with the Hard Gates Checklist before submitting.
 
 ---
 
@@ -31,9 +13,9 @@
 
 @~/.claude/_rules/03_authoring_guidelines/authoring_skills/_core_standards.md
 
-## 🎯 Trigger Design & Testing Standards
+## 🎯 Trigger Design
 
-@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_trigger_design_and_testing.md
+@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_trigger_design.md
 
 ## 🚪 Scope Boundaries & Low-Maintenance Design
 
@@ -42,10 +24,6 @@
 ## 🧹 No Orphaned Files
 
 @~/.claude/_rules/03_authoring_guidelines/authoring_skills/_no_orphaned_files.md
-
-## ⚠️ Common Mistakes
-
-@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_common_mistakes.md
 
 ---
 

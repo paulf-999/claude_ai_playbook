@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 📐 Rule Directory Organization Patterns
@@ -41,7 +41,7 @@ _rules/03_authoring_guidelines/
 └── authoring_skills/
     ├── _core_standards.md                     ← child: naming, structure, contract, maturity
     ├── _hard_gates_checklist.md               ← child: the single creation checklist
-    └── _common_mistakes.md                    ← child: anti-patterns and fixes
+    └── _scope_and_maintenance.md              ← child: scope boundaries and stability
 ```
 
 **Decision rule:**

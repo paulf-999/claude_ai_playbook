@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Test quality score: 5/10
 # Date created:      2026-09-16
-# Version:           2.0.0
+# Version:           3.0.0
 # Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
@@ -403,128 +403,6 @@ class TestLowMaintenanceDesign:
         assert has_isolation, (
             "Low-Maintenance Design must emphasize isolation: "
             "'No skill-to-skill calls', 'self-contained skills'"
-        )
-
-
-class TestCommonMistakes:
-    """Test that Common Mistakes section shows before/after examples."""
-
-    def test_common_mistakes_section_exists(self):
-        """Verify Common Mistakes section is present."""
-        content = resolved_content()
-
-        assert "Common Mistakes" in content or "common mistake" in content.lower(), (
-            "Rule must have Common Mistakes section showing anti-patterns"
-        )
-
-    def test_bad_examples_shown(self):
-        """Verify bad examples are shown (❌ pattern)."""
-        content = resolved_content()
-
-        has_bad_examples = re.search(r"❌|Bad:|mistake", content)
-
-        assert has_bad_examples, (
-            "Common Mistakes must show bad examples using ❌ or 'Bad:' label"
-        )
-
-    def test_good_examples_shown(self):
-        """Verify good examples are shown (✅ pattern)."""
-        content = resolved_content()
-
-        has_good_examples = re.search(r"✅|Fix:|Good:|correct", content, re.IGNORECASE)
-
-        assert has_good_examples, (
-            "Common Mistakes must show good examples using ✅ or 'Fix:' label"
-        )
-
-    def test_before_after_structure(self):
-        """Verify before/after examples use Fix/Good labels."""
-        content = resolved_content()
-
-        # Look for pattern: "Mistake" or bad emoji followed by "Fix" or good emoji
-        has_mistake_and_fix = (
-            re.search(r"Mistake.*?Fix", content, re.IGNORECASE | re.DOTALL) or
-            re.search(r"Bad.*?Good", content, re.IGNORECASE | re.DOTALL) or
-            (re.search(r"❌", content) and re.search(r"✅", content))
-        )
-
-        assert has_mistake_and_fix, (
-            "Common Mistakes must have before/after examples with Fix labels or good/bad emojis"
-        )
-
-
-class TestQuickNavigation:
-    """Test that Quick Navigation Guide covers all user types."""
-
-    def test_quick_navigation_exists(self):
-        """Verify Quick Navigation section is present."""
-        content = resolved_content()
-
-        assert "Quick Navigation" in content or "quick navigation" in content.lower(), (
-            "Rule must have Quick Navigation guide showing different entry points"
-        )
-
-    def test_covers_new_skill_author(self):
-        """Verify navigation for new skill authors is documented."""
-        content = resolved_content()
-
-        has_new_author_path = (
-            re.search(r"(?:New|new).*(?:skill|author)", content) and
-            re.search(r"(?:Start|start).*(?:here|at)", content)
-        )
-
-        assert has_new_author_path, (
-            "Quick Navigation must guide new skill authors: 'New skill author? Start here...'"
-        )
-
-    def test_covers_experienced_author(self):
-        """Verify navigation for experienced authors is documented."""
-        content = resolved_content()
-
-        has_experienced_path = (
-            re.search(r"(?:Experienced|experienced).*(?:author|refresh)", content) and
-            re.search(r"(?:Jump|jump).*(?:to|specific)", content)
-        )
-
-        assert has_experienced_path, (
-            "Quick Navigation must guide experienced authors: 'Experienced author? Jump to...'"
-        )
-
-    def test_covers_reviewer_path(self):
-        """Verify navigation for reviewers is documented."""
-        content = resolved_content()
-
-        has_reviewer_path = (
-            re.search(r"(?:Reviewing|review).*(?:someone|else|skill)", content) and
-            re.search(r"(?:Hard Gates|Common Mistakes)", content)
-        )
-
-        assert has_reviewer_path, (
-            "Quick Navigation must guide reviewers: 'Reviewing someone else's skill? Use...'"
-        )
-
-    def test_navigation_structure_clear(self):
-        """Verify navigation paths are clearly structured."""
-        content = resolved_content()
-
-        nav_section = re.search(
-            r"Quick Navigation.*?(?:###|##|---|\Z)",
-            content,
-            re.IGNORECASE | re.DOTALL
-        )
-
-        assert nav_section, "Quick Navigation section must exist"
-
-        nav_text = nav_section.group(0)
-
-        # Should have clear delineation between different paths
-        has_structure = (
-            nav_text.count("**") >= 6 or  # Multiple bold headers
-            re.search(r"1\.|2\.|3\.", nav_text)  # Numbered lists
-        )
-
-        assert has_structure, (
-            "Quick Navigation must have clear structure (bold headers or numbered lists)"
         )
 
 

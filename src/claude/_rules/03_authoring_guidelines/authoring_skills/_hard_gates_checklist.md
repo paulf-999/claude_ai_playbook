@@ -1,4 +1,4 @@
-<!-- version: 2.0.1 -->
+<!-- version: 2.1.0 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
 # ✅ Skill Hard Gates Checklist
@@ -18,6 +18,8 @@
   - [ ] Destructive operations set `confirmation_required: true`
   - [ ] requires [IF APPLICABLE] — tools, resources, permissions
   - [ ] dependencies [IF APPLICABLE] — external APIs or systems
+  - [ ] Secrets come from environment variables only, each listed in `requires.resources`
+  - [ ] Each permission is listed in `dependencies.permissions`, with no more than the skill needs
 - [ ] **3. SKILL.md structure [REQUIRED]:** start from `~/.claude/_templates/skills/SKILL.md.template`
   - [ ] Frontmatter: name, description, maturity, tags
   - [ ] Metadata header straight after the frontmatter: version (matching the contract), created, updated
@@ -30,7 +32,7 @@
 - [ ] **4. tests/evals.yaml [REQUIRED]:** written before any handler code, organized by phase
   - [ ] Lives at `tests/evals.yaml`, not skill root
   - [ ] Each eval: name, description, input, setup, expected_output
-  - [ ] Count and coverage match maturity (Draft 5–8, Tactical 8–12, Strategic 12+)
+  - [ ] Count and coverage match maturity (Draft 5–8 evals, Tactical 8–12 evals, Strategic 12+ evals)
   - [ ] evals.yaml is THE testing vehicle (not ad-hoc test_*_handler.py)
 - [ ] **5. tests/README.md [REQUIRED]:** plain-language explanation of what evals.yaml is
 - [ ] **6. Reference files [REQUIRED]:**
@@ -44,6 +46,7 @@
   - [ ] If over limit: reduce scope or split into multiple skills
 - [ ] **9. Clean-up:**
   - [ ] No hardcoded paths or usernames (see `portable_paths.md`)
+  - [ ] User input is validated before it reaches an API or shell command (see `security.md`)
   - [ ] No TODO/FIXME left in a tactical or strategic skill
   - [ ] Skill has clear, narrow focus (not "everything related to X")
   - [ ] Doesn't duplicate or conflict with an existing skill
@@ -52,5 +55,5 @@
 
 ## 🔗 Related
 
-- Parent: `authoring_skills.md` — quick navigation and file organisation
+- Parent: `authoring_skills.md` — child index and file organisation
 - Sibling: `_core_standards.md` — naming, SKILL.md structure, contract fields, maturity levels

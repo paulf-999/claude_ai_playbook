@@ -1,4 +1,4 @@
-<!-- version: 2.0.1 -->
+<!-- version: 2.0.2 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
 # 📐 Skill Core Standards
@@ -55,7 +55,7 @@ skill.contract.yaml must include:
 
 [REQUIRED]
 - `name`, `version`, `summary`, `maturity`
-- `dispatch.triggers` — what invokes this skill (see `_trigger_design_and_testing.md`)
+- `dispatch.triggers` — what invokes this skill (see `_trigger_design.md`)
 - `dispatch.not_for` — explicit scope boundaries (what it does NOT do)
 - `output` — type (conversational|asynchronous), confirmation_required, reversible, returns
 
@@ -87,5 +87,5 @@ Choose the maturity level from evidence, not aspiration:
 
 ## 🔗 Related
 
-- Parent: `authoring_skills.md` — quick navigation and hard gates checklist
-- Sibling: `_trigger_design_and_testing.md` — trigger phrase design, evals.yaml, quality scorecard
+- Parent: `authoring_skills.md` — child index and file organisation
+- Sibling: `_trigger_design.md` — trigger phrase design

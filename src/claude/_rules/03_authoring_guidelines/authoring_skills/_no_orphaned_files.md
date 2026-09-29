@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-19 -->
-<!-- updated: 2026-09-19 -->
+<!-- updated: 2026-09-29 -->
 # 🧹 No Orphaned Files
 
 **Purpose:** Every file in a skill directory must earn its place — referenced from `SKILL.md`, another reference doc, the handler, or evals. Files that aren't are dead weight nobody will notice until someone goes looking.
@@ -33,5 +33,5 @@
 
 ## 🔗 Related
 
-- Parent: `authoring_skills.md` — quick navigation and hard gates checklist
+- Parent: `authoring_skills.md` — child index and file organisation
 - `guiding_principles.md` — "Reversible by design" and "no speculative work" — the same reasoning this rule mechanizes for skill files specifically
