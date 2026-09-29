@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 📛 Naming
 
 **Purpose:** Establish self-describing, unambiguous naming conventions that enable readers to understand files and identifiers without additional context.
@@ -40,4 +40,4 @@ These principles apply across all artefacts: files, directories, hooks, skills, 
 
 - `claude_directory_structure.md` — Directory organization and naming conventions for `~/.claude/`
 - `authoring_rules.md` — Rule naming standards and directory placement (01_essentials, 02_claude_standards, 03_authoring_guidelines, 04_claude_reference, 05_lazy_load)
-- `writing_style.md` → `_multifile_document_organization.md` — File organization conventions; when to split into parent + child files
+- `writing_style.md` → `_multifile_document_organisation.md` — File organization conventions; when to split into parent + child files
