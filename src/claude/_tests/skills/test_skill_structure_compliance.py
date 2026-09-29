@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Test quality score: 3/10
 # Date created:      2026-08-28
-# Version:           1.1.0
-# Date updated:      2026-09-28
+# Version:           1.2.0
+# Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
 #!/usr/bin/env python3
@@ -12,7 +12,7 @@ Skill Template Compliance Test Suite
 
 Validates all installed skills in the configured Claude directory's skills/
 (CLAUDE_CONFIG_DIR; defaults to ~/.claude) comply with canonical structure:
-- SKILL.md structure (8 sections with canonical emoji headers)
+- SKILL.md structure (frontmatter plus 4 canonical emoji-headed sections)
 - skill.contract.yaml schema (Variant A: when/dont_use_for/requires)
 - Frontmatter field consistency
 - Quality scorecard depth by maturity
@@ -35,31 +35,23 @@ import yaml
 
 from _shared_paths import SKILLS_DIR
 
-# Canonical skill structure
+# Canonical skill structure: frontmatter plus these 4 headed sections
+# (see _rules/03_authoring_guidelines/authoring_skills/_core_standards.md)
 CANONICAL_SECTIONS = [
-    "Overview",
-    "Quality Scorecard",
-    "Scope",
-    "Capabilities",
-    "Security",
-    "Prerequisites",
-    "Workflow",
-    "Error Recovery",
-    "Known Gaps",
+    "Purpose",
+    "Example Usage",
+    "Best For",
+    "References",
 ]
 
 # Canonical emoji-to-section mapping
 CANONICAL_EMOJI_MAP = {
-    "📖": "Overview",
-    "📊": "Quality Scorecard",
-    "🎯": "Scope",
-    "✨": "Capabilities",
-    "🔐": "Security",
-    "📋": "Prerequisites",
-    "⚙️": "Workflow",
-    "🆘": "Error Recovery",
-    "⚠️": "Known Gaps",
+    "🎯": "Purpose",
+    "💡": "Example Usage",
+    "✨": "Best For",
+    "📚": "References",
 }
+CANONICAL_EMOJI_PATTERN = "|".join(re.escape(emoji) for emoji in CANONICAL_EMOJI_MAP)
 
 # Required frontmatter fields (in SKILL.md)
 # version lives in the metadata header after the frontmatter — see test_skill_metadata_header.py
@@ -172,9 +164,9 @@ class SkillComplianceValidator:
 
         # Check all canonical sections are present
         for section in CANONICAL_SECTIONS:
-            if f"## {section}" not in content and f"## 📖 {section}" not in content:
-                # Check with any emoji prefix
-                pattern = rf"##\s+[📖✨🎯🔐📊⚙️🆘⚠️📋]\s+{re.escape(section)}"
+            if f"## {section}" not in content:
+                # Check with any canonical emoji prefix
+                pattern = rf"##\s+(?:{CANONICAL_EMOJI_PATTERN})\s+{re.escape(section)}"
                 if not re.search(pattern, content):
                     self.violations.append(
                         f"Missing canonical section: {section}"
@@ -193,7 +185,7 @@ class SkillComplianceValidator:
     def _check_emoji_headers(self, content: str) -> None:
         """Validate emoji-to-section mapping matches canonical."""
         # Find all section headers with emojis
-        header_pattern = r"##\s+([📖✨🎯🔐📊⚙️🆘⚠️📋])\s+([^\n]+)"
+        header_pattern = rf"##\s+({CANONICAL_EMOJI_PATTERN})\s+([^\n]+)"
         found_headers = re.findall(header_pattern, content)
 
         for emoji, section in found_headers:
