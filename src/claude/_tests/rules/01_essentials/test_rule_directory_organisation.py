@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Test quality score: 7/10
 # Date created:      2026-08-28
-# Version:           1.0.0
-# Date updated:      2026-09-17
+# Version:           1.1.0
+# Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
 """
@@ -37,7 +37,6 @@ EXPECTED_TOP_LEVEL = {
 
 # Top-level directories expected (compound rules with children)
 EXPECTED_DIRECTORIES = {
-    "claude_response_standards",  # Has children (_enforcement.md, _response_timing.md)
     "claude_usage_standards",  # Grouping directory for naming, writing_style, claude_directory_structure
 }
 
