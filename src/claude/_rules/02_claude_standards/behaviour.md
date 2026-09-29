@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🛡️ Behaviour
 
 **Purpose:** Establish safe defaults for how Claude approaches tasks, ensuring intentional action, minimal assumptions, and careful handling of risky operations.
@@ -96,12 +96,3 @@ Flag any of the following before writing code — surface cost, maintenance impa
 ## 🤝 Session Conduct
 
 @~/.claude/_rules/02_claude_standards/behaviour/_session_conduct.md
-
----
-
-## 🔗 Related rules
-
-- `guiding_principles.md` — Intentionality principle; decide before proceeding
-- `decision_making.md` (child: `_decision_making.md`) — When to present options vs. decide unilaterally
-- `claude_plans.md` — Sibling; phase gates, plan-mode rules, and plan-file format
-- `writing_style.md` — Clarity principles; progressive disclosure

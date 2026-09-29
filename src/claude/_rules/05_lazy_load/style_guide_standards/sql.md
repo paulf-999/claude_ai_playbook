@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🗄️ SQL Style Guide & Standards
 
 **Purpose:** Define team SQL standards for consistency, readability, and cost optimization. Standards apply to all SQL written in the warehouse (dbt, Airflow, ad-hoc queries).
@@ -81,14 +81,6 @@ SQL style is enforced by **SQLFluff** in dialect mode `snowflake`:
 - ❌ Adding column to model without updating YAML
 - ✅ Every column has `name:` and `description:` in YAML
 - **Recovery:** Add missing YAML; PR cannot merge without it
-
----
-
-## 📚 Related Rules
-
-- **style_guide_standards/dbt.md** — dbt-specific conventions (naming, macros, snapshots)
-- **style_guide_standards/airflow.md** — Airflow SQL task patterns
-- **testing.md** — How to test dbt models and raw sources
 
 ---
 

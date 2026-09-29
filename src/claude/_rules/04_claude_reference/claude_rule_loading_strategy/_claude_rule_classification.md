@@ -1,4 +1,4 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.0.3 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 📐 Rule Directory Tier Classification
@@ -48,15 +48,3 @@ This document has been through two reorganizations: an original five-tier classi
 - No safety cost if omitted in irrelevant sessions
 
 **See also:** `claude_rule_loading_strategy.md` for the detailed always-on vs. lazy-load decision tree.
-
----
-
-## 🔗 Related References
-
-- **Loading strategy decision tree:** `claude_rule_loading_strategy.md` — Authoritative guide for always-on vs. lazy-load placement
-- **Tier-specific guidance:**
-  - `01_essentials/` — Foundational rules (safety, user-facing, quality)
-  - `02_claude_standards/` — Standard enforcement and quality gates
-  - `03_authoring_guidelines/` — Rule/skill/agent authoring standards
-  - `04_claude_reference/` — This directory; system knowledge and platform guidance
-  - `05_lazy_load/` — Domain-specific rules (load on-demand)

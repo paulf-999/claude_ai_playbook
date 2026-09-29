@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 📝 Task Logging Convention
 
 **Purpose:** Establish the convention for handling "add to TODOs" requests — when a user says "add to TODOs" or "add a TODO", Claude should edit `~/.claude/TODO.md` with a new entry in the Items table.
@@ -49,10 +49,3 @@
    - Effort: Medium
    - Value: High
    - Description: "Create style guide rule for SQL formatting in dbt models. Cover indentation, naming, comment styles. Aligns with payroc_engineering_naming_standards.md."
-
----
-
-## 🔗 Related
-
-- Parent: `task_request_conventions.md`
-- Reference file: `~/.claude/TODO.md` (the target of all "add to TODOs" requests)

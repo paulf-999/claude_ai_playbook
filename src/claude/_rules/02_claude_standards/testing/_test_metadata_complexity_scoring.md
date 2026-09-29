@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-21 -->
+<!-- updated: 2026-09-29 -->
 # 🧮 Test Complexity Scoring (0–10)
 
 **Purpose:** Apply the config's shared complexity formula to tests — reward genuinely simple tests, and make "simple" and "thorough" achievable together rather than in tension.
@@ -24,10 +24,3 @@ Assertion/function *count* (what the quality score measures) and structural comp
 **New tests must reach quality ≥9 AND complexity score ≥7** (raw sum ≤3): write as many assertions and test functions as the artifact genuinely needs, but keep the test structurally simple — one concept, one file, minimal dependencies and fixtures. If hitting quality ≥9 seems to require raw complexity above 3, that's a signal to split the test, not to let complexity slide.
 
 **Don't pad complexity to hit a number.** A single-file content-regression check (see `_concurrent_sessions.md`'s test) is *supposed* to be simple — its natural complexity score is already 8–10. Inflating its scope or dependencies just to move the number is the exact anti-pattern this scoring exists to catch.
-
----
-
-## 🔗 Related
-
-- Parent: `_test_metadata.md` — the quality-score rubric this complements
-- `_complexity_scoring.md` (in `03_authoring_guidelines/`) — the shared formula this file applies

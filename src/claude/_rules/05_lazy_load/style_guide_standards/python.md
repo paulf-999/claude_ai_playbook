@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 🐍 Python Coding Standards
 
 **Purpose:** Establish Python coding conventions extending PEP 8, ensuring consistent, readable, and maintainable code across the team.
@@ -19,7 +19,7 @@ PEP 8 is the baseline. One override: maximum line length is **120 characters** (
 - [🔖 Type hints](#-type-hints)
 - [💬 Inline comments](#-inline-comments)
 - [📌 General](#-general)
-- [🔗 Related](#-related)
+- [📂 Child files](#-child-files)
 
 ---
 ## 🗂️ Code layout
@@ -113,7 +113,7 @@ NOOP = "NOOP"
 - **File paths:** use `pathlib.Path` over `os.path`
 - **Mutable defaults:** avoid — use `None` and assign inside function
 
-## 🔗 Related
+## 📂 Child files
 
 - [`python/python_environment.md`](python/python_environment.md) — Virtual environment setup, dependency management, and tooling
 - [`python/testing.md`](python/testing.md) — Pytest conventions: test naming, structure, fixtures, mocking, assertions

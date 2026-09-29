@@ -1,19 +1,11 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🎯 Task Request Conventions
 
 **Purpose:** Establish durable, version-controlled conventions for how Claude responds to specific, recurring user request types — patterns that are behavioral, not mechanical, and codified as guidance rules.
 
 > **Scope:** Behavioral conventions for user request patterns (e.g., "add to TODOs", "propose a hook"). Not mechanical enforcement (hooks, tests) — those are governed by `testing.md` and individual enforcement rules.
-
----
-
-## 📋 Contents
-
-- [Overview](#-overview)
-- [Child files (load on-demand)](#-child-files-load-on-demand)
-- [Related rules](#-related-rules)
 
 ---
 
@@ -42,11 +34,3 @@ Convention for "add to TODOs" requests. When a user says "add to TODOs" or "add 
 @~/.claude/_rules/04_claude_reference/claude_conduct/task_request_conventions/_hooks_decision_framework.md
 
 ROI criteria and guardrails before proposing automation. When considering hook proposals, evaluate using the framework to prevent low-ROI automation.
-
----
-
-## 🔗 Related rules
-
-- `behaviour.md` — Safe defaults and task approach; includes decision-making patterns
-- `guiding_principles.md` — Foundational principles that govern all decisions
-- `testing.md` — Mechanical enforcement rules for all code artifacts

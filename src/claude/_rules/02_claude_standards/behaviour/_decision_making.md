@@ -1,6 +1,6 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 🤔 Decision-Making
 
 **Purpose:** Establish when and how Claude presents options to the user vs. deciding unilaterally, ensuring intentional action and preventing rework.
@@ -87,13 +87,3 @@ Option B: Comprehensive cleanup
 **❌ DON'T:** User reports a typo → Fix directly; "Fixed typo in X" is sufficient.
 
 **❌ DON'T:** Established pattern exists → Follow it silently; no need to ask "which of 3 folder layouts?"
-
----
-
-## 🔗 Related rules
-
-- `guiding_principles.md` — Intentionality principle; decide before proceeding
-- Parent: `behaviour.md` — Safe defaults and safe action guidelines; decision-making is one aspect
-- `writing_style.md` — Clarity principles; progressive disclosure
-
----

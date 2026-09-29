@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-09-19 -->
+<!-- updated: 2026-09-29 -->
 # 🗂️ Plan-Mode Phase Gates (MANDATORY)
 
 **Purpose:** Make phase gates non-negotiable specifically in plan mode — a plan's whole point is structured, checkpointed progression.
@@ -87,8 +87,3 @@ Claude Code's plan-mode harness assigns a scratch plan file under `~/.claude/pla
   - **Incident (2026-09-19):** exactly this happened — a prior session wrote the persisted plan to a literal `~/claude/_plans/...` path while the cwd was a project repo, creating `<repo>/~/claude/_plans/<slug>.md` inside that repo instead of the real archive. Confirmed via the stray file's content matching the plan actually being implemented in the following session.
 - 🗑️ **Scratch file is disposable:** once copied, the harness-assigned `~/.claude/plans/<slug>.md` file is no longer the source of truth — don't reference it in later turns or in the persisted plan's own content.
 - ✅ **Why:** the harness's plan-mode file lives in an auto-generated location outside version control and outside `_plans/`'s naming convention — without this step, approved plans never reach the durable, indexed archive.
-
-## 🔗 Related
-
-- Parent: `claude_plans.md` — general phase-gate principle and chat-response format
-- Sibling: `_plan_file_format.md` — how to format the persisted plan document itself

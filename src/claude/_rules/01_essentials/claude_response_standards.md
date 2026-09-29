@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-29 -->
 # 📝 Response Standards
 
 **Purpose:** Establish expected response format, delivery approach, and timing measurement for Claude when working on substantive tasks — ensuring clarity, efficiency, and measurable progress tracking.
@@ -96,9 +96,3 @@
 ## 🔒 Enforcement & Implementation
 
 @~/.claude/_rules/01_essentials/claude_response_standards/_enforcement.md
-
-## 🔗 Related Rules
-
-- `writing_style.md` — Writing conventions and progressive disclosure
-- `behaviour.md` — Safe defaults and decision-making patterns
-- `guiding_principles.md` — Intentionality and efficiency principles

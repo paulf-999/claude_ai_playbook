@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🏗️ Repository Naming
 
 **Purpose:** Standards for naming repositories within Payroc engineering.
@@ -53,10 +53,3 @@ When creating a new repo:
 - [ ] Descriptor uses underscores for multi-word values (not hyphens)
 - [ ] Lowercase throughout
 - [ ] Fewer than 60 characters total
-
----
-
-## 🔗 Related Standards
-
-- **[_naming_conventions.md](_naming_conventions.md)** — Full segment reference
-- **[_naming_infrastructure.md](_naming_infrastructure.md)** — VM and resource naming

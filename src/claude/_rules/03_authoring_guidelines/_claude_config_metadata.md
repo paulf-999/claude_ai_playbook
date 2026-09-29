@@ -1,6 +1,6 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-09-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 🗂️ Claude Config Metadata
 
 **Purpose:** One shared per-file metadata standard (version, created, updated) for every authored artefact type in this config — rules, skills, agents, and hooks — defined once here so each domain references it instead of redefining it.
@@ -47,11 +47,3 @@ Each field sits on its own line, in the order version → created → updated, w
 - **Line limit:** the 3 header lines don't count toward the 110-line rule limit.
 - **Token cost — zero:** Claude Code strips HTML comments from `@`-imported files too, verified 2026-09-28 (300 header lines imported → no change in input tokens, and a hidden marker was invisible to the model).
 - **Tests:** tests keep their own header — see `testing/_test_metadata.md`.
-
----
-
-## 🔗 Related
-
-- `authoring_rules.md` — imports this file; rule template at `~/.claude/_templates/RULE.md.template`
-- `authoring_skills.md`, `authoring_agents.md` — apply the placement above
-- `_complexity_scoring.md` — sibling shared standard, same "define once" pattern

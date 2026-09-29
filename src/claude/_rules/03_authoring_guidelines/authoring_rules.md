@@ -1,4 +1,4 @@
-<!-- version: 1.2.1 -->
+<!-- version: 1.3.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🛠️ Rule Authoring
@@ -53,10 +53,12 @@ Before writing any rule, answer these five essential questions:
 - **One concept per rule** — related patterns grouped, not split across files
 - **~100-line limit** — split into parent + child files if needed (see writing_style.md)
 - **Trailing newline** — exactly one `\n` at EOF
-- **Related rules section** — links to dependencies via `@~/.claude/_rules/...` or `[[memory-slug]]`
+- **Contents only with 3+ headings** — add a Contents section only when the rule has 3 or more real `##` headings
+- **No Related section in the rule** — parent, sibling and dependency links go in the tier's `README.md` under "🔗 Related rules", which isn't `@import`ed
 - **Wire up every documented child** — if a parent rule describes child files (e.g. under a "Load details on-demand" section), each one needs a real `@import` line, not just prose naming it. A file mentioned but never imported is silently unreachable — see `test_always_on_reachability.py`, which fails the build if any file under `01_essentials/`–`04_claude_reference/` exists on disk but isn't reachable from `CLAUDE.md`.
 - **Test validation** — enforcement rules pass custom tests; all rules pass test_rules_structure.py
 - **Metadata header** — lines 1–3 carry `version`, `created` and `updated`, one per line; bump `updated` and `version` on every edit, per the standard below
+- **Staleness reviews** — per `guiding_principles.md` reset cycles, audit all rules every ~6 months, archiving unused rules and refreshing evidence for kept ones
 
 @~/.claude/_rules/03_authoring_guidelines/_claude_config_metadata.md
 
@@ -67,23 +69,3 @@ Before writing any rule, answer these five essential questions:
 ## ✅ Hard Gates Checklist
 
 @~/.claude/_rules/03_authoring_guidelines/authoring_rules/_hard_gates_checklist.md
-
-## 📚 References & Related Rules
-
-**Naming & placement:**
-- `naming_standards.md` — self-describing, unambiguous naming principles; see children for directory structure and object patterns
-- `~/.claude/_rules/04_claude_reference/claude_rule_loading_strategy.md` — full rule list; duplication detection + always-on vs. lazy-load placement
-
-**Authoring & testing:**
-- `~/.claude/_templates/RULE.md.template` — two templates (principle-based vs. constraint-based)
-- `testing.md` — when tests are required; enforcement rules always need tests
-- `_complexity_scoring.md` (sibling file) — shared complexity formula; no maturity/complexity gate is defined for rules yet, but reference this rather than inventing a new formula if one is added
-- `_rules/quality_scorecards/README.md` — quality scorecard template and per-dimension criteria for rules
-
-**Principles & maintenance:**
-- `guiding_principles.md` — intentionality principle; evidence-gathering methods; review cadence (reset every ~6 months per Boris Cherny)
-- `behaviour.md` — includes decision-making as child file (_decision_making.md); when to present options vs. decide unilaterally
-
-**Staleness & reviews:** Per `guiding_principles.md` reset cycles, audit all rules every ~6 months. Archive unused rules; update evidence for kept rules.
-
----

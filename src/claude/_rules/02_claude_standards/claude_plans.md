@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🗂️ Claude Plans
 
 **Purpose:** Establish review/approval gates for multi-phase work — plans and any other 3+ phase implementation — preventing wasted effort and enabling course correction.
@@ -83,12 +83,3 @@ Proceed? (yes/no/adjust)
 ### ❌ Wrong: No gate, silent progress
 
 User plans 3-phase work. Claude completes Phase 1, 2, and 3 without stopping for feedback. User discovers Phase 2 approach was misaligned and wasted effort.
-
----
-
-## 🔗 Related rules
-
-- Sibling: `behaviour.md` — safe action defaults; decision-making patterns (see its child `_decision_making.md` for when to present options vs. decide unilaterally)
-- Reference: `~/.claude/_rules/04_claude_reference/claude_operational_efficiency.md` — turn budgets, context preservation
-
----

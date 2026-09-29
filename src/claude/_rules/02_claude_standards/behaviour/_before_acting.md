@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-07 -->
+<!-- updated: 2026-09-29 -->
 # 🚦 Before Acting — Task Complexity Gates
 
 **Purpose:** Apply proportional gates based on task complexity — heavier scrutiny for riskier tasks, no overhead for trivial work.
@@ -69,11 +69,3 @@ If ANY of these apply, treat the task as at least Medium (skipping the trivial t
 **Complex tasks (🔴) — Handoff required:**
 - After full gates pass, state: "Here's my approach: [A]. Alternatives: [B, C]. Confirm before I proceed."
 - Wait for explicit user confirmation before invoking tools.
-
----
-
-## 🔗 Related
-
-- Parent: `behaviour.md` — safe defaults and safe action patterns
-- Sibling: `_artefact_proposal_gates.md` — validating proposals before presenting them
-- Sibling: `_decision_making.md` — when to present options vs. decide unilaterally

@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 📁 Multifile Document Organisation
@@ -44,6 +44,7 @@ _rules/01_essentials/
 - Child files use underscore prefix: `_<aspect>.md` (distinguishes from top-level docs)
 - Parent file lists all children with links to `subdirectory/_file.md`
 - Sibling links within subdirectory are relative: `[_file.md](_file.md)`
+- **Note:** in `_rules/`, parent and sibling link lists live in the tier `README.md`, not the rule — see `_rules/README.md`
 
 ---
 
@@ -100,6 +101,7 @@ Before creating or modifying a document:
   - [ ] Child files use underscore prefix `_<aspect>.md`
   - [ ] Parent index has table/list with links to `<topic>/_<aspect>.md`
   - [ ] Sibling links within subdirectory are relative: `[_file.md](_file.md)`
+  - [ ] In `_rules/`, parent and sibling link lists sit in the tier `README.md`
 - [ ] **Is the file > 110 lines?** → Consider splitting into parent + children
 - [ ] **Will this document likely grow?** → Use subdirectory structure preemptively
 

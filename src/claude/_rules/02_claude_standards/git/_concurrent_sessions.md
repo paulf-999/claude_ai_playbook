@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-21 -->
-<!-- updated: 2026-09-21 -->
+<!-- updated: 2026-09-29 -->
 # 🔀 Concurrent Sessions — Shared Working Tree Safety
 
 **Purpose:** Prevent one Claude Code session from silently absorbing or corrupting another session's uncommitted work when both operate on the same git working tree at once.
@@ -40,12 +40,3 @@ While building several PRs in one session, another Claude Code session was concu
 
 - **If you know another session is or will be active on this repo, suggest `git worktree`:** a separate worktree gives each session its own working directory and index, eliminating this entire class of problem.
 - **This applies to your own sub-agents too:** when spawning agents that will touch git state, prefer `isolation: "worktree"` over sharing the current working tree.
-
----
-
-## 🔗 Related
-
-- Parent: `git.md` — git workflow, commits, branch naming, pull requests
-- Sibling: `_safe_patterns.md` — hook-execution risk in untrusted repos
-- Sibling: `_commits.md` — stage-by-name, branch confirmation, logical commits
-- `behaviour.md` — investigate unfamiliar state before overwriting or deleting

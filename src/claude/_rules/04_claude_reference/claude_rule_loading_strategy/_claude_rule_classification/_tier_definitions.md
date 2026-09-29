@@ -1,4 +1,4 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
 # 📁 Tier Definitions
@@ -70,9 +70,3 @@
 - **Example:** `style_guide_standards/sql.md` — SQL formatting and SQLFluff standards
 
 **Loading:** Lazy-loaded (in `_rules/05_lazy_load/`) — loaded on-demand only when actively needed. Never imported in baseline CLAUDE.md.
-
----
-
-## 🔗 Related
-
-- Parent: `_claude_rule_classification.md` — distribution summary and loading decision framework

@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-29 -->
 # 🤖 Delegating to Sub-Agent
 
 **Purpose:** Decision framework, constraints, and cost analysis for when to spawn a sub-agent vs. work directly.
@@ -77,9 +77,3 @@ When spawning a sub-agent, apply these constraints:
 - **If output would be >5K tokens:** sub-agent saves (5K + integration cost) → isolation wins
 - **If output would be <2K tokens:** work directly (direct call + context < 700-token sub-agent overhead)
 - **Grey zone (2–5K):** decide by: do I need output to proceed (direct), or is output large enough to risk main window bloat (sub-agent)?
-
----
-
-## 🔗 Related
-
-- Parent: `claude_when_to_delegate.md` — delegating to user vs. sub-agent overview

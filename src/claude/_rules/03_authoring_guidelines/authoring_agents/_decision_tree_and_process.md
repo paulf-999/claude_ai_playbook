@@ -1,4 +1,4 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
 # 🎯 Agent Decision Tree & Creation Process
@@ -54,9 +54,3 @@ Do NOT create an agent if:
 3. **Write AGENT.md** using 5-section structure (Purpose → When to use → Role & Principles → Constraints)
 4. **Create evals.yaml** with 8–12 test scenarios (by maturity level)
 5. **Document maturity:** Justify maturity level with evidence in agent file
-
----
-
-## 🔗 Related
-
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist

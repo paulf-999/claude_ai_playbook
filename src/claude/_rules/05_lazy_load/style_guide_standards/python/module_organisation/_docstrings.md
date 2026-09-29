@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 📝 Module Docstrings & Metadata
 
 **Purpose:** Establish module docstring format and metadata conventions for self-documenting modules.
@@ -197,10 +197,3 @@ def _dispatch_command(args):
 ```
 
 **Why:** Reading the file top-to-bottom tells the story of what the code does. Entry point (main) → supporting functions. Aids maintainability and understanding.
-
----
-
-## 🔗 Related
-
-- Parent: `module_organisation.md` — Module organisation overview
-- Sibling: `module_organisation/_public_private.md` — Public vs private functions and constants

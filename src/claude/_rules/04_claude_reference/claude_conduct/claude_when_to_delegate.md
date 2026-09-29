@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-29 -->
 # 🤝 Claude When to Delegate
 
 **Purpose:** Establish decision criteria for when Claude should handle a task directly vs. delegate to the user or spawn a sub-agent, reducing turns and context bloat while preserving reasoning capability.
@@ -97,10 +97,3 @@ Condition: Claude must interpret output to proceed
 ## 🤖 Delegating to Sub-Agent
 
 @~/.claude/_rules/04_claude_reference/claude_conduct/claude_when_to_delegate/_delegating_to_subagent.md
-
----
-
-## 🔗 Related
-
-- Reference: `claude_operational_efficiency.md` — token efficiency and default behaviours (this file's parent import)
-- Sibling: `behaviour/_model_selection_strategy.md` — when to use which Claude model

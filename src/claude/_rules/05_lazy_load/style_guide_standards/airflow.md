@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🌬️ Airflow Style Guide & Standards
 
 **Purpose:** Define standards for Apache Airflow DAGs and pipelines. Standards ensure reliability, debuggability, and maintainability across all workflows in the platform.
@@ -78,14 +78,6 @@
 6. Scheduling
    └─ Enable schedule_interval; monitor first week
 ```
-
----
-
-## 📚 Related Rules
-
-- **style_guide_standards/sql.md** — SQL standards within Airflow tasks
-- **style_guide_standards/utilities/makefile.md** — DAG testing and invocation patterns
-- **testing.md** — How to test Airflow DAGs locally
 
 ---
 

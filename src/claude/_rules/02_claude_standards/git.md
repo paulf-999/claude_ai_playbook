@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-21 -->
+<!-- updated: 2026-09-29 -->
 # 🌿 Rules — Git
 
 **Purpose:** Establish best practices for git workflow, commits, branch management, and pull requests to maintain clean history, safe operations, and clear communication.
@@ -69,10 +69,3 @@
 - **Summary:** 1 sentence, 2 at most — non-technical, no code references or implementation detail.
 - **Breaking changes:** flag explicitly and describe the rollout impact.
 - **No conflict markers:** files must not contain merge conflict markers.
-
----
-
-## 🔗 Related Rules
-
-- `testing.md` — test requirements and design patterns
-- `behaviour.md` — safe action defaults and decision-making

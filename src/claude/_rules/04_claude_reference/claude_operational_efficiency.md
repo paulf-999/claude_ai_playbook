@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🔧 Claude Operational Discipline
 
 **Purpose:** Establish principles and decision frameworks for how Claude operates intentionally — preserving reasoning capability through deliberate choices about tool usage, automation, and monitoring for inefficiency.
@@ -70,11 +70,3 @@
 ## 🔌 MCP server toggling
 
 @~/.claude/_rules/04_claude_reference/claude_conduct/mcp_server_toggling.md
-
----
-
-## 🔗 Related rules
-
-- `behaviour.md` — safe defaults and decision-making patterns
-  - `_session_conduct.md` — interpersonal honesty and responsiveness
-  - `_model_selection_strategy.md` — when to escalate models

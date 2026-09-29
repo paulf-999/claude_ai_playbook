@@ -1,4 +1,4 @@
-<!-- version: 3.0.0 -->
+<!-- version: 3.0.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🛠️ Skill Authoring
@@ -57,12 +57,3 @@ skill_name/
 **Nothing else.** No `templates/`, `patterns/`, `references/`, or domain-specific subdirectories. Keep scope tight, keep structure clean.
 
 **Naming applies going forward:** existing skills created before this naming change keep their `quality_scorecard.md` filename — rename to `scorecard_<skill_name>.md` only when that skill is next touched, not as a standalone rename-only pass.
-
----
-
-## 🔗 Related Rules
-
-- **naming_standards.md** — Foundational naming principles; skill naming patterns in child file
-- **testing.md** — Skill testing requirements by maturity level
-- **authoring_rules.md** — General rule authoring process (complementary to skill authoring)
-- **_complexity_scoring.md** (sibling file) — shared complexity formula this file's maturity gates and quality-scorecard dimension both draw from

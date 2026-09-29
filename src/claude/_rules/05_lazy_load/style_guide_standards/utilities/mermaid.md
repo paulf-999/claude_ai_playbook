@@ -1,17 +1,11 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🔀 Mermaid Diagram Standards
 
 [Mermaid](https://mermaid.js.org) is a Markdown-native diagramming language for flowcharts, sequence diagrams, and more.
 
 These standards apply to the flowcharts used in skill `flow.md` files and role READMEs.
-
-## 📋 Contents
-
-- [📋 Structure](#-structure)
-
----
 
 ## 📋 Structure
 

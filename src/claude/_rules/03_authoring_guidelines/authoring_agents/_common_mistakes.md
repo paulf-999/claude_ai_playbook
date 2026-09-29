@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-29 -->
 # 🚫 Agent Common Mistakes & Anti-Patterns
 
 **Purpose:** The most frequent agent-authoring mistakes, shown as wrong/right pairs.
@@ -78,9 +78,3 @@ Tactical maturity because:
 - 12 evals cover all phases (PR body drafting, Confluence creation, error cases)
 - Stable external dependencies (GitHub API, Atlassian API)
 ```
-
----
-
-## 🔗 Related
-
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist

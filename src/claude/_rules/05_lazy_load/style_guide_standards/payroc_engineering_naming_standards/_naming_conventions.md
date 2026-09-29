@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🔤 Naming Conventions & Segments
 
 **Purpose:** Core naming standards and segment definitions for all Payroc engineering resources.
@@ -94,13 +94,6 @@ All naming follows these rules:
 | `ansible` | Ansible playbook / role |
 | `terraform` | Terraform configuration |
 | `operations` | Operational / maintenance job |
-
----
-
-## 🔗 Related Standards
-
-- **[_naming_repositories.md](_naming_repositories.md)** — Repository naming examples
-- **[_naming_infrastructure.md](_naming_infrastructure.md)** — VM and cloud resource naming
 
 ---
 

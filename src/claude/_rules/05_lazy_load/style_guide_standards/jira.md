@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-05-20 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🎫 Jira Style Guide & Standards
 
 Defines standards for the DM Jira project — field requirements, ticket structure, component and sprint assignment, and hygiene expectations.
@@ -14,12 +14,6 @@ Defines standards for the DM Jira project — field requirements, ticket structu
 | [`jira/definition_of_ready.md`](jira/definition_of_ready.md) | Definition of Ready checklist — blocking and recommended checks before sprint entry |
 | [`jira/sprint_planning.md`](jira/sprint_planning.md) | Sprint ID mapping, quarter/component mapping, parent epics, and capacity conventions |
 | [`jira/business_value.md`](jira/business_value.md) | Business Value tab format, audience guidance, scoring frameworks, and worked example |
-
-## 📋 Contents
-
-- [🏗️ Core principles](#-core-principles)
-
----
 
 ## 🏗️ Core principles
 

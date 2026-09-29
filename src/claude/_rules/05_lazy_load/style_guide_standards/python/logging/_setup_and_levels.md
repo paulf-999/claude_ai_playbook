@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🔧 Logger Setup & Log Levels
 
 **Purpose:** Establish logger initialization and log level conventions for different message types.
@@ -101,11 +101,3 @@ def load_required_var(var_name: str) -> str:
 ```
 
 **When to use:** Always log before raising exceptions. Provides debugging context without hiding the error.
-
----
-
-## 🔗 Related
-
-- Parent: `logging.md` — Logging overview and links
-- Sibling: `logging/_what_to_log.md` — What to log and what NOT to log
-- Sibling: `logging/_error_handling.md` — Logging in error handling context

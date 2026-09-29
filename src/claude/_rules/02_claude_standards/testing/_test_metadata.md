@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-09-21 -->
+<!-- updated: 2026-09-29 -->
 # 📊 Test Metadata Standard
 
 **Purpose:** Track test quality, creation date, and maintenance status via structured metadata headers. Enable quick assessment of test staleness and coverage before running or updating.
@@ -70,11 +70,3 @@ Every test file in `~/.claude/_tests/` must open with this metadata header:
 ## ⚙️ Maintenance
 
 @~/.claude/_rules/02_claude_standards/testing/_test_metadata_maintenance.md
-
----
-
-## 🔗 Related Rules
-
-- Parent: `testing.md` — When tests are required; test design pattern and gates
-- `claude_plans.md` — Gate testing before merging
-- `~/.claude/_tests/` — Location of all test files and metadata headers

@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🔄 Turn Budgets
 
 **Purpose:** Establish constraints on turns for non-interactive automation to prevent runaway sessions and cost overrun.
@@ -40,10 +40,3 @@ Unbounded turns are a known source of significant cost overrun. Always cap turns
 - **Task hitting turn limit repeatedly** — scope is bigger than estimated; increase cap or decompose task
 - **Unclear success criteria** — automation needs clear exit condition; clarify before running
 - **Manual spot-checks needed** — if human judgment required mid-run, automation may not be appropriate
-
----
-
-## 🔗 Related
-
-- `claude_operational_efficiency.md` — automation and delegation context
-- `behaviour/_session_conduct.md` — how Claude conducts itself in sessions

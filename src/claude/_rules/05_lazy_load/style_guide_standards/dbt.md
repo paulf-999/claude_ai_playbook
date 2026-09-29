@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🔵 dbt Style Guide & Standards
 
 **Purpose:** Define standards for `da-etl-dbtanalytics` — covering model organization, naming, YAML properties, testing, snapshots, and macros. Standards ensure consistency, maintainability, and correctness across the dbt project.
@@ -102,14 +102,6 @@ Models are organized by **semantic maturity** — each layer serves a specific p
    └─ dbt test (final verification)
    └─ Monitor freshness in BI layer
 ```
-
----
-
-## 📚 Related Rules
-
-- **style_guide_standards/sql.md** — SQL formatting and standards
-- **style_guide_standards/airflow.md** — Airflow orchestration of dbt runs
-- **testing.md** — dbt test strategy and best practices
 
 ---
 

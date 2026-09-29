@@ -153,3 +153,66 @@ All reference files follow `~/.claude/_rules/writing_style.md`:
 ---
 
 Last updated: **2026-08-19**
+
+---
+
+## 🔗 Related rules
+
+Parent, sibling and dependency links for each file in this tier — kept here, not in the file, because READMEs aren't `@import`ed (#121).
+
+### `claude_config_architecture/_evolution.md`
+
+- **Guiding principles:** `~/.claude/_rules/guiding_principles.md`
+- **Lazy-load guide:** `~/.claude/_rules/lazy_load/README.md`
+- **Testing rules:** `~/.claude/_rules/testing.md`
+- **Naming standards:** `~/.claude/_rules/naming_standards.md`
+- **Parent doc:** `claude_config_architecture.md`
+
+### `claude_config_architecture/_security.md`
+
+- **How Claude behaves:** `~/.claude/_rules/behaviour.md`
+- **Prompt injection defence:** `~/.claude/_rules/security_guardrails.md`
+- **Code standards:** `~/.claude/_rules/security.md`
+- **MCP trust:** `~/.claude/_rules/mcp_trust_model.md`
+- **Parent doc:** `claude_config_architecture.md`
+
+### `claude_config_architecture/_testing.md`
+
+- **Test documentation:** `~/.claude/_tests/README.md`
+- **Testing rules:** `~/.claude/_rules/testing.md`
+- **Parent doc:** `claude_config_architecture.md`
+
+### `claude_config_architecture.md`
+
+- **Guiding principles:** `~/.claude/_rules/guiding_principles.md`
+- **Test coverage:** `~/.claude/_tests/README.md`
+- **Lazy-load guide:** `~/.claude/_rules/lazy_load/README.md`
+
+### `claude_prompting_best_practices.md`
+
+These practices are integrated into the global Claude config:
+
+- **`behaviour.md`** — "colleague test", "never speculate about code", "tune exploration"
+- **`writing_style.md`** — "frame as positive actions"
+- **`claude_efficiency.md`** — "when NOT to spawn"
+
+For the full rules and additional context, see `~/.claude/_rules/`.
+
+### `settings_json_recommendations/_enterprise.md`
+
+- **Parent (Tier 1 essentials):** `settings_json_recommendations.md`
+- **Tier 2–3 settings:** `_tier2_3.md`
+- **Official schema:** <https://code.claude.com/docs/en/settings>
+
+### `settings_json_recommendations/_tier2_3.md`
+
+- **Parent (Tier 1 essentials):** `settings_json_recommendations.md`
+- **Enterprise settings:** `_enterprise.md`
+- **Official schema:** <https://code.claude.com/docs/en/settings>
+
+### `settings_json_recommendations.md`
+
+- **Parent:** This doc
+- **Tier 2–3 settings:** [settings_json_recommendations/_tier2_3.md](settings_json_recommendations/_tier2_3.md)
+- **Enterprise settings:** [settings_json_recommendations/_enterprise.md](settings_json_recommendations/_enterprise.md)
+- **Security rules:** `~/.claude/_rules/02_claude_standards/security.md`

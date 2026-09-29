@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-09-19 -->
+<!-- updated: 2026-09-29 -->
 # 🔬 How to Approach
 
 **Purpose:** Establish habits for approaching a task well — diagnosing root causes, scoping narrowly, and preserving context across long sessions.
@@ -26,7 +26,3 @@
 - 🧠 **Tune exploration for current models:** newer models explore more than older ones by default. Replace blanket "be thorough" defaults with targeted instructions.
   - ❌ "Default to using [tool]" (causes overtriggering)
   - ✅ "Use [tool] when it would enhance understanding of the problem"
-
-## 🔗 Related
-
-- Parent: `behaviour.md` — safe action defaults; decision-making patterns

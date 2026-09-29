@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-08-28 -->
+<!-- updated: 2026-09-29 -->
 # 📝 Commits
 
 **Purpose:** Establish commit boundaries, formatting, and staging discipline to maintain clean history and safe operations.
@@ -28,9 +28,3 @@
 - **After stash/switch:** run `git diff --name-only origin/<branch>` before staging — only stage files that belong to the current task.
 - **Logical commits:** group related changes into a single commit — one commit per logical change, not one per file.
 - **Heredoc messages:** always pass commit messages via heredoc to preserve formatting.
-
----
-
-## 🔗 Related
-
-- Parent: `git.md` — safe patterns, branch naming, pull requests, complex operations

@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 📐 Complexity Metrics
 
 **Purpose:** Detailed explanation of each metric, thresholds, and how to measure them.
@@ -134,10 +134,3 @@ for item in items:
 **Exception:** Long strings, URLs, unavoidable literals.
 
 **Tool:** `ruff check` (already configured)
-
----
-
-## Related
-
-- Parent: `_code_complexity.md` — Overview and quick reference
-- Sibling: `_code_complexity_exceptions.md` — When to make exceptions

@@ -4,8 +4,8 @@
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # Date created:      2026-09-28
-# Version:           1.0.1
-# Date updated:      2026-09-28
+# Version:           1.1.0
+# Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
 """Structural tests for _rules/03_authoring_guidelines/authoring_agents.md.
@@ -17,10 +17,13 @@ had zero test coverage, unlike its two siblings in the same tier
 from CLAUDE.md is already covered by test_always_on_reachability.py; this
 suite covers the structural content each sibling's own test already checks.
 """
+from pathlib import Path
+
 from _shared_paths import CLAUDE_DIR
 
 AUTHORING_AGENTS = CLAUDE_DIR / "_rules" / "03_authoring_guidelines" / "authoring_agents.md"
 CHILDREN_DIR = CLAUDE_DIR / "_rules" / "03_authoring_guidelines" / "authoring_agents"
+TIER_README = CLAUDE_DIR / "_rules" / "03_authoring_guidelines" / "README.md"
 
 EXPECTED_SECTIONS = [
     "Quick Navigation",
@@ -46,6 +49,32 @@ EXPECTED_CHILDREN = [
     "_hard_gates_checklist.md",
     "_common_mistakes.md",
 ]
+
+
+
+def readme_related_entry(readme: Path, rel_path: str) -> str:
+    """Return one file's block from a tier README's "🔗 Related rules" section.
+
+    Related links moved out of rule files into tier READMEs (#121), so each
+    file's parent/sibling links now live under a ``### `<rel_path>` `` heading.
+
+    :param readme: The tier README holding the Related rules section.
+    :type readme: Path
+    :param rel_path: The rule's path relative to the README's directory.
+    :type rel_path: str
+    :return: The block's text, or an empty string if the heading is absent.
+    :rtype: str
+    """
+    lines = readme.read_text().splitlines()
+    heading = f"### `{rel_path}`"
+    if heading not in lines:
+        return ""
+    start = lines.index(heading) + 1
+    end = next(
+        (idx for idx in range(start, len(lines)) if lines[idx].startswith(("### ", "## "))),
+        len(lines),
+    )
+    return "\n".join(lines[start:end])
 
 
 def test_authoring_agents_file_exists():
@@ -138,9 +167,10 @@ def test_each_child_ends_with_newline():
 
 
 def test_each_child_links_back_to_parent():
-    """Every child file must reference authoring_agents.md as its parent."""
+    """Every child's tier README Related entry must name authoring_agents.md as its parent."""
     for child in EXPECTED_CHILDREN:
-        content = (CHILDREN_DIR / child).read_text()
-        assert "authoring_agents.md" in content, (
-            f"{child}: does not reference authoring_agents.md as its parent"
+        entry = readme_related_entry(TIER_README, f"authoring_agents/{child}")
+        assert "authoring_agents.md" in entry, (
+            f"{child}: 03_authoring_guidelines/README.md Related entry doesn't name "
+            f"authoring_agents.md as its parent"
         )

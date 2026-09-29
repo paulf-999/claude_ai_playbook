@@ -1,4 +1,4 @@
-<!-- version: 2.1.0 -->
+<!-- version: 2.1.1 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
 # ✅ Skill Hard Gates Checklist
@@ -50,10 +50,3 @@
   - [ ] No TODO/FIXME left in a tactical or strategic skill
   - [ ] Skill has clear, narrow focus (not "everything related to X")
   - [ ] Doesn't duplicate or conflict with an existing skill
-
----
-
-## 🔗 Related
-
-- Parent: `authoring_skills.md` — child index and file organisation
-- Sibling: `_core_standards.md` — naming, SKILL.md structure, contract fields, maturity levels

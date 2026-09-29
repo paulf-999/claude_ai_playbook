@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🔧 Pytest Fixtures & Mocking
 
 **Purpose:** Establish fixtures and mocking conventions for isolating code under test and reducing duplication.
@@ -114,11 +114,3 @@ assert client.create_source.call_count == 3
 ```
 
 **Why:** Mocking isolates the code being tested from its dependencies. Mock assertions verify the code interacts with dependencies correctly.
-
----
-
-## 🔗 Related
-
-- Parent: `testing.md` — Testing conventions overview
-- Sibling: `testing/_naming_structure.md` — Test naming and structure
-- Sibling: `testing/_assertions.md` — Assertions and exception testing

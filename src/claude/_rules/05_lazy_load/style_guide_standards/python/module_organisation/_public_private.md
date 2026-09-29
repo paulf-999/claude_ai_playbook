@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🔒 Public vs Private Functions & Constants
 
 **Purpose:** Establish conventions for distinguishing public API from internal helpers — ensuring module interfaces are clear and changes to internals don't break users.
@@ -131,10 +131,3 @@ elif action == "UPDATE":
 | **Private function** | Leading underscore | `def _make_client():` |
 | **Constants** | SCREAMING_SNAKE_CASE, grouped | `TIMEOUT = 30` |
 | **Constant group label** | Comment above group | `# Defaults` |
-
----
-
-## 🔗 Related
-
-- Parent: `module_organisation.md` — Module organisation overview
-- Sibling: `module_organisation/_docstrings.md` — Module docstrings and metadata

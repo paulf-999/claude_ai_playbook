@@ -1,17 +1,11 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-07 -->
+<!-- updated: 2026-09-29 -->
 # 🧭 Guiding Principles — Claude Config
 
 **Purpose:** Establish decision-making principles that prevent configuration bloat and ensure every setting, hook, and import justifies its token cost.
 
 Configuration principles that govern all decisions about settings, hooks, imports, and automation.
-
-## 📋 Contents
-
-- [How to gather usage evidence](#-how-to-gather-usage-evidence)
-
----
 
 | Principle | Description | Rationale | How to apply |
 |-----------|-------------|-----------|--------------|

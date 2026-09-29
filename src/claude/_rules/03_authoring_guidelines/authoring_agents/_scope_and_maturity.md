@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-29 -->
 # 🚪 Agent Scope Boundaries & Maturity Justification
 
 **Purpose:** Every agent must declare what it does NOT do, and justify its maturity level with evidence, not aspiration.
@@ -62,9 +62,3 @@ Document why you chose this maturity level, with evidence.
 - [Evidence point 2]
 - [Evidence point 3]
 ```
-
----
-
-## 🔗 Related
-
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist

@@ -1,4 +1,4 @@
-<!-- version: 3.0.0 -->
+<!-- version: 3.0.1 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
 # 🎯 Trigger Design
@@ -29,11 +29,3 @@ Triggers determine how users invoke your skill. Comprehensive trigger coverage e
 - **Be exhaustive:** a false positive costs less than a missed invocation.
 - **Not too generic:** "help" or "please" alone won't distinguish your skill from others.
 - **Example:** see `git_create_pr`'s `skill.contract.yaml` for a complete trigger list.
-
----
-
-## 🔗 Related
-
-- Parent: `authoring_skills.md` — child index and file organisation
-- Sibling: `_core_standards.md` — naming, SKILL.md structure, contract fields, maturity levels
-- Sibling: `_hard_gates_checklist.md` — evals.yaml, scorecard and reference-file requirements
