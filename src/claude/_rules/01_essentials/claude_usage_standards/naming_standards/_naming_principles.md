@@ -1,4 +1,4 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.0.3 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🎯 Naming Principles — Foundational Concepts
@@ -29,7 +29,7 @@ Before creating a new file or directory, propose 3–4 name candidates with a re
 Lowercase only, words separated by underscores — no hyphens, spaces, or special characters.
 
 - **Applies to:** all files, directories, identifiers, and artefacts
-- **Examples:** `naming_standards.md`, `authoring_skills.md`, `hook_enforcement_sql.sh`, `api_key`, `user_profile`
+- **Examples:** `naming_standards.md`, `authoring_skills.md`, `hook_enforcement_naming_convention.sh`, `api_key`, `user_profile`
 - **Never:** `NamingStandards.md`, `naming-standards.md`, `Naming Standards.md`
 
 ### 📈 Name for scale
@@ -47,7 +47,7 @@ Choose a name that fits the likely higher grouping, not just today's problem.
 
 | Artefact | Pattern | Example | Details |
 |---|---|---|---|
-| **Hook files** | `hook_<type>_<domain>.sh` | `hook_enforcement_sql.sh` | See `_claude_naming_patterns.md` |
+| **Hook files** | `hook_<type>_<domain>.sh` | `hook_enforcement_naming_convention.sh` | See `_claude_naming_patterns.md` |
 | **Skill** | `<domain>_<action>` | `confluence_create_page` | See `_claude_naming_patterns.md` |
 | **Rule file** | `snake_case.md` | `naming_standards.md` | See `_claude_naming_patterns.md` |
 | **Directory (user-created)** | `_<name>/` | `_rules/`, `_templates/` | See `claude_directory_structure.md` |

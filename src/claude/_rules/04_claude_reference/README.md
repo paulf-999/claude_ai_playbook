@@ -22,11 +22,10 @@
 | **task_request_conventions/_task_logging.md** | Task logging patterns for managing in-progress work |
 | **task_request_conventions/_hooks_decision_framework.md** | Framework for proposing new hooks vs. rules |
 
-**Rule loading & classification (parent + `claude_rule_loading_strategy/`):**
+**Rule loading & classification:**
 | File | Purpose |
 |---|---|
-| **claude_rule_loading_strategy.md** | Lazy-load principle; points to authoritative sources (CLAUDE.md, filesystem) |
-| **claude_rule_loading_strategy/_claude_rule_classification.md** | Five-tier directory structure for rules (01_essentials, 02_claude_standards, 03_authoring_guidelines, 04_claude_reference, 05_lazy_load) |
+| **claude_rule_loading_strategy.md** | The five rule tiers, what belongs in each, and when a rule should be always-on or lazy-loaded |
 
 ---
 
@@ -45,8 +44,7 @@ These rules explain **how the Claude config system works** and guide Claude's im
 
 ## 🚀 How to use these rules
 
-- **Understanding rule placement?** Check `claude_rule_loading_strategy.md` for the lazy-load principle, then refer to CLAUDE.md and the filesystem for actual rule locations
-- **Understanding rule tier organization?** Check `claude_rule_loading_strategy/_claude_rule_classification.md` for the five-tier system
+- **Understanding rule placement or the five tiers?** Check `claude_rule_loading_strategy.md`, then refer to CLAUDE.md and the filesystem for actual rule locations
 - **Accessing external systems?** Check `claude_conduct/external_system_access.md` before claiming inaccessibility
 - **Managing MCP servers?** Check `claude_conduct/mcp_server_toggling.md` for restart requirements
 - **Understanding user request patterns?** Check `claude_conduct/task_request_conventions.md` for behavioral templates
@@ -108,20 +106,6 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - `behaviour.md` — safe defaults and decision-making patterns
   - `_session_conduct.md` — interpersonal honesty and responsiveness
   - `_model_selection_strategy.md` — when to escalate models
-
-### `claude_rule_loading_strategy/_claude_rule_classification/_tier_definitions.md`
-
-- Parent: `_claude_rule_classification.md` — distribution summary and loading decision framework
-
-### `claude_rule_loading_strategy/_claude_rule_classification.md`
-
-- **Loading strategy decision tree:** `claude_rule_loading_strategy.md` — Authoritative guide for always-on vs. lazy-load placement
-- **Tier-specific guidance:**
-  - `01_essentials/` — Foundational rules (safety, user-facing, quality)
-  - `02_claude_standards/` — Standard enforcement and quality gates
-  - `03_authoring_guidelines/` — Rule/skill/agent authoring standards
-  - `04_claude_reference/` — This directory; system knowledge and platform guidance
-  - `05_lazy_load/` — Domain-specific rules (load on-demand)
 
 ### `claude_rule_loading_strategy.md`
 

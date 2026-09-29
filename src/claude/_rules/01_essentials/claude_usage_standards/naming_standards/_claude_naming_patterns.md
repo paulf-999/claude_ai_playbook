@@ -1,4 +1,4 @@
-<!-- version: 2.0.0 -->
+<!-- version: 3.0.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🏷️ Naming patterns — files, objects, and artefacts
@@ -10,14 +10,14 @@
 **Pattern:** `hook_<type>_<domain>.sh`
 
 - **Prefix:** all hook files must start with `hook_` — distinguishes them from other shell scripts
-- **Type:** `enforcement` (blocks or injects a warning) or `style_guide` (injects domain-specific style context)
+- **Type:** `enforcement` (blocks or injects a warning), `style_guide` (injects style context) or `session_start` (runs when a session opens)
 - **Domain:** the concern being enforced, e.g. `sql`, `dir_structure`, `naming_convention`
 - **Dispatcher:** `hook_<type>_dispatch.sh` — fan-out hook that calls multiple same-type domain hooks and aggregates their output
 
 **Examples:**
-- `hook_enforcement_sql.sh` — enforces SQL style rules
-- `hook_style_guide_dbt.sh` — injects dbt style guidance
-- `hook_enforcement_dispatch.sh` — calls all enforcement hooks
+- `hook_enforcement_naming_convention.sh` — blocks badly named new files under the config directory
+- `hook_style_guide_response_standards_inject.sh` — injects the response-format directive each turn
+- `hook_session_start_mcp_stale_settings.sh` — reminds you to restart after MCP settings change
 
 ## 🛠️ Skill naming
 
@@ -39,24 +39,8 @@
 **Pattern:** snake_case, descriptive of the concept being enforced
 
 - **Format:** lowercase only, words separated by underscores (e.g. `naming_standards.md`, `security.md`, `mcp_trust_model.md`)
-- **Location:**
-  - `01_essentials/` — blocking/safety rules (always-on imports; e.g. behaviour, security, testing, guiding_principles)
-  - `02_claude_standards/` — how Claude operates (always-on imports; e.g. efficiency, git, memory)
-  - `03_authoring_guidelines/` — meta-guidance for authoring rules, skills, agents
-  - `04_claude_reference/` — system knowledge and platform guidance
-  - `05_lazy_load/` — domain-specific rules (lazy-loaded on-demand; e.g. style guides, tool guides)
-  - `05_lazy_load/<domain>/` — group related rules by subdomain (e.g. `style_guide_standards/sql.md`, `style_guide_standards/dbt.md`)
-- **Name for scale:** choose a name that fits the likely higher grouping, not just today's problem — e.g. `naming_standards.md` over `hook_naming.md` (other identifiers will need naming guidance too)
+- **Location:** pick the tier per `claude_rule_loading_strategy.md`, which says what belongs in each of `01_essentials/` to `05_lazy_load/`
+  - **Subdomains:** group related lazy-loaded rules under `05_lazy_load/<domain>/` (e.g. `style_guide_standards/sql.md`, `style_guide_standards/dbt.md`)
+- **General principles:** self-describing names and naming for scale apply here too — see `_naming_principles.md`
 
 **Load details on-demand:** See `~/.claude/_rules/03_authoring_guidelines/authoring_rules.md` for full rule creation checklist, directory placement, and testing requirements.
-
-## 📚 References
-
-**Parent & siblings:**
-- **Parent:** `naming_standards.md` — entry point for all naming conventions
-- **Sibling:** `_naming_principles.md` — foundational naming principles (self-describing, offer options, snake_case, name for scale)
-- **Related:** `claude_directory_structure.md` → `_claude_directory_naming.md` — directory and file naming conventions
-
-**Detailed authoring guides:**
-- **authoring_skills.md** — Full skill naming convention, domain list, examples
-- **authoring_rules.md** — Rule naming standards, directory placement (01_essentials, 02_claude_standards, 03_authoring_guidelines, 04_claude_reference, 05_lazy_load), pre-creation checklist

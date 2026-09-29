@@ -9,7 +9,7 @@ Rules are organized into five numbered tiers, each with a distinct purpose and a
 - **`01_essentials/`** — Foundational principles and conventions meant for **user/stakeholder understanding** (behaviour, naming, writing standards)
 - **`02_claude_standards/`** — Foundational quality gates that **Claude must apply** to all work (security, testing) — NOT user-facing
 - **`03_authoring_guidelines/`** — Meta-guidance for authoring **rules, skills, agents** (how to create and maintain config artifacts)
-- **`04_claude_reference/`** — Technical/meta-knowledge about **how the system works** (efficiency, git workflow, loading strategy, external systems) — reference material
+- **`04_claude_reference/`** — Technical/meta-knowledge about **how the system works** (efficiency, loading strategy, external systems) — reference material
 - **`05_lazy_load/`** — Domain-specific rules loaded on demand; never imported into the main context (SQL, Airflow, dbt, Terraform, etc.)
 
 ## 🎯 Design principle: Audience-based organization

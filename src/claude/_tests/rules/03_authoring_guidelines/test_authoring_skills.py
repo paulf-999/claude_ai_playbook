@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Test quality score: 5/10
 # Date created:      2026-09-16
-# Version:           3.0.0
+# Version:           3.0.1
 # Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
@@ -32,7 +32,7 @@ RULE_FILE = CLAUDE_DIR / "_rules" / "03_authoring_guidelines" / "authoring_skill
 def resolved_content() -> str:
     """Return RULE_FILE's content with every @import line inlined recursively.
 
-    authoring_skills.md is a parent+child rule (per _rule_directory_patterns.md)
+    authoring_skills.md is a parent+child rule (per _multifile_document_organisation.md)
     — its content lives across several imported files, not just the parent.
     Checks below must see the full resolved text, not just the parent's own
     lines, or any future re-split of the rule silently breaks every assertion.

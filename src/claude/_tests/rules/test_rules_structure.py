@@ -4,7 +4,7 @@
 # Test complexity score: 4/10
 # Python style compliant: Yes
 # Date created:      2026-08-28
-# Version:           1.3.0
+# Version:           1.4.0
 # Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
@@ -201,6 +201,23 @@ def test_files_end_with_single_newline():
 
 REFERENCE_DIR = CLAUDE_DIR / "_reference"
 RELATED_HEADING = re.compile(r"^## .*Related", re.MULTILINE)
+REFERENCES_SECTION = re.compile(r"^## .*References.*\n(?:(?!## ).*\n?)*", re.MULTILINE)
+
+
+def has_internal_link_section(text: str) -> bool:
+    """Return True for a Related section, or a References section that lists config files.
+
+    A References section of external URLs (e.g. vendor docs) is legitimate
+    content; one that names other .md files is a Related section by another name.
+
+    :param text: The markdown file's content.
+    :type text: str
+    :return: Whether the file carries parent/sibling links that belong in a README.
+    :rtype: bool
+    """
+    if RELATED_HEADING.search(text):
+        return True
+    return any(".md" in section for section in REFERENCES_SECTION.findall(text))
 H2_HEADING = re.compile(r"^## (.+)$", re.MULTILINE)
 CONTENTS_MIN_HEADINGS = 3
 
@@ -229,11 +246,11 @@ def test_no_related_section_outside_readmes():
     offenders = [
         str(md_file.relative_to(CLAUDE_DIR))
         for md_file in imported_content_files()
-        if RELATED_HEADING.search(md_file.read_text())
+        if has_internal_link_section(md_file.read_text())
     ]
     assert not offenders, (
-        f"{len(offenders)} file(s) have a '## ... Related' section — move the links to the "
-        f"tier README under '🔗 Related rules': {sorted(offenders)}"
+        f"{len(offenders)} file(s) have a Related section (or a References section of .md links) — "
+        f"move the links to the tier README under '🔗 Related rules': {sorted(offenders)}"
     )
 
 

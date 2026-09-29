@@ -78,21 +78,22 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - `naming_standards.md` — Foundational naming principles
 - `behaviour.md` → "Before acting" → "Plan approval" — validate structure before proceeding with complex changes
 
-### `claude_usage_standards/claude_directory_structure/_rule_directory_patterns/_examples_and_checklist.md`
-
-- Parent: `_rule_directory_patterns.md` — the pattern itself, when to apply it
-
-### `claude_usage_standards/claude_directory_structure/_rule_directory_patterns.md`
-
-- **Parent:** `claude_directory_structure.md` — directory organization overview
-- **Sibling:** `_claude_directory_naming.md` — naming patterns for files and directories
-- **Related:** `writing_style.md` → `_multifile_document_organisation.md` — when to split documents into parent + child files (general principle, applies to rules too)
-
 ### `claude_usage_standards/claude_directory_structure.md`
 
 - `naming_standards.md` — General naming principles for all identifiers; see child file `_naming_principles.md` for foundational concepts
 - `authoring_rules.md` — Directory placement rules for new rules (01_essentials, 02_claude_standards, 03_authoring_guidelines, 04_claude_reference, 05_lazy_load)
 - `writing_style.md` → `_multifile_document_organisation.md` — When to create subdirectories for multi-file documents
+
+### `claude_usage_standards/naming_standards/_claude_naming_patterns.md`
+
+**Parent & siblings:**
+- **Parent:** `naming_standards.md` — entry point for all naming conventions
+- **Sibling:** `_naming_principles.md` — foundational naming principles (self-describing, offer options, snake_case, name for scale)
+- **Related:** `claude_directory_structure.md` → `_claude_directory_naming.md` — directory and file naming conventions
+
+**Detailed authoring guides:**
+- **authoring_skills.md** — Full skill naming convention, domain list, examples
+- **authoring_rules.md** — Rule naming standards, directory placement (01_essentials, 02_claude_standards, 03_authoring_guidelines, 04_claude_reference, 05_lazy_load), pre-creation checklist
 
 ### `claude_usage_standards/naming_standards/_naming_principles.md`
 

@@ -1,109 +1,69 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 📁 Multifile Document Organisation
 
-**Purpose:** Establish a universal directory structure convention for multi-file documents across all Claude config directories — preventing flat-level sprawl and keeping related files organised into dedicated subdirectories.
-
-Applies to all `.md` files in `_rules/`, `style_guide_standards/`, `process/`, agents, skills, and any other structured documentation in the Claude context.
+**Purpose:** One convention for when to split a document into a parent and child files, and how to lay them out — preventing flat-level sprawl across `_rules/`, style guides, skills, agents and any other structured documentation.
 
 ---
 
 ## 🎯 The Pattern
 
-Documents follow a **size-based organisation principle**:
+| Shape | When | Layout |
+|---|---|---|
+| **Single file** | One complete, self-contained topic, ≤110 lines | `<directory>/<topic>.md`, placed flat |
+| **Parent + children** | A topic with 2+ related child pages, or one that has grown past 110 lines | `<directory>/<topic>.md` plus `<directory>/<topic>/_<aspect>.md` |
 
-### Single-file documents (stay flat)
-**Condition:** One document covering a complete topic, ≤110 lines, self-contained.
-
-```
-_rules/05_lazy_load/
-├── rule_one.md           ← single file, stays at top level
-├── rule_two.md           ← single file, stays at top level
-└── rule_three.md         ← single file, stays at top level
-```
-
-**Decision rule:**
-- File is self-contained with no child pages
-- No index/parent file required
-- Place directly in the directory (flat level)
-
-### Multi-file documents (get subdirectories)
-**Condition:** One parent index file + 2+ child files covering related aspects of a topic.
-
-```
-_rules/01_essentials/
-├── behaviour.md                             ← parent index at top level (entry point)
-├── behaviour/                               ← child files in dedicated subdirectory
-│   └── _decision_making.md
-```
-
-**Decision rule:**
-- Parent index file at top level (discoverable entry point)
-- All child files in dedicated subdirectory named `<topic>/`
-- Child files use underscore prefix: `_<aspect>.md` (distinguishes from top-level docs)
-- Parent file lists all children with links to `subdirectory/_file.md`
-- Sibling links within subdirectory are relative: `[_file.md](_file.md)`
-- **Note:** in `_rules/`, parent and sibling link lists live in the tier `README.md`, not the rule — see `_rules/README.md`
+- **Parent:** sits at the top level as the discoverable entry point, explains the topic and links (or, in `_rules/`, imports) every child.
+- **Children:** live in a subdirectory named after the parent, use the `_` prefix, and each cover one aspect of the parent's topic.
+- **2+ rule:** never create a subdirectory for a single child — flatten it to a top-level file instead (e.g. `behaviour/` holding only `_decision_making.md` becomes `decision_making.md`).
+  - **Why:** a one-child folder adds navigation overhead without grouping anything.
+- **Sibling links:** any inline link between children is relative — `[_file.md](_file.md)`.
 
 ---
 
 ## ⚠️ When to Apply
 
-**Trigger:** Any document growing to 2+ related child pages, or when >110 lines.
-
-**Questions to ask:**
-
-1. Does this document have multiple related child pages?
-   - **YES** → create parent index + subdirectory structure
-   - **NO** → keep as single file
-
-2. Is the file > 110 lines?
-   - **YES** → split into parent index + child files
-   - **NO** → assess if topic complexity warrants splitting anyway
-
-3. Are child pages distinct topics grouped under one parent?
-   - **YES** → use subdirectory for the group
-   - **NO** → each should be a standalone document file
+1. **Does the topic have 2+ related child pages?** Yes → parent + subdirectory. No → single file.
+2. **Is the file over 110 lines?** Yes → split into parent + children. No → split only if the topic's complexity warrants it.
+3. **Are the children distinct aspects of one parent topic?** Yes → group them in one subdirectory. No → make each a standalone file, and don't mix unrelated files in one folder.
 
 ---
 
 ## 📚 Examples
 
-### ✅ Correct: Multi-file structure (Behaviour)
-
 ```
-behaviour.md                            ← parent: safe defaults and action guidelines
-behaviour/
-└── _decision_making.md                 ← child: when to present options vs. decide unilaterally
-```
-
-**Why:** Two distinct aspects (core principles, decision-making specifics) grouped under one topic. Parent is the entry point; child is reference material.
-
-### ✅ Correct: Single-file (Simple rule)
-
-```
-some_rule.md                             ← complete, self-contained rule
+_rules/02_claude_standards/
+├── behaviour.md                     ← ✅ parent: entry point
+├── behaviour/
+│   ├── _artefact_proposal_gates.md  ← child: validating proposals
+│   ├── _decision_making.md          ← child: when to present options
+│   └── …                            ← further children
+└── portable_paths.md                ← ✅ single concept, flat, no children
 ```
 
-**Why:** One concept, <110 lines, no need for child pages.
+**❌ Orphaned child at flat level:** a `_decision_making.md` sitting next to `behaviour.md` instead of inside `behaviour/` — no clear grouping, and the parent ends up created after the sprawl.
+
+---
+
+## 📏 Extra Rules in `_rules/`
+
+- **Import every child:** the parent `@import`s each `<topic>/_<aspect>.md` — a child only named in prose is never loaded.
+- **Contents only when earned:** add a Contents section only if the file has 3 or more real `##` headings.
+- **Related links:** parent and sibling link lists go in the tier `README.md` under "🔗 Related rules", never in the rule.
+- **README:** update `_rules/<tier>/README.md` to show the new parent + child structure.
+- **CLAUDE.md:** if the parent is imported from `CLAUDE.md`, update that import path to the parent's location.
 
 ---
 
 ## ✅ Verification Checklist
 
-Before creating or modifying a document:
-
-- [ ] **Is this a single-file document?** → Place at top level (flat)
-- [ ] **Is this multi-file (2+ pages)?** → Create parent index + subdirectory
-  - [ ] Parent index file at: `<directory>/<topic>.md`
-  - [ ] Child files at: `<directory>/<topic>/_<aspect>.md`
-  - [ ] Child files use underscore prefix `_<aspect>.md`
-  - [ ] Parent index has table/list with links to `<topic>/_<aspect>.md`
-  - [ ] Sibling links within subdirectory are relative: `[_file.md](_file.md)`
-  - [ ] In `_rules/`, parent and sibling link lists sit in the tier `README.md`
-- [ ] **Is the file > 110 lines?** → Consider splitting into parent + children
-- [ ] **Will this document likely grow?** → Use subdirectory structure preemptively
+- [ ] **Single file?** → flat at the top level
+- [ ] **Parent + children?** → parent at `<directory>/<topic>.md`, children at `<directory>/<topic>/_<aspect>.md`
+- [ ] **Children use the `_` prefix** and there are 2 or more of them
+- [ ] **Every child relates directly to the parent topic**
+- [ ] **Over 110 lines?** → split into parent + children
+- [ ] **In `_rules/`?** → the extra rules above are met
 
 ---
 
