@@ -4,8 +4,8 @@
 # Test complexity score: 3/10
 # Python style compliant: Yes
 # Date created:      2026-09-18
-# Version:           1.0.0
-# Date updated:      [placeholder]
+# Version:           1.0.1
+# Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
 """Tests for always-on-tier reachability — every file imported, nothing orphaned.
@@ -44,7 +44,9 @@ def find_reachability_issues(rules_root: Path, entry_files: list[Path]) -> tuple
     all_md = {
         p.resolve() for p in rules_root.rglob("*.md")
         if p.name != "README.md"
-        and "template" not in str(p).lower()
+        # Match "template" only below rules_root: a checkout path such as
+        # ~/git/repo_template/ must not hide every rule file from the scan.
+        and "template" not in str(p.relative_to(rules_root)).lower()
         and "05_lazy_load" not in p.parts
     }
     visited: set[Path] = set()
@@ -216,3 +218,32 @@ def test_entry_file_itself_never_counts_as_orphaned(tmp_path):
     _, orphaned = find_reachability_issues(rules.parent, [claude_md])
 
     assert not orphaned
+
+
+def test_detector_ignores_template_in_path_above_rules_root(tmp_path):
+    """Regression: a checkout folder named with 'template' must not hide orphans."""
+    root = tmp_path / "repo_skill_template"
+    rules = root / "_rules" / "01_essentials"
+    rules.mkdir(parents=True)
+    (root / "CLAUDE.md").write_text("@~/.claude/_rules/01_essentials/parent.md\n")
+    (rules / "parent.md").write_text("See `_child.md` for detail.\n")
+    (rules / "_child.md").write_text("# Child content, never imported\n")
+
+    _, orphaned = find_reachability_issues(rules.parent, [root / "CLAUDE.md"])
+
+    assert any("_child.md" in o for o in orphaned), (
+        "A 'template' folder above _rules/ hid the orphaned child — the scan checked nothing"
+    )
+
+
+def test_template_files_below_rules_root_still_excluded(tmp_path):
+    """Template files inside _rules/ are still skipped, so they never count as orphans."""
+    rules = tmp_path / "_rules" / "01_essentials"
+    rules.mkdir(parents=True)
+    (tmp_path / "CLAUDE.md").write_text("@~/.claude/_rules/01_essentials/parent.md\n")
+    (rules / "parent.md").write_text("# Parent, self-contained\n")
+    (rules / "rule_template.md").write_text("# Template, never imported by design\n")
+
+    _, orphaned = find_reachability_issues(rules.parent, [tmp_path / "CLAUDE.md"])
+
+    assert not orphaned, f"A template file inside _rules/ was reported as orphaned: {orphaned}"
