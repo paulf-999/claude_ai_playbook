@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 🚪 Artefact Proposal Gates
 
 **Purpose:** Validate naming, placement, and duplication *before* proposing any new artefact (rule, skill, hook, agent, process), ensuring proposals already comply with established standards.
@@ -24,7 +24,7 @@ Before proposing any new artefact, run these gates in order:
 **Check:** Does the artefact name follow established conventions?
 
 - **Skills:** `<domain>_<action>` format (e.g., `confluence_create_page`, `jira_create`)
-  - Domain must be valid (check `skill_domains.yaml` + `skill_domains_future.yaml`)
+  - Domain must be valid (check `skill_domains.yaml`)
   - Action must be lowercase imperative verb
 - **Rules:** snake_case, descriptive (e.g., `naming_standards.md`, `security.md`)
 - **Hooks:** `hook_<type>_<domain>.sh` (e.g., `hook_enforcement_sql.sh`)
