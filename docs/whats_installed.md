@@ -43,9 +43,9 @@ Rules are organized into five numbered tiers by audience and purpose (see `_rule
 
 - **`01_essentials/`** — foundational principles and conventions (response standards, usage standards, guiding principles)
 - **`02_claude_standards/`** — quality gates Claude applies to all work (behaviour, git, security, testing, test metadata)
-- **`03_authoring_guidelines/`** — meta-guidance for authoring rules, skills, and agents (each with a common-mistakes list and a hard-gates checklist), including the shared metadata header (version, created, updated) every artefact carries
+- **`03_authoring_guidelines/`** — meta-guidance for authoring rules and skills (each with a common-mistakes list and a hard-gates checklist), including the shared metadata header (version, created, updated) every artefact carries
 - **`04_claude_reference/`** — technical/system knowledge (operational efficiency, rule loading strategy)
-- **`05_lazy_load/`** — domain-specific rules loaded on demand (style guides, automation controls, etc.) — never imported into the main context
+- **`05_lazy_load/`** — domain-specific rules loaded on demand (style guides, automation controls, agent authoring, etc.) — never imported into the main context
 
 `01_essentials/`, `02_claude_standards/`, `03_authoring_guidelines/`, and `04_claude_reference/` are always-on, imported via `CLAUDE.md`; `05_lazy_load/` is consulted on demand only.
 

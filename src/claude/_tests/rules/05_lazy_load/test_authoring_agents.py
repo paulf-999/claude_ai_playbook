@@ -4,26 +4,26 @@
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # Date created:      2026-09-28
-# Version:           1.1.0
+# Version:           1.2.0
 # Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
-"""Structural tests for _rules/03_authoring_guidelines/authoring_agents.md.
+"""Structural tests for _rules/05_lazy_load/authoring_agents.md.
 
 Verifies the agent authoring guide and its 5 child files are present and
 well-formed. Filed after a 2026-09-28 rule audit found authoring_agents.md
 had zero test coverage, unlike its two siblings in the same tier
-(authoring_rules.md, authoring_skills.md) — reachability of the children
-from CLAUDE.md is already covered by test_always_on_reachability.py; this
-suite covers the structural content each sibling's own test already checks.
+(authoring_rules.md, authoring_skills.md). Moved to 05_lazy_load/ on
+2026-09-29 to bring always-on instructions under Claude Code's 150k-char
+limit; test_parent_is_not_always_on guards against it being re-imported.
 """
 from pathlib import Path
 
 from _shared_paths import CLAUDE_DIR
 
-AUTHORING_AGENTS = CLAUDE_DIR / "_rules" / "03_authoring_guidelines" / "authoring_agents.md"
-CHILDREN_DIR = CLAUDE_DIR / "_rules" / "03_authoring_guidelines" / "authoring_agents"
-TIER_README = CLAUDE_DIR / "_rules" / "03_authoring_guidelines" / "README.md"
+AUTHORING_AGENTS = CLAUDE_DIR / "_rules" / "05_lazy_load" / "authoring_agents.md"
+CHILDREN_DIR = CLAUDE_DIR / "_rules" / "05_lazy_load" / "authoring_agents"
+TIER_README = CLAUDE_DIR / "_rules" / "05_lazy_load" / "README.md"
 
 EXPECTED_SECTIONS = [
     "Quick Navigation",
@@ -171,6 +171,24 @@ def test_each_child_links_back_to_parent():
     for child in EXPECTED_CHILDREN:
         entry = readme_related_entry(TIER_README, f"authoring_agents/{child}")
         assert "authoring_agents.md" in entry, (
-            f"{child}: 03_authoring_guidelines/README.md Related entry doesn't name "
+            f"{child}: 05_lazy_load/README.md Related entry doesn't name "
             f"authoring_agents.md as its parent"
         )
+
+
+def test_parent_is_not_always_on():
+    """CLAUDE.md must not @import the agent guide — it is read on demand only."""
+    claude_md = (CLAUDE_DIR / "CLAUDE.md").read_text()
+    assert "authoring_agents.md" not in claude_md, (
+        "CLAUDE.md imports authoring_agents.md — it was moved to 05_lazy_load/ "
+        "to stay under the 150k always-on char limit; remove the import"
+    )
+
+
+def test_always_on_pointer_exists():
+    """authoring_rules.md (always-on) must point readers to the lazy-loaded agent guide."""
+    rules = (CLAUDE_DIR / "_rules" / "03_authoring_guidelines" / "authoring_rules.md").read_text()
+    assert "05_lazy_load/authoring_agents.md" in rules, (
+        "authoring_rules.md lost its read-on-demand pointer to "
+        "05_lazy_load/authoring_agents.md — agents would become undiscoverable"
+    )

@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-09-07 -->
 <!-- updated: 2026-09-29 -->
 # 🛠️ Agent Authoring
@@ -29,24 +29,24 @@
 
 ## 📐 Core Standards
 
-@~/.claude/_rules/03_authoring_guidelines/authoring_agents/_core_standards.md
+@./authoring_agents/_core_standards.md
 
 ## 🎯 Decision Tree & Creation Process
 
-@~/.claude/_rules/03_authoring_guidelines/authoring_agents/_decision_tree_and_process.md
+@./authoring_agents/_decision_tree_and_process.md
 
 ## 🚪 Scope Boundaries & Maturity Justification
 
-@~/.claude/_rules/03_authoring_guidelines/authoring_agents/_scope_and_maturity.md
+@./authoring_agents/_scope_and_maturity.md
 
 ---
 
 ## ✅ Hard Gates Checklist
 
-@~/.claude/_rules/03_authoring_guidelines/authoring_agents/_hard_gates_checklist.md
+@./authoring_agents/_hard_gates_checklist.md
 
 ---
 
 ## 🚫 Common Mistakes & Anti-Patterns
 
-@~/.claude/_rules/03_authoring_guidelines/authoring_agents/_common_mistakes.md
+@./authoring_agents/_common_mistakes.md

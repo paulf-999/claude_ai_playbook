@@ -54,8 +54,6 @@ constraints are harder to bypass silently.
 @~/.claude/_rules/02_claude_standards/testing.md
 
 <!-- Tier 3: 03_authoring_guidelines/ — meta-guidance for authoring rules, skills, agents -->
-<!-- Standards for creating new sub-agents (naming, structure, maturity) -->
-@~/.claude/_rules/03_authoring_guidelines/authoring_agents.md
 <!-- Standards for creating new rule files (placement, testing, scope) -->
 @~/.claude/_rules/03_authoring_guidelines/authoring_rules.md
 <!-- Standards for creating new skills (contract, triggers, maturity) -->

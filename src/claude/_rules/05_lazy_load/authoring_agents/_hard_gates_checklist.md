@@ -1,4 +1,4 @@
-<!-- version: 1.1.1 -->
+<!-- version: 1.1.2 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
 # ✅ Agent Hard Gates Checklist

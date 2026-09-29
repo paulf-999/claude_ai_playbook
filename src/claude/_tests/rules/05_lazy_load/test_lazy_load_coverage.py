@@ -4,8 +4,8 @@
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # Date created:      2026-09-16
-# Version:           1.1.0
-# Date updated:      2026-09-28
+# Version:           1.2.0
+# Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
 """Tests for lazy_load/ discoverability coverage.
@@ -122,6 +122,7 @@ def test_no_orphaned_lazy_load_files():
 # from some other file in the tree — not just live under a covered folder.
 
 ENTRY_POINT_RELATIVE_PATHS = {
+    "authoring_agents.md",
     "automation_controls.md",
     "latency_optimisation.md",
     "mcp_trust_model.md",
