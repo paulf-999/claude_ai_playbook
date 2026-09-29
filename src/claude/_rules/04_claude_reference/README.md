@@ -26,7 +26,7 @@
 | File | Purpose |
 |---|---|
 | **claude_rule_loading_strategy.md** | Lazy-load principle; points to authoritative sources (CLAUDE.md, filesystem) |
-| **claude_rule_loading_strategy/claude_rule_classification.md** | Four-tier directory structure for rules (01_essentials, 02_claude_standards, 04_claude_reference, 05_lazy_load) |
+| **claude_rule_loading_strategy/_claude_rule_classification.md** | Five-tier directory structure for rules (01_essentials, 02_claude_standards, 03_authoring_guidelines, 04_claude_reference, 05_lazy_load) |
 
 ---
 
@@ -46,7 +46,7 @@ These rules explain **how the Claude config system works** and guide Claude's im
 ## 🚀 How to use these rules
 
 - **Understanding rule placement?** Check `claude_rule_loading_strategy.md` for the lazy-load principle, then refer to CLAUDE.md and the filesystem for actual rule locations
-- **Understanding rule tier organization?** Check `claude_rule_loading_strategy/claude_rule_classification.md` for the four-tier system
+- **Understanding rule tier organization?** Check `claude_rule_loading_strategy/_claude_rule_classification.md` for the five-tier system
 - **Accessing external systems?** Check `claude_conduct/external_system_access.md` before claiming inaccessibility
 - **Managing MCP servers?** Check `claude_conduct/mcp_server_toggling.md` for restart requirements
 - **Understanding user request patterns?** Check `claude_conduct/task_request_conventions.md` for behavioral templates

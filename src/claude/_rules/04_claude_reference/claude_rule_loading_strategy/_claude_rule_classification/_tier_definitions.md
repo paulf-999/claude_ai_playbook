@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-29 -->
 # 📁 Tier Definitions
 
 **Purpose:** Define each of the 5 directory tiers — what belongs there, why, and its loading strategy.
@@ -96,4 +96,4 @@
 
 ## 🔗 Related
 
-- Parent: `claude_rule_classification.md` — distribution summary and loading decision framework
+- Parent: `_claude_rule_classification.md` — distribution summary and loading decision framework
