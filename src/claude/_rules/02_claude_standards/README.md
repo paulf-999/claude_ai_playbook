@@ -165,8 +165,3 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 
 - Parent: `_test_metadata.md` — the quality-score rubric this complements
 - `_complexity_scoring.md` (in `03_authoring_guidelines/`) — the shared formula this file applies
-
-### `testing/_test_metadata_maintenance.md`
-
-- Parent: `_test_metadata.md` — format and scoring definitions
-- Sibling: `_test_metadata_complexity_scoring.md` — the complexity dimension referenced above

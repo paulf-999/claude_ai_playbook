@@ -4,7 +4,7 @@
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # Date created:      2026-09-16
-# Version:           1.4.0
+# Version:           1.5.0
 # Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
@@ -129,6 +129,7 @@ ENTRY_POINT_RELATIVE_PATHS = {
     "latency_optimisation.md",
     "mcp_trust_model.md",
     "response_standards_enforcement.md",
+    "testing_guidance.md",
     "turn_budgets.md",
     "environment_setup/ohmyzsh_setup.md",
     "style_guide_standards/airflow.md",
