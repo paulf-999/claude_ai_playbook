@@ -4,8 +4,8 @@
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # Date created:      2026-09-28
-# Version:           1.0.0
-# Date updated:      [placeholder]
+# Version:           1.0.1
+# Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
 """Validates the skill metadata header defined in _claude_config_metadata.md.
@@ -14,48 +14,17 @@ Every SKILL.md carries the three-line header straight after its YAML
 frontmatter, holds no ``version:`` in that frontmatter, and its header
 version matches ``skill.contract.yaml``.
 """
-import re
 from pathlib import Path
 from typing import Optional
 
 import yaml
-from _metadata_header import FIELD_PATTERNS, metadata_header_errors
+from _metadata_header import FRONTMATTER_RE
+from _metadata_header import frontmatter_header_errors as skill_header_errors
+from _metadata_header import header_version_after_frontmatter as header_version
 from _shared_paths import CLAUDE_DIR, SKILLS_DIR
 
 SKILL_TEMPLATE = CLAUDE_DIR / "_templates" / "skills" / "SKILL.md.template"
-FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n", re.S)
 HINT = "— see 03_authoring_guidelines/_claude_config_metadata.md"
-
-
-def skill_header_errors(content: str) -> list[str]:
-    """Return errors for a SKILL.md's frontmatter-plus-header layout; empty if valid.
-
-    :param content: Full text of a SKILL.md file.
-    :type content: str
-    :return: Human-readable error messages, one per problem found.
-    :rtype: list[str]
-    """
-    match = FRONTMATTER_RE.match(content)
-    if not match:
-        return ["SKILL.md must open with YAML frontmatter"]
-    if re.search(r"^version:", match.group(1), re.M):
-        return ["version belongs in the metadata header, not the frontmatter"]
-    after = content[match.end():]
-    if not after.startswith("<!-- version:"):
-        return ["metadata header must start on the line after the frontmatter"]
-    return metadata_header_errors(after)
-
-
-def header_version(content: str) -> str:
-    """Return the version from the header that follows a SKILL.md's frontmatter.
-
-    :param content: Full text of a SKILL.md file with a valid header.
-    :type content: str
-    :return: The semver string from the header's version line.
-    :rtype: str
-    """
-    first_line = content[FRONTMATTER_RE.match(content).end():].splitlines()[0]
-    return ".".join(FIELD_PATTERNS["version"].match(first_line).groups())
 
 
 def build_skill(frontmatter: str = "name: demo_skill\nmaturity: draft", header: Optional[str] = None) -> str:

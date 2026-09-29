@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-29 -->
 # ✅ Agent Hard Gates Checklist
 
 **Purpose:** Final validation checklist before finalizing an agent — verify naming, content quality, testing, scope, and integration.
@@ -11,7 +11,8 @@
 
 ### Naming & Structure
 - [ ] Name follows `<domain>_<purpose>` pattern, self-describing
-- [ ] Frontmatter complete: name, description, version, maturity, triggers, model, isolation
+- [ ] Frontmatter complete: name, description, maturity, triggers, model, isolation
+- [ ] Metadata header straight after the frontmatter: version, created, updated
 - [ ] 5-section structure: Purpose, When to use, Role & Principles, Constraints, [References]
 - [ ] Total length ~40-60 lines (lean, scannable)
 
