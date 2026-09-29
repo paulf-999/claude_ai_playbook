@@ -1,4 +1,7 @@
 #!/bin/bash
+# version: 1.0.0
+# created: 2026-08-28
+# updated: 2026-09-19
 # PreToolUse hook — enforces directory structure rules for new dirs under ~/.claude/.
 # Injects directory structure rules as context before mkdir runs so Claude can confirm
 # the proposed directory name and placement follows the standard before proceeding.

@@ -1,4 +1,7 @@
 #!/bin/bash
+# version: 1.0.0
+# created: 2026-08-28
+# updated: 2026-09-19
 # PreToolUse hook — enforces naming conventions for new files under ~/.claude/.
 # Blocks the Write tool and injects naming rules so Claude must confirm
 # the proposed filename follows the standard before proceeding.

@@ -1,4 +1,7 @@
 #!/bin/bash
+# version: 1.0.0
+# created: 2026-08-31
+# updated: 2026-09-18
 # Hook: Detect stale MCP settings after toggle changes.
 #
 # Purpose: Remind user if settings.json was modified in a recent session but
