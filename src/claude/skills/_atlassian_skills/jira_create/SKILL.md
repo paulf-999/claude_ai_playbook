@@ -8,9 +8,9 @@ tags:
   tested: true
 tools: Read, mcp__atlassian__createJiraIssue
 ---
-<!-- version: 0.1.0 -->
+<!-- version: 0.1.1 -->
 <!-- created: 2026-04-11 -->
-<!-- updated: 2026-09-21 -->
+<!-- updated: 2026-09-29 -->
 
 ## 🎯 Purpose
 
@@ -31,11 +31,12 @@ $ /jira_create create a ticket for the login bug, 2 story points
 PROJ-1234 created: https://yourteam.atlassian.net/browse/PROJ-1234
 ```
 
-**Best for:** One ticket at a time, with basic fields. Currently at the **draft** development stage — happy path only, gaps logged as TODOs rather than solved. Can't update existing tickets, batch-create from templates, create epics, manage sprints/components, assign labels, or create issue links between tickets yet.
+## ✨ Best For
 
----
+One ticket at a time, with basic fields. Currently at the **draft** development stage — happy path only, gaps logged as TODOs rather than solved. Can't update existing tickets, batch-create from templates, create epics, manage sprints/components, assign labels, or create issue links between tickets yet.
 
-**For detailed specifications, see:**
+## 📚 References
+
 - `reference/error_handling.md` — Atlassian connection errors and recovery steps
 - `reference/field_constraints.md` — story point rules and other field validation
 - `quality_scorecard.md` — 7-dimension quality assessment
