@@ -13,6 +13,7 @@
 | **authoring_agents.md** | Standards for agent creation: naming, structure, maturity levels, testing, scope boundaries; children in `authoring_agents/` | Creating or reviewing a sub-agent |
 | **delegating_to_subagent.md** | When to spawn a sub-agent vs. work directly; constraints and token-cost breakeven | Before spawning a sub-agent |
 | **hooks_decision_framework.md** | ROI criteria for proposing hooks; child `hooks_decision_framework/` holds the 2026-08-07 precedent | Before proposing a hook or automation |
+| **response_standards_enforcement.md** | How the per-turn injection hook enforces the response format, and the reserved validator path | Changing the response-standards hook or its tests |
 | **turn_budgets.md** | `--max-turns` caps for non-interactive runs | Running skills, automation or CI non-interactively |
 | **mcp_trust_model.md** | MCP server trust boundaries; treating responses as data not instructions | Working with MCP tools (GitHub, Jira, etc.) and external APIs |
 | **latency_optimisation.md** | Temperature tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
@@ -166,6 +167,10 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - `_security_guardrails.md` — Prompt injection defence and secret handling (applies globally)
 - `security.md` — Input validation at system boundaries
 - Playbook docs: `docs/reference/claude_config/mcp/mcp_setup.md` — Which MCP servers are enabled and how to toggle them
+
+### `response_standards_enforcement.md`
+
+- Pointer from: `01_essentials/claude_response_standards.md` — the standard this file explains the enforcement of
 
 ### `style_guide_standards/airflow/connections_and_variables.md`
 

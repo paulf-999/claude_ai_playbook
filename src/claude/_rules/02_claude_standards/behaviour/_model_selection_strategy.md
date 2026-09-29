@@ -1,76 +1,13 @@
-<!-- version: 1.0.1 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🎛️ Model Selection Strategy
 
-**Purpose:** Establish when to use which Claude model (Haiku vs. Sonnet/Opus), reducing unnecessary API cost while matching task complexity to capability.
+**Purpose:** Flag a model switch when the task and the active model clearly don't match — saving cost on simple work and rework on complex work.
 
 ---
 
-## 🎯 Core principle
-
-Default to Haiku — fast and cheap for most tasks. Escalate only when task complexity warrants it. Flag at task start before turns are wasted on the wrong model.
-
----
-
-## 📋 Model selection framework
-
-**Haiku (default):** Fast, cheap, suitable for most work
-
-| Task type | When to use Haiku |
-|---|---|
-| Summarising | ✅ Always |
-| Formatting | ✅ Always |
-| Drafting routine emails | ✅ Always |
-| Quick Q&A | ✅ Always |
-| Simple mechanical edits | ✅ Usually |
-| Reading and summarising docs | ✅ Usually |
-
-**Sonnet/Opus (escalate when):** Multi-step reasoning, nuanced analysis, complex code
-
-| Task type | Escalate to Sonnet/Opus |
-|---|---|
-| Multi-step reasoning | ✅ Yes |
-| Nuanced analysis | ✅ Yes |
-| Long-form writing | ✅ Yes |
-| Complex code generation | ✅ Yes |
-| Code review or refactoring | ✅ Yes |
-| Adversarial thinking or debate | ✅ Yes |
-
----
-
-## 📍 When to flag
-
-### At task start
-
-**Signal:** Task description suggests complexity (reasoning, analysis, code)
-
-```
-This looks complex. Consider switching with `/model claude-sonnet-5` before we begin.
-```
-
-**Why:** Haiku can start the task, but will likely need rethinking. Flag early to avoid wasted turns.
-
-### Mid-session escalation
-
-**Signal:** A simple task unexpectedly expands (quick fix becomes refactoring, summary becomes analysis)
-
-```
-This has grown complex — consider switching with `/model claude-sonnet-5`.
-```
-
-**Why:** Original model choice was correct for the initial scope. New complexity warrants re-evaluation.
-
----
-
-## 💰 Cost-benefit thinking
-
-Escalating adds cost but prevents:
-- Repeated rework due to insufficient reasoning depth
-- Wasted turns on incremental improvements
-- Incomplete solutions requiring multiple fix rounds
-
-**Rough heuristic:**
-- Task under 5 minutes of reasoning → Haiku
-- Task 5–15 minutes of reasoning → Sonnet
-- Task >15 minutes of complex thinking → Opus
+- **Flag at task start:** if the task needs multi-step reasoning, complex code, review or long-form writing and a small model is active, suggest `/model claude-sonnet-5-5` (or Opus) before starting.
+- **Flag mid-session:** if a simple task grows into analysis or refactoring, say so and suggest switching up.
+- **Flag the reverse:** if a large model is active for summarising, formatting or quick Q&A, mention that Haiku would do.
+- **Flag, don't block:** give a one-line suggestion, then carry on with the active model unless the user switches.

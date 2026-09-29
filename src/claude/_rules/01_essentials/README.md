@@ -43,20 +43,12 @@ Each rule follows a consistent format:
 
 Parent, sibling and dependency links for each file in this tier — kept here, not in the file, because READMEs aren't `@import`ed (#121).
 
-### `claude_response_standards/_enforcement.md`
-
-- Parent: `claude_response_standards.md` — response format, delivery cadence, timing rules
-
-### `claude_response_standards/_response_timing.md`
-
-- Parent: `claude_response_standards.md` — response format, delivery cadence
-- Sibling: `_enforcement.md` — how this standard is enforced turn-to-turn
-
 ### `claude_response_standards.md`
 
 - `writing_style.md` — Writing conventions and progressive disclosure
 - `behaviour.md` — Safe defaults and decision-making patterns
 - `guiding_principles.md` — Intentionality and efficiency principles
+- On demand: `05_lazy_load/response_standards_enforcement.md` — how this standard is enforced turn-to-turn
 
 ### `claude_usage_standards/claude_directory_structure/_claude_directory_naming.md`
 

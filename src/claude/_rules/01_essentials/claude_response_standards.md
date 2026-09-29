@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-09-07 -->
 <!-- updated: 2026-09-29 -->
 # 📝 Response Standards
@@ -13,7 +13,7 @@
 - [Response Format & Style](#-response-format--style)
 - [Delivery Cadence](#-delivery-cadence)
 - [Response Timing](#-response-timing)
-- [Enforcement & Implementation](#-enforcement--implementation) — see `_enforcement.md`
+- [Enforcement & Implementation](#-enforcement--implementation) — read on demand
 
 ---
 
@@ -89,10 +89,19 @@
 
 ## ⏱️ Response Timing
 
-@~/.claude/_rules/01_essentials/claude_response_standards/_response_timing.md
+- **Start is injected:** The `UserPromptSubmit` hook fires before any reasoning and injects the submission time as `PROMPT_SUBMITTED_AT=<epoch>` — this is the timer start, so elapsed includes reasoning.
+- **End timestamp:** As the very last action before finalizing, run a real `date +%s` and compute elapsed = end − `PROMPT_SUBMITTED_AT`. Never mention the check in the visible response.
+- **Mandatory in all modes:** Always emit the footer, including in plan mode — never skip it and never fabricate the number; always run the real end timestamp.
+- **Real numbers only:** The duration must be real — never fabricate or use a placeholder like "checking...".
+- **Human-readable format:** Under 60 seconds show `Ss` (e.g. `45s`); 60 seconds or more show `Mmin Ss` (e.g. `1min 15s`).
+- **Format:** On its own line after the offer line:
+  ```
+  Response time: 1min 15s
+  ```
+- **Skip for:** Short, single-fact answers or casual exchanges.
 
 ---
 
 ## 🔒 Enforcement & Implementation
 
-@~/.claude/_rules/01_essentials/claude_response_standards/_enforcement.md
+- **Read on demand:** `~/.claude/_rules/05_lazy_load/response_standards_enforcement.md` — when changing how this standard is enforced (the per-turn injection hook and its tests).
