@@ -7,13 +7,13 @@ tags:
   tested: false
   disable_model_invocation: false
 ---
-<!-- version: 0.1.0 -->
+<!-- version: 0.1.1 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-19 -->
+<!-- updated: 2026-09-29 -->
 
 # 🌀 claude_kaizen
 
-## Purpose
+## 🎯 Purpose
 
 Self-improving development loop: capture recurring mistakes, promote only verified ones into rules, keep rule set DRY and fresh.
 
@@ -22,7 +22,7 @@ Self-improving development loop: capture recurring mistakes, promote only verifi
 - **Diff-only output:** Every change is reviewable, never auto-applied
 - **Continuous pruning:** Flag stale rules for re-validation
 
-## Example Usage
+## 💡 Example Usage
 
 **Scenario:** You fix the same bug (e.g., missing input validation) twice in one week.
 
@@ -34,7 +34,7 @@ Self-improving development loop: capture recurring mistakes, promote only verifi
 6. Outputs a **diff proposal** showing the new rule, eval case, and test results
 7. You review the diff, approve, and it's written to `_rules/learned/`
 
-## Best For
+## ✨ Best For
 
 - **Recurring mistakes** — Patterns that appear 2+ times across sessions
 - **Rule validation** — Every promoted rule ships with an eval that proves it works
@@ -51,7 +51,7 @@ Self-improving development loop: capture recurring mistakes, promote only verifi
 - Free-form prompts are incompatible with standard Claude response formatting requirements
 - The response standards rule makes an exception for this skill to preserve interactive capability
 
-## References
+## 📚 References
 
 - `~/.claude/skills/_claude_skills/claude_kaizen/evals/` — Test cases proving each rule works
 - `~/.claude/_rules/learned/` — Auto-promoted rules with validation dates
