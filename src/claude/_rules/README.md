@@ -60,7 +60,7 @@ Not all rules have mechanical triggers. Understand the difference:
 ### **03_authoring_guidelines/** — Meta-guidance for authoring config artifacts
 - **Who it's for:** Claude when creating or maintaining rules, skills, agents, hooks
 - **Scope:** Standards for authoring; structure, naming, testing, maturity levels, and per-file metadata headers for artifacts
-- **Examples:** authoring_rules.md, authoring_skills.md, authoring_agents.md, _claude_config_metadata.md (shared version/created/updated standard)
+- **Examples:** authoring_rules.md (children: common mistakes, hard-gates checklist), authoring_skills.md, authoring_agents.md, _claude_config_metadata.md (shared version/created/updated standard)
 - **Imported:** Yes, always-on (~100 tokens/session)
 
 ### **04_claude_reference/** — System/platform knowledge and reference material

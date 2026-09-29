@@ -1,4 +1,4 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-28 -->
 # 🛠️ Rule Authoring
@@ -59,6 +59,14 @@ Before writing any rule, answer these five essential questions:
 - **Metadata header** — lines 1–3 carry `version`, `created` and `updated`, one per line; bump `updated` and `version` on every edit, per the standard below
 
 @~/.claude/_rules/03_authoring_guidelines/_claude_config_metadata.md
+
+## 🚫 Common Mistakes
+
+@~/.claude/_rules/03_authoring_guidelines/authoring_rules/_common_mistakes.md
+
+## ✅ Hard Gates Checklist
+
+@~/.claude/_rules/03_authoring_guidelines/authoring_rules/_hard_gates_checklist.md
 
 ## 📚 References & Related Rules
 
