@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-09-29 -->
 # 🔎 Skill Review Framework
 
 **Purpose:** Define the multi-layer review process that skills go through before and after creation.
@@ -12,7 +12,7 @@
 ### Layer 1️⃣: Automated Validation (Pre-commit)
 
 **What it checks:**
-- ✅ SKILL.md structure (all 8 sections present)
+- ✅ SKILL.md structure (all 5 sections present)
 - ✅ Emoji headers on all `##` sections
 - ✅ Skill naming format (`<domain>_<action>`)
 - ✅ Complexity scoring valid (0–10, matches maturity)

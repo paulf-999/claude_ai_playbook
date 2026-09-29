@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # ✅ Quality Checklist (Author & Reviewer)
 
 **Purpose:** Define checkpoints for skill creation to ensure quality gates are met.
@@ -85,7 +85,7 @@ Every skill includes a quality scorecard (`scorecard_<skill_name>.md`) scoring 7
 - [ ] **Naming compliance:** Valid domain, matches directory
 - [ ] **Complexity valid:** Score ≤ maturity limit; no scope creep
 - [ ] **Contract complete:** All required YAML fields present and valid
-- [ ] **Structure correct:** All 8 sections in canonical order
+- [ ] **Structure correct:** All 5 sections in canonical order
 - [ ] **Emoji headers:** Every `##` section has emoji prefix
 - [ ] **Tests exist:** Count matches maturity level
 
