@@ -1,29 +1,16 @@
-<!-- version: 2.0.2 -->
+<!-- version: 3.0.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🏷️ Naming — Directories and Files
 
-**Purpose:** Establish conventions for naming directories and files in the Claude config, ensuring self-describing, unambiguous names that follow consistent patterns.
+**Purpose:** Set the prefix conventions that tell user-created directories, auto-generated directories and child files apart in the Claude config.
+
+- **General naming rules:** snake_case, self-describing names, naming for scale and offering options live in `naming_standards/_naming_principles.md`.
+- **Hook, skill and rule patterns:** live in `naming_standards/_claude_naming_patterns.md`.
 
 ---
 
-## 📝 Naming rules
-
-- **snake_case only:** lowercase, words separated by underscores — no hyphens, spaces, or special characters
-- **Prefix conventions:**
-  - **User-created directories:** must start with underscore — `_rules/`, `_templates/`, `_reference/`
-  - **Auto-generated directories:** no prefix — `backups/`, `memory/`, `sessions/`
-  - **Child files (within a directory):** start with underscore to distinguish from top-level files — `_child_file.md`
-- **Self-describing:** a name must be unambiguous without context
-  - ❌ Bad: `rule_a.md` — doesn't explain what "a" is
-  - ✅ Good: `naming_standards.md` — purpose is clear from the name
-- **Name for scale:** choose a name that fits the likely higher grouping, not just today's problem
-  - ❌ Bad: `hook_naming.md` — only hooks need naming; what about skills, rules, directories?
-  - ✅ Good: `naming_standards.md` — all identifiers need naming conventions; scales to future domains
-
----
-
-## 🏗️ Directory naming
+## 🏗️ Directory and file prefixes
 
 | Type | Pattern | Example | Note |
 |---|---|---|---|
@@ -31,48 +18,6 @@
 | **Auto-generated** | `<name>/` | `backups/`, `memory/`, `sessions/` | Never touch these |
 | **Child file** | `_<aspect>.md` | `_claude_directory_organisation.md` | Prefix indicates child of parent |
 
----
-
-## 🪝 Hook naming
-
-**Pattern:** `hook_<type>_<domain>.sh`
-
-- **Prefix:** all hook files must start with `hook_` — distinguishes them from other shell scripts
-- **Type:** `enforcement` (blocks or injects a warning) or `style_guide` (injects domain-specific style context)
-- **Domain:** the concern being enforced, e.g. `sql`, `dir_structure`, `naming_convention`
-- **Dispatcher:** `hook_<type>_dispatch.sh` — fan-out hook that calls multiple same-type domain hooks
-
-**Examples:**
-- `hook_enforcement_sql.sh` — enforces SQL style rules
-- `hook_enforcement_dir_structure.sh` — enforces directory structure compliance
-- `hook_style_guide_dbt.sh` — injects dbt style guidance
-
----
-
-## 🛠️ Skill naming
-
-**Pattern:** `<domain>_<action>`
-
-- **Domain prefix:** must match a domain ID from `skill_domains.yaml`
-- **Directory:** domain directory must exist and match the domain ID (e.g., `confluence_create_page` → `_confluence_skills/`)
-- **Action:** lowercase imperative verb describing what the skill does
-
-**Examples:**
-- `confluence_create_page` — creates a Confluence page
-- `jira_create` — creates a Jira issue
-- `claude_review_config` — reviews Claude configuration
-
----
-
-## 📄 Rule naming
-
-**Pattern:** snake_case, descriptive of the concept being enforced
-
-- **Format:** lowercase only, words separated by underscores (e.g. `naming_standards.md`, `security.md`)
-- **Location:**
-  - `01_essentials/` — blocking/safety rules (always-on imports)
-  - `02_claude_standards/` — how Claude operates (always-on imports)
-  - `03_authoring_guidelines/` — meta-guidance for authoring rules, skills, agents
-  - `04_claude_reference/` — system knowledge and platform guidance
-  - `05_lazy_load/` — domain-specific rules (lazy-loaded on-demand)
-- **Name for scale:** `naming_standards.md` (applies to all identifiers) over `hook_naming.md` (only hooks)
+- **User-created directories:** must start with an underscore — `_rules/`, `_templates/`, `_reference/`.
+- **Auto-generated directories:** have no prefix — `backups/`, `memory/`, `sessions/`.
+- **Child files:** start with an underscore to distinguish them from top-level files — `_child_file.md`.

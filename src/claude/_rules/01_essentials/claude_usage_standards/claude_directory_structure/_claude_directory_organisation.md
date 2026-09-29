@@ -1,4 +1,4 @@
-<!-- version: 1.0.4 -->
+<!-- version: 1.0.6 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🏗️ Directory Organisation — `~/.claude/`
@@ -26,11 +26,7 @@
 - `CLAUDE.md`, `aliases.md`, `settings.json`, `keybindings.json` — entry points and user-facing configuration
 
 **Tier 2: Core rules (_rules/)**
-- `01_essentials/` — blocking/safety rules (always-on imports; user-facing guidance)
-- `02_claude_standards/` — quality gates and operational standards (always-on imports)
-- `03_authoring_guidelines/` — standards for authoring rules, skills and agents (always-on imports)
-- `04_claude_reference/` — system knowledge and reference docs (always-on imports)
-- `05_lazy_load/` — domain-specific rules (loaded on-demand; token-efficient)
+- Five rule tiers, `01_essentials/` to `05_lazy_load/` — see `claude_rule_loading_strategy.md` for what belongs in each and which load every session
 
 **Tier 3: Infrastructure (_tests/, _templates/, _reference/, _docs/)**
 - Tests, templates, evergreen reference docs, and additional documentation

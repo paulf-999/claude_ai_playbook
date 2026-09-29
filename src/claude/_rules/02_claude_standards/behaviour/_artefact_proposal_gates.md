@@ -1,4 +1,4 @@
-<!-- version: 2.0.3 -->
+<!-- version: 2.0.4 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🚪 Artefact Proposal Gates
@@ -27,7 +27,7 @@ Before proposing any new artefact, run these gates in order:
   - Domain must be valid (check `skill_domains.yaml`)
   - Action must be lowercase imperative verb
 - **Rules:** snake_case, descriptive (e.g., `naming_standards.md`, `security.md`)
-- **Hooks:** `hook_<type>_<domain>.sh` (e.g., `hook_enforcement_sql.sh`)
+- **Hooks:** `hook_<type>_<domain>.sh` (e.g., `hook_enforcement_naming_convention.sh`)
 - **Agents:** `<name>_agent.py` or domain-grouped subdirectories
 - **Processes:** snake_case, descriptive (e.g., `session_kickoff.md`)
 
@@ -41,10 +41,10 @@ Before proposing any new artefact, run these gates in order:
 
 **Check:** Is the artefact placed in the correct directory?
 
-- **01_essentials/** — blocking/safety rules (always-on imports); security-critical artefacts
-- **02_claude_standards/** — how Claude operates; efficiency/memory/git guidance
+- **01_essentials/** — foundational principles and user-facing conventions (e.g. guiding_principles, writing style, naming)
+- **02_claude_standards/** — quality gates Claude applies to all work (e.g. behaviour, security, testing, git)
 - **03_authoring_guidelines/** — meta-guidance for authoring rules, skills, agents
-- **04_claude_reference/** — system knowledge and platform guidance
+- **04_claude_reference/** — system knowledge and platform guidance (e.g. operational efficiency, rule loading strategy)
 - **05_lazy_load/** — domain-specific; loaded on-demand only
 - **skills/** — reusable skills (single domain per subdirectory: `_confluence_skills/`, `_git_skills/`, etc.)
 - **hooks/** — enforcement and style-guide hooks
