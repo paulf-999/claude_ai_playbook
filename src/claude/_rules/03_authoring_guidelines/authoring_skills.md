@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 🛠️ Skill Authoring
 
 **Purpose:** Create focused, well-documented, properly tested skills. One concept per skill.
@@ -10,15 +10,15 @@
 ## 🧭 Quick Navigation
 
 **New skill author?** Start here in order:
-1. **Core Standards** — Naming pattern, SKILL.md structure, specification fields, testing standards
-2. **8-Step Process** — Workflow: name → specification → SKILL.md → scorecard → reference/ → evals.yaml → score → submit
-3. **Hard Gates Checklist** — Final validation before submitting
+1. **Core Standards** — Naming pattern, SKILL.md structure, contract fields, maturity levels
+2. **Trigger Design & Testing** — Trigger phrases, evals.yaml, quality scorecard
+3. **Hard Gates Checklist** — The ordered creation checklist; tick every box before submitting
 
 **Experienced author, need to refresh?** Jump to specific child files:
 - **Scope Boundaries** — If designing what your skill does NOT do (`_scope_and_maintenance.md`)
-- **Maturity Justification** — If choosing Draft vs. Tactical vs. Strategic maturity (`_maturity_justification.md`)
-- **Low-Maintenance Design** — If updating an existing skill or preventing maintenance debt (`_scope_and_maintenance.md`)
-- **Common Mistakes** — If you're stuck or uncertain about a choice (`_common_mistakes_and_security.md`)
+- **Maturity Justification** — If choosing Draft vs. Tactical vs. Strategic maturity (`_core_standards.md`)
+- **Low-Maintenance Design** — If designing a skill to stay stable once shipped (`_scope_and_maintenance.md`)
+- **Common Mistakes** — If you're stuck or uncertain about a choice (`_common_mistakes.md`)
 
 **Reviewing someone else's skill?** Use these child files:
 - **Hard Gates Checklist** (below) — Verify completeness and compliance
@@ -35,10 +35,6 @@
 
 @~/.claude/_rules/03_authoring_guidelines/authoring_skills/_trigger_design_and_testing.md
 
-## 🚀 Creation Process
-
-@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_creation_process.md
-
 ## 🚪 Scope Boundaries & Low-Maintenance Design
 
 @~/.claude/_rules/03_authoring_guidelines/authoring_skills/_scope_and_maintenance.md
@@ -47,29 +43,15 @@
 
 @~/.claude/_rules/03_authoring_guidelines/authoring_skills/_no_orphaned_files.md
 
-## 📈 Maturity Justification
+## ⚠️ Common Mistakes
 
-@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_maturity_justification.md
-
-## ⚠️ Common Mistakes & Security
-
-@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_common_mistakes_and_security.md
+@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_common_mistakes.md
 
 ---
 
 ## ✅ Hard Gates Checklist
 
 @~/.claude/_rules/03_authoring_guidelines/authoring_skills/_hard_gates_checklist.md
-
----
-
-## 📚 Reference
-
-@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_skill_structure_contract.md
-
-@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_skill_quality_checklist.md
-
-@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_skill_review_framework.md
 
 ---
 
