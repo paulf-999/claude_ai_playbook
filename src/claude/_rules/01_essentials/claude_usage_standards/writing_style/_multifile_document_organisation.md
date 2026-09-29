@@ -1,9 +1,9 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-19 -->
-# 📁 Multifile Document Organization
+<!-- updated: 2026-09-29 -->
+# 📁 Multifile Document Organisation
 
-**Purpose:** Establish a universal directory structure convention for multi-file documents across all Claude config directories — preventing flat-level sprawl and keeping related files organized into dedicated subdirectories.
+**Purpose:** Establish a universal directory structure convention for multi-file documents across all Claude config directories — preventing flat-level sprawl and keeping related files organised into dedicated subdirectories.
 
 Applies to all `.md` files in `_rules/`, `style_guide_standards/`, `process/`, agents, skills, and any other structured documentation in the Claude context.
 
@@ -11,7 +11,7 @@ Applies to all `.md` files in `_rules/`, `style_guide_standards/`, `process/`, a
 
 ## 🎯 The Pattern
 
-Documents follow a **size-based organization principle**:
+Documents follow a **size-based organisation principle**:
 
 ### Single-file documents (stay flat)
 **Condition:** One document covering a complete topic, ≤110 lines, self-contained.
