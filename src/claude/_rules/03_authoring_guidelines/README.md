@@ -6,7 +6,6 @@ Meta-guidance for authoring and maintaining Claude config artifacts — rules th
 
 | File | Purpose | Type |
 |------|---------|------|
-| **authoring_agents.md** | Standards for agent creation: naming, structure, maturity levels, testing, scope boundaries | Instructional |
 | **authoring_rules.md** | Standards for rule creation: naming, structure, directory placement, testing, scope boundaries; children in `authoring_rules/` cover common mistakes and a hard-gates checklist | Instructional |
 | **authoring_skills.md** | Standards for skill creation: naming, contract fields, structure, complexity scoring, testing, maturity levels | Instructional |
 
@@ -51,58 +50,16 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 ### `_claude_config_metadata.md`
 
 - `authoring_rules.md` — imports this file; rule template at `~/.claude/_templates/RULE.md.template`
-- `authoring_skills.md`, `authoring_agents.md` — apply the placement above
+- `authoring_skills.md`, `05_lazy_load/authoring_agents.md` — apply the placement above
 - `_complexity_scoring.md` — sibling shared standard, same "define once" pattern
 
 ### `_complexity_scoring.md`
 
 - `authoring_skills.md` — skill maturity gates and quality scorecard, applying the raw sum and inverted score respectively
-- `authoring_agents.md` — agent maturity gates, same raw-sum convention as skills
+- `05_lazy_load/authoring_agents.md` — agent maturity gates, same raw-sum convention as skills
 - `testing.md` — test complexity scoring, applying the inverted score
 - `authoring_rules.md` — rule authoring; no complexity gate defined yet
 - `authoring_skills/_hard_gates_checklist.md` and equivalents — where a domain's specific gate thresholds live once defined
-
-### `authoring_agents/_common_mistakes.md`
-
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
-
-### `authoring_agents/_core_standards.md`
-
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
-
-### `authoring_agents/_decision_tree_and_process.md`
-
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
-
-### `authoring_agents/_hard_gates_checklist.md`
-
-- Parent: `authoring_agents.md` — quick navigation and core standards
-
-### `authoring_agents/_scope_and_maturity.md`
-
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
-
-### `authoring_agents.md`
-
-**Naming & placement:**
-- `naming_standards.md` — Self-describing naming principles
-- `claude_directory_structure.md` — Directory organization patterns
-
-**Authoring & testing:**
-- `~/.claude/_templates/AGENT.md.template` — Agent template with examples
-- `testing.md` — When tests are required; evals.yaml patterns
-
-**Principles & maintenance:**
-- `guiding_principles.md` — Intentionality principle; evidence-gathering methods
-- `behaviour.md` — Safe defaults and decision-making patterns
-- `claude_plans.md` — Review/approval gates during implementation
-
-**Related agent standards:**
-- `authoring_rules.md` — Rule creation standards (model for some agent patterns)
-- `authoring_skills.md` — Skill creation standards (model for maturity levels, testing)
-- `claude_plans.md` — Review gates after each implementation phase
-- `guiding_principles.md` — Intentionality; when to create new agents vs. enhance existing ones
-- `testing.md` — Testing requirements for all artifacts including agents
 
 ### `authoring_rules/_common_mistakes.md`
 

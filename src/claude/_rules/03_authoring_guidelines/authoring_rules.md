@@ -1,4 +1,4 @@
-<!-- version: 1.3.1 -->
+<!-- version: 1.4.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-29 -->
 # 🛠️ Rule Authoring
@@ -34,6 +34,7 @@ Before writing any rule, answer these five essential questions:
    - `01_essentials/` — user-facing conventions and foundational principles (guiding_principles, response/usage standards)
    - `02_claude_standards/` — blocking standards and enforcement (behaviour, security, testing, git)
    - `03_authoring_guidelines/` — meta-guidance for authoring rules, skills, and agents
+     - **Agent authoring:** read `~/.claude/_rules/05_lazy_load/authoring_agents.md` on demand when creating or reviewing an agent
    - `04_claude_reference/` — system knowledge and platform guidance (efficiency, rule loading strategy)
    - `05_lazy_load/` — domain-specific or discretionary (style guides, tools, automation)
 
