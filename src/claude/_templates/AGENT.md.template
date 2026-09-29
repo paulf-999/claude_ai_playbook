@@ -1,7 +1,6 @@
 ---
 name: <domain>_<purpose>
 description: One-sentence value prop, user-focused (what does this agent do for users?)
-version: 0.1.0
 maturity: draft  # draft | tactical | strategic
 triggers:
   - /agent_name
@@ -10,17 +9,21 @@ triggers:
 model: inherit  # inherit (use active model) or specific override (e.g., claude-opus-4-8)
 isolation: worktree  # worktree (recommended) or none
 ---
+<!-- version: 0.1.0 -->
+<!-- created: YYYY-MM-DD -->
+<!-- updated: YYYY-MM-DD -->
 
 # 🎯 [Agent name]
 
 **Frontmatter guide:**
 - `name` — identifier matching `<domain>_<purpose>` pattern (e.g., `technical_writer`, `code_analyzer`)
 - `description` — one sentence, user-focused, non-technical (what value does this agent provide?)
-- `version` — semantic versioning (0.x = draft, 1.x = tactical, 2.x = strategic)
 - `maturity` — draft | tactical | strategic (same model as skills)
 - `triggers` — how users invoke: `/agent_name`, natural language variants
 - `model` — `inherit` (use session model) or specific model name
 - `isolation` — `worktree` (isolates file modifications) or none
+
+**Metadata header** (straight after the frontmatter): `version` (0.x = draft, 1.x = tactical, 2.x = strategic), `created`, `updated` — see `_claude_config_metadata.md`.
 
 ---
 
@@ -141,7 +144,7 @@ Link to supporting documentation:
 
 ## Creating your agent — Next steps
 
-1. **Fill in frontmatter** — name, description, version, maturity, triggers
+1. **Fill in frontmatter** — name, description, maturity, triggers, then the version/created/updated header
 2. **Write Purpose** — one-liner value prop
 3. **Write When to use** — concrete scenarios + NOT use cases
 4. **Write Role & Principles** — persona (3-5 lines) + 5-7 core principles
@@ -156,7 +159,8 @@ Link to supporting documentation:
 ## Quality checklist
 
 Before finalizing:
-- [ ] Frontmatter complete (name, description, version, maturity, triggers, model, isolation)
+- [ ] Frontmatter complete (name, description, maturity, triggers, model, isolation)
+- [ ] Metadata header straight after the frontmatter (version, created, updated)
 - [ ] Purpose: one-liner, non-technical, user-focused
 - [ ] When to use: 3+ concrete scenarios + 2+ NOT use cases
 - [ ] Role: 3-5 lines describing persona

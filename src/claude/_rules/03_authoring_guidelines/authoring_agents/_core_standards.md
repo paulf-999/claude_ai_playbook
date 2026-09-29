@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-29 -->
 # 📐 Agent Core Standards
 
 **Purpose:** The baseline every agent follows — 5-section structure, naming pattern, frontmatter fields, maturity levels, and testing requirements.
@@ -37,7 +37,6 @@
 ---
 name: <domain>_<purpose>
 description: One-sentence value prop, user-focused
-version: 0.1.0
 maturity: draft  # draft | tactical | strategic
 triggers:
   - /agent_name
@@ -45,16 +44,19 @@ triggers:
 model: inherit
 isolation: worktree
 ---
+<!-- version: 0.1.0 -->
+<!-- created: YYYY-MM-DD -->
+<!-- updated: YYYY-MM-DD -->
 ```
 
 **Frontmatter fields explained:**
 - `name` — identifier matching `<domain>_<purpose>` pattern
 - `description` — one sentence, what does this agent do for users?
-- `version` — semantic versioning (0.x = draft, 1.x = tactical, 2.x = strategic)
 - `maturity` — draft | tactical | strategic (same as skills)
 - `triggers` — how users invoke this agent (slash command + natural language variants)
 - `model` — `inherit` (use active model) or specific model override
 - `isolation` — `worktree` (recommended for agents that modify files) or none
+- **Metadata header** — straight after the frontmatter: `version` (0.x = draft, 1.x = tactical, 2.x = strategic), `created`, `updated`; see `_claude_config_metadata.md`
 
 ## 5-Section Structure [REQUIRED]
 

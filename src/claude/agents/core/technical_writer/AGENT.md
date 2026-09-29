@@ -1,7 +1,6 @@
 ---
 name: technical_writer
 description: Clear, precise writer for PR bodies and Confluence pages
-version: 1.0.0
 maturity: tactical
 triggers:
   - /technical_writer
@@ -13,6 +12,9 @@ triggers:
 model: inherit
 isolation: worktree
 ---
+<!-- version: 1.0.0 -->
+<!-- created: 2026-09-07 -->
+<!-- updated: 2026-09-07 -->
 
 # ✍️ Agent — Technical writer
 

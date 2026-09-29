@@ -1,9 +1,11 @@
 """Shared validator for the three-line metadata header (_claude_config_metadata.md).
 
-Used by the rules and skills metadata tests so the format is checked by one implementation.
+Used by the rules, skills and agents metadata tests so the format is checked by one implementation.
 """
 import re
 from datetime import date
+
+FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n", re.S)
 
 HEADER_PREFIXES = ("<!-- version:", "<!-- created:", "<!-- updated:")
 
@@ -49,3 +51,34 @@ def metadata_header_errors(content: str) -> list[str]:
     if updated < created:
         return [f"updated ({updated}) is earlier than created ({created})"]
     return []
+
+
+def frontmatter_header_errors(content: str) -> list[str]:
+    """Return errors for a frontmatter file (SKILL.md, AGENT.md) whose header follows the frontmatter.
+
+    :param content: Full text of the file.
+    :type content: str
+    :return: Human-readable error messages, one per problem found.
+    :rtype: list[str]
+    """
+    match = FRONTMATTER_RE.match(content)
+    if not match:
+        return ["file must open with YAML frontmatter"]
+    if re.search(r"^version:", match.group(1), re.M):
+        return ["version belongs in the metadata header, not the frontmatter"]
+    after = content[match.end():]
+    if not after.startswith("<!-- version:"):
+        return ["metadata header must start on the line after the frontmatter"]
+    return metadata_header_errors(after)
+
+
+def header_version_after_frontmatter(content: str) -> str:
+    """Return the version from the header that follows a file's frontmatter.
+
+    :param content: Full text of a file with a valid frontmatter and header.
+    :type content: str
+    :return: The semver string from the header's version line.
+    :rtype: str
+    """
+    first_line = content[FRONTMATTER_RE.match(content).end():].splitlines()[0]
+    return ".".join(FIELD_PATTERNS["version"].match(first_line).groups())

@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-18 -->
+<!-- updated: 2026-09-29 -->
 # 🎯 Agent Decision Tree & Creation Process
 
 **Purpose:** Decide whether to build a rule, skill, or agent; know when NOT to create an agent at all; and the 5-step process once you've decided to.
@@ -50,7 +50,7 @@ Do NOT create an agent if:
 ## 🚀 Create an Agent (5 Steps)
 
 1. **Name it:** `<domain>_<purpose>` format, self-describing
-2. **Define frontmatter:** name, description, version, maturity, triggers, model, isolation
+2. **Define frontmatter:** name, description, maturity, triggers, model, isolation — then the version/created/updated header after it
 3. **Write AGENT.md** using 5-section structure (Purpose → When to use → Role & Principles → Constraints)
 4. **Create evals.yaml** with 8–12 test scenarios (by maturity level)
 5. **Document maturity:** Justify maturity level with evidence in agent file
