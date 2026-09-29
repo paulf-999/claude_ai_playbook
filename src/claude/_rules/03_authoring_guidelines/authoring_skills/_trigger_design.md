@@ -1,9 +1,9 @@
-<!-- version: 2.0.1 -->
+<!-- version: 3.0.0 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
-# 🎯 Trigger Design & Testing Standards
+# 🎯 Trigger Design
 
-**Purpose:** Define how to design comprehensive trigger phrase coverage, and the evals.yaml/quality-scorecard testing standard every skill must follow.
+**Purpose:** Define how to design trigger phrases so a skill runs whenever users naturally ask for it.
 
 ---
 
@@ -30,26 +30,10 @@ Triggers determine how users invoke your skill. Comprehensive trigger coverage e
 - **Not too generic:** "help" or "please" alone won't distinguish your skill from others.
 - **Example:** see `git_create_pr`'s `skill.contract.yaml` for a complete trigger list.
 
-## Quality & Testing Standards [REQUIRED]
-
-**evals.yaml [REQUIRED]** — THE standard testing approach (not ad-hoc test_*_handler.py scripts)
-- Format: each eval has `name`, `description`, `input`, `setup`, `expected_output`
-- Organization: by phase/feature (e.g., Phase 1, Phase 2, error cases)
-- Coverage: happy paths, error cases, edge cases, user interactions
-- Count by maturity: **Draft 5–8 evals** | **Tactical 8–12 evals** | **Strategic 12+ evals**
-
-**Quality scorecard [REQUIRED]** — table-only, per `~/.claude/_templates/skills/_quality_scorecard_template.md`
-- Location: `scorecard_<skill_name>.md` at skill root
-- Includes: Date Created, Date Updated, the 7 dimensions, Overall
-- Maturity justification lives in SKILL.md's Best For line, not here
-
-**Reference files [REQUIRED]** — Keep SKILL.md lean by externalizing detail
-- `_implementation.md` — Phases, logic, error handling
-- `_formats.md` [IF APPLICABLE] — Standards, validation rules, format examples
-
 ---
 
 ## 🔗 Related
 
-- Parent: `authoring_skills.md` — quick navigation and hard gates checklist
-- Sibling: `_core_standards.md` — naming, SKILL.md structure, contract fields
+- Parent: `authoring_skills.md` — child index and file organisation
+- Sibling: `_core_standards.md` — naming, SKILL.md structure, contract fields, maturity levels
+- Sibling: `_hard_gates_checklist.md` — evals.yaml, scorecard and reference-file requirements

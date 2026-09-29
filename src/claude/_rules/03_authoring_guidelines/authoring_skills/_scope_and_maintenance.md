@@ -1,4 +1,4 @@
-<!-- version: 2.0.0 -->
+<!-- version: 3.0.0 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
 # 🚪 Scope Boundaries & Low-Maintenance Design
@@ -11,17 +11,7 @@
 
 Every skill must explicitly declare what it does AND what it does NOT do. This prevents feature creep and sets user expectations upfront.
 
-**In `skill.contract.yaml`, use the `dispatch.not_for` field:**
-
-```yaml
-dispatch:
-  not_for:
-    - Edge case 1 (skill doesn't handle this)
-    - Edge case 2 (skill explicitly out of scope)
-    - Future enhancement (v2.0+)
-```
-
-**Example (git_create_pr):**
+**In `skill.contract.yaml`, list them under `dispatch.not_for` — example (git_create_pr):**
 ```yaml
 not_for:
   - complex merge conflict scenarios
@@ -46,9 +36,6 @@ not_for:
 - `test_<handler>.py` (pytest) is a welcome *addition*, not a replacement, when a skill ships deterministic Python code (an MCP handler, validation logic) — automate what's automatable, since pytest runs unattended in pre-commit/CI
 - The anti-pattern is skipping `evals.yaml` in favour of pytest, not writing pytest at all — a skill with real code should have both; a skill that's pure prompt-following logic only needs `evals.yaml`
 
-**❌ Don't claim maturity without evidence**
-- Choose the level from the maturity table in `_core_standards.md`, and justify it in SKILL.md's Best For line
-
 ---
 
 ## 🛠️ Low-Maintenance Design [CRITICAL]
@@ -66,4 +53,4 @@ Design skills to be stable and self-contained, so they rarely need changing.
 
 ## 🔗 Related
 
-- Parent: `authoring_skills.md` — quick navigation and hard gates checklist
+- Parent: `authoring_skills.md` — child index and file organisation
