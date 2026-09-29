@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-29 -->
 # 🎯 Trigger Design & Testing Standards
@@ -22,68 +22,13 @@ Triggers determine how users invoke your skill. Comprehensive trigger coverage e
 
 **Explicit triggers drive auto-invocation.** Contextual triggers are fallback guidance. Prioritize explicit phrase coverage.
 
-**Designing Comprehensive Phrase Triggers**
-
-1. **Core action verbs:** List all natural ways to request the action
-   - Git PR creation: "create", "make", "open", "submit", "push"
-   - Confluence page creation: "create", "add", "write"
-   - Jira ticket creation: "create", "log", "file"
-
-2. **Domain terminology variants:** Include alternate names for the same concept
-   - Pull requests: "pr", "PR", "pull request"
-   - Merge requests: "mr", "MR", "merge request"
-   - Both: `create a pr`, `create a PR`, `create a mr`, `create a MR`
-
-3. **Case sensitivity:** Include both lowercase and uppercase variants
-   - `create a pr` and `create a PR`
-   - `create a mr` and `create a MR`
-   - **Why:** Ensures matching regardless of how users type it
-
-4. **Natural language patterns:** Cover how users naturally phrase requests
-   - Instead of just: `create a pr`
-   - Also add: `make a pr`, `open a pr`, `submit a pr`, `push a pr`
-   - **Why:** Different users have different phrasing preferences
-
-**Example: Comprehensive Trigger List**
-
-```yaml
-dispatch:
-  triggers:
-    explicit:
-      - /git_create_pr
-      - create a pr
-      - create a PR
-      - make a pr
-      - make a PR
-      - open a pr
-      - open a PR
-      - submit a pr
-      - submit a PR
-      - push a pr
-      - push a PR
-      - create a mr
-      - create a MR
-      - make a mr
-      - make a MR
-      - open a mr
-      - open a MR
-      - submit a mr
-      - submit a MR
-      - push a mr
-      - push a MR
-    contextual:
-      - user wants to create a pull request
-      - user wants to submit code changes
-```
-
-**Best Practices**
-
-- ✅ **Be exhaustive:** Add every natural variant you can think of. False positives are better than false negatives (missing an invocation)
-- ✅ **Test coverage:** Ask team members how they'd phrase the request; add those phrases
-- ✅ **Symmetry:** If you add "create a pr", also add "create a PR"
-- ✅ **Domain-aware:** Know the terminology your users use (PR vs MR, issue vs ticket, etc.)
-- ❌ **Don't be too generic:** "help" or "please" alone won't distinguish your skill from others
-- ❌ **Don't assume lowercase:** Include uppercase variants; users write in different styles
+**Designing phrase triggers:**
+- **Verbs:** list every natural way to ask — e.g. "create", "make", "open", "submit" a PR.
+- **Terminology:** include alternate names for the same concept — e.g. "pr", "pull request", "mr".
+- **Case:** add both lowercase and uppercase variants — e.g. `create a pr` and `create a PR`.
+- **Be exhaustive:** a false positive costs less than a missed invocation.
+- **Not too generic:** "help" or "please" alone won't distinguish your skill from others.
+- **Example:** see `git_create_pr`'s `skill.contract.yaml` for a complete trigger list.
 
 ## Quality & Testing Standards [REQUIRED]
 
@@ -91,14 +36,14 @@ dispatch:
 - Format: each eval has `name`, `description`, `input`, `setup`, `expected_output`
 - Organization: by phase/feature (e.g., Phase 1, Phase 2, error cases)
 - Coverage: happy paths, error cases, edge cases, user interactions
-- Count by maturity: **Draft 5–8** | **Tactical 8–12** | **Strategic 12+**
+- Count by maturity: **Draft 5–8 evals** | **Tactical 8–12 evals** | **Strategic 12+ evals**
 
-**Quality scorecard [REQUIRED]** — 7 dimensions scored + maturity justification
-- Location: `scorecard_<skill_name>.md`
-- Includes: Date Created, Date Updated, Design, Complexity, Test Coverage, Code Quality, Security, Documentation, Standards, Overall
+**Quality scorecard [REQUIRED]** — table-only, per `_quality_scorecard_template.md`
+- Location: `scorecard_<skill_name>.md` at skill root
+- Includes: Date Created, Date Updated, the 7 dimensions, Overall
+- Maturity justification lives in SKILL.md's Best For line, not here
 
 **Reference files [REQUIRED]** — Keep SKILL.md lean by externalizing detail
-- `scorecard_<skill_name>.md` — 7-dimension table only (justification lives in SKILL.md)
 - `_implementation.md` — Phases, logic, error handling
 - `_formats.md` [IF APPLICABLE] — Standards, validation rules, format examples
 

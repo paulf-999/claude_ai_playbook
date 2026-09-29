@@ -1,57 +1,56 @@
-<!-- version: 1.1.0 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # ✅ Skill Hard Gates Checklist
 
-**Purpose:** Final validation checklist before submitting a new skill — verify completeness and compliance across every required artifact.
+**Purpose:** The single checklist for creating and reviewing a skill — work through it in order, and every box must be ticked before submitting.
 
 ---
 
 ## Before Submitting
 
-- [ ] **Contract complete BEFORE SKILL.md** — never write SKILL.md without contract finalization
+- [ ] **1. Naming:** `<domain>_<action>` format, valid domain ID, directory matches (see `_core_standards.md`)
+- [ ] **2. Contract complete BEFORE SKILL.md** — never write SKILL.md without contract finalization
   - [ ] name, version, summary, maturity all defined
   - [ ] dispatch.triggers documented (when is skill invoked?)
-  - [ ] dispatch.not_for documented (scope boundaries; MOST IMPORTANT)
+  - [ ] dispatch.not_for documented, specific and not empty (scope boundaries; MOST IMPORTANT)
   - [ ] output (type, confirmation_required, reversible, returns) declared
+  - [ ] Destructive operations set `confirmation_required: true`
   - [ ] requires [IF APPLICABLE] — tools, resources, permissions
   - [ ] dependencies [IF APPLICABLE] — external APIs or systems
-- [ ] **SKILL.md structure [REQUIRED]:** 5 sections only, ~60 lines max
+- [ ] **3. SKILL.md structure [REQUIRED]:** start from `~/.claude/_templates/skills/SKILL.md.template`
   - [ ] Frontmatter: name, description, maturity, tags
   - [ ] Metadata header straight after the frontmatter: version (matching the contract), created, updated
   - [ ] Purpose: 1 sentence value prop + 3–4 bullets
   - [ ] Example Usage: realistic scenario showing complete journey
-  - [ ] Best For: use cases + explicit caveats (when NOT to use)
+  - [ ] Best For: use cases, explicit caveats, and a one-sentence maturity justification
   - [ ] References: links to reference/ files (no inline detail)
+  - [ ] Every `##` heading has an emoji
   - [ ] Total length: ≤60 lines (if longer, detail belongs in reference/)
-- [ ] **Complexity score [REQUIRED]:** 0–10 rating
-  - [ ] Score ≤ maturity limit (Draft ≤4, Tactical ≤6, Strategic ≤8)
-  - [ ] If over limit: reduce scope or split into multiple skills
-- [ ] **tests/evals.yaml [REQUIRED]:** 10–15 scenarios organized by phase
+- [ ] **4. tests/evals.yaml [REQUIRED]:** written before any handler code, organized by phase
   - [ ] Lives at `tests/evals.yaml`, not skill root
   - [ ] Each eval: name, description, input, setup, expected_output
-  - [ ] Coverage: happy paths, error cases, edge cases, user interactions
-  - [ ] Count matches maturity (Draft 5–8, Tactical 8–12, Strategic 12+)
+  - [ ] Count and coverage match maturity (Draft 5–8, Tactical 8–12, Strategic 12+)
   - [ ] evals.yaml is THE testing vehicle (not ad-hoc test_*_handler.py)
-- [ ] **tests/README.md [REQUIRED]:** plain-language explanation of what evals.yaml is
-- [ ] **Quality scorecard [REQUIRED]:** scorecard_<skill_name>.md
-  - [ ] Date Created and Date Updated fields present at the top
-  - [ ] 7 dimensions scored (Design, Complexity, Test Coverage, Code Quality, Security, Documentation, Standards)
-  - [ ] Dimensions scored *against evals.yaml*, not independently
-  - [ ] Maturity level justified with evidence
-  - [ ] Design rationale explained
-- [ ] **Reference files [REQUIRED]:**
-  - [ ] scorecard_<skill_name>.md exists with all 7 dimensions
+- [ ] **5. tests/README.md [REQUIRED]:** plain-language explanation of what evals.yaml is
+- [ ] **6. Reference files [REQUIRED]:**
   - [ ] reference/_implementation.md exists (phases, logic, error handling)
   - [ ] reference/_formats.md [IF APPLICABLE] (standards, validation, examples)
-- [ ] **Scope boundaries enforced:**
-  - [ ] dispatch.not_for defined and specific (not empty)
-  - [ ] Rationale documented in quality scorecard
+- [ ] **7. Quality scorecard [REQUIRED]:** `scorecard_<skill_name>.md` at skill root, table-only
+  - [ ] Follows `_quality_scorecard_template.md`, including Date Created and Date Updated
+  - [ ] 7 dimensions scored *against evals.yaml*, not independently
+- [ ] **8. Complexity score [REQUIRED]:** raw sum per `_complexity_scoring.md`
+  - [ ] Score ≤ maturity limit (Draft ≤4, Tactical ≤6, Strategic ≤8)
+  - [ ] If over limit: reduce scope or split into multiple skills
+- [ ] **9. Clean-up:**
+  - [ ] No hardcoded paths or usernames (see `portable_paths.md`)
+  - [ ] No TODO/FIXME left in a tactical or strategic skill
   - [ ] Skill has clear, narrow focus (not "everything related to X")
-- [ ] **Naming:** `<domain>_<action>` format, valid domain ID, directory matches
+  - [ ] Doesn't duplicate or conflict with an existing skill
 
 ---
 
 ## 🔗 Related
 
-- Parent: `authoring_skills.md` — quick navigation and core standards
+- Parent: `authoring_skills.md` — quick navigation and file organisation
+- Sibling: `_core_standards.md` — naming, SKILL.md structure, contract fields, maturity levels

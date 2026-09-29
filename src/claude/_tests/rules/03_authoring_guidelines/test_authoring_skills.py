@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Test quality score: 5/10
 # Date created:      2026-09-16
-# Version:           1.1.0
-# Date updated:      2026-09-28
+# Version:           2.0.0
+# Date updated:      2026-09-29
 # ─────────────────────────────────────────────────────────
 
 #!/usr/bin/env python3
@@ -403,35 +403,6 @@ class TestLowMaintenanceDesign:
         assert has_isolation, (
             "Low-Maintenance Design must emphasize isolation: "
             "'No skill-to-skill calls', 'self-contained skills'"
-        )
-
-    def test_maintenance_policy_documented(self):
-        """Verify maintenance policy (when to update) is documented."""
-        content = resolved_content()
-
-        has_policy = (
-            re.search(r"(?:update.*only|maintenance.*policy|when to update)", content, re.IGNORECASE) and
-            (re.search(r"(?:security|vulnerability)", content, re.IGNORECASE) or
-             re.search(r"(?:broken|deprecated|API change)", content, re.IGNORECASE))
-        )
-
-        assert has_policy, (
-            "Low-Maintenance Design must document maintenance policy: "
-            "'Update only for security/broken deps, not feature requests'"
-        )
-
-    def test_red_flags_or_measurement_documented(self):
-        """Verify red flags or measurement criteria are documented."""
-        content = resolved_content()
-
-        has_metrics = (
-            re.search(r"(?:red flag|measurement|update.*frequency|updates.*year)", content, re.IGNORECASE) or
-            re.search(r"(?:more than|2.*year)", content, re.IGNORECASE)
-        )
-
-        assert has_metrics, (
-            "Low-Maintenance Design must include red flags or metrics: "
-            "'If updated more than 2x/year, redesign it'"
         )
 
 

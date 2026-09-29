@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-19 -->
+<!-- updated: 2026-09-29 -->
 # 📐 Rule Directory Organization Patterns
 
 **Purpose:** Define when and how to organize related rules into parent+child directory structures, preventing flat-level sprawl while keeping rule discovery clear.
@@ -30,17 +30,18 @@ _rules/01_essentials/
 **Condition:** One parent rule + 2+ child files, each covering a related aspect of the parent concept.
 
 ```
-_rules/01_essentials/
+_rules/02_claude_standards/
 ├── behaviour.md                                ← parent: foundational behavior guidelines
-├── behaviour/
-│   ├── _artefact_proposal_gates.md            ← child: artifact proposal validation
-│   └── _decision_making.md                    ← child: decision-making patterns
-│
+└── behaviour/
+    ├── _artefact_proposal_gates.md            ← child: artifact proposal validation
+    └── _decision_making.md                    ← child: decision-making patterns
+
+_rules/03_authoring_guidelines/
 ├── authoring_skills.md                         ← parent: skill creation framework
-├── skill_authoring/
-│   ├── _skill_structure_contract.md           ← child: structure and contract fields
-│   ├── _skill_quality_checklist.md            ← child: quality gates
-│   └── _skill_review_framework.md             ← child: review process
+└── authoring_skills/
+    ├── _core_standards.md                     ← child: naming, structure, contract, maturity
+    ├── _hard_gates_checklist.md               ← child: the single creation checklist
+    └── _common_mistakes.md                    ← child: anti-patterns and fixes
 ```
 
 **Decision rule:**

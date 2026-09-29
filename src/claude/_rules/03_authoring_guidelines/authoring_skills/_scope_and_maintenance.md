@@ -1,9 +1,9 @@
-<!-- version: 1.0.0 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-21 -->
+<!-- updated: 2026-09-29 -->
 # 🚪 Scope Boundaries & Low-Maintenance Design
 
-**Purpose:** Every skill must declare what it does NOT do, and be designed to minimize ongoing maintenance burden.
+**Purpose:** Every skill must declare what it does NOT do, and be designed to stay stable once shipped.
 
 ---
 
@@ -47,61 +47,20 @@ not_for:
 - The anti-pattern is skipping `evals.yaml` in favour of pytest, not writing pytest at all — a skill with real code should have both; a skill that's pure prompt-following logic only needs `evals.yaml`
 
 **❌ Don't claim maturity without evidence**
-- Draft: speculative, one-time use only
-- Tactical: recurring problem, battle-tested, fully tested
-- Strategic: core workflow, heavy use, all edge cases covered
-- Justify maturity in SKILL.md's Best For line with evidence
+- Choose the level from the maturity table in `_core_standards.md`, and justify it in SKILL.md's Best For line
 
 ---
 
 ## 🛠️ Low-Maintenance Design [CRITICAL]
 
-Skills should be designed to minimize ongoing maintenance burden. This section establishes principles for creating skills that are stable, self-contained, and resist scope creep and complexity debt.
+Design skills to be stable and self-contained, so they rarely need changing.
 
-### The Maintenance Trap: What NOT to Do
-
-**❌ Don't create skills that require constant updates:** coupling to external APIs (fragility), versioning complexity (v1.0/v1.1/v2.0 branches = debt), interdependencies (Skill A depends on Skill B = cascade failures), or broad scope ("handle all X" = endless feature requests).
-
-**Anti-pattern consequence:** A skill that's updated 5+ times/year is a sign of poor design, not evolution. It's a maintenance liability.
-
-### Stability-First Design Principles
-
-**✅ Design for immutability:**
-- Once v1.0 ships, assume it won't need changes
-- Future enhancements = new skill with different name (e.g., `slack_send_message` v1.0 stays frozen; threading goes in `slack_send_thread` v1.0)
-- Deprecate old version cleanly: announce 6-month sunset, provide migration guide
-
-**✅ Isolate dependencies:**
-- **No skill-to-skill calls** — Use MCP or CLI for inter-skill communication, not direct calls
-- **No external API coupling if avoidable** — Local-only > API-dependent (fewer failure modes)
-- **Battle-tested tools only** — Slack API, GitHub API = proven stable; experimental tools = avoid
-
-**✅ Enforce tight boundaries:**
-- Use `dispatch.not_for` to explicitly freeze scope (v1.0 says "no thread replies, no reactions, no editing")
-- Document v2.0 roadmap separately (doesn't belong in v1.0 contract)
-- Future enhancements are *new* skills, not updates to existing ones
-
-**✅ Test for stability:** `evals.yaml` captures the contract — future maintainers run evals before any update. If evals break, you've broken the contract; don't merge.
-
-### Maintenance Policy
-
-**Update only for critical reasons:**
-- 🔴 **Security vulnerability** — Something is actively broken/unsafe
-- 🔴 **Broken external dependency** — External API changed, tool deprecated
-- ❌ **Feature requests** — Create new skill instead (prevents scope creep)
-- ❌ **"Improvements"** — Refactoring is scope creep in disguise (old version works fine)
-
-**Deprecate when truly necessary:**
-- Old version is superseded by better design (e.g., `slack_send_message` → `slack_send_with_threading`)
-- Announce 6-month sunset date upfront (give users time to migrate)
-- Provide clear migration guide (how to switch to new skill)
-- Keep old skill functional for full deprecation period (no breaking changes during sunset)
-
-### Measurement: Tracking Maintenance Burden
-
-Track per skill: **update frequency** (target <2/year Tactical, <1/year Strategic), **reason** (only security/API-change are valid), and **contract breakage** (does the update require changing evals.yaml?).
-
-**Red flag:** >2 updates/year means too broad or too coupled — redesign it. **Healthy:** Tactical gets 0–1/year; Strategic gets 0.
+- **Design for immutability:** once v1.0 ships, assume it won't need changes.
+  - **Note:** a new capability is a new skill with its own name, not an update to the old one.
+- **Isolate dependencies:** no skill-to-skill calls, and prefer local-only over API-dependent.
+- **Battle-tested tools only:** proven APIs such as GitHub or Slack, never experimental tools.
+- **Freeze scope with `not_for`:** document any v2.0 ideas separately, not in the v1.0 contract.
+- **Evals are the contract:** run `evals.yaml` before any update, and don't merge if they break.
 
 ---
 
