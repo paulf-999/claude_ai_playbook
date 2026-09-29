@@ -8,9 +8,9 @@ tags:
   tested: false
   test_coverage_level: comprehensive
 ---
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-19 -->
+<!-- updated: 2026-09-29 -->
 
 ## 🎯 Purpose
 
@@ -39,9 +39,10 @@ $ /git_create_pr add user authentication
 PR #1234 created: https://github.com/org/repo/pull/1234
 ```
 
-**Best for:** Routine feature/hotfix PRs. Faster than manual git workflow; enforces Conventional Commits automatically; minimal setup required.
+## ✨ Best For
 
----
+Routine feature/hotfix PRs. Faster than manual git workflow; enforces Conventional Commits automatically; minimal setup required.
 
-**For detailed specifications, see:**
+## 📚 References
+
 - `reference/_phase1_gather.md` — gather-info logic, branch/commit/PR-title/PR-body derivation, and label mapping

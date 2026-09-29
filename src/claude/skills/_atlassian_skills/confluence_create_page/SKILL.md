@@ -10,9 +10,9 @@ tags:
   date_updated: "2026-09-19"
 tools: Read, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-09-21 -->
+<!-- updated: 2026-09-29 -->
 
 ## 🎯 Purpose
 
@@ -35,11 +35,12 @@ $ /confluence_create_page create a page about the Q3 roadmap
 Page created: https://yourteam.atlassian.net/wiki/spaces/DA/pages/12345
 ```
 
-**Best for:** One-off pages using the general_page pattern in the `DA` space. Currently at the **tactical** development stage — main path plus light error handling, not full edge-case coverage. Only the general_page pattern is supported (more patterns are planned); the wide-view toggle still has to be set manually in Confluence.
+## ✨ Best For
 
----
+One-off pages using the general_page pattern in the `DA` space. Currently at the **tactical** development stage — main path plus light error handling, not full edge-case coverage. Only the general_page pattern is supported (more patterns are planned); the wide-view toggle still has to be set manually in Confluence.
 
-**For detailed specifications, see:**
+## 📚 References
+
 - `reference/_phases.md` — the three interactive phases in full
 - `reference/_error_recovery.md` — what to do when Confluence access, drafts, or publishing fail
 - `reference/_troubleshooting.md` — common issues, including publish timeouts
