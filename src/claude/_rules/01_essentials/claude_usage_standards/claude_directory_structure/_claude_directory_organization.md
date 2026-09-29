@@ -1,7 +1,7 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-28 -->
-# 🏗️ Directory Organization — `~/.claude/`
+<!-- updated: 2026-09-29 -->
+# 🏗️ Directory Organisation — `~/.claude/`
 
 **Purpose:** Define what directories exist in the Claude config, their purpose, and the distinction between user-created and auto-generated directories.
 
@@ -10,7 +10,7 @@
 ## 📁 Directory types
 
 - **User-created dirs:** underscore prefix — e.g. `_docs/`, `_rules/`, `_templates/`, `_reference/`, `_tests/`
-  - **Pattern:** `_<name>/` — user explicitly creates these to organize content
+  - **Pattern:** `_<name>/` — user explicitly creates these to organise content
   - **Note:** These directories are tracked in version control and intentionally maintained
 - **Claude Code auto-generated dirs:** no prefix — e.g. `backups/`, `memory/`, `sessions/`, `projects/`
   - **Pattern:** `<name>/` — Claude Code creates these automatically; you should not manually create them
@@ -20,7 +20,7 @@
 
 ## 📂 Directory Tiers
 
-`~/.claude/` is organized into four tiers by purpose and audience:
+`~/.claude/` is organised into five tiers by purpose and audience:
 
 **Tier 1: Top-level config files**
 - `CLAUDE.md`, `aliases.md`, `settings.json`, `keybindings.json` — entry points and user-facing configuration
@@ -28,6 +28,7 @@
 **Tier 2: Core rules (_rules/)**
 - `01_essentials/` — blocking/safety rules (always-on imports; user-facing guidance)
 - `02_claude_standards/` — quality gates and operational standards (always-on imports)
+- `03_authoring_guidelines/` — standards for authoring rules, skills and agents (always-on imports)
 - `04_claude_reference/` — system knowledge and reference docs (always-on imports)
 - `05_lazy_load/` — domain-specific rules (loaded on-demand; token-efficient)
 
@@ -40,7 +41,7 @@
 **Tier 5: Auto-generated (backups/, memory/, projects/, sessions/)**
 - Claude Code-managed; excluded from version control; never manually edited
 
-**Authoritative source:** For the current, always-up-to-date directory listing, consult the README.md in each tier (e.g., `_rules/README.md`, `agents/README.md`, `hooks/README.md`). These are maintained by humans and tools; this document describes the organizational *principle*, not a comprehensive inventory.
+**Authoritative source:** For the current, always-up-to-date directory listing, consult the README.md in each tier (e.g., `_rules/README.md`, `agents/README.md`, `hooks/README.md`). These are maintained by humans and tools; this document describes the organisational *principle*, not a comprehensive inventory.
 
 ---
 
@@ -49,7 +50,7 @@
 Create a subdirectory when **two or more related files** share the same theme and benefit from grouping:
 
 - ✅ Create when: `naming_standards/` contains `_naming_principles.md` + `_claude_naming_patterns.md` (related, reusable grouping)
-- ✅ Create when: `claude_directory_structure/` contains `_claude_directory_organization.md` + `_claude_directory_naming.md` (organization + naming are paired concerns)
+- ✅ Create when: `claude_directory_structure/` contains `_claude_directory_organization.md` + `_claude_directory_naming.md` (organisation + naming are paired concerns)
 - ❌ Avoid when: one file stands alone (e.g. a single style guide doesn't need a folder)
 
 **Note:** Prefer flat `_rules/*.md` for standalone rules; introduce a subdir only when the grouping is clear and reusable.
@@ -67,7 +68,7 @@ Create a subdirectory when **two or more related files** share the same theme an
 
 ## 🔗 Related rules
 
-- **Parent:** `claude_directory_structure.md` — entry point; organization and naming overview
+- **Parent:** `claude_directory_structure.md` — entry point; organisation and naming overview
 - **Sibling:** `_claude_directory_naming.md` — naming patterns for files and directories
 - **Related:** `writing_style.md` → `_multifile_document_organization.md` — when to split documents into parent + child files
 - **Related:** `authoring_rules.md` — directory placement for new rules (01_essentials, 02_claude_standards, 03_authoring_guidelines, 04_claude_reference, 05_lazy_load)
