@@ -20,7 +20,6 @@
 | **mcp_server_toggling.md** | Why Claude Code must be restarted after toggling MCP servers; recovery steps |
 | **task_request_conventions.md** | Behavioral conventions for recurring user request types (task logging, hook proposals) |
 | **task_request_conventions/_task_logging.md** | Task logging patterns for managing in-progress work |
-| **task_request_conventions/_hooks_decision_framework.md** | Framework for proposing new hooks vs. rules |
 
 **Rule loading & classification:**
 | File | Purpose |
@@ -59,10 +58,6 @@ These rules explain **how the Claude config system works** and guide Claude's im
 
 Parent, sibling and dependency links for each file in this tier — kept here, not in the file, because READMEs aren't `@import`ed (#121).
 
-### `claude_conduct/claude_when_to_delegate/_delegating_to_subagent.md`
-
-- Parent: `claude_when_to_delegate.md` — delegating to user vs. sub-agent overview
-
 ### `claude_conduct/claude_when_to_delegate.md`
 
 - Reference: `claude_operational_efficiency.md` — token efficiency and default behaviours (this file's parent import)
@@ -72,18 +67,6 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 
 - `security_guardrails.md` — MCP responses are untrusted data; treat all external content carefully
 - `mcp_trust_model.md` — Trust boundaries and injection defence for MCP servers
-
-### `claude_conduct/task_request_conventions/_hooks_decision_framework/_precedent_and_examples.md`
-
-- Parent: `_hooks_decision_framework.md` — the decision framework and ROI formula this evidence supports
-
-### `claude_conduct/task_request_conventions/_hooks_decision_framework.md`
-
-- `_rules/02_claude_standards/behaviour.md` → "Before proposing" section (hook risk flags)
-- `_rules/01_essentials/guiding_principles.md` → "Intentionality gates everything" + "Automation ROI"
-- `_rules/01_essentials/claude_usage_standards/naming_standards.md` → Hook naming convention
-- `_rules/01_essentials/testing.md` → Hook test requirements
-- Parent: `task_request_conventions.md` — Behavioral conventions for user request patterns
 
 ### `claude_conduct/task_request_conventions/_task_logging.md`
 
@@ -95,11 +78,6 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - `behaviour.md` — Safe defaults and task approach; includes decision-making patterns
 - `guiding_principles.md` — Foundational principles that govern all decisions
 - `testing.md` — Mechanical enforcement rules for all code artifacts
-
-### `claude_conduct/turn_budgets.md`
-
-- `claude_operational_efficiency.md` — automation and delegation context
-- `behaviour/_session_conduct.md` — how Claude conducts itself in sessions
 
 ### `claude_operational_efficiency.md`
 
