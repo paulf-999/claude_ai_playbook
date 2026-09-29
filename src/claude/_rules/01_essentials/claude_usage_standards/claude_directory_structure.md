@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 🗂️ Directory Structure — `~/.claude/`
 
 **Purpose:** Establish conventions for how the Claude config directory is organized, distinguishing user-created from auto-generated directories, and ensure files are placed in their appropriate locations.
@@ -18,7 +18,7 @@ Applies to all file and directory creation in `~/.claude/` and the playbook repo
 
 ## 🏗️ Directory organization
 
-@~/.claude/_rules/01_essentials/claude_usage_standards/claude_directory_structure/_claude_directory_organization.md
+@~/.claude/_rules/01_essentials/claude_usage_standards/claude_directory_structure/_claude_directory_organisation.md
 
 ## 🏷️ Naming conventions
 
