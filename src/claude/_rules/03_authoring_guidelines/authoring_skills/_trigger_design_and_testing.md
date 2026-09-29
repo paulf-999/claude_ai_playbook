@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 🎯 Trigger Design & Testing Standards
 
 **Purpose:** Define how to design comprehensive trigger phrase coverage, and the evals.yaml/quality-scorecard testing standard every skill must follow.
@@ -93,7 +93,7 @@ dispatch:
 - Coverage: happy paths, error cases, edge cases, user interactions
 - Count by maturity: **Draft 5–8** | **Tactical 8–12** | **Strategic 12+**
 
-**Quality scorecard [REQUIRED]** — 8 dimensions scored + maturity justification
+**Quality scorecard [REQUIRED]** — 7 dimensions scored + maturity justification
 - Location: `scorecard_<skill_name>.md`
 - Includes: Date Created, Date Updated, Design, Complexity, Test Coverage, Code Quality, Security, Documentation, Standards, Overall
 

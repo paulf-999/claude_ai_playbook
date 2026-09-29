@@ -1,9 +1,9 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-09-29 -->
 # 🚀 Skill Creation Process
 
-**Purpose:** The proven baseline pattern for a new skill, and the 7-step workflow to create one.
+**Purpose:** The proven baseline pattern for a new skill, and the 8-step workflow to create one.
 
 ---
 
