@@ -86,7 +86,7 @@ These criteria ensure the skill is clear, well-tested, and follows style standar
 - Draft: 1–2 tests (happy path)
 - Tactical: 5–8 tests (main path + error cases)
 - Strategic: 15+ tests (main path, errors, edge cases)
-- **How to test locally:** `pytest tests/skills/test_<skill_name>*.py -v`
+- **How to test locally:** `CLAUDE_CONFIG_DIR=$PWD/src/claude pytest src/claude/_tests/skills/<skill_name>/ -v`
 
 ### W4: No unexplained Claude jargon
 - ❌ Don't use jargon without explanation:
@@ -141,7 +141,7 @@ These criteria apply to **strategic skills only** — production-ready skills ex
 3. **Write:** Create `SKILL.md` with required sections
 4. **Test:** Add test file with cases matching maturity
 5. **Local check:** Run `make lint_skills` (linter validates C0–C7)
-6. **Local test:** Run `pytest tests/skills/test_<skill>.py -v` (validate W1–W6)
+6. **Local test:** Run `CLAUDE_CONFIG_DIR=$PWD/src/claude pytest src/claude/_tests/skills/<skill>/ -v` (validate W1–W6)
 7. **Style:** Verify emojis, formatting, line length
 8. **Jargon:** Search for unexplained Claude terms; explain or remove
 9. **Commit:** Make a pull request with your skill
@@ -214,10 +214,10 @@ These criteria apply to **strategic skills only** — production-ready skills ex
 make lint_skills
 
 # Validate walk/run criteria (W1–R5)
-pytest tests/test_skill_authoring_gate.py -v
+CLAUDE_CONFIG_DIR=$PWD/src/claude pytest src/claude/_tests/rules/01_essentials/test_skill_authoring_gate.py -v
 
 # Or test your specific skill
-pytest tests/test_skill_authoring_gate.py -k "your_skill_name" -v
+CLAUDE_CONFIG_DIR=$PWD/src/claude pytest src/claude/_tests/rules/01_essentials/test_skill_authoring_gate.py -k "your_skill_name" -v
 ```
 
 If linter fails, fix the issues and retry. If tests skip/warn, review the feedback and address in your PR.

@@ -42,7 +42,7 @@ All skills are validated against a **three-level gate** before merging:
 **What:** Readability, style compliance, test coverage, clarity.
 
 **Enforcement:** Manual code review + local testing
-- You run tests locally before submitting PR: `pytest tests/test_skill_authoring_gate.py`
+- You run tests locally before submitting PR: `CLAUDE_CONFIG_DIR=$PWD/src/claude pytest src/claude/_tests/rules/01_essentials/test_skill_authoring_gate.py`
 - Reviewers spot-check during code review
 - **Doesn't block merge** (advisory feedback)
 
@@ -173,7 +173,7 @@ Use this structure (end-user-first):
 
 ### 4. Write tests
 
-Create a test file: `tests/skills/test_skill_name.py`
+Create a test file: `src/claude/_tests/skills/<skill_name>/test_<skill_name>.py`
 
 **Test count by maturity:**
 - Draft: 1–2 tests (happy path only)
@@ -202,10 +202,10 @@ Before committing, run:
 make lint_skills
 
 # Check walk/run criteria (W1–R5)
-pytest tests/test_skill_authoring_gate.py -v
+CLAUDE_CONFIG_DIR=$PWD/src/claude pytest src/claude/_tests/rules/01_essentials/test_skill_authoring_gate.py -v
 
 # Optional: just test your skill
-pytest tests/test_skill_authoring_gate.py -k skill_name -v
+CLAUDE_CONFIG_DIR=$PWD/src/claude pytest src/claude/_tests/rules/01_essentials/test_skill_authoring_gate.py -k skill_name -v
 ```
 
 Fix any failures. Tests that skip are advisory (reviewer will spot-check).
