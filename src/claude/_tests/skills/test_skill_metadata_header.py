@@ -5,7 +5,7 @@
 # Python style compliant: Yes
 # Date created:      2026-09-28
 # Version:           1.0.1
-# Date updated:      2026-09-29
+# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """Validates the skill metadata header defined in _claude_config_metadata.md.
@@ -24,7 +24,7 @@ from _metadata_header import header_version_after_frontmatter as header_version
 from _shared_paths import CLAUDE_DIR, SKILLS_DIR
 
 SKILL_TEMPLATE = CLAUDE_DIR / "_templates" / "skills" / "SKILL.md.template"
-HINT = "— see 03_authoring_guidelines/_claude_config_metadata.md"
+HINT = "— see 03_authoring_guidelines/shared_standards/_claude_config_metadata.md"
 
 
 def build_skill(frontmatter: str = "name: demo_skill\nmaturity: draft", header: Optional[str] = None) -> str:

@@ -5,7 +5,7 @@
 # Python style compliant: Yes
 # Date created:      2026-09-29
 # Version:           1.0.0
-# Date updated:      [placeholder]
+# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """Validates the agent metadata header defined in _claude_config_metadata.md.
@@ -22,7 +22,7 @@ from _shared_paths import CLAUDE_DIR
 
 AGENTS_DIR = CLAUDE_DIR / "agents"
 AGENT_TEMPLATE = CLAUDE_DIR / "_templates" / "AGENT.md.template"
-HINT = "— see 03_authoring_guidelines/_claude_config_metadata.md"
+HINT = "— see 03_authoring_guidelines/shared_standards/_claude_config_metadata.md"
 VALID_HEADER = "<!-- version: 1.0.0 -->\n<!-- created: 2026-09-07 -->\n<!-- updated: 2026-09-29 -->\n"
 AGENT_FRONTMATTER = (
     "name: demo_agent\nmaturity: tactical\ntriggers:\n  - /demo_agent\nmodel: inherit\nisolation: worktree"

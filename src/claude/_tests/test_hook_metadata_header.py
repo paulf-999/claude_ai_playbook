@@ -5,7 +5,7 @@
 # Python style compliant: Yes
 # Date created:      2026-09-29
 # Version:           1.0.0
-# Date updated:      [placeholder]
+# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """Validates the hook metadata header defined in _claude_config_metadata.md.
@@ -18,7 +18,7 @@ from pathlib import Path
 from _metadata_header import metadata_header_errors, shell_header_errors
 from _shared_paths import HOOKS_DIR
 
-HINT = "— see 03_authoring_guidelines/_claude_config_metadata.md"
+HINT = "— see 03_authoring_guidelines/shared_standards/_claude_config_metadata.md"
 VALID_HEADER = "# version: 1.0.0\n# created: 2026-09-07\n# updated: 2026-09-28\n"
 
 

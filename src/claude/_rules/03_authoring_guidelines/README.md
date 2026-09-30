@@ -48,13 +48,13 @@ Authoring guidelines follow a **progressive maturity model**:
 
 Parent, sibling and dependency links for each file in this tier — kept here, not in the file, because READMEs aren't `@import`ed (#121).
 
-### `_claude_config_metadata.md`
+### `shared_standards/_claude_config_metadata.md`
 
 - `authoring_rules.md` — imports this file; rule template at `~/.claude/_templates/RULE.md.template`
 - `authoring_skills.md`, `authoring_agents.md` — apply the placement above
 - `_complexity_scoring.md` — sibling shared standard, same "define once" pattern
 
-### `_complexity_scoring.md`
+### `shared_standards/_complexity_scoring.md`
 
 - `authoring_skills.md` — skill maturity gates and quality scorecard, applying the raw sum and inverted score respectively
 - `authoring_agents.md` — agent maturity gates, same raw-sum convention as skills
@@ -123,7 +123,7 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 **Authoring & testing:**
 - `~/.claude/_templates/RULE.md.template` — two templates (principle-based vs. constraint-based)
 - `testing.md` — when tests are required; enforcement rules always need tests
-- `_complexity_scoring.md` (sibling file) — shared complexity formula; no maturity/complexity gate is defined for rules yet, but reference this rather than inventing a new formula if one is added
+- `shared_standards/_complexity_scoring.md` — shared complexity formula; no maturity/complexity gate is defined for rules yet, but reference this rather than inventing a new formula if one is added
 - `_rules/quality_scorecards/README.md` — quality scorecard template and per-dimension criteria for rules
 
 **Principles & maintenance:**
@@ -160,4 +160,4 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - **naming_standards.md** — Foundational naming principles; skill naming patterns in child file
 - **testing.md** — Skill testing requirements by maturity level
 - **authoring_rules.md** — General rule authoring process (complementary to skill authoring)
-- **_complexity_scoring.md** (sibling file) — shared complexity formula this file's maturity gates and quality-scorecard dimension both draw from
+- **shared_standards/_complexity_scoring.md** — shared complexity formula this file's maturity gates and quality-scorecard dimension both draw from
