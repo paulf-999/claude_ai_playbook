@@ -100,7 +100,7 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 
 ### `delegating_to_subagent.md`
 
-- Pointer from: `04_claude_reference/claude_conduct/claude_when_to_delegate.md` — delegating to user vs. sub-agent overview
+- Pointer from: `04_claude_reference/claude_operational_efficiency/_claude_when_to_delegate.md` — delegating to user vs. sub-agent overview
 
 ### `hooks_decision_framework.md`
 
@@ -108,7 +108,7 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - `_rules/01_essentials/guiding_principles.md` → "Intentionality gates everything" + "Automation ROI"
 - `_rules/01_essentials/claude_usage_standards/naming_standards.md` → Hook naming convention
 - `_rules/01_essentials/testing.md` → Hook test requirements
-- Pointer from: `task_request_conventions.md` and `behaviour.md` — Behavioral conventions for user request patterns
+- Pointer from: `_task_request_conventions.md` and `behaviour.md` — Behavioral conventions for user request patterns
 
 ### `hooks_decision_framework/_precedent_and_examples.md`
 
