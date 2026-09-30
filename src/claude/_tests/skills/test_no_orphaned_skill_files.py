@@ -4,8 +4,8 @@
 # Test complexity score: 5/10
 # Python style compliant: Yes
 # Date created:      2026-09-19
-# Version:           1.1.1
-# Date updated:      2026-09-21
+# Version:           1.2.0
+# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """Generic orphaned-file detection for every skill under src/claude/skills/.
@@ -24,6 +24,9 @@ Also verifies the inverse: every reference/ path SKILL.md points at
 resolves to a real file, so a skill's docs can't silently link to
 nothing (this is how git_create_pr's three broken reference/ links to
 nonexistent files were found).
+
+Also verifies no SKILL.md @-imports a file, so reference/ files stay
+loaded on demand rather than on every skill run.
 
 Structural files (SKILL.md, skill.contract.yaml, README.md, __init__.py,
 conftest.py, evals.yaml, test_*.py, and auto-generated artifacts) are
@@ -167,6 +170,28 @@ def find_broken_reference_links(skill_root: Path) -> list[str]:
     return broken
 
 
+def find_eager_imports(skill_root: Path) -> list[str]:
+    """Return ``@``-import lines in SKILL.md, ignoring fenced code blocks.
+
+    :param skill_root: The skill directory to scan.
+    :type skill_root: Path
+    :return: Stripped SKILL.md lines that would eagerly import a file.
+    :rtype: list[str]
+    """
+    skill_md = skill_root / "SKILL.md"
+    if not skill_md.exists():
+        return []
+    imports = []
+    in_fence = False
+    for line in skill_md.read_text(encoding="utf-8", errors="ignore").splitlines():
+        if line.lstrip().startswith(("```", "~~~")):
+            in_fence = not in_fence
+            continue
+        if not in_fence and re.match(r"^\s*@\S", line):
+            imports.append(line.strip())
+    return imports
+
+
 def test_no_orphaned_files_in_any_skill():
     """Every content file in every skill must be referenced from elsewhere in that skill."""
     failures = []
@@ -191,6 +216,20 @@ def test_no_broken_reference_links_in_any_skill():
 
     assert not failures, (
         "SKILL.md files reference paths that don't exist on disk:\n  "
+        + "\n  ".join(failures)
+    )
+
+
+def test_no_eager_imports_in_any_skill():
+    """No SKILL.md may @-import a file — reference/ files must load on demand."""
+    failures = []
+    for skill_root in _skill_dirs():
+        for line in find_eager_imports(skill_root):
+            failures.append(f"{skill_root.relative_to(SKILLS_DIR)}: {line}")
+
+    assert not failures, (
+        "SKILL.md files @-import files, loading them every run — name them "
+        "as plain `reference/...` paths instead:\n  "
         + "\n  ".join(failures)
     )
 
@@ -299,6 +338,42 @@ def test_broken_link_detector_passes_when_file_exists(tmp_path):
     broken = find_broken_reference_links(skill)
 
     assert broken == []
+
+
+def test_eager_import_detector_flags_reference_import(tmp_path):
+    """Regression: an @-import of a reference/ file in SKILL.md is flagged."""
+    skill = tmp_path / "fake_skill"
+    skill.mkdir()
+    (skill / "SKILL.md").write_text("# Fake skill\n@reference/_x.md\n")
+
+    assert find_eager_imports(skill) == ["@reference/_x.md"]
+
+
+def test_eager_import_detector_passes_plain_path(tmp_path):
+    """A backticked reference/ path is read on demand, so it is not flagged."""
+    skill = tmp_path / "fake_skill"
+    skill.mkdir()
+    (skill / "SKILL.md").write_text("# Fake skill\nSee `reference/_x.md` for details.\n")
+
+    assert find_eager_imports(skill) == []
+
+
+def test_eager_import_detector_ignores_fenced_code_block(tmp_path):
+    """An @ line inside a fenced code block is an example, not an import."""
+    skill = tmp_path / "fake_skill"
+    skill.mkdir()
+    (skill / "SKILL.md").write_text("# Fake skill\n```\n@reference/_x.md\n```\n")
+
+    assert find_eager_imports(skill) == []
+
+
+def test_eager_import_detector_ignores_mid_line_at(tmp_path):
+    """An @ in prose, such as an email address, is not an import."""
+    skill = tmp_path / "fake_skill"
+    skill.mkdir()
+    (skill / "SKILL.md").write_text("# Fake skill\nContact team@example.com for help.\n")
+
+    assert find_eager_imports(skill) == []
 
 
 def test_skill_dirs_discovery_finds_nested_skills(tmp_path, monkeypatch):
