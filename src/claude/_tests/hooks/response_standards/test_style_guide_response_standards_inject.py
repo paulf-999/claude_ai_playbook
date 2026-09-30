@@ -1,9 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Test quality score: 9/10
+# Test complexity score: 8/10
+# Python style compliant: No
 # Date created:      2026-09-07
-# Version:           1.0.0
-# Date updated:      2026-09-18
+# Version:           2.0.0
+# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """
@@ -22,7 +24,9 @@ modes including plan mode.
 import json
 import os
 import re
+import shutil
 import subprocess
+from pathlib import Path
 
 from _shared_paths import CLAUDE_DIR
 
@@ -128,70 +132,119 @@ class TestResponseStandardsInjectHook:
         assert "last tool call" in context.lower(), \
             f"Directive should order the timestamp as the last tool call. Got: {context}"
 
-    # ═════════════════════════════════════════════════════════════════════════════════
-    # SKILL WAIVER TESTS — Phase 2 conditional logic
-    # ═════════════════════════════════════════════════════════════════════════════════
 
-    def test_skips_injection_when_skill_waives_standards(self):
-        """Hook must skip injection when SKILL_WAIVES_RESPONSE_STANDARDS=true.
+class TestSkillWaiver:
+    """The hook skips injection for /<skill> prompts whose contract waives the standard.
 
-        Skills that use custom output formats (e.g. multi-phase interactive workflows)
-        declare waives_response_standards: true in their contract. The hook checks this
-        env var and exits cleanly without injecting the response-standards directive.
+    Each test copies the hook into a temporary config dir with its own skills/,
+    because the hook resolves skills relative to its own location.
+    """
+
+    @staticmethod
+    def make_config(tmp_path: Path) -> Path:
+        """Build a temp config dir holding the hook and three sample skills.
+
+        :param tmp_path: pytest temporary directory.
+        :return: Path to the copied hook script.
         """
-        result = self.run_hook(env_override={"SKILL_WAIVES_RESPONSE_STANDARDS": "true"})
+        hooks = tmp_path / "hooks"
+        hooks.mkdir()
+        hook = hooks / Path(HOOK_SCRIPT).name
+        shutil.copy(HOOK_SCRIPT, hook)
+        contracts = {
+            "skills/_demo_skills/waiving_skill": "name: waiving_skill\nwaives_response_standards: true  # own format\n",
+            "skills/_demo_skills/normal_skill": "name: normal_skill\nwaives_response_standards: false\n",
+            "skills/flat_skill": "name: flat_skill\nwaives_response_standards: true\n",
+        }
+        for rel, body in contracts.items():
+            skill_dir = tmp_path / rel
+            skill_dir.mkdir(parents=True)
+            (skill_dir / "skill.contract.yaml").write_text(body)
+        return hook
 
-        # Must exit 0 (clean, non-blocking exit)
-        assert result.returncode == 0, \
-            f"Hook should exit 0 when waiver is true. Got {result.returncode}. Stderr: {result.stderr}"
+    @staticmethod
+    def run(hook: Path, stdin: str, env_override=None) -> subprocess.CompletedProcess:
+        """Run a copied hook with the given raw stdin.
 
-        # Must NOT emit JSON (waiver suppresses injection entirely)
-        assert result.stdout.strip() == "", \
-            f"Hook should emit no output when waiver is true. Got: {result.stdout}"
-
-    def test_injects_normally_when_waiver_unset(self):
-        """Hook must inject directive when waiver is not set (backward compatibility).
-
-        If SKILL_WAIVES_RESPONSE_STANDARDS is unset or false, the hook proceeds with
-        normal injection. This ensures existing skills and non-skill responses continue
-        to receive the response-standards directive.
+        :param hook: Hook script path.
+        :param stdin: Raw stdin text (normally a JSON payload).
+        :param env_override: Extra environment variables.
+        :return: Completed process.
         """
-        # Test with unset env var (default case)
-        result = self.run_hook(env_override={"SKILL_WAIVES_RESPONSE_STANDARDS": "false"})
+        env = os.environ.copy()
+        env.pop("SKILL_WAIVES_RESPONSE_STANDARDS", None)
+        env.update(env_override or {})
+        return subprocess.run(["bash", str(hook)], input=stdin, text=True, capture_output=True, env=env)
 
-        # Must exit 0 and emit JSON with directive
-        assert result.returncode == 0, \
-            f"Hook should exit 0 when waiver is false. Got {result.returncode}. Stderr: {result.stderr}"
+    def run_prompt(self, hook: Path, prompt, env_override=None) -> subprocess.CompletedProcess:
+        """Run a copied hook with a UserPromptSubmit payload.
 
-        data = json.loads(result.stdout)
-        assert "hookSpecificOutput" in data, \
-            f"Hook should emit JSON when waiver is false. Got: {result.stdout}"
-        assert "**Summary**" in data["hookSpecificOutput"]["additionalContext"], \
-            f"Directive should be injected when waiver is false. Got: {result.stdout}"
-
-    def test_honors_waiver_precedence_over_directive(self):
-        """Hook must check waiver FIRST, before building the directive.
-
-        This is both a performance and correctness requirement: the waiver check
-        should occur at the earliest point, preventing unnecessary processing.
+        :param hook: Hook script path.
+        :param prompt: Value for the payload's ``prompt`` field.
+        :param env_override: Extra environment variables.
+        :return: Completed process.
         """
-        # When waiver is true, hook exits immediately without reading the directive block
-        result_waived = self.run_hook(env_override={"SKILL_WAIVES_RESPONSE_STANDARDS": "true"})
+        return self.run(hook, json.dumps({"hook_event_name": "UserPromptSubmit", "prompt": prompt}), env_override)
 
-        # When waiver is false or unset, hook proceeds to emit directive
-        result_normal = self.run_hook(env_override={"SKILL_WAIVES_RESPONSE_STANDARDS": "false"})
+    @staticmethod
+    def injected(result: subprocess.CompletedProcess) -> bool:
+        """Return whether the hook emitted the directive.
 
-        # Waived: empty output
-        assert result_waived.stdout.strip() == "", \
-            f"Waived response should have no output. Got: {result_waived.stdout}"
+        :param result: Completed hook run.
+        :return: True when stdout carries the Summary directive.
+        """
+        assert result.returncode == 0, f"Hook must exit 0. Stderr: {result.stderr}"
+        return "**Summary**" in result.stdout
 
-        # Normal: directive output
-        assert len(result_normal.stdout) > 0, \
-            "Normal response should have directive output. Got empty string"
+    def test_slash_command_for_waiving_skill_skips_injection(self, tmp_path):
+        """/<skill> for a skill whose contract waives the standard emits nothing."""
+        result = self.run_prompt(self.make_config(tmp_path), "/waiving_skill")
+        assert result.returncode == 0, f"Hook must exit 0. Stderr: {result.stderr}"
+        assert result.stdout.strip() == "", f"Waived skill should get no injection. Got: {result.stdout}"
 
-        # Verify they're different (waiver genuinely changes behavior)
-        assert result_waived.stdout != result_normal.stdout, \
-            "Waived and normal responses should differ"
+    def test_slash_command_with_arguments_still_waives(self, tmp_path):
+        """Arguments and leading whitespace after the slash command don't break the match."""
+        assert not self.injected(self.run_prompt(self.make_config(tmp_path), "  /waiving_skill --date 2026-08-20"))
+
+    def test_flat_skill_layout_is_found(self, tmp_path):
+        """A contract at skills/<name>/ (no group folder) is honoured too."""
+        assert not self.injected(self.run_prompt(self.make_config(tmp_path), "/flat_skill"))
+
+    def test_non_waiving_skill_still_injects(self, tmp_path):
+        """A skill whose contract says false gets the directive."""
+        assert self.injected(self.run_prompt(self.make_config(tmp_path), "/normal_skill"))
+
+    def test_unknown_slash_command_injects(self, tmp_path):
+        """A slash command with no matching skill contract gets the directive."""
+        assert self.injected(self.run_prompt(self.make_config(tmp_path), "/no_such_skill"))
+
+    def test_natural_language_mention_injects(self, tmp_path):
+        """Naming a waiving skill without a leading slash does not waive."""
+        assert self.injected(self.run_prompt(self.make_config(tmp_path), "please run waiving_skill /waiving_skill"))
+
+    def test_prefix_of_skill_name_does_not_match(self, tmp_path):
+        """/waiving_skillx must not match waiving_skill."""
+        assert self.injected(self.run_prompt(self.make_config(tmp_path), "/waiving_skillx"))
+
+    def test_path_traversal_name_is_rejected(self, tmp_path):
+        """Names with path characters never reach the filesystem lookup."""
+        assert self.injected(self.run_prompt(self.make_config(tmp_path), "/../skills/flat_skill"))
+
+    def test_malformed_or_empty_input_injects(self, tmp_path):
+        """Bad JSON, empty stdin, or a non-string prompt fall back to normal injection."""
+        hook = self.make_config(tmp_path)
+        assert self.injected(self.run(hook, "{not json"))
+        assert self.injected(self.run(hook, ""))
+        assert self.injected(self.run(hook, "[1, 2]"))
+        assert self.injected(self.run_prompt(hook, 42))
+
+    def test_legacy_env_var_no_longer_waives(self, tmp_path):
+        """SKILL_WAIVES_RESPONSE_STANDARDS was never set by anything and is no longer read."""
+        result = self.run_prompt(self.make_config(tmp_path), "hello", {"SKILL_WAIVES_RESPONSE_STANDARDS": "true"})
+        assert self.injected(result)
+        assert "SKILL_WAIVES_RESPONSE_STANDARDS" not in Path(HOOK_SCRIPT).read_text(), (
+            "Hook should no longer reference the unused env var"
+        )
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 # 🔒 Response Standards Enforcement
 
 **Purpose:** Explain the mechanism that keeps response formatting reliable turn-to-turn, and where its implementation lives.
@@ -35,8 +35,9 @@ Enforcement is implemented via the injection hook: `~/.claude/hooks/hook_style_g
 - **Behaviour:** Emits the compact directive (Summary format, offer line, timing footer) as `hookSpecificOutput.additionalContext` on stdout.
 - **Timing start:** Injects `PROMPT_SUBMITTED_AT=<epoch>` captured at prompt submission (pre-reasoning) so the footer spans reasoning time; the model runs only the end timestamp.
 - **Cost:** Zero LLM cost; a small per-turn context injection — salience, not volume, is what makes it work.
+- **Skill waiver:** a prompt starting with `/<skill_name>` gets no injection when that skill's `skill.contract.yaml` sets `waives_response_standards: true`; natural-language skill runs and follow-up turns still get it.
 
-**Test coverage:** `_tests/hooks/test_response_standards_inject.py` — asserts the hook exits 0 and emits valid JSON whose `additionalContext` contains the required markers (`**Summary**`, `More detail? (Y/N)`, `Response time: Xs`) plus a real injected `PROMPT_SUBMITTED_AT` start timestamp.
+**Test coverage:** `_tests/hooks/response_standards/test_style_guide_response_standards_inject.py` — asserts the hook exits 0 and emits valid JSON whose `additionalContext` contains the required markers (`**Summary**`, `More detail? (Y/N)`, `Response time: Xs`) plus a real injected `PROMPT_SUBMITTED_AT` start timestamp.
 
 **Future path (the "walk" escalation) — build only if injection proves insufficient:**
 - **Mechanism:** 🚪 A `type:"prompt"` `Stop` hook that runs an LLM to validate each finished response and force correction.
