@@ -16,7 +16,7 @@ If working tree is clean (nothing to commit), stop.
 
 **Commit message:** Conventional Commits format `type(scope): description`
 - `type`: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `ci`
-- `scope`: 
+- `scope`:
   - Single file → filename in backticks (`` `git.md` ``)
   - Multiple files in one skill → skill name in backticks (`` `create_pr` ``)
   - Area descriptor or omit entirely for cross-area changes
@@ -41,11 +41,11 @@ If working tree is clean (nothing to commit), stop.
 
 **Labels:** Map using file paths, branch name, commit message:
 - `src/claude/skills/` → `claude-skill`
-- `src/claude/rules/` → `claude-rule`
+- `src/claude/_rules/05_lazy_load/style_guide_standards/` → `style-guide-and-standards`
+- `src/claude/_rules/` (anything else) → `claude-rule`
 - `src/claude/agents/` → `claude-agent`
 - `src/claude/hooks/` → `claude-hook`
-- `src/claude/process/` → `claude-process`
-- `src/claude/style_guide_standards/` → `style-guide-and-standards`
+- `src/claude/_tests/` → `tests`
 - `src/sh/`, `src/cicd/`, `.github/workflows/`, `.pre-commit-config.yaml` → `CI/CD`
 - `.github/ISSUE_TEMPLATE/`, `pull_request_template.md` → `governance`
 - `requirements.txt`, `packages.yml`, `pyproject.toml`, `package.json` → `dependencies`
@@ -55,3 +55,8 @@ If working tree is clean (nothing to commit), stop.
 - Scope/message contains `security` → `security`
 - Breaking change (`!` or `BREAKING CHANGE:`) → `breaking-change`
 - All `docs/` only → `documentation`
+
+**Check labels exist:** run `gh label list --limit 200 --json name -q '.[].name'` and split the mapped labels in two:
+- **Apply:** labels the repo already has go on the `gh pr create` command.
+- **Missing:** labels the repo lacks are left off the command and listed in the plan instead.
+- **Why:** `gh pr create --label` aborts the whole PR when any label is missing, so one absent label must never block the PR.

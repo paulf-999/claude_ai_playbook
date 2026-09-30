@@ -12,7 +12,7 @@
 | 4 | `reuses_existing_feature_branch` | Derive | Keeps an existing `feature/` branch rather than creating a new one |
 | 5 | `branch_name_derived_in_snake_case` | Derive | Turns messy arguments into a valid lowercase, underscore-only branch name |
 | 6 | `pr_title_plain_english_no_filenames` | Derive | PR title is plain English, 70 characters or fewer, with no filenames |
-| 7 | `labels_mapped_from_paths_and_branch` | Labels | Applies `claude-skill` and `hotfix` from the path and branch |
+| 7 | `labels_mapped_and_missing_ones_skipped` | Labels | Applies `claude-skill` from the path, and skips and reports `hotfix` when the repo lacks it |
 | 8 | `docs_only_change_labelled_documentation` | Labels | A docs-only change gets the `docs` type and `documentation` label |
 | 9 | `user_requests_title_alternatives` | Confirm | Offers alternative titles and uses the one picked, running nothing until the plan is approved |
 | 10 | `user_declines_plan` | Confirm | Declining the plan leaves no branch, commit, push or PR behind |

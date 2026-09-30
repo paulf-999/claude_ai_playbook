@@ -1,7 +1,7 @@
 ---
 _metadata:
     date_created: '2026-09-29'
-    date_updated: '2026-09-29'
+    date_updated: '2026-09-30'
     status: active
 
 skill_name: git_create_pr
@@ -107,21 +107,27 @@ evals:
           - The PR title is lowercase after the colon
 
   # Phase 1 — labels
-    - name: labels_mapped_from_paths_and_branch
-      description: Labels come from the changed paths and the branch prefix
+    - name: labels_mapped_and_missing_ones_skipped
+      description: Labels come from the changed paths and the branch prefix, and labels the repo lacks are skipped
       input:
           prompt: /git_create_pr fix broken skill trigger
       setup:
           current_branch: hotfix/fix_skill_trigger
           changed_files:
               - src/claude/skills/_git_skills/git_create_pr/SKILL.md
+          repo_labels:
+              - claude-skill
+              - bug
           pr_template_exists: true
       expected_output: >
-          Claude applies the claude-skill label for the skills path and the
-          hotfix label for the hotfix/ branch.
+          Claude maps claude-skill from the skills path and hotfix from the
+          hotfix/ branch, finds the repo has no hotfix label, lists it under
+          Missing labels in the plan, and creates the PR with claude-skill only.
       assertions:
+          - Claude runs gh label list before building the gh pr create command
           - The PR is created with the claude-skill label
-          - The PR is created with the hotfix label
+          - The gh pr create command does not include the hotfix label
+          - The plan lists hotfix under Missing labels and offers create labels
           - Claude does not add labels that no mapping rule supports
 
     - name: docs_only_change_labelled_documentation
