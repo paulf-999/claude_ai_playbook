@@ -33,6 +33,7 @@ Here is what I will run:
 
 Commit message: <type(scope): imperative description>
 PR title:       <type(scope): plain English description>
+Missing labels: <labels not in the repo, or "none">   # reply `create labels` to add them
 
 PR body:
 ---
@@ -42,7 +43,8 @@ PR body:
 
 Wait for the user to confirm or request changes.
 
-- **Confirm:** run the commands in order.
+- **Confirm:** run the commands in order, leaving any missing labels off the PR.
+- **`create labels`:** add a `gh label create "<label>"` step before `gh pr create` for each missing label, move those labels onto the `gh pr create` command, show the updated plan again and wait for approval.
 - **Request changes:** apply them, show the updated plan again and wait for approval.
 - **Decline:** stop and run nothing, so no branch, commit or push is left behind.
 
@@ -63,4 +65,5 @@ Wait for the user to confirm or request changes.
 | **Hook modifies files** | Tell the user which files the hook changed, stage them by name and commit again. |
 | **Push rejected** | Report the rejection (for example, the remote branch already exists or is ahead) and ask how to proceed rather than force-pushing. |
 | **`gh` not logged in** | Stop before `gh pr create` and tell the user to run `gh auth login`; the branch is already pushed, so only the PR step remains. |
+| **`gh pr create` fails on a label** | Re-run `gh label list`, drop the missing label from the command and retry, then report which label was dropped — never leave the pushed branch without a PR. |
 | **PR already exists for the branch** | Report the existing PR's URL instead of creating a second one. |
