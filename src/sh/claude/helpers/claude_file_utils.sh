@@ -8,7 +8,8 @@ source src/sh/shell_utils.sh
 #=======================================================================
 
 SOURCE_DIR="${ROOT_DIR}/src/claude"        # repo-managed Claude files (source of truth)
-TARGET_DIR="${HOME}/.claude"              # local runtime directory for Claude
+# Live Claude config dir — never ~/.claude, which holds Claude Code's own state
+TARGET_DIR="${CLAUDE_CONFIG_DIR:?CLAUDE_CONFIG_DIR is not set — export it (e.g. export CLAUDE_CONFIG_DIR=\"\$HOME/claude\") and re-run}"
 BACKUP_DIR="${HOME}/.claude_backup_${TIMESTAMP}"  # timestamped backup location
 
 #=======================================================================

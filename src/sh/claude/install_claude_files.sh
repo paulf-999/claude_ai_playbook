@@ -8,6 +8,34 @@ source src/sh/claude/helpers/claude_file_utils.sh
 # Functions
 #=======================================================================
 
+# Preview the install and require a typed confirmation at a real terminal.
+# Refuses when stdin is not a TTY, so Claude's Bash tool can't run it unattended.
+confirm_install() {
+    if [[ ! -t 0 ]]; then
+        log_message "${ERROR}" "make install must be run from your own terminal — nothing changed."
+        exit 1
+    fi
+
+    print_section_header "${INFO}" "make install will make these changes" && echo
+    echo "  Source:  ${SOURCE_DIR}"
+    echo "  Target:  ${TARGET_DIR}"
+    echo "  Backup:  ${BACKUP_DIR}"
+    echo
+    echo "  1. Move the existing target to the backup path"
+    echo "  2. Copy the repo's Claude files into the target"
+    echo "  3. Install the Claude CLI via npm"
+    echo "  4. Install the core MCP servers"
+    echo "  5. Install the Claude Code plugins"
+    echo
+
+    local ANSWER
+    read -r -p "Type 'install' to continue: " ANSWER || true  # EOF counts as no
+    if [[ "${ANSWER}" != "install" ]]; then
+        log_message "${WARNING}" "Install cancelled — nothing changed."
+        exit 1
+    fi
+}
+
 # Execute full install flow for Claude files
 install_claude_files() {
     validate_source_dir          # from claude_file_utils.sh
@@ -80,6 +108,7 @@ trap handle_interruption INT
 
 print_section_header "${DEBUG}" "Claude file installation started."
 
+confirm_install
 install_claude_files
 print_operation_summary "installation"
 install_claude_cli

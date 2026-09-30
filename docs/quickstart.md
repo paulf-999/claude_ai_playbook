@@ -2,9 +2,14 @@
 
 ## ⚙️ Step 1: Install
 
+Run this from your own terminal — the install refuses to run anywhere else, including from Claude:
+
 ```bash
+export CLAUDE_CONFIG_DIR="$HOME/claude"
 make install
 ```
+
+It previews the target, backup path and five install steps, then asks you to type `install` — any other answer cancels with nothing changed.
 
 > **First-time install:** open a new terminal after `make install` before running `claude`.
 
@@ -58,13 +63,13 @@ Paste this into `~/.claude/context.md` — Claude loads it automatically at the 
 
 ## ➕ Extras: Keeping up to date
 
-After any `git pull`, re-sync your config:
+After any `git pull`, re-run the install from your own terminal:
 
 ```bash
-make update
+make install
 ```
 
-This syncs config files only — it does not re-install the CLI, MCP servers, or plugins. If the pull included changes to MCP servers, plugins, or the Claude CLI, run `make install` instead.
+Your current config folder is moved to `~/.claude_backup_<timestamp>` first, so copy back any local edits you want to keep.
 
 ---
 
