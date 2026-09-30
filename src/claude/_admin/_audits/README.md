@@ -8,7 +8,7 @@ Central index for audit scorecards across Claude config, skills, rules, and othe
 
 | Domain | File | Last updated | Coverage | Status |
 |---|---|---|---|---|
-| **Reference files** | [`reference_files.md`](reference_files.md) | 2026-08-19 | 9 reference files | ✅ Complete |
+| **Reference files** | [`audit_reference_files.md`](audit_reference_files.md) | 2026-08-19 | 9 reference files | ✅ Complete |
 
 ---
 
