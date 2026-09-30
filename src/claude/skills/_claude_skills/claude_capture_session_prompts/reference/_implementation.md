@@ -6,9 +6,7 @@
 
 Parses `history.jsonl` in the Claude config directory (`$CLAUDE_CONFIG_DIR`, default `~/.claude`) and filters prompts by date (defaults to today, local time).
 
-```bash
-python3 "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills/_claude_skills/claude_capture_session_prompts/capture_session_prompts.py" [--date YYYY-MM-DD]
-```
+Run the **Run:** command in SKILL.md → Example Usage. It uses `${CLAUDE_SKILL_DIR}`, which Claude Code expands only inside SKILL.md.
 
 **Actions:**
 - Read history.jsonl

@@ -22,8 +22,10 @@ Capture session activity from `history.jsonl` into a structured markdown table:
 
 ## 💡 Example Usage
 
+**Run:** `python3 "${CLAUDE_SKILL_DIR}/capture_session_prompts.py" [--date YYYY-MM-DD]` — Claude Code expands `${CLAUDE_SKILL_DIR}` to this skill's folder.
+
 ```
-$ /capture_session_prompts
+$ /claude_capture_session_prompts
 
 Capturing prompts for 2026-08-26 (local time)...
 

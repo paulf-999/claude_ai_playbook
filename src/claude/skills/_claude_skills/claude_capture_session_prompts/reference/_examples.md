@@ -6,7 +6,7 @@
 
 **Command:**
 ```bash
-/capture_session_prompts
+/claude_capture_session_prompts
 ```
 
 **Output:** `~/_sessions/2026_08_26_claude_prompts.md`
@@ -31,7 +31,7 @@
 
 **Command:**
 ```bash
-/capture_session_prompts --date 2026-08-20
+/claude_capture_session_prompts --date 2026-08-20
 ```
 
 **Output:** `~/_sessions/2026_08_20_claude_prompts.md`
@@ -63,7 +63,7 @@ Generates same table structure for specified date. Use for:
 
 **Scenario:** Use captured high-priority pending items to plan next session.
 
-1. Generate today's prompts: `/capture_session_prompts`
+1. Generate today's prompts: `/claude_capture_session_prompts`
 2. Review pending items: Filter by `Status = ⏳ Pending` and `MoSCoW = Must/Should`
 3. Create TODOs from pending items: Add high-MoSCoW items to `~/.claude/TODO.md`
 4. Start next session with clear priorities based on captured activity

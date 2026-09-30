@@ -8,7 +8,7 @@ test_coverage_level: comprehensive
 dispatch:
     triggers:
         explicit:
-            - /capture_session_prompts
+            - /claude_capture_session_prompts
             - capture session prompts
             - audit session prompts
             - audit my claude prompts

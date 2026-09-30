@@ -4,7 +4,7 @@
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # Date created:      2026-09-30
-# Version:           1.0.0
+# Version:           1.0.1
 # Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
@@ -25,7 +25,14 @@ import pytest
 
 from _shared_paths import SKILLS_DIR
 
-SCRIPT = SKILLS_DIR / "_claude_skills" / "claude_capture_session_prompts" / "capture_session_prompts.py"
+# Grouped in the playbook repo (skills/_claude_skills/<name>/), flat in a live
+# config (skills/<name>/) — Claude Code only loads the flat layout.
+SCRIPT = next(
+    (SKILLS_DIR / rel / "capture_session_prompts.py" for rel in
+     ("claude_capture_session_prompts", "_claude_skills/claude_capture_session_prompts")
+     if (SKILLS_DIR / rel / "capture_session_prompts.py").is_file()),
+    SKILLS_DIR / "claude_capture_session_prompts" / "capture_session_prompts.py",
+)
 
 
 def _load_script():
