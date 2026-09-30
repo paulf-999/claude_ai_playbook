@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.0.0
+# version: 3.0.0
 # created: 2026-09-07
 # updated: 2026-09-30
 # hook_style_guide_response_standards_inject.sh
@@ -25,14 +25,28 @@ set -euo pipefail
 # True start of the turn — the moment the prompt was submitted (pre-reasoning).
 START=$(date +%s)
 
-# SKILL WAIVER CHECK: If a skill declares it waives response standards,
-# skip injection entirely. Skills set SKILL_WAIVES_RESPONSE_STANDARDS=true
-# to enable custom output formats (e.g. interactive multi-phase workflows).
-# This check allows skills like confluence_create_page to produce free-form
-# interactive prompts instead of Summary + Next steps format.
-if [ "${SKILL_WAIVES_RESPONSE_STANDARDS:-false}" == "true" ]; then
-  # Waiver is active — exit cleanly without injecting response standards
-  exit 0
+# SKILL WAIVER CHECK: a prompt that invokes a skill by slash command
+# (/<skill_name>) gets no injection when that skill's skill.contract.yaml
+# declares waives_response_standards: true — the skill sets its own format.
+# Natural-language skill runs and follow-up turns still get the directive.
+CLAUDE_ROOT_DIR="$(dirname "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)")"
+HOOK_INPUT="$(cat || true)"
+SKILL_NAME="$(HOOK_INPUT="$HOOK_INPUT" python3 -c '
+import json, os, re
+try:
+    prompt = json.loads(os.environ["HOOK_INPUT"]).get("prompt", "")
+except (ValueError, AttributeError):
+    prompt = ""
+match = re.match(r"\s*/([a-z0-9_]+)(\s|$)", prompt if isinstance(prompt, str) else "")
+print(match.group(1) if match else "")
+')"
+if [ -n "$SKILL_NAME" ]; then
+  for contract in "${CLAUDE_ROOT_DIR}/skills/${SKILL_NAME}/skill.contract.yaml" \
+                  "${CLAUDE_ROOT_DIR}"/skills/*/"${SKILL_NAME}"/skill.contract.yaml; do
+    if [ -f "$contract" ] && grep -Eq '^waives_response_standards:[[:space:]]*true([[:space:]]|#|$)' "$contract"; then
+      exit 0
+    fi
+  done
 fi
 
 read -r -d '' DIRECTIVE <<'EOF' || true
