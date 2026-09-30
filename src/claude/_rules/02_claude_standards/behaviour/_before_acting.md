@@ -1,6 +1,6 @@
-<!-- version: 1.0.1 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 # 🚦 Before Acting — Task Complexity Gates
 
 **Purpose:** Apply proportional gates based on task complexity — heavier scrutiny for riskier tasks, no overhead for trivial work.
@@ -19,7 +19,7 @@
 
 **🟠 Medium** — multiple files, some ambiguity, new feature or significant change
 - Example: "add a new rule to the config", "refactor this module", "implement X feature"
-- **Gate:** Full gates (see below)
+- **Gate:** Full gates, then wait for an explicit go-ahead (see below)
 
 **🔴 Complex** — architecture decision, multi-system impact, major refactor, or foundational change
 - Example: "redesign the config system", "split this PR into a series", "rethink how we handle X"
@@ -64,8 +64,10 @@ If ANY of these apply, treat the task as at least Medium (skipping the trivial t
 4. **TRADEOFF** (Karpathy: "Surface tradeoffs.")
    - Have I surfaced my approach and alternatives?
    - If no → surface before proceeding.
-   - If yes → execute with tools.
+   - If yes → state the approach and wait for an explicit go-ahead before invoking tools.
 
 **Complex tasks (🔴) — Handoff required:**
 - After full gates pass, state: "Here's my approach: [A]. Alternatives: [B, C]. Confirm before I proceed."
 - Wait for explicit user confirmation before invoking tools.
+
+**All tiers:** irreversible or externally visible actions always need confirmation first, even when the task is Trivial or Simple.
