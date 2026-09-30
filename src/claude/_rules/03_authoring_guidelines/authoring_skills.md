@@ -1,35 +1,21 @@
-<!-- version: 3.0.1 -->
+<!-- version: 3.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 # 🛠️ Skill Authoring
 
 **Purpose:** Create focused, well-documented, properly tested skills. One concept per skill.
 
-Work through the children in order, and finish with the Hard Gates Checklist before submitting.
+Before creating or reviewing a skill, read the children below in order, and finish with the Hard Gates Checklist before submitting.
 
 ---
 
-## 📐 Core Standards
+## 📚 Read on demand
 
-@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_core_standards.md
-
-## 🎯 Trigger Design
-
-@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_trigger_design.md
-
-## 🚪 Scope Boundaries & Low-Maintenance Design
-
-@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_scope_and_maintenance.md
-
-## 🧹 No Orphaned Files
-
-@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_no_orphaned_files.md
-
----
-
-## ✅ Hard Gates Checklist
-
-@~/.claude/_rules/03_authoring_guidelines/authoring_skills/_hard_gates_checklist.md
+- **Read on demand:** `~/.claude/_rules/03_authoring_guidelines/authoring_skills/_lazy_load/_core_standards.md` — naming, SKILL.md structure, contract fields and maturity levels.
+- **Read on demand:** `~/.claude/_rules/03_authoring_guidelines/authoring_skills/_lazy_load/_trigger_design.md` — how to write trigger phrases so the skill runs when users ask for it.
+- **Read on demand:** `~/.claude/_rules/03_authoring_guidelines/authoring_skills/_lazy_load/_scope_and_maintenance.md` — declaring `not_for` boundaries and designing for stability.
+- **Read on demand:** `~/.claude/_rules/03_authoring_guidelines/authoring_skills/_lazy_load/_no_orphaned_files.md` — making sure every file in the skill is referenced.
+- **Read on demand:** `~/.claude/_rules/03_authoring_guidelines/authoring_skills/_lazy_load/_hard_gates_checklist.md` — the final checklist before submitting a skill.
 
 ---
 

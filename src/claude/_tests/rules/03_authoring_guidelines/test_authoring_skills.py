@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Test quality score: 5/10
 # Date created:      2026-09-16
-# Version:           3.0.1
-# Date updated:      2026-09-29
+# Version:           3.1.0
+# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 #!/usr/bin/env python3
@@ -30,12 +30,14 @@ RULE_FILE = CLAUDE_DIR / "_rules" / "03_authoring_guidelines" / "authoring_skill
 
 
 def resolved_content() -> str:
-    """Return RULE_FILE's content with every @import line inlined recursively.
+    """Return RULE_FILE's content with every @import and on-demand child inlined.
 
     authoring_skills.md is a parent+child rule (per _multifile_document_organisation.md)
     — its content lives across several imported files, not just the parent.
     Checks below must see the full resolved text, not just the parent's own
     lines, or any future re-split of the rule silently breaks every assertion.
+    Children kept in `authoring_skills/_lazy_load/` are named in
+    `**Read on demand:**` pointers rather than imported, so those are inlined too.
 
     :return: The parent file's text with each @import line replaced by the
         target file's own (recursively resolved) content.
@@ -48,6 +50,12 @@ def resolved_content() -> str:
         if stripped.startswith("@~/") and "/" in stripped[len("@~/"):]:
             rest = stripped[len("@~/"):].split("/", 1)[1]
             target = CLAUDE_DIR / rest
+            if target.exists():
+                parts.append(target.read_text(encoding="utf-8"))
+                continue
+        pointer = re.search(r"\*\*Read on demand:\*\* `~/[^/]+/([^`]+)`", stripped)
+        if pointer:
+            target = CLAUDE_DIR / pointer.group(1)
             if target.exists():
                 parts.append(target.read_text(encoding="utf-8"))
                 continue

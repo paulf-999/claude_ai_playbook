@@ -2,7 +2,7 @@
 
 > 🚫 **Managed file** — do not edit directly. All changes belong in imported rule files, not here.
 > - **Rule:** add behaviour by editing imported files only — never inline
-> - **Lazy load by default:** domain-specific rules go in `_rules/05_lazy_load/` — never imported, read on demand. `_rules/05_lazy_load/` is the only subdirectory that is never imported. **Why:** every imported rule consumes ~100-200 tokens per session regardless of task type. Load domain-specific rules only when actually needed to preserve context for the current task.
+> - **Lazy load by default:** domain-specific rules go in `_rules/05_lazy_load/` — never imported, read on demand. The only other never-imported folders are per-parent `<parent>/_lazy_load/` folders, whose children the always-on parent names in `**Read on demand:**` pointers. **Why:** every imported rule consumes ~100-200 tokens per session regardless of task type. Load domain-specific rules only when actually needed to preserve context for the current task.
 > - **Reset cadence:** Boris Cherny recommends resetting `~/.claude/` every ~6 months to prevent config bloat. Archive to `~/.claude_releases/` before resetting.
 > - **Remember:** every import grows context — favour deliberate addition
 

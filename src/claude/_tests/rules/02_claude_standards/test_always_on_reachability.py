@@ -4,8 +4,8 @@
 # Test complexity score: 3/10
 # Python style compliant: Yes
 # Date created:      2026-09-18
-# Version:           1.0.1
-# Date updated:      2026-09-29
+# Version:           1.1.0
+# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """Tests for always-on-tier reachability — every file imported, nothing orphaned.
@@ -48,6 +48,9 @@ def find_reachability_issues(rules_root: Path, entry_files: list[Path]) -> tuple
         # ~/git/repo_template/ must not hide every rule file from the scan.
         and "template" not in str(p.relative_to(rules_root)).lower()
         and "05_lazy_load" not in p.parts
+        # A parent may keep on-demand children beside it in a `_lazy_load/`
+        # folder — never imported by design, so never an orphan.
+        and "_lazy_load" not in p.relative_to(rules_root).parts
     }
     visited: set[Path] = set()
     broken: list[str] = []
@@ -247,3 +250,40 @@ def test_template_files_below_rules_root_still_excluded(tmp_path):
     _, orphaned = find_reachability_issues(rules.parent, [tmp_path / "CLAUDE.md"])
 
     assert not orphaned, f"A template file inside _rules/ was reported as orphaned: {orphaned}"
+
+
+def test_lazy_load_folder_beside_parent_is_exempt(tmp_path):
+    """A child in a parent's `_lazy_load/` folder is read on demand — never an orphan."""
+    rules = tmp_path / "_rules" / "03_authoring_guidelines"
+    lazy = rules / "parent" / "_lazy_load"
+    lazy.mkdir(parents=True)
+    (tmp_path / "CLAUDE.md").write_text("@~/.claude/_rules/03_authoring_guidelines/parent.md\n")
+    (rules / "parent.md").write_text("**Read on demand:** `parent/_lazy_load/_child.md`\n")
+    (lazy / "_child.md").write_text("# Child content, read on demand\n")
+    (rules / "parent" / "_sibling.md").write_text("# Sibling outside _lazy_load, never imported\n")
+
+    broken, orphaned = find_reachability_issues(rules.parent, [tmp_path / "CLAUDE.md"])
+
+    assert not broken
+    assert not any("_lazy_load" in o for o in orphaned), (
+        f"A `_lazy_load/` child was flagged as orphaned: {orphaned}"
+    )
+    assert any("_sibling.md" in o for o in orphaned), (
+        "The exemption leaked: an un-imported file outside `_lazy_load/` was not flagged"
+    )
+
+
+def test_lazy_load_exemption_matches_whole_segment_only(tmp_path):
+    """Only a folder named exactly `_lazy_load` is exempt — a name merely containing it is not."""
+    rules = tmp_path / "_rules" / "01_essentials"
+    lookalike = rules / "parent" / "_lazy_loader"
+    lookalike.mkdir(parents=True)
+    (tmp_path / "CLAUDE.md").write_text("@~/.claude/_rules/01_essentials/parent.md\n")
+    (rules / "parent.md").write_text("# Parent, self-contained\n")
+    (lookalike / "_child.md").write_text("# Never imported\n")
+
+    _, orphaned = find_reachability_issues(rules.parent, [tmp_path / "CLAUDE.md"])
+
+    assert any("_lazy_loader" in o for o in orphaned), (
+        "A folder merely containing '_lazy_load' in its name was wrongly exempted"
+    )
