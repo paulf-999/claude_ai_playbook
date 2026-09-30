@@ -79,11 +79,17 @@ def test_exit_code_on_change(temp_settings_file, monkeypatch):
     import mcp_toggle
     monkeypatch.setattr("mcp_toggle.SETTINGS_PATH", mock_path)
 
-    # Test: enable when disabled should exit 1
-    with pytest.raises(SystemExit):
+    # Disable when enabled: state changes, so exit 1 (restart needed)
+    monkeypatch.setattr(sys, "argv", ["mcp_toggle.py", "disable", "atlassian"])
+    with pytest.raises(SystemExit) as exc_info:
         mcp_toggle.main()
-        sys.argv = ["mcp_toggle.py", "enable", "atlassian"]
-    # Note: This test is simplified; full integration test is better
+    assert exc_info.value.code == 1
+    assert any(e.get("serverName") == "atlassian" for e in json.loads(mock_path.read_text())["deniedMcpServers"])
+
+    # Disable again: no change, so exit 0
+    with pytest.raises(SystemExit) as exc_info:
+        mcp_toggle.main()
+    assert exc_info.value.code == 0
 
 
 def test_blocking_message_format():
