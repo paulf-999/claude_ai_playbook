@@ -8,9 +8,9 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 0.1.0 -->
+<!-- version: 0.1.1 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-21 -->
+<!-- updated: 2026-09-30 -->
 
 ## 🎯 Purpose
 
@@ -68,5 +68,5 @@ Creating knowledge graphs for large codebases where token cost for file reads is
 - `tests/evals.yaml` — 15 test scenarios covering all phases
 
 **Quality:**
-- `quality_scorecard.md` — Quality assessment and Draft maturity justification
+- `_admin/_quality_scorecards/skills/scorecard_claude_setup_graphify.md` — Quality assessment and Draft maturity justification
 - `reference/_security.md` — Input validation and file-permission safeguards

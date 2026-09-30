@@ -8,9 +8,9 @@ tags:
   tested: true
 tools: Read, mcp__atlassian__createJiraIssue
 ---
-<!-- version: 0.1.1 -->
+<!-- version: 0.1.2 -->
 <!-- created: 2026-04-11 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 
 ## 🎯 Purpose
 
@@ -39,7 +39,7 @@ One ticket at a time, with basic fields. Currently at the **draft** development 
 
 - `reference/error_handling.md` — Atlassian connection errors and recovery steps
 - `reference/field_constraints.md` — story point rules and other field validation
-- `quality_scorecard.md` — 7-dimension quality assessment
+- `_admin/_quality_scorecards/skills/scorecard_jira_create.md` — 7-dimension quality assessment
 
 ## 📌 Prerequisites
 

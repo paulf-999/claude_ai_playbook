@@ -7,9 +7,9 @@ tags:
   tested: true
   disable_model_invocation: false
 ---
-<!-- version: 0.2.0 -->
+<!-- version: 0.2.1 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 
 ## 🎯 Purpose
 
@@ -56,4 +56,4 @@ Self-improving development loop: capture recurring mistakes, promote only verifi
 - `~/.claude/_rules/learned/` — Auto-promoted rules with validation dates
 - `reference/_roadmap.md` — planned v2 enhancements
 - `tests/evals.yaml` — 7 test scenarios covering promotion, validation, pruning and scope
-- `scorecard_claude_kaizen.md` — 7-dimension quality scorecard
+- `_admin/_quality_scorecards/skills/scorecard_claude_kaizen.md` — 7-dimension quality scorecard

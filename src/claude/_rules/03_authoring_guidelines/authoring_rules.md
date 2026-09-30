@@ -1,4 +1,4 @@
-<!-- version: 1.5.2 -->
+<!-- version: 1.5.3 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-30 -->
 # 🛠️ Rule Authoring
@@ -45,7 +45,7 @@ Before writing any rule, answer these five essential questions:
    - Template A (single principle, ~60 lines) vs. Template B (multiple patterns, ~100 lines)
 3. **Write the rule** — follow template structure, emoji headers, one sentence per bullet
 4. **Write tests:** Enforcement rules require tests in `_tests/rules/`. Instructional rules use structural checks.
-5. **Create a quality scorecard:** `_rules/quality_scorecards/<tier>/scorecard_<rule_name>.md`, per `quality_scorecards/README.md`'s template — centralized, never `@import`ed.
+5. **Create a quality scorecard:** `_admin/_quality_scorecards/rules/<tier>/scorecard_<rule_name>.md`, per the template in that folder's `README.md` — centralized, never `@import`ed.
 
 ## 📏 Quality Gates
 

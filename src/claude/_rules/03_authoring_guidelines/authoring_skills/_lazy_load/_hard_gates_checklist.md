@@ -1,6 +1,6 @@
-<!-- version: 2.1.1 -->
+<!-- version: 3.0.0 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 # ✅ Skill Hard Gates Checklist
 
 **Purpose:** The single checklist for creating and reviewing a skill — work through it in order, and every box must be ticked before submitting.
@@ -38,7 +38,7 @@
 - [ ] **6. Reference files [REQUIRED]:**
   - [ ] reference/_implementation.md exists (phases, logic, error handling)
   - [ ] reference/_formats.md [IF APPLICABLE] (standards, validation, examples)
-- [ ] **7. Quality scorecard [REQUIRED]:** `scorecard_<skill_name>.md` at skill root, table-only
+- [ ] **7. Quality scorecard [REQUIRED]:** `_admin/_quality_scorecards/skills/scorecard_<skill_name>.md`, table-only
   - [ ] Follows `~/.claude/_templates/skills/_quality_scorecard_template.md`, including Date Created and Date Updated
   - [ ] 7 dimensions scored *against evals.yaml*, not independently
 - [ ] **8. Complexity score [REQUIRED]:** raw sum per `_complexity_scoring.md`

@@ -7,10 +7,10 @@ tags:
   status: active
   tested: true
   date_created: "2026-06-07"
-  date_updated: "2026-09-19"
+  date_updated: "2026-09-30"
 tools: Read, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
-<!-- version: 1.0.3 -->
+<!-- version: 1.0.4 -->
 <!-- created: 2026-04-08 -->
 <!-- updated: 2026-09-30 -->
 
@@ -45,7 +45,7 @@ One-off pages using the general_page pattern in the `DA` space. Currently at the
 - `reference/_error_recovery.md` — what to do when Confluence access, drafts, or publishing fail
 - `reference/_troubleshooting.md` — common issues, including publish timeouts
 - `reference/_confluence_page_formatting.md` — page header structure and formatting rules
-- `quality_scorecard.md` — 7-dimension quality assessment
+- `_admin/_quality_scorecards/skills/scorecard_confluence_create_page.md` — 7-dimension quality assessment
 
 ## 📌 Prerequisites
 

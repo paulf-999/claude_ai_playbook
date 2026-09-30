@@ -28,7 +28,7 @@ _templates/
 - Used by: `/skill_creator` tool during initial setup
 
 **`skills/_quality_scorecard_template.md`**
-- Table-only layout for each skill's `scorecard_<skill_name>.md`: 7 dimensions plus Overall
+- Table-only layout for each skill's scorecard at `_admin/_quality_scorecards/skills/scorecard_<skill_name>.md`: 7 dimensions plus Overall
 - Includes the scoring scale and per-dimension criteria
 
 ## Usage

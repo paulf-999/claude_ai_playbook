@@ -1,6 +1,6 @@
 ---
 name: claude_kaizen
-version: 0.2.0
+version: 0.2.1
 summary: Self-improving loop—audit corrections for patterns, promote verified ones into rules with proof, prune stale rules
 maturity: draft
 test_coverage_level: comprehensive

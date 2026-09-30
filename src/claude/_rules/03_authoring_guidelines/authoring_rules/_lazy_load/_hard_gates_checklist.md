@@ -1,6 +1,6 @@
-<!-- version: 1.1.1 -->
+<!-- version: 1.1.2 -->
 <!-- created: 2026-09-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 # ✅ Rule Hard Gates Checklist
 
 **Purpose:** Final tick-box check before finishing a rule — verify placement, content, testing, wiring and docs, then run the before-merging review.
@@ -38,7 +38,7 @@
 - [ ] The rule has no `## Related` section — its parent, sibling and dependency links sit in the tier `README.md` under "🔗 Related rules"
 
 ### 📚 Docs
-- [ ] Quality scorecard created or updated at `_rules/quality_scorecards/<tier>/scorecard_<rule_name>.md`
+- [ ] Quality scorecard created or updated at `_admin/_quality_scorecards/rules/<tier>/scorecard_<rule_name>.md`
 - [ ] Tier README (`_rules/<tier>/README.md`) and `_rules/README.md` list the new file
 - [ ] `docs/whats_installed.md` rules description updated
 
