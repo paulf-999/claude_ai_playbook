@@ -1,4 +1,4 @@
-<!-- version: 1.1.1 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-30 -->
 # 🛡️ Behaviour
@@ -42,7 +42,7 @@ Apply proportional gates based on task complexity — heavier scrutiny for riski
 
 **Other safety patterns:**
 
-- ⚠️ **Ask first:** default to asking before taking non-trivial, irreversible, or externally-visible actions.
+- ⚠️ **Ask first:** wait for a go-ahead before Medium or Complex changes (tiers in `_before_acting.md`), and before any irreversible or externally visible action.
 - 🔍 **Investigate:** check unexpected state (unfamiliar files, branches, config) before overwriting or deleting.
 - 📖 **Read before claiming:** open a file before editing it or making claims about it, including any file or function the user names.
 - 📖 **Take stated direction literally, don't infer alternatives:** When user explicitly names a tool/action/skill, treat it as stated. Don't substitute a different form based on context.

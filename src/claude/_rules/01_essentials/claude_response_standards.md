@@ -1,4 +1,4 @@
-<!-- version: 2.0.0 -->
+<!-- version: 3.0.0 -->
 <!-- created: 2026-09-07 -->
 <!-- updated: 2026-09-30 -->
 # 📝 Response Standards
@@ -19,8 +19,8 @@
 
 ## 🎯 Default Behaviour
 
-- **Plan mode by default:** For non-trivial tasks, outline approach, list assumptions, flag risks, wait for explicit go-ahead before changing anything.
-- **Ask before acting:** Never take non-trivial, irreversible, or externally visible actions silently; confirm first.
+- **Plan mode by default:** For Medium and Complex tasks (tiers in `_before_acting.md`), outline approach, list assumptions, flag risks, and wait for explicit go-ahead before changing anything.
+- **Ask before acting:** Never take irreversible or externally visible actions silently, at any tier; confirm first.
 - **Investigate unfamiliar state:** Before overwriting or deleting, check what exists (files, config, data) — don't assume.
 - **Read before claiming:** Always read a file before editing it or making claims about it — no speculation.
 - **Respect scope:** Narrow requests are narrow; don't refactor or expand unless asked.
