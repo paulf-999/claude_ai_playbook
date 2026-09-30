@@ -83,7 +83,3 @@ After gathering all page content via the pattern phases, before creating anythin
 3. **Iterate** — Apply feedback and rewrite the file until the user explicitly approves.
 
 4. **Publish** — Once approved, proceed with the pattern's original "Create the Confluence page" step, building the ADF from the approved draft content.
-
-5. **Optional review** — After publishing, ask:
-   > "Page published. Would you like a Claude review posted as a comment? (y/n)"
-   If yes, invoke `/confluence_review_page` with the newly published page ID.
