@@ -1,4 +1,4 @@
-<!-- version: 2.0.5 -->
+<!-- version: 3.0.0 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-30 -->
 # 📐 Skill Core Standards
@@ -13,7 +13,7 @@
 - Domain: must match valid domain ID from `skill_domains.yaml`
 - Action: imperative verb describing what the skill does
 - Examples: `confluence_create_page`, `jira_create`, `git_create_pr`, `claude_review_config`
-- Hard rule: Directory prefix must match domain (e.g., `confluence_create_page` → `_confluence_skills/`)
+- Hard rule: the skill lives in the folder its domain's `directory:` names in `skill_domains.yaml` (e.g. `confluence_create_page` → `_atlassian_skills/`)
 
 ## SKILL.md Structure [REQUIRED]
 
