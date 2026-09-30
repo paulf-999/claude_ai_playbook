@@ -1,6 +1,6 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 # 🔧 Claude Operational Discipline
 
 **Purpose:** Establish principles and decision frameworks for how Claude operates intentionally — preserving reasoning capability through deliberate choices about tool usage, automation, and monitoring for inefficiency.
@@ -9,12 +9,12 @@
 
 - [Token awareness](#-token-awareness)
 - [Default behaviours](#-default-behaviours)
-- [When to delegate](#-when-to-delegate) — `claude_when_to_delegate.md`
+- [When to delegate](#-when-to-delegate) — `_claude_when_to_delegate.md`
 - [Turn budgets](#-turn-budgets) — read on demand for non-interactive runs
 - [Intervention mode](#-intervention-mode)
 - [External system access](#-external-system-access)
 - [Task request conventions](#-task-request-conventions)
-- [MCP server toggling](#-mcp-server-toggling) — restart requirements after enabling/disabling servers; `mcp_server_toggling.md`
+- [MCP server toggling](#-mcp-server-toggling) — restart requirements after enabling/disabling servers; `_mcp_server_toggling.md`
 
 ---
 
@@ -37,7 +37,7 @@
 
 ## 🤝 When to delegate
 
-@~/.claude/_rules/04_claude_reference/claude_conduct/claude_when_to_delegate.md
+@~/.claude/_rules/04_claude_reference/claude_operational_efficiency/_claude_when_to_delegate.md
 
 ---
 
@@ -57,16 +57,16 @@
 
 ## 🔐 External system access
 
-@~/.claude/_rules/04_claude_reference/claude_conduct/external_system_access.md
+@~/.claude/_rules/04_claude_reference/claude_operational_efficiency/_external_system_access.md
 
 ---
 
 ## 📋 Task request conventions
 
-@~/.claude/_rules/04_claude_reference/claude_conduct/task_request_conventions.md
+@~/.claude/_rules/04_claude_reference/claude_operational_efficiency/_task_request_conventions.md
 
 ---
 
 ## 🔌 MCP server toggling
 
-@~/.claude/_rules/04_claude_reference/claude_conduct/mcp_server_toggling.md
+@~/.claude/_rules/04_claude_reference/claude_operational_efficiency/_mcp_server_toggling.md

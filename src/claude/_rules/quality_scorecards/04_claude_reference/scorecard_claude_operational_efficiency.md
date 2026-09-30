@@ -23,8 +23,8 @@
 ## 🔗 Related files
 
 - `src/claude/_rules/04_claude_reference/claude_operational_efficiency.md` — the rule being scored
-- `src/claude/_rules/04_claude_reference/claude_conduct/claude_when_to_delegate.md` — Test Coverage dimension (untested child)
-- `src/claude/_rules/04_claude_reference/claude_conduct/turn_budgets.md` — Test Coverage dimension (untested child)
-- `src/claude/_rules/04_claude_reference/claude_conduct/task_request_conventions.md` — Test Coverage dimension (untested child)
+- `src/claude/_rules/04_claude_reference/claude_operational_efficiency/_claude_when_to_delegate.md` — Test Coverage dimension (untested child)
+- `src/claude/_rules/05_lazy_load/turn_budgets.md` — Test Coverage dimension (untested, read on demand)
+- `src/claude/_rules/04_claude_reference/claude_operational_efficiency/_task_request_conventions.md` — Test Coverage dimension (untested child)
 - `src/claude/_tests/hooks/session_start/test_session_start_mcp_stale_settings.py` — Test Coverage dimension (adjacent, not direct)
 - `src/claude/_tests/rules/05_lazy_load/test_automation_controls.py` — Test Coverage dimension (adjacent, not direct)
