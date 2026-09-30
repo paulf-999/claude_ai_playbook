@@ -4,7 +4,6 @@ Tests validate: idempotency, exit codes, message format, settings.json integrity
 """
 
 import json
-import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -31,7 +30,7 @@ def mock_settings_path(temp_settings_file, monkeypatch):
         lambda: Path(temp_settings_file).parent
     )
     Path(temp_settings_file).parent.mkdir(parents=True, exist_ok=True)
-    (.parent / ".claude").mkdir(exist_ok=True)
+    (Path(temp_settings_file).parent / ".claude").mkdir(exist_ok=True)
     (Path(temp_settings_file).parent / ".claude" / "settings.json").write_text(
         json.dumps({"deniedMcpServers": []})
     )
@@ -81,7 +80,7 @@ def test_exit_code_on_change(temp_settings_file, monkeypatch):
     monkeypatch.setattr("mcp_toggle.SETTINGS_PATH", mock_path)
 
     # Test: enable when disabled should exit 1
-    with pytest.raises(SystemExit) as exc_info:
+    with pytest.raises(SystemExit):
         mcp_toggle.main()
         sys.argv = ["mcp_toggle.py", "enable", "atlassian"]
     # Note: This test is simplified; full integration test is better
