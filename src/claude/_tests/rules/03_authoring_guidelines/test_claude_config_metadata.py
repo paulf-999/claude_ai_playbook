@@ -5,7 +5,7 @@
 # Python style compliant: Yes
 # Date created:      2026-09-28
 # Version:           2.1.0
-# Date updated:      2026-09-28
+# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """Validates the three-line rule metadata header defined in _claude_config_metadata.md.
@@ -19,7 +19,7 @@ from _shared_paths import RULES_DIR
 # Non-rule content under _rules/: review artefacts and a skill-managed tally
 EXCLUDED_DIRS = {"quality_scorecards", "learned"}
 
-HINT = "— see 03_authoring_guidelines/_claude_config_metadata.md"
+HINT = "— see 03_authoring_guidelines/shared_standards/_claude_config_metadata.md"
 
 VALID_HEADER = "<!-- version: 1.2.10 -->\n<!-- created: 2026-09-01 -->\n<!-- updated: 2026-09-28 -->"
 

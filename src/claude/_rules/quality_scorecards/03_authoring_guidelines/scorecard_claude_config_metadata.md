@@ -22,7 +22,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/03_authoring_guidelines/_claude_config_metadata.md` — the rule being scored
+- `src/claude/_rules/03_authoring_guidelines/shared_standards/_claude_config_metadata.md` — the rule being scored
 - `src/claude/_rules/03_authoring_guidelines/authoring_rules.md` — imports this file (Token Cost Justification)
 - `src/claude/_tests/rules/03_authoring_guidelines/test_claude_config_metadata.py` — Test Coverage dimension
 - `src/claude/_tests/rules/02_claude_standards/test_always_on_reachability.py` — why the always-on import is required

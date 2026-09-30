@@ -66,7 +66,7 @@ One file per scored rule, mirroring the tier path: `_rules/quality_scorecards/<t
 - 10 = unambiguous, actionable, no room for conflicting interpretation
 - 1 = vague, contradictory, or requires outside context to apply
 
-**Complexity** — Use the shared formula in `authoring_guidelines/_complexity_scoring.md` (Concepts + Scope + Dependencies + Prerequisites), inverted: 10 = simple, single-concept, single-file; 1 = tangled, many concepts, wide scope. No maturity gate exists for rules yet (see that file) — this dimension scores the rule as-is, it doesn't cap anything.
+**Complexity** — Use the shared formula in `03_authoring_guidelines/shared_standards/_complexity_scoring.md` (Concepts + Scope + Dependencies + Prerequisites), inverted: 10 = simple, single-concept, single-file; 1 = tangled, many concepts, wide scope. No maturity gate exists for rules yet (see that file) — this dimension scores the rule as-is, it doesn't cap anything.
 
 **Evidence of Need** — Per `guiding_principles.md`'s own "Intentionality gates everything":
 - 10 = documented recurring problem, real incident, or usage evidence
@@ -105,5 +105,5 @@ One file per scored rule, mirroring the tier path: `_rules/quality_scorecards/<t
 - `scorecard_summary.md` — one-glance rollup of every scored rule's Overall score
 - `authoring_rules.md` — rule creation process; references this convention
 - `_templates/skills/_quality_scorecard_template.md` — the skill-scorecard equivalent this mirrors
-- `authoring_guidelines/_complexity_scoring.md` — shared complexity formula used by the Complexity dimension
+- `03_authoring_guidelines/shared_standards/_complexity_scoring.md` — shared complexity formula used by the Complexity dimension
 - `guiding_principles.md` — source of the Intentionality and Currency principles this scorecard operationalizes

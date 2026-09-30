@@ -164,4 +164,4 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 ### `testing/_test_metadata_complexity_scoring.md`
 
 - Parent: `_test_metadata.md` — the quality-score rubric this complements
-- `_complexity_scoring.md` (in `03_authoring_guidelines/`) — the shared formula this file applies
+- `_complexity_scoring.md` (in `03_authoring_guidelines/shared_standards/`) — the shared formula this file applies
