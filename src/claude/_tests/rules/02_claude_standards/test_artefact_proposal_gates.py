@@ -1,200 +1,215 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Test quality score: 9/10
+# Test complexity score: 7/10
+# Python style compliant: Yes
 # Date created:      2026-08-28
-# Version:           1.0.0
-# Date updated:      2026-09-17
+# Version:           2.0.0
+# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
+"""Content-regression tests for behaviour/_artefact_proposal_gates.md.
+
+Goal: catch silent loss or drift of the three proposal gates (naming,
+placement, duplication), their order, and the files and examples they
+point to. Every check reads the real rule or a file it names, so the suite
+fails if the rule is deleted, trimmed, or left pointing at moved files.
 """
-Test artefact proposal gates: naming, placement, duplication.
+import re
 
-Validates that the three gates establish clear rules before proposing new artefacts.
-"""
+from _shared_paths import CLAUDE_DIR, HOOKS_DIR, RULES_DIR, SKILLS_DIR
 
-from _shared_paths import CLAUDE_DIR
+RULE_FILE = RULES_DIR / "02_claude_standards" / "behaviour" / "_artefact_proposal_gates.md"
+PARENT_FILE = RULES_DIR / "02_claude_standards" / "behaviour.md"
+SKILL_DOMAINS = RULES_DIR / "03_authoring_guidelines" / "authoring_skills" / "skill_domains.yaml"
 
-
-class TestNamingGate:
-    """Gate 1: Naming convention validation."""
-
-    def test_skill_naming_pattern(self):
-        """Validates that skills follow <domain>_<action> pattern."""
-        valid_names = [
-            "confluence_create_page",
-            "jira_create",
-            "git_commit",
-        ]
-
-        for name in valid_names:
-            parts = name.split("_")
-            assert len(parts) >= 2, f"Skill {name} must have domain and action"
-            assert all(part.islower() for part in parts), f"Skill {name} must be lowercase"
-            assert "_" in name, f"Skill {name} must use underscores"
-
-        # Invalid structure checks (hyphens, camelCase)
-        invalid_structures = [
-            "confluence-create-page",  # hyphens
-            "confluenceCreatePage",    # camelCase
-        ]
-        for name in invalid_structures:
-            assert not all(c.isalpha() or c == "_" for c in name) or "-" in name or not name.islower(), \
-                f"Invalid structure {name} should be rejected"
-
-    def test_rule_naming_pattern(self):
-        """Validates that rules follow snake_case, descriptive naming."""
-        valid_names = [
-            "naming_standards.md",
-            "security.md",
-            "behaviour.md",
-            "testing.md",
-        ]
-        invalid_names = [
-            "naming-standards.md",     # hyphens
-            "NamingStandards.md",      # PascalCase
-            "a.md",                    # too short, not descriptive
-            "rule_for_X.md",           # vague placeholder
-        ]
-
-        for name in valid_names:
-            base = name.replace(".md", "")
-            assert "_" in base or len(base) > 3, f"Rule {name} should be descriptive"
-            assert base.islower(), f"Rule {name} must be lowercase"
-
-        for name in invalid_names:
-            base = name.replace(".md", "")
-            # Either has hyphens, isn't lowercase, or too short
-            assert "-" in base or not base.islower() or len(base) <= 3
-
-    def test_hook_naming_pattern(self):
-        """Validates that hooks follow hook_<type>_<domain>.sh pattern."""
-        valid_names = [
-            "hook_enforcement_sql.sh",
-            "hook_enforcement_naming_convention.sh",
-            "hook_style_guide_dbt.sh",
-        ]
-
-        for name in valid_names:
-            assert name.startswith("hook_"), f"Hook {name} must start with hook_"
-            assert name.endswith(".sh"), f"Hook {name} must end with .sh"
-            assert "_" in name.replace("hook_", ""), f"Hook {name} must have type and domain"
-
-        # Invalid structure checks
-        invalid_structures = [
-            "enforcement_sql.sh",      # missing hook_ prefix
-            "hook-enforcement-sql.sh", # hyphens
-        ]
-        for name in invalid_structures:
-            # Either missing prefix or has hyphens
-            assert not name.startswith("hook_") or "-" in name, \
-                f"Invalid structure {name} should be rejected"
+GATE_HEADINGS = ["### Gate 1️⃣: Naming", "### Gate 2️⃣: Placement", "### Gate 3️⃣: Duplication"]
+TIERS = ["01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference", "05_lazy_load"]
 
 
-class TestPlacementGate:
-    """Gate 2: Directory placement validation."""
+def gate_section(content: str, number: int) -> str:
+    """Return the text of one gate, from its heading to the next ``---`` rule.
 
-    def test_rule_placement_by_type(self):
-        """Validates that rules are placed in correct directory tier."""
-        always_on_rules = [
-            "guiding_principles.md",
-            "behaviour.md",
-            "security.md",
-            "testing.md",
-        ]
-        # These should be in 01_core/ or 02_claude_internal/
-        for rule in always_on_rules:
-            # Simulate placement check
-            assert rule in always_on_rules, f"{rule} should be in top-level tier"
-
-    def test_skill_placement_by_domain(self):
-        """Validates that skills are placed in domain-specific subdirectories."""
-        skill_placements = {
-            "confluence_create_page": "_confluence_skills/",
-            "git_commit": "_git_skills/",
-            "jira_create": "_jira_skills/",
-        }
-
-        for skill, expected_dir in skill_placements.items():
-            domain = skill.split("_")[0]
-            expected = f"_{domain}_skills/"
-            assert expected_dir == expected, f"Skill {skill} should be in {expected}"
-
-    def test_lazy_load_placement(self):
-        """Validates that domain-specific rules are in lazy_load/."""
-        lazy_load_rules = [
-            "sql.md",
-            "dbt.md",
-            "airflow.md",
-        ]
-        # These should be in 03_lazy_load/
-        for rule in lazy_load_rules:
-            # Simulate placement check: these are domain-specific
-            assert rule not in ["guiding_principles.md", "security.md"], f"{rule} should be lazy-loaded"
+    :param content: Full text of the rule file.
+    :type content: str
+    :param number: Gate number, 1 to 3.
+    :type number: int
+    :return: The gate's section, or an empty string if the heading is missing.
+    :rtype: str
+    """
+    start = content.find(GATE_HEADINGS[number - 1])
+    if start == -1:
+        return ""
+    end = content.find("\n---", start)
+    return content[start:] if end == -1 else content[start:end]
 
 
-class TestDuplicationGate:
-    """Gate 3: Duplication detection."""
+def referenced_rule_files(section: str) -> list:
+    """Resolve every file a gate's **Reference:** line names to a real path.
 
-    def test_existing_rule_detection(self):
-        """Validates that duplicate rules are detected before proposal."""
-        existing_rules = {
-            "naming_standards": "Covers all identifier naming",
-            "security": "Covers secure coding practices",
-            "testing": "Covers test requirements",
-        }
+    The parent is written as ``~/<config_dir>/_rules/...md`` (any config
+    directory name, per portable_paths.md); its children are bare
+    ``_child.md`` names living in a folder named after the parent.
 
-        # If proposing a new rule on naming, should detect naming_standards exists
-        assert any("naming" in existing.lower() for existing in existing_rules.keys()), \
-            "New naming rule conflicts with existing"
-
-    def test_existing_skill_detection(self):
-        """Validates that duplicate skills are detected before proposal."""
-        existing_skills = {
-            "confluence_create_page": "Creates Confluence pages",
-            "jira_create": "Creates Jira issues",
-            "git_commit": "Creates git commits",
-        }
-
-        # If proposing git_push, should detect git_commit exists (same domain)
-        new_proposal = "git_push"
-        domain = new_proposal.split("_")[0]
-        existing_domains = [skill.split("_")[0] for skill in existing_skills.keys()]
-        assert domain in existing_domains, "Similar skill in same domain exists"
+    :param section: One gate's text, from :func:`gate_section`.
+    :type section: str
+    :return: Paths of the parent and each named child.
+    :rtype: list
+    """
+    match = re.search(r"\*\*Reference:\*\* `~/[^/`]+/(_rules/[^`]+)\.md`(.*)", section)
+    if not match:
+        return []
+    parent = CLAUDE_DIR / f"{match.group(1)}.md"
+    children = re.findall(r"`(_[a-z_]+\.md)`", match.group(2))
+    return [parent] + [parent.with_suffix("") / child for child in children]
 
 
-class TestGateSequence:
-    """Validate that gates run in correct order: naming → placement → duplication."""
-
-    def test_gate_order_matters(self):
-        """Validates that gates run in strict sequence."""
-        gates = ["naming", "placement", "duplication"]
-        expected_order = ["naming", "placement", "duplication"]
-        assert gates == expected_order, "Gates must run in order: naming → placement → duplication"
-
-    def test_early_termination_on_failure(self):
-        """Validates that gates stop on first failure (no options until gates pass)."""
-        # Scenario: bad naming
-        # Expected: stop at Gate 1, recommend correct name, do not proceed to Gate 2/3
-        # Scenario: good naming, bad placement
-        # Expected: stop at Gate 2, recommend correct dir, do not proceed to Gate 3
-        # Scenario: good naming, good placement, duplicate exists
-        # Expected: reach Gate 3, present options (integrate vs. new)
-        pass  # Structural test; behavior validated by rule guidance
+def test_rule_file_exists():
+    """The rule lives where behaviour.md and this test expect it."""
+    assert RULE_FILE.is_file(), f"Missing {RULE_FILE} — restore it or update RULE_FILE and behaviour.md's import"
 
 
-class TestGateDocumentation:
-    """Validate that gate rules are documented in _artefact_proposal_gates.md."""
+def test_parent_imports_the_rule():
+    """behaviour.md imports the rule, so it is loaded every session."""
+    parent = PARENT_FILE.read_text()
+    import_line = r"^@~/[^/]+/_rules/02_claude_standards/behaviour/_artefact_proposal_gates\.md$"
+    assert re.search(import_line, parent, re.MULTILINE), (
+        "behaviour.md must @import _artefact_proposal_gates.md, or the gates are never loaded"
+    )
 
-    def test_gates_file_exists(self):
-        """Validates that _artefact_proposal_gates.md exists and is accessible."""
-        gate_file = CLAUDE_DIR / "_rules" / "02_claude_standards" / "behaviour" / "_artefact_proposal_gates.md"
-        assert gate_file.exists(), f"Gates file should exist at {gate_file}"
 
-    def test_gates_file_has_all_three_gates(self):
-        """Validates that gates file documents all three gates."""
-        gate_file = CLAUDE_DIR / "_rules" / "02_claude_standards" / "behaviour" / "_artefact_proposal_gates.md"
-        content = gate_file.read_text()
+def test_three_gates_appear_in_order():
+    """Naming, placement and duplication headings all exist, in that order."""
+    content = RULE_FILE.read_text()
+    positions = [content.find(heading) for heading in GATE_HEADINGS]
+    assert -1 not in positions, f"Missing gate heading(s): {[h for h, p in zip(GATE_HEADINGS, positions) if p == -1]}"
+    assert positions == sorted(positions), "Gates must appear in order: naming → placement → duplication"
 
-        assert "Gate 1" in content or "Naming" in content, "Gates file should document naming gate"
-        assert "Gate 2" in content or "Placement" in content, "Gates file should document placement gate"
-        assert "Gate 3" in content or "Duplication" in content, "Gates file should document duplication gate"
+
+def test_every_gate_has_check_reference_and_action():
+    """Each gate states what it checks, where the standard lives, and what to do."""
+    content = RULE_FILE.read_text()
+    for number in (1, 2, 3):
+        section = gate_section(content, number)
+        for label in ("**Check:**", "**Reference:**", "**Action:**"):
+            assert label in section, f"Gate {number} is missing its {label} line"
+
+
+def test_naming_gate_covers_every_artefact_type():
+    """Gate 1 gives a naming rule for skills, rules, hooks, agents and processes."""
+    section = gate_section(RULE_FILE.read_text(), 1)
+    for artefact in ("**Skills:**", "**Rules:**", "**Hooks:**", "**Agents:**", "**Processes:**"):
+        assert artefact in section, f"Gate 1 no longer names a pattern for {artefact.strip('*:')}"
+
+
+def test_naming_gate_keeps_its_patterns():
+    """Gate 1's patterns match the naming standard's own patterns."""
+    section = gate_section(RULE_FILE.read_text(), 1)
+    for pattern in ("`<domain>_<action>`", "`hook_<type>_<domain>.sh`", "`agents/<group>/<name>/AGENT.md`"):
+        assert pattern in section, f"Gate 1 lost the {pattern} pattern"
+
+
+def test_naming_gate_examples_exist():
+    """Every skill, hook and agent Gate 1 uses as an example is real."""
+    section = gate_section(RULE_FILE.read_text(), 1)
+    skills = {path.parent.name for path in SKILLS_DIR.rglob("SKILL.md")}
+    for skill in ("confluence_create_page", "jira_create"):
+        assert f"`{skill}`" in section, f"Gate 1 no longer uses {skill} as an example — update this test"
+        assert skill in skills, f"Gate 1 example skill {skill} doesn't exist under skills/"
+    assert (HOOKS_DIR / "hook_enforcement_naming_convention.sh").is_file(), "Gate 1 example hook no longer exists"
+    agent = CLAUDE_DIR / "agents" / "core" / "technical_writer" / "AGENT.md"
+    assert agent.is_file(), "Gate 1 example agent no longer exists"
+
+
+def test_naming_gate_example_domains_are_registered():
+    """The skill domains Gate 1 relies on are listed in skill_domains.yaml."""
+    domains = set(re.findall(r"^\s*- id: ([a-z_]+)$", SKILL_DOMAINS.read_text(), re.MULTILINE))
+    for domain in ("confluence", "jira"):
+        assert domain in domains, (
+            f"Domain '{domain}' is missing from skill_domains.yaml, which Gate 1 tells Claude to check"
+        )
+
+
+def test_placement_gate_names_every_tier():
+    """Gate 2 lists all five rule tiers, and each one exists."""
+    section = gate_section(RULE_FILE.read_text(), 2)
+    for tier in TIERS:
+        assert f"**{tier}/**" in section, f"Gate 2 no longer lists the {tier}/ tier"
+        assert (RULES_DIR / tier).is_dir(), f"Gate 2 lists {tier}/, but _rules/{tier}/ doesn't exist"
+
+
+def test_reference_files_exist():
+    """Every file a gate's Reference line points to exists."""
+    content = RULE_FILE.read_text()
+    for number in (1, 2, 3):
+        paths = referenced_rule_files(gate_section(content, number))
+        assert paths, f"Gate {number}'s Reference line no longer names a ~/<config>/_rules/ file"
+        for path in paths:
+            assert path.is_file(), f"Gate {number} points to {path}, which doesn't exist — update the Reference line"
+
+
+def test_naming_and_placement_recommend_directly():
+    """Gates 1 and 2 recommend the fix outright instead of offering options."""
+    content = RULE_FILE.read_text()
+    assert "recommend the corrected name directly" in gate_section(content, 1), (
+        "Gate 1 must recommend the corrected name directly"
+    )
+    assert "recommend the correct directory directly" in gate_section(content, 2), (
+        "Gate 2 must recommend the correct directory directly"
+    )
+
+
+def test_duplication_gate_offers_integration():
+    """Gate 3 offers extending the existing artefact as an alternative to a new one."""
+    section = gate_section(RULE_FILE.read_text(), 3)
+    assert "extend existing artefact vs. create new one" in section, (
+        "Gate 3 must offer extend-existing vs. create-new options"
+    )
+
+
+def test_gate_sequence_runs_in_order():
+    """The sequence block asks the three questions in order and ends in 'safe to proceed'."""
+    content = RULE_FILE.read_text()
+    questions = [
+        "1. Does naming follow convention?",
+        "2. Is placement correct for artefact type?",
+        "3. Does similar artefact already exist?",
+    ]
+    positions = [content.find(question) for question in questions]
+    assert -1 not in positions, "The Gate Sequence block lost one of its three questions"
+    assert positions == sorted(positions), "The Gate Sequence questions are out of order"
+    assert "Safe to proceed with proposal" in content, (
+        "The Gate Sequence no longer ends in 'Safe to proceed with proposal'"
+    )
+
+
+def test_options_only_in_listed_scenarios():
+    """Options are limited to one named scenario per gate, with 'Otherwise' as the default."""
+    content = RULE_FILE.read_text()
+    assert "Present options *only* in these scenarios" in content, (
+        "The 'only in these scenarios' limit on options was lost"
+    )
+    for gate in ("**Gate 1 (Naming):**", "**Gate 2 (Placement):**", "**Gate 3 (Duplication):**"):
+        assert gate in content, f"When to Present Options lost its {gate} scenario"
+    assert "**Otherwise:**" in content, "When to Present Options lost its 'Otherwise' default"
+
+
+def test_contents_matches_headings():
+    """Every Contents link has a matching ## heading."""
+    content = RULE_FILE.read_text()
+    for title in ("The Three Gates", "Gate Sequence", "When to Present Options"):
+        assert f"[{title}]" in content, f"Contents is missing a link to '{title}'"
+        assert re.search(rf"^## \S+ {title}$", content, re.MULTILINE), f"'{title}' is in Contents but has no ## heading"
+
+
+def test_section_helper_flags_missing_gate():
+    """Synthetic bad case: a rule with a gate removed yields an empty section."""
+    trimmed = RULE_FILE.read_text().replace(GATE_HEADINGS[1], "### Placement (renamed)")
+    assert gate_section(trimmed, 2) == "", "gate_section must return '' when a gate heading is missing"
+    assert gate_section(trimmed, 1), "gate_section must still find the untouched gates"
+
+
+def test_reference_helper_flags_missing_reference():
+    """Synthetic bad case: a gate with no Reference line resolves to no files."""
+    assert referenced_rule_files("### Gate 1️⃣: Naming\n**Check:** something\n") == [], \
+        "referenced_rule_files must return [] when there is no Reference line"
