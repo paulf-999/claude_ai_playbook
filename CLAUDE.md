@@ -27,8 +27,8 @@ Use targeted Grep and Glob rather than reading files broadly:
 
 | Goal | Tool |
 |---|---|
-| Find a rule | `Glob src/claude/rules/**/<rule_name>.md` |
-| Find rules importing another | `Grep "<import_name>" src/claude/rules/` |
+| Find a rule | `Glob src/claude/_rules/**/<rule_name>.md` |
+| Find rules importing another | `Grep "<import_name>" src/claude/_rules/` |
 | Find skills in a group | `Glob src/claude/skills/_<group>_skills/**/SKILL.md` |
 | Find a style guide | `Glob src/claude/_rules/05_lazy_load/style_guide_standards/<name>.md` |
 
@@ -41,29 +41,26 @@ Whenever a new artefact is added to `src/claude/`, the documentation listed belo
 | Artefact | Required doc updates |
 |---|---|
 | **Skill** (`skills/`) | `src/claude/skills/README.md` · `docs/whats_installed.md` skills section |
-| **Rule** (`rules/`) | `src/claude/rules/README.md` · `src/claude/CLAUDE.md` (add `@import`) · `docs/whats_installed.md` rules description |
-| **Rule (behaviour)** (`rules/behaviour/`) | `src/claude/rules/behaviour/README.md` · `src/claude/CLAUDE.md` (add `@import`) · `docs/whats_installed.md` rules description |
-| **Agent** (`agents/<group>/`) | Group README (e.g. `agents/core/README.md`) · `src/claude/CLAUDE.md` sub-agent table |
+| **Rule** (`_rules/<tier>/`) | `src/claude/_rules/<tier>/README.md` · `src/claude/CLAUDE.md` (add `@import` for tiers 01–04 only; `05_lazy_load/` is never imported) · `docs/whats_installed.md` rules description |
+| **Agent** (`agents/<group>/<name>/AGENT.md`) | `docs/whats_installed.md` agents section |
 | **Hook** (`hooks/`) | `docs/whats_installed.md` hooks table · `settings.json` lifecycle event registration |
-| **Style guide** (`_rules/05_lazy_load/style_guide_standards/`) | `src/claude/CLAUDE.md` (add `@import`) · `docs/whats_installed.md` style guides table · create matching tool agent in `src/claude/agents/tools/` and update `agents/tools/README.md` |
-| **Command** (`commands/`) | `src/claude/commands/README.md` · `docs/whats_installed.md` commands section |
-| **Skill behavioural test** (`tests/skills/`) | Set `tested: true` in the skill's `SKILL.md` frontmatter · update the group README (`_<group>_skills/README.md`) `Tested` column — no other doc updates required; `tests/skills/README.md` describes the pattern only, not individual files |
+| **Style guide** (`_rules/05_lazy_load/style_guide_standards/`) | `docs/whats_installed.md` style guides table (never `@import`ed — read on demand) |
+| **Skill behavioural test** (`src/claude/_tests/skills/`) | Set `tested: true` in the skill's `SKILL.md` frontmatter · update the group README (`_<group>_skills/README.md`) `Tested` column — no other doc updates required |
 
-After updating the required files above, scan the rest of `docs/` for pages that may reference the area being changed — `quickstart.md`, `training.md`, `best_practices_generic.md`, and files under `docs/reference/` may also need updating depending on the nature of the addition.
+After updating the required files above, scan the rest of `docs/` for pages that may reference the area being changed — `quickstart.md`, `training.md`, and files under `docs/reference/` may also need updating depending on the nature of the addition.
 
 ---
 
 ## Priority reads
 
-Files most frequently cross-referenced across the playbook, derived from static reference-frequency analysis of `~/.claude/_rules/05_lazy_load/style_guide_standards/`. Consult these before scanning broadly when looking for conventions or standards:
+Files most frequently cross-referenced across the playbook, derived from static reference-frequency analysis of `src/claude/_rules/05_lazy_load/style_guide_standards/`. Consult these before scanning broadly when looking for conventions or standards:
 
 | File | Domain |
 |---|---|
-| `~/.claude/_rules/05_lazy_load/style_guide_standards/sql.md` | SQL / SQLFluff |
-| `~/.claude/_rules/05_lazy_load/style_guide_standards/airflow.md` | Airflow DAGs |
-| `~/.claude/_rules/05_lazy_load/style_guide_standards/dbt.md` | dbt models |
-| `~/.claude/_rules/05_lazy_load/style_guide_standards/jira.md` | Jira tickets |
-| `~/.claude/_rules/05_lazy_load/style_guide_standards/cicd.md` | CI/CD pipelines |
-| `~/.claude/_rules/05_lazy_load/style_guide_standards/terraform.md` | Terraform |
-| `~/.claude/_rules/05_lazy_load/style_guide_standards/ansible.md` | Ansible |
-| `~/.claude/_rules/05_lazy_load/style_guide_standards/payroc_engineering_naming_standards.md` | Naming standards |
+| `src/claude/_rules/05_lazy_load/style_guide_standards/sql.md` | SQL / SQLFluff |
+| `src/claude/_rules/05_lazy_load/style_guide_standards/airflow.md` | Airflow DAGs |
+| `src/claude/_rules/05_lazy_load/style_guide_standards/dbt.md` | dbt models |
+| `src/claude/_rules/05_lazy_load/style_guide_standards/jira.md` | Jira tickets |
+| `src/claude/_rules/05_lazy_load/style_guide_standards/infra/terraform.md` | Terraform |
+| `src/claude/_rules/05_lazy_load/style_guide_standards/infra/ansible.md` | Ansible |
+| `src/claude/_rules/05_lazy_load/style_guide_standards/payroc_engineering_naming_standards.md` | Naming standards |

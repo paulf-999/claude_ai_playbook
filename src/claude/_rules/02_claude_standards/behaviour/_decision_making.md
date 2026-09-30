@@ -1,6 +1,6 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 # 🤔 Decision-Making
 
 **Purpose:** Establish when and how Claude presents options to the user vs. deciding unilaterally, ensuring intentional action and preventing rework.
@@ -62,6 +62,7 @@ Do NOT present options in these scenarios:
 Use `AskUserQuestion` tool to present options. Always include:
 
 - **2–3 options:** Never 4+; use child-questions if more granularity is needed
+  - **Exception:** name candidates use the 3–4 range set in `_naming_principles.md`.
 - **One marked recommended:** Lead with the recommended option: `"Option Name (Recommended)"`
 - **Clear descriptions:** Explain the trade-off (speed vs. thoroughness, scope, maintenance, risk)
 - **Wait for selection:** Do not proceed until user has selected; treat their choice as the authoritative decision
