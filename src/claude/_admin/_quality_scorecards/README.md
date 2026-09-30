@@ -12,7 +12,7 @@
 | `skills/` | Skills in `skills/`, one flat folder | `skills/scorecard_<skill_name>.md` |
 | `hooks/` | Hooks in `hooks/` — none scored yet | `hooks/scorecard_<hook_name>.md` |
 | `agents/` | Agents in `agents/` — none scored yet | `agents/scorecard_<agent_name>.md` |
-| `tests/` | Tests in `_tests/` — none scored yet | `tests/scorecard_<test_name>.md` |
+| `tests/` | Tests in `_tests/`, mirroring the `_tests/` path | `tests/<subpath>/scorecard_<test_file_stem>.md` |
 
 - **Summaries:** each folder has a `<type>_scorecards_summary.md` rollup (e.g. `skills/skill_scorecards_summary.md`) — update it in the same commit as any scorecard change.
 - **Templates:** rules use the template in `rules/README.md`, and skills use `_templates/skills/_quality_scorecard_template.md`.
