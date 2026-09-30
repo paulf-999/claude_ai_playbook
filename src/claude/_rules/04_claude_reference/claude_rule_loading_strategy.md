@@ -1,6 +1,6 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 # 📋 Rules Loading Strategy
 
 **Purpose:** Decide which of the five tiers a rule belongs in — and so whether it loads every session or only on demand.
@@ -23,6 +23,7 @@ Every import adds the imported file's full size to every session — measured ti
 
 - **Source of truth:** each tier's directory is the current list of its rules, and `CLAUDE.md` shows what is actually imported — the examples above are illustrative only.
 - **Placement rationale:** each rule's `Purpose` statement explains why it sits in its tier.
+- **Per-parent `_lazy_load/`:** an always-on parent may keep bulky children beside it in `<parent>/_lazy_load/` — never imported, named in the parent's `**Read on demand:**` pointers (e.g. `authoring_skills/_lazy_load/`).
 
 ---
 

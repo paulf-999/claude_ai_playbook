@@ -1,9 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Test quality score: 3/10
+# Test complexity score: 3/10
+# Python style compliant: No
 # Date created:      2026-08-28
-# Version:           1.2.1
-# Date updated:      2026-09-29
+# Version:           1.2.2
+# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 #!/usr/bin/env python3
@@ -37,7 +39,7 @@ import yaml
 from _shared_paths import SKILLS_DIR
 
 # Canonical skill structure: frontmatter plus these 4 headed sections
-# (see _rules/03_authoring_guidelines/authoring_skills/_core_standards.md)
+# (see _rules/03_authoring_guidelines/authoring_skills/_lazy_load/_core_standards.md)
 CANONICAL_SECTIONS = [
     "Purpose",
     "Example Usage",

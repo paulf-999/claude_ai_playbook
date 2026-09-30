@@ -57,7 +57,7 @@ Per Boris Cherny's recommendation, perform a **full reset**:
 
 ### Step 4: Update documentation
 
-Work through the **Docs** and **Wiring** sections of `authoring_rules/_hard_gates_checklist.md` — that checklist is the current source of truth, so it isn't copied here.
+Work through the **Docs** and **Wiring** sections of `authoring_rules/_lazy_load/_hard_gates_checklist.md` — that checklist is the current source of truth, so it isn't copied here.
 
 ### Step 5: Commit
 
