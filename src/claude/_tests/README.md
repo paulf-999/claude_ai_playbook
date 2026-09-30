@@ -96,6 +96,13 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_authoring_skills.py` | `authoring_skills.md` contains its 7 required improvements | 5/10 | 2026-09-16 | 2026-09-30 | 3.1.2 |
 | `test_claude_config_metadata.py` | Every rule opens with the three-line version, created and updated metadata header | 9/10 | 2026-09-28 | 2026-09-28 | 2.1.0 |
 
+### `rules/04_claude_reference/`
+
+| File | What it tests | Quality | Created | Updated | Version |
+|---|---|---|---|---|---|
+| `test_claude_operational_efficiency.py` | `claude_operational_efficiency.md` keeps its 8 sections, imports exactly its 4 children with no orphans, and keeps its key phrases | 9/10 | 2026-09-30 | 2026-09-30 | 1.0.0 |
+| `test_claude_rule_loading_strategy.py` | The five-tier table matches the real `_rules/` folders, its example files exist, and CLAUDE.md imports match each tier's loading claim | 9/10 | 2026-09-30 | 2026-09-30 | 1.0.0 |
+
 ### `rules/05_lazy_load/`
 
 | File | What it tests | Quality | Created | Updated | Version |
