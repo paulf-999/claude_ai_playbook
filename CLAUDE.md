@@ -51,6 +51,19 @@ After updating the required files above, scan the rest of `docs/` for pages that
 
 ---
 
+## 🧪 Running tests
+
+Tests read the config from `CLAUDE_CONFIG_DIR`, which a local shell may point at the live `~/claude/` install. Point it at the repo explicitly — the same target CI uses:
+
+```bash
+CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest src/claude/_tests
+```
+
+- **Why:** a plain `pytest` (or `make test`) checks whatever `CLAUDE_CONFIG_DIR` points at, so it can pass or fail on the live config instead of your changes (found 2026-09-30).
+- **Flat live install:** the live `skills/` has no `_<group>_skills/` folders, so skill-folder checks skip there and only run against the repo.
+
+---
+
 ## Priority reads
 
 Files most frequently cross-referenced across the playbook, derived from static reference-frequency analysis of `src/claude/_rules/05_lazy_load/style_guide_standards/`. Consult these before scanning broadly when looking for conventions or standards:
