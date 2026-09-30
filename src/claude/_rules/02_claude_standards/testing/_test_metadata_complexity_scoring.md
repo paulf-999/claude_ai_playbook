@@ -13,7 +13,7 @@
 
 Tests use the *inverted score* defined above: **complexity score = 10 − raw sum**, so a higher number means a simpler test — one concept, one file, no external dependencies, no fixtures scores 10; a sprawling, multi-directory, multi-dependency test scores near 0.
 
-**Example:** `test_portable_paths.md`'s test scans 2 directories (Scope 1), verifies 3 distinct patterns — hardcoded source, `.expanduser()`, home-dir constants (Concepts 1), uses no external tools (Dependencies 0), needs no fixtures (Prerequisites 0) → raw complexity 2 → **complexity score 8**.
+**Example:** `test_portable_paths.py` scans 2 directories (Scope 1), verifies 3 distinct patterns — hardcoded source, `.expanduser()`, home-dir constants (Concepts 1), uses no external tools (Dependencies 0), needs no fixtures (Prerequisites 0) → raw complexity 2 → **complexity score 8**.
 
 ---
 

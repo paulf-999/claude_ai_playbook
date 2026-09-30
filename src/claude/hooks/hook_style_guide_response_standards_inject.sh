@@ -1,7 +1,7 @@
 #!/bin/bash
-# version: 1.0.0
+# version: 2.0.0
 # created: 2026-09-07
-# updated: 2026-09-18
+# updated: 2026-09-30
 # hook_style_guide_response_standards_inject.sh
 #
 # Per-turn salience injection for Response Standards.
@@ -43,7 +43,7 @@ RESPONSE STANDARDS — apply to this response now. These rules apply in ALL mode
 - Nothing else may appear between the Summary (or the Next steps block, if present) and the offer line — no stray bullets, no partial lines. Citations, if any, go immediately before the offer line.
 - After the Summary/Next steps, on its own line, ask whether to continue: use "⚡ Speed prioritised over verification — More detail, or verify first? (Y/N/V)" if speed was prioritised over full verification, otherwise "More detail? (Y/N)". If a Next steps block is present, append ", or pick a next step (1–N)". Wait for an explicit reply before proceeding.
 - Timing (MANDATORY, including in plan mode): this prompt was submitted at PROMPT_SUBMITTED_AT=__START__ (Unix epoch seconds). Immediately before you compose your closing lines, run `date +%s` as your last tool call — it is read-only and permitted in plan mode — then compute elapsed = end value − PROMPT_SUBMITTED_AT. On its own line after the offer line, output "Response time: <D>" where <D> is the elapsed formatted human-readably: under 60 seconds as "Ss" (e.g. "45s"); 60 seconds or more as "Mmin Ss" (e.g. "1min 15s"). This is true wall-clock from prompt submission, so it INCLUDES reasoning time. Never write a placeholder such as "checking..."; if you have not yet run the end timestamp, run it now before finishing. Never fabricate the number.
-- Match reasoning depth to complexity; prefer the fastest correct first pass; run independent tool calls in parallel.
+- Prefer the fastest correct first pass; run independent tool calls in parallel.
 EOF
 
 # Substitute the real submission timestamp into the directive.
