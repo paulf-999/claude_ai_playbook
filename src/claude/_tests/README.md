@@ -116,7 +116,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_skill_structure_compliance.py` | All installed skills follow the skill template structure | 3/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
+| `test_skill_structure_compliance.py` | Every installed skill passes the skill authoring gate's crawl checks, and each check is proven to fire | 9/10 | 2026-08-28 | 2026-09-30 | 2.0.0 |
 
 ### `skills/confluence_create_page/`
 
