@@ -1,8 +1,10 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Test quality score: 5/10
+# Test complexity score: 6/10
+# Python style compliant: Yes
 # Date created:      2026-09-16
-# Version:           3.1.0
+# Version:           3.1.2
 # Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
@@ -19,7 +21,7 @@ Validates that authoring_skills.md contains all 7 improvements:
 6. Anti-patterns section (scope-creep guidance)
 7. Maturity eval differences documented (Draft vs. Tactical vs. Strategic)
 
-Run: pytest _tests/rules/test_authoring_skills_improvements.py -v
+Run: pytest src/claude/_tests/rules/03_authoring_guidelines/test_authoring_skills.py -v
 """
 
 import re

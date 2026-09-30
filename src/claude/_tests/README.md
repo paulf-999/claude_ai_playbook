@@ -77,10 +77,13 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
+| `test_always_on_reachability.py` | Every always-on rule file is reachable from `CLAUDE.md` via `@import`, and `_lazy_load/` folders are exempt | 9/10 | 2026-09-18 | 2026-09-30 | 1.1.0 |
 | `test_artefact_proposal_gates.py` | The three artefact proposal gates — naming, placement, duplication | 9/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
+| `test_concurrent_sessions.py` | `git/_concurrent_sessions.md` keeps its incident record and shared-working-tree safety guidance | 9/10 | 2026-09-21 | 2026-09-29 | 1.2.0 |
 | `test_decision_making.py` | `_decision_making.md` is present, well-formed, and contains the intentionality-gate sections | 5/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
 | `test_git.py` | `git.md` is present, well-formed, and contains its expected section headings | 5/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
 | `test_plan_mode_phase_gates.py` | Mandatory plan-mode phase gates — blocking requirements, plan-type examples | 8/10 | 2026-09-16 | — | 1.0.0 |
+| `test_portable_paths.py` | Hooks and tests resolve the config directory at runtime instead of hardcoding paths or usernames | 9/10 | 2026-09-18 | 2026-09-18 | 1.0.0 |
 | `test_security_guardrails.py` | Claude never recommends wildcard permissions for destructive commands, and related security guardrails | 5/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
 | `test_testing.py` | Self-consistency: enforcement hooks have tests, and testing.md documents the enforcement pattern | 5/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
 
@@ -88,8 +91,9 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_authoring_rules.py` | The rule authoring guide's pre-creation checklist and quality gate sections | — *(no metadata header)* | — | — | — |
-| `test_authoring_skills.py` | `authoring_skills.md` contains its 7 required improvements | 5/10 | 2026-09-16 | — | 1.0.0 |
+| `test_authoring_rules.py` | The rule authoring guide's pre-creation checklist and quality gate sections | 5/10 | 2026-08-28 | 2026-09-28 | 1.0.0 |
+| `test_authoring_skills.py` | `authoring_skills.md` contains its 7 required improvements | 5/10 | 2026-09-16 | 2026-09-30 | 3.1.2 |
+| `test_claude_config_metadata.py` | Every rule opens with the three-line version, created and updated metadata header | 9/10 | 2026-09-28 | 2026-09-28 | 2.1.0 |
 
 ### `rules/05_lazy_load/`
 
@@ -116,7 +120,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_skill_structure_compliance.py` | All installed skills follow the skill template structure | 3/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
+| `test_skill_structure_compliance.py` | Every installed skill passes the skill authoring gate's crawl checks, and each check is proven to fire | 9/10 | 2026-08-28 | 2026-09-30 | 2.0.0 |
 
 ### `skills/confluence_create_page/`
 
