@@ -21,7 +21,7 @@ make disable_mcp server=github
 make disable_mcp server=all
 ```
 
-Restart Claude Code after toggling. `make update` resets to the default disabled state.
+Restart Claude Code after toggling. Re-running `make install` resets to the default disabled state.
 
 Core servers (context7, memory, sequential-thinking, filesystem) are always active — they are utility servers with no external API calls.
 

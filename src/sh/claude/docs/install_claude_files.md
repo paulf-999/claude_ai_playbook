@@ -44,7 +44,7 @@ flowchart TD
 Steps 8 to 10 are non-fatal — a failure prints a warning and the install continues. To re-run them individually:
 
 ```bash
-make install_claude_cli
+bash src/sh/claude/install_claude_cli.sh
 make install_core_mcp_servers
 make install_plugins
 ```

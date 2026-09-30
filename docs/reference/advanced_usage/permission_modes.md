@@ -31,7 +31,7 @@ Permission modes control what Claude can do automatically versus what requires y
 }
 ```
 
-This is installed to `~/.claude/settings.json` by `make install` and updated by `make update`.
+This is installed to `~/.claude/settings.json` by `make install` — re-run it to pick up changes.
 
 ### Override for a single session (CLI flag)
 

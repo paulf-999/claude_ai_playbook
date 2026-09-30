@@ -63,21 +63,16 @@ Claude Code will start using the playbook automatically — it reads from `C:\Us
 
 ## Keeping the playbook up to date
 
-Whenever the playbook repo is updated, run `/sync_playbook` from any Claude session in your WSL terminal. This pulls the latest changes and syncs both environments:
-
-```
-/sync_playbook
-```
-
-Or run it manually from WSL:
+Whenever the playbook repo is updated, pull and re-run both installs from your own WSL terminal:
 
 ```bash
 cd ~/git_repos/dmt-scripts-claude_ai_playbook
 git pull
-make sync
+make install          # WSL — previews, then asks you to type 'install'
+make install_windows  # Windows C:\Users\<username>\.claude
 ```
 
-`make sync` = `make update` (WSL `~/.claude`) + `make install_windows` (Windows `C:\Users\<username>\.claude`).
+Both need `CLAUDE_CONFIG_DIR` exported first — see the [README](../README.md#getting-started).
 
 Restart any open Claude Code sessions after syncing to pick up the changes.
 
@@ -87,12 +82,9 @@ Restart any open Claude Code sessions after syncing to pick up the changes.
 
 | Command | What it does |
 |---|---|
-| `make install` | Full install for WSL (Claude CLI + MCP servers + plugins + config files) |
-| `make update` | Update playbook config files in WSL `~/.claude` only |
+| `make install` | Full install for WSL (Claude CLI + MCP servers + plugins + config files) — also how you update |
 | `make install_windows` | Sync playbook config files to Windows `.claude` (run from WSL) |
 | `make update_windows` | Alias for `install_windows` |
-| `make sync` | Update WSL + Windows in one step |
-| `/sync_playbook` | Claude skill — git pull + make sync |
 
 ---
 
@@ -114,10 +106,3 @@ Verify the files were copied:
 ls $env:USERPROFILE\.claude\CLAUDE.md
 ```
 If missing, re-run `make install_windows` from WSL. If present, restart Claude Code.
-
-**`CLAUDE_PLAYBOOK_DIR` — custom repo location**
-If your playbook repo is not at `~/git_repos/dmt-scripts-claude_ai_playbook`, set this variable in your WSL shell profile:
-```bash
-export CLAUDE_PLAYBOOK_DIR=/path/to/your/clone
-```
-The `/sync_playbook` skill will use it automatically.
