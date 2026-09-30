@@ -8,14 +8,14 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 0.1.0 -->
+<!-- version: 0.2.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-21 -->
+<!-- updated: 2026-09-30 -->
 
 ## 🎯 Purpose
 
 Capture session activity from `history.jsonl` into a structured markdown table:
-- **Date-filtered capture** — Extract prompts from a specific date (default: today, Dublin time)
+- **Date-filtered capture** — Extract prompts from a specific date (default: today, local time)
 - **Heuristic categorization** — Classify by theme, status, subject, priority (MoSCoW)
 - **Structured markdown** — Output table with summary statistics for review and planning
 - **Manual refinement workflow** — Edit categories post-generation for accuracy
@@ -25,14 +25,14 @@ Capture session activity from `history.jsonl` into a structured markdown table:
 ```
 $ /capture_session_prompts
 
-Capturing prompts for 2026-08-26 (Dublin time)...
+Capturing prompts for 2026-08-26 (local time)...
 
 ✅ Capture complete
    - Prompts found: 8
    - Themes: Rules (2), Skills (2), Process (1), Planning (1), Other (2)
    - Status: Done (3), Pending (4), Clarifying (1)
 
-📄 Output saved to: ~/.claude/sessions/2026-08-26_prompts.md
+📄 Output saved to: ~/_sessions/2026_08_26_claude_prompts.md
 
 Next: Review table for accuracy, adjust categorization, use for planning.
 ```
@@ -50,18 +50,19 @@ Next: Review table for accuracy, adjust categorization, use for planning.
 
 Capturing end-of-session activity for review, planning, and auditing. Generates a structured table that identifies pending work and priorities for next session.
 
-**Caveats:** Heuristics are keyword-based; manual refinement expected. One date at a time (no cross-session aggregation in v0.1). Python 3.6+ required.
+**Caveats:** Heuristics are keyword-based; manual refinement expected. One date at a time (no cross-session aggregation in v0.1). Python 3.9+ required.
 
 **Special Note — Response Standards Waiver:**
-- This skill uses custom interactive output format (heuristic categorization workflow)
-- Free-form prompts are incompatible with standard Claude response formatting requirements
-- The response standards rule makes an exception for this skill to preserve interactive capability
+- **Exemption:** `_rules/05_lazy_load/response_standards_enforcement.md` exempts skill invocation output from the response standards.
+- **Declared:** the contract sets `waives_response_standards: true`, so this skill's capture report keeps its own format.
 
 ## 📚 References
 
 **Workflow & Implementation:**
+- `capture_session_prompts.py` — the script this skill runs (reads history, writes the table)
 - `reference/_implementation.md` — 3-phase workflow (capture → review → plan)
 - `tests/evals.yaml` — 6 test scenarios covering all phases
+- `_tests/skills/claude_capture_session_prompts/` — pytest coverage for the script
 
 **Quality & Design:**
 - `quality_scorecard.md` — Quality assessment and Draft maturity justification

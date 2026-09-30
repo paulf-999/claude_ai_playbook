@@ -1,4 +1,4 @@
-<!-- version: 3.1.0 -->
+<!-- version: 3.2.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-30 -->
 # 🛠️ Skill Authoring
@@ -41,5 +41,7 @@ skill_name/
 **`evals.yaml` always lives in `tests/`, never at skill root** — "evals" is jargon; a `tests/` folder reads as familiar to a non-technical browser of the skill directory. `tests/README.md` is mandatory alongside it, in plain language, so anyone who does open the folder isn't left guessing what the file is.
 
 **Nothing else.** No `templates/`, `patterns/`, `references/`, or domain-specific subdirectories. Keep scope tight, keep structure clean.
+
+- **Exception — a skill's own script:** a skill that runs code may keep that one script at skill root, named for what it does (e.g. `capture_session_prompts.py`) and referenced from SKILL.md; its pytest file lives in `_tests/skills/<skill_name>/`.
 
 **Naming applies going forward:** existing skills created before this naming change keep their `quality_scorecard.md` filename — rename to `scorecard_<skill_name>.md` only when that skill is next touched, not as a standalone rename-only pass.

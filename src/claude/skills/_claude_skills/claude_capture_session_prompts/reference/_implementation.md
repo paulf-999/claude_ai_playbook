@@ -4,10 +4,10 @@
 
 ### Phase 1: Capture from History
 
-Parses `~/.claude/history.jsonl` and filters prompts by date (defaults to today, Dublin time UTC+1).
+Parses `history.jsonl` in the Claude config directory (`$CLAUDE_CONFIG_DIR`, default `~/.claude`) and filters prompts by date (defaults to today, local time).
 
 ```bash
-python3 ~/.claude/scripts/capture_session_prompts.py [--date YYYY-MM-DD]
+python3 "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills/_claude_skills/claude_capture_session_prompts/capture_session_prompts.py" [--date YYYY-MM-DD]
 ```
 
 **Actions:**
@@ -20,7 +20,7 @@ python3 ~/.claude/scripts/capture_session_prompts.py [--date YYYY-MM-DD]
 
 ### Phase 2: Review & Refine (Manual)
 
-Open generated file (`~/.claude/sessions/YYYY-MM-DD_prompts.md`) and adjust categorization as needed.
+Open generated file (`~/_sessions/YYYY_MM_DD_claude_prompts.md`) and adjust categorization as needed.
 
 **Actions:**
 - Review each row for accuracy
@@ -44,22 +44,33 @@ Reference the captured prompts for session review and next-step planning.
 
 ## Categorization Heuristics
 
-**Theme:** Pattern-based classification into Rules, Skills, Process, Planning, TODOs, Other, Unclassified
+Rules are checked in the order listed; the first match wins. Matching is lowercase substring matching, so "but" also matches "button".
 
-**Status:** Detected via markers
-- ✅ Done: "complete", "finished", "done", "created"
-- ⏳ Pending: "pending", "waiting", "blocked", "todo", "later"
-- ✔️ Clarifying Question: "?" at end, "clarif"
-- ↩️ Response: "response", "reply", "answer"
-- 📋 Note: "noted", "note", "reminder"
+**Theme:**
+- **Unclassified (-):** the whole prompt is `yes`, `no`, `1`, `y` or `n`
+- **Rules:** rule, hooks, naming, multifile, style guide, framework, claude_config
+- **Skills:** skill, domain, skill.md
+- **Process:** refactor, trimming, file, structure, child page
+- **TODOs:** todo
+- **Planning:** two or more of prompt, audit, capture, session, table, theme, status
+- **Other:** anything else
 
-**Subject:** Extracted via keyword patterns from prompt text
+**Status:**
+- ✔️ **Clarifying Question:** ends with `?` (unless it starts with a quote mark)
+- ↩️ **Response:** contains but, however, "no.", "yes,", i never said, re:, go to plan, entries containing — or is exactly `yes`, `y` or `1`
+- 📋 **Note:** starts with "this ", "the " or "it " and has no directive verb (create, add, update, review, audit, ensure)
+- ✅ **Done:** contains create a dir, go to plan, or create artifact
+- ⏳ **Pending:** contains so i don't like, you've jumped, i want, i told you, you should, before continuing
+- ✅ **Done:** contains a directive verb (create, add, update, review, audit, ensure, document)
+- ↩️ **Response:** anything else
 
-**MoSCoW:** Applied to pending items based on keyword markers
-- Must: "urgent", "critical", "blocking", "asap"
-- Should: "high", "important", "soon"
-- Could: "nice-to-have", "future", "consider"
+**Subject:** the first match of Style guides (style guide, payroc_engineering), Hooks (hook), Child pages (child page, multifile), Naming (name), Skill domains (domain), Rules (rule), Prompt audit (prompt, audit, capture), TODOs (todo); blank otherwise
 
-**Proposed Action:** Detected from action markers ("do", "create", "update", "build")
+**MoSCoW (Pending prompts only):**
+- **Must:** must, critical, urgent, blocker
+- **Should:** should, important, priority
+- **Could:** could, nice, defer
 
-**Closure:** Extracted from file creation/update patterns or task completion markers
+**Proposed Action:** "Create Artifact" or "Go To Plan Mode" when the prompt contains that phrase
+
+**Closure:** the first file-change phrase found, e.g. "created notes.md", "config.yaml created", "readme updated", "renamed a → b", "removed x from"

@@ -6,10 +6,10 @@
 
 **Command:**
 ```bash
-$ /capture_session_prompts
+/capture_session_prompts
 ```
 
-**Output:** `~/.claude/sessions/2026-08-26_prompts.md`
+**Output:** `~/_sessions/2026_08_26_claude_prompts.md`
 
 | Timestamp | Theme | Subject | Status | Proposed Action | Closure | MoSCoW | Prompt |
 |---|---|---|---|---|---|---|---|
@@ -31,10 +31,10 @@ $ /capture_session_prompts
 
 **Command:**
 ```bash
-$ /capture_session_prompts --date 2026-08-20
+/capture_session_prompts --date 2026-08-20
 ```
 
-**Output:** `~/.claude/sessions/2026-08-20_prompts.md`
+**Output:** `~/_sessions/2026_08_20_claude_prompts.md`
 
 Generates same table structure for specified date. Use for:
 - Retrospectives: what was accomplished this week?
@@ -48,14 +48,14 @@ Generates same table structure for specified date. Use for:
 **Scenario:** Auto-generated categorization has inaccuracies. Refine before archiving.
 
 1. Generate prompts table
-2. Open file: `cat ~/.claude/sessions/2026-08-26_prompts.md`
+2. Open file: `cat ~/_sessions/2026_08_26_claude_prompts.md`
 3. Review and edit:
    - **Correct Theme:** "Rules" → "Process" (misclassified)
    - **Add Subject:** "MoSCoW assignment" (heuristic missed specific topic)
    - **Adjust Status:** "⏳ Pending" → "✅ Done" (task completed after capture)
    - **Add Closure:** "Updated CLAUDE.md" (heuristic didn't detect file edit)
 4. Save refined markdown
-5. Commit to git if archiving: `git add ~/.claude/sessions/2026-08-26_prompts.md && git commit -m "docs: archive session prompts for 2026-08-26"`
+5. Commit to git if archiving: `git add ~/_sessions/2026_08_26_claude_prompts.md && git commit -m "docs: archive session prompts for 2026-08-26"`
 
 ---
 
