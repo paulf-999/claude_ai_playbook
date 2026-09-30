@@ -1,6 +1,6 @@
-<!-- version: 1.0.1 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 # 🗂️ Claude Plans
 
 **Purpose:** Establish review/approval gates for multi-phase work — plans and any other 3+ phase implementation — preventing wasted effort and enabling course correction.
@@ -40,23 +40,15 @@
 4. **On "yes"** — proceed to next phase
 5. **On "no" or feedback** — adjust approach, ask clarifying questions, or halt
 
-**Format:**
+**Format:** use the normal response format from `claude_response_standards.md` (Summary, then Next steps). The phase report must contain:
 
-```
-✅ Phase N complete.
-
-**Deliverables:**
-- Item 1: what was done
-- Item 2: what was done
-
-**Ready for Phase N+1:** [description]
-
-Proceed? (yes/no/adjust)
-```
+- **Phase theme:** a heading for the finished phase, with one bullet per deliverable
+- **Gate theme:** a heading that names the next phase and says work has stopped
+- **Next steps:** "Start Phase N+1" as the recommended option, plus an "Adjust first" option
 
 ---
 
-## 🗂️ Plan-Mode Phase Gates (MANDATORY)
+## 🗂️ Plan-Mode Phase Gates
 
 @~/.claude/_rules/02_claude_standards/claude_plans/_plan_mode_phase_gates.md
 

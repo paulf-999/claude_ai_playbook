@@ -1,4 +1,4 @@
-<!-- version: 2.0.0 -->
+<!-- version: 3.0.0 -->
 <!-- created: 2026-09-17 -->
 <!-- updated: 2026-09-30 -->
 # 🗂️ Plan-Mode Phase Gates
@@ -12,19 +12,7 @@ In plan mode, stop after each phase and wait for the user's explicit approval be
 - Early feedback (after Phase 1) prevents wasted effort on subsequent phases based on stale assumptions
 - Plan mode is *designed* for intentional progression — gates are not optional
 
-**Plan-mode execution format:**
-
-```
-✅ Phase N: [Phase Name] — complete
-
-**Deliverables:**
-- [Item 1]: specific output or discovery
-- [Item 2]: specific output or discovery
-
-**Ready for Phase N+1:** [brief description of next phase]
-
-Proceed? (yes/no/adjust)
-```
+**Report format:** use the phase report described in the parent `claude_plans.md` → How to apply, which follows the normal Summary + Next steps format.
 
 Wait for the user's explicit response before starting the next phase, and treat silence as no approval.
 

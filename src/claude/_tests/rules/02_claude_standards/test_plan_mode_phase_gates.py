@@ -4,14 +4,15 @@
 # Test complexity score: 10/10
 # Python style compliant: Yes
 # Date created:      2026-09-16
-# Version:           2.0.0
+# Version:           3.0.0
 # Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """Tests for plan-mode phase approval gates in claude_plans/_plan_mode_phase_gates.md.
 
 Verifies the rule still requires a stop and explicit approval between plan
-phases, defines the report format, and keeps its plan-approval exceptions.
+phases, uses the parent's Summary-format phase report (no separate
+template, per a 2026-09-30 decision), and keeps its plan-approval exceptions.
 Checks behaviour-bearing text, not emphasis words: the 2026-09-30 prompt audit
 removed the stacked MANDATORY/CRITICAL/BLOCKING register and three duplicate
 examples, so asserting those would lock in the style it replaced.
@@ -21,6 +22,7 @@ import re
 from _shared_paths import CLAUDE_DIR
 
 RULE_FILE = CLAUDE_DIR / "_rules" / "02_claude_standards" / "claude_plans" / "_plan_mode_phase_gates.md"
+PARENT_FILE = CLAUDE_DIR / "_rules" / "02_claude_standards" / "claude_plans.md"
 
 PRESSURE_WORDS = ["MANDATORY", "CRITICAL", "BLOCKING", "non-negotiable", "absolute requirement"]
 
@@ -68,19 +70,35 @@ def test_explains_why_plans_require_gates():
     assert "wasted effort" in content, "Rationale must name wasted effort as the cost avoided"
 
 
-def test_defines_execution_format():
-    """Rule must define the phase report format once."""
+def test_report_format_points_to_parent():
+    """The child defers to the parent's phase report instead of defining its own."""
     content = _content()
-    assert "✅ Phase N: [Phase Name] — complete" in content, "Format missing Phase N header"
-    assert "**Deliverables:**" in content, "Format missing Deliverables block"
-    assert "**Ready for Phase N+1:**" in content, "Format missing next-phase line"
-    assert "Proceed? (yes/no/adjust)" in content, "Format missing approval question"
+    assert "**Report format:**" in content, "Rule must say which report format to use"
+    assert "`claude_plans.md` → How to apply" in content, "Rule must point at the parent's How to apply"
 
 
-def test_format_shown_once():
-    """Rule shows the report template once, not repeated as near-identical examples."""
-    count = _content().count("Proceed? (yes/no/adjust)")
-    assert count == 1, f"Report template appears {count} times; keep one copy"
+def test_no_separate_report_template():
+    """No standalone template competes with the Summary format (2026-09-30 decision)."""
+    for name, text in (("child", _content()), ("parent", PARENT_FILE.read_text())):
+        assert "Proceed? (yes/no/adjust)" not in text, f"{name} still carries the old template"
+        assert "**Ready for Phase N+1:**" not in text, f"{name} still carries the old template"
+
+
+def test_parent_report_uses_summary_format():
+    """The parent's report is built from the normal Summary + Next steps format."""
+    parent = PARENT_FILE.read_text()
+    assert "claude_response_standards.md" in parent, "Parent must reference the response standards"
+    assert "(Summary, then Next steps)" in parent, "Parent must name the Summary + Next steps shape"
+
+
+def test_parent_report_lists_required_contents():
+    """The report must still carry deliverables, the next phase, and an approve/adjust choice."""
+    parent = PARENT_FILE.read_text()
+    assert "one bullet per deliverable" in parent, "Report must list each deliverable"
+    assert "names the next phase" in parent, "Report must name the next phase"
+    assert "says work has stopped" in parent, "Report must say work has stopped"
+    assert '"Start Phase N+1" as the recommended option' in parent, "Report must offer to start the next phase"
+    assert '"Adjust first"' in parent, "Report must offer an adjust option"
 
 
 def test_no_stacked_pressure_language():
