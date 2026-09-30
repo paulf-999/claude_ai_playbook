@@ -1,4 +1,4 @@
-# 📊 Scorecard Summary
+# 📊 Rule Scorecards Summary
 
 **Purpose:** One-glance rollup of every rule scorecard's Overall score and whether it has Recommended improvements — see which rules need attention without opening each file individually.
 

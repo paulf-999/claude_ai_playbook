@@ -8,7 +8,7 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 1.3.0 -->
+<!-- version: 1.3.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-30 -->
 
@@ -47,4 +47,4 @@ Routine feature/hotfix PRs. Faster than manual git workflow; enforces Convention
 - `reference/_phase1_gather.md` — gather-info logic, branch/commit/PR-title/PR-body derivation, label mapping and the label-exists check
 - `reference/_phase2_execute.md` — title and plan confirmation, execution rules and error recovery
 - `tests/evals.yaml` — 12 test scenarios covering every phase, both confirmation steps, a rejected push and the 20-file limit
-- `scorecard_git_create_pr.md` — 7-dimension quality scorecard
+- `_admin/_quality_scorecards/skills/scorecard_git_create_pr.md` — 7-dimension quality scorecard

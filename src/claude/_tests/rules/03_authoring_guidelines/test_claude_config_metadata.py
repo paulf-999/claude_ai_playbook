@@ -4,7 +4,7 @@
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # Date created:      2026-09-28
-# Version:           2.1.0
+# Version:           2.1.1
 # Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
@@ -16,8 +16,8 @@ Lines 1–3 must be ``<!-- version: X.Y.Z -->``, ``<!-- created: YYYY-MM-DD -->`
 from _metadata_header import metadata_header_errors
 from _shared_paths import RULES_DIR
 
-# Non-rule content under _rules/: review artefacts and a skill-managed tally
-EXCLUDED_DIRS = {"quality_scorecards", "learned"}
+# Non-rule content under _rules/: a skill-managed tally
+EXCLUDED_DIRS = {"learned"}
 
 HINT = "— see 03_authoring_guidelines/shared_standards/_claude_config_metadata.md"
 

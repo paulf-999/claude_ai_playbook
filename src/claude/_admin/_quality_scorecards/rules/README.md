@@ -6,15 +6,15 @@
 
 ## 📁 Location convention
 
-One file per scored rule, mirroring the tier path: `_rules/quality_scorecards/<tier>/scorecard_<rule_name>.md`.
+One file per scored rule, mirroring the tier path: `_admin/_quality_scorecards/rules/<tier>/scorecard_<rule_name>.md`.
 
-**Example:** `_rules/01_essentials/guiding_principles.md` → `_rules/quality_scorecards/01_essentials/scorecard_guiding_principles.md`
+**Example:** `_rules/01_essentials/guiding_principles.md` → `_admin/_quality_scorecards/rules/01_essentials/scorecard_guiding_principles.md`
 
 **Never `@import` these files.** They're authoring/review artifacts, not content Claude reads while operating — the whole point is keeping always-on rule files free of scorecard token cost, the same reasoning that already keeps skills' `scorecard_<skill_name>.md` un-imported.
 
-**Child rules** (e.g. `git/_commits.md`) get their own scorecard file at the equivalent nested path, dropping the child file's leading underscore per `_testing_file_organization.md`'s naming convention: `quality_scorecards/02_claude_standards/git/scorecard_commits.md`.
+**Child rules** (e.g. `git/_commits.md`) get their own scorecard file at the equivalent nested path, dropping the child file's leading underscore per `_testing_file_organization.md`'s naming convention: `_admin/_quality_scorecards/rules/02_claude_standards/git/scorecard_commits.md`.
 
-**Non-tiered top-level imports** (e.g. `aliases.md`, which lives at `src/claude/aliases.md` with no tier directory) get their scorecard directly under `quality_scorecards/`, with no tier subdirectory: `quality_scorecards/scorecard_aliases.md`.
+**Non-tiered top-level imports** (e.g. `aliases.md`, which lives at `src/claude/aliases.md` with no tier directory) get their scorecard directly under `rules/`, with no tier subdirectory: `_admin/_quality_scorecards/rules/scorecard_aliases.md`.
 
 **`memory/MEMORY.md` is deliberately excluded** from this convention — it's auto-generated, per-user dynamic content, not a static authored artifact, so there's nothing fixed to score.
 
@@ -95,14 +95,14 @@ One file per scored rule, mirroring the tier path: `_rules/quality_scorecards/<t
 ## 📅 When to score
 
 - **On creation** — every new rule gets a scorecard alongside it, same as skills
-- **During quarterly/6-month audits** — per `guiding_principles.md`'s existing audit cadence; this is the primary reason these live centralized, not colocated — an auditor sweeps `quality_scorecards/` in one pass instead of opening every rule file
-- **Update `scorecard_summary.md` in the same commit** — every score created or changed here must also update its row in the summary rollup, or the two drift out of sync
+- **During quarterly/6-month audits** — per `guiding_principles.md`'s existing audit cadence; this is the primary reason these live centralized, not colocated — an auditor sweeps `_admin/_quality_scorecards/rules/` in one pass instead of opening every rule file
+- **Update `rule_scorecards_summary.md` in the same commit** — every score created or changed here must also update its row in the summary rollup, or the two drift out of sync
 
 ---
 
 ## 🔗 Related
 
-- `scorecard_summary.md` — one-glance rollup of every scored rule's Overall score
+- `rule_scorecards_summary.md` — one-glance rollup of every scored rule's Overall score
 - `authoring_rules.md` — rule creation process; references this convention
 - `_templates/skills/_quality_scorecard_template.md` — the skill-scorecard equivalent this mirrors
 - `03_authoring_guidelines/shared_standards/_complexity_scoring.md` — shared complexity formula used by the Complexity dimension

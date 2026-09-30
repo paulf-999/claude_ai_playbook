@@ -1,9 +1,9 @@
-<!-- version: 1.1.0 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 # Quality Scorecard — Template
 
-Every skill includes a `scorecard_<skill_name>.md` containing only this table (no justification or rationale sections).
+Every skill has a scorecard at `_admin/_quality_scorecards/skills/scorecard_<skill_name>.md` containing only this table (no justification or rationale sections).
 
 ---
 
@@ -103,4 +103,5 @@ Every skill includes a `scorecard_<skill_name>.md` containing only this table (n
 - Overall score is **not a grade** — a 9.5/10 skill is production-ready, not "A-"
 - Maturity justification and design rationale belong in SKILL.md or authoring_skills.md, not in the scorecard
 - **Date Created** is frozen once set; **Date Updated** bumps to today whenever the scorecard is re-scored
+- **Summary row:** update the skill's row in `_admin/_quality_scorecards/skills/skill_scorecards_summary.md` in the same commit
 - **Overall score** repeats the Overall row so it's readable without scanning the table; **Recommended improvements** turns each flagged gap into one imperative action, and is included only when Overall is below 8.5

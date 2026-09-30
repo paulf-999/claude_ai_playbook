@@ -1,6 +1,6 @@
 ---
 name: confluence_create_page
-version: 1.0.3
+version: 1.0.4
 summary: Create Confluence pages using the general_page pattern with local draft review and explicit approval
 maturity: tactical
 test_coverage_level: comprehensive

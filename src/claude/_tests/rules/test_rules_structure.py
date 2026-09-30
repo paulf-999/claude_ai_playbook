@@ -4,8 +4,8 @@
 # Test complexity score: 4/10
 # Python style compliant: Yes
 # Date created:      2026-08-28
-# Version:           1.4.0
-# Date updated:      2026-09-29
+# Version:           1.4.1
+# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """Tests for _rules/ directory structure and content standards.
@@ -227,8 +227,7 @@ def imported_content_files() -> list[Path]:
 
     Wider than rule_files(): includes 05_lazy_load/ and _reference/, since a
     lazy-loaded rule costs the same context once it is read. Excludes READMEs
-    (never imported — they are where Related links now live) and
-    quality_scorecards/ (never imported).
+    (never imported — they are where Related links now live).
 
     :return: Markdown files subject to the context-budget checks.
     :rtype: list[Path]
@@ -237,7 +236,7 @@ def imported_content_files() -> list[Path]:
         md_file
         for base in (RULES_DIR, REFERENCE_DIR)
         for md_file in base.rglob("*.md")
-        if md_file.name != "README.md" and "quality_scorecards" not in md_file.parts
+        if md_file.name != "README.md"
     ]
 
 

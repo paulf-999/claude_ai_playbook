@@ -124,7 +124,7 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - `~/.claude/_templates/RULE.md.template` — two templates (principle-based vs. constraint-based)
 - `testing.md` — when tests are required; enforcement rules always need tests
 - `shared_standards/_complexity_scoring.md` — shared complexity formula; no maturity/complexity gate is defined for rules yet, but reference this rather than inventing a new formula if one is added
-- `_rules/quality_scorecards/README.md` — quality scorecard template and per-dimension criteria for rules
+- `_admin/_quality_scorecards/rules/README.md` — quality scorecard template and per-dimension criteria for rules
 
 **Principles & maintenance:**
 - `guiding_principles.md` — intentionality principle; evidence-gathering methods; review cadence (reset every ~6 months per Boris Cherny)

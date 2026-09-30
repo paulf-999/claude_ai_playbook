@@ -1,6 +1,6 @@
 ---
 name: claude_capture_session_prompts
-version: 0.2.0
+version: 0.2.1
 summary: Generate structured prompts table from session history with theme, status, and MoSCoW categorization
 maturity: draft
 test_coverage_level: comprehensive

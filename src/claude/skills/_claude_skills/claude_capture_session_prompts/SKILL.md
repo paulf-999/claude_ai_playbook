@@ -8,7 +8,7 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 0.2.0 -->
+<!-- version: 0.2.1 -->
 <!-- created: 2026-09-07 -->
 <!-- updated: 2026-09-30 -->
 
@@ -67,6 +67,6 @@ Capturing end-of-session activity for review, planning, and auditing. Generates 
 - `_tests/skills/claude_capture_session_prompts/` — pytest coverage for the script
 
 **Quality & Design:**
-- `quality_scorecard.md` — Quality assessment and Draft maturity justification
+- `_admin/_quality_scorecards/skills/scorecard_claude_capture_session_prompts.md` — Quality assessment and Draft maturity justification
 - `reference/_error_recovery.md` — Troubleshooting common issues
 - `reference/_examples.md` — Usage examples (daily capture, historical review, refinement)

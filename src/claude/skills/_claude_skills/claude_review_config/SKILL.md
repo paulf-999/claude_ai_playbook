@@ -8,9 +8,9 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 0.1.0 -->
+<!-- version: 0.1.1 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-21 -->
+<!-- updated: 2026-09-30 -->
 
 ## 🎯 Purpose
 
@@ -79,4 +79,4 @@ Periodic config health checks (monthly/quarterly) to maintain quality standards 
 - `tests/evals.yaml` — 11 test scenarios covering all phases and edge cases
 
 **Quality & Design:**
-- `quality_scorecard.md` — Quality assessment and Draft maturity justification
+- `_admin/_quality_scorecards/skills/scorecard_claude_review_config.md` — Quality assessment and Draft maturity justification
