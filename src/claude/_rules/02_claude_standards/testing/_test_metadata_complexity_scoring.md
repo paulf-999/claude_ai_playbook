@@ -1,4 +1,4 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.0.3 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-09-30 -->
 # 🧮 Test Complexity Scoring (0–10)
