@@ -1,4 +1,4 @@
-<!-- version: 2.0.5 -->
+<!-- version: 2.0.6 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-09-30 -->
 # 🚪 Artefact Proposal Gates
@@ -46,9 +46,9 @@ Before proposing any new artefact, run these gates in order:
 - **03_authoring_guidelines/** — meta-guidance for authoring rules, skills, agents
 - **04_claude_reference/** — system knowledge and platform guidance (e.g. operational efficiency, rule loading strategy)
 - **05_lazy_load/** — domain-specific; loaded on-demand only
-- **skills/** — reusable skills (single domain per subdirectory: `_confluence_skills/`, `_git_skills/`, etc.)
+- **skills/** — reusable skills, in the folder their domain names in `skill_domains.yaml` (e.g. `_atlassian_skills/`, `_git_skills/`)
 - **hooks/** — enforcement and style-guide hooks
-- **agents/** — custom sub-agents (domain-grouped subdirectories: `agents/core/`, `agents/tools/`, etc.)
+- **agents/** — custom sub-agents (domain-grouped subdirectories, e.g. `agents/core/`)
 
 **Reference:** `~/.claude/_rules/01_essentials/claude_usage_standards/claude_directory_structure.md` (parent) → `_claude_directory_organisation.md` (full tree) + `_claude_directory_naming.md` (naming patterns)
 

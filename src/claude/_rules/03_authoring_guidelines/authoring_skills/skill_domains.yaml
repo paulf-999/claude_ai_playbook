@@ -6,22 +6,22 @@
 #
 # To add a new domain:
 # 1. Add entry below with id, prefix, directory, description
-# 2. Create _<id>_skills/ directory in skills/
-# 3. Update skill_naming_guide.md with new domain
-# 4. Validation automatically picks up the new domain
+# 2. Set directory to the skills/ folder it lives in — domains may share one
+#    (e.g. confluence and jira both live in _atlassian_skills)
+# 3. Create that folder under skills/ if it doesn't exist yet
 #
-# Active domains (match existing skills): confluence, jira, claude
+# Active domains (match existing skills): confluence, jira, claude, git
 
 domains:
     - id: confluence
       prefix: confluence_
-      directory: _confluence_skills
+      directory: _atlassian_skills
       description: Confluence page creation and management
       stable: false
 
     - id: jira
       prefix: jira_
-      directory: _jira_skills
+      directory: _atlassian_skills
       description: Jira issue and epic creation
       stable: false
 
@@ -29,4 +29,10 @@ domains:
       prefix: claude_
       directory: _claude_skills
       description: Claude optimization tools (config review, Graphify setup, audits)
+      stable: false
+
+    - id: git
+      prefix: git_
+      directory: _git_skills
+      description: Git and GitHub workflow automation (branches, commits, pull requests)
       stable: false
