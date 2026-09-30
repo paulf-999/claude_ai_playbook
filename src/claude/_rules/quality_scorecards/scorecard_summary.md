@@ -33,7 +33,7 @@ Each tier is its own table, sorted descending by Overall score within the tier.
 |---|---|---|
 | `scorecard_authoring_skills.md` | 8.7/10 | — (≥8.5) |
 | `scorecard_authoring_rules.md` | 7.1/10 | • Extend `test_authoring_rules.py` to check tier names against the real directory structure |
-| `scorecard_authoring_agents.md` | 6.9/10 | • Moved to lazy-load (2026-09-29) — revisit if agent authoring becomes frequent |
+| `scorecard_authoring_agents.md` | 6.9/10 | • Parent always-on again (2026-09-30), children read on demand from `authoring_agents/_lazy_load/` |
 
 ### 04_claude_reference
 

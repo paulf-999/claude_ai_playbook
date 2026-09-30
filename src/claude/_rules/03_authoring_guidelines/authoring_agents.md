@@ -1,6 +1,6 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 # 🛠️ Agent Authoring
 
 **Purpose:** Establish standardized process for creating agents that ensures clarity, consistency, and intentionality. One concept per agent.
@@ -27,26 +27,12 @@
 
 ---
 
-## 📐 Core Standards
+## 📚 Read on demand
 
-@./authoring_agents/_core_standards.md
+Before creating or reviewing an agent, read the children below in order.
 
-## 🎯 Decision Tree & Creation Process
-
-@./authoring_agents/_decision_tree_and_process.md
-
-## 🚪 Scope Boundaries & Maturity Justification
-
-@./authoring_agents/_scope_and_maturity.md
-
----
-
-## ✅ Hard Gates Checklist
-
-@./authoring_agents/_hard_gates_checklist.md
-
----
-
-## 🚫 Common Mistakes & Anti-Patterns
-
-@./authoring_agents/_common_mistakes.md
+- **Read on demand:** `~/.claude/_rules/03_authoring_guidelines/authoring_agents/_lazy_load/_core_standards.md` — Core Standards: naming pattern, structure, maturity levels and testing requirements.
+- **Read on demand:** `~/.claude/_rules/03_authoring_guidelines/authoring_agents/_lazy_load/_decision_tree_and_process.md` — Decision Tree & Creation Process: agent vs. rule vs. skill, then the 5-step workflow.
+- **Read on demand:** `~/.claude/_rules/03_authoring_guidelines/authoring_agents/_lazy_load/_scope_and_maturity.md` — Scope Boundaries & Maturity Justification: what the agent does not do, and why its maturity fits.
+- **Read on demand:** `~/.claude/_rules/03_authoring_guidelines/authoring_agents/_lazy_load/_hard_gates_checklist.md` — Hard Gates Checklist: the final validation before finishing an agent.
+- **Read on demand:** `~/.claude/_rules/03_authoring_guidelines/authoring_agents/_lazy_load/_common_mistakes.md` — Common Mistakes & Anti-Patterns: what to catch when writing or reviewing.

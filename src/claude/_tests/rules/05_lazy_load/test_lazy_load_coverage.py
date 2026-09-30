@@ -122,7 +122,6 @@ def test_no_orphaned_lazy_load_files():
 # from some other file in the tree — not just live under a covered folder.
 
 ENTRY_POINT_RELATIVE_PATHS = {
-    "authoring_agents.md",
     "automation_controls.md",
     "delegating_to_subagent.md",
     "hooks_decision_framework.md",

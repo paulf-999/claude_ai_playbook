@@ -4,26 +4,29 @@
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # Date created:      2026-09-28
-# Version:           1.2.0
-# Date updated:      2026-09-29
+# Version:           2.0.0
+# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
-"""Structural tests for _rules/05_lazy_load/authoring_agents.md.
+"""Structural tests for _rules/03_authoring_guidelines/authoring_agents.md.
 
 Verifies the agent authoring guide and its 5 child files are present and
 well-formed. Filed after a 2026-09-28 rule audit found authoring_agents.md
 had zero test coverage, unlike its two siblings in the same tier
 (authoring_rules.md, authoring_skills.md). Moved to 05_lazy_load/ on
-2026-09-29 to bring always-on instructions under Claude Code's 150k-char
-limit; test_parent_is_not_always_on guards against it being re-imported.
+2026-09-29 to stay under Claude Code's 150k-char limit, then back to
+03_authoring_guidelines/ on 2026-09-30: the parent is always-on so agent
+work is detected, while its children sit in `authoring_agents/_lazy_load/`
+and are only read on demand.
 """
 from pathlib import Path
 
 from _shared_paths import CLAUDE_DIR
 
-AUTHORING_AGENTS = CLAUDE_DIR / "_rules" / "05_lazy_load" / "authoring_agents.md"
-CHILDREN_DIR = CLAUDE_DIR / "_rules" / "05_lazy_load" / "authoring_agents"
-TIER_README = CLAUDE_DIR / "_rules" / "05_lazy_load" / "README.md"
+TIER_DIR = CLAUDE_DIR / "_rules" / "03_authoring_guidelines"
+AUTHORING_AGENTS = TIER_DIR / "authoring_agents.md"
+CHILDREN_DIR = TIER_DIR / "authoring_agents" / "_lazy_load"
+TIER_README = TIER_DIR / "README.md"
 
 EXPECTED_SECTIONS = [
     "Quick Navigation",
@@ -113,13 +116,25 @@ def test_authoring_agents_ends_with_newline():
     assert not raw.endswith(b"\n\n"), "authoring_agents.md ends with multiple newlines"
 
 
-def test_authoring_agents_imports_every_declared_child():
-    """Every file the parent's Quick Navigation names must have a real @import line."""
-    content = AUTHORING_AGENTS.read_text()
+def test_parent_points_to_every_child_on_demand():
+    """Every child must be named in one of the parent's `**Read on demand:**` pointers."""
+    pointers = [
+        line for line in AUTHORING_AGENTS.read_text().splitlines()
+        if line.startswith("- **Read on demand:**")
+    ]
     for child in EXPECTED_CHILDREN:
-        assert f"authoring_agents/{child}" in content, (
-            f"authoring_agents.md does not @import its declared child: {child}"
+        assert any(f"authoring_agents/_lazy_load/{child}" in p for p in pointers), (
+            f"authoring_agents.md has no read-on-demand pointer to: {child}"
         )
+
+
+def test_parent_never_imports_a_child():
+    """No child may be @imported — that would load it every session."""
+    imports = [
+        line for line in AUTHORING_AGENTS.read_text().splitlines()
+        if line.lstrip().startswith("@") and "authoring_agents/" in line
+    ]
+    assert not imports, f"authoring_agents.md @imports a child it should read on demand: {imports}"
 
 
 def test_all_expected_children_exist_on_disk():
@@ -169,26 +184,30 @@ def test_each_child_ends_with_newline():
 def test_each_child_links_back_to_parent():
     """Every child's tier README Related entry must name authoring_agents.md as its parent."""
     for child in EXPECTED_CHILDREN:
-        entry = readme_related_entry(TIER_README, f"authoring_agents/{child}")
+        entry = readme_related_entry(TIER_README, f"authoring_agents/_lazy_load/{child}")
         assert "authoring_agents.md" in entry, (
-            f"{child}: 05_lazy_load/README.md Related entry doesn't name "
+            f"{child}: 03_authoring_guidelines/README.md Related entry doesn't name "
             f"authoring_agents.md as its parent"
         )
 
 
-def test_parent_is_not_always_on():
-    """CLAUDE.md must not @import the agent guide — it is read on demand only."""
-    claude_md = (CLAUDE_DIR / "CLAUDE.md").read_text()
-    assert "authoring_agents.md" not in claude_md, (
-        "CLAUDE.md imports authoring_agents.md — it was moved to 05_lazy_load/ "
-        "to stay under the 150k always-on char limit; remove the import"
+def test_parent_is_always_on():
+    """CLAUDE.md must @import the agent guide, so agent work is always detected."""
+    imports = [
+        line.strip() for line in (CLAUDE_DIR / "CLAUDE.md").read_text().splitlines()
+        if line.strip().startswith("@")
+    ]
+    assert any(i.endswith("/_rules/03_authoring_guidelines/authoring_agents.md") for i in imports), (
+        "CLAUDE.md does not @import 03_authoring_guidelines/authoring_agents.md"
     )
 
 
 def test_always_on_pointer_exists():
-    """authoring_rules.md (always-on) must point readers to the lazy-loaded agent guide."""
-    rules = (CLAUDE_DIR / "_rules" / "03_authoring_guidelines" / "authoring_rules.md").read_text()
-    assert "05_lazy_load/authoring_agents.md" in rules, (
-        "authoring_rules.md lost its read-on-demand pointer to "
-        "05_lazy_load/authoring_agents.md — agents would become undiscoverable"
+    """authoring_rules.md's tier list must point readers to the agent guide's current home."""
+    rules = (TIER_DIR / "authoring_rules.md").read_text()
+    assert "03_authoring_guidelines/authoring_agents.md" in rules, (
+        "authoring_rules.md lost its pointer to 03_authoring_guidelines/authoring_agents.md"
+    )
+    assert "05_lazy_load/authoring_agents.md" not in rules, (
+        "authoring_rules.md still points to the old 05_lazy_load/ location"
     )

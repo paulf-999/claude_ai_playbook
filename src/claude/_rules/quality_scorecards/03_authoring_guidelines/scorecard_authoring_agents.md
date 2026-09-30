@@ -1,7 +1,7 @@
 # Quality Scorecard — authoring_agents.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-09-30
 
 **Overall score:** 6.9/10
 
@@ -21,7 +21,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/05_lazy_load/authoring_agents.md` — the rule being scored
+- `src/claude/_rules/03_authoring_guidelines/authoring_agents.md` — the rule being scored
 - `src/claude/_rules/03_authoring_guidelines/authoring_rules.md` — Evidence of Need / Test Coverage dimension (sibling with a dedicated test)
 - `src/claude/_rules/03_authoring_guidelines/authoring_skills.md` — Evidence of Need / Test Coverage dimension (sibling with a dedicated test)
 

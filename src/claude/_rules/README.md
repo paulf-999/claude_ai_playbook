@@ -85,7 +85,7 @@ Rule files are `@import`ed every session, so every line in them costs always-on 
 ### **05_lazy_load/** — Domain-specific rules (lazy-loaded)
 - **Who it's for:** Domain specialists (SQL, Airflow, dbt, Terraform, etc.)
 - **Scope:** Rules specific to a single language, tool, or domain
-- **Examples:** style_guide_standards/sql.md, style_guide_standards/airflow.md, latency_optimisation.md, authoring_agents.md
+- **Examples:** style_guide_standards/sql.md, style_guide_standards/airflow.md, latency_optimisation.md, turn_budgets.md
 - **Imported:** No, loaded on-demand only
 - **Note:** if a rule applies in most sessions regardless of task type, it belongs in tier 01/02/03/04 — not here.
 - **Hook required:** every file in 05_lazy_load/ should have a corresponding enforcement hook or be a pure reference document (consulted explicitly, not auto-triggered)

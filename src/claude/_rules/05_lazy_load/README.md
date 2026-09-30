@@ -10,7 +10,6 @@
 
 | Rule | Purpose | Load when |
 |---|---|---|
-| **authoring_agents.md** | Standards for agent creation: naming, structure, maturity levels, testing, scope boundaries; children in `authoring_agents/` | Creating or reviewing a sub-agent |
 | **delegating_to_subagent.md** | When to spawn a sub-agent vs. work directly; constraints and token-cost breakeven | Before spawning a sub-agent |
 | **hooks_decision_framework.md** | ROI criteria for proposing hooks; child `hooks_decision_framework/` holds the 2026-08-07 precedent | Before proposing a hook or automation |
 | **response_standards_enforcement.md** | How the per-turn injection hook enforces the response format, and the reserved validator path | Changing the response-standards hook or its tests |
@@ -98,48 +97,6 @@ A rule should be promoted from lazy-load to top-level (`_rules/`) if:
 ## 🔗 Related rules
 
 Parent, sibling and dependency links for each file in this tier — kept here, not in the file, because READMEs aren't `@import`ed (#121).
-
-### `authoring_agents/_common_mistakes.md`
-
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
-
-### `authoring_agents/_core_standards.md`
-
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
-
-### `authoring_agents/_decision_tree_and_process.md`
-
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
-
-### `authoring_agents/_hard_gates_checklist.md`
-
-- Parent: `authoring_agents.md` — quick navigation and core standards
-
-### `authoring_agents/_scope_and_maturity.md`
-
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
-
-### `authoring_agents.md`
-
-**Naming & placement:**
-- `naming_standards.md` — Self-describing naming principles
-- `claude_directory_structure.md` — Directory organization patterns
-
-**Authoring & testing:**
-- `~/.claude/_templates/AGENT.md.template` — Agent template with examples
-- `testing.md` — When tests are required; evals.yaml patterns
-
-**Principles & maintenance:**
-- `guiding_principles.md` — Intentionality principle; evidence-gathering methods
-- `behaviour.md` — Safe defaults and decision-making patterns
-- `claude_plans.md` — Review/approval gates during implementation
-
-**Related agent standards:**
-- `authoring_rules.md` — Rule creation standards (model for some agent patterns)
-- `authoring_skills.md` — Skill creation standards (model for maturity levels, testing)
-- `claude_plans.md` — Review gates after each implementation phase
-- `guiding_principles.md` — Intentionality; when to create new agents vs. enhance existing ones
-- `testing.md` — Testing requirements for all artifacts including agents
 
 ### `delegating_to_subagent.md`
 
