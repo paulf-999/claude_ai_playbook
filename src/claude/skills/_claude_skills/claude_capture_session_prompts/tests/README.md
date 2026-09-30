@@ -13,5 +13,5 @@
 | 5 | `markdown_table_format` | Output | The generated table is well-formed, complete, and not truncated |
 | 6 | `manual_refinement_workflow` | Integration | The output file can be hand-edited and re-read for TODO planning |
 
-- **No Python handler:** this skill has none
-- **Only coverage:** `evals.yaml` is this skill's sole test coverage
+- **Script tests:** `_tests/skills/claude_capture_session_prompts/test_capture_session_prompts.py` runs the skill's script against sample history
+- **Scenario tests:** `evals.yaml` covers the end-to-end workflow above

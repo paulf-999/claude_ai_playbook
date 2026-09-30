@@ -6,21 +6,21 @@ evals:
   # Capture phase
     - name: capture_default_date
       description: Capture prompts for today (default date)
-      input: /capture_session_prompts
-      setup: ~/.claude/history.jsonl populated with today's prompts (at least 2 entries)
+      input: /claude_capture_session_prompts
+      setup: $CLAUDE_CONFIG_DIR/history.jsonl populated with today's prompts (at least 2 entries)
       expected_output:
           - Script runs without errors
-          - Output file created at ~/.claude/sessions/YYYY-MM-DD_prompts.md (today's date)
+          - Output file created at ~/_sessions/YYYY_MM_DD_claude_prompts.md (today's date)
           - Markdown table with headers: Timestamp, Theme, Subject, Status, Proposed Action, Closure, MoSCoW, Prompt
           - Summary statistics included
 
     - name: capture_specific_date
       description: Capture prompts for a specific past date
-      input: /capture_session_prompts --date 2026-08-20
+      input: /claude_capture_session_prompts --date 2026-08-20
       setup: history.jsonl contains entries from 2026-08-20
       expected_output:
           - Script runs without errors
-          - Output file created at ~/.claude/sessions/2026-08-20_prompts.md
+          - Output file created at ~/_sessions/2026_08_20_claude_prompts.md
           - Only prompts from target date included
           - Timestamp range matches target date
 
