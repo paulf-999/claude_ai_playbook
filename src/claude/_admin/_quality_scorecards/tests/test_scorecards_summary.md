@@ -6,8 +6,8 @@
 
 ## 📋 Current scores
 
-- **Scored:** 43 test files, average 8.0/10.
-- **Below 8.5:** 33 tests, each with recommended improvements.
+- **Scored:** 43 test files, average 8.1/10.
+- **Below 8.5:** 32 tests, each with recommended improvements.
 - **Order:** one table per `_tests/` folder, sorted by Overall score, highest first.
 
 ### agents
@@ -34,6 +34,7 @@
 |---|---|---|
 | `rules/03_authoring_guidelines/scorecard_test_claude_config_metadata.md` | 9.1/10 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_plan_mode_phase_gates.md` | 9.0/10 | — (≥8.5) |
+| `rules/02_claude_standards/scorecard_test_artefact_proposal_gates.md` | 8.9/10 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_concurrent_sessions.md` | 8.7/10 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_authoring_agents.md` | 8.6/10 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_authoring_skills.md` | 8.6/10 | — (≥8.5) |
@@ -55,7 +56,6 @@
 | `rules/02_claude_standards/scorecard_test_testing.md` | 7.4/10 | • Add test functions and assertions toward 10+ and 15+ (now 4 and 5)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/02_claude_standards/scorecard_test_decision_making.md` | 7.3/10 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 6)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Add a synthetic bad-input test that proves the check fails when it should<br>• Fix the module docstring to name `02_claude_standards/behaviour/_decision_making.md` |
 | `rules/01_essentials/scorecard_test_guiding_principles.md` | 7.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 3 and 3)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Replace the `< 20 imports` limit with a check tied to a documented budget |
-| `rules/02_claude_standards/scorecard_test_artefact_proposal_gates.md` | 6.1/10 | • Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Replace the 7 functions that only re-check their own literal lists with checks against `_artefact_proposal_gates.md`<br>• Update the comments to the current five tier names |
 
 ### settings
 
