@@ -77,6 +77,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
+| `test_always_on_reachability.py` | Every always-on rule file is reachable from `CLAUDE.md` via `@import`, and `_lazy_load/` folders are exempt | 9/10 | 2026-09-18 | 2026-09-30 | 1.1.0 |
 | `test_artefact_proposal_gates.py` | The three artefact proposal gates — naming, placement, duplication | 9/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
 | `test_decision_making.py` | `_decision_making.md` is present, well-formed, and contains the intentionality-gate sections | 5/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
 | `test_git.py` | `git.md` is present, well-formed, and contains its expected section headings | 5/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
@@ -89,7 +90,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_authoring_rules.py` | The rule authoring guide's pre-creation checklist and quality gate sections | — *(no metadata header)* | — | — | — |
-| `test_authoring_skills.py` | `authoring_skills.md` contains its 7 required improvements | 5/10 | 2026-09-16 | — | 1.0.0 |
+| `test_authoring_skills.py` | `authoring_skills.md` contains its 7 required improvements | 5/10 | 2026-09-16 | 2026-09-30 | 3.1.2 |
 
 ### `rules/05_lazy_load/`
 
