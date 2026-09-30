@@ -1,6 +1,6 @@
-<!-- version: 1.1.0 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 # 📝 Response Standards
 
 **Purpose:** Establish expected response format, delivery approach, and timing measurement for Claude when working on substantive tasks — ensuring clarity, efficiency, and measurable progress tracking.
@@ -45,10 +45,6 @@
 - Put each option's description as a child bullet beneath it (emoji + short concrete text, honour writing_style.md).
 - Omit the block entirely when there are no meaningful next steps.
 - Example: `1. ✅ **Commit now** (recommended)` followed by `- 📦 Stage and commit the hook, rule, and test`.
-
-**Reasoning depth matching:**
-- Straightforward domain questions with established answers: direct response, no extended reasoning.
-- Novel, ambiguous, or high-stakes questions: deeper reasoning as needed.
 
 **Progress narration:**
 - ✅ Welcome: "checking the official docs for current rates" (task-related progress)

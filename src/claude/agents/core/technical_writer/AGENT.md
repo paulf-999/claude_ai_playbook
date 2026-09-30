@@ -1,6 +1,6 @@
 ---
 name: technical_writer
-description: Clear, precise writer for PR bodies and Confluence pages
+description: Drafts PR/MR descriptions (following the repo's .github/pull_request_template.md) and new Confluence pages, adjusting tone and depth to the audience. Use when asked to draft a PR body, PR description or pull request, or to create or write a Confluence page. Not for editing existing docs, ADRs, runbooks, READMEs or diagrams.
 maturity: tactical
 triggers:
   - /technical_writer
@@ -12,9 +12,9 @@ triggers:
 model: inherit
 isolation: worktree
 ---
-<!-- version: 1.0.0 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-07 -->
+<!-- updated: 2026-09-30 -->
 
 # ✍️ Agent — Technical writer
 
