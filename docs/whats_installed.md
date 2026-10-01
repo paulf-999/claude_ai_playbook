@@ -85,6 +85,8 @@ See [`src/claude/style_guide_standards/README.md`](../src/claude/style_guide_sta
 
 Coding standards and platform conventions for all technologies used by the team.
 
+**Path-scoped loading:** `rules/sql.md` links to the SQL style guide and has `paths: ["**/*.sql"]` frontmatter, so Claude Code loads it automatically when Claude reads a `.sql` file. The other style guides are still read on demand.
+
 **`claude.md` is the meta-guide for the playbook itself** — it defines naming and structural conventions for all Claude components: skills, agents, rules, and memory files. Read this before adding or renaming any playbook component. Loaded globally in every session via `CLAUDE.md`.
 
 ---

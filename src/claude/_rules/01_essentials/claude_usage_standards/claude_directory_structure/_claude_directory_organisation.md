@@ -1,6 +1,6 @@
-<!-- version: 1.0.6 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 # 🏗️ Directory Organisation — `~/.claude/`
 
 **Purpose:** Define what directories exist in the Claude config, their purpose, and the distinction between user-created and auto-generated directories.
@@ -31,8 +31,9 @@
 **Tier 3: Infrastructure (_tests/, _templates/, _reference/, _docs/)**
 - Tests, templates, evergreen reference docs, and additional documentation
 
-**Tier 4: Domain-specific (agents/, hooks/, skills/, wip/)**
+**Tier 4: Domain-specific (agents/, hooks/, rules/, skills/, wip/)**
 - Custom sub-agents, enforcement/style-guide hooks, reusable skills, work-in-progress features
+- **`rules/`:** Claude Code only reads path-scoped rules from a folder with exactly this name, so it has no underscore — it holds symlinks into `_rules/05_lazy_load/`, never original files
 
 **Tier 5: Auto-generated (backups/, memory/, projects/, sessions/)**
 - Claude Code-managed; excluded from version control; never manually edited
