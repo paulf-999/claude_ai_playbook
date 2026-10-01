@@ -2,9 +2,9 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           2.0.0
+# Version:           2.1.0
 # Test quality score: 9/10
-# Test complexity score: 9/10
+# Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
@@ -13,6 +13,11 @@
 Verifies that every hook registered in settings.json is well formed and points
 to a real hook file. A typo or stale reference would otherwise silently skip a
 hook with no error — Claude Code simply would not fire it.
+
+It also checks the reverse: every hook file is either registered or listed in
+``RESERVED_HOOKS`` — kept on purpose but not wired in, with the rule that explains
+why. That stops a reserved hook being deleted as dead code, and a forgotten one
+lingering unnoticed.
 """
 import json
 from pathlib import Path
@@ -20,6 +25,12 @@ from pathlib import Path
 from _shared_paths import CLAUDE_DIR
 from _shared_paths import HOOKS_DIR
 from _shared_paths import SETTINGS_FILE
+
+# Hooks kept on purpose but not registered, mapped to the rule that explains why
+RESERVED_HOOKS = {
+    "hook_style_guide_response_standards.sh": "_rules/05_lazy_load/response_standards_enforcement.md",
+}
+RESERVED_MARKER = "RESERVED"
 
 # Hook events Claude Code fires — a name outside this set is never triggered
 KNOWN_EVENTS = {
@@ -165,3 +176,32 @@ def test_paths_keep_registration_order():
     }
     expected = [Path("/h/hook_a_b.sh"), Path("/h/hook_c_d.sh"), Path("/h/hook_e_f.sh")]
     assert hook_paths(settings) == expected, f"got {hook_paths(settings)}"
+
+
+def test_every_hook_file_is_registered_or_reserved():
+    """Every hook script is either wired into settings.json or listed in RESERVED_HOOKS."""
+    registered = {p.name for p in hook_paths(load_settings())}
+    loose = sorted(p.name for p in HOOKS_DIR.glob("hook_*.sh") if p.name not in registered | set(RESERVED_HOOKS))
+    assert not loose, (
+        f"hook files neither registered nor reserved: {loose} — register them in settings.json, "
+        "or add them to RESERVED_HOOKS with the rule that explains why they're kept"
+    )
+
+
+def test_reserved_hooks_exist_and_stay_unregistered():
+    """Each reserved hook is still on disk and still not wired in."""
+    registered = {p.name for p in hook_paths(load_settings())}
+    for name in RESERVED_HOOKS:
+        assert (HOOKS_DIR / name).is_file(), (
+            f"reserved hook {name} is missing — restore it or drop it from RESERVED_HOOKS"
+        )
+        assert name not in registered, f"{name} is now registered — remove it from RESERVED_HOOKS"
+
+
+def test_reserved_hooks_say_why_they_are_kept():
+    """Each reserved hook and its rule both say it is kept on purpose."""
+    for name, rule in RESERVED_HOOKS.items():
+        header = (HOOKS_DIR / name).read_text()
+        assert RESERVED_MARKER in header, f"{name} must say {RESERVED_MARKER} in its header so no one deletes it"
+        assert rule in header, f"{name} must point to {rule}, the rule that explains why it's kept"
+        assert name in (CLAUDE_DIR / rule).read_text(), f"{rule} must name {name} as a reserved hook"

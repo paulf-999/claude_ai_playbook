@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           1.0.3
+# Version:           1.1.0
 # Test quality score: 5/10
 # Test complexity score: 7/10
 # Python style compliant: No
@@ -17,6 +17,7 @@ Validates that enforcement hooks and behavior-modifying rules have tests:
 
 This is a linting test enforcing the "rules require tests" constraint.
 """
+from __future__ import annotations
 
 from _shared_paths import CLAUDE_DIR, HOOKS_DIR, RULES_DIR
 
@@ -53,6 +54,25 @@ def _hook_to_test_name(hook_name: str) -> str:
     return f"test_{base}.py"
 
 
+def _owning_hook(test_name: str, hook_bases: set[str]) -> str | None:
+    """Return the hook a test file covers, allowing one hook's tests to be split by aspect.
+
+    ``test_<base>.py`` and ``test_<base>_<aspect>.py`` both belong to ``hook_<base>.sh``.
+    When several hook names match, the longest wins, so ``test_x_inject.py`` belongs to
+    ``hook_x_inject.sh`` rather than ``hook_x.sh``.
+
+    :param test_name: Test file name, e.g. ``test_enforcement_naming_convention.py``.
+    :type test_name: str
+    :param hook_bases: Hook names without the ``hook_`` prefix and ``.sh`` suffix.
+    :type hook_bases: set[str]
+    :return: The matching hook base, or ``None`` when no hook matches.
+    :rtype: str | None
+    """
+    base = test_name.removeprefix("test_").removesuffix(".py")
+    matches = [hook for hook in hook_bases if base == hook or base.startswith(f"{hook}_")]
+    return max(matches, key=len, default=None)
+
+
 def test_all_hooks_have_tests():
     """Every enforcement hook must have a corresponding test file.
 
@@ -66,13 +86,14 @@ def test_all_hooks_have_tests():
         return
 
     tests = _get_test_files()
+    hook_bases = {h.replace("hook_", "").replace(".sh", "") for h in hooks}
+    covered = {_owning_hook(test, hook_bases) for test in tests}
 
     # Map each hook to its expected test name
     missing_tests = []
     for hook in hooks:
-        expected_test = _hook_to_test_name(hook)
-        if expected_test not in tests:
-            missing_tests.append((hook, expected_test))
+        if hook.replace("hook_", "").replace(".sh", "") not in covered:
+            missing_tests.append((hook, _hook_to_test_name(hook)))
 
     assert not missing_tests, (
         "Enforcement hooks without tests:\n" +
@@ -103,7 +124,7 @@ def test_no_orphaned_test_files():
         # Skip utility files like test_hook_utils
         if base.endswith("_utils"):
             continue
-        if base not in hook_names:
+        if _owning_hook(test, hook_names) is None:
             orphaned.append(test)
 
     assert not orphaned, (
@@ -142,3 +163,15 @@ def test_testing_rule_documents_test_goals():
     assert "test goal" in content.lower() or "goal" in content.lower(), (
         "testing.md must document how to define test goals."
     )
+
+
+def test_split_test_files_map_to_the_longest_hook_name():
+    """Aspect-split test files belong to their hook, and the most specific hook name wins."""
+    hooks = {"style_guide_response_standards", "style_guide_response_standards_inject"}
+    assert _owning_hook("test_style_guide_response_standards_flags.py", hooks) == "style_guide_response_standards", (
+        "a _<aspect> split should belong to the base hook"
+    )
+    assert _owning_hook("test_style_guide_response_standards_inject.py", hooks) == (
+        "style_guide_response_standards_inject"
+    ), "an exact match on the longer hook name should win"
+    assert _owning_hook("test_unrelated.py", hooks) is None, "a test matching no hook should be orphaned"
