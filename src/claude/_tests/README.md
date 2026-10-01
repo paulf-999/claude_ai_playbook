@@ -12,6 +12,8 @@ Each table's **Quality**, **Created**, **Updated**, and **Version** columns are 
 the test file's own metadata header — see `testing.md`'s Test Metadata Standard section for the
 format and scoring rubric.
 
+**Utility (not a scored test):** `_resolved_rule.py` — reads a parent rule with every child it imports or points to on demand inlined.
+
 **Utility (not a scored test):** `_rule_reachability.py` — walks the `@import` chains from `CLAUDE.md` and reports broken imports and orphaned rule files.
 
 **Utility (not a scored test):** `_file_structure_validator.py` — the file-structure scanner, and the `--check` mode the naming hook calls for one new path.
@@ -86,7 +88,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_portable_paths_python.py` | Python test files use `CLAUDE_DIR` — no `.expanduser()` outside `_shared_paths.py`, home-directory constants or one-convention import prefixes | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.0 |
 | `test_security_guardrails.py` | `_security_guardrails.md` keeps each guardrail, and settings.json allows none of the wildcards it forbids | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_test_metadata.py` | Every test's metadata header is complete, in order, well formed (banners, dates, semver, scores), and its quality score matches its own counts | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.0 |
-| `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, or holds its `BASELINE` scores and never gets worse | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.9 |
+| `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, or holds its `BASELINE` scores and never gets worse | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.10 |
 | `test_testing.py` | Every enforcement hook has a test (aspect splits allowed), no orphaned hook tests, and testing.md's pointers exist | 9/10 | 2026-08-28 | 2026-10-01 | 1.2.0 |
 
 ### `rules/03_authoring_guidelines/`
@@ -95,7 +97,8 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 |---|---|---|---|---|---|
 | `test_authoring_rules.py` | `authoring_rules.md` keeps its checklist, steps and gates, and every file it points authors to exists | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_authoring_agents.py` | `authoring_agents.md` is always-on and points to each of its 5 on-demand children, which are present and well-formed | 9/10 | 2026-09-28 | 2026-10-01 | 2.0.1 |
-| `test_authoring_skills.py` | `authoring_skills.md` contains its 7 required improvements | 9/10 | 2026-09-16 | 2026-10-01 | 3.1.4 |
+| `test_authoring_skills.py` | `authoring_skills.md` and its children: SKILL.md's five sections, the frontmatter example, contract fields matching the checklist, and trigger design | 9/10 | 2026-09-16 | 2026-10-01 | 4.0.0 |
+| `test_authoring_skills_maturity.py` | `authoring_skills.md`'s maturity table matches the checklist and complexity formula, plus scope anti-patterns and low-maintenance principles | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
 | `test_claude_config_metadata.py` | Every rule opens with the three-line version, created and updated metadata header | 9/10 | 2026-09-28 | 2026-10-01 | 2.2.1 |
 
 ### `rules/04_claude_reference/`
