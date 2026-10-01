@@ -31,7 +31,7 @@ repos:
             pass_filenames: false
           - id: skill_authoring_gate # Validate skill authoring gate (crawl + walk + run)
             name: Skill validation - authoring gate (all levels)
-            description: Checks skill.contract.yaml and SKILL.md against crawl (C0–C7), walk (W1–W6) and run (R1–R5) criteria.
+            description: Checks skill.contract.yaml and SKILL.md against crawl (C0–C7), walk (W1–W6) and run (R2–R4) criteria, all in one linter.
             entry: src/sh/pre_commit_hooks/skill_authoring_gate.sh
             language: script
             files: ^src/claude/skills/

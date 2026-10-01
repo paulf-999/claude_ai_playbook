@@ -210,14 +210,11 @@ These criteria apply to **strategic skills only** — production-ready skills ex
 **Before committing:**
 
 ```bash
-# Validate crawl criteria (C0–C7)
+# Validate crawl, walk and run criteria (C0–C7, W1–W6, R2–R4) — FAIL blocks, WARN is advisory
 make lint_skills
 
-# Validate walk/run criteria (W1–R5)
-CLAUDE_CONFIG_DIR=$PWD/src/claude pytest src/claude/_tests/rules/01_essentials/test_skill_authoring_gate.py -v
-
-# Or test your specific skill
-CLAUDE_CONFIG_DIR=$PWD/src/claude pytest src/claude/_tests/rules/01_essentials/test_skill_authoring_gate.py -k "your_skill_name" -v
+# Or just your skill's group
+python3 src/sh/claude/skill_authoring_gate_lint.py src/claude/skills/_<group>_skills
 ```
 
 If linter fails, fix the issues and retry. If tests skip/warn, review the feedback and address in your PR.

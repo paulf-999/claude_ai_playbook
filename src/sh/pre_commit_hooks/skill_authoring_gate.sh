@@ -1,14 +1,14 @@
 #!/bin/bash
 # Pre-commit hook: Skill Authoring Gate (crawl + walk + run validation)
 #
-# Validates all skill changes against the three-level gate:
-# - Crawl (C0–C7): Foundation criteria — BLOCKS commit on failure
-# - Walk (W1–W6): Quality criteria — WARNS on failure but allows commit
-# - Run (R1–R5): Comprehensive criteria — WARNS on failure but allows commit
+# Validates all skill changes against the three-level gate, all run by one linter:
+# - Crawl (C0–C7), walk (W1–W6) and run (R2–R4) checks that fail a skill — BLOCK the commit
+# - Walk and run checks that need a human to judge — WARN only and allow the commit
+# - Complexity score per skill — BLOCKS the commit when too high for its maturity
 #
 # Exit code:
-#   0 — all levels pass (or crawl passes + walk/run are warnings only)
-#   1 — crawl level FAILS (commit is blocked)
+#   0 — no FAILs (WARNs are advisory)
+#   1 — the linter or complexity scorer reports a FAIL (commit is blocked)
 
 set -e
 
@@ -16,7 +16,6 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../" && pwd)"
 export CLAUDE_CONFIG_DIR="${REPO_ROOT}/src/claude"
 LINTER="$REPO_ROOT/src/sh/claude/skill_authoring_gate_lint.py"
 COMPLEXITY_SCORER="$REPO_ROOT/src/claude/_scripts/skill_complexity_scorer.py"
-TEST_SUITE="$REPO_ROOT/src/claude/_tests/rules/01_essentials/test_skill_authoring_gate.py"
 SKILLS_ROOT="$REPO_ROOT/src/claude/skills"
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -26,11 +25,10 @@ echo ""
 
 # Track exit codes
 CRAWL_EXIT=0
-WALK_EXIT=0
 
 # ── Crawl Level (C0–C7): Hard Gate ──────────────────────────────────────────
 
-echo "📋 Running Crawl validation (C0–C7 + complexity)..."
+echo "📋 Running gate validation (crawl, walk and run + complexity)..."
 echo ""
 
 LINTER_EXIT=0
@@ -39,15 +37,15 @@ COMPLEXITY_EXIT=0
 # Run linter
 if [ -f "$LINTER" ]; then
     if python3 "$LINTER" "$SKILLS_ROOT" 2>&1; then
-        echo "✅ Crawl (structure): PASS"
+        echo "✅ Gate (crawl, walk, run): PASS — any WARN lines above are advisory"
         LINTER_EXIT=0
     else
         echo ""
-        echo "❌ Crawl (structure): FAIL — Fix these errors before committing"
+        echo "❌ Gate (crawl, walk, run): FAIL — fix the FAIL lines above before committing"
         LINTER_EXIT=1
     fi
 else
-    echo "⚠️  Crawl (structure): Linter not found at $LINTER — skipping"
+    echo "⚠️  Gate: linter not found at $LINTER — skipping"
     LINTER_EXIT=0
 fi
 
@@ -84,51 +82,22 @@ fi
 
 echo ""
 
-# ── Walk Level (W1–W6) and Run Level (R1–R5): Warnings ──────────────────────
-
-echo "📋 Running Walk/Run validation (W1–W6, R1–R5)..."
-echo ""
-
-if [ -f "$TEST_SUITE" ]; then
-    # Run tests, capture output but don't fail on non-zero exit
-    if python3 -m pytest "$TEST_SUITE" -v --tb=short 2>&1; then
-        echo ""
-        echo "✅ Walk/Run: PASS"
-        WALK_EXIT=0
-    else
-        echo ""
-        echo "⚠️  Walk/Run: WARNINGS detected — fix before code review"
-        # Don't fail the commit; these are advisory
-        WALK_EXIT=0
-    fi
-else
-    echo "⚠️  Walk/Run: Test suite not found at $TEST_SUITE — skipping"
-    WALK_EXIT=0
-fi
-
-echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
 # ── Summary ────────────────────────────────────────────────────────────────
 
 if [ $CRAWL_EXIT -eq 0 ]; then
-    echo "✅ Crawl (C0–C7):   PASS"
+    echo "✅ Gate (crawl, walk, run + complexity): PASS"
 else
-    echo "❌ Crawl (C0–C7):   FAIL"
-fi
-
-if [ $WALK_EXIT -eq 0 ]; then
-    echo "✅ Walk/Run (W/R):  PASS or WARNINGS (address before review)"
-else
-    echo "⚠️  Walk/Run (W/R):  WARNINGS (address before review)"
+    echo "❌ Gate (crawl, walk, run + complexity): FAIL"
 fi
 
 echo ""
 
 if [ $CRAWL_EXIT -eq 0 ]; then
-    echo "✅ Commit: ALLOWED (crawl criteria passed)"
+    echo "✅ Commit: ALLOWED (no gate failures)"
     exit 0
 else
-    echo "❌ Commit: BLOCKED (fix crawl errors above)"
+    echo "❌ Commit: BLOCKED (fix the gate failures above)"
     exit 1
 fi
