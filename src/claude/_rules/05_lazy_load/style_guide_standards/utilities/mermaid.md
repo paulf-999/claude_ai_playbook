@@ -1,7 +1,9 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
 # 🔀 Mermaid Diagram Standards
+
+**Purpose:** Keep Mermaid diagrams consistent and readable across skills and READMEs.
 
 [Mermaid](https://mermaid.js.org) is a Markdown-native diagramming language for flowcharts, sequence diagrams, and more.
 
