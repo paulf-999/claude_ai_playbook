@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Test quality score: 5/10
 # Date created:      2026-08-28
-# Version:           1.1.1
-# Date updated:      2026-09-28
+# Version:           1.2.0
+# Date updated:      2026-10-01
 # ─────────────────────────────────────────────────────────
 
 """
@@ -20,9 +20,15 @@ Checks:
    (01_essentials/, 02_claude_standards/, 04_claude_reference/, 05_lazy_load/)
 
 This test is parametrized to scan all files at once and report violations.
+
+``check_new_path`` applies the same file checks to one path that doesn't exist yet. The
+naming hook (``hooks/hook_enforcement_naming_convention.sh``) calls it through the
+``--check`` command-line mode, so the hook and this test always agree.
 """
 
+import json
 import re
+import sys
 from pathlib import Path
 
 
@@ -269,6 +275,31 @@ class FileStructureValidator:
         return bool(re.match(pattern, filename))
 
 
+def check_new_path(file_path: Path, claude_home: Path = CLAUDE_HOME) -> list[dict]:
+    """Return the violations a new file at ``file_path`` would cause.
+
+    Paths outside ``claude_home``, or inside a skipped directory (auto-generated or hidden),
+    return an empty list — the same files the full scan never looks at.
+
+    :param file_path: Absolute path of the file about to be created.
+    :type file_path: Path
+    :param claude_home: Root of the Claude config directory.
+    :type claude_home: Path
+    :return: Violation dicts with keys path, rule, severity and message.
+    :rtype: list[dict]
+    """
+    try:
+        rel_path = file_path.relative_to(claude_home)
+    except ValueError:
+        return []
+    parent_dirs = rel_path.parts[:-1]
+    if any(part in AUTO_GENERATED_DIRS or part.startswith(".") or part == "node_modules" for part in parent_dirs):
+        return []
+    validator = FileStructureValidator(claude_home)
+    validator._validate_file(file_path, len(parent_dirs))
+    return validator.violations
+
+
 def test_file_structure_compliance():
     """
     Validate that all files and directories in the configured Claude directory follow conventions.
@@ -305,5 +336,9 @@ def test_file_structure_compliance():
 
 
 if __name__ == "__main__":
-    test_file_structure_compliance()
-    print("✅ File structure compliance check passed!")
+    # --check <claude_home> <file_path>: print one path's violations as JSON (used by the naming hook)
+    if len(sys.argv) == 4 and sys.argv[1] == "--check":
+        print(json.dumps(check_new_path(Path(sys.argv[3]), Path(sys.argv[2]))))
+    else:
+        test_file_structure_compliance()
+        print("✅ File structure compliance check passed!")

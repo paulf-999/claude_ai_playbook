@@ -65,6 +65,17 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/hook_enforcement_naming_convention.sh"
+          }
+        ]
+      }
     ]
   }
 }

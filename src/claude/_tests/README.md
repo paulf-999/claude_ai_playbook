@@ -36,8 +36,7 @@ Tests for Claude Code hook scripts in `~/.claude/hooks/`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_enforcement_dir_structure.py` | `hook_enforcement_dir_structure.sh` — injects dir structure rules for `mkdir` under `~/.claude/` | 5/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
-| `test_enforcement_naming_convention.py` | `hook_enforcement_naming_convention.sh` — blocks new files under `~/.claude/` | 5/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
+| `test_enforcement_naming_convention.py` | `hook_enforcement_naming_convention.sh` — denies new config files whose names break the compliance checks, and lets everything else through | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_enforcement_writing_style.py` | `hook_enforcement_writing_style.sh` — validates markdown file locations against writing_style.md | 9/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
 
 ### `hooks/response_standards/`

@@ -40,7 +40,7 @@ Not all rules have mechanical triggers. Understand the difference:
 
 ### Enforcement rules
 - **What:** Rules with mechanical triggers — hooks, linters, validators that block or inject context
-- **Examples:** naming_conventions (enforced by `hook_enforcement_naming_convention.sh`), dir_structure validation
+- **Examples:** naming_conventions (enforced by `hook_enforcement_naming_convention.sh`)
 - **Testing:** Must have corresponding tests in `_tests/hooks/` — verify the hook works as documented
 - **Enforcement:** Automatic — can block operations or force corrections
 - **Per testing.md:** Adding or modifying an enforcement hook requires a corresponding test
