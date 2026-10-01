@@ -1,6 +1,6 @@
-<!-- version: 2.1.0 -->
+<!-- version: 2.2.0 -->
 <!-- created: 2026-09-28 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
 # 🗂️ Claude Config Metadata
 
 **Purpose:** One shared per-file metadata standard (version, created, updated) for every authored artefact type in this config — rules, skills, agents, and hooks — defined once here so each domain references it instead of redefining it.
@@ -47,3 +47,21 @@ Each field sits on its own line, in the order version → created → updated, w
 - **Line limit:** the 3 header lines don't count toward the 110-line rule limit.
 - **Token cost — zero:** Claude Code strips HTML comments from `@`-imported files too, verified 2026-09-28 (300 header lines imported → no change in input tokens, and a hidden marker was invisible to the model).
 - **Tests:** tests keep their own header — see `testing/_test_metadata.md`.
+
+---
+
+## 🎯 Rule-only usage fields
+
+Entry-point rules add up to two more lines straight after `updated`, which `make audit_rule_usage` reads:
+
+```markdown
+<!-- applies_to: **/*.py, **/*.pyi -->
+<!-- miss_cost: high — commits secrets if missed -->
+```
+
+- **applies_to:** comma-separated globs for the files whose sessions need the rule, or `*` alone for every session.
+  - **Required:** on every always-on entry point (tiers 01–04).
+  - **Lazy rules:** optional, since `paths:` frontmatter or the audit's built-in defaults apply otherwise.
+- **miss_cost:** `high` (safety, security, data loss or a silent wrong result), `medium` (rework the user would catch) or `low` (style drift), then ` — ` and a reason.
+- **Entry points only:** a child file inherits its parent's fields.
+- **No dates:** last-used dates live in the audit's history CSV, so running an audit never edits a rule.

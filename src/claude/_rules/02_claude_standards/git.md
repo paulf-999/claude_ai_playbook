@@ -1,6 +1,7 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
+<!-- applies_to: * -->
 # 🌿 Rules — Git
 
 **Purpose:** Establish best practices for git workflow, commits, branch management, and pull requests to maintain clean history, safe operations, and clear communication.

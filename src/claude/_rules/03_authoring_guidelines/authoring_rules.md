@@ -1,6 +1,7 @@
-<!-- version: 1.5.3 -->
+<!-- version: 1.5.4 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
+<!-- applies_to: **/_rules/** -->
 # 🛠️ Rule Authoring
 
 **Purpose:** Establish a standardized process for creating rules that ensures intentionality, proper scoping, and mechanical rigor.

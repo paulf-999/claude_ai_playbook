@@ -1,6 +1,7 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
+<!-- applies_to: * -->
 # 🔐 Rules — Security
 
 **Purpose:** Establish security standards across two concerns: (1) secure coding practices for user-generated code, and (2) Claude's own conduct guardrails to prevent prompt injection and secret exposure.

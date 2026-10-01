@@ -1,6 +1,7 @@
-<!-- version: 4.0.0 -->
+<!-- version: 4.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
+<!-- applies_to: **/skills/** -->
 # 🛠️ Skill Authoring
 
 **Purpose:** Create focused, well-documented, properly tested skills. One concept per skill.

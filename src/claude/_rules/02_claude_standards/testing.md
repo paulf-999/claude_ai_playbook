@@ -1,6 +1,7 @@
-<!-- version: 1.2.0 -->
+<!-- version: 1.2.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
+<!-- applies_to: **/*.py, **/*.sh, **/*.sql -->
 # 🧪 Testing
 
 **Purpose:** Every new code artifact needs a test to prevent regressions and validate intended behavior.
