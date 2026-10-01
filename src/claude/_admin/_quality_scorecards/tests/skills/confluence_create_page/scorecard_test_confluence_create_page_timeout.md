@@ -1,30 +1,22 @@
 # Quality Scorecard — test_confluence_create_page_timeout.py
 
-**Date Created:** 2026-09-30
-**Date Updated:** 2026-09-30
+**Date Created:** keep
+**Date Updated:** 2026-10-01
 
-**Overall score:** 6.9/10
-
-**Recommended improvements:**
-- Add failure messages that say how to fix each assertion (0% have one today)
-- Split the test by concept to bring raw complexity (6) down to 3 or less
-- Add test functions and assertions toward 10+ and 15+ (now 9 and 19)
-- Add a synthetic bad-input test that proves the check fails when it should
-- Confirm the handler still mirrors what SKILL.md tells Claude to do, or move the handler into the skill so the test covers real behaviour
+**Overall score:** 8.9/10
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 5/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 0% of assertions carry a failure message |
-| **Complexity** | 4/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 4/10 (raw complexity 6) |
-| **Evidence of Need** | 7/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact<br>• ⚠️ **Finding:** tests a Python handler kept beside the test, while the skill itself runs from its SKILL.md instructions |
-| **Coverage** | 7/10 | 2026-09-30 | • 📊 **Counts:** 9 test functions and 19 assertions |
-| **Structural Compliance** | 9/10 | 2026-09-30 | • ✅ **Header:** full metadata header, marked Python style compliant |
-| **Currency** | 9/10 | 2026-09-30 | • 🔍 **References:** passes against the current config, header last updated 2026-09-19 |
-| **Regression Value** | 7/10 | 2026-09-30 | • 🛡️ **Failure cases:** checks real files, but no function proves the check fails on a bad case |
-| **Overall** | **6.9/10** | 2026-09-30 | • 💪 **Strongest:** Structural Compliance (9/10)<br>• ⚠️ **Weakest:** Complexity (4/10) |
+| **Clarity** | 9/10 | 2026-10-01 | • 🔍 **Messages:** every test function has a docstring, and every assertion carries a failure message |
+| **Complexity** | 7/10 | 2026-10-01 | • 🧮 **Raw complexity 3:** Concepts 1 (the timed wrapper's outcomes) + Scope 0 + Dependencies 0 + Prerequisites 2 (real threads, patched `input`, clock and home) |
+| **Evidence of Need** | 7/10 | 2026-09-30 | • 🔗 **Target:** the confluence_create_page handler<br>• ⚠️ **Finding:** tests a Python handler kept beside the test, while the skill itself runs from its SKILL.md |
+| **Coverage** | 9/10 | 2026-10-01 | • 📊 **Counts:** 10 test functions and 15 assertions<br>• 🧩 **New:** a failing call, an empty result and closed input at the dialog |
+| **Structural Compliance** | 10/10 | 2026-10-01 | • ✅ **Header:** full metadata header, marked Python style compliant and checked with `ruff` |
+| **Currency** | 10/10 | 2026-10-01 | • 🔍 **References:** passes against the current handler, header last updated 2026-10-01 |
+| **Regression Value** | 10/10 | 2026-10-01 | • 🐛 **Tightened:** the trigger test accepted a 'timeout' status the code never returns, and the custom-timeout test repeated it with the same timeout |
+| **Overall** | **8.9/10** | 2026-10-01 | • 💪 **Strongest:** Structural Compliance, Currency and Regression Value (10/10)<br>• ⚠️ **Weakest:** Complexity and Evidence of Need (7/10) |
 
 ## 🔗 Related files
 
 - `src/claude/_tests/skills/confluence_create_page/test_confluence_create_page_timeout.py` — the test being scored
-- `src/claude/_tests/skills/confluence_create_page/confluence_create_page_handler.py` — what the test guards
-- `src/claude/skills/_atlassian_skills/confluence_create_page/SKILL.md` — what the test guards
+- `src/claude/_tests/skills/confluence_create_page/confluence_create_page_handler.py` — the handler under test
