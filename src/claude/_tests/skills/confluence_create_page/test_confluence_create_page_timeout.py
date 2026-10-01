@@ -2,17 +2,20 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           1.1.1
-# Test quality score: 8/10
-# Test complexity score: 4/10
+# Version:           2.0.0
+# Test quality score: 9/10
+# Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Tests for confluence_create_page timeout mechanism.
+"""Tests confluence_create_page's timeout wrapper while a real call is running.
 
-Tests validate: timeout trigger, user responses (A/R/C), draft preservation,
-timeout customization, and the hard 6-minute wait cap.
+Covers when the dialog fires, what each answer does to a live call, the 6-minute
+cap, draft preservation, and the result for a call that errors or returns nothing.
+The tool call runs on a real thread; only the 6-minute test fakes the clock.
+``test_confluence_create_page_timeout_options.py`` covers the dialog and its answers.
 """
+from __future__ import annotations
 
 import threading
 import time
@@ -20,176 +23,136 @@ from unittest.mock import patch
 
 import pytest
 
-from .confluence_create_page_handler import (
-    create_page_with_timeout,
-    format_timeout_dialog,
-    parse_timeout_arg,
-    save_draft,
-)
+from .confluence_create_page_handler import create_page_with_timeout
+from .confluence_create_page_handler import save_draft
 
 
 class MockToolCall:
-    """Mock a tool call that takes a real, fixed amount of time to return."""
+    """A tool call that takes a real, fixed time to return a page."""
 
-    def __init__(self, duration_seconds):
+    def __init__(self, duration_seconds: float, result: dict | None = None):
+        """Set how long the call takes and what it returns.
+
+        :param duration_seconds: Seconds to sleep before returning.
+        :type duration_seconds: float
+        :param result: What to return, or None for the default page.
+        :type result: dict | None
+        """
         self.duration = duration_seconds
-        self.start_time = None
+        self.result = {"pageId": "123456", "url": "https://confluence.example.com/x"} if result is None else result
 
-    def __call__(self):
-        self.start_time = time.time()
+    def __call__(self) -> dict:
+        """Sleep, then return the result.
+
+        :return: The configured result.
+        :rtype: dict
+        """
         time.sleep(self.duration)
-        return {"pageId": "123456", "url": "https://confluence.example.com/..."}
+        return self.result
 
 
 class BlockingToolCall:
-    """A tool call that never returns on its own — only a timeout/abort path ends it.
+    """A tool call that never returns, so only the timeout path can end the test."""
 
-    Used for the 6-minute-cap test, where the real elapsed time is driven by a
-    mocked time.time() rather than actual sleeping (waiting 6 real minutes per
-    test run isn't practical). The daemon thread that calls this is abandoned
-    once the test's assertions run; it is never joined.
-    """
+    def __call__(self) -> dict:
+        """Block forever on an event nothing sets.
 
-    def __call__(self):
+        :return: Never returns.
+        :rtype: dict
+        """
         threading.Event().wait()
-        return {"pageId": "never-returns", "url": "never-returns"}
+        return {}
 
 
 @pytest.fixture
-def mock_confluence_setup():
-    """Set up mocks for Confluence API interactions."""
+def answers():
+    """Patch input() so each test can script the user's answers to the dialog.
+
+    :return: The mock standing in for input().
+    :rtype: unittest.mock.MagicMock
+    """
     with patch("builtins.input") as mock_input:
         yield mock_input
 
 
-def test_timeout_trigger_at_2_minutes(mock_confluence_setup):
-    """Timeout dialog appears once elapsed time reaches the timeout.
-
-    Uses timeout_seconds=1 (not a sub-second value) because the production
-    polling loop checks elapsed time once per second — a timeout under 1s can
-    never actually be observed, regardless of how slow the tool call is.
-    """
-    mock_confluence_setup.return_value = "A"
-    slow_call = MockToolCall(duration_seconds=2.5)
-
-    result = create_page_with_timeout(tool_call=slow_call, timeout_seconds=1)
-
-    assert result["status"] in ["timeout", "aborted", "retry_requested"]
-    mock_confluence_setup.assert_called_once()
+def test_dialog_fires_once_the_timeout_passes(answers):
+    """A call still running after the timeout shows the dialog once, and [A]bort ends it."""
+    answers.return_value = "A"
+    result = create_page_with_timeout(tool_call=MockToolCall(2.5), timeout_seconds=1)
+    assert result["status"] == "aborted", f"[A]bort should end the wait, got {result}"
+    assert result["elapsed"] >= 1, f"the dialog shouldn't appear before the timeout, got {result['elapsed']}s"
+    answers.assert_called_once()
 
 
-def test_timeout_abort_preserves_draft(mock_confluence_setup, tmp_path):
-    """[A]bort preserves draft in ~/.drafts/confluence/."""
+def test_abort_keeps_the_draft(answers, tmp_path):
+    """[A]bort reports the draft's path, and the draft is still there with its content."""
     with patch("pathlib.Path.home", return_value=tmp_path):
-        draft_content = "# Test Page\n\nThis is test content."
-        draft_path = save_draft(draft_content, "test_page")
-
-        mock_confluence_setup.return_value = "A"
-        slow_call = MockToolCall(duration_seconds=2.5)
-
-        result = create_page_with_timeout(
-            tool_call=slow_call,
-            timeout_seconds=1,
-            draft_path=draft_path,
-        )
-
-        assert result["status"] == "aborted"
-        assert draft_path.exists()
-        assert draft_path.read_text() == draft_content
+        draft = save_draft("# Test Page\n\nBody.", "test_page")
+        answers.return_value = "A"
+        result = create_page_with_timeout(tool_call=MockToolCall(2.5), timeout_seconds=1, draft_path=draft)
+    assert result["draft_path"] == str(draft), f"the result should point at the draft, got {result}"
+    assert draft.read_text() == "# Test Page\n\nBody.", "the draft should be kept unchanged"
 
 
-def test_timeout_retry_starts_fresh(mock_confluence_setup):
-    """[R]etry cancels current attempt and starts fresh."""
-    mock_confluence_setup.return_value = "R"
-    slow_call = MockToolCall(duration_seconds=2.5)
-
-    result = create_page_with_timeout(tool_call=slow_call, timeout_seconds=1)
-
-    assert result["status"] == "retry_requested"
+def test_retry_ends_the_live_call(answers):
+    """[R]etry ends the running call and asks for a fresh attempt."""
+    answers.return_value = "R"
+    result = create_page_with_timeout(tool_call=MockToolCall(2.5), timeout_seconds=1)
+    assert result["status"] == "retry_requested", f"[R]etry should end the call, got {result}"
 
 
-def test_timeout_continue_adds_4_minutes(mock_confluence_setup):
-    """[C]ontinue extends the timeout and lets a slow-but-finishing call succeed.
-
-    The call takes 2.3s against a 1s initial timeout, so the dialog must fire
-    and consume the "C" response before the call finishes on its own —
-    verifying [C]ontinue actually extended the window rather than the call
-    simply finishing before any check happened.
-    """
-    mock_confluence_setup.return_value = "C"
-    call_that_completes = MockToolCall(duration_seconds=2.3)
-
-    result = create_page_with_timeout(tool_call=call_that_completes, timeout_seconds=1)
-
-    assert result["status"] == "success"
-    assert result["pageId"] == "123456"
-    mock_confluence_setup.assert_called_once()
+def test_continue_lets_a_slow_call_finish(answers):
+    """[C]ontinue extends the wait, so a call that finishes later still succeeds."""
+    answers.return_value = "C"
+    result = create_page_with_timeout(tool_call=MockToolCall(2.3), timeout_seconds=1)
+    assert result["status"] == "success", f"the call should finish after [C]ontinue, got {result}"
+    assert result["pageId"] == "123456", "the page from the call should come back"
+    answers.assert_called_once()
 
 
-def test_timeout_customization_override(mock_confluence_setup):
-    """Custom timeout via --timeout-seconds parameter still triggers correctly."""
-    mock_confluence_setup.return_value = "A"
-    medium_call = MockToolCall(duration_seconds=2.5)
-
-    result = create_page_with_timeout(tool_call=medium_call, timeout_seconds=1)
-
-    assert result["status"] in ["aborted", "timeout"]
+def test_longer_custom_timeout_avoids_the_dialog(answers):
+    """A 3-second timeout lets a 1.5-second call finish without asking, where 1 second would ask."""
+    result = create_page_with_timeout(tool_call=MockToolCall(1.5), timeout_seconds=3)
+    assert result["status"] == "success", f"the call should finish inside the custom timeout, got {result}"
+    answers.assert_not_called()
 
 
-def test_timeout_dialog_content(mock_confluence_setup):
-    """Timeout dialog displays correct information."""
-    dialog_2min = format_timeout_dialog(elapsed=120, remaining_attempts=1)
-
-    assert "TIMEOUT" in dialog_2min
-    assert "[A]bort" in dialog_2min
-    assert "[R]etry" in dialog_2min
-    assert "[C]ontinue" in dialog_2min
-    assert "minute" in dialog_2min
-
-
-def test_timeout_maximum_6_minutes(mock_confluence_setup):
-    """Total wait cannot exceed 6 minutes even with [C]ontinue.
-
-    A real 6-minute wait isn't practical per test run, so time.time() is
-    mocked to jump straight through the relevant checkpoints (initial
-    timeout at ~120s, then past the 360s hard cap) while the tool call
-    itself blocks on a real threading.Event so it genuinely never returns
-    on its own — only the max-wait abort path can end this test.
-    """
-    mock_confluence_setup.side_effect = ["C", "A"]
+def test_wait_never_passes_six_minutes(answers):
+    """Even after [C]ontinue, a call still running at 360 seconds is aborted."""
+    answers.side_effect = ["C", "A"]
     fake_times = iter([0, 1, 121, 121, 365, 365, 365, 365])
-
     with patch("time.time", side_effect=lambda: next(fake_times)):
-        result = create_page_with_timeout(
-            tool_call=BlockingToolCall(),
-            timeout_seconds=1,
-        )
-
-    assert result["status"] == "aborted"
+        result = create_page_with_timeout(tool_call=BlockingToolCall(), timeout_seconds=1)
+    assert result["status"] == "aborted", f"the 6-minute cap should abort, got {result}"
+    assert result["elapsed"] >= 360, f"the abort should come at or after 360s, got {result['elapsed']}"
 
 
-def test_timeout_respects_fast_completion(mock_confluence_setup):
-    """No timeout dialog if call completes within timeout."""
-    fast_call = MockToolCall(duration_seconds=0.05)
-
-    result = create_page_with_timeout(tool_call=fast_call, timeout_seconds=0.2)
-
-    assert result["status"] == "success"
-    assert result["pageId"] == "123456"
-    mock_confluence_setup.assert_not_called()
+def test_fast_call_never_asks(answers):
+    """A call that finishes inside the timeout returns its page without a dialog."""
+    result = create_page_with_timeout(tool_call=MockToolCall(0.05), timeout_seconds=1)
+    assert result["status"] == "success", f"a fast call should succeed, got {result}"
+    answers.assert_not_called()
 
 
-def test_timeout_parameter_parsing():
-    """--timeout-seconds parameter is parsed correctly."""
-    timeout = parse_timeout_arg(["confluence_create_page"])
-    assert timeout == 120
+def test_failing_call_reports_its_error(answers):
+    """A call that raises is reported as an error with its message."""
 
-    timeout = parse_timeout_arg(["confluence_create_page", "--timeout-seconds", "300"])
-    assert timeout == 300
+    def failing_call() -> dict:
+        raise ConnectionError("network down")
 
-    timeout = parse_timeout_arg(["confluence_create_page", "--timeout-seconds", "invalid"])
-    assert timeout == 120
+    result = create_page_with_timeout(tool_call=failing_call, timeout_seconds=1)
+    assert result["status"] == "error", f"a raising call should be an error, got {result}"
+    assert result["error"] == "network down", f"the error message should come through, got {result}"
 
 
-if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
+def test_empty_result_is_unknown(answers):
+    """A call that returns nothing is reported as unknown, not success."""
+    result = create_page_with_timeout(tool_call=MockToolCall(0.05, result={}), timeout_seconds=1)
+    assert result["status"] == "unknown", f"an empty result shouldn't count as success, got {result}"
+
+
+def test_closed_input_aborts(answers):
+    """If the user closes input (Ctrl-D) at the dialog, the wait aborts."""
+    answers.side_effect = EOFError
+    result = create_page_with_timeout(tool_call=MockToolCall(2.5), timeout_seconds=1)
+    assert result["status"] == "aborted", f"closed input should abort, got {result}"

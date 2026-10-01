@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.12
+# Version:           1.0.13
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -36,8 +36,6 @@ SCORE_PATTERN = re.compile(
 # Files below the minimum when it was first enforced, keyed by path under _tests/,
 # with their recorded (quality, complexity, style) — remove each as it's fixed
 BASELINE = {
-    "skills/confluence_create_page/test_confluence_create_page_handler.py": (9, 4, "Yes"),
-    "skills/confluence_create_page/test_confluence_create_page_timeout.py": (8, 4, "Yes"),
 }
 
 
