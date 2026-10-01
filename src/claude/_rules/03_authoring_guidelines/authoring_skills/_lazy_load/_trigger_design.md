@@ -1,13 +1,13 @@
-<!-- version: 3.0.1 -->
+<!-- version: 3.0.2 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
 # 🎯 Trigger Design
 
 **Purpose:** Define how to design trigger phrases so a skill runs whenever users naturally ask for it.
 
 ---
 
-## Trigger Design [REQUIRED]
+## 🎯 Trigger Design [REQUIRED]
 
 Triggers determine how users invoke your skill. Comprehensive trigger coverage ensures the skill auto-invokes when users naturally ask for it, not just via explicit slash commands.
 

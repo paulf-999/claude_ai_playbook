@@ -1,13 +1,13 @@
-<!-- version: 3.0.0 -->
+<!-- version: 3.0.1 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
 # 📐 Skill Core Standards
 
 **Purpose:** Define the baseline every skill must follow — naming, SKILL.md's 5-section structure, what `skill.contract.yaml` must declare, and how to choose a maturity level.
 
 ---
 
-## Naming Pattern
+## 🏷️ Naming Pattern
 
 - Format: `<domain>_<action>` (lowercase, snake_case)
 - Domain: must match valid domain ID from `skill_domains.yaml`
@@ -15,7 +15,7 @@
 - Examples: `confluence_create_page`, `jira_create`, `git_create_pr`, `claude_review_config`
 - Hard rule: the skill lives in the folder its domain's `directory:` names in `skill_domains.yaml` (e.g. `confluence_create_page` → `_atlassian_skills/`)
 
-## SKILL.md Structure [REQUIRED]
+## 📄 SKILL.md Structure [REQUIRED]
 
 5-section canonical structure, ~60 lines, scannable in <2 minutes:
 1. **Frontmatter** — name, description, maturity, tags, followed by the three-line metadata header (version, created, updated)
@@ -49,7 +49,7 @@ tags:
 - ✅ maturity justified (tactical = battle-tested, widely used)
 - ✅ tags capture status + criticality for quick scanning
 
-## Contract Requirements [REQUIRED]
+## 📜 Contract Requirements [REQUIRED]
 
 skill.contract.yaml must include:
 
@@ -65,7 +65,7 @@ skill.contract.yaml must include:
 - `dependencies.external` — external APIs or systems (if any)
 - `dependencies.permissions` — special access required (if any)
 
-## Maturity Levels [REQUIRED]
+## 📈 Maturity Levels [REQUIRED]
 
 Choose the maturity level from evidence, not aspiration:
 

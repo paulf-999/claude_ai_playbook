@@ -54,7 +54,7 @@
 | `rules/02_claude_standards/scorecard_test_always_on_reachability.md` | 8.3/10 | • Split the test by concept to bring raw complexity (7) down to 3 or less |
 | `rules/05_lazy_load/scorecard_test_lazy_load_coverage.md` | 8.3/10 | • Add failure messages that say how to fix each assertion (27% have one today) |
 | `rules/01_essentials/scorecard_test_writing_style.md` | 8.3/10 | • Add test functions and assertions toward 10+ and 15+ (now 7 and 14)<br>• Add a synthetic bad-input test that proves the check fails when it should |
-| `rules/scorecard_test_rules_structure.md` | 8.1/10 | • Split the test by concept to bring raw complexity (6) down to 3 or less |
+| `rules/scorecard_test_rules_structure.md` | 8.3/10 | • Split the test by concept to bring raw complexity (6) down to 3 or less |
 | `rules/02_claude_standards/scorecard_test_git.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/02_claude_standards/scorecard_test_security_guardrails.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 6 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/03_authoring_guidelines/scorecard_test_authoring_rules.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should |

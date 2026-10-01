@@ -1,13 +1,13 @@
-<!-- version: 1.1.2 -->
+<!-- version: 1.1.3 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
 # 📐 Agent Core Standards
 
 **Purpose:** The baseline every agent follows — 5-section structure, naming pattern, frontmatter fields, maturity levels, and testing requirements.
 
 ---
 
-## 5-Section Structure at a Glance
+## 🧱 5-Section Structure at a Glance
 
 ```
 ┌─ Frontmatter (metadata)
@@ -17,7 +17,7 @@
 └─ Constraints (what it does NOT do + limitations)
 ```
 
-## Naming Pattern
+## 🏷️ Naming Pattern
 
 - Format: `<domain>_<purpose>` (lowercase, snake_case)
 - Domain: primary area of expertise (e.g., `technical_writer`, `architect`, `code_reviewer`)
@@ -25,13 +25,13 @@
 - Examples: `technical_writer`, `architect`, `code_analyzer`, `design_reviewer`
 - Hard rule: Naming must be self-describing — unambiguous without context
 
-## Directory Structure
+## 📁 Directory Structure
 
 - **Location:** `~/.claude/agents/core/` or organized by domain (flexible for now)
 - **Filename:** `<domain>_<purpose>.md`
 - **Example:** `~/.claude/agents/core/technical_writer.md`
 
-## Agent Frontmatter [REQUIRED]
+## 🧾 Agent Frontmatter [REQUIRED]
 
 ```yaml
 ---
@@ -58,7 +58,7 @@ isolation: worktree
 - `isolation` — `worktree` (recommended for agents that modify files) or none
 - **Metadata header** — straight after the frontmatter: `version` (0.x = draft, 1.x = tactical, 2.x = strategic), `created`, `updated`; see `_claude_config_metadata.md`
 
-## 5-Section Structure [REQUIRED]
+## 🧱 5-Section Structure [REQUIRED]
 
 All agents follow this structure (lean, end-user readable, Claude-operable):
 
@@ -70,7 +70,7 @@ All agents follow this structure (lean, end-user readable, Claude-operable):
 
 See `AGENT.md.template` for detailed structure guidance.
 
-## Maturity Levels [REQUIRED]
+## 📈 Maturity Levels [REQUIRED]
 
 Agents follow the same maturity model as skills:
 
@@ -82,7 +82,7 @@ Agents follow the same maturity model as skills:
 
 **Maturity justification [REQUIRED]:** Document in agent why you chose this maturity level, with evidence (usage frequency, test coverage, dependencies, scope clarity).
 
-## Testing [REQUIRED]
+## 🧪 Testing [REQUIRED]
 
 **evals.yaml [REQUIRED]** — THE standard testing approach
 - Format: each eval has `name`, `description`, `input`, `setup`, `expected_output`

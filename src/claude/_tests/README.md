@@ -58,7 +58,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_rules_structure.py` | File quality across all `_rules/` files — line limits, trailing newlines, import resolution, expected file set | 9/10 | 2026-08-28 | 2026-10-01 | 1.4.2 |
+| `test_rules_structure.py` | File quality across all `_rules/` files — line limits, H1 and H2 heading emoji, trailing newlines, import resolution, expected file set | 9/10 | 2026-08-28 | 2026-10-01 | 1.5.0 |
 | `test_aliases_behavior.py` | Aliases are documented, properly formatted, and validated as functional (spot-check representative aliases) | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
 
 ### `rules/01_essentials/`
