@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-01
-# Version:           1.5.2
+# Version:           1.5.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -131,7 +131,6 @@ ENTRY_POINT_RELATIVE_PATHS = {
     "response_standards_enforcement.md",
     "testing_guidance.md",
     "turn_budgets.md",
-    "environment_setup/ohmyzsh_setup.md",
     "style_guide_standards/airflow.md",
     "style_guide_standards/bash.md",
     "style_guide_standards/dbt.md",

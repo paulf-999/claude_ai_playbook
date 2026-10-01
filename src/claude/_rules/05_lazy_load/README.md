@@ -19,8 +19,7 @@
 | **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
 | **claude_rule_loading_strategy.md** | The five rule tiers and when a rule should be always-on or lazy, from measured usage and miss cost | Loads through `paths:` on `_rules/` files and `CLAUDE.md` |
 | **automation_controls.md** | Guardrails for `/loop`, `/batch`, `/goal` automation commands | Setting up recurring automation |
-| **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | Working in that domain (e.g., load `sql.md` when writing SQL) |
-| **environment_setup/** | Environment-specific setup (e.g., oh-my-zsh configuration) | Setting up a new machine or environment |
+| **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | File-type guides load through `paths:` when Claude reads a matching file; jira, Payroc naming and datetime through pointers |
 
 ---
 

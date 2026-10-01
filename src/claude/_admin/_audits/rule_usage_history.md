@@ -16,10 +16,10 @@ Each session counts once per rule, however many runs saw it. Sessions stay in th
 
 ### 🔥 Highest miss rates (at least 10 applied sessions)
 
-1. `05_lazy_load/testing_guidance.md` — missed 28 of 28 sessions (100%)
-2. `05_lazy_load/style_guide_standards/python.md` — missed 29 of 30 sessions (97%)
-3. `05_lazy_load/style_guide_standards/bash.md` — missed 10 of 11 sessions (91%)
-4. `04_claude_reference/claude_rule_loading_strategy.md` — missed 19 of 35 sessions (54%)
+1. `05_lazy_load/claude_rule_loading_strategy.md` — missed 35 of 35 sessions (100%)
+2. `05_lazy_load/testing_guidance.md` — missed 28 of 28 sessions (100%)
+3. `05_lazy_load/style_guide_standards/python.md` — missed 29 of 30 sessions (97%)
+4. `05_lazy_load/style_guide_standards/bash.md` — missed 10 of 11 sessions (91%)
 5. `01_essentials/claude_usage_standards.md` — missed 28 of 115 sessions (24%)
 
 - **Too few sessions to rank:** 5 more rules have misses but under 10 applied sessions.
@@ -31,7 +31,7 @@ Each session counts once per rule, however many runs saw it. Sessions stay in th
 
 1. `01_essentials/guiding_principles.md` — applied in 88 sessions, loaded in 104
 2. `02_claude_standards/testing.md` — applied in 37 sessions, loaded in 104
-3. `04_claude_reference/claude_rule_loading_strategy.md` — applied in 35 sessions, loaded in 59
+3. `05_lazy_load/claude_rule_loading_strategy.md` — applied in 35 sessions, loaded in 0
 4. `03_authoring_guidelines/authoring_rules.md` — applied in 32 sessions, loaded in 87
 5. `05_lazy_load/style_guide_standards/python.md` — applied in 30 sessions, loaded in 1
 
@@ -69,15 +69,14 @@ Each session counts once per rule, however many runs saw it. Sessions stay in th
 | Rule | Applied | Loaded | Misses | Miss rate | Runs | First seen | Last used |
 |---|---|---|---|---|---|---|---|
 | `04_claude_reference/claude_operational_efficiency.md` | 115 | 87 | 28 | 24% | 1 | 2026-08-31 | 2026-10-01 |
-| `04_claude_reference/claude_rule_loading_strategy.md` | 35 | 59 | 19 | 54% | 1 | 2026-08-31 | 2026-10-01 |
 
 ### 💤 05 Lazy load
 
 | Rule | Applied | Loaded | Misses | Miss rate | Runs | First seen | Last used |
 |---|---|---|---|---|---|---|---|
 | `05_lazy_load/automation_controls.md` | 0 | 0 | 0 | — | 1 | — | — |
+| `05_lazy_load/claude_rule_loading_strategy.md` | 35 | 0 | 35 | 100% | 1 | 2026-08-31 | 2026-10-01 |
 | `05_lazy_load/delegating_to_subagent.md` | 0 | 0 | 0 | — | 1 | — | — |
-| `05_lazy_load/environment_setup/ohmyzsh_setup.md` | 0 | 0 | 0 | — | 1 | — | — |
 | `05_lazy_load/hooks_decision_framework.md` | 3 | 0 | 3 | 100% | 1 | 2026-09-19 | 2026-09-30 |
 | `05_lazy_load/latency_optimisation.md` | 0 | 3 | 0 | — | 1 | 2026-09-19 | 2026-10-01 |
 | `05_lazy_load/mcp_trust_model.md` | 0 | 0 | 0 | — | 1 | — | — |

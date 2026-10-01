@@ -1,7 +1,7 @@
 ---
 name: jira_create
 description: Create Jira tickets with full field configuration and story point validation
-version: 0.1.2
+version: 0.1.3
 maturity: draft
 summary: Create Jira tickets with field configuration and security checks
 
