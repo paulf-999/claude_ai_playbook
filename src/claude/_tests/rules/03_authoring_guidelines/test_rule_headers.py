@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.1.0
+# Version:           1.1.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -27,7 +27,7 @@ MISS_COST = re.compile(r"^<!-- miss_cost: (high|medium|low) — \S.* -->$")
 MISS_COST_PREFIX = "<!-- miss_cost:"
 HEADER_PREFIX = "<!-- applies_to:"
 EVERY_SESSION = "*"
-HEADER_LINES = 6  # version, created, updated, applies_to, miss_cost, plus paths: frontmatter slack
+HEADER_LINES = 10  # paths: frontmatter (up to 4) + version, created, updated, applies_to, miss_cost
 GLOB = re.compile(r"^[A-Za-z0-9_.*/\-{}?\[\]]+$")
 HINT = "— see 03_authoring_guidelines/shared_standards/_claude_config_metadata.md"
 

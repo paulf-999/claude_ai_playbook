@@ -55,7 +55,7 @@ MISS_COST = re.compile(r"<!--\s*miss_cost:\s*(high|medium|low)\b", re.I)
 FILE_TOOLS = {"Read", "Edit", "Write", "MultiEdit", "NotebookEdit"}
 
 APPLIES_TO = re.compile(r"^<!--\s*applies_to:\s*(.+?)\s*-->$")
-HEADER_LINES = 6  # applies_to sits in the header block, never deep in a rule's body
+HEADER_LINES = 10  # paths: frontmatter (up to 4) + version, created, updated, applies_to, miss_cost
 
 # First-guess globs for lazy rules with no ``applies_to`` header and no ``paths:`` frontmatter,
 # keyed by path under 05_lazy_load/.

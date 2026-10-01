@@ -1,7 +1,7 @@
 # Quality Scorecard — test_claude_rule_loading_strategy.py
 
 **Date Created:** 2026-09-30
-**Date Updated:** 2026-09-30
+**Date Updated:** 2026-10-01
 
 **Overall score:** 8.4/10
 
@@ -13,7 +13,7 @@
 | **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
 | **Complexity** | 7/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 7/10 (raw complexity 3) |
 | **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact |
-| **Coverage** | 9/10 | 2026-09-30 | • 📊 **Counts:** 12 test functions and 21 assertions |
+| **Coverage** | 9/10 | 2026-09-30 | • 📊 **Counts:** 16 test functions and 28 assertions<br>• 🧩 **New:** measured placement inputs, audit flags, the adding-a-rule steps and the pointer rule |
 | **Structural Compliance** | 9/10 | 2026-09-30 | • ✅ **Header:** full metadata header, marked Python style compliant |
 | **Currency** | 9/10 | 2026-09-30 | • 🔍 **References:** passes against the current config, header last updated 2026-09-30 |
 | **Regression Value** | 7/10 | 2026-09-30 | • 🛡️ **Failure cases:** checks real files, but no function proves the check fails on a bad case |

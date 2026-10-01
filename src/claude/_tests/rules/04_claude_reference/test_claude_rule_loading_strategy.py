@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
 # Date updated:      2026-10-01
-# Version:           1.0.1
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -134,11 +134,38 @@ def test_pointers_resolve():
 
 
 def test_key_guidance_survives():
-    """The lazy-by-default principle and 70% threshold must keep their wording."""
+    """The lazy-by-default principle and its fallback must keep their wording."""
     content = _content()
     assert "Lazy-load by default" in content, "'Lazy-load by default' principle lost"
     assert "If unsure, lazy-load it" in content, "'If unsure, lazy-load it' fallback lost"
-    assert content.count("70%") >= 3, "The 70%-of-sessions threshold was dropped"
+
+
+def test_placement_uses_measured_numbers():
+    """Placement rests on the audit's applied % and each rule's miss_cost, not a guessed threshold."""
+    content = _content()
+    assert "70%" not in content, "the unmeasurable 70% threshold is back — use the audit's applied % instead"
+    assert "**Applied %:**" in content, "applied % is no longer one of the placement inputs"
+    assert "**Miss cost:**" in content, "miss_cost is no longer one of the placement inputs"
+    assert "audit_rule_usage.md" in content, "the pointer to the usage report was removed"
+
+
+def test_audit_flags_are_documented():
+    """Each flag the audit sets is explained, so a report reader knows what to do."""
+    content = _content()
+    for flag in ("**Promote:**", "**Demote:**", "**Stale:**", "**Not enough data:**"):
+        assert flag in content, f"the {flag} flag is no longer explained"
+
+
+def test_adding_a_rule_runs_the_audit():
+    """The 'When adding a rule' steps include the headers and an audit run."""
+    steps = _content().split("## ➕ When adding a rule", 1)[1]
+    assert "make audit_rule_usage" in steps, "adding a rule no longer runs the audit"
+    assert "`applies_to` and `miss_cost`" in steps, "adding a rule no longer sets the usage headers"
+
+
+def test_pointers_are_not_triggers():
+    """A high-cost lazy rule needs a mechanical trigger, which test_rule_headers.py enforces."""
+    assert "Pointers aren't triggers" in _content(), "the rule that pointers don't count as triggers was removed"
 
 
 def test_line_limit():
