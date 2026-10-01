@@ -7,16 +7,16 @@
 ## 📋 Scores by type
 
 - **Overall:** the mean of every scorecard's Overall score for that type.
-- **Strongest and weakest:** the mean of each dimension across that type's scorecards, since the per-type summaries don't carry dimension scores.
+- **Strongest and weakest:** the highest- and lowest-scoring file of that type, by Overall score.
 - **Date Updated:** the latest `Date Updated` among that type's scorecards.
 - **Rules split:** always-on rules (tiers 01–04 and `aliases.md`) load in every session, so they rank above lazy-load rules, which load only on demand.
 
 | Type | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
-| Tests | 48 | 8.5/10 | 2026-10-01 | • 💪 **Strongest:** Currency (9.2/10)<br>• ⚠️ **Weakest:** Complexity (7.2/10) |
-| Skills | 7 | 8.4/10 | 2026-09-30 | • 💪 **Strongest:** Standards Compliance (9.1/10)<br>• ⚠️ **Weakest:** Code Quality (7.7/10) |
-| Rules — always-on | 16 | 8.0/10 | 2026-09-30 | • 💪 **Strongest:** Token Cost Justification (8.7/10)<br>• ⚠️ **Weakest:** Test Coverage (7.3/10) |
-| Rules — lazy-load | 17 | 6.9/10 | 2026-09-28 | • 💪 **Strongest:** Clarity (8.6/10)<br>• ⚠️ **Weakest:** Test Coverage (2.7/10) |
+| Tests | 48 | 8.5/10 | 2026-10-01 | • 💪 **Strongest:** 8 files tied at 9.3/10, including `test_test_metadata.py`<br>• ⚠️ **Weakest:** `test_confluence_create_page_timeout.py` (6.9/10) |
+| Skills | 7 | 8.4/10 | 2026-09-30 | • 💪 **Strongest:** `claude_setup_graphify` (9.9/10)<br>• ⚠️ **Weakest:** `claude_kaizen` (6.1/10) |
+| Rules — always-on | 16 | 8.0/10 | 2026-09-30 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_rule_loading_strategy.md` (6.4/10) |
+| Rules — lazy-load | 17 | 6.9/10 | 2026-09-28 | • 💪 **Strongest:** `payroc_engineering_naming_standards.md` (7.8/10)<br>• ⚠️ **Weakest:** `makefile.md` (5.2/10) |
 | Hooks | 0 | — | — | • ⚠️ **Gap:** no hooks are scored yet |
 | Agents | 0 | — | — | • ⚠️ **Gap:** no agents are scored yet |
 
@@ -40,6 +40,6 @@ Ranked by impact, highest first.
 ## 🔄 Keeping this current
 
 - **Same commit:** update this file whenever any per-type summary changes.
-- **Recompute means:** re-average the dimension scores from the individual `scorecard_*.md` files whenever a scorecard is re-scored.
+- **Recompute:** re-average the Overall scores and re-check the strongest and weakest files whenever a scorecard is re-scored.
 - **Bump dates:** set a type's `Date Updated` to the re-scored scorecard's `Date Updated`.
 - **Prune actions:** remove an action once its source summary no longer lists it.
