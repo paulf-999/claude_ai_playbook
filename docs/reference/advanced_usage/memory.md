@@ -30,7 +30,7 @@ This repo is the source of truth for the team's Claude configuration. `src/claud
 @~/.claude/style_guide_standards/python.md
 ```
 
-To add or change a rule, edit the relevant file in `src/claude/` and run `make update` to sync to `~/.claude/`.
+To add or change a rule, edit the relevant file in `src/claude/` and run `make install` from your own terminal to sync to `$CLAUDE_CONFIG_DIR`.
 
 ### @import syntax
 

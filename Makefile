@@ -7,10 +7,12 @@ SHELL = /bin/bash
 # make test             # run structural validation tests
 # make lint_tags        # validate Tier 1 tags on all Claude components (run before committing)
 # make audit_components # run periodic health audit on the Claude component library
-# make install          # [DISABLED] install Claude config files into ~/.claude/ (edit ~/.claude directly)
+# make install          # install Claude config files into $CLAUDE_CONFIG_DIR (previews, then asks you to type 'install')
 # make update           # [DISABLED] update Claude config files in ~/.claude/ (WSL)
 # make clean_plans      # archive executed/superseded plans to ~/.claude/plans/archive/
 # make clean_backups    # move old ~/.claude_backup_* dirs to ~/.claude_backup_archive/
+# make clean            # run clean_plans and clean_backups
+# make all              # print this usage list
 # make install_windows  # sync Claude config files to Windows .claude (run from WSL2)
 # make update_windows   # alias for install_windows
 # make sync             # [DISABLED] update WSL + Windows .claude in one step (run from WSL2)
@@ -34,9 +36,9 @@ deps:
 	@echo "${INFO}\nInstalling Python test dependencies${COLOUR_OFF}"
 	@pip install -r requirements.txt
 
-# install:
-# 	@echo "${INFO}\nInstalling Claude config files into ~/.claude/${COLOUR_OFF}"
-# 	@bash src/sh/claude/install_claude_files.sh
+install:
+	@echo "${INFO}\nInstalling Claude config files into \$$CLAUDE_CONFIG_DIR${COLOUR_OFF}"
+	@bash src/sh/claude/install_claude_files.sh
 
 # update:
 # 	@echo "${INFO}\nUpdating Claude config files in ~/.claude/${COLOUR_OFF}"
@@ -85,5 +87,11 @@ clean_backups:
 	@echo "${INFO}\nMoving old ~/.claude_backup_* dirs to ~/.claude_backup_archive/${COLOUR_OFF}"
 	@python3 src/sh/claude/clean_backups.py
 
+clean: clean_plans clean_backups
+
+# Print the usage block (kept last so `make` alone still runs deps)
+all:
+	@grep -E '^# make ' Makefile
+
 # .PHONY tells Make that these targets don't represent files
-.PHONY: deps install_windows update_windows install_plugins patch_plugins test lint lint_tags lint_skills audit_components clean_plans clean_backups
+.PHONY: all clean deps install install_windows update_windows install_plugins patch_plugins test lint lint_tags lint_skills audit_components clean_plans clean_backups

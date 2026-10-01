@@ -42,6 +42,5 @@ flowchart TD
 ## 🚀 Usage
 
 ```bash
-make install_claude_cli                           # standard usage
-bash src/sh/claude/install_claude_cli.sh          # direct invocation (from repo root)
+bash src/sh/claude/install_claude_cli.sh          # standard usage (from repo root)
 ```
