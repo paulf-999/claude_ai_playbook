@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-01 -->
 # 🔧 Ansible Roles & Tasks
 
 ## 🗂️ Role layout
@@ -94,7 +94,7 @@ When using `community.docker.docker_compose_v2`:
 
 When adding a new role directory, update `.github/CODEOWNERS`. Key ownerships:
 
-- `/roles/database` — `@payroc/database-administration`
-- `/roles/observability` — `@markkelly-payroc`
+- `/roles/database` — `@acme/database-administration`
+- `/roles/observability` — `@jane-doe`
 
 Add the new role path and assign the appropriate owner or team.

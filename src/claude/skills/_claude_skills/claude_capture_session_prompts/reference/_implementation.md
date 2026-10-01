@@ -62,7 +62,7 @@ Rules are checked in the order listed; the first match wins. Matching is lowerca
 - ✅ **Done:** contains a directive verb (create, add, update, review, audit, ensure, document)
 - ↩️ **Response:** anything else
 
-**Subject:** the first match of Style guides (style guide, payroc_engineering), Hooks (hook), Child pages (child page, multifile), Naming (name), Skill domains (domain), Rules (rule), Prompt audit (prompt, audit, capture), TODOs (todo); blank otherwise
+**Subject:** the first match of Style guides (style guide, naming_standards), Hooks (hook), Child pages (child page, multifile), Naming (name), Skill domains (domain), Rules (rule), Prompt audit (prompt, audit, capture), TODOs (todo); blank otherwise
 
 **MoSCoW (Pending prompts only):**
 - **Must:** must, critical, urgent, blocker

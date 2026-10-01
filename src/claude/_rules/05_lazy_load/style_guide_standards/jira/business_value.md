@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-06-07 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-01 -->
 # 💼 Business Value Tab
 
 Standards for populating the Business Value tab (`customfield_10650`) on DM project Jira tickets — covering format, audience, scoring framework, and a worked example.
@@ -40,7 +40,7 @@ Always append the following block after the intro and bullets:
 
 ```
 Impact Rating (per Data Team Prioritization Framework):
-* a. Prioritization Matrix: https://payroc.atlassian.net/wiki/x/k4DcRQE
+* a. Prioritization Matrix: <link to your team's prioritisation matrix>
 * b. Priority Value Driver: <driver> – Score: <N>
 * c. Secondary Value Driver: <driver> – Score: <N>
 * d. Calculated Score: <value>
@@ -57,7 +57,7 @@ Fill in scores when the driver and rating are clear at creation time. Use `< TOD
 
 ### Standard (6-category) — official Data Team framework
 
-Use for all general work. Framework authored by Kevin Dolhay; reference: https://payroc.atlassian.net/wiki/x/k4DcRQE
+Use for all general work. Reference: your team's prioritisation matrix page — see `~/.claude/_rules/05_lazy_load/org.md` if present
 
 | Category | Weight |
 |---|---|

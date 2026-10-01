@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-05-20 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-01 -->
 # 📊 Ansible Variables
 
 ## 🗂️ group_vars hierarchy
@@ -13,9 +13,9 @@ Variables are organised into a 6-level hierarchy under `group_vars/` at the repo
 | L1 | `l1_<env>.yml` | Environment-wide (e.g. `l1_prd.yml`, `l1_stg.yml`) |
 | L2 | `l2_<env>_<site>.yml` | Site within an environment (e.g. `l2_crp_ind.yml`) |
 | L3 | `l3_<env>_<app>.yml` | Application within an environment (e.g. `l3_prd_pps.yml`) |
-| L4 | `l4_<env>_<app>_<role>.yml` | Role within app/env (e.g. `l4_prd_pyrc_ilb.yml`) |
-| L5 | `l5_<env>_<app>_<role>_<site>.yml` | Role at a specific site (e.g. `l5_prd_pyrc_ilb_ind.yml`) |
-| L6 | `l6_<env>_<app>_<role>_<site>_<scope>.yml` | Most specific — scope within a site (e.g. `l6_prd_pyrc_ftp_ind_cde.yml`) |
+| L4 | `l4_<env>_<app>_<role>.yml` | Role within app/env (e.g. `l4_prd_acme_ilb.yml`) |
+| L5 | `l5_<env>_<app>_<role>_<site>.yml` | Role at a specific site (e.g. `l5_prd_acme_ilb_ind.yml`) |
+| L6 | `l6_<env>_<app>_<role>_<site>_<scope>.yml` | Most specific — scope within a site (e.g. `l6_prd_acme_ftp_ind_cde.yml`) |
 
 Use the lowest level that satisfies the requirement — do not define variables at L4 if L1 is sufficient.
 
@@ -65,7 +65,7 @@ Use the double-underscore pattern to namespace by application and role:
 [app/dept]__[role]_[variable_name]_[descriptor]
 ```
 
-Examples: `pyrc__nginx_port_http`, `dmt__mysql_backup_retention_days`
+Examples: `acme__nginx_port_http`, `data__mysql_backup_retention_days`
 
 The double underscore (`__`) separates the application/department namespace from the role-level variable name. This avoids collisions across applications sharing the same role.
 

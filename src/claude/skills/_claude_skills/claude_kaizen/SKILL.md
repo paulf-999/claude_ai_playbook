@@ -7,9 +7,9 @@ tags:
   tested: true
   disable_model_invocation: false
 ---
-<!-- version: 0.2.1 -->
+<!-- version: 0.2.2 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
 
 ## 🎯 Purpose
 
@@ -52,7 +52,7 @@ Self-improving development loop: capture recurring mistakes, promote only verifi
 ## 📚 References
 
 - `evals/runner.py` — scores eval cases before and after a proposed rule change
-- `evals/dmt-scripts-claude_ai_playbook.yaml` — seed eval cases proving each promoted rule works
+- `evals/claude_ai_playbook.yaml` — seed eval cases proving each promoted rule works
 - `~/.claude/_rules/learned/` — Auto-promoted rules with validation dates
 - `reference/_roadmap.md` — planned v2 enhancements
 - `tests/evals.yaml` — 7 test scenarios covering promotion, validation, pruning and scope

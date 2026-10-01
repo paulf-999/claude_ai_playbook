@@ -7,7 +7,7 @@ This guide sets up Claude Code on a Windows machine so it uses the team playbook
 ## Prerequisites
 
 - Windows 10/11 with WSL2 installed
-- The playbook repo cloned into WSL2 at `~/git_repos/dmt-scripts-claude_ai_playbook`
+- The playbook repo cloned into WSL2 at `~/git_repos/claude_ai_playbook`
 - `winget` available (built into Windows 10 1809+ and Windows 11)
 
 ---
@@ -43,7 +43,7 @@ claude --version
 Open your **WSL2 terminal** and run:
 
 ```bash
-cd ~/git_repos/dmt-scripts-claude_ai_playbook
+cd ~/git_repos/claude_ai_playbook
 make install_windows
 ```
 
@@ -66,7 +66,7 @@ Claude Code will start using the playbook automatically — it reads from `C:\Us
 Whenever the playbook repo is updated, pull and re-run both installs from your own WSL terminal:
 
 ```bash
-cd ~/git_repos/dmt-scripts-claude_ai_playbook
+cd ~/git_repos/claude_ai_playbook
 git pull
 make install          # WSL — previews, then asks you to type 'install'
 make install_windows  # Windows C:\Users\<username>\.claude

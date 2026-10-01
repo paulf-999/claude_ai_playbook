@@ -59,7 +59,7 @@ Commit message references: `feat(api): DM-12345 - fix rate limiting`
 User context: Working on rate limiting improvements
 
 **Expected output:**
-- ✅ Recognizes DM-12345 and formats as `[DM-12345](https://payroc.atlassian.net/browse/DM-12345)`
+- ✅ Recognizes ABC-123 and formats as `[ABC-123](https://<your-site>.atlassian.net/browse/ABC-123)`
 - ✅ Summary doesn't repeat the ticket ID (uses "Fixes rate limiting" not "Fixes DM-12345")
 
 ---

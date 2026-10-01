@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-06-07 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-01 -->
 # 🎨 Mermaid Advanced Techniques
 
 ## 📋 Contents
@@ -77,7 +77,7 @@ end
 
 ## 📖 Reference example
 
-`roles/application/ddp/airbyte/README.md` in `pyrc-cac-ans` — an illustrative example demonstrating:
+`roles/application/ddp/airbyte/README.md` in an Ansible repo — an illustrative example demonstrating:
 
 - Subgraphs and milestone nodes
 - Failure nodes and rescue branches

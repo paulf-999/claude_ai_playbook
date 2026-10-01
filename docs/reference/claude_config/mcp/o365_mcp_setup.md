@@ -6,7 +6,7 @@ Gives Claude access to Microsoft 365 — including Outlook email, Teams chat, Sh
 
 ## Prerequisites
 
-- An active Microsoft 365 account (Payroc work account).
+- An active Microsoft 365 account (work account).
 - Access to [claude.ai](https://claude.ai) — the connector is configured in the web UI, but once enabled it is also available in Claude Code CLI sessions.
 
 ---

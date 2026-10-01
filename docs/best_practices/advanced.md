@@ -31,8 +31,8 @@ Quote the relevant output and suggest the fix — don't just name the problem.
 **Parallel workstreams with worktrees** — useful when developing two independent dbt features simultaneously without branch conflicts:
 
 ```bash
-git worktree add ../dbtanalytics-feature-a feature/add_salesforce_mart
-git worktree add ../dbtanalytics-feature-b feature/refactor_access_one_staging
+git worktree add ../dbt_project-feature-a feature/add_salesforce_mart
+git worktree add ../dbt_project-feature-b feature/refactor_crm_staging
 # Open Claude in each worktree directory separately
 ```
 

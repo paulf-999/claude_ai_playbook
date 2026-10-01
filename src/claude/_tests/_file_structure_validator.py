@@ -225,8 +225,8 @@ class FileStructureValidator:
             "skill.contract.yaml",  # required exact name, see authoring_skills.md
             "__init__.py",  # Python package marker, not a naming-convention target
             # Eval fixture deliberately named after a real external repo slug
-            # (Payroc's own repos use hyphens) — see payroc_engineering_naming_standards.md
-            "dmt-scripts-claude_ai_playbook.yaml",
+            # (some organisations' repos use hyphens)
+            "claude_ai_playbook.yaml",
         ] or filename in AUTO_GENERATED_FILES:
             return
 

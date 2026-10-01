@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-01
-# Version:           1.5.3
+# Version:           1.5.4
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -135,7 +135,7 @@ ENTRY_POINT_RELATIVE_PATHS = {
     "style_guide_standards/bash.md",
     "style_guide_standards/dbt.md",
     "style_guide_standards/jira.md",
-    "style_guide_standards/payroc_engineering_naming_standards.md",
+    "org.md",
     "style_guide_standards/python.md",
     "style_guide_standards/sql.md",
     "style_guide_standards/infra/ansible.md",

@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-01 -->
 # 🏷️ dbt Naming Conventions
 
 Naming standards for models, files, keys, data types, audit fields, CTEs, and null handling across all layers of the dbt project.
@@ -43,10 +43,10 @@ Every model must have a surrogate key named `KEY`, generated using the `create_s
 
 | Layer | File naming convention | Example |
 |-------|------------------------|---------|
-| Staging | `staging_<source>_<entity>.sql` | `staging_access_one_merchant_list.sql` |
-| Base | `<source>_<entity>.sql` | `access_one_merchant_list.sql` |
-| Mart | `mart_<domain>_<entity>.sql` | `mart_payroc_commerce_payouts.sql` |
-| Publication | `pub_<domain>_<entity>.sql` | `pub_payroc_commerce_payouts.sql` |
+| Staging | `staging_<source>_<entity>.sql` | `staging_crm_customer_list.sql` |
+| Base | `<source>_<entity>.sql` | `crm_customer_list.sql` |
+| Mart | `mart_<domain>_<entity>.sql` | `mart_commerce_payouts.sql` |
+| Publication | `pub_<domain>_<entity>.sql` | `pub_commerce_payouts.sql` |
 | Snapshots | `dim_<entity>_history.sql` | `dim_merchant_history.sql` |
 | Macros | File name must match the macro name | `create_surrogate_key.sql` |
 

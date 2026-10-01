@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.1.1
+# Version:           1.1.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -28,9 +28,7 @@ STYLE_DIR = Path("style_guide_standards")
 
 # Rule path (relative to 05_lazy_load/) -> H2 headings it must keep, emoji stripped.
 RULES: dict[Path, list[str]] = {
-    STYLE_DIR / "payroc_engineering_naming_standards.md": [
-        "Child Pages", "Quick Reference", "Before Creating a Named Resource",
-    ],
+    Path("org.md"): ["Child pages", "Organisation facts", "Internal references"],
     STYLE_DIR / "airflow.md": ["Child pages", "Core Principles", "DAG Acceptance Checklist"],
     STYLE_DIR / "utilities" / "datetime.md": ["Standard formats", "Timezone", "Known exceptions"],
     STYLE_DIR / "infra" / "ansible.md": ["Child pages", "Repo structure", "Naming conventions", "Linting"],

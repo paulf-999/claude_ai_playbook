@@ -1,6 +1,6 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
 # 🔧 Pytest Fixtures & Mocking
 
 **Purpose:** Establish fixtures and mocking conventions for isolating code under test and reducing duplication.
@@ -49,7 +49,7 @@ Create underscore-prefixed helper functions to set up test data:
 def _make_client():
     """Create mock Airbyte client with default return values."""
     client = MagicMock()
-    client.base_url = "https://test-server.prod.payroc.com:8006"
+    client.base_url = "https://api.example.com:8006"
     client.list_sources.return_value = []
     client.list_destinations.return_value = []
     return client
