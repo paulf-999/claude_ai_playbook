@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-01
-# Version:           4.0.0
+# Version:           4.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -27,7 +27,7 @@ from _shared_paths import RULES_DIR
 
 RULE_FILE = RULES_DIR / "03_authoring_guidelines" / "authoring_skills.md"
 CHECKLIST = RULES_DIR / "03_authoring_guidelines" / "authoring_skills" / "_lazy_load" / "_hard_gates_checklist.md"
-SECTIONS = ["Frontmatter", "Purpose", "Example Usage", "Best For", "References"]
+SECTIONS = ["Frontmatter", "Instructions for Claude", "Purpose", "Example Usage", "Best For", "References"]
 CONTRACT_FIELDS = ["`name`, `version`, `summary`, `maturity`", "`dispatch.triggers`", "`dispatch.not_for`", "`output`"]
 MATURITY_LEVELS = {"draft", "tactical", "strategic"}
 
@@ -60,15 +60,16 @@ def test_children_resolve():
     assert "**Read on demand:**" not in content(), "a pointer was left unresolved"
 
 
-def test_skill_md_has_five_sections_in_order():
-    """SKILL.md's five sections are listed in the canonical order."""
+def test_skill_md_has_six_sections_in_order():
+    """SKILL.md's six sections are listed in the canonical order."""
     found = re.findall(r"^\d\. \*\*([^*]+)\*\* —", content(), re.M)
-    assert found[:5] == SECTIONS, f"SKILL.md sections changed: {found[:5]}"
+    assert found[:6] == SECTIONS, f"SKILL.md sections changed: {found[:6]}"
 
 
 def test_skill_md_stays_short():
-    """SKILL.md is meant to be about 60 lines, with detail in reference/."""
-    assert "5-section canonical structure, ~60 lines" in content(), "the ~60-line target is missing"
+    """SKILL.md is meant to be about 60 lines plus its instructions, with detail in reference/."""
+    target = "6-section canonical structure, ~60 lines plus the instructions section"
+    assert target in content(), "the ~60-line target is missing"
 
 
 def test_example_name_follows_pattern():
