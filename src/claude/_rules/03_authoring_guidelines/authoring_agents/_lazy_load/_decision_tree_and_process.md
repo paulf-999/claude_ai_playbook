@@ -1,13 +1,13 @@
-<!-- version: 1.1.2 -->
+<!-- version: 1.1.3 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
 # 🎯 Agent Decision Tree & Creation Process
 
 **Purpose:** Decide whether to build a rule, skill, or agent; know when NOT to create an agent at all; and the 5-step process once you've decided to.
 
 ---
 
-## Rule vs. Skill vs. Agent Decision Tree
+## 🌳 Rule vs. Skill vs. Agent Decision Tree
 
 Use this tree to decide what to create:
 

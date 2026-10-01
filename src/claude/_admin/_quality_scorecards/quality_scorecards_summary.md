@@ -15,8 +15,8 @@
 |---|---|---|---|---|
 | Tests | 49 | 8.6/10 | 2026-10-01 | • 💪 **Strongest:** 10 files tied at 9.3/10, including `test_test_metadata.py`<br>• ⚠️ **Weakest:** `test_confluence_create_page_timeout.py` (6.9/10) |
 | Skills | 7 | 8.4/10 | 2026-09-30 | • 💪 **Strongest:** `claude_setup_graphify` (9.9/10)<br>• ⚠️ **Weakest:** `claude_kaizen` (6.1/10) |
-| Rules — always-on | 16 | 8.0/10 | 2026-09-30 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_rule_loading_strategy.md` (6.4/10) |
-| Rules — lazy-load | 17 | 8.2/10 | 2026-10-01 | • 💪 **Strongest:** `datetime.md` and `payroc_engineering_naming_standards.md` (9.0/10)<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
+| Rules — always-on | 16 | 8.2/10 | 2026-10-01 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_operational_efficiency.md` (7.1/10) |
+| Rules — lazy-load | 17 | 8.3/10 | 2026-10-01 | • 💪 **Strongest:** 3 files tied at 9.0/10, including `airflow.md`<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
 | Hooks | 0 | — | — | • ⚠️ **Gap:** no hooks are scored yet |
 | Agents | 0 | — | — | • ⚠️ **Gap:** no agents are scored yet |
 
@@ -30,10 +30,9 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 |---|---|---|---|
 | 1 | • 🆕 **Unscored hooks and agents:** write the first scorecards for hooks and agents | • 🙈 **Blind spot:** two of the five types have no quality signal at all | `hooks/hook_scorecards_summary.md`<br>`agents/agent_scorecards_summary.md` |
 | 2 | • 🔧 **Lowest skill score:** replace `claude_kaizen`'s placeholder eval runner | • 🔻 **Bottom of the table:** at 6.1/10 it is the lowest-scoring skill | `skills/skill_scorecards_summary.md` |
-| 3 | • 🔧 **Lowest always-on rule score:** extend `test_rules_structure.py`'s emoji check to every `##` subheading, as `claude_rule_loading_strategy.md`'s scorecard asks | • 🔻 **Bottom of the table:** at 6.4/10 it is the lowest-scoring rule, and it loads in every session | `rules/rule_scorecards_summary.md` |
-| 4 | • ✂️ **Test complexity:** split `test_always_on_reachability.py` and `test_portable_paths.py` first, then the other 7 tests whose complexity score is below 7 | • 📉 **Lowest scores:** those two tests score 3/10 for complexity, the lowest of the 9 below the ≥7 floor | `tests/test_scorecards_summary.md` |
-| 5 | • 💬 **Failure messages:** add assertion failure messages to `test_jira_create_handler.py` and `test_confluence_create_page_timeout.py` first, then `test_confluence_create_page_handler.py` | • 🔍 **Lowest scores:** the first two have failure messages on 0% of assertions, and the third on 1% | `tests/test_scorecards_summary.md` |
-| 6 | • 🔧 **Lowest lazy-load rule score:** fix or remove `makefile.md`'s broken templates reference, then add inline principles | • 🔻 **Bottom of the table:** at 6.8/10 it is the lowest-scoring lazy-load rule | `rules/rule_scorecards_summary.md` |
+| 3 | • ✂️ **Test complexity:** split `test_always_on_reachability.py` and `test_portable_paths.py` first, then the other 7 tests whose complexity score is below 7 | • 📉 **Lowest scores:** those two tests score 3/10 for complexity, the lowest of the 9 below the ≥7 floor | `tests/test_scorecards_summary.md` |
+| 4 | • 💬 **Failure messages:** add assertion failure messages to `test_jira_create_handler.py` and `test_confluence_create_page_timeout.py` first, then `test_confluence_create_page_handler.py` | • 🔍 **Lowest scores:** the first two have failure messages on 0% of assertions, and the third on 1% | `tests/test_scorecards_summary.md` |
+| 5 | • 🔧 **Lowest lazy-load rule score:** fix or remove `makefile.md`'s broken templates reference, then add inline principles | • 🔻 **Bottom of the table:** at 6.8/10 it is the lowest-scoring lazy-load rule | `rules/rule_scorecards_summary.md` |
 
 ---
 
