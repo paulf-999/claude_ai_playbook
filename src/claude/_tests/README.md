@@ -155,7 +155,7 @@ alongside these tests and is imported directly via a relative import.
 | `test_confluence_create_page_handler.py` | The handler's title, space, pattern and section validators, including their boundaries | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_confluence_create_page_phases.py` | The handler's publish phases, each failure mode's error, and the end-to-end flow, with Confluence mocked | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
 | `test_confluence_create_page_timeout.py` | The timeout wrapper on a live call — the dialog, each answer, draft preservation, the 6-minute cap, errors and closed input | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
-| `test_confluence_create_page_timeout_options.py` | Timeout argument parsing, the dialog's wording and how each answer resolves, with no threads | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
+| `test_confluence_create_page_timeout_options.py` | Timeout argument parsing, the dialog's wording, how each answer resolves, and that drafts go to `~/_drafts/confluence/` | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.0 |
 
 ### `skills/jira_create/`
 
