@@ -57,13 +57,15 @@ repos:
           - id: yamllint # Lint YAML files using rules specified in .yamllint
             args: [-c=.yamllint]
             name: YAML checks - linter (using yamllint)
-        # Illustrative style-guide templates, not real deployable YAML
-            exclude: style_guide_standards/.*/templates/.*\.ya?ml$
+        # Illustrative style-guide templates, not real deployable YAML;
+        # agent evals.yaml files are markdown with front matter, not YAML
+            exclude: (style_guide_standards/.*/templates/.*\.ya?ml$|^src/claude/agents/.*/evals\.yaml$)
     - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
       rev: 0.2.1
       hooks:
           - id: yamlfmt # yamlfmt - fix input yaml files
             name: YAML fixes
+            exclude: ^src/claude/agents/.*/evals\.yaml$
     # Markdown linter
     - repo: https://github.com/igorshubovych/markdownlint-cli
       rev: v0.43.0
