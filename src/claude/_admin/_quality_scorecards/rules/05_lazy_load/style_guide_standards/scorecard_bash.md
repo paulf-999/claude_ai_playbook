@@ -1,12 +1,12 @@
 # Quality Scorecard — bash.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-01
 
-**Overall score:** 6.5/10 (6-dimension average, Token Cost N/A)
+**Overall score:** 7.7/10 (6-dimension average, Token Cost N/A)
 
 **Recommended improvements:**
-- Add a dedicated structural test for this file.
+- Fix the template path so it reads `05_lazy_load/style_guide_standards/bash/templates/template_bash_script.sh`.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
@@ -16,8 +16,8 @@
 | **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
 | **Structural Compliance** | 9/10 | 2026-09-28 | • ✅ **Compliant:** Purpose statement, Contents section, emoji headers, 81 lines well within limit |
 | **Currency** | 3/10 | 2026-09-28 | • 🐛 **Wrong tier:** template path reads `03_lazy_load/...` — the real tier is `05_lazy_load/`<br>• 🐛 **Wrong subdirectory:** path reads `style_guide_standards/unix/templates/...` — the real path is `style_guide_standards/bash/templates/template_bash_script.sh` (confirmed via `find`)<br>• ✅ **One correct reference:** `shell_utils.sh`'s canonical path is accurate |
-| **Test Coverage** | 2/10 | 2026-09-28 | • 🧪 **Gap:** confirmed via `find` — no test file references `bash` style guide content by name |
-| **Overall** | **6.5/10** | 2026-09-28 | • 💪 **Strength:** concrete, actively-enforced conventions (shellcheck, log levels)<br>• ⚠️ **Gap:** the one file-path reference readers actually need to follow is wrong in two ways |
+| **Test Coverage** | 9/10 | 2026-10-01 | • 🧪 **Dedicated test:** `test_lazy_load_rule_structure.py` checks its header, Purpose line, key sections, child links, relative links and Contents<br>• ✅ **Generic checks:** also passes `test_rules_structure.py` |
+| **Overall** | **7.7/10** | 2026-10-01 | • 💪 **Strength:** concrete, actively-enforced conventions (shellcheck, log levels)<br>• ⚠️ **Gap:** Currency (3/10) is now the weakest dimension |
 
 ## 🔗 Related files
 

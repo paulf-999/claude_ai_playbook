@@ -1,12 +1,9 @@
 # Quality Scorecard — payroc_engineering_naming_standards.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-01
 
-**Overall score:** 7.8/10 (6-dimension average, Token Cost N/A)
-
-**Recommended improvements:**
-- Add a dedicated structural test for this file and its 3 children.
+**Overall score:** 9.0/10 (6-dimension average, Token Cost N/A)
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
@@ -16,8 +13,8 @@
 | **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
 | **Structural Compliance** | 9/10 | 2026-09-28 | • ✅ **Compliant:** Purpose statement, emoji headers, trailing newline, 40 lines, no orphaned duplicate (unlike several siblings surveyed) |
 | **Currency** | 9/10 | 2026-09-28 | • 🔍 **Check:** no stale internal references found; external Confluence link can't be verified from here but follows the same citation convention used elsewhere |
-| **Test Coverage** | 2/10 | 2026-09-28 | • 🧪 **Gap:** confirmed via `find` — no test file references this rule or its 3 children by name |
-| **Overall** | **7.8/10** | 2026-09-28 | • 💪 **Strength:** the cleanest file in this survey — concise, well-cited, no orphaned duplicates<br>• ⚠️ **Gap:** the only real drag is zero test coverage |
+| **Test Coverage** | 9/10 | 2026-10-01 | • 🧪 **Dedicated test:** `test_lazy_load_rule_structure.py` checks its header, Purpose line, key sections, child links, relative links and Contents<br>• ✅ **Generic checks:** also passes `test_rules_structure.py` |
+| **Overall** | **9.0/10** | 2026-10-01 | • 💪 **Strength:** the cleanest file in this survey — concise, well-cited, no orphaned duplicates<br>• ⚠️ **Gap:** Clarity (9/10) is now the weakest dimension |
 
 ## 🔗 Related files
 

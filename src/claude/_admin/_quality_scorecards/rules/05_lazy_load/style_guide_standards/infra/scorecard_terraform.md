@@ -1,13 +1,9 @@
 # Quality Scorecard — terraform.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-01
 
-**Overall score:** 7.0/10 (6-dimension average, Token Cost N/A)
-
-**Recommended improvements:**
-- Add a `**Purpose:**` statement at the top — this file opens with plain prose instead.
-- Add a dedicated structural test for this file and its 4 children.
+**Overall score:** 8.7/10 (6-dimension average, Token Cost N/A)
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
@@ -15,10 +11,10 @@
 | **Complexity** | 9/10 | 2026-09-28 | • 🧮 **Raw complexity 1:** router to 4 children plus 5 short principles, single file, no dependencies |
 | **Evidence of Need** | 8/10 | 2026-09-28 | • 🔗 **Concrete:** names real environments (`dev`, `uat`, `cicd`, `prod`, `global`) and a specific scope (Snowflake infra only, not application logic) |
 | **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
-| **Structural Compliance** | 6/10 | 2026-09-28 | • 🚩 **Missing Purpose statement:** opens with plain prose, unlike this config's convention<br>• ✅ **Otherwise compliant:** emoji headers, Contents section, well within line limit |
+| **Structural Compliance** | 9/10 | 2026-10-01 | • ✅ **Fixed:** `**Purpose:**` line added under the H1 (PR #200)<br>• ✅ **Otherwise compliant:** emoji headers, Contents section, well within line limit |
 | **Currency** | 9/10 | 2026-09-28 | • 🔍 **Check:** no stale references found, no orphaned duplicate |
-| **Test Coverage** | 2/10 | 2026-09-28 | • 🧪 **Gap:** confirmed via `find` — no test file references this rule by name |
-| **Overall** | **7.0/10** | 2026-09-28 | • 💪 **Strength:** concrete, well-scoped principles, no orphaned duplicate<br>• ⚠️ **Gap:** missing Purpose statement, zero test coverage |
+| **Test Coverage** | 9/10 | 2026-10-01 | • 🧪 **Dedicated test:** `test_lazy_load_rule_structure.py` checks its header, Purpose line, key sections, child links, relative links and Contents<br>• ✅ **Generic checks:** also passes `test_rules_structure.py` |
+| **Overall** | **8.7/10** | 2026-10-01 | • 💪 **Strength:** concrete, well-scoped principles, no orphaned duplicate<br>• ⚠️ **Gap:** Clarity (8/10) is now the weakest dimension |
 
 ## 🔗 Related files
 

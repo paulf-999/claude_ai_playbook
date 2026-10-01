@@ -3,6 +3,8 @@
 **Date Created:** 2026-09-07
 **Date Updated:** 2026-09-07
 
+**Overall score:** 9.9/10
+
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
 | **Design** | 10/10 | 2026-09-07 | Clear 5-phase workflow + pre-flight validation + utility flags (--dry-run, --skip-extract, --state). Smart, defensible, user-friendly. ✅ |
@@ -13,3 +15,8 @@
 | **Documentation** | 10/10 | 2026-09-07 | 5-section SKILL.md ✅. Workflow + utility flags ✅. Troubleshooting ✅. Examples + FAQ ✅. Complete. ✅ |
 | **Standards Compliance** | 10/10 | 2026-09-07 | skill.contract.yaml ✅. 15 evals (98 lines) ✅. reference/ (5 files, all lean) ✅. Workflow + Troubleshooting + Security + Examples + Scorecard ✅. Perfect. |
 | **Overall** | **9.9/10** | 2026-09-07 | Exemplary Draft skill. 6 dimensions at 10/10. Production-ready with enterprise-grade security and comprehensive documentation. |
+
+## 🔗 Related files
+
+- `src/claude/skills/_claude_skills/claude_setup_graphify/SKILL.md` — the skill being scored
+- `src/claude/skills/_claude_skills/claude_setup_graphify/tests/evals.yaml` — Test Coverage dimension

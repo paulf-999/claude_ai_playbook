@@ -1,0 +1,55 @@
+# 📊 <Type> Scorecards Summary
+
+**Purpose:** One-glance rollup of every <type> scorecard, showing where quality is weakest and what to fix first, without opening each file.
+
+---
+
+## 📋 Scores by <group>
+
+- **Overall:** the mean of every scorecard's Overall score in that <group>.
+- **Strongest and weakest:** the highest- and lowest-scoring file in that <group>, by Overall score.
+- **Date Updated:** the latest `Date Updated` among that <group>'s scorecards.
+
+| <Group> | Scored | Overall | Date Updated | Strengths and gaps |
+|---|---|---|---|---|
+| <group name> | N | X.X/10 | YYYY-MM-DD | • 💪 **Strongest:** `<file>` (X.X/10)<br>• ⚠️ **Weakest:** `<file>` (X.X/10) |
+
+---
+
+## 🚀 Recommended next actions
+
+Ranked by impact, highest first.
+
+| # | Action | Why | Source |
+|---|---|---|---|
+| 1 | • <emoji> **<keyword>:** <one imperative action that names the file> | • <emoji> **<keyword>:** <one reason, with the score> | `<scorecard or summary>` |
+
+---
+
+## 📄 All scorecards
+
+Sorted by Overall score, highest first.
+
+| Scorecard | Overall | Date Updated | Recommended improvements |
+|---|---|---|---|
+| `<scorecard_file.md>` | X.X/10 | YYYY-MM-DD | • <action> — or — (≥8.5) |
+
+---
+
+## 🔄 Keeping this current
+
+- **Same commit:** update this file whenever a scorecard it covers is created or re-scored.
+- **Recompute:** re-average the Overall scores and re-check the strongest and weakest files.
+- **Bump dates:** set a <group>'s `Date Updated` to the re-scored scorecard's `Date Updated`.
+- **Prune actions:** remove an action once its scorecard no longer lists it.
+
+<!--
+How to fill this template:
+- <Type> / <type>: the artefact type, e.g. Rule / rule. The top-level summary uses "Quality" and covers every type.
+- <group> / <Group>: how rows are grouped — "type" in the top-level summary, "tier" for rules, "folder" for tests.
+  Use a single row named after the type when there is only one group (skills, hooks, agents).
+- Ties: write "N files tied at X.X/10, including `<file>`".
+- No scorecards yet: one row with Scored 0, "—" for Overall and Date Updated, and "• ⚠️ **Gap:** no <type>s are scored yet".
+- Recommended improvements: copy the scorecard's own bullets, trimmed at " — ". If a scorecard has no such section, name its weakest dimension instead.
+- Top-level summary only: replace "📄 All scorecards" with "📄 All summaries", one row per per-type summary file.
+-->

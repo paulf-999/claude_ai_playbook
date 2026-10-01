@@ -1,0 +1,39 @@
+# Quality Scorecard — <artefact_name>
+
+**Date Created:** YYYY-MM-DD
+**Date Updated:** YYYY-MM-DD
+
+**Overall score:** X.X/10
+
+**Recommended improvements:**
+- <one imperative action per gap flagged in the Notes column below>
+
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **<Dimension>** | X/10 | YYYY-MM-DD | • <emoji> **<keyword>:** <one point> |
+| **Overall** | **X.X/10** | YYYY-MM-DD | • 💪 **<keyword>:** <strength><br>• ⚠️ **<keyword>:** <gap, if any> |
+
+## 🔗 Related files
+
+- `<full/repo-relative/path/to/the/artefact>` — the artefact being scored
+- `<full/repo-relative/path/to/anything/named/in/the/Notes>` — <which dimension it's relevant to>
+
+<!--
+How to fill this template:
+- <artefact_name>: the scored file or skill name, e.g. `git.md`, `test_git.py` or `git_create_pr`.
+- Dimensions: one row per dimension for the artefact's type, in this order —
+  - Rules: Clarity, Complexity, Evidence of Need, Token Cost Justification, Structural Compliance, Currency, Test Coverage
+    (criteria in `_admin/_quality_scorecards/rules/README.md`).
+  - Tests: Clarity, Complexity, Evidence of Need, Coverage, Structural Compliance, Currency, Regression Value
+    (criteria in `_admin/_quality_scorecards/tests/README.md`).
+  - Skills: Design, Complexity, Test Coverage, Code Quality, Security, Documentation, Standards Compliance
+    (criteria in `_templates/skills/_quality_scorecard_template.md`).
+  - Hooks and agents: define their dimensions in their folder's README when the first one is scored.
+- Overall: the mean of the dimension scores, rounded to 0.1; the "Overall score" line repeats it.
+- Recommended improvements: include only when Overall is below 8.5, and omit the heading and bullets entirely otherwise.
+- Notes: one point per bullet, joined with <br>, each `• <emoji> **<keyword>:** <point>`.
+- Dates: Date Created is frozen; a row's Date Updated changes only when its score changes,
+  and the header Date Updated must be on or after the latest row date.
+- Related files: full repo-relative paths, never bare filenames.
+- Summary: update the matching row in `<type>_scorecards_summary.md` in the same commit.
+-->
