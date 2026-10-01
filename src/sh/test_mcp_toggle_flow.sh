@@ -22,7 +22,7 @@ test_setup() {
     echo "Test Setup: Creating temporary settings.json"
     cat > "$TEST_SETTINGS" <<'EOF'
 {
-  "cleanupPeriodDays": 30,
+  "cleanupPeriodDays": 90,
   "deniedMcpServers": [{"serverName": "github"}],
   "permissions": {
     "allow": ["Bash(git:*)"],
@@ -49,7 +49,7 @@ test_blocking_message() {
     # Create settings with atlassian DISABLED (in deniedMcpServers)
     cat > "$HOME/.claude/settings.json" <<'EOF'
 {
-  "cleanupPeriodDays": 30,
+  "cleanupPeriodDays": 90,
   "deniedMcpServers": [{"serverName": "atlassian"}],
   "permissions": {"allow": ["Bash(git:*)"]}
 }
@@ -125,7 +125,7 @@ test_settings_preservation() {
     local passed=0
 
     # Check 1: cleanupPeriodDays
-    if echo "$settings_content" | jq -e '.cleanupPeriodDays == 30' > /dev/null 2>&1; then
+    if echo "$settings_content" | jq -e '.cleanupPeriodDays == 90' > /dev/null 2>&1; then
         passed=$((passed + 1))
     fi
     checks=$((checks + 1))

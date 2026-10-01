@@ -114,7 +114,7 @@ def test_settings_json_preservation():
     import mcp_toggle
 
     settings = {
-        "cleanupPeriodDays": 30,
+        "cleanupPeriodDays": 90,
         "deniedMcpServers": [{"serverName": "github"}],
         "permissions": {"allow": ["Bash(git:*)"]}
     }
@@ -123,7 +123,7 @@ def test_settings_json_preservation():
     mcp_toggle.enable_server(settings, "atlassian")
 
     # Check other settings are intact
-    assert settings["cleanupPeriodDays"] == 30
+    assert settings["cleanupPeriodDays"] == 90
     assert settings["permissions"]["allow"] == ["Bash(git:*)"]
     assert any(e.get("serverName") == "github" for e in settings["deniedMcpServers"])
 

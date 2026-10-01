@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
 # Date updated:      2026-10-01
-# Version:           2.0.1
+# Version:           2.0.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -119,7 +119,7 @@ def test_non_mcp_settings_change_is_silent(tmp_path):
     sandbox = HookSandbox(tmp_path)
     sandbox.set_denied()
     sandbox.prompt()
-    sandbox.settings.write_text(json.dumps({"deniedMcpServers": [], "cleanupPeriodDays": 30}))
+    sandbox.settings.write_text(json.dumps({"deniedMcpServers": [], "cleanupPeriodDays": 90}))
     assert_silent(sandbox.prompt(), "unrelated setting changed")
 
 
