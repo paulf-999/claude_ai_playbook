@@ -4,7 +4,7 @@
 # Test complexity score: 9/10
 # Python style compliant: No
 # Date created:      2026-08-28
-# Version:           1.0.1
+# Version:           1.0.2
 # Date updated:      2026-10-01
 # ─────────────────────────────────────────────────────────
 
@@ -20,10 +20,11 @@ Validates that each alias entry:
 """
 
 import sys
-from pathlib import Path
+
+from _shared_paths import ALIASES_FILE
 
 # Load aliases.md
-ALIASES_PATH = Path(__file__).parent.parent.parent / "aliases.md"
+ALIASES_PATH = ALIASES_FILE
 
 
 def parse_aliases_table():

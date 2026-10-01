@@ -4,7 +4,7 @@
 # Test complexity score: 5/10
 # Python style compliant: No
 # Date created:      2026-08-28
-# Version:           1.2.1
+# Version:           1.3.0
 # Date updated:      2026-10-01
 # ─────────────────────────────────────────────────────────
 
@@ -19,7 +19,7 @@ Checks:
 2. **Location compliance:** Files in correct directories (_rules/, _tests/, hooks/, skills/, etc.)
 3. **Child file prefixes:** Child files start with underscore (_child.md)
 4. **Directory depth:** Rules organized properly by tier
-   (01_essentials/, 02_claude_standards/, 04_claude_reference/, 05_lazy_load/)
+   (01_essentials/, 02_claude_standards/, 03_authoring_guidelines/, 04_claude_reference/, 05_lazy_load/)
 
 This test is parametrized to scan all files at once and report violations.
 
@@ -89,10 +89,17 @@ USER_CREATED_DIRS = {
 # Directory-specific validation rules
 DIR_RULES = {
     "_rules": {
-        "subdirs": ["01_essentials", "02_claude_standards", "04_claude_reference", "05_lazy_load"],
+        "subdirs": [
+            "01_essentials",
+            "02_claude_standards",
+            "03_authoring_guidelines",
+            "04_claude_reference",
+            "05_lazy_load",
+        ],
         "rule": (
             "Rules organized by tier (01_essentials=blocking, 02_claude_standards=how Claude works, "
-            "04_claude_reference=reference material, 05_lazy_load=domain-specific)"
+            "03_authoring_guidelines=authoring standards, 04_claude_reference=reference material, "
+            "05_lazy_load=domain-specific)"
         ),
     },
     "hooks": {
@@ -176,20 +183,6 @@ class FileStructureValidator:
 
     def _validate_directory(self, directory: Path, depth: int) -> None:
         """Validate a directory name and structure."""
-        rel_path = directory.relative_to(self.claude_home)
-
-        # Check if directory is user-created or auto-generated
-        is_user_created = directory.name.startswith("_") or depth == 0
-
-        # Check naming convention
-        if is_user_created and depth > 0 and not directory.name.startswith("_"):
-            self.violations.append({
-                "path": str(rel_path),
-                "rule": "User-created directories must start with underscore",
-                "severity": "warning",
-                "message": f"Directory should be _{directory.name}/",
-            })
-
         # Check directory-specific rules
         if directory.name in DIR_RULES:
             rules = DIR_RULES[directory.name]
