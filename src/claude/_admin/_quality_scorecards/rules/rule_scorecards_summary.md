@@ -47,23 +47,23 @@ Each tier is its own table, sorted descending by Overall score within the tier.
 
 | File | Overall | Recommended improvements |
 |---|---|---|
-| `scorecard_payroc_engineering_naming_standards.md` | 7.8/10 | • Add a dedicated structural test for this file and its 3 children |
-| `scorecard_latency_optimisation.md` | 7.5/10 | • Cite a specific incident or observed need for this guidance |
+| `scorecard_datetime.md` | 9.0/10 | — (≥8.5) |
+| `scorecard_payroc_engineering_naming_standards.md` | 9.0/10 | — (≥8.5) |
+| `scorecard_ansible.md` | 8.8/10 | — (≥8.5) |
+| `scorecard_ohmyzsh_setup.md` | 8.8/10 | — (≥8.5) |
+| `scorecard_airflow.md` | 8.7/10 | — (≥8.5) |
+| `scorecard_terraform.md` | 8.7/10 | — (≥8.5) |
+| `scorecard_python.md` | 8.5/10 | — (≥8.5) |
+| `scorecard_docker.md` | 8.2/10 | • Add some inline content (principles, examples, or a "when to load" column) |
+| `scorecard_mermaid.md` | 8.2/10 | • Add inline principles or a short example, so the file is more than a 2-item routing list |
+| `scorecard_jira.md` | 8.0/10 | • Delete or reconcile the orphaned duplicate `jira/jira.md` |
+| `scorecard_mcp_trust_model.md` | 8.0/10 | • Fix the broken `/docs/mcp_servers.md` reference<br>• Point the `security_guardrails.md` reference at `_rules/02_claude_standards/security/_security_guardrails.md` |
+| `scorecard_dbt.md` | 7.8/10 | • Reconcile the redundant `@./dbt/*.md` imports block with the "Child pages" markdown-link table above it<br>• Delete or reconcile the orphaned duplicate `dbt/dbt.md` |
+| `scorecard_bash.md` | 7.7/10 | • Fix the template path so it reads `05_lazy_load/style_guide_standards/bash/templates/template_bash_script.sh` |
 | `scorecard_automation_controls.md` | 7.5/10 | • Split into parent + child files — 162 lines with no children |
-| `scorecard_airflow.md` | 7.5/10 | • Add a dedicated structural test<br>• Delete or reconcile the orphaned duplicate `airflow/airflow.md` |
-| `scorecard_datetime.md` | 7.3/10 | • Add a `**Purpose:**` statement<br>• Add a dedicated structural test |
-| `scorecard_ohmyzsh_setup.md` | 7.2/10 | • Add a `**Purpose:**` statement<br>• Add a lightweight structural test |
-| `scorecard_ansible.md` | 7.2/10 | • Add a `**Purpose:**` statement<br>• Add a dedicated structural test |
-| `scorecard_terraform.md` | 7.0/10 | • Add a `**Purpose:**` statement<br>• Add a dedicated structural test |
-| `scorecard_python.md` | 6.8/10 | • Add a dedicated structural test |
-| `scorecard_mcp_trust_model.md` | 6.8/10 | • Add a dedicated structural test |
-| `scorecard_dbt.md` | 6.7/10 | • Reconcile the redundant Child-pages-table + `@./` imports<br>• Delete or reconcile the orphaned duplicate `dbt/dbt.md`<br>• Add a dedicated structural test |
-| `scorecard_mermaid.md` | 6.5/10 | • Add a `**Purpose:**` statement<br>• Add a dedicated structural test |
-| `scorecard_docker.md` | 6.5/10 | • Add a `**Purpose:**` statement<br>• Expand beyond a bare 2-item routing list<br>• Add a dedicated structural test |
-| `scorecard_bash.md` | 6.5/10 | • Add a dedicated structural test |
-| `scorecard_sql.md` | 6.3/10 | • Add an emoji to the "Imports" heading<br>• Reconcile the redundant Child-pages-table + `@./` imports<br>• Delete or reconcile the orphaned duplicate `sql/sql.md`<br>• Add a dedicated structural test |
-| `scorecard_jira.md` | 6.3/10 | • Add a `**Purpose:**` statement<br>• Delete or reconcile the orphaned duplicate `jira/jira.md`<br>• Add a dedicated structural test |
-| `scorecard_makefile.md` | 5.2/10 | • Add a `**Purpose:**` statement<br>• Add a dedicated structural test |
+| `scorecard_latency_optimisation.md` | 7.5/10 | • Cite a specific incident or observed need for this guidance |
+| `scorecard_sql.md` | 7.5/10 | • Add an emoji to the "## Imports" heading<br>• Reconcile the redundant "Child pages" markdown-link table with the separate `@./sql/*.md` imports block at the bottom, same inconsistency found in `dbt.md`<br>• Delete or reconcile the orphaned duplicate `sql/sql.md` |
+| `scorecard_makefile.md` | 6.8/10 | • Fix or remove the broken `~/.claude/templates/makefile/` templates reference<br>• Add inline principles beyond the 2-item routing list |
 
 ### Non-tiered
 
