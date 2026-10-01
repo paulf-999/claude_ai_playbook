@@ -2,70 +2,120 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           1.0.2
-# Test quality score: 5/10
-# Test complexity score: 9/10
+# Version:           2.0.0
+# Test quality score: 9/10
+# Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Structural tests for _rules/03_authoring_guidelines/authoring_rules.md.
+"""Content tests for _rules/03_authoring_guidelines/authoring_rules.md.
 
-Verifies that the rule authoring guide is present, well-formed, and contains
-the expected sections for pre-creation checklist and quality gates.
+Each test guards one part of the rule-authoring guide — the five checklist
+questions, the five creation steps and the key quality gates — so a lost
+clause fails by name. Every file the guide sends an author to (template,
+tiers, scorecard README, on-demand children, the structure test) must exist,
+so the guide can't point at something that was moved or deleted.
 """
+from __future__ import annotations
+
 import re
 
 from _shared_paths import CLAUDE_DIR
+from _shared_paths import RULES_DIR
 
-RULE_AUTHORING = CLAUDE_DIR / "_rules" / "03_authoring_guidelines" / "authoring_rules.md"
-
-EXPECTED_SECTIONS = [
-    "Pre-Creation Checklist",
-    "Rule Creation",
-    "Quality Gates",
-    "Common Mistakes",
-    "Hard Gates Checklist",
-]
-
-EXPECTED_PATTERNS = [
-    r"Mechanical enforcement",
-    r"Always-on or lazy-loaded",
-    r"evidence of need",
-    r"Related/conflicting rules",
-]
+AUTHORING_RULES = RULES_DIR / "03_authoring_guidelines" / "authoring_rules.md"
+TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference", "05_lazy_load")
 
 
-def test_rule_authoring_file_exists():
-    """rule_authoring.md must be present at the expected path."""
-    assert RULE_AUTHORING.exists(), f"rule_authoring.md missing: {RULE_AUTHORING}"
+def content() -> str:
+    """Read authoring_rules.md.
+
+    :return: The guide's text.
+    :rtype: str
+    """
+    return AUTHORING_RULES.read_text()
 
 
-def test_rule_authoring_has_expected_sections():
-    """rule_authoring.md must contain all required section headings."""
-    content = RULE_AUTHORING.read_text()
-    for section in EXPECTED_SECTIONS:
-        assert section.lower() in content.lower(), (
-            f"rule_authoring.md missing expected section: '{section}'"
-        )
+def numbered_items(heading: str) -> list[str]:
+    """List the bold titles of a section's numbered items.
+
+    :param heading: Text of the ``##`` heading that starts the section.
+    :type heading: str
+    :return: The bold text of each ``1. **...**`` line, in order.
+    :rtype: list[str]
+    """
+    section = content().split(heading, 1)[1].split("\n## ", 1)[0]
+    return re.findall(r"^\d\. \*\*([^*]+)\*\*", section, re.M)
 
 
-def test_rule_authoring_contains_key_patterns():
-    """rule_authoring.md must reference checklist items and quality gates."""
-    content = RULE_AUTHORING.read_text()
-    for pattern in EXPECTED_PATTERNS:
-        assert re.search(pattern, content, re.IGNORECASE), (
-            f"rule_authoring.md missing expected pattern: '{pattern}'"
-        )
+def test_checklist_has_five_questions():
+    """The pre-creation checklist asks its five questions in order."""
+    items = numbered_items("## ✅ Pre-Creation Checklist")
+    assert len(items) == 5, f"expected 5 checklist questions, found {items}"
+    assert items[0] == "Mechanical enforcement or instructional?", f"question 1 changed: {items[0]}"
+    assert items[1] == "Always-on or lazy-loaded?", f"question 2 changed: {items[1]}"
 
 
-def test_rule_authoring_line_limit():
-    """rule_authoring.md must not exceed 110 lines."""
-    lines = RULE_AUTHORING.read_text().splitlines()
-    assert len(lines) <= 110, f"rule_authoring.md: {len(lines)} lines exceeds 110-line limit"
+def test_evidence_of_need_required():
+    """Authors must show evidence of need, not a hypothetical."""
+    assert "**Evidence of need** (not hypothetical)" in content(), "the evidence-of-need question is missing"
 
 
-def test_rule_authoring_ends_with_newline():
-    """rule_authoring.md must end with exactly one newline."""
-    raw = RULE_AUTHORING.read_bytes()
-    assert raw.endswith(b"\n"), "rule_authoring.md does not end with a newline"
-    assert not raw.endswith(b"\n\n"), "rule_authoring.md ends with multiple newlines"
+def test_creation_has_five_steps():
+    """Rule creation keeps its five steps, ending with the scorecard."""
+    steps = numbered_items("## 🚀 Rule Creation (5 Steps)")
+    assert len(steps) == 5, f"expected 5 creation steps, found {steps}"
+    assert steps[-1].startswith("Create a quality scorecard"), f"the last step should be the scorecard, got {steps[-1]}"
+
+
+def test_template_exists():
+    """The rule template the guide names exists."""
+    assert "_templates/RULE.md.template" in content(), "the guide no longer names the rule template"
+    assert (CLAUDE_DIR / "_templates" / "RULE.md.template").is_file(), "_templates/RULE.md.template is missing"
+
+
+def test_every_tier_named_exists():
+    """Each tier the guide offers is a real folder."""
+    missing = [t for t in TIERS if f"`{t}/`" not in content() or not (RULES_DIR / t).is_dir()]
+    assert not missing, f"tiers missing from the guide or from _rules/: {missing}"
+
+
+def test_scorecard_template_exists():
+    """The scorecard README the guide points to exists."""
+    readme = CLAUDE_DIR / "_admin" / "_quality_scorecards" / "rules" / "README.md"
+    assert readme.is_file(), f"the guide points to a scorecard template that's gone: {readme}"
+
+
+def test_read_on_demand_children_exist():
+    """Every on-demand child the guide names exists."""
+    paths = re.findall(r"\*\*Read on demand:\*\* `~/[^/]+/([^`]+)`", content())
+    assert len(paths) == 2, f"expected the common-mistakes and hard-gates pointers, found {paths}"
+    missing = [p for p in paths if not (CLAUDE_DIR / p).is_file()]
+    assert not missing, f"Read-on-demand pointers to missing files: {missing}"
+
+
+def test_structure_test_exists():
+    """The structural test every rule must pass is where the guide says."""
+    assert "test_rules_structure.py" in content(), "the guide no longer names test_rules_structure.py"
+    assert (CLAUDE_DIR / "_tests" / "rules" / "test_rules_structure.py").is_file(), "test_rules_structure.py is gone"
+
+
+def test_children_must_be_wired_up():
+    """Documented children need a real @import, with the _lazy_load/ exception."""
+    assert "**Wire up every documented child**" in content(), "the wire-up gate is missing"
+    assert "children kept in a parent's `<parent>/_lazy_load/` folder are read on demand" in content(), (
+        "the _lazy_load/ exception is missing"
+    )
+
+
+def test_metadata_header_gate():
+    """Rules carry the version/created/updated header and import its standard."""
+    assert "**Metadata header**" in content(), "the metadata-header gate is missing"
+    import_line = r"^@~/[^/]+/_rules/03_authoring_guidelines/shared_standards/_claude_config_metadata\.md$"
+    assert re.search(import_line, content(), re.M), "the guide must @import _claude_config_metadata.md"
+
+
+def test_line_limit():
+    """The guide stays within the 110-line rule limit."""
+    lines = len(content().splitlines())
+    assert lines <= 110, f"authoring_rules.md has {lines} lines — split it into a parent and children"
