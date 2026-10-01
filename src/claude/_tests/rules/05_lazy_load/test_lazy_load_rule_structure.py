@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.0
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -11,10 +11,10 @@
 """Structural tests for the lazy-load rules that had no dedicated test.
 
 Their scorecards average 4.9/10 for Test Coverage, the lowest dimension
-anywhere (see ``quality_scorecards_summary.md``). This file guards five
-things for each rule: its metadata header, its key sections, that every
-child page is linked, that every relative link resolves, and that each
-Contents entry matches a real heading.
+anywhere (see ``quality_scorecards_summary.md``). This file guards six
+things for each rule: its metadata header, its ``**Purpose:**`` line, its
+key sections, that every child page is linked, that every relative link
+resolves, and that each Contents entry matches a real heading.
 """
 from __future__ import annotations
 
@@ -46,9 +46,6 @@ RULES: dict[Path, list[str]] = {
     STYLE_DIR / "jira.md": ["Child pages", "Core principles"],
     STYLE_DIR / "utilities" / "makefile.md": ["Structure"],
 }
-
-# Rules that already carry a **Purpose:** line; the other 8 gain one in a later PR.
-PURPOSE_RULES = {"payroc_engineering_naming_standards", "airflow", "python", "mcp_trust_model", "dbt", "bash", "sql"}
 
 FENCE_PATTERN = re.compile(r"^\s*(```|~~~)")
 HEADER_PATTERNS = (
@@ -113,6 +110,17 @@ def read_header(text: str) -> tuple[str, str] | None:
     if not all(matches):
         return None
     return matches[1].group(1), matches[2].group(1)
+
+
+def has_purpose_line(text: str) -> bool:
+    """Return True if a line outside code fences opens with ``**Purpose:**``.
+
+    :param text: Full file content.
+    :type text: str
+    :return: Whether the rule states its purpose on a line of its own.
+    :rtype: bool
+    """
+    return any(line.startswith("**Purpose:**") for line in _unfenced_lines(text))
 
 
 def h2_headings(text: str) -> list[str]:
@@ -269,18 +277,10 @@ def test_contents_entries_match_headings():
     assert not bad, f"Contents entries with no matching heading — rename the entry or the heading: {bad}"
 
 
-def test_purpose_rules_keep_purpose_line():
-    """The 7 rules that already state a Purpose keep their **Purpose:** line."""
-    texts = {rule.stem: text for rule, text in _rule_texts().items()}
-    lost = sorted(stem for stem in PURPOSE_RULES if "**Purpose:**" not in texts[stem])
-    assert not lost, f"**Purpose:** line removed — restore it: {lost}"
-
-
-def test_purpose_rules_are_tracked():
-    """Every name in PURPOSE_RULES is a rule in the table, so none is silently skipped."""
-    stems = {rel.stem for rel in RULES}
-    assert len(PURPOSE_RULES) == 7, f"Expected 7 rules with a Purpose line, found {len(PURPOSE_RULES)}"
-    assert PURPOSE_RULES <= stems, f"PURPOSE_RULES names untracked rules: {sorted(PURPOSE_RULES - stems)}"
+def test_every_rule_has_purpose_line():
+    """Every tracked rule states its purpose on a **Purpose:** line."""
+    missing = sorted(rule.name for rule, text in _rule_texts().items() if not has_purpose_line(text))
+    assert not missing, f"Rules with no **Purpose:** line — add one under the H1: {missing}"
 
 
 # ── Synthetic cases: prove each detector fails when it should ────────────
@@ -301,6 +301,13 @@ def test_read_header_finds_header_after_frontmatter():
     )
     assert read_header(text) == ("2026-01-01", "2026-02-01"), "Header after frontmatter should be parsed"
     assert read_header("---\npaths: []\n") is None, "Unclosed frontmatter should be rejected"
+
+
+def test_has_purpose_line_needs_its_own_unfenced_line():
+    """A Purpose mid-sentence or inside a code fence doesn't count."""
+    assert has_purpose_line("# 🧪 Title\n\n**Purpose:** Explain things.\n"), "A real Purpose line was missed"
+    assert not has_purpose_line("See the **Purpose:** line below.\n"), "A mid-sentence Purpose was counted"
+    assert not has_purpose_line("```\n**Purpose:** example\n```\n"), "A fenced Purpose was counted"
 
 
 def test_h2_headings_strip_emoji_and_skip_fences():
