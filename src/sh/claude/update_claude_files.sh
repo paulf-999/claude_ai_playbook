@@ -58,6 +58,7 @@ update_claude_files() {
     remove_managed_files          # local
     copy_claude_files             # from claude_file_utils.sh
     flatten_skills                # from claude_file_utils.sh
+    rewrite_config_paths          # from claude_file_utils.sh — @ imports can't read CLAUDE_CONFIG_DIR
     restore_user_editable_files   # local
 }
 
