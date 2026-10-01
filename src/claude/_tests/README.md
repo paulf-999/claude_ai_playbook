@@ -112,7 +112,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_aliases.py` | Each `aliases.md` entry is documented, formatted, and structurally valid | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.1 |
+| `test_aliases.py` | Each `aliases.md` entry is documented, formatted, and structurally valid | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
 | `test_settings.py` | `settings.json` permission structure, hook registration, and principle compliance | 7/10 | 2026-08-28 | 2026-10-01 | 1.0.1 |
 
 **Removed (2026-09-18):** `settings/test_aliases_behavior.py` — written to run as a standalone script (per its own docstring/README), not as native pytest: 3 of its 5 functions required positional arguments pytest couldn't supply (collection errors), and the other 2 used `print`/`return` instead of `assert`, so they never actually failed regardless of outcome. `rules/test_aliases_behavior.py` already covers "aliases are documented and functional" with real assertions. **Lost, not replaced:** the skill/command-existence and convention-documentation checks this file's logic described but never actually enforced as pytest.
@@ -135,14 +135,23 @@ alongside these tests and is imported directly via a relative import.
 | `test_confluence_create_page_handler.py` | Validation, phase orchestration, and error handling in the handler | 9/10 | 2026-08-28 | 2026-09-19 | 1.0.0 |
 | `test_confluence_create_page_timeout.py` | The publish-timeout mechanism — trigger, abort/retry/continue, draft preservation, 6-minute cap | 8/10 | 2026-08-28 | 2026-09-19 | 1.1.0 |
 
+### `skills/jira_create/`
+
+Behavioral tests for a code-backed skill — `jira_create_handler.py` lives alongside
+these tests and is imported directly via a relative import.
+
+| File | What it tests | Quality | Created | Updated | Version |
+|---|---|---|---|---|---|
+| `test_jira_create_handler.py` | Validation, phase orchestration, and mocked MCP error handling in the handler | 9/10 | 2026-09-19 | 2026-10-01 | 1.0.0 |
+
 ---
 
 ## 📁 Top level
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_file_structure_compliance.py` | All files and directories in the Claude config follow naming and placement conventions | 2/10 | 2026-08-28 | 2026-10-01 | 1.2.1 |
-| `test_file_structure_validator.py` | The file-structure scanner flags bad names and skips auto-generated, hidden and exempt files | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
+| `test_file_structure_compliance.py` | All files and directories in the Claude config follow naming and placement conventions | 2/10 | 2026-08-28 | 2026-10-01 | 1.3.0 |
+| `test_file_structure_validator.py` | The file-structure scanner flags bad names and skips auto-generated, hidden and exempt files | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.0 |
 
 ---
 

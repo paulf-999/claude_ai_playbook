@@ -4,7 +4,7 @@
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # Date created:      2026-10-01
-# Version:           1.0.0
+# Version:           1.1.0
 # Date updated:      2026-10-01
 # ─────────────────────────────────────────────────────────
 
@@ -150,6 +150,7 @@ def test_rules_missing_tier_is_warning(tmp_path: Path) -> None:
     violations = scan(tmp_path)
     missing = {v["rule"] for v in violations if v["severity"] == "warning"}
     assert "Missing subdirectory: 05_lazy_load" in missing, f"missing tier should warn, got {missing}"
+    assert "Missing subdirectory: 03_authoring_guidelines" in missing, f"tier 03 must be expected too, got {missing}"
     assert "Missing subdirectory: 01_essentials" not in missing, "a tier that exists must not be reported"
 
 
