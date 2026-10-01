@@ -6,7 +6,7 @@ Tracks patterns observed 1+ times in `~/_errors/`. Only candidates reaching the 
 |---------|--------|-------|-----------|-----------|--------|-------|
 | No bare except clauses | Security | 2 | 2026-08-31 | 2026-08-31 | 📋 pending | Test candidate for dry-run validation |
 
-## Schema
+## 📋 Schema
 
 - **Pattern:** One-sentence description of the recurring mistake (e.g., "missing input validation on user-supplied strings")
 - **Domain:** Category (e.g., "security", "testing", "naming")

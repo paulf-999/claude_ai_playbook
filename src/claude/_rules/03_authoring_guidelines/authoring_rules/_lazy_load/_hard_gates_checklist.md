@@ -1,13 +1,13 @@
-<!-- version: 1.1.2 -->
+<!-- version: 1.1.3 -->
 <!-- created: 2026-09-28 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
 # ✅ Rule Hard Gates Checklist
 
 **Purpose:** Final tick-box check before finishing a rule — verify placement, content, testing, wiring and docs, then run the before-merging review.
 
 ---
 
-## Before finishing a rule, verify ALL of these:
+## ✅ Before finishing a rule, verify ALL of these:
 
 ### 📍 Placement
 - [ ] Name is snake_case and self-describing, per `naming_standards.md`

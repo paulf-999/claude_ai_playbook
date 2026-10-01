@@ -1,7 +1,9 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-04-11 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-01 -->
 # 📅 Date & Time Standards
+
+**Purpose:** Set one date and time format for technical contexts, so code, metadata and logs sort and compare consistently.
 
 ISO format applies to technical contexts (code, metadata, logs). Human-facing content uses
 English sentence-style dates instead. Do not retroactively update existing files — apply

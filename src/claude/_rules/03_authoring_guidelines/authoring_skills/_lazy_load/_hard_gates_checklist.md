@@ -1,13 +1,13 @@
-<!-- version: 3.0.0 -->
+<!-- version: 3.0.1 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
 # ✅ Skill Hard Gates Checklist
 
 **Purpose:** The single checklist for creating and reviewing a skill — work through it in order, and every box must be ticked before submitting.
 
 ---
 
-## Before Submitting
+## ✅ Before Submitting
 
 - [ ] **1. Naming:** `<domain>_<action>` format, valid domain ID, directory matches (see `_core_standards.md`)
 - [ ] **2. Contract complete BEFORE SKILL.md** — never write SKILL.md without contract finalization

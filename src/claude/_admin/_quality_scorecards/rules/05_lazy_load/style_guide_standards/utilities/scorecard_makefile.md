@@ -1,13 +1,13 @@
 # Quality Scorecard — makefile.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-01
 
-**Overall score:** 5.2/10 (6-dimension average, Token Cost N/A)
+**Overall score:** 6.8/10 (6-dimension average, Token Cost N/A)
 
 **Recommended improvements:**
-- Add a `**Purpose:**` statement at the top — this file opens with plain prose instead.
-- Add a dedicated structural test for this file and its 2 children.
+- Fix or remove the broken `~/.claude/templates/makefile/` templates reference.
+- Add inline principles beyond the 2-item routing list.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
@@ -15,10 +15,10 @@
 | **Complexity** | 9/10 | 2026-09-28 | • 🧮 **Raw complexity 1:** router to 2 children plus one broken template pointer, single file, no dependencies |
 | **Evidence of Need** | 5/10 | 2026-09-28 | • 🔗 **Thin:** no concrete evidence beyond routing; the templates claim can't even be verified since the path doesn't exist |
 | **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
-| **Structural Compliance** | 6/10 | 2026-09-28 | • 🚩 **Missing Purpose statement:** opens with plain prose, unlike this config's convention<br>• ✅ **Otherwise compliant:** emoji headers, Contents section |
+| **Structural Compliance** | 9/10 | 2026-10-01 | • ✅ **Fixed:** `**Purpose:**` line added under the H1 (PR #200)<br>• ✅ **Otherwise compliant:** emoji headers, Contents section |
 | **Currency** | 3/10 | 2026-09-28 | • 🐛 **Broken reference:** "Templates are available in `~/.claude/templates/makefile/`" — confirmed via `find`, no such directory exists anywhere in this repo |
-| **Test Coverage** | 2/10 | 2026-09-28 | • 🧪 **Gap:** confirmed via `find` — no test file references this rule by name |
-| **Overall** | **5.2/10** | 2026-09-28 | • 💪 **Strength:** the two real children it does route to are accurately named<br>• ⚠️ **Gap:** a broken templates promise, missing Purpose, zero tests — one of the lower scores in this survey |
+| **Test Coverage** | 9/10 | 2026-10-01 | • 🧪 **Dedicated test:** `test_lazy_load_rule_structure.py` checks its header, Purpose line, key sections, child links, relative links and Contents<br>• ✅ **Generic checks:** also passes `test_rules_structure.py` |
+| **Overall** | **6.8/10** | 2026-10-01 | • 💪 **Strength:** the two real children it does route to are accurately named<br>• ⚠️ **Gap:** Currency (3/10) is now the weakest dimension |
 
 ## 🔗 Related files
 

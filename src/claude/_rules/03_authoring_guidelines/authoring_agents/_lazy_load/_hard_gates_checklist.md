@@ -1,13 +1,13 @@
-<!-- version: 1.1.2 -->
+<!-- version: 1.1.3 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
 # ✅ Agent Hard Gates Checklist
 
 **Purpose:** Final validation checklist before finalizing an agent — verify naming, content quality, testing, scope, and integration.
 
 ---
 
-## Before finalizing an agent, verify ALL of these:
+## ✅ Before finalizing an agent, verify ALL of these:
 
 ### Naming & Structure
 - [ ] Name follows `<domain>_<purpose>` pattern, self-describing

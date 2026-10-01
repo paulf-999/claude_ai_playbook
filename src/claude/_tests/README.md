@@ -58,7 +58,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_rules_structure.py` | File quality across all `_rules/` files — line limits, trailing newlines, import resolution, expected file set | 9/10 | 2026-08-28 | 2026-10-01 | 1.4.2 |
+| `test_rules_structure.py` | File quality across all `_rules/` files — line limits, H1 and H2 heading emoji, trailing newlines, import resolution, expected file set | 9/10 | 2026-08-28 | 2026-10-01 | 1.5.0 |
 | `test_aliases_behavior.py` | Aliases are documented, properly formatted, and validated as functional (spot-check representative aliases) | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
 
 ### `rules/01_essentials/`
@@ -109,6 +109,8 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_automation_controls.py` | Turn budgets and gates for `/loop`, `/batch`, `/goal` are documented and reasonable | 9/10 | 2026-09-16 | 2026-10-01 | 1.0.2 |
 | `test_latency_optimisation.py` | `latency_optimisation.md` keeps effort as the lever, never gives a temperature above 1, and keeps its measure-first steps | 9/10 | 2026-09-17 | 2026-10-01 | 2.0.0 |
 | `test_lazy_load_coverage.py` | Every `05_lazy_load/` file is reachable from at least one hook (direct or via a parent index file) | 3/10 | 2026-09-16 | 2026-10-01 | 1.5.1 |
+| `test_lazy_load_rule_structure.py` | The 15 lazy-load rules once lacking a dedicated test keep their metadata header, Purpose line, key sections, linked child pages, working links and accurate Contents | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.0 |
+| `test_path_scoped_rules.py` | Path-scoped rules in `rules/` carry no `@` imports, and `rules/` holds only symlinks into `_rules/05_lazy_load/` | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
 
 ---
 

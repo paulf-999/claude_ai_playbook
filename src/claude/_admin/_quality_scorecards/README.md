@@ -16,6 +16,7 @@
 
 - **Summaries:** each folder has a `<type>_scorecards_summary.md` rollup (e.g. `skills/skill_scorecards_summary.md`) — update it in the same commit as any scorecard change.
   - **Top-level rollup:** `quality_scorecards_summary.md` compares all five types and ranks the next actions.
+  - **Template:** all six summaries follow `_templates/scorecard_summary.md.template`.
 - **Templates:** rules use the template in `rules/README.md`, and skills use `_templates/skills/_quality_scorecard_template.md`.
 - **Never `@import`:** these files are for review and audit only, so they cost no session tokens.
 - **Audits:** cross-cutting audits of whole areas live in `_admin/_audits/`, not here.
