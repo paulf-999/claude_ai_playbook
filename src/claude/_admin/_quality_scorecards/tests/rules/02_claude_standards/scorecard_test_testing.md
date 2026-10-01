@@ -10,16 +10,16 @@
 - Fix the style gaps and set `Python style compliant: Yes`
 - Add a synthetic bad-input test that proves the check fails when it should
 
-| Dimension | Score | Notes |
-|---|---|---|
-| **Clarity** | 9/10 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
-| **Complexity** | 7/10 | • 🧮 **Complexity:** header complexity score 7/10 (raw complexity 3) |
-| **Evidence of Need** | 9/10 | • 🔗 **Target:** guards a real, installed artefact |
-| **Coverage** | 5/10 | • 📊 **Counts:** 5 test functions and 7 assertions |
-| **Structural Compliance** | 7/10 | • ✅ **Header:** header says `Python style compliant: No` |
-| **Currency** | 9/10 | • 🔍 **References:** passes against the current config, header last updated 2026-09-17 |
-| **Regression Value** | 7/10 | • 🛡️ **Failure cases:** checks real files, but no function proves the check fails on a bad case |
-| **Overall** | **7.6/10** | • 💪 **Strongest:** Clarity, Evidence of Need and Currency (9/10)<br>• ⚠️ **Weakest:** Coverage (5/10) |
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
+| **Complexity** | 7/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 7/10 (raw complexity 3) |
+| **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact |
+| **Coverage** | 5/10 | 2026-09-30 | • 📊 **Counts:** 5 test functions and 7 assertions |
+| **Structural Compliance** | 7/10 | 2026-10-01 | • ✅ **Header:** header says `Python style compliant: No` |
+| **Currency** | 9/10 | 2026-09-30 | • 🔍 **References:** passes against the current config, header last updated 2026-09-17 |
+| **Regression Value** | 7/10 | 2026-09-30 | • 🛡️ **Failure cases:** checks real files, but no function proves the check fails on a bad case |
+| **Overall** | **7.6/10** | 2026-10-01 | • 💪 **Strongest:** Clarity, Evidence of Need and Currency (9/10)<br>• ⚠️ **Weakest:** Coverage (5/10) |
 
 ## 🔗 Related files
 

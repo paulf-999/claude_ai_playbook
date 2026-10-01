@@ -33,16 +33,16 @@ One file per scored rule, mirroring the tier path: `_admin/_quality_scorecards/r
 **Recommended improvements:** [omit this line and the bullets below entirely when Overall ≥ 8.5]
 - <one imperative action per distinct gap found in the Notes column below>
 
-| Dimension | Score | Notes |
-|---|---|---|
-| **Clarity** | X/10 | • 🔍 **<keyword>:** is the guidance unambiguous and actionable?<br>• 🔍 **<keyword>:** [second point, if needed] |
-| **Complexity** | X/10 | • 🧮 **Raw complexity N:** Concepts+Scope+Dependencies+Prerequisites — see `_complexity_scoring.md` |
-| **Evidence of Need** | X/10 | • 🔗 **<keyword>:** backed by real, recurring problems, or speculative? |
-| **Token Cost Justification** | X/10 | • 🎯 **<keyword>:** if always-on, is placement justified by session coverage? |
-| **Structural Compliance** | X/10 | • ✅ **<keyword>:** writing_style.md / naming_standards.md adherence |
-| **Currency** | X/10 | • 🔍 **<keyword>:** any stale references? Content still accurate? |
-| **Test Coverage** | X/10 | • 🧪 **<keyword>:** structural test passes; content-regression test if it documents a real incident |
-| **Overall** | **X.X/10** | • 💪 **<keyword>:** [strength]<br>• ⚠️ **<keyword>:** [gap, if any] |
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Clarity** | X/10 | YYYY-MM-DD | • 🔍 **<keyword>:** is the guidance unambiguous and actionable?<br>• 🔍 **<keyword>:** [second point, if needed] |
+| **Complexity** | X/10 | YYYY-MM-DD | • 🧮 **Raw complexity N:** Concepts+Scope+Dependencies+Prerequisites — see `_complexity_scoring.md` |
+| **Evidence of Need** | X/10 | YYYY-MM-DD | • 🔗 **<keyword>:** backed by real, recurring problems, or speculative? |
+| **Token Cost Justification** | X/10 | YYYY-MM-DD | • 🎯 **<keyword>:** if always-on, is placement justified by session coverage? |
+| **Structural Compliance** | X/10 | YYYY-MM-DD | • ✅ **<keyword>:** writing_style.md / naming_standards.md adherence |
+| **Currency** | X/10 | YYYY-MM-DD | • 🔍 **<keyword>:** any stale references? Content still accurate? |
+| **Test Coverage** | X/10 | YYYY-MM-DD | • 🧪 **<keyword>:** structural test passes; content-regression test if it documents a real incident |
+| **Overall** | **X.X/10** | YYYY-MM-DD | • 💪 **<keyword>:** [strength]<br>• ⚠️ **<keyword>:** [gap, if any] |
 
 ## 🔗 Related files
 
@@ -55,6 +55,8 @@ One file per scored rule, mirroring the tier path: `_admin/_quality_scorecards/r
 **Related files:** full repo-relative path (e.g. `src/claude/_tests/rules/01_essentials/test_guiding_principles.py`), never just a bare filename — a scorecard often outlives the memory of where things live, and a bare filename forces a search. List the rule file itself plus every other file named anywhere in the Notes column (tests, other rules cited as evidence, anything a reader would otherwise have to go find).
 
 **Date Created / Date Updated:** `Date Created` is frozen once set; `Date Updated` bumps to today whenever the scorecard is re-scored — mirrors the test-metadata maintenance convention in `_test_metadata_maintenance.md`.
+
+**Row `Date Updated`:** set a row's date only when that row's score changes — re-scoring a row to the same score leaves its date alone. The header `Date Updated` must be on or after the latest row date.
 
 **Overall score / Recommended improvements:** the header line repeats the Overall row's score so it's readable without scanning the table. **Recommended improvements** turns each ⚠️/❌/🚩-flagged Notes bullet into one imperative action (e.g. "Add a `## 🔗 Related` section", not a restatement of the gap) — include the section only when Overall is below 8.5; omit it entirely otherwise, don't leave an empty bullet list.
 

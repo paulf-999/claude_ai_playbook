@@ -8,16 +8,16 @@
 **Recommended improvements:**
 - Split into parent + child files — at 162 lines it's well past the ~100-line limit, with no children to absorb the detail.
 
-| Dimension | Score | Notes |
-|---|---|---|
-| **Clarity** | 9/10 | • 📋 **Well organized:** decision tree, per-feature tables, failure-scenario recovery steps, and a verification checklist all make this scannable despite its length |
-| **Complexity** | 7/10 | • 🧮 **Raw complexity 3:** 3 automation features (`/loop`, `/goal`, `/batch`) plus kill-switch and permission-gate concepts — 6+ distinct concepts, but single file, no dependencies or fixtures |
-| **Evidence of Need** | 8/10 | • 🔗 **Plausible, actively enforced:** turn budgets and interval floors are specific enough to be real operational limits, and are directly tested |
-| **Token Cost Justification** | N/A | • N/A — lazy-loaded, not always-on |
-| **Structural Compliance** | 6/10 | • 🚩 **Line-limit violation:** 162 lines, well past the ~100-line (110 tolerated) limit in `writing_style.md`, with no child files to split into<br>• ✅ **Otherwise compliant:** emoji headers, Purpose statement, trailing newline |
-| **Currency** | 5/10 | • 🐛 **Stale reference:** "Related Rules" cites `claude_efficiency.md`, which doesn't exist — the real file is `claude_operational_efficiency.md` |
-| **Test Coverage** | 10/10 | • 🧪 **Strong:** `test_automation_controls.py` — 10 test functions, 20 assertions, self-rated 9/10 quality |
-| **Overall** | **7.5/10** | • 💪 **Strength:** heavily and correctly tested, clear decision tree for choosing between features<br>• ⚠️ **Gap:** too long for a childless file, plus a stale cross-reference |
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Clarity** | 9/10 | 2026-09-28 | • 📋 **Well organized:** decision tree, per-feature tables, failure-scenario recovery steps, and a verification checklist all make this scannable despite its length |
+| **Complexity** | 7/10 | 2026-09-28 | • 🧮 **Raw complexity 3:** 3 automation features (`/loop`, `/goal`, `/batch`) plus kill-switch and permission-gate concepts — 6+ distinct concepts, but single file, no dependencies or fixtures |
+| **Evidence of Need** | 8/10 | 2026-09-28 | • 🔗 **Plausible, actively enforced:** turn budgets and interval floors are specific enough to be real operational limits, and are directly tested |
+| **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
+| **Structural Compliance** | 6/10 | 2026-09-28 | • 🚩 **Line-limit violation:** 162 lines, well past the ~100-line (110 tolerated) limit in `writing_style.md`, with no child files to split into<br>• ✅ **Otherwise compliant:** emoji headers, Purpose statement, trailing newline |
+| **Currency** | 5/10 | 2026-09-28 | • 🐛 **Stale reference:** "Related Rules" cites `claude_efficiency.md`, which doesn't exist — the real file is `claude_operational_efficiency.md` |
+| **Test Coverage** | 10/10 | 2026-09-28 | • 🧪 **Strong:** `test_automation_controls.py` — 10 test functions, 20 assertions, self-rated 9/10 quality |
+| **Overall** | **7.5/10** | 2026-09-28 | • 💪 **Strength:** heavily and correctly tested, clear decision tree for choosing between features<br>• ⚠️ **Gap:** too long for a childless file, plus a stale cross-reference |
 
 ## 🔗 Related files
 

@@ -6,9 +6,15 @@
 
 ## 📋 Current scores
 
-- **Scored:** 47 test files, average 8.5/10.
+- **Scored:** 48 test files, average 8.6/10.
 - **Below 8.5:** 21 tests, each with recommended improvements.
 - **Order:** one table per `_tests/` folder, sorted by Overall score, highest first.
+
+### admin
+
+| Scorecard | Overall | Recommended improvements |
+|---|---|---|
+| `admin/scorecard_test_scorecard_dates.md` | 9.3/10 | — (≥8.5) |
 
 ### agents
 

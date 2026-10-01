@@ -10,16 +10,16 @@
 - Fix the style gaps and set `Python style compliant: Yes`
 - Confirm the handler still mirrors what SKILL.md tells Claude to do, or move the handler into the skill so the test covers real behaviour
 
-| Dimension | Score | Notes |
-|---|---|---|
-| **Clarity** | 5/10 | • 🔍 **Messages:** every test function has a docstring, and 0% of assertions carry a failure message |
-| **Complexity** | 7/10 | • 🧮 **Complexity:** header complexity score 7/10 (raw complexity 3) |
-| **Evidence of Need** | 7/10 | • 🔗 **Target:** guards a real, installed artefact<br>• ⚠️ **Finding:** tests a Python handler kept beside the test, while the skill itself runs from its SKILL.md instructions |
-| **Coverage** | 10/10 | • 📊 **Counts:** 30 test functions and 67 assertions |
-| **Structural Compliance** | 7/10 | • ✅ **Header:** header says `Python style compliant: No` |
-| **Currency** | 6/10 | • 🔍 **References:** passes against the current config, but has no header dates to show when it last changed |
-| **Regression Value** | 10/10 | • 🛡️ **Failure cases:** 9 test functions named for a failure case |
-| **Overall** | **7.4/10** | • 💪 **Strongest:** Coverage and Regression Value (10/10)<br>• ⚠️ **Weakest:** Clarity (5/10) |
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Clarity** | 5/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 0% of assertions carry a failure message |
+| **Complexity** | 7/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 7/10 (raw complexity 3) |
+| **Evidence of Need** | 7/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact<br>• ⚠️ **Finding:** tests a Python handler kept beside the test, while the skill itself runs from its SKILL.md instructions |
+| **Coverage** | 10/10 | 2026-09-30 | • 📊 **Counts:** 30 test functions and 67 assertions |
+| **Structural Compliance** | 7/10 | 2026-10-01 | • ✅ **Header:** header says `Python style compliant: No` |
+| **Currency** | 6/10 | 2026-09-30 | • 🔍 **References:** passes against the current config, but has no header dates to show when it last changed |
+| **Regression Value** | 10/10 | 2026-09-30 | • 🛡️ **Failure cases:** 9 test functions named for a failure case |
+| **Overall** | **7.4/10** | 2026-10-01 | • 💪 **Strongest:** Coverage and Regression Value (10/10)<br>• ⚠️ **Weakest:** Clarity (5/10) |
 
 ## 🔗 Related files
 

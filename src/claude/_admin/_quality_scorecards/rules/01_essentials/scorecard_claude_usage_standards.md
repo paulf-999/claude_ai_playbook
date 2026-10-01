@@ -5,16 +5,16 @@
 
 **Overall score:** 8.9/10
 
-| Dimension | Score | Notes |
-|---|---|---|
-| **Clarity** | 9/10 | • 📋 **Thin, honest index:** routes to directory structure, naming, and writing style with no ambiguity |
-| **Complexity** | 8/10 | • 🧮 **Raw complexity 2:** pure 3-child router, no inline substantive rules of its own |
-| **Evidence of Need** | 10/10 | • 🔗 **Documented real incident:** the file's own "Why this file exists" line states these 3 conventions were previously unreachable from CLAUDE.md — exactly the "real, recurring problem" the rubric wants at 10 |
-| **Token Cost Justification** | 9/10 | • 🎯 **Scope:** Tier 1, always-on — routes to naming/writing conventions used in every substantive task |
-| **Structural Compliance** | 9/10 | • ✅ **Compliant:** Contents matches headings exactly, emoji header, trailing newline, appropriately short (35 lines) |
-| **Currency** | 9/10 | • 🔍 **Check:** all 3 child imports resolve; no stale references found |
-| **Test Coverage** | 8/10 | • 🧪 **Indirect, uneven:** `test_rule_directory_organisation.py` (11 functions) and `test_writing_style.py` (7 functions) cover 2 of 3 children<br>• ⚠️ **Gap:** `naming_standards.md` child has no dedicated test |
-| **Overall** | **8.9/10** | • 💪 **Strength:** clean index with a genuine, documented reason for existing<br>• ⚠️ **Gap:** naming_standards.md untested |
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Clarity** | 9/10 | 2026-09-28 | • 📋 **Thin, honest index:** routes to directory structure, naming, and writing style with no ambiguity |
+| **Complexity** | 8/10 | 2026-09-28 | • 🧮 **Raw complexity 2:** pure 3-child router, no inline substantive rules of its own |
+| **Evidence of Need** | 10/10 | 2026-09-28 | • 🔗 **Documented real incident:** the file's own "Why this file exists" line states these 3 conventions were previously unreachable from CLAUDE.md — exactly the "real, recurring problem" the rubric wants at 10 |
+| **Token Cost Justification** | 9/10 | 2026-09-28 | • 🎯 **Scope:** Tier 1, always-on — routes to naming/writing conventions used in every substantive task |
+| **Structural Compliance** | 9/10 | 2026-09-28 | • ✅ **Compliant:** Contents matches headings exactly, emoji header, trailing newline, appropriately short (35 lines) |
+| **Currency** | 9/10 | 2026-09-28 | • 🔍 **Check:** all 3 child imports resolve; no stale references found |
+| **Test Coverage** | 8/10 | 2026-09-28 | • 🧪 **Indirect, uneven:** `test_rule_directory_organisation.py` (11 functions) and `test_writing_style.py` (7 functions) cover 2 of 3 children<br>• ⚠️ **Gap:** `naming_standards.md` child has no dedicated test |
+| **Overall** | **8.9/10** | 2026-09-28 | • 💪 **Strength:** clean index with a genuine, documented reason for existing<br>• ⚠️ **Gap:** naming_standards.md untested |
 
 ## 🔗 Related files
 
