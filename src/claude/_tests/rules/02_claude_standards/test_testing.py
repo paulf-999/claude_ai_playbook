@@ -2,10 +2,10 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           1.1.0
-# Test quality score: 5/10
+# Version:           1.2.0
+# Test quality score: 9/10
 # Test complexity score: 7/10
-# Python style compliant: No
+# Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
 """Tests that the testing.md rule is self-consistently followed.
@@ -19,25 +19,37 @@ This is a linting test enforcing the "rules require tests" constraint.
 """
 from __future__ import annotations
 
-from _shared_paths import CLAUDE_DIR, HOOKS_DIR, RULES_DIR
+import re
+
+from _shared_paths import CLAUDE_DIR
+from _shared_paths import HOOKS_DIR
+from _shared_paths import RULES_DIR
 
 TESTS_HOOKS_DIR = CLAUDE_DIR / "_tests/hooks"
 TESTS_RULES_DIR = CLAUDE_DIR / "_tests/rules"
 TESTING_MD = RULES_DIR / "02_claude_standards" / "testing.md"
+TEST_METADATA_MD = RULES_DIR / "02_claude_standards" / "testing" / "_test_metadata.md"
 
 
 def _get_hook_files() -> set[str]:
-    """Return the set of hook script names (e.g., 'hook_enforcement_naming_convention.sh')."""
+    """Return the hook script names, e.g. ``hook_enforcement_naming_convention.sh``.
+
+    :return: File names of every ``hook_*.sh`` in hooks/.
+    :rtype: set[str]
+    """
     if not HOOKS_DIR.exists():
         return set()
     return {f.name for f in HOOKS_DIR.glob("hook_*.sh")}
 
 
 def _get_test_files() -> set[str]:
-    """Return the set of test file names (e.g., 'test_enforcement_naming_convention.py').
+    """Return the hook test file names, e.g. ``test_enforcement_naming_convention.py``.
 
-    Recursive: test files are grouped into subdirectories (enforcement/,
-    style_guides/, response_standards/), not flat under hooks/.
+    Recursive, because hook tests are grouped into subfolders such as
+    ``enforcement/`` and ``response_standards/``.
+
+    :return: File names of every ``test_*.py`` under _tests/hooks/.
+    :rtype: set[str]
     """
     if not TESTS_HOOKS_DIR.exists():
         return set()
@@ -45,9 +57,12 @@ def _get_test_files() -> set[str]:
 
 
 def _hook_to_test_name(hook_name: str) -> str:
-    """Convert hook name to expected test name.
+    """Convert a hook file name to its expected test file name.
 
-    Example: hook_enforcement_naming_convention.sh -> test_enforcement_naming_convention.py
+    :param hook_name: Hook file name, e.g. ``hook_enforcement_naming_convention.sh``.
+    :type hook_name: str
+    :return: The test name, e.g. ``test_enforcement_naming_convention.py``.
+    :rtype: str
     """
     # Remove 'hook_' prefix and .sh extension, add 'test_' prefix and .py extension
     base = hook_name.replace("hook_", "").replace(".sh", "")
@@ -175,3 +190,41 @@ def test_split_test_files_map_to_the_longest_hook_name():
         "style_guide_response_standards_inject"
     ), "an exact match on the longer hook name should win"
     assert _owning_hook("test_unrelated.py", hooks) is None, "a test matching no hook should be orphaned"
+
+
+def test_owning_hook_needs_a_full_word_boundary():
+    """A test name that only shares a prefix with a hook, without an underscore, isn't owned."""
+    assert _owning_hook("test_enforcement_namingx.py", {"enforcement_naming"}) is None, (
+        "test_enforcement_namingx.py must not count as a test for hook_enforcement_naming.sh"
+    )
+
+
+def test_hook_to_test_name():
+    """Hook names map to test names by swapping the prefix and extension."""
+    assert _hook_to_test_name("hook_enforcement_naming_convention.sh") == "test_enforcement_naming_convention.py", (
+        "the expected test name for a hook changed"
+    )
+
+
+def test_testing_md_children_exist():
+    """Every child testing.md imports exists, so none is silently unloaded."""
+    children = re.findall(r"^@~/[^/]+/(\S+)$", TESTING_MD.read_text(), re.M)
+    assert children, "testing.md should import its children"
+    missing = [c for c in children if not (CLAUDE_DIR / c).is_file()]
+    assert not missing, f"testing.md imports files that don't exist: {missing}"
+
+
+def test_score_minimum_names_its_enforcer():
+    """_test_metadata.md names the test that enforces the score minimum, and that test exists."""
+    assert "`test_test_score_floor.py` fails any test file below quality 9" in TEST_METADATA_MD.read_text(), (
+        "_test_metadata.md should say test_test_score_floor.py enforces the minimum"
+    )
+    assert (TESTS_RULES_DIR / "02_claude_standards" / "test_test_score_floor.py").is_file(), (
+        "test_test_score_floor.py is missing, so the score minimum is no longer enforced"
+    )
+
+
+def test_hook_tests_exist_to_check():
+    """There are hook tests to check, so the hook-to-test checks can't pass on an empty set."""
+    assert _get_hook_files(), "no hook files found — HOOKS_DIR may be wrong"
+    assert _get_test_files(), "no hook tests found — TESTS_HOOKS_DIR may be wrong"

@@ -76,20 +76,20 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_always_on_reachability.py` | Every always-on rule file is reachable from `CLAUDE.md` via `@import`, and `_lazy_load/` folders are exempt | 9/10 | 2026-09-18 | 2026-10-01 | 1.1.1 |
 | `test_artefact_proposal_gates.py` | The three artefact proposal gates — naming, placement, duplication | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.1 |
 | `test_concurrent_sessions.py` | `git/_concurrent_sessions.md` keeps its incident record and shared-working-tree safety guidance | 9/10 | 2026-09-21 | 2026-10-01 | 1.2.1 |
-| `test_decision_making.py` | `_decision_making.md` is present, well-formed, and contains the intentionality-gate sections | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
-| `test_git.py` | `git.md` is present, well-formed, and contains its expected section headings | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
+| `test_decision_making.py` | `_decision_making.md` keeps each clause of the intentionality gate, and the rules it defers to still exist and agree | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
+| `test_git.py` | `git.md` keeps each git rule, imports its children, and its branch-name pattern matches its own examples | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_plan_mode_phase_gates.py` | Mandatory plan-mode phase gates — blocking requirements, plan-type examples | 8/10 | 2026-09-16 | 2026-10-01 | 3.0.1 |
 | `test_portable_paths.py` | Hooks and tests resolve the config directory at runtime instead of hardcoding paths or usernames | 9/10 | 2026-09-18 | 2026-10-01 | 1.0.1 |
-| `test_security_guardrails.py` | Claude never recommends wildcard permissions for destructive commands, and related security guardrails | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
+| `test_security_guardrails.py` | `_security_guardrails.md` keeps each guardrail, and settings.json allows none of the wildcards it forbids | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_test_metadata.py` | Every test's metadata header is complete, in order, well formed (banners, dates, semver, scores), and its quality score matches its own counts | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.0 |
 | `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, or holds its `BASELINE` scores and never gets worse | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.6 |
-| `test_testing.py` | Self-consistency: enforcement hooks have tests, and testing.md documents the enforcement pattern | 5/10 | 2026-08-28 | 2026-10-01 | 1.1.0 |
+| `test_testing.py` | Every enforcement hook has a test (aspect splits allowed), no orphaned hook tests, and testing.md's pointers exist | 9/10 | 2026-08-28 | 2026-10-01 | 1.2.0 |
 
 ### `rules/03_authoring_guidelines/`
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_authoring_rules.py` | The rule authoring guide's pre-creation checklist and quality gate sections | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
+| `test_authoring_rules.py` | `authoring_rules.md` keeps its checklist, steps and gates, and every file it points authors to exists | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_authoring_agents.py` | `authoring_agents.md` is always-on and points to each of its 5 on-demand children, which are present and well-formed | 9/10 | 2026-09-28 | 2026-10-01 | 2.0.1 |
 | `test_authoring_skills.py` | `authoring_skills.md` contains its 7 required improvements | 9/10 | 2026-09-16 | 2026-10-01 | 3.1.4 |
 | `test_claude_config_metadata.py` | Every rule opens with the three-line version, created and updated metadata header | 9/10 | 2026-09-28 | 2026-10-01 | 2.2.1 |
