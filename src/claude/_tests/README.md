@@ -100,7 +100,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 |---|---|---|---|---|---|
 | `test_authoring_rules.py` | `authoring_rules.md` keeps its checklist, steps and gates, and every file it points authors to exists | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_authoring_agents.py` | `authoring_agents.md` is always-on and points to each of its 5 on-demand children, which are present and well-formed | 9/10 | 2026-09-28 | 2026-10-01 | 2.0.1 |
-| `test_authoring_skills.py` | `authoring_skills.md` and its children: SKILL.md's five sections, the frontmatter example, contract fields matching the checklist, and trigger design | 9/10 | 2026-09-16 | 2026-10-01 | 4.0.0 |
+| `test_authoring_skills.py` | `authoring_skills.md` and its children: SKILL.md's six sections, the frontmatter example, contract fields matching the checklist, and trigger design | 9/10 | 2026-09-16 | 2026-10-01 | 4.1.0 |
 | `test_authoring_skills_maturity.py` | `authoring_skills.md`'s maturity table matches the checklist and complexity formula, plus scope anti-patterns and low-maintenance principles | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
 | `test_claude_config_metadata.py` | Every rule opens with the three-line version, created and updated metadata header | 9/10 | 2026-09-28 | 2026-10-01 | 2.2.1 |
 
