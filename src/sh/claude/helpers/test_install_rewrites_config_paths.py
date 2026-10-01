@@ -28,7 +28,12 @@ UTILS = REPO_ROOT / "src" / "sh" / "claude" / "helpers" / "claude_file_utils.sh"
 SCRIPTS = REPO_ROOT / "src" / "sh" / "claude"
 TESTS_DIR = REPO_ROOT / "src" / "claude" / "_tests"
 REACHABILITY_TEST = TESTS_DIR / "rules" / "02_claude_standards" / "test_always_on_reachability.py"
-STEPS = "backup_target_dir copy && copy_claude_files && flatten_skills && rewrite_config_paths"
+# The same order install_claude_files runs; creating the target first matters, since cp -R into a
+# missing folder behaves differently on macOS and Linux
+STEPS = (
+    "create_target_dir_if_missing && backup_target_dir copy && copy_claude_files && flatten_skills"
+    " && rewrite_config_paths"
+)
 IMPORT = re.compile(r"^@(\S+\.md)\s*$", re.M)
 SQL_GUIDE = Path("_rules/05_lazy_load/style_guide_standards/sql.md")
 PORTABLE = Path("_rules/02_claude_standards/portable_paths.md")
