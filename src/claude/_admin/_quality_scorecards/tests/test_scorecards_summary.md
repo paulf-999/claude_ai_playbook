@@ -17,7 +17,7 @@
 | hooks | 7 | 9.2/10 | 2026-10-01 | • 💪 **Strongest:** 5 files tied at 9.3/10, including `test_enforcement_writing_style.py`<br>• ⚠️ **Weakest:** `test_enforcement_mcp_stale_settings.py` (9.1/10) |
 | rules | 29 | 9.1/10 | 2026-10-01 | • 💪 **Strongest:** `test_latency_optimisation.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_lazy_load_coverage.py` (8.3/10) |
 | settings | 2 | 9.5/10 | 2026-10-01 | • 💪 **Strongest:** `test_aliases.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_settings.py` (9.3/10) |
-| skills | 9 | 8.4/10 | 2026-10-01 | • 💪 **Strongest:** 2 files tied at 9.4/10, including `test_skill_authoring_gate_run.py`<br>• ⚠️ **Weakest:** `test_confluence_create_page_timeout.py` (6.9/10) |
+| skills | 9 | 8.5/10 | 2026-10-01 | • 💪 **Strongest:** 3 files tied at 9.4/10, including `test_no_orphaned_skill_files.py`<br>• ⚠️ **Weakest:** `test_confluence_create_page_timeout.py` (6.9/10) |
 | _tests root | 4 | 9.2/10 | 2026-10-01 | • 💪 **Strongest:** `test_rule_reachability.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_file_structure_compliance.py` (8.9/10) |
 
 ---
@@ -47,6 +47,7 @@ Sorted by Overall score, highest first.
 | `rules/02_claude_standards/scorecard_test_portable_paths_hooks.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_portable_paths_python.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_authoring_skills_maturity.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
+| `skills/scorecard_test_no_orphaned_skill_files.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
 | `skills/scorecard_test_skill_authoring_gate_run.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
 | `skills/scorecard_test_skill_authoring_gate_walk.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
 | `admin/scorecard_test_scorecard_dates.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
@@ -87,10 +88,9 @@ Sorted by Overall score, highest first.
 | `rules/05_lazy_load/scorecard_test_automation_controls.md` | 8.6/10 | 2026-10-01 | — (≥8.5) |
 | `rules/05_lazy_load/scorecard_test_claude_rule_loading_strategy.md` | 8.4/10 | 2026-10-01 | • Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/05_lazy_load/scorecard_test_lazy_load_coverage.md` | 8.3/10 | 2026-09-30 | • Add failure messages that say how to fix each assertion (27% have one today) |
-| `skills/scorecard_test_no_orphaned_skill_files.md` | 8.3/10 | 2026-09-30 | • Add failure messages that say how to fix each assertion (16% have one today)<br>• Split the test by concept to bring raw complexity (5) down to 3 or less |
 | `skills/claude_capture_session_prompts/scorecard_test_capture_session_prompts.md` | 8.1/10 | 2026-09-30 | • Add failure messages that say how to fix each assertion (14% have one today)<br>• Add a synthetic bad-input test that proves the check fails when it should |
+| `skills/jira_create/scorecard_test_jira_create_handler.md` | 7.9/10 | 2026-10-01 | • Add failure messages that say how to fix each assertion (0% have one today)<br>• Confirm the handler still mirrors what SKILL.md tells Claude to do, or move the handler into the skill so the test covers real behaviour |
 | `skills/confluence_create_page/scorecard_test_confluence_create_page_handler.md` | 7.7/10 | 2026-09-30 | • Add failure messages that say how to fix each assertion (1% have one today)<br>• Split the test by concept to bring raw complexity (6) down to 3 or less<br>• Confirm the handler still mirrors what SKILL.md tells Claude to do, or move the handler into the skill so the test covers real behaviour |
-| `skills/jira_create/scorecard_test_jira_create_handler.md` | 7.4/10 | 2026-10-01 | • Add failure messages that say how to fix each assertion (0% have one today)<br>• Fix the style gaps and set `Python style compliant: Yes`<br>• Confirm the handler still mirrors what SKILL.md tells Claude to do, or move the handler into the skill so the test covers real behaviour |
 | `skills/confluence_create_page/scorecard_test_confluence_create_page_timeout.md` | 6.9/10 | 2026-09-30 | • Add failure messages that say how to fix each assertion (0% have one today)<br>• Split the test by concept to bring raw complexity (6) down to 3 or less<br>• Add test functions and assertions toward 10+ and 15+ (now 9 and 19)<br>• Add a synthetic bad-input test that proves the check fails when it should<br>• Confirm the handler still mirrors what SKILL.md tells Claude to do, or move the handler into the skill so the test covers real behaviour |
 
 ---

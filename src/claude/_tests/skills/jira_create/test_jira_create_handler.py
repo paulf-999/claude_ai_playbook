@@ -2,10 +2,10 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-19
 # Date updated:      2026-10-01
-# Version:           1.0.1
+# Version:           1.0.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
-# Python style compliant: No
+# Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
 """Tests for jira_create handler.
@@ -13,8 +13,10 @@
 Validates: phase orchestration, input validation, MCP integration (mocked).
 """
 
-import pytest
 from unittest.mock import MagicMock
+
+import pytest
+
 from .jira_create_handler import (
     validate_story_points,
     validate_title,

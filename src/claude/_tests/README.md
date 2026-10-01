@@ -12,6 +12,8 @@ Each table's **Quality**, **Created**, **Updated**, and **Version** columns are 
 the test file's own metadata header — see `testing.md`'s Test Metadata Standard section for the
 format and scoring rubric.
 
+**Utility (not a scored test):** `_skill_orphans.py` — pure detectors for orphaned skill files, broken `reference/` links and eager imports.
+
 **Utility (not a scored test):** `_gate_fixtures.py` — loads the skill authoring gate linter and builds fake skills for its walk and run tests.
 
 **Utility (not a scored test):** `_resolved_rule.py` — reads a parent rule with every child it imports or points to on demand inlined.
@@ -89,7 +91,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_portable_paths_python.py` | Python test files use `CLAUDE_DIR` — no `.expanduser()` outside `_shared_paths.py`, home-directory constants or one-convention import prefixes | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.0 |
 | `test_security_guardrails.py` | `_security_guardrails.md` keeps each guardrail, and settings.json allows none of the wildcards it forbids | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_test_metadata.py` | Every test's metadata header is complete, in order, well formed (banners, dates, semver, scores), and its quality score matches its own counts | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.0 |
-| `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, or holds its `BASELINE` scores and never gets worse | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.11 |
+| `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, or holds its `BASELINE` scores and never gets worse | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.12 |
 | `test_testing.py` | Every enforcement hook has a test (aspect splits allowed), no orphaned hook tests, and testing.md's pointers exist | 9/10 | 2026-08-28 | 2026-10-01 | 1.2.0 |
 
 ### `rules/03_authoring_guidelines/`
@@ -139,6 +141,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_skill_structure_compliance.py` | Every installed skill passes the skill authoring gate's crawl checks, and each check is proven to fire | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.1 |
+| `test_no_orphaned_skill_files.py` | Every skill file is referenced somewhere in its skill, every `reference/` link in SKILL.md exists, and no SKILL.md @-imports a file | 9/10 | 2026-09-19 | 2026-10-01 | 2.0.0 |
 | `test_skill_authoring_gate_walk.py` | The gate linter's walk checks (W1–W6) fail or warn as intended on fake skills | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
 | `test_skill_authoring_gate_run.py` | The gate linter's run checks (R2–R4) on fake skills, and failures block while judgement calls only warn | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
 
@@ -159,7 +162,7 @@ these tests and is imported directly via a relative import.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_jira_create_handler.py` | Validation, phase orchestration, and mocked MCP error handling in the handler | 9/10 | 2026-09-19 | 2026-10-01 | 1.0.1 |
+| `test_jira_create_handler.py` | Validation, phase orchestration, and mocked MCP error handling in the handler | 9/10 | 2026-09-19 | 2026-10-01 | 1.0.2 |
 
 ---
 
