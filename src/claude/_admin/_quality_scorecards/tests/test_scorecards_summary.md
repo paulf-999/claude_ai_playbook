@@ -21,10 +21,9 @@
 | Scorecard | Overall | Recommended improvements |
 |---|---|---|
 | `hooks/response_standards/scorecard_test_style_guide_response_standards_inject.md` | 8.4/10 | • Add failure messages that say how to fix each assertion (62% have one today)<br>• Fix the style gaps and set `Python style compliant: Yes` |
-| `hooks/enforcement/scorecard_test_enforcement_dir_structure.md` | 7.9/10 | • Add test functions and assertions toward 10+ and 15+ (now 8 and 9)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Update fixture paths from the retired `01_core` tier to a current tier name |
 | `hooks/response_standards/scorecard_test_style_guide_response_standards.md` | 7.9/10 | • Split the test by concept to bring raw complexity (5) down to 3 or less<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant` |
-| `hooks/session_start/scorecard_test_session_start_mcp_stale_settings.md` | 7.9/10 | • Add failure messages that say how to fix each assertion (14% have one today)<br>• Split the test by concept to bring raw complexity (7) down to 3 or less |
-| `hooks/enforcement/scorecard_test_enforcement_naming_convention.md` | 7.7/10 | • Add test functions and assertions toward 10+ and 15+ (now 7 and 7)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Update fixture paths from the retired `01_core` tier to a current tier name |
+| `hooks/enforcement/scorecard_test_enforcement_mcp_stale_settings.md` | 9.1/10 | • None blocking |
+| `hooks/enforcement/scorecard_test_enforcement_naming_convention.md` | 9.1/10 | • None blocking |
 | `hooks/enforcement/scorecard_test_enforcement_writing_style.md` | 7.7/10 | • Split the test by concept to bring raw complexity (5) down to 3 or less<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Rename the hook in the module docstring to `hook_enforcement_writing_style.sh`<br>• Update fixture paths from the retired `01_core` tier to a current tier name |
 | `hooks/scorecard_test_hook_registry_utils.md` | 7.7/10 | • Add test functions and assertions toward 10+ and 15+ (now 2 and 2)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant` |
 
