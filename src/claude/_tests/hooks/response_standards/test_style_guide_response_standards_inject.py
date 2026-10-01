@@ -2,14 +2,13 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-07
 # Date updated:      2026-10-01
-# Version:           2.0.1
+# Version:           2.0.2
 # Test quality score: 9/10
 # Test complexity score: 8/10
-# Python style compliant: No
+# Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""
-Test suite for hook_style_guide_response_standards_inject.sh
+"""Test suite for hook_style_guide_response_standards_inject.sh.
 
 Validates the per-turn salience-injection hook: it must exit 0 and emit valid
 JSON whose hookSpecificOutput.additionalContext carries the response-standards
@@ -28,6 +27,8 @@ import shutil
 import subprocess
 from pathlib import Path
 
+import pytest
+
 from _shared_paths import CLAUDE_DIR
 
 HOOK_SCRIPT = str(CLAUDE_DIR / "hooks" / "hook_style_guide_response_standards_inject.sh")
@@ -40,8 +41,10 @@ class TestResponseStandardsInjectHook:
     def run_hook(env_override=None) -> subprocess.CompletedProcess:
         """Run the injection hook with empty stdin (mirrors UserPromptSubmit).
 
-        Args:
-            env_override: Optional dict of environment variables to set for this run.
+        :param env_override: Extra environment variables to set for this run.
+        :type env_override: dict[str, str] | None
+        :return: The completed hook run.
+        :rtype: subprocess.CompletedProcess
         """
         env = os.environ.copy()
         if env_override:
@@ -204,49 +207,62 @@ class TestSkillWaiver:
 
     def test_slash_command_with_arguments_still_waives(self, tmp_path):
         """Arguments and leading whitespace after the slash command don't break the match."""
-        assert not self.injected(self.run_prompt(self.make_config(tmp_path), "  /waiving_skill --date 2026-08-20"))
+        assert not self.injected(self.run_prompt(self.make_config(tmp_path), "  /waiving_skill --date 2026-08-20")), (
+            "arguments after a waiving skill's slash command should still skip injection"
+        )
 
     def test_flat_skill_layout_is_found(self, tmp_path):
         """A contract at skills/<name>/ (no group folder) is honoured too."""
-        assert not self.injected(self.run_prompt(self.make_config(tmp_path), "/flat_skill"))
+        assert not self.injected(self.run_prompt(self.make_config(tmp_path), "/flat_skill")), (
+            "a waiving contract at skills/<name>/ should skip injection"
+        )
 
     def test_non_waiving_skill_still_injects(self, tmp_path):
         """A skill whose contract says false gets the directive."""
-        assert self.injected(self.run_prompt(self.make_config(tmp_path), "/normal_skill"))
+        assert self.injected(self.run_prompt(self.make_config(tmp_path), "/normal_skill")), (
+            "a contract with waives_response_standards: false should still inject"
+        )
 
     def test_unknown_slash_command_injects(self, tmp_path):
         """A slash command with no matching skill contract gets the directive."""
-        assert self.injected(self.run_prompt(self.make_config(tmp_path), "/no_such_skill"))
+        assert self.injected(self.run_prompt(self.make_config(tmp_path), "/no_such_skill")), (
+            "an unknown slash command should still inject"
+        )
 
     def test_natural_language_mention_injects(self, tmp_path):
         """Naming a waiving skill without a leading slash does not waive."""
-        assert self.injected(self.run_prompt(self.make_config(tmp_path), "please run waiving_skill /waiving_skill"))
+        assert self.injected(self.run_prompt(self.make_config(tmp_path), "please run waiving_skill /waiving_skill")), (
+            "only a leading slash command can waive injection"
+        )
 
     def test_prefix_of_skill_name_does_not_match(self, tmp_path):
         """/waiving_skillx must not match waiving_skill."""
-        assert self.injected(self.run_prompt(self.make_config(tmp_path), "/waiving_skillx"))
+        assert self.injected(self.run_prompt(self.make_config(tmp_path), "/waiving_skillx")), (
+            "a longer name must not match a waiving skill by prefix"
+        )
 
     def test_path_traversal_name_is_rejected(self, tmp_path):
         """Names with path characters never reach the filesystem lookup."""
-        assert self.injected(self.run_prompt(self.make_config(tmp_path), "/../skills/flat_skill"))
+        assert self.injected(self.run_prompt(self.make_config(tmp_path), "/../skills/flat_skill")), (
+            "names with path characters must never reach the skill lookup"
+        )
 
     def test_malformed_or_empty_input_injects(self, tmp_path):
         """Bad JSON, empty stdin, or a non-string prompt fall back to normal injection."""
         hook = self.make_config(tmp_path)
-        assert self.injected(self.run(hook, "{not json"))
-        assert self.injected(self.run(hook, ""))
-        assert self.injected(self.run(hook, "[1, 2]"))
-        assert self.injected(self.run_prompt(hook, 42))
+        assert self.injected(self.run(hook, "{not json")), "bad JSON should fall back to injecting"
+        assert self.injected(self.run(hook, "")), "empty stdin should fall back to injecting"
+        assert self.injected(self.run(hook, "[1, 2]")), "a non-object payload should fall back to injecting"
+        assert self.injected(self.run_prompt(hook, 42)), "a non-string prompt should fall back to injecting"
 
     def test_legacy_env_var_no_longer_waives(self, tmp_path):
         """SKILL_WAIVES_RESPONSE_STANDARDS was never set by anything and is no longer read."""
         result = self.run_prompt(self.make_config(tmp_path), "hello", {"SKILL_WAIVES_RESPONSE_STANDARDS": "true"})
-        assert self.injected(result)
+        assert self.injected(result), "the retired env var must no longer waive injection"
         assert "SKILL_WAIVES_RESPONSE_STANDARDS" not in Path(HOOK_SCRIPT).read_text(), (
             "Hook should no longer reference the unused env var"
         )
 
 
 if __name__ == "__main__":
-    import pytest
     pytest.main([__file__, "-v"])

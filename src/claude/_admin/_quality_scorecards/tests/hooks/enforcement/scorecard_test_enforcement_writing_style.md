@@ -3,26 +3,21 @@
 **Date Created:** 2026-09-30
 **Date Updated:** 2026-10-01
 
-**Overall score:** 7.9/10
-
-**Recommended improvements:**
-- Split the test by concept to bring raw complexity (5) down to 3 or less
-- Fix the style gaps and set `Python style compliant: Yes`
-- Rename the hook in the module docstring to `hook_enforcement_writing_style.sh`
-- Update fixture paths from the retired `01_core` tier to a current tier name
+**Overall score:** 9.3/10
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 7/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 87% of assertions carry a failure message<br>• ⚠️ **Docstring:** module docstring calls it the `enforcement_markdown_file_locations` hook, an old name |
-| **Complexity** | 5/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 5/10 (raw complexity 5) |
-| **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact |
-| **Coverage** | 10/10 | 2026-09-30 | • 📊 **Counts:** 21 test functions and 31 assertions |
-| **Structural Compliance** | 7/10 | 2026-10-01 | • ✅ **Header:** header says `Python style compliant: No` |
-| **Currency** | 7/10 | 2026-09-30 | • 🔍 **References:** passes against the current config, header last updated 2026-09-17<br>• ⚠️ **Finding:** fixture paths still use the retired `01_core` tier name |
-| **Regression Value** | 10/10 | 2026-09-30 | • 🛡️ **Failure cases:** 8 test functions named for a failure case |
-| **Overall** | **7.9/10** | 2026-10-01 | • 💪 **Strongest:** Coverage and Regression Value (10/10)<br>• ⚠️ **Weakest:** Complexity (5/10) |
+| **Clarity** | 9/10 | 2026-10-01 | • 🔍 **Goal:** module docstring says what the hook checks and why the payload matters<br>• 🔍 **Messages:** every assertion carries a failure message |
+| **Complexity** | 7/10 | 2026-10-01 | • 🧮 **Raw complexity 3:** Concepts 2 (root files, reference names, ignored paths, payload handling) + Scope 0 + Dependencies 1 (runs the bash hook) + Prerequisites 0 |
+| **Evidence of Need** | 10/10 | 2026-10-01 | • 🔗 **Incident:** the old hook read a path argument Claude Code never passes, so it never fired |
+| **Coverage** | 9/10 | 2026-10-01 | • 📊 **Counts:** 14 test functions and 20 assertions<br>• 🧩 **Edge cases:** dated, hyphenated and unprefixed reference files, stray root files, bad payloads, Edit and Write, and manual runs |
+| **Structural Compliance** | 10/10 | 2026-10-01 | • ✅ **Header:** full metadata header, marked Python style compliant and checked with `ruff` |
+| **Currency** | 10/10 | 2026-10-01 | • 🔍 **References:** matches `writing_style.md` and the directory rules as of 2026-10-01 |
+| **Regression Value** | 10/10 | 2026-09-30 | • 🛡️ **Mutation check:** 7 of the 15 test cases fail against the old hook |
+| **Overall** | **9.3/10** | 2026-10-01 | • 💪 **Strongest:** Evidence of Need, Structural Compliance, Currency and Regression Value (10/10)<br>• ⚠️ **Weakest:** Complexity (7/10), at the minimum |
 
 ## 🔗 Related files
 
 - `src/claude/_tests/hooks/enforcement/test_enforcement_writing_style.py` — the test being scored
 - `src/claude/hooks/hook_enforcement_writing_style.sh` — what the test guards
+- `src/claude/_rules/01_essentials/claude_usage_standards/writing_style.md` — the conventions the hook enforces
