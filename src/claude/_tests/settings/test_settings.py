@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           1.1.0
+# Version:           1.2.0
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -16,6 +16,7 @@ Ensures:
 - Broad wildcard permissions are intentional and documented
 - Configuration aligns with guiding principles (least privilege)
 - No real secret is written into the file
+- Transcript retention is the chosen 90 days
 """
 import json
 import re
@@ -32,6 +33,9 @@ SECRET_PATTERNS = {
 }
 
 # Allow entries security.md names as too broad, because each permits destructive commands
+# Transcript retention chosen 2026-10-01 so the rule-usage audit has enough sessions
+EXPECTED_CLEANUP_PERIOD_DAYS = 90
+
 BROAD_DESTRUCTIVE_ALLOWS = {"Bash(*)", "Bash(git:*)", "Bash(rm:*)", "Bash(rm -rf:*)", "Bash(sudo:*)"}
 
 
@@ -204,3 +208,12 @@ def test_enabled_plugins_intentional():
     enabled = settings["enabledPlugins"]
     assert isinstance(enabled, dict), "enabledPlugins must be a dict"
     assert enabled, "enabledPlugins should not be present if empty — remove the key instead"
+
+
+def test_cleanup_period_days_is_chosen_value():
+    """Transcript retention must stay at the chosen value, which the rule-usage audit depends on."""
+    days = _load_settings().get("cleanupPeriodDays")
+    assert days == EXPECTED_CLEANUP_PERIOD_DAYS, (
+        f"cleanupPeriodDays is {days}, expected {EXPECTED_CLEANUP_PERIOD_DAYS} — "
+        f"update settings_json_readme.md and this test together if the choice changes"
+    )

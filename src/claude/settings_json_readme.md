@@ -141,13 +141,15 @@ See `~/.claude/_rules/guiding_principles.md` for the decision framework applied 
 
 ---
 
-### `cleanupPeriodDays: 30`
+### `cleanupPeriodDays: 90`
 
-**What it does:** Sets session-transcript retention to 30 days. Transcripts older than this are cleaned up automatically.
+**What it does:** Sets session-transcript retention to 90 days. Transcripts older than this are cleaned up automatically.
 
-**When set:** 2026-08-07 (adopted from `_reference/settings_json_recommendations.md` item 2)
+**When set:** 2026-08-07 at 30 days (adopted from `_reference/settings_json_recommendations.md` item 2), raised to 90 days on 2026-10-01
 
-**Why:** 30 is also the documented default — this makes the retention window an explicit, auditable choice rather than an implicit one. Near-zero cost.
+**Why:** the rule-usage audit (`make audit_rule_usage`) measures which rules each session needed, and the 30-day default left too few sessions to judge rarely used rules.
+
+**Trade-off:** transcripts can hold pasted secrets and private content, so 90 days keeps about 3× as much of it on disk (≈630MB at current usage).
 
 **Guiding principle:** Explicit over implicit — a documented default beats a silent one; if the default ever changes upstream, this pins the behaviour.
 
@@ -166,6 +168,7 @@ See `~/.claude/_rules/guiding_principles.md` for the decision framework applied 
 | 2026-08-07 | `permissions.allow` | Added `git show *`, `grep *` | Transcript analysis: 4 and 48 uses/session respectively; both read-only, safe |
 | 2026-08-07 | `permissions.deny` | Added 7-pattern secrets + destructive-op firewall | Backs advisory `security.md` rules with a mechanical guard; zero context cost. Adopted from `_reference/settings_json_recommendations.md` |
 | 2026-08-07 | `cleanupPeriodDays` | Set to `30` (explicit form of documented default) | Makes transcript retention an auditable choice. Adopted from `_reference/settings_json_recommendations.md` |
+| 2026-10-01 | `cleanupPeriodDays` | Raised `30` → `90` | The rule-usage audit needs more sessions than 30 days holds; accepts 3× the transcript exposure on disk |
 | 2026-08-07 | `permissions.deny` | Added `rm -fr` / `rm -r -f` / `rm -f -r` flag-reordering variants | Widen destructive-op coverage; still defense-in-depth (Bash-text denial can't be airtight) |
 | 2026-08-07 | `model` + key order | Reconciled live `~/.claude/settings.json` with repo source (added missing `model`, aligned key order) | `src/claude/` must mirror `~/.claude/`; the two had drifted |
 
