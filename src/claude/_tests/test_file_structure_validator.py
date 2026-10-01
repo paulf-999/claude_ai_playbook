@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.1.2
+# Version:           1.1.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -22,7 +22,7 @@ from _file_structure_validator import FileStructureValidator
 HINT = "— see claude_directory_structure/_claude_directory_naming.md"
 
 
-def make_files(root: Path, *relative_paths: str) -> None:
+def make_files(root: Path, *relative_paths: str):
     """Create empty files under a fake config root.
 
     :param root: Root of the fake config tree.
@@ -60,7 +60,7 @@ def errors_for(violations: list[dict], filename: str) -> list[dict]:
     return [v for v in violations if v["severity"] == "error" and Path(v["path"]).name == filename]
 
 
-def test_hyphenated_markdown_is_an_error(tmp_path: Path) -> None:
+def test_hyphenated_markdown_is_an_error(tmp_path: Path):
     """A hyphenated .md file name is reported as a snake_case error."""
     make_files(tmp_path, "bad-name.md")
     errors = errors_for(scan(tmp_path), "bad-name.md")
@@ -68,7 +68,7 @@ def test_hyphenated_markdown_is_an_error(tmp_path: Path) -> None:
     assert errors[0]["rule"] == "Invalid naming: not snake_case", f"wrong rule: {errors[0]['rule']}"
 
 
-def test_camel_case_python_is_an_error(tmp_path: Path) -> None:
+def test_camel_case_python_is_an_error(tmp_path: Path):
     """A CamelCase .py file name is reported as a snake_case error."""
     make_files(tmp_path, "BadName.py")
     errors = errors_for(scan(tmp_path), "BadName.py")
@@ -76,21 +76,21 @@ def test_camel_case_python_is_an_error(tmp_path: Path) -> None:
     assert "snake_case" in errors[0]["message"], f"message should name snake_case: {errors[0]['message']}"
 
 
-def test_snake_case_file_gives_no_violations(tmp_path: Path) -> None:
+def test_snake_case_file_gives_no_violations(tmp_path: Path):
     """A snake_case file at the root gives no violations at all."""
     make_files(tmp_path, "good_name.md", "helper_script.py")
     violations = scan(tmp_path)
     assert violations == [], f"valid names should be clean, got {violations}"
 
 
-def test_child_prefix_passes_snake_case(tmp_path: Path) -> None:
+def test_child_prefix_passes_snake_case(tmp_path: Path):
     """A leading-underscore child file is valid snake_case and needs no rename."""
     make_files(tmp_path, "_rules/01_essentials/topic/_child_aspect.md")
     violations = [v for v in scan(tmp_path) if Path(v["path"]).name == "_child_aspect.md"]
     assert violations == [], f"_child_aspect.md should be clean {HINT}, got {violations}"
 
 
-def test_exact_name_exceptions_are_exempt(tmp_path: Path) -> None:
+def test_exact_name_exceptions_are_exempt(tmp_path: Path):
     """CLAUDE.md, SKILL.md and skill.contract.yaml are exempt from snake_case."""
     make_files(tmp_path, "CLAUDE.md", "skills/demo_skill/SKILL.md", "skills/demo_skill/skill.contract.yaml")
     violations = scan(tmp_path)
@@ -99,21 +99,21 @@ def test_exact_name_exceptions_are_exempt(tmp_path: Path) -> None:
         assert flagged == [], f"{name} is a required exact name and must be exempt, got {flagged}"
 
 
-def test_dotfiles_are_ignored(tmp_path: Path) -> None:
+def test_dotfiles_are_ignored(tmp_path: Path):
     """Tooling dotfiles such as .gitkeep are never flagged."""
     make_files(tmp_path, ".gitkeep", "_docs/.gitkeep")
     violations = scan(tmp_path)
     assert violations == [], f"dotfiles should be ignored, got {violations}"
 
 
-def test_valid_template_is_exempt(tmp_path: Path) -> None:
+def test_valid_template_is_exempt(tmp_path: Path):
     """A template named after an exact-name target, like AGENT.md.template, is exempt."""
     make_files(tmp_path, "_templates/AGENT.md.template")
     violations = scan(tmp_path)
     assert violations == [], f"AGENT.md.template should be exempt, got {violations}"
 
 
-def test_bad_template_is_flagged(tmp_path: Path) -> None:
+def test_bad_template_is_flagged(tmp_path: Path):
     """A template whose target name breaks snake_case is still flagged."""
     make_files(tmp_path, "_templates/Bad-Name.md.template")
     errors = errors_for(scan(tmp_path), "Bad-Name.md.template")
@@ -121,21 +121,21 @@ def test_bad_template_is_flagged(tmp_path: Path) -> None:
     assert "Bad-Name.md" in errors[0]["message"], f"message should name the target: {errors[0]['message']}"
 
 
-def test_auto_generated_dir_is_skipped(tmp_path: Path) -> None:
+def test_auto_generated_dir_is_skipped(tmp_path: Path):
     """A bad name inside an auto-generated directory like memory/ is not scanned."""
     make_files(tmp_path, "memory/Bad-Name.md", "memory/nested/Other-Bad.py")
     violations = scan(tmp_path)
     assert violations == [], f"memory/ is auto-generated and must be skipped, got {violations}"
 
 
-def test_hidden_dir_is_skipped(tmp_path: Path) -> None:
+def test_hidden_dir_is_skipped(tmp_path: Path):
     """A bad name inside a hidden directory like .cache/ is not scanned."""
     make_files(tmp_path, ".cache/Bad-Name.md")
     violations = scan(tmp_path)
     assert violations == [], f".cache/ is hidden and must be skipped, got {violations}"
 
 
-def test_unprefixed_nested_markdown_is_info(tmp_path: Path) -> None:
+def test_unprefixed_nested_markdown_is_info(tmp_path: Path):
     """An un-prefixed nested .md file gets an info nudge, not an error."""
     make_files(tmp_path, "_reference/topic/guide.md")
     violations = scan(tmp_path)
@@ -144,7 +144,7 @@ def test_unprefixed_nested_markdown_is_info(tmp_path: Path) -> None:
     assert violations[0]["rule"] == "Child files should start with underscore", f"wrong rule: {violations[0]['rule']}"
 
 
-def test_rules_missing_tier_is_warning(tmp_path: Path) -> None:
+def test_rules_missing_tier_is_warning(tmp_path: Path):
     """A _rules/ directory missing a tier subdirectory gives a warning."""
     (tmp_path / "_rules" / "01_essentials").mkdir(parents=True)
     violations = scan(tmp_path)
@@ -154,7 +154,7 @@ def test_rules_missing_tier_is_warning(tmp_path: Path) -> None:
     assert "Missing subdirectory: 01_essentials" not in missing, "a tier that exists must not be reported"
 
 
-def test_missing_config_dir_is_an_error(tmp_path: Path) -> None:
+def test_missing_config_dir_is_an_error(tmp_path: Path):
     """A config directory that doesn't exist gives a 'Directory exists' error."""
     violations = scan(tmp_path / "does_not_exist")
     assert len(violations) == 1, f"expected one error, got {violations}"
@@ -162,7 +162,7 @@ def test_missing_config_dir_is_an_error(tmp_path: Path) -> None:
     assert violations[0]["severity"] == "error", "a missing config dir must be an error"
 
 
-def test_every_violation_has_required_keys(tmp_path: Path) -> None:
+def test_every_violation_has_required_keys(tmp_path: Path):
     """Every violation dict carries path, rule, severity and message."""
     make_files(tmp_path, "bad-name.md", "_reference/topic/guide.md")
     (tmp_path / "_rules").mkdir()

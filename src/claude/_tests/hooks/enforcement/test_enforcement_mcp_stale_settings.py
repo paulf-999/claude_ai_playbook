@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
 # Date updated:      2026-10-01
-# Version:           2.0.2
+# Version:           2.0.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -41,7 +41,7 @@ class HookSandbox:
         self.settings = tmp_path / "settings.json"
         self.env = {**os.environ, "TMPDIR": str(tmp_path)}
 
-    def set_denied(self, *servers: str) -> None:
+    def set_denied(self, *servers: str):
         """Write a settings.json that disables the given MCP servers.
 
         :param servers: Server names to put in ``deniedMcpServers``.
@@ -61,7 +61,7 @@ class HookSandbox:
         return subprocess.run(["bash", str(self.hook)], input=payload, capture_output=True, text=True, env=self.env)
 
 
-def assert_silent(result: subprocess.CompletedProcess[str], case: str) -> None:
+def assert_silent(result: subprocess.CompletedProcess[str], case: str):
     """Assert the hook exited cleanly without output.
 
     :param result: The finished hook process.
