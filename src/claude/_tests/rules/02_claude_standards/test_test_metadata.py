@@ -1,23 +1,25 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
+# Date created:      2026-10-01
+# Date updated:      2026-10-01
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
-# Date created:      2026-10-01
-# Version:           1.0.0
-# Date updated:      2026-10-01
 # ─────────────────────────────────────────────────────────
 
 """Validates every test's metadata header against _test_metadata.md.
 
-Each test file must open with the full header, in order, and its quality
-score must sit within ±1 of the band its own test-function and assertion
-counts support — so a header can't drift from the test it describes.
+Each test file must open with the full header — banners, fields in order,
+well-formed values — and its quality score must sit within ±1 of the band
+its own test-function and assertion counts support, so a header can't drift
+from the test it describes.
 """
 from __future__ import annotations
 
 import ast
 import re
+from datetime import date
 from pathlib import Path
 
 from _shared_paths import CLAUDE_DIR
@@ -26,23 +28,32 @@ TESTS_DIR = CLAUDE_DIR / "_tests"
 HINT = "— see _rules/02_claude_standards/testing/_test_metadata.md"
 TITLE = "# Test Metadata"
 FIELDS = [
+    "Date created",
+    "Date updated",
+    "Version",
     "Test quality score",
     "Test complexity score",
     "Python style compliant",
-    "Date created",
-    "Version",
-    "Date updated",
 ]
+VALUE_PATTERNS = {
+    "Date created": r"\d{4}-\d{2}-\d{2}",
+    "Date updated": r"\d{4}-\d{2}-\d{2}",
+    "Version": r"\d+\.\d+\.\d+",
+    "Test quality score": r"(?:10|[1-9])/10",
+    "Test complexity score": r"(?:10|[0-9])/10",
+    "Python style compliant": r"Yes|No",
+}
+BANNER = re.compile(r"# ─+")
 HEADER_LINES = 9
 VALID_HEADER = (
     "# Test Metadata\n"
     "# ─────\n"
+    "# Date created:      2026-10-01\n"
+    "# Date updated:      2026-10-01\n"
+    "# Version:           1.0.0\n"
     "# Test quality score: 3/10\n"
     "# Test complexity score: 9/10\n"
     "# Python style compliant: Yes\n"
-    "# Date created:      2026-10-01\n"
-    "# Version:           1.0.0\n"
-    "# Date updated:      2026-10-01\n"
     "# ─────\n"
 )
 ONE_TEST = '\n\ndef test_demo():\n    """Demo."""\n    assert True\n'
@@ -97,23 +108,51 @@ def header_errors(source: str) -> list[str]:
 
     :param source: Python source of the test file.
     :type source: str
-    :return: One message per problem — empty when the header is complete and in order.
+    :return: One message per problem — empty when the header is complete, in order and well formed.
     :rtype: list[str]
     """
     head = source.splitlines()[:HEADER_LINES]
     if not head or head[0] != TITLE:
         return [f"line 1 must be '{TITLE}'"]
     positions = []
+    values = {}
     errors = []
     for field in FIELDS:
         position = next((i for i, line in enumerate(head) if line.startswith(f"# {field}:")), None)
         if position is None:
             errors.append(f"missing '# {field}:'")
+            continue
+        positions.append(position)
+        value = head[position].split(":", 1)[1].strip()
+        if re.fullmatch(VALUE_PATTERNS[field], value):
+            values[field] = value
         else:
-            positions.append(position)
+            errors.append(f"'{field}' value '{value}' must match {VALUE_PATTERNS[field]}")
     if positions != sorted(positions):
         errors.append(f"fields out of order — expected {', '.join(FIELDS)}")
+    if not errors:
+        if not (BANNER.fullmatch(head[1]) and BANNER.fullmatch(head[8])):
+            errors.append("lines 2 and 9 must be '# ─…' banners")
+        errors.extend(date_errors(values["Date created"], values["Date updated"]))
     return errors
+
+
+def date_errors(created: str, updated: str) -> list[str]:
+    """Return what is wrong with a header's two dates.
+
+    :param created: The ``Date created`` value.
+    :type created: str
+    :param updated: The ``Date updated`` value.
+    :type updated: str
+    :return: A message for an impossible date or an update before creation, else empty.
+    :rtype: list[str]
+    """
+    try:
+        if date.fromisoformat(updated) < date.fromisoformat(created):
+            return [f"Date updated {updated} is earlier than Date created {created}"]
+    except ValueError as error:
+        return [f"invalid date: {error}"]
+    return []
 
 
 def quality_error(source: str) -> str | None:
@@ -179,8 +218,8 @@ def test_missing_field_is_flagged() -> None:
 def test_out_of_order_fields_are_flagged() -> None:
     """Swapping two fields is reported as out of order."""
     swapped = VALID_HEADER.replace(
-        "# Date created:      2026-10-01\n# Version:           1.0.0\n",
-        "# Version:           1.0.0\n# Date created:      2026-10-01\n",
+        "# Date created:      2026-10-01\n# Date updated:      2026-10-01\n",
+        "# Date updated:      2026-10-01\n# Date created:      2026-10-01\n",
     )
     errors = header_errors(swapped + ONE_TEST)
     assert len(errors) == 1, f"expected one ordering error, got {errors}"
@@ -230,3 +269,53 @@ def test_missing_quality_score_is_flagged() -> None:
     """A header with no quality score is reported."""
     source = VALID_HEADER.replace("# Test quality score: 3/10\n", "") + ONE_TEST
     assert quality_error(source) == "no quality score", "a missing quality score must be reported"
+
+
+def test_old_field_order_is_flagged() -> None:
+    """The pre-2026-10-01 order, scores first, is reported as out of order."""
+    lines = VALID_HEADER.splitlines()
+    old_order = lines[:2] + lines[5:8] + [lines[2], lines[4], lines[3]] + lines[8:]
+    errors = header_errors("\n".join(old_order) + ONE_TEST)
+    assert errors == [f"fields out of order — expected {', '.join(FIELDS)}"], f"got {errors}"
+
+
+def test_placeholder_date_is_flagged() -> None:
+    """``[placeholder]`` is no longer a valid Date updated."""
+    source = VALID_HEADER.replace("updated:      2026-10-01", "updated:      [placeholder]") + ONE_TEST
+    errors = header_errors(source)
+    assert len(errors) == 1, f"expected one value error, got {errors}"
+    assert "'Date updated' value '[placeholder]'" in errors[0], f"error should name the field, got {errors[0]}"
+
+
+def test_bad_values_are_flagged() -> None:
+    """Two-part versions, out-of-range scores and non Yes/No style values fail."""
+    cases = {
+        "# Version:           1.0.0": "# Version:           1.0",
+        "# Test quality score: 3/10": "# Test quality score: 11/10",
+        "# Python style compliant: Yes": "# Python style compliant: Partly",
+    }
+    for good, bad in cases.items():
+        errors = header_errors(VALID_HEADER.replace(good, bad) + ONE_TEST)
+        assert len(errors) == 1, f"'{bad}' should give one error, got {errors}"
+
+
+def test_wrong_banner_is_flagged() -> None:
+    """A closing banner of hyphens instead of ─ fails."""
+    lines = VALID_HEADER.splitlines()
+    lines[8] = "# -----"
+    errors = header_errors("\n".join(lines) + ONE_TEST)
+    assert errors == ["lines 2 and 9 must be '# ─…' banners"], f"got {errors}"
+
+
+def test_updated_before_created_is_flagged() -> None:
+    """A Date updated earlier than Date created fails."""
+    source = VALID_HEADER.replace("updated:      2026-10-01", "updated:      2026-09-01") + ONE_TEST
+    errors = header_errors(source)
+    assert errors == ["Date updated 2026-09-01 is earlier than Date created 2026-10-01"], f"got {errors}"
+
+
+def test_impossible_date_is_flagged() -> None:
+    """A well-shaped but impossible date fails."""
+    errors = date_errors("2026-13-40", "2026-10-01")
+    assert len(errors) == 1, f"expected one date error, got {errors}"
+    assert errors[0].startswith("invalid date"), f"error should say invalid date, got {errors[0]}"

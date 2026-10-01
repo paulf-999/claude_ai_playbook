@@ -1,11 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
+# Date created:      2026-09-30
+# Date updated:      2026-10-01
+# Version:           1.0.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
-# Date created:      2026-09-30
-# Version:           1.0.0
-# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """Keeps skill_domains.yaml and the real skills/ layout in step.

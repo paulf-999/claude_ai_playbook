@@ -1,11 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
+# Date created:      2026-09-19
+# Date updated:      2026-10-01
+# Version:           1.2.1
 # Test quality score: 9/10
 # Test complexity score: 5/10
 # Python style compliant: Yes
-# Date created:      2026-09-19
-# Version:           1.2.0
-# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """Generic orphaned-file detection for every skill under src/claude/skills/.

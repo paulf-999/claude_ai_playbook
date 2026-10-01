@@ -1,6 +1,6 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
 # 📊 Test Metadata Standard
 
 **Purpose:** Track test quality, creation date, and maintenance status via structured metadata headers. Enable quick assessment of test staleness and coverage before running or updating.
@@ -24,16 +24,20 @@ Every test file in `~/.claude/_tests/` must open with this metadata header:
 ```python
 # Test Metadata
 # ─────────────────────────────────────────────────────────
+# Date created:      YYYY-MM-DD
+# Date updated:      YYYY-MM-DD
+# Version:           X.Y.Z
 # Test quality score: X/10
 # Test complexity score: Y/10
 # Python style compliant: Yes/No
-# Date created:      YYYY-MM-DD
-# Version:           1.0.0
-# Date updated:      [placeholder] or YYYY-MM-DD
 # ─────────────────────────────────────────────────────────
 ```
 
-**Placement:** Line 1–7, before any docstring or code.
+**Placement:** Lines 1–9, before any docstring or code.
+
+**Order:** the six fields appear in exactly this order — dates, then version, then scores — and `test_test_metadata.py` enforces it.
+
+**Every field is mandatory:** a new file sets `Date updated:` to the same day as `Date created:`, never `[placeholder]`.
 
 **Python style compliant:** `Yes` only if the file follows every rule in `~/.claude/_rules/05_lazy_load/style_guide_standards/python.md` (f-strings only, reST docstrings, no bare `except`, `pathlib.Path` not `os.path`, etc.) — check before setting; don't assume.
 
