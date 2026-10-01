@@ -7,8 +7,8 @@ Skills follow a **three-level gate** as they mature from draft to production-rea
 | Level | Name | Criteria | Enforcement | Author Action |
 |-------|------|----------|-------------|---|
 | 🏗️ | **Crawl** (C0–C7) | Foundation: structure, contract, no coupling | Auto-gate (pre-commit hook) | ✅ Must pass before commit |
-| 🚶 | **Walk** (W1–W6) | Quality: clarity, style, testing, documentation | Manual review + local tests | ⚠️ Test locally; reviewers spot-check |
-| 🏃 | **Run** (R1–R4) | Comprehensive: versioning, gap documentation, maturity progression | Manual review | ⚠️ Required for strategic skills only |
+| 🚶 | **Walk** (W1–W6) | Quality: clarity, style, testing, documentation | Pre-commit linter + review | ❌ FAILs block the commit; ⚠️ WARNs are advisory |
+| 🏃 | **Run** (R1–R4) | Comprehensive: versioning, gap documentation, maturity progression | Pre-commit linter + review | ❌ FAILs block the commit; ⚠️ WARNs are advisory |
 
 ---
 
@@ -68,7 +68,7 @@ These criteria ensure every skill has the basic structure to be safe to use. **T
 
 ## 🚶 Walk Level: Quality (W1–W6)
 
-These criteria ensure the skill is clear, well-tested, and follows style standards. **Reviewers spot-check these; use local tests to validate before submitting.**
+These criteria ensure the skill is clear, well-tested, and follows style standards. **The pre-commit linter checks them: run `make lint_skills` before submitting.**
 
 ### W1: SKILL.md is readable at a glance
 - ✅ Opening is clear without jargon (~100 lines max for opening section)
@@ -114,7 +114,7 @@ These criteria ensure the skill is clear, well-tested, and follows style standar
 These criteria apply to **strategic skills only** — production-ready skills expected to be stable and complete.
 
 ### R1: Semantic versioning aligns with maturity
-- ✅ Major version matches maturity (verified in C3, but worth double-checking)
+- ✅ Major version matches maturity (the linter reports this as C3, not R1)
 - ✅ Version history in git shows progression: `0.x` → `1.x` → `2.x`
 
 ### R2: Test coverage is thorough
@@ -200,8 +200,8 @@ These criteria apply to **strategic skills only** — production-ready skills ex
 | Level | How it's enforced | What happens if you fail? |
 |-------|------------------|---|
 | **Crawl (C0–C7)** | Pre-commit hook (`skill_authoring_gate_lint.py`) | ❌ Commit blocked; fix and retry |
-| **Walk (W1–W6)** | Local tests + manual review | ⚠️ Reviewer requests changes in PR |
-| **Run (R1–R4)** | Manual review (strategic skills) | ⚠️ Reviewer requests changes in PR |
+| **Walk (W1–W6)** | Same linter (`make lint_skills`), plus review | ❌ FAILs block the commit; ⚠️ WARNs come up in review |
+| **Run (R1–R4)** | Same linter, plus review for strategic skills | ❌ FAILs block the commit; ⚠️ WARNs come up in review |
 
 ---
 

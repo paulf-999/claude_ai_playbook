@@ -41,10 +41,10 @@ All skills are validated against a **three-level gate** before merging:
 
 **What:** Readability, style compliance, test coverage, clarity.
 
-**Enforcement:** Manual code review + local testing
+**Enforcement:** the same pre-commit linter as crawl, plus code review
 - You run the gate locally before submitting a PR: `make lint_skills` (crawl, walk and run in one linter)
-- Reviewers spot-check during code review
-- **Doesn't block merge** (advisory feedback)
+- **FAIL blocks** the commit: a long opening, a false `tested: true` claim, test counts outside the maturity range, unexplained jargon, open TODOs once tactical, or stub phase files
+- **WARN is advisory:** unexplained terms, headings without emoji, a long SKILL.md, or an honestly untested skill
 
 **Examples of walk criteria:**
 - W1: SKILL.md readable in <60 seconds
@@ -54,20 +54,19 @@ All skills are validated against a **three-level gate** before merging:
 
 **How to pass:** Test locally, respond to reviewer feedback.
 
-### 🏃 Run (Comprehensive): R1–R5
+### 🏃 Run (Comprehensive): R2–R4
 
 **What:** Full quality, maturity progression, gap documentation.
 
-**Enforcement:** Manual review by maintainers (strategic skills only)
-- Only applies to **strategic skills** (version 2+.x)
-- Reviewers verify during code review
-- **Doesn't block merge** (guidance for completeness)
+**Enforcement:** the same pre-commit linter, plus review for strategic skills
+- **FAIL blocks** the commit: a test file that's 30 lines or fewer or has no pytest tests (R2), or a strategic skill with no "Known gaps" section (R4)
+- **WARN is advisory:** a tactical or strategic skill with no version history section (R3)
+- **R1** (version matches maturity) is the same check as crawl's C3, so it's reported once, as C3
 
-**Examples of run criteria:**
-- R1: Semantic versioning progression documented
+**Run criteria:**
+- R2: Test files have real depth
 - R3: Version history explains each tier bump
 - R4: Known gaps explicitly documented with workarounds
-- R5: Complex skills (external APIs) have optional schema
 
 **How to pass:** Comprehensive test suite, clear documentation.
 
@@ -225,7 +224,7 @@ Then open a PR with your branch.
 Reviewers will check:
 - **Crawl:** Should already pass (linter validated before commit)
 - **Walk:** Spot-check clarity (W1), style (W2), test coverage (W3)
-- **Run:** For strategic skills only (R1–R5)
+- **Run:** Mostly for strategic skills (R2–R4)
 
 Respond to feedback and update your PR. Once approved, merge!
 
@@ -269,9 +268,9 @@ Skills can progress from draft → tactical → strategic. Here's how:
 
 | Stage | What's enforced | Who enforces | What happens if you fail |
 |-------|---|---|---|
-| **Commit** | Crawl (C0–C7) | Pre-commit hook | ❌ Commit blocked |
-| **Code review** | Walk (W1–W6) | Manual review | ⚠️ Requested changes |
-| **Strategic review** | Run (R1–R5) | Manual review | ⚠️ Requested changes |
+| **Commit** | Crawl (C0–C7), plus walk and run FAILs | Pre-commit hook | ❌ Commit blocked |
+| **Code review** | Walk (W1–W6) WARNs | Manual review | ⚠️ Requested changes |
+| **Strategic review** | Run (R2–R4) WARNs | Manual review | ⚠️ Requested changes |
 
 ---
 
