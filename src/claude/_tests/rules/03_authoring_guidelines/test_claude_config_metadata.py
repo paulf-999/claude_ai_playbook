@@ -4,16 +4,17 @@
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # Date created:      2026-09-28
-# Version:           2.1.1
+# Version:           2.2.0
 # Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """Validates the three-line rule metadata header defined in _claude_config_metadata.md.
 
 Lines 1–3 must be ``<!-- version: X.Y.Z -->``, ``<!-- created: YYYY-MM-DD -->`` and
-``<!-- updated: YYYY-MM-DD -->``, with ``updated`` on or after ``created``.
+``<!-- updated: YYYY-MM-DD -->``, with ``updated`` on or after ``created``. A path-scoped rule's
+``paths:`` frontmatter comes first, and the header sits straight after it.
 """
-from _metadata_header import metadata_header_errors
+from _metadata_header import FRONTMATTER_RE, metadata_header_errors
 from _shared_paths import RULES_DIR
 
 # Non-rule content under _rules/: a skill-managed tally
@@ -53,6 +54,15 @@ def test_zero_components_accepted():
     """Zero is a valid semver component (e.g. 0.1.0, 1.0.0)."""
     for version in ("0.1.0", "1.0.0", "0.0.1"):
         assert metadata_header_errors(with_header(version=version)) == [], f"{version} was rejected"
+
+
+def test_header_after_paths_frontmatter_accepted():
+    """A path-scoped rule keeps its header straight after the ``paths:`` frontmatter."""
+    content = f'---\npaths:\n  - "**/*.sql"\n---\n{VALID_HEADER}\n# 🗂️ Rule\n'
+    frontmatter = FRONTMATTER_RE.match(content)
+    assert frontmatter, "paths frontmatter was not recognised"
+    body = content[frontmatter.end():]
+    assert metadata_header_errors(body, line_offset=4) == [], "header after frontmatter was rejected"
 
 
 def test_headerless_file_has_no_format_errors():
@@ -147,6 +157,9 @@ def test_every_rule_file_has_a_valid_header():
     assert rule_files, f"no rule files found under {RULES_DIR}"
     for rule_file in rule_files:
         content, name = rule_file.read_text(), rule_file.relative_to(RULES_DIR)
-        assert content.startswith("<!-- version:"), f"{name}: missing metadata header on lines 1–3 {HINT}"
-        errors = metadata_header_errors(content)
+        frontmatter = FRONTMATTER_RE.match(content)
+        offset = frontmatter.group(0).count("\n") if frontmatter else 0
+        body = content[frontmatter.end():] if frontmatter else content
+        assert body.startswith("<!-- version:"), f"{name}: missing metadata header after any frontmatter {HINT}"
+        errors = metadata_header_errors(body, line_offset=offset)
         assert not errors, f"{name}: {errors} {HINT}"

@@ -1,4 +1,4 @@
-<!-- version: 2.0.2 -->
+<!-- version: 2.1.0 -->
 <!-- created: 2026-09-28 -->
 <!-- updated: 2026-09-30 -->
 # 🗂️ Claude Config Metadata
@@ -30,7 +30,7 @@ Each field sits on its own line, in the order version → created → updated, w
 
 | Artefact | Where | Comment syntax |
 |---|---|---|
-| **Rule** (`_rules/**/*.md`) | Lines 1–3, above the H1 | `<!-- version: 1.0.0 -->` |
+| **Rule** (`_rules/**/*.md`) | Lines 1–3, above the H1, or straight after `paths:` frontmatter for a path-scoped rule | `<!-- version: 1.0.0 -->` |
 | **Skill** (`SKILL.md`) | The 3 lines straight after the frontmatter's closing `---` | `<!-- version: 1.0.0 -->` |
 | **Agent** (`AGENT.md`) | The 3 lines straight after the frontmatter's closing `---` | `<!-- version: 1.0.0 -->` |
 | **Hook** (`hooks/*.sh`) | Lines 2–4, after the shebang | `# version: 1.0.0` |

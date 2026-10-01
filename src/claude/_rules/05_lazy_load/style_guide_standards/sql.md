@@ -1,6 +1,10 @@
-<!-- version: 1.0.1 -->
+---
+paths:
+  - "**/*.sql"
+---
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-09-30 -->
 # 🗄️ SQL Style Guide & Standards
 
 **Purpose:** Define team SQL standards for consistency, readability, and cost optimization. Standards apply to all SQL written in the warehouse (dbt, Airflow, ad-hoc queries).
