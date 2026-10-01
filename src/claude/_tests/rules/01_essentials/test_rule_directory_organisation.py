@@ -11,7 +11,7 @@
 """Tests the folder layout of the always-on rule tiers.
 
 - **01_essentials/:** holds exactly the expected top-level files and folders.
-- **Parent and children:** across tiers 01–04, per ``_multifile_document_organisation.md``,
+- **Parent and children:** across tiers 01–04, per ``multifile_document_organisation.md``,
   children sit in a ``<topic>/`` folder beside their ``<topic>.md`` parent, use the ``_``
   prefix, come two or more to a folder, and never sit loose at a tier's root.
 
@@ -31,19 +31,19 @@ ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guideli
 EXPECTED_TOP_LEVEL = {"README.md", "claude_response_standards.md", "claude_usage_standards.md", "guiding_principles.md"}
 EXPECTED_DIRECTORIES = {"claude_usage_standards"}
 
-# claude_usage_standards/ groups three parents, each with its own children folder
-USAGE_STANDARDS_PARENTS = {"naming_standards.md", "writing_style.md", "claude_directory_structure.md"}
-USAGE_STANDARDS_SUBDIRS = {"naming_standards", "writing_style", "claude_directory_structure"}
+# claude_usage_standards/ groups four rules, two of which keep a children folder
+USAGE_STANDARDS_PARENTS = {
+    "naming_standards.md",
+    "writing_style.md",
+    "claude_directory_structure.md",
+    "multifile_document_organisation.md",
+}
+USAGE_STANDARDS_SUBDIRS = {"naming_standards", "claude_directory_structure"}
 
 # Folders that group parents or shared children rather than one parent's children
 GROUPING_DIRS = {
     "01_essentials/claude_usage_standards",
     "03_authoring_guidelines/shared_standards",
-}
-
-# Known breaks of the 2+ rule, each with why it hasn't been flattened yet
-ONE_CHILD_EXCEPTIONS = {
-    "01_essentials/claude_usage_standards/writing_style": "flagged 2026-10-01 — flatten the one child, or add a second",
 }
 
 
@@ -89,14 +89,14 @@ def test_top_level_directories_are_expected():
 
 
 def test_usage_standards_parent_files():
-    """claude_usage_standards/ holds exactly its three parent files."""
+    """claude_usage_standards/ holds exactly its four rule files."""
     files = {f.name for f in USAGE_STANDARDS_DIR.glob("*.md")}
     expected = USAGE_STANDARDS_PARENTS
     assert files == expected, f"missing {expected - files}, extra {files - expected}"
 
 
 def test_usage_standards_subdirectories():
-    """claude_usage_standards/ holds exactly one children folder per parent."""
+    """claude_usage_standards/ holds exactly the children folders its rules need."""
     dirs = {d.name for d in USAGE_STANDARDS_DIR.iterdir() if d.is_dir() and not d.name.startswith(".")}
     expected = USAGE_STANDARDS_SUBDIRS
     assert dirs == expected, f"missing {expected - dirs}, extra {dirs - expected}"
@@ -117,13 +117,10 @@ def test_no_loose_child_files_at_tier_roots():
 
 
 def test_two_plus_rule_for_child_folders():
-    """Every children folder holds two or more children, or is a listed exception."""
+    """Every children folder holds two or more children."""
     folders = child_folders()
     assert folders, "expected children folders in the always-on tiers"
-    single = [
-        str(f.relative_to(RULES_DIR)) for f in folders
-        if len(children(f)) == 1 and str(f.relative_to(RULES_DIR)) not in ONE_CHILD_EXCEPTIONS
-    ]
+    single = [str(f.relative_to(RULES_DIR)) for f in folders if len(children(f)) == 1]
     assert not single, f"folders with one child — flatten each to a top-level file: {single}"
 
 
@@ -144,9 +141,9 @@ def test_lazy_load_folders_sit_inside_a_parent_folder():
     assert not bad, f"_lazy_load/ folders without a parent rule: {bad}"
 
 
-def test_exceptions_still_apply():
-    """Every grouping folder and one-child exception still exists, so none goes stale."""
-    stale = [d for d in GROUPING_DIRS | set(ONE_CHILD_EXCEPTIONS) if not (RULES_DIR / d).is_dir()]
-    assert not stale, f"exceptions for folders that no longer exist — remove them: {stale}"
-    fixed = [d for d in ONE_CHILD_EXCEPTIONS if len(children(RULES_DIR / d)) != 1]
-    assert not fixed, f"one-child exceptions that now meet the 2+ rule — remove them: {fixed}"
+def test_grouping_dirs_still_exist():
+    """Every grouping folder exempted above still exists, so no exemption goes stale."""
+    stale = [d for d in GROUPING_DIRS if not (RULES_DIR / d).is_dir()]
+    assert not stale, f"grouping exemptions for folders that no longer exist — remove them: {stale}"
+    shared = [f.name for f in (RULES_DIR / "03_authoring_guidelines" / "shared_standards").glob("*.md")]
+    assert len(shared) >= 2, f"shared_standards/ should group 2+ shared children, found {shared}"

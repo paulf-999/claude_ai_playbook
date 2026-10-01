@@ -1,6 +1,6 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
 # ✏️ Writing style
 
 **Purpose:** Establish consistent, scannable, and user-friendly writing conventions for all content Claude produces — ensuring clarity, respect for reader time, and professional presentation.
@@ -106,4 +106,4 @@ When writing SKILL.md files, apply these conventions specific to skill documenta
 
 ## 📚 Multifile Document Organization
 
-@~/.claude/_rules/01_essentials/claude_usage_standards/writing_style/_multifile_document_organisation.md
+@~/.claude/_rules/01_essentials/claude_usage_standards/multifile_document_organisation.md

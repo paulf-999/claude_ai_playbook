@@ -257,7 +257,7 @@ def test_rules_with_child_folders_have_children():
     assert len(split) >= 10, f"Expected 10+ split rules, found {len(split)} — was a child folder removed?"
     thin = [rule.name for rule in split if len(_child_names(rule)) < 2]
     assert not thin, (
-        f"Child folders with fewer than 2 pages — flatten them per _multifile_document_organisation.md: {thin}"
+        f"Child folders with fewer than 2 pages — flatten them per multifile_document_organisation.md: {thin}"
     )
 
 

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           1.1.0
+# Version:           1.1.1
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -143,8 +143,8 @@ def test_writing_style_dated_paths_use_underscores():
 
 
 def test_writing_style_imports_multifile_child():
-    """The multifile-organisation child is imported and exists."""
+    """The multifile-organisation rule is imported and exists."""
     content = RULE_FILE.read_text()
-    child = RULE_FILE.parent / "writing_style" / "_multifile_document_organisation.md"
-    assert "/writing_style/_multifile_document_organisation.md" in content, "the multifile child import is missing"
+    child = RULE_FILE.parent / "multifile_document_organisation.md"
+    assert "/claude_usage_standards/multifile_document_organisation.md" in content, "the multifile import is missing"
     assert child.is_file(), f"the imported child is missing: {child}"
