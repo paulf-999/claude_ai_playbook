@@ -47,6 +47,14 @@ HISTORY_NAME = "rule_usage_history.csv"
 LEDGER_NAME = "rule_usage_sessions.csv"
 SUMMARY_NAME = "rule_usage_history.md"
 LEDGER_FIELDS = ["session", "date", "rule", "applied", "loaded"]
+TOP_INSIGHTS = 5
+TIER_TITLES = {
+    "01_essentials": "🧭 01 Essentials",
+    "02_claude_standards": "🛡️ 02 Claude standards",
+    "03_authoring_guidelines": "🛠️ 03 Authoring guidelines",
+    "04_claude_reference": "📚 04 Claude reference",
+    "05_lazy_load": "💤 05 Lazy load",
+}
 HISTORY_FIELDS = [
     "run_date", "rule", "tier", "tokens", "sessions", "applied", "loaded", "misses", "last_applied", "last_loaded",
 ]
@@ -716,6 +724,105 @@ def run_dates(path: Path) -> dict[str, set[str]]:
     return dates
 
 
+def rule_totals(rows: list[dict[str, str]]) -> dict:
+    """Total one rule's ledger rows.
+
+    :param rows: The rule's ledger rows.
+    :type rows: list[dict[str, str]]
+    :return: ``applied``, ``loaded``, ``misses``, ``rate`` (a fraction, or None) and ``first``/``last`` dates.
+    :rtype: dict
+    """
+    applied = sum(r["applied"] == "1" for r in rows)
+    misses = sum(r["applied"] == "1" and r["loaded"] == "0" for r in rows)
+    seen = sorted(r["date"] for r in rows if r["date"])
+    return {
+        "applied": applied,
+        "loaded": sum(r["loaded"] == "1" for r in rows),
+        "misses": misses,
+        "rate": misses / applied if applied else None,
+        "first": seen[0] if seen else "—",
+        "last": seen[-1] if seen else "—",
+    }
+
+
+def insight_lines(totals: dict[str, dict], every_session: set[str]) -> list[str]:
+    """Summarise the worst miss rates and the most used rules, above the tables.
+
+    :param totals: ``rule_totals`` keyed by rule.
+    :type totals: dict[str, dict]
+    :param every_session: Rules whose globs are ``*``, which apply to every session by definition.
+    :type every_session: set[str]
+    :return: Markdown lines.
+    :rtype: list[str]
+    """
+    heading = f"### 🔥 Highest miss rates (at least {MIN_SAMPLE_SESSIONS} applied sessions)"
+    lines = ["## 🔎 Key insights", "", heading, ""]
+    measurable = [(rel, t) for rel, t in totals.items() if t["applied"] >= MIN_SAMPLE_SESSIONS and t["misses"]]
+    worst = sorted(measurable, key=lambda item: (-item[1]["rate"], -item[1]["misses"], item[0]))[:TOP_INSIGHTS]
+    lines += [
+        f"{i}. `{rel}` — missed {t['misses']} of {t['applied']} sessions ({round(100 * t['rate'])}%)"
+        for i, (rel, t) in enumerate(worst, start=1)
+    ] or [f"No rule has missed loads across {MIN_SAMPLE_SESSIONS} or more applied sessions yet."]
+    small = sum(1 for t in totals.values() if 0 < t["applied"] < MIN_SAMPLE_SESSIONS and t["misses"])
+    if small:
+        lines += [
+            "",
+            f"- **Too few sessions to rank:** {small} more rules have misses "
+            f"but under {MIN_SAMPLE_SESSIONS} applied sessions.",
+        ]
+    lines += ["", "### ⭐ Most used", ""]
+    always = [totals[rel] for rel in every_session if rel in totals]
+    if always:
+        loads = sorted(t["loaded"] for t in always)
+        lines += [
+            f"- **Every-session rules:** {len(always)} rules apply to every session (`applies_to: *`), "
+            f"loaded in {loads[0]}–{loads[-1]} sessions each.",
+        ]
+    rest = sorted(
+        ((rel, t) for rel, t in totals.items() if rel not in every_session and t["applied"]),
+        key=lambda item: (-item[1]["applied"], item[0]),
+    )[:TOP_INSIGHTS]
+    if rest:
+        lines += ["- **Most needed of the rest, by sessions applied:**", ""]
+        lines += [
+            f"{i}. `{rel}` — applied in {t['applied']} sessions, loaded in {t['loaded']}"
+            for i, (rel, t) in enumerate(rest, start=1)
+        ]
+    return lines + [""]
+
+
+def tier_tables(totals: dict[str, dict], runs: dict[str, set[str]], current: set[str]) -> list[str]:
+    """Build one table per tier.
+
+    :param totals: ``rule_totals`` keyed by rule.
+    :type totals: dict[str, dict]
+    :param runs: Distinct run dates per rule.
+    :type runs: dict[str, set[str]]
+    :param current: Rules that still exist.
+    :type current: set[str]
+    :return: Markdown lines.
+    :rtype: list[str]
+    """
+    lines = ["## 📋 Rules by tier", ""]
+    for tier in sorted({rel.split("/", 1)[0] for rel in totals}):
+        lines += [
+            f"### {TIER_TITLES.get(tier, f'📁 {tier}')}",
+            "",
+            "| Rule | Applied | Loaded | Misses | Miss rate | Runs | First seen | Last used |",
+            "|---|---|---|---|---|---|---|---|",
+        ]
+        for rel in sorted(r for r in totals if r.split("/", 1)[0] == tier):
+            t = totals[rel]
+            rate = f"{round(100 * t['rate'])}%" if t["rate"] is not None else "—"
+            name = f"`{rel}`" if rel in current else f"`{rel}` (removed)"
+            lines.append(
+                f"| {name} | {t['applied']} | {t['loaded']} | {t['misses']} | {rate} | "
+                f"{len(runs.get(rel, ()))} | {t['first']} | {t['last']} |"
+            )
+        lines.append("")
+    return lines
+
+
 def render_history(
     ledger: list[dict[str, str]], rules: list[Rule], runs: dict[str, set[str]], today: date
 ) -> str:
@@ -736,6 +843,8 @@ def render_history(
     by_rule: dict[str, list[dict[str, str]]] = {rel: [] for rel in current}
     for row in ledger:
         by_rule.setdefault(row["rule"], []).append(row)
+    totals = {rel: rule_totals(rows) for rel, rows in by_rule.items()}
+    every_session = {rule.rel for rule in rules if EVERY_SESSION in rule.globs}
     dates = sorted(r["date"] for r in ledger if r["date"])
     all_runs = set().union(*runs.values()) if runs else set()
     lines = [
@@ -757,27 +866,14 @@ def render_history(
         "- **First seen / Last used:** the earliest and latest session where the rule applied or loaded.",
         "- **Removed:** a rule in the record that no longer exists, usually after a rename.",
         "",
-        "## 📋 Rules",
-        "",
-        "| Rule | Applied | Loaded | Misses | Miss rate | Runs | First seen | Last used |",
-        "|---|---|---|---|---|---|---|---|",
     ]
-    for rel in sorted(by_rule):
-        rows = by_rule[rel]
-        applied = sum(r["applied"] == "1" for r in rows)
-        loaded = sum(r["loaded"] == "1" for r in rows)
-        misses = sum(r["applied"] == "1" and r["loaded"] == "0" for r in rows)
-        rate = f"{round(100 * misses / applied)}%" if applied else "—"
-        seen = sorted(r["date"] for r in rows if r["date"])
-        name = f"`{rel}`" if rel in current else f"`{rel}` (removed)"
-        lines.append(
-            f"| {name} | {applied} | {loaded} | {misses} | {rate} | {len(runs.get(rel, ()))} | "
-            f"{seen[0] if seen else '—'} | {seen[-1] if seen else '—'} |"
-        )
+    lines += insight_lines(totals, every_session)
+    lines += tier_tables(totals, runs, current)
     lines += [
-        "",
         "## ⚠️ Limits",
         "",
+        "- **Always-on misses:** usually sessions that ran before the file was added or renamed, "
+        "not times Claude skipped it.",
         "- **Globs at measure time:** a session's applied value uses the rule's globs from the last run "
         "that still had its log, so changing a rule's `applies_to` doesn't rewrite older sessions.",
         f"- **Starts at the first run:** sessions deleted before {min(all_runs) if all_runs else 'the first run'} "

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.3.0
+# Version:           1.4.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -328,7 +328,8 @@ def python_row(out):
     :return: The table line.
     :rtype: str
     """
-    return next(line for line in (out / AUDIT.SUMMARY_NAME).read_text().splitlines() if "python.md`" in line)
+    lines = (out / AUDIT.SUMMARY_NAME).read_text().splitlines()
+    return next(line for line in lines if line.startswith("| `") and "python.md`" in line)
 
 
 def test_ledger_counts_each_session_once_across_runs(tmp_path):
@@ -381,3 +382,42 @@ def test_summary_marks_removed_rules(tmp_path):
     AUDIT.run(rules_dir, transcripts, out, TODAY)
     assert "(removed)" in python_row(out), python_row(out)
     assert "| 1 | 1 | 0 | 0% |" in python_row(out), "only s1's row should survive, since s2 was re-measured"
+
+
+def test_summary_has_one_table_per_tier(tmp_path):
+    """Rules are grouped into a titled table per tier, each rule under its own tier."""
+    rules_dir, transcripts, out = make_rules(tmp_path), make_transcripts(tmp_path), tmp_path / "out"
+    AUDIT.run(rules_dir, transcripts, out, TODAY)
+    text = (out / AUDIT.SUMMARY_NAME).read_text()
+    essentials, lazy = text.index("### 🧭 01 Essentials"), text.index("### 💤 05 Lazy load")
+    assert essentials < text.index("parent.md` |") < lazy, "parent.md should sit in the 01 Essentials table"
+    assert lazy < text.index("python.md` |"), "python.md should sit in the 05 Lazy load table"
+
+
+def totals(applied, loaded, misses):
+    """Build one rule's totals for insight tests.
+
+    :return: The totals dict.
+    :rtype: dict
+    """
+    return {"applied": applied, "loaded": loaded, "misses": misses,
+            "rate": misses / applied if applied else None, "first": "—", "last": "—"}
+
+
+def test_insights_rank_worst_miss_rates_with_enough_data():
+    """Miss-rate insights rank by rate and skip rules under the minimum sample."""
+    data = {"a.md": totals(20, 10, 10), "b.md": totals(30, 3, 27), "tiny.md": totals(2, 0, 2)}
+    lines = AUDIT.insight_lines(data, set())
+    ranked = [line for line in lines if line[:2] in ("1.", "2.") and "missed" in line]
+    expected = ["1. `b.md` — missed 27 of 30 sessions (90%)", "2. `a.md` — missed 10 of 20 sessions (50%)"]
+    assert ranked == expected, ranked
+    assert any("1 more rules have misses" in line for line in lines), "rules under the minimum sample should be counted"
+
+
+def test_insights_show_most_used_rules():
+    """Every-session rules are summarised together, and the rest are ranked by sessions applied."""
+    data = {"star.md": totals(100, 95, 5), "big.md": totals(40, 38, 2), "small.md": totals(12, 12, 0)}
+    lines = AUDIT.insight_lines(data, {"star.md"})
+    assert any("**Every-session rules:** 1 rules" in line and "loaded in 95–95" in line for line in lines), lines
+    assert "1. `big.md` — applied in 40 sessions, loaded in 38" in lines, lines
+    assert "2. `small.md` — applied in 12 sessions, loaded in 12" in lines, lines
