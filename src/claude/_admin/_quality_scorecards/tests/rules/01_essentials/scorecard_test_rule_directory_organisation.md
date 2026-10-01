@@ -9,7 +9,7 @@
 |---|---|---|---|
 | **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and every assertion says what to move or flatten |
 | **Complexity** | 8/10 | 2026-10-01 | • 🧮 **Raw complexity 2:** Concepts 1 (01_essentials layout and the parent-and-children rule) + Scope 1 (`_rules/`) + Dependencies 0 + Prerequisites 0 |
-| **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** enforces `_multifile_document_organisation.md`, which stops flat-level sprawl |
+| **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** enforces `multifile_document_organisation.md`, which stops flat-level sprawl |
 | **Coverage** | 9/10 | 2026-10-01 | • 📊 **Counts:** 11 test functions and 16 assertions<br>• 🧩 **Wider:** the parent-and-children checks now cover tiers 01–04, not just 01 |
 | **Structural Compliance** | 10/10 | 2026-10-01 | • ✅ **Header:** full metadata header, marked Python style compliant and checked with `ruff` |
 | **Currency** | 10/10 | 2026-10-01 | • 🔍 **References:** passes against the current config, header last updated 2026-10-01 |
