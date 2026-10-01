@@ -1,14 +1,14 @@
 ---
 date_created: "2026-08-28"
-date_updated: "2026-09-19"
+date_updated: "2026-10-01"
 status: active
 ---
 
 # 🆘 Error recovery — confluence_create_page
 
-## Can't access Confluence space DA
+## Can't access the Confluence space
 
-- **Check space exists:** Log in to Confluence and verify `DA` space
+- **Check space exists:** Log in to Confluence and verify the `<SPACE_KEY>` space exists
 - **Check permissions:** Do you have Contributor role in the space?
 - **Check MCP:** Run `make enable_mcp server=Atlassian` + restart Claude Code
 

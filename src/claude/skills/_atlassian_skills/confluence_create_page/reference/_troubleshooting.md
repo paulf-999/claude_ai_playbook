@@ -1,6 +1,6 @@
 ---
 date_created: "2026-09-07"
-date_updated: "2026-09-19"
+date_updated: "2026-10-01"
 status: active
 ---
 
@@ -12,7 +12,7 @@ Common issues and how to resolve them.
 
 ## Phase 2: Creator Name Incorrect
 
-**Symptom:** Draft shows creator as "paulfry.payroc" or unexpected name; not your real name.
+**Symptom:** Draft shows creator as your git username or an unexpected name; not your real name.
 
 **Root cause:** Creator retrieved from `git config user.name` in this order:
 1. git config user.name
@@ -39,19 +39,19 @@ whoami
 
 ## Phase 2: Creator Email Incorrect or Missing
 
-**Symptom:** Creator email shows as "user@payroc.com" or non-Payroc domain.
+**Symptom:** Creator email shows as "user@company.com" or the wrong domain.
 
 **Root cause:** Email retrieved from `git config user.email` in this order:
 1. git config user.email
 2. EMAIL environment variable
-3. Constructed as "firstname.lastname@payroc.com"
+3. Constructed as "firstname.lastname@company.com"
 
 **Solutions:**
 
 | Source | Command | Example |
 |---|---|---|
-| Git config | `git config user.email "your.email@payroc.com"` | `git config user.email "paul.fry@payroc.com"` |
-| Environment | `export EMAIL="your.email@payroc.com"` | `export EMAIL="paul.fry@payroc.com"` |
+| Git config | `git config user.email "<your.email@company.com>"` | `git config user.email "jane.doe@company.com"` |
+| Environment | `export EMAIL="<your.email@company.com>"` | `export EMAIL="jane.doe@company.com"` |
 
 **Verify current resolution:**
 ```bash
@@ -129,7 +129,7 @@ find ~ -name "*confluence*" -type f 2>/dev/null | head -10
 
 ## Phase 3: Permission Denied Error
 
-**Symptom:** "Permission denied: You lack write access to space DA"
+**Symptom:** "Permission denied: You lack write access to space <SPACE_KEY>"
 
 **Causes:**
 
@@ -141,7 +141,7 @@ find ~ -name "*confluence*" -type f 2>/dev/null | head -10
 
 1. **Check permissions:** Ask space admin to grant "Editor" role in Confluence space
 2. **Re-enable MCP:** `make enable_mcp server=Atlassian` and restart Claude Code
-3. **Verify space exists:** Confirm space key (e.g., "DA") in Confluence UI
+3. **Verify space exists:** Confirm space key (e.g., "<SPACE_KEY>") in Confluence UI
 4. **Use different space:** Specify `--space "YOURSPACE"` if you have access to another space
 
 ---

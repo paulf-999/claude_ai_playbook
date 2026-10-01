@@ -50,7 +50,7 @@ Wait for the user's response before proceeding.
 
 Wait for confirmation before proceeding.
 
-**Create the Confluence page** — do not execute this yet; proceed to the **Local Draft Review** phase below first. When you reach it (after draft approval): ask the user "Should the page title be prefixed with `WIP - `? (default: yes)", then create the page as a **draft** using `createConfluencePage` with `contentFormat: adf` and `status: draft` in the `DA` space.
+**Create the Confluence page** — do not execute this yet; proceed to the **Local Draft Review** phase below first. When you reach it (after draft approval): ask the user "Should the page title be prefixed with `WIP - `? (default: yes)", then create the page as a **draft** using `createConfluencePage` with `contentFormat: adf` and `status: draft` in the target space (`<SPACE_KEY>`) — confirm the space with the user if they haven't named it; never infer it.
 
 **ADF structure** — build the ADF body as a JSON document. Include the following nodes in the `content` array, in order:
 - **Header** — read `reference/common/_common_header.md` and include those nodes first.
