@@ -17,7 +17,7 @@
 | 02_claude_standards | 6 | 8.0/10 | 2026-09-28 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_plans.md` (7.6/10) |
 | 03_authoring_guidelines | 4 | 8.2/10 | 2026-09-30 | • 💪 **Strongest:** `authoring_skills.md` (8.7/10)<br>• ⚠️ **Weakest:** `authoring_agents.md` (7.9/10) |
 | 04_claude_reference | 2 | 7.9/10 | 2026-10-01 | • 💪 **Strongest:** `claude_rule_loading_strategy.md` (8.7/10)<br>• ⚠️ **Weakest:** `claude_operational_efficiency.md` (7.1/10) |
-| 05_lazy_load | 17 | 8.3/10 | 2026-10-01 | • 💪 **Strongest:** 3 files tied at 9.0/10, including `airflow.md`<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
+| 05_lazy_load | 17 | 8.4/10 | 2026-10-01 | • 💪 **Strongest:** `latency_optimisation.md` (9.2/10)<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
 | Non-tiered | 1 | 8.6/10 | 2026-09-28 | • 💪 **Only file:** `aliases.md` (8.6/10) |
 
 ---
@@ -43,6 +43,7 @@ Sorted by Overall score, highest first.
 | Scorecard | Overall | Date Updated | Recommended improvements |
 |---|---|---|---|
 | `02_claude_standards/scorecard_portable_paths.md` | 9.4/10 | 2026-09-28 | — (≥8.5) |
+| `05_lazy_load/scorecard_latency_optimisation.md` | 9.2/10 | 2026-10-01 | — (≥8.5) |
 | `05_lazy_load/style_guide_standards/scorecard_airflow.md` | 9.0/10 | 2026-10-01 | — (≥8.5) |
 | `05_lazy_load/style_guide_standards/scorecard_payroc_engineering_naming_standards.md` | 9.0/10 | 2026-10-01 | — (≥8.5) |
 | `05_lazy_load/style_guide_standards/utilities/scorecard_datetime.md` | 9.0/10 | 2026-10-01 | — (≥8.5) |
@@ -72,7 +73,6 @@ Sorted by Overall score, highest first.
 | `02_claude_standards/scorecard_security.md` | 7.6/10 | 2026-09-28 | • Add a "Related rules" section cross-linking to `behaviour.md` and other rules touching conduct/injection concerns<br>• Add dedicated tests for the `_code_security.md` child and the `security.md` parent file itself |
 | `02_claude_standards/scorecard_testing.md` | 7.6/10 | 2026-09-28 | • Add a check to `test_testing.py` that verifies the content-regression-test recommendation this file makes is itself followed somewhere in the test suite |
 | `05_lazy_load/scorecard_automation_controls.md` | 7.5/10 | 2026-09-28 | • Split into parent + child files |
-| `05_lazy_load/scorecard_latency_optimisation.md` | 7.5/10 | 2026-09-28 | • Cite a specific incident or observed need for this guidance, rather than general LLM-parameter advice |
 | `04_claude_reference/scorecard_claude_operational_efficiency.md` | 7.1/10 | 2026-09-28 | • Add dedicated structural tests for the parent and its imported children (`claude_when_to_delegate.md`, `turn_budgets.md`, `external_system_access.md`, `task_request_conventions.md`, `mcp_server_toggling.md`), rather than relying on adjacent hook/automation tests<br>• Cite a specific incident or recurring problem that motivated this rule |
 | `05_lazy_load/style_guide_standards/utilities/scorecard_makefile.md` | 6.8/10 | 2026-10-01 | • Fix or remove the broken `~/.claude/templates/makefile/` templates reference<br>• Add inline principles beyond the 2-item routing list |
 

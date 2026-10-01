@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.5
+# Version:           1.0.6
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -48,7 +48,6 @@ BASELINE = {
     "rules/02_claude_standards/test_testing.py": (5, 7, "No"),
     "rules/03_authoring_guidelines/test_authoring_rules.py": (5, 9, "Yes"),
     "rules/03_authoring_guidelines/test_authoring_skills.py": (9, 6, "Yes"),
-    "rules/05_lazy_load/test_latency_optimisation.py": (5, 9, "Yes"),
     "rules/test_aliases_behavior.py": (5, 9, "Yes"),
     "rules/test_rules_structure.py": (9, 4, "Yes"),
     "skills/confluence_create_page/test_confluence_create_page_handler.py": (9, 4, "Yes"),

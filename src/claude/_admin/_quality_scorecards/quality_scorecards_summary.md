@@ -13,10 +13,10 @@
 
 | Type | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
-| Tests | 49 | 8.6/10 | 2026-10-01 | • 💪 **Strongest:** 10 files tied at 9.3/10, including `test_test_metadata.py`<br>• ⚠️ **Weakest:** `test_confluence_create_page_timeout.py` (6.9/10) |
+| Tests | 49 | 8.6/10 | 2026-10-01 | • 💪 **Strongest:** `test_latency_optimisation.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_confluence_create_page_timeout.py` (6.9/10) |
 | Skills | 7 | 8.4/10 | 2026-09-30 | • 💪 **Strongest:** `claude_setup_graphify` (9.9/10)<br>• ⚠️ **Weakest:** `claude_kaizen` (6.1/10) |
 | Rules — always-on | 16 | 8.2/10 | 2026-10-01 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_operational_efficiency.md` (7.1/10) |
-| Rules — lazy-load | 17 | 8.3/10 | 2026-10-01 | • 💪 **Strongest:** 3 files tied at 9.0/10, including `airflow.md`<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
+| Rules — lazy-load | 17 | 8.4/10 | 2026-10-01 | • 💪 **Strongest:** `latency_optimisation.md` (9.2/10)<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
 | Hooks | 0 | — | — | • ⚠️ **Gap:** no hooks are scored yet |
 | Agents | 0 | — | — | • ⚠️ **Gap:** no agents are scored yet |
 
@@ -42,7 +42,7 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 |---|---|---|---|
 | `tests/test_scorecards_summary.md` | 49 | 8.6/10 | 2026-10-01 |
 | `skills/skill_scorecards_summary.md` | 7 | 8.4/10 | 2026-09-30 |
-| `rules/rule_scorecards_summary.md` | 33 | 8.2/10 | 2026-10-01 |
+| `rules/rule_scorecards_summary.md` | 33 | 8.3/10 | 2026-10-01 |
 | `hooks/hook_scorecards_summary.md` | 0 | — | — |
 | `agents/agent_scorecards_summary.md` | 0 | — | — |
 

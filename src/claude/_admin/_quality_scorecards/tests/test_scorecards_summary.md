@@ -15,7 +15,7 @@
 | admin | 1 | 9.3/10 | 2026-10-01 | • 💪 **Only file:** `test_scorecard_dates.py` (9.3/10) |
 | agents | 1 | 9.0/10 | 2026-09-30 | • 💪 **Only file:** `test_agent_metadata_header.py` (9.0/10) |
 | hooks | 7 | 9.2/10 | 2026-10-01 | • 💪 **Strongest:** 5 files tied at 9.3/10, including `test_enforcement_writing_style.py`<br>• ⚠️ **Weakest:** `test_enforcement_mcp_stale_settings.py` (9.1/10) |
-| rules | 28 | 8.4/10 | 2026-10-01 | • 💪 **Strongest:** 2 files tied at 9.3/10, including `test_test_metadata.py`<br>• ⚠️ **Weakest:** `test_guiding_principles.py` (7.6/10) |
+| rules | 28 | 8.5/10 | 2026-10-01 | • 💪 **Strongest:** `test_latency_optimisation.py` (9.6/10)<br>• ⚠️ **Weakest:** 2 files tied at 7.6/10, including `test_guiding_principles.py` |
 | settings | 2 | 9.2/10 | 2026-10-01 | • 💪 **Strongest:** `test_settings.py` (9.3/10)<br>• ⚠️ **Weakest:** `test_aliases.py` (9.1/10) |
 | skills | 7 | 8.1/10 | 2026-10-01 | • 💪 **Strongest:** `test_skill_metadata_header.py` (9.1/10)<br>• ⚠️ **Weakest:** `test_confluence_create_page_timeout.py` (6.9/10) |
 | _tests root | 3 | 9.1/10 | 2026-10-01 | • 💪 **Strongest:** `test_file_structure_validator.py` (9.3/10)<br>• ⚠️ **Weakest:** `test_file_structure_compliance.py` (8.9/10) |
@@ -42,6 +42,7 @@ Sorted by Overall score, highest first.
 
 | Scorecard | Overall | Date Updated | Recommended improvements |
 |---|---|---|---|
+| `rules/05_lazy_load/scorecard_test_latency_optimisation.md` | 9.6/10 | 2026-10-01 | — (≥8.5) |
 | `admin/scorecard_test_scorecard_dates.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
 | `hooks/enforcement/scorecard_test_enforcement_writing_style.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
 | `hooks/response_standards/scorecard_test_style_guide_response_standards_flags.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
@@ -79,7 +80,6 @@ Sorted by Overall score, highest first.
 | `rules/02_claude_standards/scorecard_test_git.md` | 8.1/10 | 2026-10-01 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/02_claude_standards/scorecard_test_security_guardrails.md` | 8.1/10 | 2026-10-01 | • Add test functions and assertions toward 10+ and 15+ (now 6 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/03_authoring_guidelines/scorecard_test_authoring_rules.md` | 8.1/10 | 2026-10-01 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should |
-| `rules/05_lazy_load/scorecard_test_latency_optimisation.md` | 8.1/10 | 2026-10-01 | • Add test functions and assertions toward 10+ and 15+ (now 4 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/scorecard_test_aliases_behavior.md` | 8.1/10 | 2026-10-01 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 7)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `skills/claude_capture_session_prompts/scorecard_test_capture_session_prompts.md` | 8.1/10 | 2026-09-30 | • Add failure messages that say how to fix each assertion (14% have one today)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/01_essentials/scorecard_test_rule_directory_organisation.md` | 8.0/10 | 2026-10-01 | • Split the test by concept to bring raw complexity (4) down to 3 or less<br>• Add test functions and assertions toward 10+ and 15+ (now 11 and 13)<br>• Add a synthetic bad-input test that proves the check fails when it should |
