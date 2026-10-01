@@ -32,32 +32,9 @@ test_setup() {
 EOF
 }
 
+# shellcheck disable=SC2317  # called via trap, not directly
 test_cleanup() {
     rm -f "$TEST_SETTINGS"
-}
-
-run_test() {
-    local test_name="$1"
-    local test_cmd="$2"
-    local expected_exit_code="$3"
-
-    echo ""
-    echo -e "${YELLOW}[TEST]${NC} $test_name"
-    if eval "$test_cmd" > /tmp/test_output_$$.txt 2>&1; then
-        actual_exit_code=0
-    else
-        actual_exit_code=$?
-    fi
-
-    if [[ "$actual_exit_code" == "$expected_exit_code" ]]; then
-        echo -e "${GREEN}✓ PASS${NC}: Exit code $actual_exit_code (expected $expected_exit_code)"
-        TESTS_PASSED=$((TESTS_PASSED + 1))
-    else
-        echo -e "${RED}✗ FAIL${NC}: Exit code $actual_exit_code (expected $expected_exit_code)"
-        cat /tmp/test_output_$$.txt
-        TESTS_FAILED=$((TESTS_FAILED + 1))
-    fi
-    rm -f /tmp/test_output_$$.txt
 }
 
 test_blocking_message() {
@@ -68,6 +45,7 @@ test_blocking_message() {
     local HOME_BACKUP="$HOME"
     export HOME="/tmp/mcp_test_$$"
     mkdir -p "$HOME/.claude"
+    export CLAUDE_CONFIG_DIR="$HOME/.claude"  # never touch your real config
     # Create settings with atlassian DISABLED (in deniedMcpServers)
     cat > "$HOME/.claude/settings.json" <<'EOF'
 {
@@ -135,12 +113,14 @@ test_settings_preservation() {
     local HOME_BACKUP="$HOME"
     export HOME="/tmp/mcp_test_$$"
     mkdir -p "$HOME/.claude"
+    export CLAUDE_CONFIG_DIR="$HOME/.claude"  # never touch your real config
     cp "$TEST_SETTINGS" "$HOME/.claude/settings.json"
 
     python3 src/sh/claude/helpers/mcp_toggle.py enable atlassian > /dev/null 2>&1 || true
 
     # Verify other fields intact
-    local settings_content=$(cat "$HOME/.claude/settings.json")
+    local settings_content
+    settings_content=$(cat "$HOME/.claude/settings.json")
     local checks=0
     local passed=0
 
@@ -190,6 +170,7 @@ test_no_change_exit_code_zero() {
     local HOME_BACKUP="$HOME"
     export HOME="/tmp/mcp_test_$$"
     mkdir -p "$HOME/.claude"
+    export CLAUDE_CONFIG_DIR="$HOME/.claude"  # never touch your real config
     # Create settings with atlassian already enabled (not in deniedMcpServers)
     cat > "$HOME/.claude/settings.json" <<'EOF'
 {"deniedMcpServers": []}

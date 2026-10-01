@@ -1,11 +1,11 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-31 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-01 -->
 # ⚠️ MCP Server Toggling — Restart Requirement
 
 **Purpose:** Explain why Claude Code must be restarted after toggling MCP servers and how to recover if you forget.
 
-When you run `make enable_mcp server=<name>` or `make disable_mcp server=<name>`, the script modifies `~/.claude/settings.json`. **You must restart Claude Code immediately for changes to take effect.**
+When you run `make enable_mcp server=<name>` or `make disable_mcp server=<name>`, the script modifies `$CLAUDE_CONFIG_DIR/settings.json`. **You must restart Claude Code immediately for changes to take effect.**
 
 ## 🔍 Why?
 

@@ -1,4 +1,4 @@
-"""Toggle MCP servers on/off by adding/removing from deniedMcpServers in ~/.claude/settings.json.
+"""Toggle MCP servers on/off by adding/removing from deniedMcpServers in $CLAUDE_CONFIG_DIR/settings.json.
 
 Usage:
     python3 mcp_toggle.py enable <server-name> [server-name ...]
@@ -6,11 +6,15 @@ Usage:
 """
 
 import json
+import os
 import pathlib
 import sys
 
 
-SETTINGS_PATH = pathlib.Path.home() / ".claude" / "settings.json"
+# Live Claude config dir — never ~/.claude, which holds Claude Code's own state.
+# None when CLAUDE_CONFIG_DIR is unset; main() refuses to run in that case.
+_CONFIG_DIR = os.environ.get("CLAUDE_CONFIG_DIR")
+SETTINGS_PATH = pathlib.Path(_CONFIG_DIR) / "settings.json" if _CONFIG_DIR else None
 
 # Known integration servers (disabled by default)
 INTEGRATION_SERVERS = ["github", "atlassian"]
@@ -24,6 +28,7 @@ GROUPS = {
 
 
 def load_settings() -> dict:
+    """Read settings.json, or return an empty dict if it does not exist."""
     if SETTINGS_PATH.exists():
         with open(SETTINGS_PATH) as f:
             return json.load(f)
@@ -31,16 +36,19 @@ def load_settings() -> dict:
 
 
 def save_settings(settings: dict) -> None:
+    """Write settings back to settings.json with a trailing newline."""
     with open(SETTINGS_PATH, "w") as f:
         json.dump(settings, f, indent=2)
         f.write("\n")
 
 
 def get_denied(settings: dict) -> list[dict]:
+    """Return the deniedMcpServers list, or an empty list if absent."""
     return settings.get("deniedMcpServers", [])
 
 
 def is_denied(denied: list[dict], server: str) -> bool:
+    """Return True if server is in the denied list."""
     return any(entry.get("serverName") == server for entry in denied)
 
 
@@ -76,6 +84,7 @@ def resolve_servers(names: list[str]) -> list[str]:
 
 
 def format_blocking_message(action: str, changed: list[str]) -> str:
+    """Build the restart-required message shown after a change."""
     action_desc = "ENABLED" if action == "enable" else "DISABLED"
     servers_list = "\n".join(f"  • {s}" for s in changed)
     return f"""\n⚠️  RESTART REQUIRED — MCP SERVER STATE CHANGED
@@ -96,6 +105,7 @@ If you don't restart, tool calls will HANG (2–6 minutes).
 
 
 def main() -> None:
+    """Parse arguments, apply the toggle, and exit 1 if a restart is needed."""
     if len(sys.argv) < 3:
         print(f"Usage: {sys.argv[0]} enable|disable <server|group> [...]", file=sys.stderr)
         print(f"Groups: {', '.join(GROUPS.keys())}", file=sys.stderr)
@@ -105,6 +115,13 @@ def main() -> None:
     action = sys.argv[1].lower()
     if action not in ("enable", "disable"):
         print(f"Error: action must be 'enable' or 'disable', got '{action}'", file=sys.stderr)
+        sys.exit(1)
+
+    if SETTINGS_PATH is None:
+        print(
+            'Error: CLAUDE_CONFIG_DIR is not set — export it (e.g. export CLAUDE_CONFIG_DIR="$HOME/claude") and re-run',
+            file=sys.stderr,
+        )
         sys.exit(1)
 
     servers = resolve_servers(sys.argv[2:])
