@@ -8,16 +8,16 @@
 **Recommended improvements:**
 - Add a dedicated structural test for this file.
 
-| Dimension | Score | Notes |
-|---|---|---|
-| **Clarity** | 9/10 | • 📋 **Concrete:** exact safety-flag snippet, named log-level constants, a shellcheck-suppression example with required justification |
-| **Complexity** | 7/10 | • 🧮 **Raw complexity 3:** 8 distinct small sections (structure, safety, utilities, tooling, naming, variables, conditionals, general) in a single file, no dependencies |
-| **Evidence of Need** | 9/10 | • 🔗 **Actively enforced:** shellcheck is a real CI gate, log-level constants and shell_utils.sh are real shared infrastructure |
-| **Token Cost Justification** | N/A | • N/A — lazy-loaded, not always-on |
-| **Structural Compliance** | 9/10 | • ✅ **Compliant:** Purpose statement, Contents section, emoji headers, 81 lines well within limit |
-| **Currency** | 3/10 | • 🐛 **Wrong tier:** template path reads `03_lazy_load/...` — the real tier is `05_lazy_load/`<br>• 🐛 **Wrong subdirectory:** path reads `style_guide_standards/unix/templates/...` — the real path is `style_guide_standards/bash/templates/template_bash_script.sh` (confirmed via `find`)<br>• ✅ **One correct reference:** `shell_utils.sh`'s canonical path is accurate |
-| **Test Coverage** | 2/10 | • 🧪 **Gap:** confirmed via `find` — no test file references `bash` style guide content by name |
-| **Overall** | **6.5/10** | • 💪 **Strength:** concrete, actively-enforced conventions (shellcheck, log levels)<br>• ⚠️ **Gap:** the one file-path reference readers actually need to follow is wrong in two ways |
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Clarity** | 9/10 | 2026-09-28 | • 📋 **Concrete:** exact safety-flag snippet, named log-level constants, a shellcheck-suppression example with required justification |
+| **Complexity** | 7/10 | 2026-09-28 | • 🧮 **Raw complexity 3:** 8 distinct small sections (structure, safety, utilities, tooling, naming, variables, conditionals, general) in a single file, no dependencies |
+| **Evidence of Need** | 9/10 | 2026-09-28 | • 🔗 **Actively enforced:** shellcheck is a real CI gate, log-level constants and shell_utils.sh are real shared infrastructure |
+| **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
+| **Structural Compliance** | 9/10 | 2026-09-28 | • ✅ **Compliant:** Purpose statement, Contents section, emoji headers, 81 lines well within limit |
+| **Currency** | 3/10 | 2026-09-28 | • 🐛 **Wrong tier:** template path reads `03_lazy_load/...` — the real tier is `05_lazy_load/`<br>• 🐛 **Wrong subdirectory:** path reads `style_guide_standards/unix/templates/...` — the real path is `style_guide_standards/bash/templates/template_bash_script.sh` (confirmed via `find`)<br>• ✅ **One correct reference:** `shell_utils.sh`'s canonical path is accurate |
+| **Test Coverage** | 2/10 | 2026-09-28 | • 🧪 **Gap:** confirmed via `find` — no test file references `bash` style guide content by name |
+| **Overall** | **6.5/10** | 2026-09-28 | • 💪 **Strength:** concrete, actively-enforced conventions (shellcheck, log levels)<br>• ⚠️ **Gap:** the one file-path reference readers actually need to follow is wrong in two ways |
 
 ## 🔗 Related files
 

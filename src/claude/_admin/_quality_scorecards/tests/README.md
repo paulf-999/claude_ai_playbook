@@ -28,16 +28,16 @@ One file per test, mirroring its path under `_tests/`: `_admin/_quality_scorecar
 **Recommended improvements:** [omit this line and the bullets below entirely when Overall ≥ 8.5]
 - <one imperative action per distinct gap found in the Notes column below>
 
-| Dimension | Score | Notes |
-|---|---|---|
-| **Clarity** | X/10 | • 🔍 **<keyword>:** <one point> |
-| **Complexity** | X/10 | • 🧮 **Raw complexity N:** Concepts+Scope+Dependencies+Prerequisites |
-| **Evidence of Need** | X/10 | • 🔗 **<keyword>:** <one point> |
-| **Coverage** | X/10 | • 📊 **<keyword>:** N test functions, N assertions |
-| **Structural Compliance** | X/10 | • ✅ **<keyword>:** <one point> |
-| **Currency** | X/10 | • 🔍 **<keyword>:** <one point> |
-| **Regression Value** | X/10 | • 🛡️ **<keyword>:** <one point> |
-| **Overall** | **X.X/10** | • 💪 **<keyword>:** [strength]<br>• ⚠️ **<keyword>:** [gap, if any] |
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Clarity** | X/10 | YYYY-MM-DD | • 🔍 **<keyword>:** <one point> |
+| **Complexity** | X/10 | YYYY-MM-DD | • 🧮 **Raw complexity N:** Concepts+Scope+Dependencies+Prerequisites |
+| **Evidence of Need** | X/10 | YYYY-MM-DD | • 🔗 **<keyword>:** <one point> |
+| **Coverage** | X/10 | YYYY-MM-DD | • 📊 **<keyword>:** N test functions, N assertions |
+| **Structural Compliance** | X/10 | YYYY-MM-DD | • ✅ **<keyword>:** <one point> |
+| **Currency** | X/10 | YYYY-MM-DD | • 🔍 **<keyword>:** <one point> |
+| **Regression Value** | X/10 | YYYY-MM-DD | • 🛡️ **<keyword>:** <one point> |
+| **Overall** | **X.X/10** | YYYY-MM-DD | • 💪 **<keyword>:** [strength]<br>• ⚠️ **<keyword>:** [gap, if any] |
 
 ## 🔗 Related files
 
@@ -48,6 +48,7 @@ One file per test, mirroring its path under `_tests/`: `_admin/_quality_scorecar
 - **Notes column:** one point per bullet, joined with `<br>`, each `• <emoji> **<keyword>:** <point>` — same as rule scorecards.
 - **Related files:** full repo-relative paths, never bare filenames.
 - **Dates:** `Date Created` is frozen once set; `Date Updated` bumps whenever the test is re-scored.
+- **Row dates:** a row's `Date Updated` changes only when that row's score changes, and the header `Date Updated` must be on or after the latest row date.
 
 ---
 

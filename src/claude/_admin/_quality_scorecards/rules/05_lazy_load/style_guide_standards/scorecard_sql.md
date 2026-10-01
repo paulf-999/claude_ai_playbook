@@ -11,16 +11,16 @@
 - Delete or reconcile the orphaned duplicate `sql/sql.md`.
 - Add a dedicated structural test for this file.
 
-| Dimension | Score | Notes |
-|---|---|---|
-| **Clarity** | 10/10 | • 📋 **Excellent:** concrete cost guardrails (`AUTO_SUSPEND`, warehouse sizing), ❌/✅ mistake examples with recovery steps, a pre-commit checklist |
-| **Complexity** | 7/10 | • 🧮 **Raw complexity 3:** router to 4 children plus principles, tooling, dbt-specific, cost guardrails, mistakes, and a checklist — single file, no dependencies |
-| **Evidence of Need** | 9/10 | • 🔗 **Concrete and enforced:** SQLFluff is a real pre-commit gate; warehouse-cost thresholds are specific operational limits |
-| **Token Cost Justification** | N/A | • N/A — lazy-loaded, not always-on |
-| **Structural Compliance** | 6/10 | • 🚩 **Missing emoji:** "## Imports" is the only heading in the file without one<br>• 🚩 **Dual child-loading pattern:** same inconsistency as `dbt.md` — a "Child pages" table AND a separate `@./` imports block for the same 4 files |
-| **Currency** | 4/10 | • 🐛 **Orphaned duplicate:** `sql/sql.md` is a near-identical, unreferenced copy of this file (confirmed via `diff`)<br>• 🐛 **Ambiguous import mechanism:** same undocumented `@./` behavior as `dbt.md` |
-| **Test Coverage** | 2/10 | • 🧪 **Gap:** confirmed via `find` — no test file references this rule by name |
-| **Overall** | **6.3/10** | • 💪 **Strength:** the most concrete, operationally-grounded content in this survey (real cost thresholds, real SQLFluff codes)<br>• ⚠️ **Gap:** same dual-loading and orphaned-duplicate pattern seen in `dbt.md`, plus one missing heading emoji |
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Clarity** | 10/10 | 2026-09-28 | • 📋 **Excellent:** concrete cost guardrails (`AUTO_SUSPEND`, warehouse sizing), ❌/✅ mistake examples with recovery steps, a pre-commit checklist |
+| **Complexity** | 7/10 | 2026-09-28 | • 🧮 **Raw complexity 3:** router to 4 children plus principles, tooling, dbt-specific, cost guardrails, mistakes, and a checklist — single file, no dependencies |
+| **Evidence of Need** | 9/10 | 2026-09-28 | • 🔗 **Concrete and enforced:** SQLFluff is a real pre-commit gate; warehouse-cost thresholds are specific operational limits |
+| **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
+| **Structural Compliance** | 6/10 | 2026-09-28 | • 🚩 **Missing emoji:** "## Imports" is the only heading in the file without one<br>• 🚩 **Dual child-loading pattern:** same inconsistency as `dbt.md` — a "Child pages" table AND a separate `@./` imports block for the same 4 files |
+| **Currency** | 4/10 | 2026-09-28 | • 🐛 **Orphaned duplicate:** `sql/sql.md` is a near-identical, unreferenced copy of this file (confirmed via `diff`)<br>• 🐛 **Ambiguous import mechanism:** same undocumented `@./` behavior as `dbt.md` |
+| **Test Coverage** | 2/10 | 2026-09-28 | • 🧪 **Gap:** confirmed via `find` — no test file references this rule by name |
+| **Overall** | **6.3/10** | 2026-09-28 | • 💪 **Strength:** the most concrete, operationally-grounded content in this survey (real cost thresholds, real SQLFluff codes)<br>• ⚠️ **Gap:** same dual-loading and orphaned-duplicate pattern seen in `dbt.md`, plus one missing heading emoji |
 
 ## 🔗 Related files
 

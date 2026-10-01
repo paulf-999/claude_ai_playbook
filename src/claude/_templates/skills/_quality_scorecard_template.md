@@ -1,6 +1,6 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.1.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
 # Quality Scorecard — Template
 
 Every skill has a scorecard at `_admin/_quality_scorecards/skills/scorecard_<skill_name>.md` containing only this table (no justification or rationale sections).
@@ -20,16 +20,16 @@ Every skill has a scorecard at `_admin/_quality_scorecards/skills/scorecard_<ski
 **Recommended improvements:** [omit this line and the bullets below entirely when Overall ≥ 8.5]
 - <one imperative action per distinct gap found in the Notes column below>
 
-| Dimension | Score | Notes |
-|---|---|---|
-| **Design** | X/10 | [Brief note on design quality] |
-| **Complexity** | X/10 | [Brief note on code complexity] |
-| **Test Coverage** | X/10 | [Brief note on test coverage] |
-| **Code Quality** | X/10 | [Brief note on code quality/safety] |
-| **Security** | X/10 | [Brief note on security measures] |
-| **Documentation** | X/10 | [Brief note on documentation completeness] |
-| **Standards Compliance** | X/10 | [Brief note on compliance with standards] |
-| **Overall** | **X.X/10** | [One-sentence overall assessment] |
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Design** | X/10 | YYYY-MM-DD | [Brief note on design quality] |
+| **Complexity** | X/10 | YYYY-MM-DD | [Brief note on code complexity] |
+| **Test Coverage** | X/10 | YYYY-MM-DD | [Brief note on test coverage] |
+| **Code Quality** | X/10 | YYYY-MM-DD | [Brief note on code quality/safety] |
+| **Security** | X/10 | YYYY-MM-DD | [Brief note on security measures] |
+| **Documentation** | X/10 | YYYY-MM-DD | [Brief note on documentation completeness] |
+| **Standards Compliance** | X/10 | YYYY-MM-DD | [Brief note on compliance with standards] |
+| **Overall** | **X.X/10** | YYYY-MM-DD | [One-sentence overall assessment] |
 ```
 
 ---
@@ -103,5 +103,6 @@ Every skill has a scorecard at `_admin/_quality_scorecards/skills/scorecard_<ski
 - Overall score is **not a grade** — a 9.5/10 skill is production-ready, not "A-"
 - Maturity justification and design rationale belong in SKILL.md or authoring_skills.md, not in the scorecard
 - **Date Created** is frozen once set; **Date Updated** bumps to today whenever the scorecard is re-scored
+- **Row Date Updated** changes only when that row's score changes, and the header **Date Updated** must be on or after the latest row date
 - **Summary row:** update the skill's row in `_admin/_quality_scorecards/skills/skill_scorecards_summary.md` in the same commit
 - **Overall score** repeats the Overall row so it's readable without scanning the table; **Recommended improvements** turns each flagged gap into one imperative action, and is included only when Overall is below 8.5

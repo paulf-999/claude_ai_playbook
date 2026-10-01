@@ -5,16 +5,16 @@
 
 **Overall score:** 8.9/10
 
-| Dimension | Score | Notes |
-|---|---|---|
-| **Clarity** | 9/10 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
-| **Complexity** | 7/10 | • 🧮 **Complexity:** header complexity score 7/10 (raw complexity 3) |
-| **Evidence of Need** | 9/10 | • 🔗 **Target:** guards a real, installed artefact |
-| **Coverage** | 9/10 | • 📊 **Counts:** 17 test functions and 30 assertions |
-| **Structural Compliance** | 9/10 | • ✅ **Header:** full metadata header, marked Python style compliant |
-| **Currency** | 9/10 | • 🔍 **References:** passes against the current config, header last updated 2026-09-30 |
-| **Regression Value** | 10/10 | • 🛡️ **Failure cases:** 2 test functions named for a failure case<br>• ✅ **Mutation check:** a mutation check on a broken copy of the rule failed 3 of 3 deliberate breaks, where the previous version passed all 12 of its functions |
-| **Overall** | **8.9/10** | • 💪 **Strongest:** Regression Value (10/10)<br>• ⚠️ **Weakest:** Complexity (7/10) |
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
+| **Complexity** | 7/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 7/10 (raw complexity 3) |
+| **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact |
+| **Coverage** | 9/10 | 2026-09-30 | • 📊 **Counts:** 17 test functions and 30 assertions |
+| **Structural Compliance** | 9/10 | 2026-09-30 | • ✅ **Header:** full metadata header, marked Python style compliant |
+| **Currency** | 9/10 | 2026-09-30 | • 🔍 **References:** passes against the current config, header last updated 2026-09-30 |
+| **Regression Value** | 10/10 | 2026-09-30 | • 🛡️ **Failure cases:** 2 test functions named for a failure case<br>• ✅ **Mutation check:** a mutation check on a broken copy of the rule failed 3 of 3 deliberate breaks, where the previous version passed all 12 of its functions |
+| **Overall** | **8.9/10** | 2026-09-30 | • 💪 **Strongest:** Regression Value (10/10)<br>• ⚠️ **Weakest:** Complexity (7/10) |
 
 ## 🔗 Related files
 
