@@ -10,6 +10,7 @@ _templates/
 │   ├── SKILL.md.template
 │   ├── skill.contract.yaml.template
 │   └── _quality_scorecard_template.md
+├── scorecard_summary.md.template  # Layout for every scorecard summary
 └── README.md                # This file
 ```
 
@@ -30,6 +31,12 @@ _templates/
 **`skills/_quality_scorecard_template.md`**
 - Table-only layout for each skill's scorecard at `_admin/_quality_scorecards/skills/scorecard_<skill_name>.md`: 7 dimensions plus Overall
 - Includes the scoring scale and per-dimension criteria
+
+### Scorecards
+
+**`scorecard_summary.md.template`**
+- Shared layout for all six scorecard summaries in `_admin/_quality_scorecards/`: the top-level `quality_scorecards_summary.md` and each `<type>_scorecards_summary.md`
+- Sections: Scores by group, Recommended next actions, All scorecards (All summaries in the top-level file) and Keeping this current
 
 ## Usage
 
