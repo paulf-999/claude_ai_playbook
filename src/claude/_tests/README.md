@@ -28,7 +28,7 @@ Tests for Claude Code hook scripts in `~/.claude/hooks/`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_hook_registry_utils.py` | `settings.json` hook registry — every referenced hook file must exist on disk | 3/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
+| `test_hook_registry_utils.py` | `settings.json` hook registry — known events, command hooks, no duplicates, and every referenced hook file exists in `hooks/` | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 
 **Archived:** `test_auto_rotate_todo.py` moved to `_tests/_archived/` (2026-09-18) — `rotate_todo.sh` and `hook_auto_rotate_todo.sh` were never built despite a stale "Ready for production" claim in `TODO.md`; see the file's own archival note.
 
@@ -47,7 +47,7 @@ Tests for Claude Code hook scripts in `~/.claude/hooks/`.
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_style_guide_response_standards.py` | `hook_style_guide_response_standards.sh` — response-format compliance (Summary, offer line, timing footer) | 7/10 | 2026-09-07 | 2026-10-01 | 1.0.2 |
-| `test_style_guide_response_standards_inject.py` | `hook_style_guide_response_standards_inject.sh` — per-turn salience injection, timestamp, waiver handling | 9/10 | 2026-09-07 | 2026-10-01 | 2.0.1 |
+| `test_style_guide_response_standards_inject.py` | `hook_style_guide_response_standards_inject.sh` — per-turn salience injection, timestamp, waiver handling | 9/10 | 2026-09-07 | 2026-10-01 | 2.0.2 |
 
 ---
 
@@ -82,7 +82,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_portable_paths.py` | Hooks and tests resolve the config directory at runtime instead of hardcoding paths or usernames | 9/10 | 2026-09-18 | 2026-10-01 | 1.0.1 |
 | `test_security_guardrails.py` | Claude never recommends wildcard permissions for destructive commands, and related security guardrails | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
 | `test_test_metadata.py` | Every test's metadata header is complete, in order, well formed (banners, dates, semver, scores), and its quality score matches its own counts | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.0 |
-| `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, or holds its `BASELINE` scores and never gets worse | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.2 |
+| `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, or holds its `BASELINE` scores and never gets worse | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.3 |
 | `test_testing.py` | Self-consistency: enforcement hooks have tests, and testing.md documents the enforcement pattern | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.3 |
 
 ### `rules/03_authoring_guidelines/`

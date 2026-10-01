@@ -6,8 +6,8 @@
 
 ## 📋 Current scores
 
-- **Scored:** 46 test files, average 8.4/10.
-- **Below 8.5:** 25 tests, each with recommended improvements.
+- **Scored:** 46 test files, average 8.5/10.
+- **Below 8.5:** 23 tests, each with recommended improvements.
 - **Order:** one table per `_tests/` folder, sorted by Overall score, highest first.
 
 ### agents
@@ -20,10 +20,10 @@
 
 | Scorecard | Overall | Recommended improvements |
 |---|---|---|
+| `hooks/response_standards/scorecard_test_style_guide_response_standards_inject.md` | 9.3/10 | — (≥8.5) |
+| `hooks/scorecard_test_hook_registry_utils.md` | 9.3/10 | — (≥8.5) |
 | `hooks/enforcement/scorecard_test_enforcement_mcp_stale_settings.md` | 9.1/10 | • None blocking |
 | `hooks/enforcement/scorecard_test_enforcement_naming_convention.md` | 9.1/10 | • None blocking |
-| `hooks/response_standards/scorecard_test_style_guide_response_standards_inject.md` | 8.4/10 | • Add failure messages that say how to fix each assertion (62% have one today)<br>• Fix the style gaps and set `Python style compliant: Yes` |
-| `hooks/scorecard_test_hook_registry_utils.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 2 and 2) |
 | `hooks/response_standards/scorecard_test_style_guide_response_standards.md` | 8.0/10 | • Split the test by concept to bring raw complexity (5) down to 3 or less<br>• Fix the style gaps and set `Python style compliant: Yes` |
 | `hooks/enforcement/scorecard_test_enforcement_writing_style.md` | 7.9/10 | • Split the test by concept to bring raw complexity (5) down to 3 or less<br>• Fix the style gaps and set `Python style compliant: Yes`<br>• Rename the hook in the module docstring to `hook_enforcement_writing_style.sh`<br>• Update fixture paths from the retired `01_core` tier to a current tier name |
 

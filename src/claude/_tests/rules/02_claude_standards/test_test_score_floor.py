@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.2
+# Version:           1.0.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -38,8 +38,6 @@ SCORE_PATTERN = re.compile(
 BASELINE = {
     "hooks/enforcement/test_enforcement_writing_style.py": (9, 5, "No"),
     "hooks/response_standards/test_style_guide_response_standards.py": (7, 5, "No"),
-    "hooks/response_standards/test_style_guide_response_standards_inject.py": (9, 8, "No"),
-    "hooks/test_hook_registry_utils.py": (3, 10, "Yes"),
     "rules/01_essentials/test_guiding_principles.py": (3, 10, "Yes"),
     "rules/01_essentials/test_rule_directory_organisation.py": (7, 6, "Yes"),
     "rules/01_essentials/test_skill_authoring_gate.py": (9, 5, "No"),
