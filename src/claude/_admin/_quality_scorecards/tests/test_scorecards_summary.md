@@ -6,7 +6,7 @@
 
 ## 📋 Current scores
 
-- **Scored:** 48 test files, average 8.6/10.
+- **Scored:** 49 test files, average 8.6/10.
 - **Below 8.5:** 21 tests, each with recommended improvements.
 - **Order:** one table per `_tests/` folder, sorted by Overall score, highest first.
 
@@ -43,6 +43,7 @@
 | `rules/03_authoring_guidelines/scorecard_test_claude_config_metadata.md` | 9.1/10 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_plan_mode_phase_gates.md` | 9.0/10 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_skill_domains.md` | 9.0/10 | — (≥8.5) |
+| `rules/05_lazy_load/scorecard_test_lazy_load_rule_structure.md` | 9.0/10 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_artefact_proposal_gates.md` | 8.9/10 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_concurrent_sessions.md` | 8.7/10 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_authoring_agents.md` | 8.6/10 | — (≥8.5) |
