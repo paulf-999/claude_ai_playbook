@@ -2,23 +2,26 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.0
+# Version:           1.1.0
 # Test quality score: 9/10
-# Test complexity score: 9/10
+# Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
 """Tests the confluence_create_page timeout's options, with no threads or waiting.
 
-Covers parsing ``--timeout-seconds``, the dialog's wording, and how each
-[A]bort, [R]etry or [C]ontinue answer resolves, including the 6-minute cap on
-[C]ontinue. ``test_confluence_create_page_timeout.py`` covers the timed behaviour.
+Covers parsing ``--timeout-seconds``, the dialog's wording, how each [A]bort,
+[R]etry or [C]ontinue answer resolves, including the 6-minute cap on [C]ontinue,
+and where [A]bort's draft is kept: ``~/_drafts/confluence/``, not the config folder.
+``test_confluence_create_page_timeout.py`` covers the timed behaviour.
 """
 from pathlib import Path
+from unittest.mock import patch
 
 from .confluence_create_page_handler import _handle_timeout_choice
 from .confluence_create_page_handler import format_timeout_dialog
 from .confluence_create_page_handler import parse_timeout_arg
+from .confluence_create_page_handler import save_draft
 
 MAX_WAIT = 360
 
@@ -99,3 +102,18 @@ def test_unknown_answer_aborts():
     result, new_timeout = _handle_timeout_choice("X", 130, MAX_WAIT, None)
     assert result == {"status": "aborted", "elapsed": 130, "draft_path": None}, f"got {result}"
     assert new_timeout is None, "an unknown answer shouldn't extend the timeout"
+
+
+def test_draft_is_saved_in_home_drafts_folder(tmp_path: Path):
+    """A draft lands in ~/_drafts/confluence/ with its content, never under the config folder."""
+    with patch("pathlib.Path.home", return_value=tmp_path):
+        draft = save_draft("# Page\n\nBody.", "Q3 Roadmap")
+    assert draft.parent == tmp_path / "_drafts" / "confluence", f"draft saved in the wrong folder: {draft}"
+    assert ".claude" not in draft.parts, f"drafts must not depend on the config folder: {draft}"
+    assert draft.read_text() == "# Page\n\nBody.", "the draft should hold the content unchanged"
+
+
+def test_dialog_names_the_drafts_folder():
+    """[A]bort's line in the dialog names the same folder the draft is saved in."""
+    dialog = format_timeout_dialog(elapsed=120, remaining_attempts=1)
+    assert "preserve draft in ~/_drafts/confluence/" in dialog, f"dialog should name the drafts folder, got {dialog!r}"

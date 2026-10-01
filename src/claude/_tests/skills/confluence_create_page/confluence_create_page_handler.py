@@ -369,16 +369,19 @@ def create_confluence_page(
 
 
 def save_draft(content: str, page_title: str) -> pathlib.Path:
-    """Save draft to ~/.claude/_drafts/confluence/ directory.
+    """Save a draft to ~/_drafts/confluence/, where the skill and writing_style.md keep drafts.
 
-    Args:
-        content: Markdown content to save
-        page_title: Page title (used for filename sanitization)
+    Drafts live in the user's home folder, not the Claude config folder, so the path
+    doesn't depend on where the config is installed.
 
-    Returns:
-        Path object pointing to the saved draft file
+    :param content: Markdown content to save.
+    :type content: str
+    :param page_title: Page title, sanitised into the filename.
+    :type page_title: str
+    :return: Path to the saved draft file.
+    :rtype: pathlib.Path
     """
-    drafts_dir = pathlib.Path.home() / ".claude" / "_drafts" / "confluence"
+    drafts_dir = pathlib.Path.home() / "_drafts" / "confluence"
     drafts_dir.mkdir(parents=True, exist_ok=True)
 
     # Sanitize filename: replace spaces and special chars with underscores
@@ -408,7 +411,7 @@ def format_timeout_dialog(elapsed: int, remaining_attempts: int) -> str:
 Your page has been publishing for {minutes} minute{'s' if minutes != 1 else ''} ({elapsed} seconds).
 Confluence is not responding. Choose an action:
 
-[A]bort  — Cancel now, preserve draft in ~/.claude/_drafts/confluence/
+[A]bort  — Cancel now, preserve draft in ~/_drafts/confluence/
 [R]etry  — Cancel and start a fresh publish attempt
 [C]ontinue — Wait 4 more minutes (max 6 minutes total)
 
