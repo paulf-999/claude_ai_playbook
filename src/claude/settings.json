@@ -1,5 +1,6 @@
 {
   "cleanupPeriodDays": 90,
+  "syncClaudeAiSkills": false,
   "permissions": {
     "allow": [
       "Bash(bash -c:*)",
@@ -50,11 +51,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ~/.claude/hooks/hook_style_guide_response_standards_inject.sh"
+            "command": "bash \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hooks/hook_style_guide_response_standards_inject.sh\""
           },
           {
             "type": "command",
-            "command": "bash ~/.claude/hooks/hook_enforcement_mcp_stale_settings.sh"
+            "command": "bash \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hooks/hook_enforcement_mcp_stale_settings.sh\""
           }
         ]
       }
@@ -65,7 +66,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ~/.claude/hooks/hook_enforcement_writing_style.sh"
+            "command": "bash \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hooks/hook_enforcement_writing_style.sh\""
           }
         ]
       }
@@ -76,7 +77,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ~/.claude/hooks/hook_enforcement_naming_convention.sh"
+            "command": "bash \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hooks/hook_enforcement_naming_convention.sh\""
           }
         ]
       }
