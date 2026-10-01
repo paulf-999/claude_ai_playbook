@@ -27,7 +27,8 @@ This page explains the layout, not the inventory — `_tests/README.md` lists ev
 
 ## 📏 Structure and reachability
 
-- **Rule format:** `test_rules_structure.py` checks line limits, H1 emoji headings, trailing newlines, that every `@import` resolves, and that `CLAUDE.md` imports tiers in order.
+- **Rule format:** `test_rules_structure.py` checks line limits, H1 and H2 emoji headings and trailing newlines.
+- **Rule layout:** `test_rules_structure_layout.py` checks where rule files live, that every `@import` resolves, and that `CLAUDE.md` imports tiers in order.
 - **Context budget:** the same file fails on a `## Related` section outside a README, or a Contents section on a file with fewer than 3 real headings.
 - **Naming and placement:** `test_file_structure_compliance.py` checks snake_case names, underscore prefixes and where directories sit.
 - **Reachability:** `test_always_on_reachability.py` fails if a file in tiers 01–04 exists on disk but no `@import` chain from `CLAUDE.md` reaches it.
