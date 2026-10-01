@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.1
+# Version:           1.0.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -55,8 +55,6 @@ BASELINE = {
     "rules/05_lazy_load/test_latency_optimisation.py": (5, 9, "Yes"),
     "rules/test_aliases_behavior.py": (5, 9, "Yes"),
     "rules/test_rules_structure.py": (9, 4, "Yes"),
-    "settings/test_aliases.py": (5, 9, "No"),
-    "settings/test_settings.py": (7, 9, "Yes"),
     "skills/confluence_create_page/test_confluence_create_page_handler.py": (9, 4, "Yes"),
     "skills/confluence_create_page/test_confluence_create_page_timeout.py": (8, 4, "Yes"),
     "skills/jira_create/test_jira_create_handler.py": (9, 7, "No"),

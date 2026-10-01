@@ -3,25 +3,21 @@
 **Date Created:** 2026-09-30
 **Date Updated:** 2026-10-01
 
-**Overall score:** 8.0/10
-
-**Recommended improvements:**
-- Add test functions and assertions toward 10+ and 15+ (now 7 and 10)
-- Move the test next to `rules/test_aliases_behavior.py`, or merge the two
-- Fix the style gaps and set `Python style compliant: Yes`
+**Overall score:** 9.1/10
 
 | Dimension | Score | Notes |
 |---|---|---|
-| **Clarity** | 9/10 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
-| **Complexity** | 9/10 | • 🧮 **Complexity:** header complexity score 9/10 (raw complexity 1) |
-| **Evidence of Need** | 9/10 | • 🔗 **Target:** guards a real, installed artefact |
-| **Coverage** | 6/10 | • 📊 **Counts:** 7 test functions and 10 assertions |
-| **Structural Compliance** | 6/10 | • ✅ **Header:** header says `Python style compliant: No`<br>• 📁 **Location:** guards `aliases.md` but sits in `_tests/settings/`, apart from `rules/test_aliases_behavior.py` |
-| **Currency** | 9/10 | • 🔍 **References:** passes against the current config, header last updated 2026-09-17 |
-| **Regression Value** | 8/10 | • 🛡️ **Failure cases:** 1 test function named for a failure case |
-| **Overall** | **8.0/10** | • 💪 **Strongest:** Clarity, Complexity, Evidence of Need and Currency (9/10)<br>• ⚠️ **Weakest:** Coverage and Structural Compliance (6/10) |
+| **Clarity** | 9/10 | • 🔍 **Messages:** every test function has a docstring, and every assertion carries a failure message |
+| **Complexity** | 9/10 | • 🧮 **Raw complexity 1:** Concepts 1 (the alias table and its parser) + Scope 0 (one file) + Dependencies 0 + Prerequisites 0 |
+| **Evidence of Need** | 9/10 | • 🔗 **Target:** guards `aliases.md`, which is imported into every session |
+| **Coverage** | 9/10 | • 📊 **Counts:** 13 test functions and 15 assertions<br>• 🧩 **New:** rule-path links, the controls note matching the table, and parser failure cases |
+| **Structural Compliance** | 8/10 | • ✅ **Header:** full metadata header, marked Python style compliant and checked with `ruff`<br>• 📁 **Location:** guards `aliases.md` but sits in `_tests/settings/`, apart from `rules/test_aliases_behavior.py` |
+| **Currency** | 10/10 | • 🔍 **References:** passes against the current config, header last updated 2026-10-01 |
+| **Regression Value** | 10/10 | • 🛡️ **Failure cases:** a missing table, a wrong header and a short row each fail<br>• 🐛 **Fix:** a broken row used to vanish silently, but now it fails |
+| **Overall** | **9.1/10** | • 💪 **Strongest:** Currency and Regression Value (10/10)<br>• ⚠️ **Weakest:** Structural Compliance (8/10), for the location |
 
 ## 🔗 Related files
 
 - `src/claude/_tests/settings/test_aliases.py` — the test being scored
 - `src/claude/aliases.md` — what the test guards
+- `src/claude/_tests/rules/test_aliases_behavior.py` — the sibling test that checks alias behaviour

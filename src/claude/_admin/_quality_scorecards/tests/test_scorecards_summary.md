@@ -7,7 +7,7 @@
 ## 📋 Current scores
 
 - **Scored:** 46 test files, average 8.4/10.
-- **Below 8.5:** 26 tests, each with recommended improvements.
+- **Below 8.5:** 25 tests, each with recommended improvements.
 - **Order:** one table per `_tests/` folder, sorted by Overall score, highest first.
 
 ### agents
@@ -63,8 +63,8 @@
 
 | Scorecard | Overall | Recommended improvements |
 |---|---|---|
-| `settings/scorecard_test_settings.md` | 8.6/10 | — (≥8.5) |
-| `settings/scorecard_test_aliases.md` | 8.0/10 | • Add test functions and assertions toward 10+ and 15+ (now 7 and 10)<br>• Move the test next to `rules/test_aliases_behavior.py`, or merge the two<br>• Fix the style gaps and set `Python style compliant: Yes` |
+| `settings/scorecard_test_settings.md` | 9.3/10 | — (≥8.5) |
+| `settings/scorecard_test_aliases.md` | 9.1/10 | — (≥8.5) |
 
 ### skills
 
