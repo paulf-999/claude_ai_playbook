@@ -6,9 +6,9 @@ Runs eval cases against the current _rules/ state and reports pass/fail,
 enabling before/after comparisons when a proposed patch is added.
 
 Usage:
-  python runner.py evals/dmt-scripts-claude_ai_playbook.yaml
-  python runner.py --before evals/dmt-scripts-claude_ai_playbook.yaml
-  python runner.py --after evals/dmt-scripts-claude_ai_playbook.yaml
+  python runner.py evals/claude_ai_playbook.yaml
+  python runner.py --before evals/claude_ai_playbook.yaml
+  python runner.py --after evals/claude_ai_playbook.yaml
 """
 
 import sys
@@ -27,7 +27,7 @@ class EvalRunner:
 
     def _load_evals(self) -> List[Dict[str, Any]]:
         """Load eval cases from YAML file."""
-        with open(self.eval_file, 'r') as f:
+        with open(self.eval_file) as f:
             data = yaml.safe_load(f)
         return data.get('evals', [])
 

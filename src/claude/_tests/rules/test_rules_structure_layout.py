@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.0
+# Version:           1.0.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -52,7 +52,6 @@ DISSOLVED_PATHS = [
     RULES_DIR / "aliases.md",
     RULES_DIR / "lazy_load" / "security.md",
     RULES_DIR / "lazy_load" / "speculative_features.md",
-    RULES_DIR / "lazy_load" / "style_guide_standards" / "payroc_engineering_naming_standards.md",
     RULES_DIR / "speculative_features.md",
     RULES_DIR / "claude_internal.md",
 ]

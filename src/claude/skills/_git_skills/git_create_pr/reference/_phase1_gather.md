@@ -36,8 +36,9 @@ If working tree is clean (nothing to commit), stop.
 - **Summary:** 1 punchy sentence max. 2 sentences only if critical context would be lost. No jargon, no code refs. State what + why.
 - **Additional Details:** Omit if not needed. 1 line for single point; bullets (max 3) for multiple. Never mix prose and bullets.
 - **Checkboxes:** Tick only applicable one
-- **Jira links:** Format as `[DM-12345](https://payroc.atlassian.net/browse/DM-12345)` if ticket known
-- **Team links:** Format as `[team-name](https://github.com/orgs/dmt-ghe-engineering/teams/team-name)`
+- **Jira links:** Format as `[ABC-123](https://<your-site>.atlassian.net/browse/ABC-123)` if ticket known
+- **Team links:** Format as `[team-name](https://github.com/orgs/<your-org>/teams/team-name)`
+- **Read on demand:** `~/.claude/_rules/05_lazy_load/org.md` — for the real Jira site and GitHub org, if your organisation has one.
 
 **Labels:** Map using file paths, branch name, commit message:
 - `src/claude/skills/` → `claude-skill`

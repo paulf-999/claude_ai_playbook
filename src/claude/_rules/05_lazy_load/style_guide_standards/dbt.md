@@ -3,15 +3,15 @@ paths:
   - "**/models/**/*.sql"
   - "**/dbt_project.yml"
 ---
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-01 -->
 <!-- miss_cost: medium — models that break naming or layering and fail review -->
 # 🔵 dbt Style Guide & Standards
 
-**Purpose:** Define standards for `da-etl-dbtanalytics` — covering model organization, naming, YAML properties, testing, snapshots, and macros. Standards ensure consistency, maintainability, and correctness across the dbt project.
+**Purpose:** Define standards for the dbt project — covering model organization, naming, YAML properties, testing, snapshots, and macros. Standards ensure consistency, maintainability, and correctness across the dbt project.
 
-**Scope:** All models, macros, and YAML in `da-etl-dbtanalytics/`. Standards are checked in CI and enforce best practices from [dbt Labs style guide](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md).
+**Scope:** All models, macros, and YAML in the dbt project. Standards are checked in CI and enforce best practices from [dbt Labs style guide](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md).
 
 ## 📋 Child pages
 

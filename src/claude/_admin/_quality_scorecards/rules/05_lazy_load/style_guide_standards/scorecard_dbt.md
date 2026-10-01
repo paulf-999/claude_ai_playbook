@@ -12,7 +12,7 @@
 |---|---|---|---|
 | **Clarity** | 10/10 | 2026-09-28 | • 📋 **Excellent:** each core principle states Why/How/Test, plus a model-layer table, mistakes table, and workflow diagram |
 | **Complexity** | 8/10 | 2026-09-28 | • 🧮 **Raw complexity 2:** router to 5 children plus 4 inline principles, a layer table, a mistakes table, and a workflow diagram — single file, no external dependencies |
-| **Evidence of Need** | 9/10 | 2026-09-28 | • 🔗 **Concrete and scoped:** targets a real project (`da-etl-dbtanalytics`), cites the external dbt Labs style guide |
+| **Evidence of Need** | 9/10 | 2026-09-28 | • 🔗 **Concrete and scoped:** targets a real dbt project, cites the external dbt Labs style guide |
 | **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
 | **Structural Compliance** | 6/10 | 2026-09-28 | • 🚩 **Inconsistent with siblings:** carries BOTH a "Child pages" markdown-link table AND a separate `@./dbt/*.md` imports block at the bottom — `airflow.md` and `bash.md` use only the link-table pattern<br>• ✅ **Otherwise compliant:** Purpose + Scope statements, emoji headers |
 | **Currency** | 7/10 | 2026-10-01 | • ✅ **Resolved:** the orphaned duplicate `dbt/dbt.md` was deleted in #90 (confirmed 2026-10-01)<br>• 🐛 **Ambiguous import mechanism:** the `@./` block's effect when this file is read on demand still isn't documented |

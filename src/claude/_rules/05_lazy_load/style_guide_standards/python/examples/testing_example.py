@@ -24,7 +24,7 @@ from airbyte_client import AirbytClient
 def _make_client():
     """Create mock Airbyte client with default return values."""
     client = MagicMock()
-    client.base_url = "https://test-server.prod.payroc.com:8006"
+    client.base_url = "https://api.example.com:8006"
     client.list_sources.return_value = []
     client.list_destinations.return_value = []
     client.list_connections.return_value = []
