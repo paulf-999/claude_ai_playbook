@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.7
+# Version:           1.0.8
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -39,7 +39,6 @@ BASELINE = {
     "rules/01_essentials/test_rule_directory_organisation.py": (7, 6, "Yes"),
     "rules/01_essentials/test_skill_authoring_gate.py": (9, 5, "No"),
     "rules/03_authoring_guidelines/test_authoring_skills.py": (9, 6, "Yes"),
-    "rules/test_rules_structure.py": (9, 4, "Yes"),
     "skills/confluence_create_page/test_confluence_create_page_handler.py": (9, 4, "Yes"),
     "skills/confluence_create_page/test_confluence_create_page_timeout.py": (8, 4, "Yes"),
     "skills/jira_create/test_jira_create_handler.py": (9, 7, "No"),
