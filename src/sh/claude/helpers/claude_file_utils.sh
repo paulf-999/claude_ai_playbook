@@ -12,6 +12,9 @@ SOURCE_DIR="${ROOT_DIR}/src/claude"        # repo-managed Claude files (source o
 TARGET_DIR="${CLAUDE_CONFIG_DIR:?CLAUDE_CONFIG_DIR is not set — export it (e.g. export CLAUDE_CONFIG_DIR=\"\$HOME/claude\") and re-run}"
 BACKUP_DIR="${HOME}/.claude_backup_${TIMESTAMP}"  # timestamped backup location
 
+# Top-level entries the user owns once installed: copied on first install only, never overwritten
+USER_OWNED_ENTRIES=("memory" "TODO.md" "_plans" "settings.local.json")
+
 #=======================================================================
 # Shared functions
 #=======================================================================
@@ -32,19 +35,15 @@ validate_target_dir() {
     fi
 }
 
-# Backup ~/.claude using specified mode: "move" (install) or "copy" (update)
+# Back up the target. Only "copy" exists: moving the target away would strand its runtime data
+# (transcripts, history, app state) in the backup, so there is deliberately no "move" mode.
 backup_target_dir() {
-    local MODE="$1"  # backup strategy: move (clean install) or copy (safe update)
+    local MODE="$1"  # backup strategy: copy (the target stays in place)
 
     # Only backup if directory exists and is not empty
     if dir_exists "${TARGET_DIR}" && [[ -n "$(ls -A "${TARGET_DIR}" 2>/dev/null)" ]]; then
 
-        if [[ "${MODE}" == "move" ]]; then
-            mv "${TARGET_DIR}" "${BACKUP_DIR}"   # move entire directory (install behaviour)
-            mkdir -p "${TARGET_DIR}"             # recreate clean target directory
-            log_message "${INFO}" "Backed up (move) Claude directory to: ${BACKUP_DIR}"
-
-        elif [[ "${MODE}" == "copy" ]]; then
+        if [[ "${MODE}" == "copy" ]]; then
             cp -R "${TARGET_DIR}" "${BACKUP_DIR}"  # copy directory (update safety)
             log_message "${INFO}" "Backed up (copy) Claude directory to: ${BACKUP_DIR}"
 
@@ -63,9 +62,30 @@ create_target_dir_if_missing() {
     fi
 }
 
-# Copy all managed Claude files from repo into target directory
+# Return 0 when a top-level entry name is in USER_OWNED_ENTRIES
+is_user_owned() {
+    local NAME="$1"  # top-level entry name, e.g. "memory"
+    local ENTRY
+    for ENTRY in "${USER_OWNED_ENTRIES[@]}"; do
+        [[ "${ENTRY}" == "${NAME}" ]] && return 0
+    done
+    return 1
+}
+
+# Copy the repo's Claude files over the target, entry by entry.
+# Anything already in the target that the repo doesn't ship (transcripts, app state) is left alone,
+# and user-owned entries are copied only when the target doesn't have them yet.
 copy_claude_files() {
-    cp -R "${SOURCE_DIR}/." "${TARGET_DIR}/"
+    local ENTRY NAME
+    for ENTRY in "${SOURCE_DIR}"/* "${SOURCE_DIR}"/.[!.]*; do
+        [[ -e "${ENTRY}" ]] || continue
+        NAME=$(basename "${ENTRY}")
+        if is_user_owned "${NAME}" && [[ -e "${TARGET_DIR}/${NAME}" ]]; then
+            log_message "${INFO}" "Kept user-owned: ${NAME}"
+            continue
+        fi
+        cp -R "${ENTRY}" "${TARGET_DIR}/"
+    done
     find "${TARGET_DIR}" -name "*.sh" -exec chmod +x {} \;
     log_message "${INFO}" "Copied Claude files to: ${TARGET_DIR}"
 }

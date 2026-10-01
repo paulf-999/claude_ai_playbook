@@ -1,11 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
+# Date created:      2026-09-30
+# Date updated:      2026-10-01
+# Version:           1.0.1
 # Test quality score: 9/10
 # Test complexity score: 6/10
 # Python style compliant: Yes
-# Date created:      2026-09-30
-# Version:           1.0.0
-# Date updated:      [placeholder]
 # ─────────────────────────────────────────────────────────
 """Tests for the ``make install`` approval gate (issue #150).
 
@@ -149,7 +149,7 @@ def test_tty_preview_lists_five_steps(sandbox: dict) -> None:
     """The preview lists all five install steps."""
     _, output = run_with_tty(sandbox["env"], b"no\n")
     steps = (
-        "1. Move",
+        "1. Back up",
         "2. Copy",
         "3. Install the Claude CLI",
         "4. Install the core MCP",
