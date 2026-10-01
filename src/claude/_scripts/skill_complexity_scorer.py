@@ -8,7 +8,7 @@ Scores a skill on a 0-10 scale based on:
   4. Prerequisite knowledge required (0-2 pts)
 
 Usage:
-    python3 skill_complexity_scorer.py <skill_dir>
+    python3 src/claude/_scripts/skill_complexity_scorer.py <skill_dir>
 
 Returns:
     JSON with complexity score and breakdown
@@ -309,22 +309,23 @@ def main() -> int:
 
         print(f"Complexity Score: {score}/10 ({maturity} skill, limit: {limit})")
         print()
+        breakdown = result["breakdown"]
         print("Breakdown:")
         print(
-            f"  Concepts:      {result['breakdown']['concepts']['points']}/{result['breakdown']['concepts']['max']} pts "
-            f"({result['breakdown']['concepts']['count']} concepts)"
+            f"  Concepts:      {breakdown['concepts']['points']}/{breakdown['concepts']['max']} pts "
+            f"({breakdown['concepts']['count']} concepts)"
         )
         print(
-            f"  Scope:         {result['breakdown']['scope']['points']}/{result['breakdown']['scope']['max']} pts "
-            f"({result['breakdown']['scope']['phases']} phases, {result['breakdown']['scope']['lines']} lines)"
+            f"  Scope:         {breakdown['scope']['points']}/{breakdown['scope']['max']} pts "
+            f"({breakdown['scope']['phases']} phases, {breakdown['scope']['lines']} lines)"
         )
         print(
-            f"  Dependencies:  {result['breakdown']['dependencies']['points']}/{result['breakdown']['dependencies']['max']} pts "
-            f"({result['breakdown']['dependencies']['count']} dependencies)"
+            f"  Dependencies:  {breakdown['dependencies']['points']}/{breakdown['dependencies']['max']} pts "
+            f"({breakdown['dependencies']['count']} dependencies)"
         )
         print(
-            f"  Prerequisites: {result['breakdown']['prerequisites']['points']}/{result['breakdown']['prerequisites']['max']} pts "
-            f"({result['breakdown']['prerequisites']['domains']} domains)"
+            f"  Prerequisites: {breakdown['prerequisites']['points']}/{breakdown['prerequisites']['max']} pts "
+            f"({breakdown['prerequisites']['domains']} domains)"
         )
         print()
         if exceeds:

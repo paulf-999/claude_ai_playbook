@@ -13,10 +13,14 @@ Unlike the lint validator (claude_tag_lint.py), this script:
     review dates, deprecated components, and broken depends-on chains
 
 Usage:
-    python3 src/sh/claude/claude_component_audit.py          # scan src/claude/
-    python3 src/sh/claude/claude_component_audit.py <root>   # explicit root
-    make audit_components                                      # via Makefile target
+    python3 src/claude/_scripts/claude_component_audit.py <root>   # e.g. src/claude
+    make audit_components                                           # passes src/claude
+
+The root is required: the script is installed into the live config too, so it
+never guesses the repo from its own location.
 """
+
+from __future__ import annotations
 
 import sys
 from collections import defaultdict
@@ -31,10 +35,7 @@ SCAN_DIRS = ["skills", "agents", "rules", "process", "commands"]
 EXCLUDE_DIRS = {"style_guide_standards", "patches"}
 EXCLUDE_NAMES = {"README.md"}
 STALENESS_WARN_DAYS = 90
-
-# Script lives at src/sh/claude/; repo root is three levels up.
-_REPO_ROOT = Path(__file__).resolve().parent.parent.parent.parent
-DEFAULT_ROOT = _REPO_ROOT / "src" / "claude"
+USAGE = "usage: claude_component_audit.py <root>   e.g. src/claude"
 
 
 # ── file discovery ────────────────────────────────────────────────────────────
@@ -322,11 +323,13 @@ def _print_signal_section(
 def main() -> int:
     """Run the component audit and print the health report.
 
-    :return: Always 0 — this tool is informational, not a CI gate.
+    :return: 0 once the report prints, or 1 when the root is missing or not found.
     :rtype: int
     """
-    root_arg = sys.argv[1] if len(sys.argv) > 1 else str(DEFAULT_ROOT)
-    root = Path(root_arg).resolve()
+    if len(sys.argv) < 2:
+        print(f"error: no root directory given\n{USAGE}", file=sys.stderr)
+        return 1
+    root = Path(sys.argv[1]).resolve()
 
     if not root.exists():
         print(f"error: root directory not found: {root}", file=sys.stderr)
