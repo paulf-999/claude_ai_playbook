@@ -83,7 +83,7 @@ Sorted by Overall score, highest first.
 | `rules/03_authoring_guidelines/scorecard_test_authoring_skills.md` | 8.6/10 | 2026-10-01 | — (≥8.5) |
 | `rules/04_claude_reference/scorecard_test_claude_operational_efficiency.md` | 8.6/10 | 2026-09-30 | — (≥8.5) |
 | `rules/05_lazy_load/scorecard_test_automation_controls.md` | 8.6/10 | 2026-10-01 | — (≥8.5) |
-| `rules/04_claude_reference/scorecard_test_claude_rule_loading_strategy.md` | 8.4/10 | 2026-09-30 | • Add a synthetic bad-input test that proves the check fails when it should |
+| `rules/05_lazy_load/scorecard_test_claude_rule_loading_strategy.md` | 8.4/10 | 2026-10-01 | • Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/05_lazy_load/scorecard_test_lazy_load_coverage.md` | 8.3/10 | 2026-09-30 | • Add failure messages that say how to fix each assertion (27% have one today) |
 | `skills/scorecard_test_no_orphaned_skill_files.md` | 8.3/10 | 2026-09-30 | • Add failure messages that say how to fix each assertion (16% have one today)<br>• Split the test by concept to bring raw complexity (5) down to 3 or less |
 | `skills/claude_capture_session_prompts/scorecard_test_capture_session_prompts.md` | 8.1/10 | 2026-09-30 | • Add failure messages that say how to fix each assertion (14% have one today)<br>• Add a synthetic bad-input test that proves the check fails when it should |

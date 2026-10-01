@@ -2,13 +2,13 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
 # Date updated:      2026-10-01
-# Version:           1.1.0
+# Version:           1.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Drift tests for _rules/04_claude_reference/claude_rule_loading_strategy.md.
+"""Drift tests for _rules/05_lazy_load/claude_rule_loading_strategy.md.
 
 The rule's five-tier table describes the real ``_rules/`` layout. These tests
 fail when the table and the folders on disk stop matching, or when the table's
@@ -19,7 +19,7 @@ import re
 from _shared_paths import CLAUDE_MD
 from _shared_paths import RULES_DIR
 
-RULE = RULES_DIR / "04_claude_reference" / "claude_rule_loading_strategy.md"
+RULE = RULES_DIR / "05_lazy_load" / "claude_rule_loading_strategy.md"
 
 # A table row: | `01_essentials/` | ... | `example.md` | ... | Loading |
 ROW_PATTERN = re.compile(
@@ -29,7 +29,7 @@ ROW_PATTERN = re.compile(
 # Matches any config-dir name (~/.claude/, ~/claude/, ...) per portable_paths.md.
 IMPORT_PATTERN = re.compile(r"^@~/[^/]+/_rules/(\d{2}_[a-z_]+)/", re.MULTILINE)
 LAZY_TIER = "05_lazy_load"
-HEADER_LINES = 3
+HEADER_LINES = 9  # paths: frontmatter (5 lines) + version, created, updated, miss_cost
 LINE_LIMIT = 110
 
 

@@ -118,7 +118,7 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 
 **Naming & placement:**
 - `naming_standards.md` — self-describing, unambiguous naming principles; see children for directory structure and object patterns
-- `~/.claude/_rules/04_claude_reference/claude_rule_loading_strategy.md` — full rule list; duplication detection + always-on vs. lazy-load placement
+- `~/.claude/_rules/05_lazy_load/claude_rule_loading_strategy.md` — full rule list; duplication detection + always-on vs. lazy-load placement
 
 **Authoring & testing:**
 - `~/.claude/_templates/RULE.md.template` — two templates (principle-based vs. constraint-based)

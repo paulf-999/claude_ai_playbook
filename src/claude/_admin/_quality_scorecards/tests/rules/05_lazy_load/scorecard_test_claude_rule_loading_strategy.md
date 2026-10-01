@@ -21,5 +21,5 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/rules/04_claude_reference/test_claude_rule_loading_strategy.py` — the test being scored
-- `src/claude/_rules/04_claude_reference/claude_rule_loading_strategy.md` — what the test guards
+- `src/claude/_tests/rules/05_lazy_load/test_claude_rule_loading_strategy.py` — the test being scored
+- `src/claude/_rules/05_lazy_load/claude_rule_loading_strategy.md` — what the test guards

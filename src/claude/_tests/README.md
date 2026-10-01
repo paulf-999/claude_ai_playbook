@@ -103,12 +103,12 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_claude_operational_efficiency.py` | `claude_operational_efficiency.md` keeps its 8 sections, imports exactly its 4 children with no orphans, and keeps its key phrases | 9/10 | 2026-09-30 | 2026-10-01 | 1.0.1 |
-| `test_claude_rule_loading_strategy.py` | The five-tier table matches the real `_rules/` folders, its example files exist, and CLAUDE.md imports match each tier's loading claim | 9/10 | 2026-09-30 | 2026-10-01 | 1.0.1 |
 
 ### `rules/05_lazy_load/`
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
+| `test_claude_rule_loading_strategy.py` | The five-tier table matches the real `_rules/` folders, its example files exist, and CLAUDE.md imports match each tier's loading claim; placement uses measured usage, not 70% | 9/10 | 2026-09-30 | 2026-10-01 | 1.2.0 |
 | `test_automation_controls.py` | Turn budgets and gates for `/loop`, `/batch`, `/goal` are documented and reasonable | 9/10 | 2026-09-16 | 2026-10-01 | 1.0.2 |
 | `test_latency_optimisation.py` | `latency_optimisation.md` keeps effort as the lever, never gives a temperature above 1, and keeps its measure-first steps | 9/10 | 2026-09-17 | 2026-10-01 | 2.0.0 |
 | `test_lazy_load_coverage.py` | Every `05_lazy_load/` file is reachable from at least one hook (direct or via a parent index file) | 3/10 | 2026-09-16 | 2026-10-01 | 1.5.1 |

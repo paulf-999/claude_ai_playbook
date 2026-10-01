@@ -64,8 +64,7 @@ constraints are harder to bypass silently.
 <!-- Tier 4: 04_claude_reference/ — system knowledge and platform guidance -->
 <!-- Token/turn discipline: when to delegate, parallelize, or spawn sub-agents -->
 @~/.claude/_rules/04_claude_reference/claude_operational_efficiency.md
-<!-- Decision tree for always-on vs. lazy-load rule placement -->
-@~/.claude/_rules/04_claude_reference/claude_rule_loading_strategy.md
+<!-- Rule placement (claude_rule_loading_strategy.md) is lazy: rules/ loads it when a _rules/ file or CLAUDE.md is read -->
 
 ---
 

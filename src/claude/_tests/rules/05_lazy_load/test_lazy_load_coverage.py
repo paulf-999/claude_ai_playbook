@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-01
-# Version:           1.5.1
+# Version:           1.5.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -123,6 +123,7 @@ def test_no_orphaned_lazy_load_files():
 
 ENTRY_POINT_RELATIVE_PATHS = {
     "automation_controls.md",
+    "claude_rule_loading_strategy.md",
     "delegating_to_subagent.md",
     "hooks_decision_framework.md",
     "latency_optimisation.md",
