@@ -1,4 +1,4 @@
-<!-- version: 1.3.0 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-09-17 -->
 <!-- updated: 2026-10-01 -->
 # 📊 Test Metadata Standard
@@ -64,8 +64,8 @@ Every test file in `~/.claude/_tests/` must open with this metadata header:
 **Style counts too:** a new test must also set `Python style compliant: Yes`.
 
 **Enforced:** `test_test_score_floor.py` fails any test file below quality 9, complexity 7 or style Yes.
-- **Baseline:** files that were below the minimum when this was enforced sit on its `BASELINE` list and may improve but never get worse.
-- **Leaving the list:** a listed file that meets every minimum fails until its entry is removed, so the list only shrinks.
+- **No exemptions:** every test met the minimum on 2026-10-01, so the old exemption list is gone and the rule applies to every test.
+- **Can't meet it?** split the test by concept rather than padding it — see `_test_metadata_complexity_scoring.md`.
 
 ---
 

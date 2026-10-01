@@ -91,7 +91,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_portable_paths_python.py` | Python test files use `CLAUDE_DIR` — no `.expanduser()` outside `_shared_paths.py`, home-directory constants or one-convention import prefixes | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.0 |
 | `test_security_guardrails.py` | `_security_guardrails.md` keeps each guardrail, and settings.json allows none of the wildcards it forbids | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_test_metadata.py` | Every test's metadata header is complete, in order, well formed (banners, dates, semver, scores), and its quality score matches its own counts | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.0 |
-| `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, or holds its `BASELINE` scores and never gets worse | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.13 |
+| `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, with no exemptions, and the minimums match `_test_metadata.md` | 9/10 | 2026-10-01 | 2026-10-01 | 2.0.0 |
 | `test_testing.py` | Every enforcement hook has a test (aspect splits allowed), no orphaned hook tests, and testing.md's pointers exist | 9/10 | 2026-08-28 | 2026-10-01 | 1.2.0 |
 
 ### `rules/03_authoring_guidelines/`
