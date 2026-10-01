@@ -1,6 +1,6 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
 # 📁 Multifile Document Organisation
 
 **Purpose:** One convention for when to split a document into a parent and child files, and how to lay them out — preventing flat-level sprawl across `_rules/`, style guides, skills, agents and any other structured documentation.

@@ -2,242 +2,148 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           1.1.2
-# Test quality score: 7/10
-# Test complexity score: 6/10
+# Version:           2.0.0
+# Test quality score: 9/10
+# Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
+"""Tests the folder layout of the always-on rule tiers.
+
+- **01_essentials/:** holds exactly the expected top-level files and folders.
+- **Parent and children:** across tiers 01–04, per ``multifile_document_organisation.md``,
+  children sit in a ``<topic>/`` folder beside their ``<topic>.md`` parent, use the ``_``
+  prefix, come two or more to a folder, and never sit loose at a tier's root.
+
+Whether CLAUDE.md imports these files is checked by ``test_always_on_reachability.py``.
 """
-Test suite for rule directory organization patterns.
+from __future__ import annotations
 
-Validates:
-1. Top-level files in 01_essentials/ are simple/foundational concepts
-2. Child files use underscore prefix (_filename.md)
-3. Subdirectories only exist when 2+ child files present
-4. No orphaned child files at top level
-5. All top-level files imported in CLAUDE.md
-"""
+from pathlib import Path
 
-import re
-
-from _shared_paths import CLAUDE_DIR, CLAUDE_MD, RULES_DIR
+from _shared_paths import RULES_DIR
 
 ESSENTIALS_DIR = RULES_DIR / "01_essentials"
+USAGE_STANDARDS_DIR = ESSENTIALS_DIR / "claude_usage_standards"
+ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference")
 
-# Top-level files expected in 01_essentials
-# These are parent files that are imported in CLAUDE.md. Per the 5-tier reorg,
-# behaviour.md/security.md/testing.md moved to 02_claude_standards/, and
-# authoring_rules.md/authoring_skills.md moved to 03_authoring_guidelines/ —
-# 01_essentials now holds only the foundational, user-facing files.
-EXPECTED_TOP_LEVEL = {
-    "README.md",
-    "claude_response_standards.md",
-    "claude_usage_standards.md",
-    "guiding_principles.md",
-}
+# Top-level files and folders expected in 01_essentials/
+EXPECTED_TOP_LEVEL = {"README.md", "claude_response_standards.md", "claude_usage_standards.md", "guiding_principles.md"}
+EXPECTED_DIRECTORIES = {"claude_usage_standards"}
 
-# Top-level directories expected (compound rules with children)
-EXPECTED_DIRECTORIES = {
-    "claude_usage_standards",  # Grouping directory for naming, writing_style, claude_directory_structure
-}
-
-# Parent files within claude_usage_standards/ subdirectory
-CLAUDE_USAGE_STANDARDS_PARENTS = {
+# claude_usage_standards/ groups four rules, two of which keep a children folder
+USAGE_STANDARDS_PARENTS = {
     "naming_standards.md",
     "writing_style.md",
     "claude_directory_structure.md",
+    "multifile_document_organisation.md",
+}
+USAGE_STANDARDS_SUBDIRS = {"naming_standards", "claude_directory_structure"}
+
+# Folders that group parents or shared children rather than one parent's children
+GROUPING_DIRS = {
+    "01_essentials/claude_usage_standards",
+    "03_authoring_guidelines/shared_standards",
 }
 
-# Subdirectories within claude_usage_standards/
-CLAUDE_USAGE_STANDARDS_SUBDIRS = {
-    "naming_standards",
-    "writing_style",
-    "claude_directory_structure",
-}
+
+def child_folders() -> list[Path]:
+    """List the children folders in tiers 01–04, leaving out grouping folders.
+
+    :return: Every folder under the always-on tiers that holds one parent's children.
+    :rtype: list[Path]
+    """
+    return sorted(
+        folder for tier in ALWAYS_ON_TIERS for folder in (RULES_DIR / tier).rglob("*")
+        if folder.is_dir() and str(folder.relative_to(RULES_DIR)) not in GROUPING_DIRS
+    )
+
+
+def children(folder: Path) -> list[Path]:
+    """List the rule files in a children folder.
+
+    :param folder: A children folder.
+    :type folder: Path
+    :return: Its markdown files, README.md excluded.
+    :rtype: list[Path]
+    """
+    return sorted(f for f in folder.glob("*.md") if f.name != "README.md")
 
 
 def test_01_essentials_directory_exists():
-    """Verify 01_essentials/ directory exists."""
+    """01_essentials/ exists and is a folder."""
     assert ESSENTIALS_DIR.exists(), f"Directory not found: {ESSENTIALS_DIR}"
     assert ESSENTIALS_DIR.is_dir(), f"Not a directory: {ESSENTIALS_DIR}"
 
 
 def test_top_level_files_are_expected():
-    """Verify top-level files in 01_essentials/ match expected set."""
+    """01_essentials/ holds exactly the expected top-level files."""
     files = {f.name for f in ESSENTIALS_DIR.glob("*.md")}
-    assert files == EXPECTED_TOP_LEVEL, (
-        f"Unexpected top-level files.\n"
-        f"Expected: {EXPECTED_TOP_LEVEL}\n"
-        f"Got: {files}\n"
-        f"Missing: {EXPECTED_TOP_LEVEL - files}\n"
-        f"Extra: {files - EXPECTED_TOP_LEVEL}"
-    )
+    assert files == EXPECTED_TOP_LEVEL, f"missing {EXPECTED_TOP_LEVEL - files}, extra {files - EXPECTED_TOP_LEVEL}"
 
 
 def test_top_level_directories_are_expected():
-    """Verify top-level directories in 01_essentials/ match expected set."""
+    """01_essentials/ holds exactly the expected folders."""
     dirs = {d.name for d in ESSENTIALS_DIR.iterdir() if d.is_dir() and not d.name.startswith(".")}
-    assert dirs == EXPECTED_DIRECTORIES, (
-        f"Unexpected top-level directories.\n"
-        f"Expected: {EXPECTED_DIRECTORIES}\n"
-        f"Got: {dirs}\n"
-        f"Missing: {EXPECTED_DIRECTORIES - dirs}\n"
-        f"Extra: {dirs - EXPECTED_DIRECTORIES}"
-    )
+    assert dirs == EXPECTED_DIRECTORIES, f"missing {EXPECTED_DIRECTORIES - dirs}, extra {dirs - EXPECTED_DIRECTORIES}"
 
 
-def test_claude_usage_standards_directory_exists():
-    """Verify claude_usage_standards/ subdirectory exists."""
-    claude_usage_standards_dir = ESSENTIALS_DIR / "claude_usage_standards"
-    assert claude_usage_standards_dir.exists(), f"Directory not found: {claude_usage_standards_dir}"
-    assert claude_usage_standards_dir.is_dir(), f"Not a directory: {claude_usage_standards_dir}"
+def test_usage_standards_parent_files():
+    """claude_usage_standards/ holds exactly its four rule files."""
+    files = {f.name for f in USAGE_STANDARDS_DIR.glob("*.md")}
+    expected = USAGE_STANDARDS_PARENTS
+    assert files == expected, f"missing {expected - files}, extra {files - expected}"
 
 
-def test_claude_usage_standards_parent_files():
-    """Verify parent files in claude_usage_standards/ directory."""
-    claude_usage_standards_dir = ESSENTIALS_DIR / "claude_usage_standards"
-    files = {f.name for f in claude_usage_standards_dir.glob("*.md")}
-    assert files == CLAUDE_USAGE_STANDARDS_PARENTS, (
-        f"Unexpected parent files in claude_usage_standards/.\n"
-        f"Expected: {CLAUDE_USAGE_STANDARDS_PARENTS}\n"
-        f"Got: {files}\n"
-        f"Missing: {CLAUDE_USAGE_STANDARDS_PARENTS - files}\n"
-        f"Extra: {files - CLAUDE_USAGE_STANDARDS_PARENTS}"
-    )
-
-
-def test_claude_usage_standards_subdirectories():
-    """Verify subdirectories in claude_usage_standards/ match expected set."""
-    claude_usage_standards_dir = ESSENTIALS_DIR / "claude_usage_standards"
-    dirs = {d.name for d in claude_usage_standards_dir.iterdir() if d.is_dir() and not d.name.startswith(".")}
-    assert dirs == CLAUDE_USAGE_STANDARDS_SUBDIRS, (
-        f"Unexpected subdirectories in claude_usage_standards/.\n"
-        f"Expected: {CLAUDE_USAGE_STANDARDS_SUBDIRS}\n"
-        f"Got: {dirs}\n"
-        f"Missing: {CLAUDE_USAGE_STANDARDS_SUBDIRS - dirs}\n"
-        f"Extra: {dirs - CLAUDE_USAGE_STANDARDS_SUBDIRS}"
-    )
+def test_usage_standards_subdirectories():
+    """claude_usage_standards/ holds exactly the children folders its rules need."""
+    dirs = {d.name for d in USAGE_STANDARDS_DIR.iterdir() if d.is_dir() and not d.name.startswith(".")}
+    expected = USAGE_STANDARDS_SUBDIRS
+    assert dirs == expected, f"missing {expected - dirs}, extra {dirs - expected}"
 
 
 def test_child_files_have_underscore_prefix():
-    """Verify all child files in subdirectories use underscore prefix."""
-    errors = []
-
-    for subdir in EXPECTED_DIRECTORIES:
-        if subdir == "claude_usage_standards":
-            continue  # claude_usage_standards is a special case
-
-        subdir_path = ESSENTIALS_DIR / subdir
-        if not subdir_path.exists():
-            continue
-
-        for md_file in subdir_path.glob("*.md"):
-            if not md_file.name.startswith("_"):
-                errors.append(f"Child file missing underscore prefix: {md_file.relative_to(ESSENTIALS_DIR)}")
-
-    # Check claude_usage_standards subdirectory children
-    claude_usage_standards_dir = ESSENTIALS_DIR / "claude_usage_standards"
-    for subdir in CLAUDE_USAGE_STANDARDS_SUBDIRS:
-        subdir_path = claude_usage_standards_dir / subdir
-        if not subdir_path.exists():
-            continue
-
-        for md_file in subdir_path.glob("*.md"):
-            if not md_file.name.startswith("_"):
-                errors.append(f"Child file missing underscore prefix: {md_file.relative_to(ESSENTIALS_DIR)}")
-
-    assert not errors, "Child file naming violations:\n" + "\n".join(errors)
+    """Every child file in tiers 01–04 starts with an underscore."""
+    files = [f for folder in child_folders() for f in children(folder)]
+    assert files, "expected child files in the always-on tiers"
+    bad = [str(f.relative_to(RULES_DIR)) for f in files if not f.name.startswith("_")]
+    assert not bad, f"child files missing the _ prefix: {bad}"
 
 
-def test_no_orphaned_child_files():
-    """Verify no orphaned child files at top level of 01_essentials/."""
-    errors = []
-
-    for md_file in ESSENTIALS_DIR.glob("_*.md"):
-        errors.append(f"Orphaned child file at top level: {md_file.name}")
-
-    assert not errors, "Orphaned child files found:\n" + "\n".join(errors)
+def test_no_loose_child_files_at_tier_roots():
+    """No _child.md sits loose at a tier's root, away from its parent's folder."""
+    loose = [str(f.relative_to(RULES_DIR)) for tier in ALWAYS_ON_TIERS for f in (RULES_DIR / tier).glob("_*.md")]
+    assert not loose, f"child files at a tier root — move them into their parent's folder: {loose}"
 
 
-def test_two_plus_rule_for_subdirectories():
-    """Verify subdirectories only exist when 2+ child files present."""
-    errors = []
-
-    for subdir in ESSENTIALS_DIR.iterdir():
-        if not subdir.is_dir() or subdir.name.startswith("."):
-            continue
-
-        if subdir.name == "claude_usage_standards":
-            continue  # claude_usage_standards has special structure
-
-        child_files = list(subdir.glob("_*.md"))
-        if len(child_files) == 1:
-            errors.append(
-                f"Subdirectory with only 1 child file violates 2+ rule: "
-                f"{subdir.name}/ (contains {child_files[0].name})"
-            )
-
-    assert not errors, "2+ rule violations:\n" + "\n".join(errors)
+def test_two_plus_rule_for_child_folders():
+    """Every children folder holds two or more children."""
+    folders = child_folders()
+    assert folders, "expected children folders in the always-on tiers"
+    single = [str(f.relative_to(RULES_DIR)) for f in folders if len(children(f)) == 1]
+    assert not single, f"folders with one child — flatten each to a top-level file: {single}"
 
 
-def test_claude_md_imports():
-    """Verify all top-level files are imported in CLAUDE.md."""
-    if not CLAUDE_MD.exists():
-        return  # Skip if CLAUDE.md doesn't exist
-
-    claude_content = CLAUDE_MD.read_text()
-    errors = []
-
-    for file in EXPECTED_TOP_LEVEL:
-        if file == "README.md":
-            continue  # README is not imported
-
-        # Match any "@~/<config-dir-name>/_rules/01_essentials/<file>" import,
-        # regardless of whether the config-dir is named .claude or claude.
-        stem = file.replace(".md", "")
-        import_pattern = re.compile(
-            rf"@~/[^/]+/_rules/01_essentials/{re.escape(stem)}(?:\.md)?\b"
-        )
-        if not import_pattern.search(claude_content):
-            errors.append(f"Missing import for {file}: expected a pattern like .../01_essentials/{stem}")
-
-    assert not errors, "Missing imports in CLAUDE.md:\n" + "\n".join(errors)
-
-
-def test_claude_usage_standards_parent_files_imported():
-    """Verify claude_usage_standards parent files are reachable from CLAUDE.md (directly or via a hub file).
-
-    CLAUDE.md imports claude_usage_standards.md, which is the actual entry
-    point for these 3 grouped files — not CLAUDE.md directly. Checking only
-    CLAUDE.md's own text would miss this legitimate indirection.
-    """
-    usage_standards = CLAUDE_DIR / "_rules" / "01_essentials" / "claude_usage_standards.md"
-    if not CLAUDE_MD.exists() or not usage_standards.exists():
-        return  # Skip if either entry point doesn't exist
-
-    combined_content = CLAUDE_MD.read_text() + "\n" + usage_standards.read_text()
-    errors = []
-
-    expected_imports = [
-        "naming_standards",
-        "writing_style",
-        "claude_directory_structure",
+def test_child_folders_sit_beside_their_parent():
+    """Every children folder has its <topic>.md parent beside it."""
+    orphans = [
+        str(f.relative_to(RULES_DIR)) for f in child_folders()
+        if f.name != "_lazy_load" and not (f.parent / f"{f.name}.md").is_file()
     ]
-
-    for import_name in expected_imports:
-        pattern = re.compile(
-            rf"@~/[^/]+/_rules/01_essentials/claude_usage_standards/{re.escape(import_name)}(?:\.md)?\b"
-        )
-        if not pattern.search(combined_content):
-            errors.append(f"Missing import for claude_usage_standards/{import_name}")
-
-    assert not errors, (
-        "Missing claude_usage_standards imports in CLAUDE.md or claude_usage_standards.md:\n" +
-        "\n".join(errors)
-    )
+    assert not orphans, f"children folders with no <topic>.md parent beside them: {orphans}"
 
 
-if __name__ == "__main__":
-    import pytest
-    pytest.main([__file__, "-v"])
+def test_lazy_load_folders_sit_inside_a_parent_folder():
+    """Every _lazy_load/ folder sits inside <topic>/ with <topic>.md beside that folder."""
+    lazy = [f for f in child_folders() if f.name == "_lazy_load"]
+    assert lazy, "expected per-parent _lazy_load/ folders in the always-on tiers"
+    bad = [str(f.relative_to(RULES_DIR)) for f in lazy if not (f.parent.parent / f"{f.parent.name}.md").is_file()]
+    assert not bad, f"_lazy_load/ folders without a parent rule: {bad}"
+
+
+def test_grouping_dirs_still_exist():
+    """Every grouping folder exempted above still exists, so no exemption goes stale."""
+    stale = [d for d in GROUPING_DIRS if not (RULES_DIR / d).is_dir()]
+    assert not stale, f"grouping exemptions for folders that no longer exist — remove them: {stale}"
+    shared = [f.name for f in (RULES_DIR / "03_authoring_guidelines" / "shared_standards").glob("*.md")]
+    assert len(shared) >= 2, f"shared_standards/ should group 2+ shared children, found {shared}"
