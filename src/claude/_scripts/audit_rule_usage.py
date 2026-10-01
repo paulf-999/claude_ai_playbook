@@ -44,6 +44,9 @@ EVERY_SESSION = "*"
 LAZY_TIER = "05_lazy_load"
 REPORT_NAME = "audit_rule_usage.md"
 HISTORY_NAME = "rule_usage_history.csv"
+LEDGER_NAME = "rule_usage_sessions.csv"
+SUMMARY_NAME = "rule_usage_history.md"
+LEDGER_FIELDS = ["session", "date", "rule", "applied", "loaded"]
 HISTORY_FIELDS = [
     "run_date", "rule", "tier", "tokens", "sessions", "applied", "loaded", "misses", "last_applied", "last_loaded",
 ]
@@ -107,6 +110,7 @@ class Session:
     last_date: date | None = None
     touched: set[str] = field(default_factory=set)
     loaded: set[str] = field(default_factory=set)
+    sid: str = ""
 
 
 @dataclass
@@ -359,7 +363,7 @@ def parse_session(path: Path, rules_dir: Path) -> Session:
     :return: The session's touched files, loaded rules and last date.
     :rtype: Session
     """
-    session = Session(project=path.parent.name)
+    session = Session(project=path.parent.name, sid=path.stem)
     loaded_paths = []
     days = []
     for line in path.read_text(encoding="utf-8", errors="ignore").splitlines():
@@ -639,11 +643,155 @@ def render_report(
     return "\n".join(lines)
 
 
+# ── all-time session ledger ───────────────────────────────────────────────────
+
+
+def session_rows(rules: list[Rule], sessions: list[Session]) -> list[dict[str, str]]:
+    """Build one ledger row per session and rule where the rule applied or loaded.
+
+    :param rules: Discovered rules.
+    :type rules: list[Rule]
+    :param sessions: Parsed sessions.
+    :type sessions: list[Session]
+    :return: Rows keyed by ``LEDGER_FIELDS``.
+    :rtype: list[dict[str, str]]
+    """
+    rows = []
+    for session in sessions:
+        for rule in rules:
+            applied = bool(rule.globs) and applies(rule, session)
+            loaded = rule.rel in session.loaded
+            if applied or loaded:
+                rows.append({
+                    "session": session.sid,
+                    "date": session.last_date.isoformat() if session.last_date else "",
+                    "rule": rule.rel,
+                    "applied": str(int(applied)),
+                    "loaded": str(int(loaded)),
+                })
+    return rows
+
+
+def update_ledger(path: Path, rules: list[Rule], sessions: list[Session]) -> list[dict[str, str]]:
+    """Record each session once per rule, replacing rows for sessions seen again.
+
+    Sessions whose logs are gone keep their old rows, so the totals survive log deletion.
+
+    :param path: The ledger CSV.
+    :type path: Path
+    :param rules: Discovered rules.
+    :type rules: list[Rule]
+    :param sessions: Parsed sessions.
+    :type sessions: list[Session]
+    :return: Every ledger row after the update.
+    :rtype: list[dict[str, str]]
+    """
+    existing = []
+    if path.is_file():
+        with path.open(newline="", encoding="utf-8") as handle:
+            existing = list(csv.DictReader(handle))
+    measured = {s.sid for s in sessions}
+    rows = [r for r in existing if r["session"] not in measured] + session_rows(rules, sessions)
+    rows.sort(key=lambda r: (r["date"], r["session"], r["rule"]))
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=LEDGER_FIELDS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return rows
+
+
+def run_dates(path: Path) -> dict[str, set[str]]:
+    """Read the distinct run dates per rule from the history CSV.
+
+    :param path: The history file.
+    :type path: Path
+    :return: Run dates keyed by rule.
+    :rtype: dict[str, set[str]]
+    """
+    dates: dict[str, set[str]] = {}
+    if path.is_file():
+        with path.open(newline="", encoding="utf-8") as handle:
+            for row in csv.DictReader(handle):
+                dates.setdefault(row["rule"], set()).add(row["run_date"])
+    return dates
+
+
+def render_history(
+    ledger: list[dict[str, str]], rules: list[Rule], runs: dict[str, set[str]], today: date
+) -> str:
+    """Build the all-time summary, counting each session once per rule.
+
+    :param ledger: Every ledger row.
+    :type ledger: list[dict[str, str]]
+    :param rules: Discovered rules, so rules with no rows still get a line.
+    :type rules: list[Rule]
+    :param runs: Distinct run dates per rule.
+    :type runs: dict[str, set[str]]
+    :param today: The run date.
+    :type today: date
+    :return: Summary markdown.
+    :rtype: str
+    """
+    current = {rule.rel for rule in rules}
+    by_rule: dict[str, list[dict[str, str]]] = {rel: [] for rel in current}
+    for row in ledger:
+        by_rule.setdefault(row["rule"], []).append(row)
+    dates = sorted(r["date"] for r in ledger if r["date"])
+    all_runs = set().union(*runs.values()) if runs else set()
+    lines = [
+        "# 📈 Rule usage history",
+        "",
+        f"**Generated:** {today} by `make audit_rule_usage` · **Sessions recorded:** "
+        f"{len({r['session'] for r in ledger})}"
+        + (f" ({dates[0]} to {dates[-1]})" if dates else "")
+        + f" · **Runs:** {len(all_runs)}",
+        "",
+        "Each session counts once per rule, however many runs saw it. Sessions stay in the record "
+        "after Claude Code deletes their logs, so these totals keep growing past the 90-day log limit.",
+        "",
+        "## 📖 How to read this",
+        "",
+        "- **Applied / Loaded / Misses:** sessions, all time — the same meaning as in `audit_rule_usage.md`.",
+        "- **Miss rate:** misses as a share of applied sessions.",
+        "- **Runs:** distinct days `make audit_rule_usage` measured the rule.",
+        "- **First seen / Last used:** the earliest and latest session where the rule applied or loaded.",
+        "- **Removed:** a rule in the record that no longer exists, usually after a rename.",
+        "",
+        "## 📋 Rules",
+        "",
+        "| Rule | Applied | Loaded | Misses | Miss rate | Runs | First seen | Last used |",
+        "|---|---|---|---|---|---|---|---|",
+    ]
+    for rel in sorted(by_rule):
+        rows = by_rule[rel]
+        applied = sum(r["applied"] == "1" for r in rows)
+        loaded = sum(r["loaded"] == "1" for r in rows)
+        misses = sum(r["applied"] == "1" and r["loaded"] == "0" for r in rows)
+        rate = f"{round(100 * misses / applied)}%" if applied else "—"
+        seen = sorted(r["date"] for r in rows if r["date"])
+        name = f"`{rel}`" if rel in current else f"`{rel}` (removed)"
+        lines.append(
+            f"| {name} | {applied} | {loaded} | {misses} | {rate} | {len(runs.get(rel, ()))} | "
+            f"{seen[0] if seen else '—'} | {seen[-1] if seen else '—'} |"
+        )
+    lines += [
+        "",
+        "## ⚠️ Limits",
+        "",
+        "- **Globs at measure time:** a session's applied value uses the rule's globs from the last run "
+        "that still had its log, so changing a rule's `applies_to` doesn't rewrite older sessions.",
+        f"- **Starts at the first run:** sessions deleted before {min(all_runs) if all_runs else 'the first run'} "
+        "were never recorded.",
+        "",
+    ]
+    return "\n".join(lines)
+
+
 # ── entry point ───────────────────────────────────────────────────────────────
 
 
 def run(rules_dir: Path, transcripts_dir: Path, out_dir: Path, today: date) -> list[Usage]:
-    """Measure usage, flag it, append history and write the report.
+    """Measure usage, flag it, append history, update the session ledger and write both reports.
 
     :param rules_dir: The ``_rules`` folder.
     :type rules_dir: Path
@@ -670,6 +818,9 @@ def run(rules_dir: Path, transcripts_dir: Path, out_dir: Path, today: date) -> l
     append_history(history_path, usages, today)
     report = render_report(usages, section_sizes(rules_dir, rules), sessions, today)
     (out_dir / REPORT_NAME).write_text(report, encoding="utf-8")
+    ledger = update_ledger(out_dir / LEDGER_NAME, rules, sessions)
+    summary = render_history(ledger, rules, run_dates(history_path), today)
+    (out_dir / SUMMARY_NAME).write_text(summary, encoding="utf-8")
     return usages
 
 

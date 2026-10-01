@@ -19,6 +19,7 @@
 !.claude/settings.json
 *.csv
 !src/claude/_admin/_audits/rule_usage_history.csv
+!src/claude/_admin/_audits/rule_usage_sessions.csv
 *.csv.gz
 *.tsv
 *.tsv.gz
