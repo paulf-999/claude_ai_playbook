@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           1.4.2
+# Version:           1.5.0
 # Test quality score: 9/10
 # Test complexity score: 4/10
 # Python style compliant: Yes
@@ -13,7 +13,7 @@
 Verifies the design goals for the _rules/ layout in the configured Claude directory:
 - Human-readable files at root, Claude-specific internals in claude_internal/
 - All @import paths resolve to real files
-- File quality standards (line limits, H1 headings, trailing newlines)
+- File quality standards (line limits, H1 and H2 heading emoji, trailing newlines)
 - CLAUDE.md import priority order
 - No always-on bloat: no Related sections, Contents only when earned
 - _reference/ is never reached from CLAUDE.md's import graph
@@ -187,6 +187,40 @@ def test_h1_heading_has_emoji():
         heading_text = h1_match.group(1)
         has_non_ascii = any(ord(char) > 127 for char in heading_text)
         assert has_non_ascii, f"{rule_file.name}: H1 heading has no emoji — got: '# {heading_text}'"
+
+
+def h2_headings_without_emoji(text: str) -> list[str]:
+    """Return the ``##`` headings outside code fences that carry no emoji.
+
+    :param text: Full file content.
+    :type text: str
+    :return: Offending heading lines, in file order.
+    :rtype: list[str]
+    """
+    missing, in_fence = [], False
+    for line in text.splitlines():
+        if re.match(r"^\s*(```|~~~)", line):
+            in_fence = not in_fence
+            continue
+        if not in_fence and line.startswith("## ") and not any(ord(char) > 127 for char in line[3:]):
+            missing.append(line)
+    return missing
+
+
+def test_h2_headings_have_emoji():
+    """Every ``##`` heading in a _rules/ file must include an emoji, per writing_style.md."""
+    bad = [
+        f"{rule_file.relative_to(RULES_DIR)}: '{heading}'"
+        for rule_file in rule_files()
+        for heading in h2_headings_without_emoji(rule_file.read_text())
+    ]
+    assert not bad, f"## headings with no emoji — add one at the start of each: {bad}"
+
+
+def test_h2_emoji_check_flags_bare_headings_and_skips_fences():
+    """The detector flags a bare ## heading but ignores emoji headings and fenced examples."""
+    text = "## 🎯 Good\n## Bad\n```\n## Fenced example\n```\n"
+    assert h2_headings_without_emoji(text) == ["## Bad"], "Detector missed a bare heading or flagged a fenced one"
 
 
 def test_files_end_with_single_newline():

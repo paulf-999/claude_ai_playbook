@@ -3,6 +3,13 @@
 **Date Created:** 2026-09-19
 **Date Updated:** 2026-09-19
 
+**Overall score:** 7.6/10
+
+**Recommended improvements:**
+- Add adversarial-input and assignee-validation scenarios to `tests/evals.yaml`.
+- Add retry logic for transient MCP failures in `phase_3_create_ticket`.
+- Add a short FAQ section to the documentation.
+
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
 | **Design** | 8/10 | 2026-09-19 | Single clear purpose, simple 3-phase workflow (gather → validate → create); only single-ticket creation is supported — batch, epics, and sprint management are explicit, acknowledged v2.0+ gaps in `not_for`, not design flaws. |
@@ -13,3 +20,8 @@
 | **Documentation** | 7/10 | 2026-09-19 | `SKILL.md` explains purpose and usage with a real example; `reference/error_handling.md` and `reference/field_constraints.md` cover common failure modes and field rules; no dedicated FAQ section. |
 | **Standards Compliance** | 9/10 | 2026-09-19 | `domain_action` naming ✓, canonical 5-section `SKILL.md` ✓, complete `skill.contract.yaml` ✓, `tests/evals.yaml` + `tests/README.md` ✓, single `reference/` directory ✓ — matches `authoring_skills.md`'s File Organization spec in full. |
 | **Overall** | **7.6/10** | 2026-09-19 | Solid, draft-stage skill: validated inputs, typed MCP error handling, and full authoring-standard compliance, with test coverage and documentation depth still short of tactical-tier edge-case coverage. |
+
+## 🔗 Related files
+
+- `src/claude/skills/_atlassian_skills/jira_create/SKILL.md` — the skill being scored
+- `src/claude/skills/_atlassian_skills/jira_create/tests/evals.yaml` — Test Coverage dimension

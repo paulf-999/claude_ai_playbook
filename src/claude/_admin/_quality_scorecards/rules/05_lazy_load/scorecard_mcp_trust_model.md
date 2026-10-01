@@ -1,12 +1,13 @@
 # Quality Scorecard — mcp_trust_model.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-01
 
-**Overall score:** 6.8/10 (6-dimension average, Token Cost N/A)
+**Overall score:** 8.0/10 (6-dimension average, Token Cost N/A)
 
 **Recommended improvements:**
-- Add a dedicated structural test for this file — it's security-relevant and currently has zero coverage.
+- Fix the broken `/docs/mcp_servers.md` reference.
+- Point the `security_guardrails.md` reference at `_rules/02_claude_standards/security/_security_guardrails.md`.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
@@ -16,8 +17,8 @@
 | **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
 | **Structural Compliance** | 9/10 | 2026-09-28 | • ✅ **Compliant:** emoji headers throughout, Purpose statement, Contents section, trailing newline, well within the line limit |
 | **Currency** | 4/10 | 2026-09-28 | • 🐛 **Broken reference:** "Playbook docs: `/docs/mcp_servers.md`" — confirmed via `find`, no such file exists anywhere in the repo<br>• 🐛 **Wrong filename:** "Related rules" cites `security_guardrails.md`, but the real file is `_rules/02_claude_standards/security/_security_guardrails.md` (missing underscore, missing path) |
-| **Test Coverage** | 2/10 | 2026-09-28 | • 🧪 **Gap:** confirmed via `find` — zero test files reference `mcp_trust_model` by name |
-| **Overall** | **6.8/10** | 2026-09-28 | • 💪 **Strength:** the clearest injection-pattern documentation in this survey<br>• ⚠️ **Gap:** two stale references and no dedicated test, for a security-relevant rule |
+| **Test Coverage** | 9/10 | 2026-10-01 | • 🧪 **Dedicated test:** `test_lazy_load_rule_structure.py` checks its header, Purpose line, key sections, child links, relative links and Contents<br>• ✅ **Generic checks:** also passes `test_rules_structure.py` |
+| **Overall** | **8.0/10** | 2026-10-01 | • 💪 **Strength:** the clearest injection-pattern documentation in this survey<br>• ⚠️ **Gap:** Currency (4/10) is now the weakest dimension |
 
 ## 🔗 Related files
 

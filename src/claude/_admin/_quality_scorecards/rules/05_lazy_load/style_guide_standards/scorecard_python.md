@@ -1,12 +1,9 @@
 # Quality Scorecard — python.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-01
 
-**Overall score:** 6.8/10 (6-dimension average, Token Cost N/A)
-
-**Recommended improvements:**
-- Add a dedicated structural test for this file.
+**Overall score:** 8.5/10 (6-dimension average, Token Cost N/A)
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
@@ -16,8 +13,8 @@
 | **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
 | **Structural Compliance** | 9/10 | 2026-09-28 | • ✅ **Fixed:** "## 🔗 Related" now has its emoji, matching every other heading in the file<br>• ✅ **Otherwise compliant:** Purpose statement, Contents section, well within line limit |
 | **Currency** | 9/10 | 2026-09-28 | • ✅ **Fixed:** the `[[python_environment]]` wiki-link is now a real markdown link<br>• ✅ **Fixed:** the parent now links all 4 genuine sibling pages (`testing.md`, `logging.md`, `module_organisation.md`, `code_complexity.md`)<br>• ✅ **Fixed:** both orphaned duplicates removed — `python/python.md`, and `python/python_standards.md` (found during this same cleanup; not merely an unreferenced sibling as first assessed, but a second near-identical copy of this parent) |
-| **Test Coverage** | 2/10 | 2026-09-28 | • 🧪 **Gap:** confirmed via `find` — no test file references this rule by name |
-| **Overall** | **6.8/10** | 2026-09-28 | • 💪 **Strength:** concrete, tooling-backed conventions, now fully connected to its real children with no orphans left<br>• ⚠️ **Gap:** zero test coverage remains the only open item |
+| **Test Coverage** | 9/10 | 2026-10-01 | • 🧪 **Dedicated test:** `test_lazy_load_rule_structure.py` checks its header, Purpose line, key sections, child links, relative links and Contents<br>• ✅ **Generic checks:** also passes `test_rules_structure.py` |
+| **Overall** | **8.5/10** | 2026-10-01 | • 💪 **Strength:** concrete, tooling-backed conventions, now fully connected to its real children with no orphans left<br>• ⚠️ **Gap:** Complexity (7/10) is now the weakest dimension |
 
 ## 🔗 Related files
 
