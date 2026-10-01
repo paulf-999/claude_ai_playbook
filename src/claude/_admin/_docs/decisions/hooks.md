@@ -18,6 +18,7 @@
 | `hook_enforcement_naming_convention.sh` | PreToolUse (Write) | Block before the file is created — naming can't be fixed after the fact without a rename. Denies only names with an error under `_tests/_file_structure_validator.py`, which it calls for that one path |
 | `hook_enforcement_writing_style.sh` | PostToolUse (Edit/Write) | Flag stray markdown at the config root and badly named `_reference/` files after the edit — exit 2 feeds the fix back to Claude, since the file is already written |
 | `hook_style_guide_response_standards_inject.sh` | UserPromptSubmit | Only place to act before Claude starts reasoning — adds the response-format reminder to every prompt |
+| `hook_style_guide_response_standards.sh` | Stop (**reserved — not registered**) | Kept on purpose as the post-response check to wire in if injection stops working — see `response_standards_enforcement.md`. `test_hook_registry_utils.py` lists it in `RESERVED_HOOKS`, so it can't be deleted or wired in silently |
 
 - **Removed 2026-08-07:** `enforcement_subagent_reads.sh` and `enforcement_task_tracking.sh` were dropped with the rest of the hooks section — see the audit trail in `settings_json_readme.md`.
 

@@ -1,6 +1,6 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
 # 🔒 Response Standards Enforcement
 
 **Purpose:** Explain the mechanism that keeps response formatting reliable turn-to-turn, and where its implementation lives.
@@ -42,4 +42,5 @@ Enforcement is implemented via the injection hook: `~/.claude/hooks/hook_style_g
 **Future path (the "walk" escalation) — build only if injection proves insufficient:**
 - **Mechanism:** 🚪 A `type:"prompt"` `Stop` hook that runs an LLM to validate each finished response and force correction.
 - **Trade-off:** ⚖️ Hard mechanical guarantee, but incurs a model call on every substantive turn (cost + latency).
-- **Reserved asset:** 🧪 The post-response validator `hook_style_guide_response_standards.sh` (+ its test) is retained for this path — it is not wired into `settings.json` today.
+- **Reserved asset:** 🧪 The post-response validator `hook_style_guide_response_standards.sh` (+ its `_flags` and `_waivers` tests) is retained for this path — it is not wired into `settings.json` today.
+- **Kept on purpose:** 🛡️ `test_hook_registry_utils.py` lists it in `RESERVED_HOOKS`, so deleting it, wiring it in, or dropping its RESERVED header note fails the suite until that list is updated too.
