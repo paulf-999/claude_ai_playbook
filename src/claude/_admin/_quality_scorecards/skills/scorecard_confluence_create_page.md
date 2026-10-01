@@ -3,6 +3,13 @@
 **Date Created:** 2026-09-19
 **Date Updated:** 2026-09-19
 
+**Overall score:** 8.1/10
+
+**Recommended improvements:**
+- Add adversarial-input scenarios to `tests/evals.yaml`.
+- Add retry logic for transient MCP failures in `phase_3_publish_page`.
+- Add a short FAQ section to the documentation.
+
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
 | **Design** | 8/10 | 2026-09-19 | Single clear purpose, intuitive 3-phase workflow (gather → local draft review → publish); only one pattern (`general_page`) is supported, an acknowledged v2.0 gap, not a design flaw. |
@@ -13,3 +20,8 @@
 | **Documentation** | 8/10 | 2026-09-19 | `SKILL.md` explains purpose and usage with a real example; `reference/_troubleshooting.md` and `reference/_error_recovery.md` cover common failure modes in detail; no dedicated FAQ section. |
 | **Standards Compliance** | 9/10 | 2026-09-19 | `domain_action` naming ✓, canonical 5-section `SKILL.md` ✓, complete `skill.contract.yaml` ✓, `tests/evals.yaml` + `tests/README.md` ✓, single `reference/` directory ✓ — matches `authoring_skills.md`'s File Organization spec in full. |
 | **Overall** | **8.1/10** | 2026-09-19 | Solid, tactical-stage skill: validated inputs, comprehensive error typing, and full authoring-standard compliance, with test/documentation depth still short of strategic-tier edge-case coverage. |
+
+## 🔗 Related files
+
+- `src/claude/skills/_atlassian_skills/confluence_create_page/SKILL.md` — the skill being scored
+- `src/claude/skills/_atlassian_skills/confluence_create_page/tests/evals.yaml` — Test Coverage dimension

@@ -3,6 +3,13 @@
 **Date Created:** 2026-09-29
 **Date Updated:** 2026-09-29
 
+**Overall score:** 6.1/10
+
+**Recommended improvements:**
+- Replace the placeholder `_run_case` in `evals/runner.py` with a real before/after eval run.
+- Add a `reference/_implementation.md` covering the audit and promotion logic, including the promotion threshold.
+- Get the `regression_blocks_promotion` eval passing once the runner is real.
+
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
 | **Design** | 7/10 | 2026-09-29 | Clear loop (audit → promote → validate → propose) with diff-only output and explicit `not_for` limits; the "promote with proof" step depends on an eval harness that doesn't exist yet. |
@@ -13,3 +20,8 @@
 | **Documentation** | 6/10 | 2026-09-29 | `SKILL.md` has a clear step-by-step example and scope limits; there is no reference doc for the audit or promotion logic, and the promotion threshold is only shown by example. |
 | **Standards Compliance** | 8/10 | 2026-09-29 | `domain_action` naming ✓, 4 canonical `SKILL.md` sections ✓, complete `skill.contract.yaml` ✓, `tests/evals.yaml` + `tests/README.md` ✓, roadmap kept in `reference/` ✓; no `reference/_implementation.md`. |
 | **Overall** | **6.1/10** | 2026-09-29 | Well-bounded draft skill with safe diff-only output, held back by a placeholder eval runner that can't yet prove anything. |
+
+## 🔗 Related files
+
+- `src/claude/skills/_claude_skills/claude_kaizen/SKILL.md` — the skill being scored
+- `src/claude/skills/_claude_skills/claude_kaizen/tests/evals.yaml` — Test Coverage dimension

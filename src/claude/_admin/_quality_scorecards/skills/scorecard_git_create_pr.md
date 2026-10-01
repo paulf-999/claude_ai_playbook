@@ -3,6 +3,12 @@
 **Date Created:** 2026-09-29
 **Date Updated:** 2026-09-30
 
+**Overall score:** 7.9/10
+
+**Recommended improvements:**
+- Add an eval scenario for a missing `gh` login.
+- Merge the two phase files into one `reference/_implementation.md`, or note why they stay split.
+
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
 | **Design** | 8/10 | 2026-09-29 | Single clear purpose with a 2-phase flow (gather → confirm and execute); `not_for` rules out merge conflicts and non-main target branches. |
@@ -13,3 +19,8 @@
 | **Documentation** | 8/10 | 2026-09-29 | `SKILL.md` has a clear end-to-end example; `reference/_phase1_gather.md` and `reference/_phase2_execute.md` cover every step and the common failures. |
 | **Standards Compliance** | 8/10 | 2026-09-29 | `domain_action` naming ✓, 4 canonical `SKILL.md` sections ✓, complete `skill.contract.yaml` ✓, `tests/evals.yaml` + `tests/README.md` ✓; implementation is split across two phase files rather than one `reference/_implementation.md`. |
 | **Overall** | **7.9/10** | 2026-09-29 | Well-scoped, actively used skill with both phases documented, confirmation before any change, and tactical-level eval coverage. |
+
+## 🔗 Related files
+
+- `src/claude/skills/_git_skills/git_create_pr/SKILL.md` — the skill being scored
+- `src/claude/skills/_git_skills/git_create_pr/tests/evals.yaml` — Test Coverage dimension
