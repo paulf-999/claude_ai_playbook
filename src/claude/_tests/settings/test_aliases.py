@@ -2,184 +2,162 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           1.0.3
-# Test quality score: 5/10
+# Version:           2.0.0
+# Test quality score: 9/10
 # Test complexity score: 9/10
-# Python style compliant: No
+# Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-#!/usr/bin/env python3
-"""
-Tests for aliases.md
+"""Validates the alias table in aliases.md.
 
-Validates that each alias entry:
-1. Has all required fields (Input, Theme, Status, Meaning)
-2. Status is a valid state (Ready, Testing)
-3. The alias/skill actually exists or is documented
-4. Meaning accurately describes the feature
+Every row needs the four columns filled in, a known status, a unique and
+well-formed input, and a substantive meaning. Rule paths a meaning names must
+exist, and experimental automation aliases must point to their controls.
 """
+import re
 
-import sys
+import pytest
 
 from _shared_paths import ALIASES_FILE
+from _shared_paths import CLAUDE_DIR
 
-# Load aliases.md
-ALIASES_PATH = ALIASES_FILE
+COLUMNS = ["Input", "Theme", "Status", "Meaning"]
+VALID_STATUSES = {"Ready", "Testing"}
+INPUT_PATTERN = r"`/?[a-z][a-z0-9_-]*`"
+CONTROLS_DOC = "_rules/05_lazy_load/automation_controls.md"
 
 
-def parse_aliases_table():
-    """Parse aliases.md markdown table into structured data."""
-    with open(ALIASES_PATH) as f:
-        content = f.read()
+def parse_aliases(content: str) -> list[dict[str, str]]:
+    """Parse the alias table into one dict per row.
 
-    # Extract table rows (skip header)
-    lines = content.split('\n')
-    table_lines = [line for line in lines if line.strip().startswith('|')]
+    :param content: Text of aliases.md.
+    :type content: str
+    :return: Rows keyed by lowercase column name.
+    :rtype: list[dict[str, str]]
+    :raises ValueError: When there's no table, the header is wrong or a row doesn't have four cells.
+    """
+    table = [line for line in content.splitlines() if line.strip().startswith("|")]
+    if len(table) < 3:
+        raise ValueError("aliases.md needs a table with a header, a separator and at least one row")
+    header = [cell.strip() for cell in table[0].strip().strip("|").split("|")]
+    if header != COLUMNS:
+        raise ValueError(f"alias table header is {header}, expected {COLUMNS}")
+    rows = []
+    for line in table[2:]:
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        # A wrong cell count means a broken row, which must fail rather than vanish
+        if len(cells) != len(COLUMNS):
+            raise ValueError(f"alias row has {len(cells)} cells, expected {len(COLUMNS)}: {line}")
+        rows.append(dict(zip([c.lower() for c in COLUMNS], cells)))
+    return rows
 
-    if len(table_lines) < 3:  # header, separator, at least one row
-        raise ValueError(f"Invalid aliases table in {ALIASES_PATH}")
 
-    aliases = []
-    for line in table_lines[2:]:  # Skip header and separator
-        parts = [p.strip() for p in line.split('|')[1:-1]]  # Skip empty first/last
-        if len(parts) != 4:
-            continue
+def load_aliases() -> list[dict[str, str]]:
+    """Parse the real aliases.md.
 
-        aliases.append({
-            'input': parts[0],
-            'theme': parts[1],
-            'status': parts[2],
-            'meaning': parts[3]
-        })
+    :return: Rows keyed by lowercase column name.
+    :rtype: list[dict[str, str]]
+    """
+    return parse_aliases(ALIASES_FILE.read_text())
 
-    return aliases
+
+def test_table_parses_with_rows():
+    """The real table parses and has at least one alias."""
+    aliases = load_aliases()
+    assert aliases, "aliases.md has no alias rows"
 
 
 def test_required_fields():
-    """Test: Each alias has all required fields."""
-    aliases = parse_aliases_table()
-
-    for alias in aliases:
-        assert alias['input'], "Input field missing"
-        assert alias['theme'], "Theme field missing"
-        assert alias['status'], "Status field missing"
-        assert alias['meaning'], "Meaning field missing"
-
-    print(f"✅ All {len(aliases)} aliases have required fields")
+    """Each alias has all four fields filled in."""
+    for alias in load_aliases():
+        empty = [column for column, value in alias.items() if not value]
+        assert not empty, f"{alias['input'] or 'a row'}: empty {empty} — fill in every column"
 
 
 def test_valid_status():
-    """Test: Status is one of allowed values."""
-    VALID_STATUSES = {'Ready', 'Testing'}
-    aliases = parse_aliases_table()
-
-    for alias in aliases:
-        assert alias['status'] in VALID_STATUSES, \
-            f"{alias['input']}: Invalid status '{alias['status']}'. Must be one of: {VALID_STATUSES}"
-
-    print("✅ All aliases have valid status (Ready or Testing)")
+    """Status is Ready or Testing."""
+    for alias in load_aliases():
+        assert alias["status"] in VALID_STATUSES, (
+            f"{alias['input']}: status '{alias['status']}' not in {VALID_STATUSES}"
+        )
 
 
 def test_no_duplicate_inputs():
-    """Test: No duplicate input aliases."""
-    aliases = parse_aliases_table()
-    inputs = [a['input'] for a in aliases]
-
-    assert len(inputs) == len(set(inputs)), \
-        f"Duplicate alias inputs found: {[x for x in inputs if inputs.count(x) > 1]}"
-
-    print("✅ No duplicate alias inputs")
+    """No input appears twice."""
+    inputs = [alias["input"] for alias in load_aliases()]
+    duplicates = sorted({i for i in inputs if inputs.count(i) > 1})
+    assert not duplicates, f"Duplicate alias inputs: {duplicates}"
 
 
-def test_meaning_not_empty():
-    """Test: Meaning field has substantive content (not just punctuation)."""
-    aliases = parse_aliases_table()
-
-    for alias in aliases:
-        meaning = alias['meaning'].strip()
-        assert len(meaning) > 10, \
-            f"{alias['input']}: Meaning too brief or empty ('{meaning}')"
-
-    print("✅ All meanings are substantive (>10 chars)")
+def test_meaning_is_substantive():
+    """Each meaning is more than a few characters."""
+    for alias in load_aliases():
+        assert len(alias["meaning"]) > 10, f"{alias['input']}: meaning too brief ('{alias['meaning']}')"
 
 
 def test_input_format():
-    """Test: Input field is properly formatted (/command or bare word)."""
-    aliases = parse_aliases_table()
-
-    for alias in aliases:
-        inp = alias['input']
-        # Should be /command or bare_word or backtick wrapped
-        assert inp.startswith('/') or inp.startswith('`') or '_' not in inp or inp[0].isalpha(), \
-            f"Invalid input format: '{inp}' (expected /command or bare word)"
-
-    print("✅ All inputs are properly formatted")
+    """Each input is a backticked lowercase word or /command."""
+    for alias in load_aliases():
+        assert re.fullmatch(INPUT_PATTERN, alias["input"]), (
+            f"{alias['input']}: expected `word` or `/command` in lowercase, matching {INPUT_PATTERN}"
+        )
 
 
-def test_no_orphaned_references():
-    """Test: Referenced skills/commands are not stubs (at least documented somewhere)."""
-    aliases = parse_aliases_table()
-
-    for alias in aliases:
-        inp = alias['input'].lstrip('/').lstrip('`').rstrip('`')
-        if inp.startswith('_'):
-            continue  # Skip internal aliases
-
-        # If it's documented, that's enough
-        if alias['status'] == 'Ready' or alias['status'] == 'Testing':
-            assert alias['meaning'], f"{inp}: No meaning provided"
-
-    print("✅ All aliases are documented (have meaning)")
+def test_referenced_rule_paths_exist():
+    """Every _rules/ path a meaning names exists, so links can't rot."""
+    paths = {path for alias in load_aliases() for path in re.findall(r"_rules/[\w/]+\.md", alias["meaning"])}
+    assert paths, "expected at least one meaning to name a _rules/ path"
+    missing = sorted(path for path in paths if not (CLAUDE_DIR / path).is_file())
+    assert not missing, f"aliases.md names rule files that don't exist: {missing}"
 
 
-def test_consistency():
-    """Test: Related aliases have consistent documentation."""
-    aliases = parse_aliases_table()
-
-    # Automation-related aliases should reference controls
-    automation_aliases = [a for a in aliases if a['theme'] == 'Automation']
-    for alias in automation_aliases:
-        if alias['status'] == 'Testing':
-            # Should reference control docs
-            assert 'claude_efficiency.md' in alias['meaning'] or 'automation_controls.md' in alias['meaning'], \
-                f"{alias['input']}: Automation Testing alias should reference control docs"
-
-    print("✅ Automation aliases reference control documentation")
+def test_testing_automation_aliases_reference_controls():
+    """Experimental automation aliases point to their controls doc."""
+    testing = [a for a in load_aliases() if a["theme"] == "Automation" and a["status"] == "Testing"]
+    assert testing, "expected at least one Automation alias in Testing"
+    for alias in testing:
+        assert CONTROLS_DOC in alias["meaning"], f"{alias['input']}: Testing automation alias must name {CONTROLS_DOC}"
 
 
-def main():
-    """Run all tests."""
-    tests = [
-        test_required_fields,
-        test_valid_status,
-        test_no_duplicate_inputs,
-        test_meaning_not_empty,
-        test_input_format,
-        test_no_orphaned_references,
-        test_consistency,
-    ]
-
-    print("🧪 Running aliases.md tests...\n")
-
-    failed = 0
-    for test in tests:
-        try:
-            test()
-        except AssertionError as e:
-            print(f"❌ {test.__name__}: {e}")
-            failed += 1
-        except Exception as e:
-            print(f"❌ {test.__name__}: {e}")
-            failed += 1
-
-    print()
-    if failed:
-        print(f"❌ {failed}/{len(tests)} tests failed")
-        sys.exit(1)
-    else:
-        print(f"✅ All {len(tests)} tests passed")
-        sys.exit(0)
+def test_controls_note_matches_table():
+    """The automation-controls note names exactly the Testing automation aliases."""
+    content = ALIASES_FILE.read_text()
+    note = content.split("## ", 1)[1] if "## " in content else ""
+    named = set(re.findall(r"`(/[a-z][a-z0-9_-]*)`", note))
+    testing = {
+        a["input"].strip("`") for a in load_aliases() if a["theme"] == "Automation" and a["status"] == "Testing"
+    }
+    assert named, "expected the note section to name the experimental automation aliases"
+    assert named == testing, (
+        f"note names {sorted(named)} but the table's Testing automation aliases are {sorted(testing)}"
+    )
 
 
-if __name__ == '__main__':
-    main()
+def test_parser_rejects_missing_table():
+    """Text with no table is an error, not an empty list."""
+    with pytest.raises(ValueError, match="needs a table"):
+        parse_aliases("# Aliases\n\nNo table here.\n")
+
+
+def test_parser_rejects_wrong_header():
+    """A table with the wrong columns is an error."""
+    content = "| Input | Meaning |\n|---|---|\n| `x` | does x |\n"
+    with pytest.raises(ValueError, match="header"):
+        parse_aliases(content)
+
+
+def test_parser_rejects_short_row():
+    """A row with a missing cell fails instead of being dropped."""
+    content = "| Input | Theme | Status | Meaning |\n|---|---|---|---|\n| `x` | Theme | Ready |\n"
+    with pytest.raises(ValueError, match="3 cells") as error:
+        parse_aliases(content)
+    assert "| `x` | Theme | Ready |" in str(error.value), "the error should quote the broken row so it can be found"
+
+
+def test_parser_reads_good_row():
+    """A well-formed row parses into lowercase keys."""
+    content = "| Input | Theme | Status | Meaning |\n|---|---|---|---|\n| `x` | Demo | Ready | Does the x thing |\n"
+    rows = parse_aliases(content)
+    assert len(rows) == 1, f"expected one row, got {rows}"
+    expected = {"input": "`x`", "theme": "Demo", "status": "Ready", "meaning": "Does the x thing"}
+    assert rows[0] == expected, f"got {rows[0]}"

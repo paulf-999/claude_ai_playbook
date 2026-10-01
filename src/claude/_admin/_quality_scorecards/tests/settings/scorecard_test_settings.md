@@ -3,20 +3,21 @@
 **Date Created:** 2026-09-30
 **Date Updated:** 2026-10-01
 
-**Overall score:** 8.6/10
+**Overall score:** 9.3/10
 
 | Dimension | Score | Notes |
 |---|---|---|
-| **Clarity** | 9/10 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
-| **Complexity** | 9/10 | • 🧮 **Complexity:** header complexity score 9/10 (raw complexity 1) |
-| **Evidence of Need** | 9/10 | • 🔗 **Target:** guards a real, installed artefact |
-| **Coverage** | 7/10 | • 📊 **Counts:** 9 test functions and 15 assertions |
-| **Structural Compliance** | 9/10 | • ✅ **Header:** full metadata header, marked Python style compliant |
-| **Currency** | 9/10 | • 🔍 **References:** passes against the current config, header last updated 2026-09-17 |
-| **Regression Value** | 8/10 | • 🛡️ **Failure cases:** 1 test function named for a failure case |
-| **Overall** | **8.6/10** | • 💪 **Strongest:** Clarity, Complexity, Evidence of Need, Structural Compliance and Currency (9/10)<br>• ⚠️ **Weakest:** Coverage (7/10) |
+| **Clarity** | 9/10 | • 🔍 **Messages:** every test function has a docstring, and every assertion carries a failure message that says what to fix |
+| **Complexity** | 9/10 | • 🧮 **Raw complexity 1:** Concepts 1 (permissions and secrets in `settings.json`) + Scope 0 (one file) + Dependencies 0 + Prerequisites 0 |
+| **Evidence of Need** | 9/10 | • 🔗 **Target:** guards `settings.json` against the rules in `security.md` |
+| **Coverage** | 9/10 | • 📊 **Counts:** 11 test functions and 18 assertions<br>• 🧩 **New:** over-broad destructive allows and entries in both allow and deny |
+| **Structural Compliance** | 10/10 | • ✅ **Header:** full metadata header, marked Python style compliant and checked with `ruff` |
+| **Currency** | 10/10 | • 🔍 **References:** passes against the current config, header last updated 2026-10-01 |
+| **Regression Value** | 9/10 | • 🛡️ **Secrets:** the secrets check now matches real key shapes, where the old one asserted nothing |
+| **Overall** | **9.3/10** | • 💪 **Strongest:** Structural Compliance and Currency (10/10)<br>• ⚠️ **Weakest:** none below 9/10 |
 
 ## 🔗 Related files
 
 - `src/claude/_tests/settings/test_settings.py` — the test being scored
 - `src/claude/settings.json` — what the test guards
+- `src/claude/_rules/02_claude_standards/security/_security_guardrails.md` — the permission guidance it enforces

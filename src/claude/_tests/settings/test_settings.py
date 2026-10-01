@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           1.0.2
-# Test quality score: 7/10
+# Version:           1.1.0
+# Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
@@ -15,14 +15,32 @@ Ensures:
 - Deny list includes security-critical paths
 - Broad wildcard permissions are intentional and documented
 - Configuration aligns with guiding principles (least privilege)
+- No real secret is written into the file
 """
 import json
+import re
 
 from _shared_paths import SETTINGS_FILE
 
+# Shapes of real credentials — a match means a secret was pasted into settings.json
+SECRET_PATTERNS = {
+    "OpenAI-style key": r"sk-[A-Za-z0-9_-]{20,}",
+    "GitHub token": r"gh[pousr]_[A-Za-z0-9]{36}",
+    "AWS access key ID": r"AKIA[0-9A-Z]{16}",
+    "Slack token": r"xox[abprs]-[A-Za-z0-9-]{10,}",
+    "private key": r"-----BEGIN [A-Z ]*PRIVATE KEY-----",
+}
 
-def _load_settings():
-    """Load and parse settings.json."""
+# Allow entries security.md names as too broad, because each permits destructive commands
+BROAD_DESTRUCTIVE_ALLOWS = {"Bash(*)", "Bash(git:*)", "Bash(rm:*)", "Bash(rm -rf:*)", "Bash(sudo:*)"}
+
+
+def _load_settings() -> dict:
+    """Load and parse settings.json.
+
+    :return: The parsed settings.
+    :rtype: dict
+    """
     content = SETTINGS_FILE.read_text()
     return json.loads(content)
 
@@ -152,35 +170,24 @@ def test_default_mode_set():
 
 
 def test_no_hardcoded_secrets():
-    """Settings.json must not contain hardcoded secrets, API keys, or tokens."""
+    """Settings.json must not contain a real API key, token or private key."""
     content = SETTINGS_FILE.read_text()
+    found = [name for name, pattern in SECRET_PATTERNS.items() if re.search(pattern, content)]
+    assert not found, f"settings.json contains what looks like a {found} — remove it and rotate it"
 
-    # Check for common secret patterns
-    secret_patterns = [
-        "sk-",      # OpenAI-style key prefix
-        "ghp_",     # GitHub personal access token
-        "token",    # Generic token
-        "api_key",  # API key
-        "secret",   # Secret value
-        "password", # Password
-    ]
 
-    # Note: This is a best-effort check; it won't catch all secret formats
-    # but catches common mistakes
-    for pattern in secret_patterns:
-        # Only flag if pattern appears in values (not in keys like "defaultMode")
-        # Skip keys that legitimately contain these words
-        for line in content.split("\n"):
-            if pattern in line.lower() and ":" in line:
-                # Check if it's a key definition (allowed) vs. a value
-                after_colon = line.split(":", 1)[-1].strip()
-                if pattern in after_colon.lower() and after_colon not in ('true', 'false', '"github"'):
-                    # This is a weak check; real secret detection would use regex
-                    # For now, just verify no obviously exposed secrets
-                    pass
+def test_allow_list_has_no_broad_destructive_wildcards():
+    """Allow list must not hold wildcards that permit destructive commands, per security.md."""
+    allow_list = _load_settings()["permissions"]["allow"]
+    broad = sorted(BROAD_DESTRUCTIVE_ALLOWS & set(allow_list))
+    assert not broad, f"Allow list has over-broad entries {broad} — list specific safe subcommands instead"
 
-    # This test is intentionally lenient since settings.json should legitimately
-    # contain tool names and plugin refs
+
+def test_allow_and_deny_do_not_overlap():
+    """No permission sits in both the allow and deny lists, where one silently overrides the other."""
+    perms = _load_settings()["permissions"]
+    both = sorted(set(perms["allow"]) & set(perms["deny"]))
+    assert not both, f"Permissions in both allow and deny: {both} — keep each in one list only"
 
 
 def test_enabled_plugins_intentional():

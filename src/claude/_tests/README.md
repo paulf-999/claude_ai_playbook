@@ -82,7 +82,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_portable_paths.py` | Hooks and tests resolve the config directory at runtime instead of hardcoding paths or usernames | 9/10 | 2026-09-18 | 2026-10-01 | 1.0.1 |
 | `test_security_guardrails.py` | Claude never recommends wildcard permissions for destructive commands, and related security guardrails | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
 | `test_test_metadata.py` | Every test's metadata header is complete, in order, well formed (banners, dates, semver, scores), and its quality score matches its own counts | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.0 |
-| `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, or holds its `BASELINE` scores and never gets worse | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.1 |
+| `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, or holds its `BASELINE` scores and never gets worse | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.2 |
 | `test_testing.py` | Self-consistency: enforcement hooks have tests, and testing.md documents the enforcement pattern | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.3 |
 
 ### `rules/03_authoring_guidelines/`
@@ -115,8 +115,8 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_aliases.py` | Each `aliases.md` entry is documented, formatted, and structurally valid | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.3 |
-| `test_settings.py` | `settings.json` permission structure, hook registration, and principle compliance | 7/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
+| `test_aliases.py` | Each `aliases.md` entry is complete, well formed and unique, and its links and controls note stay in sync | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
+| `test_settings.py` | `settings.json` permission structure, security denies, no broad destructive allows and no real secrets | 9/10 | 2026-08-28 | 2026-10-01 | 1.1.0 |
 
 **Removed (2026-09-18):** `settings/test_aliases_behavior.py` — written to run as a standalone script (per its own docstring/README), not as native pytest: 3 of its 5 functions required positional arguments pytest couldn't supply (collection errors), and the other 2 used `print`/`return` instead of `assert`, so they never actually failed regardless of outcome. `rules/test_aliases_behavior.py` already covers "aliases are documented and functional" with real assertions. **Lost, not replaced:** the skill/command-existence and convention-documentation checks this file's logic described but never actually enforced as pytest.
 
