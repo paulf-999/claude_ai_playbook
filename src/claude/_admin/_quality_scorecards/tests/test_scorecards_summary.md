@@ -7,7 +7,7 @@
 ## 📋 Current scores
 
 - **Scored:** 48 test files, average 8.6/10.
-- **Below 8.5:** 21 tests, each with recommended improvements.
+- **Below 8.5:** 20 tests, each with recommended improvements.
 - **Order:** one table per `_tests/` folder, sorted by Overall score, highest first.
 
 ### admin
@@ -38,6 +38,7 @@
 
 | Scorecard | Overall | Recommended improvements |
 |---|---|---|
+| `rules/05_lazy_load/scorecard_test_latency_optimisation.md` | 9.6/10 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_test_metadata.md` | 9.3/10 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_test_score_floor.md` | 9.3/10 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_claude_config_metadata.md` | 9.1/10 | — (≥8.5) |
@@ -57,7 +58,6 @@
 | `rules/02_claude_standards/scorecard_test_git.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/02_claude_standards/scorecard_test_security_guardrails.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 6 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/03_authoring_guidelines/scorecard_test_authoring_rules.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should |
-| `rules/05_lazy_load/scorecard_test_latency_optimisation.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 4 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/scorecard_test_aliases_behavior.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 7)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/01_essentials/scorecard_test_rule_directory_organisation.md` | 8.0/10 | • Split the test by concept to bring raw complexity (4) down to 3 or less<br>• Add test functions and assertions toward 10+ and 15+ (now 11 and 13)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/02_claude_standards/scorecard_test_portable_paths.md` | 7.7/10 | • Split the test by concept to bring raw complexity (7) down to 3 or less<br>• Update the header quality score from 9/10 to reflect the current counts<br>• Add test functions and assertions toward 10+ and 15+ (now 9 and 13) |

@@ -16,7 +16,7 @@
 | **testing_guidance.md** | Test design pattern, anti-patterns and the quarterly metadata audit; children in `testing_guidance/` | Writing a new test or auditing existing ones |
 | **turn_budgets.md** | `--max-turns` caps for non-interactive runs | Running skills, automation or CI non-interactively |
 | **mcp_trust_model.md** | MCP server trust boundaries; treating responses as data not instructions | Working with MCP tools (GitHub, Jira, etc.) and external APIs |
-| **latency_optimisation.md** | Temperature tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
+| **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
 | **automation_controls.md** | Guardrails for `/loop`, `/batch`, `/goal` automation commands | Setting up recurring automation |
 | **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | Working in that domain (e.g., load `sql.md` when writing SQL) |
 | **environment_setup/** | Environment-specific setup (e.g., oh-my-zsh configuration) | Setting up a new machine or environment |

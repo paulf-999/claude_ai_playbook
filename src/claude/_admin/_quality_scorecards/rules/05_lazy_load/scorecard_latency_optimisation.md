@@ -1,32 +1,22 @@
 # Quality Scorecard — latency_optimisation.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-01
 
-**Overall score:** 7.5/10 (6-dimension average, Token Cost N/A)
-
-**Recommended improvements:**
-- Cite a specific incident or observed need for this guidance, rather than general LLM-parameter advice.
+**Overall score:** 9.2/10 (6-dimension average, Token Cost N/A)
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 9/10 | 2026-09-28 | • 📋 **Concrete:** specific temperature values per scenario, a measure-before-optimizing checklist, explicit appropriate/not-appropriate use cases |
-| **Complexity** | 9/10 | 2026-09-28 | • 🧮 **Raw complexity 1:** single concept (temperature as a latency lever) with a small "how to apply" appendix, single file, no dependencies |
-| **Evidence of Need** | 6/10 | 2026-09-28 | • 🔗 **Plausible but unevidenced:** reads as sound general LLM-API guidance, but no specific incident or recurring problem in this config is cited |
+| **Clarity** | 9/10 | 2026-09-28 | • 📋 **Concrete:** an effort table by use, explicit appropriate and not-appropriate cases, and a measure-first checklist |
+| **Complexity** | 9/10 | 2026-09-28 | • 🧮 **Raw complexity 1:** single concept (making responses faster or cheaper), single file, no dependencies |
+| **Evidence of Need** | 8/10 | 2026-10-01 | • 🔗 **Incident:** the rule recommended temperatures of 1.5–2.0, which the API never accepts, and temperature on models that reject it, so it needed correcting against the API reference |
 | **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
-| **Structural Compliance** | 6/10 | 2026-09-28 | • 🚩 **Unusual frontmatter:** opens with `name:`/`description:`/`metadata: type: feedback` YAML — the personal-memory-entry schema, not used by any other `_rules/` file seen this session<br>• ✅ **Otherwise compliant:** emoji H1, Purpose statement, trailing newline, well under the line limit |
-| **Currency** | 9/10 | 2026-09-28 | • 🔍 **Check:** no stale references found; temperature guidance matches current model behavior |
-| **Test Coverage** | 6/10 | 2026-09-28 | • 🧪 **Moderate:** `test_latency_optimisation.py` — 4 functions, 6 assertions, self-rated 5/10 quality |
-| **Overall** | **7.5/10** | 2026-09-28 | • 💪 **Strength:** clear, practical, appropriately scoped guidance<br>• ⚠️ **Gap:** stray memory-schema frontmatter and no cited real-world justification |
+| **Structural Compliance** | 9/10 | 2026-10-01 | • ✅ **Header:** 3-line metadata header, emoji H1 and headings, Purpose statement and British spelling<br>• ✅ **Fixed:** the stray memory-schema frontmatter is gone |
+| **Currency** | 10/10 | 2026-10-01 | • 🔍 **Check:** effort levels, the Opus 5.5 `medium` default and which models reject `temperature` match the API reference as of 2026-10-01 |
+| **Test Coverage** | 10/10 | 2026-10-01 | • 🧪 **Strong:** `test_latency_optimisation.py` — 13 functions, 18 assertions, 9/10, and it fails on any temperature above 1 |
+| **Overall** | **9.2/10** | 2026-10-01 | • 💪 **Strength:** current, practical guidance with a test that stops the temperature error coming back<br>• ⚠️ **Gap:** model-specific details will date, so re-check them at each model release |
 
 ## 🔗 Related files
 
 - `src/claude/_rules/05_lazy_load/latency_optimisation.md` — the rule being scored
 - `src/claude/_tests/rules/05_lazy_load/test_latency_optimisation.py` — Test Coverage dimension
-
----
-
-## 🚩 Pre-existing issue disclosed, not fixed
-
-- 🐛 **Anomalous frontmatter:** the file opens with `name: latency_optimisation`, `description: ...`, `metadata: {type: feedback}` — YAML matching this user's personal-memory-entry schema (see the memory system's own file format), not any convention used by other `_rules/` files.
-- 📋 **Disposition:** out of scope for this scorecard — flagged here per this config's pre-existing-issue disclosure rule, not silently fixed.

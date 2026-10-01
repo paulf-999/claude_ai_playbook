@@ -47,8 +47,8 @@ Each tier is its own table, sorted descending by Overall score within the tier.
 
 | File | Overall | Recommended improvements |
 |---|---|---|
+| `scorecard_latency_optimisation.md` | 9.2/10 | — (≥8.5) |
 | `scorecard_payroc_engineering_naming_standards.md` | 7.8/10 | • Add a dedicated structural test for this file and its 3 children |
-| `scorecard_latency_optimisation.md` | 7.5/10 | • Cite a specific incident or observed need for this guidance |
 | `scorecard_automation_controls.md` | 7.5/10 | • Split into parent + child files — 162 lines with no children |
 | `scorecard_airflow.md` | 7.5/10 | • Add a dedicated structural test<br>• Delete or reconcile the orphaned duplicate `airflow/airflow.md` |
 | `scorecard_datetime.md` | 7.3/10 | • Add a `**Purpose:**` statement<br>• Add a dedicated structural test |

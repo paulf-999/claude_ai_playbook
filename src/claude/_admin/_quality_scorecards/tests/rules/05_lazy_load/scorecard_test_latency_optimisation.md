@@ -3,22 +3,18 @@
 **Date Created:** 2026-09-30
 **Date Updated:** 2026-10-01
 
-**Overall score:** 8.1/10
-
-**Recommended improvements:**
-- Add test functions and assertions toward 10+ and 15+ (now 4 and 6)
-- Add a synthetic bad-input test that proves the check fails when it should
+**Overall score:** 9.6/10
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
-| **Complexity** | 9/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 9/10 (raw complexity 1) |
-| **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact |
-| **Coverage** | 5/10 | 2026-09-30 | • 📊 **Counts:** 4 test functions and 6 assertions |
-| **Structural Compliance** | 9/10 | 2026-10-01 | • ✅ **Header:** full metadata header, marked Python style compliant |
-| **Currency** | 9/10 | 2026-09-30 | • 🔍 **References:** passes against the current config, header last updated 2026-09-28 |
-| **Regression Value** | 7/10 | 2026-09-30 | • 🛡️ **Failure cases:** checks real files, but no function proves the check fails on a bad case |
-| **Overall** | **8.1/10** | 2026-10-01 | • 💪 **Strongest:** Clarity, Complexity, Evidence of Need, Structural Compliance and Currency (9/10)<br>• ⚠️ **Weakest:** Coverage (5/10) |
+| **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and every assertion names the clause that broke |
+| **Complexity** | 9/10 | 2026-09-30 | • 🧮 **Raw complexity 1:** Concepts 1 (the latency rule's guidance) + Scope 0 + Dependencies 0 + Prerequisites 0 |
+| **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Incident:** the rule recommended temperatures of 1.5–2.0, but the API only accepts 0–1 and current models reject temperature |
+| **Coverage** | 10/10 | 2026-10-01 | • 📊 **Counts:** 13 test functions and 18 assertions<br>• 🧩 **Checks:** effort table, the Opus 5.5 default, temperature warning, `max_tokens`, streaming and the measure-first steps |
+| **Structural Compliance** | 10/10 | 2026-10-01 | • ✅ **Header:** full metadata header, marked Python style compliant and checked with `ruff` |
+| **Currency** | 10/10 | 2026-10-01 | • 🔍 **References:** matches the API's effort and temperature behaviour as of 2026-10-01 |
+| **Regression Value** | 10/10 | 2026-10-01 | • 🛡️ **Mutation check:** the old rule fails the no-temperature-above-1 check on `[1.5, 2.0]` |
+| **Overall** | **9.6/10** | 2026-10-01 | • 💪 **Strongest:** Coverage, Structural Compliance, Currency and Regression Value (10/10)<br>• ⚠️ **Weakest:** Clarity, Complexity and Evidence of Need (9/10) |
 
 ## 🔗 Related files
 
