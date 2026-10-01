@@ -1,13 +1,9 @@
 # Quality Scorecard — airflow.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-01
 
-**Overall score:** 7.5/10 (6-dimension average, Token Cost N/A)
-
-**Recommended improvements:**
-- Add a dedicated structural test for this file, matching the pattern used for tier-based parent rules.
-- Delete or reconcile the orphaned duplicate `airflow/airflow.md` — an unreferenced near-copy of this file.
+**Overall score:** 8.7/10 (6-dimension average, Token Cost N/A)
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
@@ -17,8 +13,8 @@
 | **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
 | **Structural Compliance** | 9/10 | 2026-09-28 | • ✅ **Compliant:** Purpose + Scope statements, consistent emoji headers, 100 lines (at the tolerated limit, not over it) |
 | **Currency** | 7/10 | 2026-09-28 | • 🐛 **Orphaned duplicate:** `style_guide_standards/airflow/airflow.md` is a near-identical, unreferenced copy of this file — flagged, not fixed, out of scope here<br>• ✅ **Content itself:** no stale references found in the parent's own text |
-| **Test Coverage** | 2/10 | 2026-09-28 | • 🧪 **Gap:** confirmed via `find` — no test file references `airflow` by name (only unrelated hook-injection tests exist under that keyword) |
-| **Overall** | **7.5/10** | 2026-09-28 | • 💪 **Strength:** the clearest why/how/test structure in this survey<br>• ⚠️ **Gap:** zero test coverage and an unreferenced duplicate file sitting alongside its real children |
+| **Test Coverage** | 9/10 | 2026-10-01 | • 🧪 **Dedicated test:** `test_lazy_load_rule_structure.py` checks its header, Purpose line, key sections, child links, relative links and Contents<br>• ✅ **Generic checks:** also passes `test_rules_structure.py` |
+| **Overall** | **8.7/10** | 2026-10-01 | • 💪 **Strength:** the clearest why/how/test structure in this survey<br>• ⚠️ **Gap:** Currency (7/10) is now the weakest dimension |
 
 ## 🔗 Related files
 

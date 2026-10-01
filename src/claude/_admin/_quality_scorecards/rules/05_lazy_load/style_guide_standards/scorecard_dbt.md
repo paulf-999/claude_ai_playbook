@@ -1,14 +1,13 @@
 # Quality Scorecard — dbt.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-01
 
-**Overall score:** 6.7/10 (6-dimension average, Token Cost N/A)
+**Overall score:** 7.8/10 (6-dimension average, Token Cost N/A)
 
 **Recommended improvements:**
 - Reconcile the redundant `@./dbt/*.md` imports block with the "Child pages" markdown-link table above it — `05_lazy_load/` is documented as never auto-imported, so having both patterns is ambiguous about whether children load automatically.
 - Delete or reconcile the orphaned duplicate `dbt/dbt.md` — an unreferenced near-copy of this file.
-- Add a dedicated structural test for this file.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
@@ -18,8 +17,8 @@
 | **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
 | **Structural Compliance** | 6/10 | 2026-09-28 | • 🚩 **Inconsistent with siblings:** carries BOTH a "Child pages" markdown-link table AND a separate `@./dbt/*.md` imports block at the bottom — `airflow.md` and `bash.md` use only the link-table pattern<br>• ✅ **Otherwise compliant:** Purpose + Scope statements, emoji headers |
 | **Currency** | 5/10 | 2026-09-28 | • 🐛 **Orphaned duplicate:** `dbt/dbt.md` is a near-identical, unreferenced copy of this file — flagged, not fixed<br>• 🐛 **Ambiguous import mechanism:** the `@./` block's actual effect when this file is read on-demand (vs. imported at CLAUDE.md load time) isn't documented anywhere in this repo |
-| **Test Coverage** | 2/10 | 2026-09-28 | • 🧪 **Gap:** confirmed via `find` — no test file references `dbt` style guide content by name |
-| **Overall** | **6.7/10** | 2026-09-28 | • 💪 **Strength:** the same strong why/how/test structure as `airflow.md`<br>• ⚠️ **Gap:** a confusing dual child-loading pattern, an orphaned duplicate, and no test coverage |
+| **Test Coverage** | 9/10 | 2026-10-01 | • 🧪 **Dedicated test:** `test_lazy_load_rule_structure.py` checks its header, Purpose line, key sections, child links, relative links and Contents<br>• ✅ **Generic checks:** also passes `test_rules_structure.py` |
+| **Overall** | **7.8/10** | 2026-10-01 | • 💪 **Strength:** the same strong why/how/test structure as `airflow.md`<br>• ⚠️ **Gap:** Currency (5/10) is now the weakest dimension |
 
 ## 🔗 Related files
 

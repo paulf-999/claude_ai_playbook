@@ -1,15 +1,14 @@
 # Quality Scorecard — sql.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-01
 
-**Overall score:** 6.3/10 (6-dimension average, Token Cost N/A)
+**Overall score:** 7.5/10 (6-dimension average, Token Cost N/A)
 
 **Recommended improvements:**
 - Add an emoji to the "## Imports" heading — it's the only heading in this file without one.
 - Reconcile the redundant "Child pages" markdown-link table with the separate `@./sql/*.md` imports block at the bottom, same inconsistency found in `dbt.md`.
 - Delete or reconcile the orphaned duplicate `sql/sql.md`.
-- Add a dedicated structural test for this file.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
@@ -19,8 +18,8 @@
 | **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
 | **Structural Compliance** | 6/10 | 2026-09-28 | • 🚩 **Missing emoji:** "## Imports" is the only heading in the file without one<br>• 🚩 **Dual child-loading pattern:** same inconsistency as `dbt.md` — a "Child pages" table AND a separate `@./` imports block for the same 4 files |
 | **Currency** | 4/10 | 2026-09-28 | • 🐛 **Orphaned duplicate:** `sql/sql.md` is a near-identical, unreferenced copy of this file (confirmed via `diff`)<br>• 🐛 **Ambiguous import mechanism:** same undocumented `@./` behavior as `dbt.md` |
-| **Test Coverage** | 2/10 | 2026-09-28 | • 🧪 **Gap:** confirmed via `find` — no test file references this rule by name |
-| **Overall** | **6.3/10** | 2026-09-28 | • 💪 **Strength:** the most concrete, operationally-grounded content in this survey (real cost thresholds, real SQLFluff codes)<br>• ⚠️ **Gap:** same dual-loading and orphaned-duplicate pattern seen in `dbt.md`, plus one missing heading emoji |
+| **Test Coverage** | 9/10 | 2026-10-01 | • 🧪 **Dedicated test:** `test_lazy_load_rule_structure.py` checks its header, Purpose line, key sections, child links, relative links and Contents<br>• ✅ **Generic checks:** also passes `test_rules_structure.py` |
+| **Overall** | **7.5/10** | 2026-10-01 | • 💪 **Strength:** the most concrete, operationally-grounded content in this survey (real cost thresholds, real SQLFluff codes)<br>• ⚠️ **Gap:** Currency (4/10) is now the weakest dimension |
 
 ## 🔗 Related files
 
