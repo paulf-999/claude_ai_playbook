@@ -12,6 +12,8 @@ Each table's **Quality**, **Created**, **Updated**, and **Version** columns are 
 the test file's own metadata header — see `testing.md`'s Test Metadata Standard section for the
 format and scoring rubric.
 
+**Utility (not a scored test):** `_rule_reachability.py` — walks the `@import` chains from `CLAUDE.md` and reports broken imports and orphaned rule files.
+
 **Utility (not a scored test):** `_file_structure_validator.py` — the file-structure scanner, and the `--check` mode the naming hook calls for one new path.
 
 **Utility (not a scored test):** `_shared_paths.py` — resolves `CLAUDE_DIR` (via `CLAUDE_CONFIG_DIR`,
@@ -73,16 +75,17 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_always_on_reachability.py` | Every always-on rule file is reachable from `CLAUDE.md` via `@import`, and `_lazy_load/` folders are exempt | 9/10 | 2026-09-18 | 2026-10-01 | 1.1.1 |
+| `test_always_on_reachability.py` | Every always-on rule file in the real config is reachable from `CLAUDE.md`, and every `_lazy_load/` child has a 'Read on demand' pointer | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.0 |
 | `test_artefact_proposal_gates.py` | The three artefact proposal gates — naming, placement, duplication | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.1 |
 | `test_concurrent_sessions.py` | `git/_concurrent_sessions.md` keeps its incident record and shared-working-tree safety guidance | 9/10 | 2026-09-21 | 2026-10-01 | 1.2.1 |
 | `test_decision_making.py` | `_decision_making.md` keeps each clause of the intentionality gate, and the rules it defers to still exist and agree | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_git.py` | `git.md` keeps each git rule, imports its children, and its branch-name pattern matches its own examples | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_plan_mode_phase_gates.py` | Mandatory plan-mode phase gates — blocking requirements, plan-type examples | 8/10 | 2026-09-16 | 2026-10-01 | 3.0.1 |
-| `test_portable_paths.py` | Hooks and tests resolve the config directory at runtime instead of hardcoding paths or usernames | 9/10 | 2026-09-18 | 2026-10-01 | 1.0.1 |
+| `test_portable_paths_hooks.py` | Hooks resolve the config dir from their own location — no hardcoded `~/.claude/` file operations or guard substrings | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.0 |
+| `test_portable_paths_python.py` | Python test files use `CLAUDE_DIR` — no `.expanduser()` outside `_shared_paths.py`, home-directory constants or one-convention import prefixes | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.0 |
 | `test_security_guardrails.py` | `_security_guardrails.md` keeps each guardrail, and settings.json allows none of the wildcards it forbids | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_test_metadata.py` | Every test's metadata header is complete, in order, well formed (banners, dates, semver, scores), and its quality score matches its own counts | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.0 |
-| `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, or holds its `BASELINE` scores and never gets worse | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.6 |
+| `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, or holds its `BASELINE` scores and never gets worse | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.7 |
 | `test_testing.py` | Every enforcement hook has a test (aspect splits allowed), no orphaned hook tests, and testing.md's pointers exist | 9/10 | 2026-08-28 | 2026-10-01 | 1.2.0 |
 
 ### `rules/03_authoring_guidelines/`
@@ -159,6 +162,7 @@ these tests and is imported directly via a relative import.
 |---|---|---|---|---|---|
 | `test_file_structure_compliance.py` | Every file in the real Claude config passes the file-structure scan, checked area by area | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_file_structure_validator.py` | The file-structure scanner flags bad names and skips auto-generated, hidden and exempt files | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.2 |
+| `test_rule_reachability.py` | The rule-reachability detector flags orphans and broken imports, and honours its exemptions, on fake rule trees | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.0 |
 
 ---
 
