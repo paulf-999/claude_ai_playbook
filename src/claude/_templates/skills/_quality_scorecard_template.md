@@ -1,16 +1,16 @@
-<!-- version: 2.1.0 -->
+<!-- version: 2.2.0 -->
 <!-- created: 2026-09-07 -->
 <!-- updated: 2026-10-01 -->
 # Quality Scorecard — Template
 
-Every skill has a scorecard at `_admin/_quality_scorecards/skills/scorecard_<skill_name>.md` containing only this table (no justification or rationale sections).
+Every skill has a scorecard at `_admin/_quality_scorecards/skills/scorecard_<skill_name>.md` following the shared `_templates/scorecard.md.template`, with the skill dimensions below (no justification or rationale sections).
 
 ---
 
 ## Template
 
 ```markdown
-# Quality Scorecard
+# Quality Scorecard — <skill_name>
 
 **Date Created:** YYYY-MM-DD
 **Date Updated:** YYYY-MM-DD
@@ -30,6 +30,11 @@ Every skill has a scorecard at `_admin/_quality_scorecards/skills/scorecard_<ski
 | **Documentation** | X/10 | YYYY-MM-DD | [Brief note on documentation completeness] |
 | **Standards Compliance** | X/10 | YYYY-MM-DD | [Brief note on compliance with standards] |
 | **Overall** | **X.X/10** | YYYY-MM-DD | [One-sentence overall assessment] |
+
+## 🔗 Related files
+
+- `src/claude/skills/<group>/<skill_name>/SKILL.md` — the skill being scored
+- `src/claude/skills/<group>/<skill_name>/tests/evals.yaml` — Test Coverage dimension
 ```
 
 ---

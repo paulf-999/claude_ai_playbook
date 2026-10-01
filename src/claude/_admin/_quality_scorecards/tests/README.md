@@ -17,6 +17,8 @@ One file per test, mirroring its path under `_tests/`: `_admin/_quality_scorecar
 
 ## 📋 Template
 
+This is the test-specific version of the shared `_templates/scorecard.md.template`, with the test dimensions filled in.
+
 ```markdown
 # Quality Scorecard — <test_file_stem>.py
 
