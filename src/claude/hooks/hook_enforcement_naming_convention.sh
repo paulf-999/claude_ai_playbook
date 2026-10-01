@@ -1,17 +1,16 @@
 #!/bin/bash
-# version: 1.0.0
+# version: 2.0.0
 # created: 2026-08-28
-# updated: 2026-09-19
-# PreToolUse hook — enforces naming conventions for new files under ~/.claude/.
-# Blocks the Write tool and injects naming rules so Claude must confirm
-# the proposed filename follows the standard before proceeding.
+# updated: 2026-10-01
+# PreToolUse hook — checks the name of each new file written under the Claude config dir.
+# Runs the same file checks as _tests/test_file_structure_compliance.py on that one path,
+# and denies the Write only when the name has an error (e.g. not snake_case), giving the fix.
+# Advisory notes are ignored: the "child file" note also fires on correctly named tier rules.
 set -e
 
 CLAUDE_HOOKS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_ROOT_DIR="$(dirname "${CLAUDE_HOOKS_DIR}")"
-
-# shellcheck source=/dev/null
-source "${CLAUDE_ROOT_DIR}/_templates/utils/shell_utils.sh" 2>/dev/null || true
+CHECKER="${CLAUDE_ROOT_DIR}/_tests/test_file_structure_compliance.py"
 
 #=======================================================================
 # Variables
@@ -24,40 +23,24 @@ INPUT=$(cat)
 # Main script logic
 #=======================================================================
 
-trap handle_interruption INT 2>/dev/null || true
-
-print_section_header "${DEBUG}" "Enforcement: naming_convention.sh started" >&2 2>/dev/null || true
-
 # Only intercept Write calls — other tools cannot create new files.
 TOOL_NAME=$(echo "${INPUT}" | jq -r '.tool_name // empty' 2>/dev/null)
 [[ "${TOOL_NAME}" != "Write" ]] && exit 0
 
-# Only enforce within the Claude config dir — project files follow their own conventions.
-# Checked against CLAUDE_ROOT_DIR (resolved relative to this script), not a hardcoded
-# string, so this works whether the config lives at ~/.claude/, ~/claude/, or a repo checkout.
+# Only check new files inside the config dir — project files follow their own conventions,
+# and existing files already passed the compliance test.
 FILE_PATH=$(echo "${INPUT}" | jq -r '.tool_input.file_path // empty' 2>/dev/null)
-[[ "${FILE_PATH}" != "${CLAUDE_ROOT_DIR}"* ]] && exit 0
-
-# Skip existing files — naming is only a concern at creation time.
+[[ "${FILE_PATH}" != "${CLAUDE_ROOT_DIR}/"* ]] && exit 0
 [[ -e "${FILE_PATH}" ]] && exit 0
 
-# Load naming conventions from the appropriate rule files.
-# Prefer reading the specific child file for focused context.
-NAMING_RULES=""
+# Fail open: a missing checker, python3 or a checker error must never block a write.
+[[ -f "${CHECKER}" ]] && command -v python3 >/dev/null 2>&1 || exit 0
+VIOLATIONS=$(python3 "${CHECKER}" --check "${CLAUDE_ROOT_DIR}" "${FILE_PATH}" 2>/dev/null) || exit 0
+ERRORS=$(echo "${VIOLATIONS}" | jq -r '[.[] | select(.severity == "error") | "- " + .message] | join("\n")' 2>/dev/null) || exit 0
+[[ -z "${ERRORS}" ]] && exit 0
 
-if [[ -f "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/claude_directory_structure/_claude_directory_naming.md" ]]; then
-  NAMING_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/claude_directory_structure/_claude_directory_naming.md")
-elif [[ -f "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/naming_standards/_naming_principles.md" ]]; then
-  NAMING_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/naming_standards/_naming_principles.md")
-else
-  # Fallback to parent rules if child files not found
-  NAMING_RULES=$(cat "${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/naming_standards.md" 2>/dev/null || echo "Naming standards rule file not found. Check ${CLAUDE_ROOT_DIR}/_rules/01_essentials/claude_usage_standards/naming_standards.md")
-fi
-
-# Block and surface the naming conventions so Claude reviews the proposed name.
+# Deny the Write and say exactly what to rename.
 jq -n \
-  --arg conventions "$NAMING_RULES" \
-  --arg file_path "$FILE_PATH" \
-  '{"decision":"block","reason":("New file detected under ~/.claude/. Review naming conventions before proceeding.\n\nFile: " + $file_path + "\n\n" + $conventions)}'
-
-print_section_header "${DEBUG}" "Enforcement: naming_convention.sh completed" >&2 2>/dev/null || true
+  --arg file_path "${FILE_PATH}" \
+  --arg errors "${ERRORS}" \
+  '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":("New config file name breaks the naming standard — rename it and retry.\n\nFile: " + $file_path + "\n" + $errors + "\n\nSee _rules/01_essentials/claude_usage_standards/naming_standards.md")}}'

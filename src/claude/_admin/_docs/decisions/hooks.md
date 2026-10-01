@@ -15,9 +15,8 @@
 
 | Hook | Event | Reason |
 |---|---|---|
-| `hook_enforcement_naming_convention.sh` | PreToolUse (Write) | Block before the file is created — naming can't be fixed after the fact without a rename |
+| `hook_enforcement_naming_convention.sh` | PreToolUse (Write) | Block before the file is created — naming can't be fixed after the fact without a rename. Denies only names with an error under `test_file_structure_compliance.py`, which it calls for that one path |
 | `hook_enforcement_writing_style.sh` | PostToolUse (Edit/Write) | Inject style reminder after an edit — the edit is valid, but style compliance should follow |
-| `hook_enforcement_dir_structure.sh` | PreToolUse (Bash) | Soft inject before `mkdir` — structure decisions should be intentional |
 | `enforcement_subagent_reads.sh` | PreToolUse (Read) | Nudge before a large read — the most effective point to redirect to a sub-agent |
 | `enforcement_task_tracking.sh` | UserPromptSubmit | Only place to intercept the prompt — detects multi-step intent before any action starts |
 

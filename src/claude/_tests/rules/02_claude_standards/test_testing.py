@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Test quality score: 5/10
 # Date created:      2026-08-28
-# Version:           1.0.0
-# Date updated:      2026-09-17
+# Version:           1.0.1
+# Date updated:      2026-10-01
 # ─────────────────────────────────────────────────────────
 
 """Tests that the testing.md rule is self-consistently followed.
@@ -24,14 +24,14 @@ TESTING_MD = RULES_DIR / "02_claude_standards" / "testing.md"
 
 
 def _get_hook_files() -> set[str]:
-    """Return the set of hook script names (e.g., 'hook_enforcement_dir_structure.sh')."""
+    """Return the set of hook script names (e.g., 'hook_enforcement_naming_convention.sh')."""
     if not HOOKS_DIR.exists():
         return set()
     return {f.name for f in HOOKS_DIR.glob("hook_*.sh")}
 
 
 def _get_test_files() -> set[str]:
-    """Return the set of test file names (e.g., 'test_enforcement_dir_structure.py').
+    """Return the set of test file names (e.g., 'test_enforcement_naming_convention.py').
 
     Recursive: test files are grouped into subdirectories (enforcement/,
     style_guides/, response_standards/), not flat under hooks/.
@@ -44,7 +44,7 @@ def _get_test_files() -> set[str]:
 def _hook_to_test_name(hook_name: str) -> str:
     """Convert hook name to expected test name.
 
-    Example: hook_enforcement_dir_structure.sh -> test_enforcement_dir_structure.py
+    Example: hook_enforcement_naming_convention.sh -> test_enforcement_naming_convention.py
     """
     # Remove 'hook_' prefix and .sh extension, add 'test_' prefix and .py extension
     base = hook_name.replace("hook_", "").replace(".sh", "")
