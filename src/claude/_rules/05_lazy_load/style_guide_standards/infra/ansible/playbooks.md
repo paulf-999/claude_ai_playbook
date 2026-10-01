@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-01 -->
 # 📋 Ansible Playbooks
 
 ## 🏷️ Naming convention
@@ -9,11 +9,11 @@ Playbook files follow the pattern: `[app]_[asset_role]_[descriptor].yml`
 
 | Segment | Meaning | Example values |
 |---------|---------|----------------|
-| `app` | Application or department code | `pyrc`, `dmt`, `mobileaxept` |
+| `app` | Application or department code | `acme`, `data`, `webapp` |
 | `asset_role` | Functional role of the target asset | `ilb`, `web`, `db`, `agent` |
 | `descriptor` | Short description of what the playbook does | `setup`, `configure`, `upgrade` |
 
-Examples: `pyrc_ilb_setup.yml`, `pyrc_web_configure.yml`
+Examples: `acme_ilb_setup.yml`, `acme_web_configure.yml`
 
 ## 📋 Contents
 
@@ -30,7 +30,7 @@ Playbooks live under `playbooks/` organised by owner or application, with option
 
 ```
 playbooks/
-  <dept_or_app>/            # e.g. pyrc/, dev_ops/, obs/
+  <dept_or_app>/            # e.g. acme/, dev_ops/, obs/
     [<team>/]               # optional — e.g. dpe/, dba/
       <playbook>.yml
       group_vars -> ../../group_vars   # symlink — required
@@ -63,10 +63,10 @@ Tags are `snake_case`. Apply them consistently within a playbook — tasks of th
 
 ```bash
 # Run only configuration tasks
-ansible-playbook playbooks/pyrc/pyrc_ilb_setup.yml --tags configure
+ansible-playbook playbooks/acme/acme_ilb_setup.yml --tags configure
 
 # Skip installation tasks
-ansible-playbook playbooks/pyrc/pyrc_ilb_setup.yml --skip-tags install
+ansible-playbook playbooks/acme/acme_ilb_setup.yml --skip-tags install
 ```
 
 ---

@@ -9,7 +9,7 @@
 |---|---|---|---|
 | **Clarity** | 9/10 | 2026-09-28 | • 📋 **Concrete:** exact `.zshrc` config, a plugin table with sources, and an ordered install-script breakdown |
 | **Complexity** | 9/10 | 2026-09-28 | • 🧮 **Raw complexity 1:** single file, 4 closely-related setup steps (theme, plugins, install, VS Code), no dependencies or fixtures |
-| **Evidence of Need** | 9/10 | 2026-09-28 | • 🔗 **Concrete and operational:** references a real automated setup script (`dmt-scripts-environments`) and a `make install` target, not speculative guidance |
+| **Evidence of Need** | 9/10 | 2026-09-28 | • 🔗 **Concrete and operational:** references a real automated setup script and a `make install` target, not speculative guidance |
 | **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
 | **Structural Compliance** | 9/10 | 2026-10-01 | • ✅ **Fixed:** `**Purpose:**` line added under the H1 (PR #200)<br>• ✅ **Otherwise compliant:** emoji header, Contents section, trailing newline |
 | **Currency** | 8/10 | 2026-09-28 | • 🔍 **Check:** no internally-stale references found (external repo/script paths can't be verified from here) |

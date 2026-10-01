@@ -19,7 +19,7 @@
 | **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
 | **claude_rule_loading_strategy.md** | The five rule tiers and when a rule should be always-on or lazy, from measured usage and miss cost | Loads through `paths:` on `_rules/` files and `CLAUDE.md` |
 | **automation_controls.md** | Guardrails for `/loop`, `/batch`, `/goal` automation commands | Setting up recurring automation |
-| **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | File-type guides load through `paths:` when Claude reads a matching file; jira, Payroc naming and datetime through pointers |
+| **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | File-type guides load through `paths:` when Claude reads a matching file; jira, organisation standards and datetime through pointers |
 
 ---
 
@@ -126,16 +126,13 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - `security.md` — Input validation at system boundaries
 - Playbook docs: `docs/reference/claude_config/mcp/mcp_setup.md` — Which MCP servers are enabled and how to toggle them
 
+### `org.md`
+
+- Pointer from: `01_essentials/claude_usage_standards/naming_standards.md`, `style_guide_standards/airflow.md` and `style_guide_standards/infra/ansible.md` — organisation-specific standards kept apart from the general style guides
+
 ### `response_standards_enforcement.md`
 
 - Pointer from: `01_essentials/claude_response_standards.md` — the standard this file explains the enforcement of
-
-### `style_guide_standards/airflow/connections_and_variables.md`
-
-- [Airflow Connections](https://payroc.atlassian.net/wiki/spaces/DA/pages/3038347265)
-- [Airflow Variables](https://payroc.atlassian.net/wiki/spaces/DA/pages/3421929479)
-- [AKV Naming Standard](https://payroc.atlassian.net/wiki/spaces/DA/pages/3556671573)
-- [Secrets Backend](https://payroc.atlassian.net/wiki/spaces/DA/pages/3036774402)
 
 ### `style_guide_standards/airflow.md`
 
@@ -148,21 +145,6 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - **style_guide_standards/sql.md** — SQL formatting and standards
 - **style_guide_standards/airflow.md** — Airflow orchestration of dbt runs
 - **testing.md** — dbt test strategy and best practices
-
-### `style_guide_standards/payroc_engineering_naming_standards/_naming_conventions.md`
-
-- **[_naming_repositories.md](style_guide_standards/payroc_engineering_naming_standards/_naming_repositories.md)** — Repository naming examples
-- **[_naming_infrastructure.md](style_guide_standards/payroc_engineering_naming_standards/_naming_infrastructure.md)** — VM and cloud resource naming
-
-### `style_guide_standards/payroc_engineering_naming_standards/_naming_infrastructure.md`
-
-- **[_naming_conventions.md](style_guide_standards/payroc_engineering_naming_standards/_naming_conventions.md)** — Core segment definitions
-- **[_naming_repositories.md](style_guide_standards/payroc_engineering_naming_standards/_naming_repositories.md)** — Repository naming standards
-
-### `style_guide_standards/payroc_engineering_naming_standards/_naming_repositories.md`
-
-- **[_naming_conventions.md](style_guide_standards/payroc_engineering_naming_standards/_naming_conventions.md)** — Full segment reference
-- **[_naming_infrastructure.md](style_guide_standards/payroc_engineering_naming_standards/_naming_infrastructure.md)** — VM and resource naming
 
 ### `style_guide_standards/python/code_complexity/_code_complexity_exceptions.md`
 

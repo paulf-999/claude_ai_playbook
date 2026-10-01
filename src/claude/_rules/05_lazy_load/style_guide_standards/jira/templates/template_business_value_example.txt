@@ -12,7 +12,7 @@ data platform from running its automated processes unless addressed before the d
 - Scope: identify the solution now; implementation follows as a separate piece of work
 
 Impact Rating (per Data Team Prioritization Framework):
-* a. Prioritization Matrix: https://payroc.atlassian.net/wiki/x/k4DcRQE
+* a. Prioritization Matrix: <link to your team's prioritisation matrix>
 * b. Priority Value Driver: Platform Reliability & Technical Risk – Score: 5
 * c. Secondary Value Driver: Transaction Integrity – Score: 4
 * d. Calculated Score: 1.55

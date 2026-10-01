@@ -1,4 +1,4 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.0.3 -->
 <!-- created: 2026-04-08 -->
 <!-- updated: 2026-10-01 -->
 <!-- miss_cost: low — shell setup differs from the documented one -->
@@ -6,7 +6,7 @@
 
 **Purpose:** Give the team one standard shell setup — theme, plugins and editor integration — so terminals behave the same on every machine.
 
-The team uses [Oh My Zsh](https://ohmyz.sh/) as the standard shell framework on top of `zsh`. Setup is automated via scripts in [`dmt-scripts-environments`](https://github.com/dmt-ghe-engineering/dmt-scripts-environments/tree/main/src/sh/setup_scripts/ohmyzsh).
+The team uses [Oh My Zsh](https://ohmyz.sh/) as the standard shell framework on top of `zsh`. Setup is automated via the team's environment setup scripts.
 
 ## 📋 Contents
 

@@ -82,7 +82,7 @@ evals:
     - name: phase4_sync_to_playbook_repo
       description: Phase 4 syncs fixes to playbook repo
       input: Phase 4 applying fixes
-      setup: Playbook repo available at ~/git_repos/core/dmt-scripts-claude_ai_playbook/
+      setup: Playbook repo available at ~/git_repos/claude_ai_playbook/
       expected_output:
           - Changes synced to src/claude/
           - Both ~/.claude/ and src/claude/ updated

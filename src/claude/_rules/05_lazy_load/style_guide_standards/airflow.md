@@ -2,7 +2,7 @@
 paths:
   - "**/dags/**/*.py"
 ---
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-01 -->
 <!-- miss_cost: medium — DAGs that fail review or misbehave on schedule -->
@@ -20,7 +20,8 @@ paths:
 | [`airflow/dag_configuration.md`](airflow/dag_configuration.md) | config.yaml fields, default args, scheduling, tags, documentation | Configuring DAG behavior |
 | [`airflow/tasks_and_operators.md`](airflow/tasks_and_operators.md) | Task design, operator selection, dependencies, TaskGroups, XComs | Writing DAG logic |
 | [`airflow/best_practices.md`](airflow/best_practices.md) | Idempotency, catchup, retries, error handling, testing | Debugging DAG failures |
-| [`airflow/connections_and_variables.md`](airflow/connections_and_variables.md) | AKV-backed connections/variables, naming, provisioning | Configuring external integrations |
+
+- **Read on demand:** `~/.claude/_rules/05_lazy_load/org.md` — before adding a connection or variable, for any organisation-specific secrets conventions.
 
 ---
 

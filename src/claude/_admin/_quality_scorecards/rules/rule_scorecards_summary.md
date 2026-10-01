@@ -45,7 +45,6 @@ Sorted by Overall score, highest first.
 | `02_claude_standards/scorecard_portable_paths.md` | 9.4/10 | 2026-09-28 | — (≥8.5) |
 | `05_lazy_load/scorecard_latency_optimisation.md` | 9.2/10 | 2026-10-01 | — (≥8.5) |
 | `05_lazy_load/style_guide_standards/scorecard_airflow.md` | 9.0/10 | 2026-10-01 | — (≥8.5) |
-| `05_lazy_load/style_guide_standards/scorecard_payroc_engineering_naming_standards.md` | 9.0/10 | 2026-10-01 | — (≥8.5) |
 | `05_lazy_load/style_guide_standards/utilities/scorecard_datetime.md` | 9.0/10 | 2026-10-01 | — (≥8.5) |
 | `01_essentials/scorecard_claude_usage_standards.md` | 8.9/10 | 2026-09-28 | — (≥8.5) |
 | `05_lazy_load/style_guide_standards/infra/scorecard_ansible.md` | 8.8/10 | 2026-10-01 | — (≥8.5) |

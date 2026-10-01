@@ -1,6 +1,6 @@
-<!-- version: 1.2.0 -->
+<!-- version: 1.2.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
 # 🎯 Task Request Conventions
 
 **Purpose:** Establish durable, version-controlled conventions for how Claude responds to specific, recurring user request types — patterns that are behavioral, not mechanical, and codified as guidance rules.
@@ -62,7 +62,7 @@ Convention for "add to TODOs" requests — when a user says "add to TODOs" or "a
    - Priority: Medium
    - Effort: Medium
    - Value: High
-   - Description: "Create style guide rule for SQL formatting in dbt models. Cover indentation, naming, comment styles. Aligns with payroc_engineering_naming_standards.md."
+   - Description: "Create style guide rule for SQL formatting in dbt models. Cover indentation, naming, comment styles. Aligns with naming_standards.md."
 
 ---
 

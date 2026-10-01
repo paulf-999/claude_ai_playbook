@@ -170,7 +170,7 @@ def extract_subject(prompt: str) -> str:
     """
     prompt_lower = prompt.lower()
     subjects = {
-        "Style guides": ["style guide", "payroc_engineering"],
+        "Style guides": ["style guide", "naming_standards"],
         "Hooks": ["hooks", "hook"],
         "Child pages": ["child page", "multifile"],
         "Naming": ["naming", "name"],

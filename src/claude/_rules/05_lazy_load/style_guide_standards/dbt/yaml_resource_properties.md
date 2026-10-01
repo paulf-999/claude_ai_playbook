@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-01 -->
 # 📄 YAML Resource Properties
 
 Standards for declaring dbt resource properties in YAML — covering file naming, formatting style, source definitions, tests, and sensitive data tagging.
@@ -39,7 +39,7 @@ Apply at minimum `unique` and `not_null` tests to the surrogate key (`KEY`) of e
 
 ```yaml
 models:
-  - name: staging_access_one_merchant_list
+  - name: staging_crm_customer_list
     columns:
       - name: KEY
         tests:

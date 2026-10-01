@@ -1,4 +1,4 @@
-# CLAUDE.md — dmt-scripts-claude_ai_playbook
+# CLAUDE.md — claude_ai_playbook
 
 This file provides repo-specific instructions for Claude Code when working in the playbook repo.
 
@@ -78,4 +78,4 @@ Files most frequently cross-referenced across the playbook, derived from static 
 | `src/claude/_rules/05_lazy_load/style_guide_standards/jira.md` | Jira tickets |
 | `src/claude/_rules/05_lazy_load/style_guide_standards/infra/terraform.md` | Terraform |
 | `src/claude/_rules/05_lazy_load/style_guide_standards/infra/ansible.md` | Ansible |
-| `src/claude/_rules/05_lazy_load/style_guide_standards/payroc_engineering_naming_standards.md` | Naming standards |
+| `src/claude/_rules/05_lazy_load/org.md` | Organisation-specific standards (naming, secrets, estate) |

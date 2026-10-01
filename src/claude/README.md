@@ -10,7 +10,7 @@ Files installed into `~/.claude/` by `make install`. Everything here shapes how 
 |------------------|---------|
 | [`CLAUDE.md`](CLAUDE.md) | 🔗 Root config — imports rules via `@` directives |
 | [`settings.json`](settings.json) | ⚙️ Claude Code settings — team baseline configuration |
-| [`agents/`](agents) | 🤖 Sub-agent personas for core and DMT-specific roles |
+| [`agents/`](agents) | 🤖 Sub-agent personas for core and team-specific roles |
 | [`_rules/`](_rules) | 📏 Hard rules Claude must follow — always-on essentials and lazy-load domain rules (incl. style guides) |
 | [`skills/`](skills/README.md) | 🛠️ Reusable multi-step workflows invoked via `/skill-name` |
 

@@ -3,7 +3,7 @@ paths:
   - "**/playbooks/**/*.yml"
   - "**/roles/**/*.yml"
 ---
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.1 -->
 <!-- created: 2026-04-08 -->
 <!-- updated: 2026-10-01 -->
 <!-- miss_cost: medium — playbooks that fail review or idempotency checks -->
@@ -18,7 +18,8 @@ paths:
 | [`ansible/playbooks.md`](ansible/playbooks.md) | Playbook naming, folder structure, symlinks, CODEOWNERS, and tags |
 | [`ansible/roles_and_tasks.md`](ansible/roles_and_tasks.md) | Role layout, task conventions, variable naming, and versioning |
 | [`ansible/variables.md`](ansible/variables.md) | `l1`–`l6` group_vars hierarchy, precedence, and variable naming |
-| [`ansible/air_gapped_deployment.md`](ansible/air_gapped_deployment.md) | Air-gapped constraints, Cloudsmith artefact sourcing, and Helm chart deployment |
+
+- **Read on demand:** `~/.claude/_rules/05_lazy_load/org.md` — before deploying, for any organisation-specific estate constraints such as air-gapped hosts.
 
 > **Note:** `secrets_and_inventory.md` is excluded from this guide — handle vault secrets and dynamic inventory configuration directly in the repo.
 
@@ -76,12 +77,12 @@ pipelines/                          # CI/CD pipeline definitions
 
 | Construct | Convention | Example |
 |-----------|------------|---------|
-| Playbook files | `[app]_[asset_role]_[descriptor].yml` | `pyrc_ilb_setup.yml` |
+| Playbook files | `[app]_[asset_role]_[descriptor].yml` | `acme_ilb_setup.yml` |
 | Role directories | `roles/[capability]/[role_name]` | `roles/systems/azure_devops_agent` |
-| Inventory scope dirs | `[org]-[env]-[qualifier]` | `pyrc-prd-cde`, `pyrc-stg-dct` |
+| Inventory scope dirs | `[org]-[env]-[qualifier]` | `acme-prd-cde`, `acme-stg-dct` |
 | Dynamic plugin files | `[provider]_[account/site]_[plugin].yml` | `aws_28122221233-aws_ec2.yml` |
 | Variables in roles | `[role]_[variable_name]` | `webserver_port` |
-| Variables in vars files | `[app/dept]__[role]_[variable_name]_[descriptor]` | `pyrc__nginx_port_http` |
+| Variables in vars files | `[app/dept]__[role]_[variable_name]_[descriptor]` | `acme__nginx_port_http` |
 | Task names | Sentence case, descriptive | `Install nginx package` |
 | Tags | `snake_case` | `install`, `configure`, `restart` |
 
