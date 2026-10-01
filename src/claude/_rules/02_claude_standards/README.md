@@ -160,6 +160,7 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - Parent: `testing.md` — When tests are required; test design pattern and gates
 - `claude_plans.md` — Gate testing before merging
 - `~/.claude/_tests/` — Location of all test files and metadata headers
+- `_tests/rules/02_claude_standards/test_test_score_floor.py` — enforces the score minimum
 
 ### `testing/_test_metadata_complexity_scoring.md`
 

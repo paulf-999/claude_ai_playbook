@@ -1,4 +1,4 @@
-<!-- version: 1.2.0 -->
+<!-- version: 1.3.0 -->
 <!-- created: 2026-09-17 -->
 <!-- updated: 2026-10-01 -->
 # 📊 Test Metadata Standard
@@ -61,7 +61,11 @@ Every test file in `~/.claude/_tests/` must open with this metadata header:
 
 **Any test Claude writes from now on must be built to reach quality ≥9/10 AND complexity score ≥7/10** — not scored honestly after the fact at whatever level it lands. Design for 15+ assertions and 10+ test functions up front (quality), while keeping the test to one concept and one file with minimal dependencies/fixtures (complexity) — see `_test_metadata_complexity_scoring.md` for why these don't trade off against each other. A test that only reaches 5/10 or 6/10 quality wasn't finished; a test padded with unnecessary scope/dependencies just to look thorough missed the point.
 
-**Existing tests keep their current score** — this floor applies going forward, not retroactively. A 6/10 test written before this rule existed isn't a violation; a new 6/10 test is.
+**Style counts too:** a new test must also set `Python style compliant: Yes`.
+
+**Enforced:** `test_test_score_floor.py` fails any test file below quality 9, complexity 7 or style Yes.
+- **Baseline:** files that were below the minimum when this was enforced sit on its `BASELINE` list and may improve but never get worse.
+- **Leaving the list:** a listed file that meets every minimum fails until its entry is removed, so the list only shrinks.
 
 ---
 
