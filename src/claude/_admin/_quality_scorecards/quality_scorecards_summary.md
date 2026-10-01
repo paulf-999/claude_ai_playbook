@@ -26,7 +26,7 @@
 
 Ranked by impact, highest first, with lazy-load rule actions last because those rules load only on demand.
 
-| # | Action | Why | Source summary |
+| # | Action | Why | Source |
 |---|---|---|---|
 | 1 | • 🆕 **Unscored hooks and agents:** write the first scorecards for hooks and agents | • 🙈 **Blind spot:** two of the five types have no quality signal at all | `hooks/hook_scorecards_summary.md`<br>`agents/agent_scorecards_summary.md` |
 | 2 | • 🔧 **Lowest skill score:** replace `claude_kaizen`'s placeholder eval runner | • 🔻 **Bottom of the table:** at 6.1/10 it is the lowest-scoring skill | `skills/skill_scorecards_summary.md` |
@@ -36,9 +36,22 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 
 ---
 
+## 📄 All summaries
+
+| Summary | Scored | Overall | Date Updated |
+|---|---|---|---|
+| `tests/test_scorecards_summary.md` | 49 | 8.6/10 | 2026-10-01 |
+| `skills/skill_scorecards_summary.md` | 7 | 8.4/10 | 2026-09-30 |
+| `rules/rule_scorecards_summary.md` | 33 | 8.2/10 | 2026-10-01 |
+| `hooks/hook_scorecards_summary.md` | 0 | — | — |
+| `agents/agent_scorecards_summary.md` | 0 | — | — |
+
+---
+
 ## 🔄 Keeping this current
 
 - **Same commit:** update this file whenever any per-type summary changes.
 - **Recompute:** re-average the Overall scores and re-check the strongest and weakest files whenever a scorecard is re-scored.
 - **Bump dates:** set a type's `Date Updated` to the re-scored scorecard's `Date Updated`.
 - **Prune actions:** remove an action once its source summary no longer lists it.
+- **Template:** this file follows `_templates/scorecard_summary.md.template`.
