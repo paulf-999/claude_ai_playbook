@@ -18,6 +18,7 @@
 !src/claude/skills/**/evals/*.json
 !.claude/settings.json
 *.csv
+!src/claude/_admin/_audits/rule_usage_history.csv
 *.csv.gz
 *.tsv
 *.tsv.gz

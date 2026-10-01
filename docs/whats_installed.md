@@ -67,7 +67,7 @@ Shell scripts that run at Claude Code lifecycle events once registered in `setti
 
 See [`src/claude/_scripts/`](../src/claude/_scripts/)
 
-Python tools for auditing the config, such as `make audit_components`, which reports on the health of skills, agents and rules.
+Python tools for auditing the config, such as `make audit_components`, which reports on the health of skills, agents and rules, and `make audit_rule_usage`, which measures how often each rule applies and loads.
 
 ---
 
