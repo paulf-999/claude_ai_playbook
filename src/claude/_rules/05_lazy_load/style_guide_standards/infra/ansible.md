@@ -1,4 +1,9 @@
-<!-- version: 1.0.2 -->
+---
+paths:
+  - "**/playbooks/**/*.yml"
+  - "**/roles/**/*.yml"
+---
+<!-- version: 1.1.0 -->
 <!-- created: 2026-04-08 -->
 <!-- updated: 2026-10-01 -->
 <!-- miss_cost: medium — playbooks that fail review or idempotency checks -->

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.1.0
+# Version:           1.1.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -33,7 +33,6 @@ RULES: dict[Path, list[str]] = {
     ],
     STYLE_DIR / "airflow.md": ["Child pages", "Core Principles", "DAG Acceptance Checklist"],
     STYLE_DIR / "utilities" / "datetime.md": ["Standard formats", "Timezone", "Known exceptions"],
-    Path("environment_setup") / "ohmyzsh_setup.md": ["Theme", "Plugins", "Installation"],
     STYLE_DIR / "infra" / "ansible.md": ["Child pages", "Repo structure", "Naming conventions", "Linting"],
     STYLE_DIR / "infra" / "terraform.md": ["Child pages", "Core principles"],
     STYLE_DIR / "python.md": ["Naming conventions", "Error handling", "Docstrings", "Child files"],
@@ -205,9 +204,9 @@ def _rule_texts() -> dict[Path, str]:
 # ── Real config ─────────────────────────────────────────────────────────
 
 
-def test_rule_table_tracks_fifteen_distinct_rules():
-    """The table covers the 15 rules whose scorecards asked for a dedicated test."""
-    assert len(RULES) == 15, f"Expected 15 tracked rules, found {len(RULES)} — update RULES"
+def test_rule_table_tracks_fourteen_distinct_rules():
+    """The table covers the 14 rules whose scorecards asked for a dedicated test (ohmyzsh_setup.md is archived)."""
+    assert len(RULES) == 14, f"Expected 14 tracked rules, found {len(RULES)} — update RULES"
     stems = [rel.stem for rel in RULES]
     assert len(set(stems)) == len(stems), f"Duplicate rule stems in RULES: {stems}"
 

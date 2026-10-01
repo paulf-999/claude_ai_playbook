@@ -1,4 +1,4 @@
-<!-- version: 1.1.3 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-01 -->
 <!-- applies_to: * -->
@@ -24,6 +24,7 @@
 
 - **Don't parallelise for its own sake:** prefer targeted, scoped operations over broad sweeps where the output would be equivalent.
   - **Note:** parallelise only where it reduces real wait time or produces meaningfully better results.
+- **Read on demand:** `~/.claude/_rules/05_lazy_load/latency_optimisation.md` — when slow or costly API calls are blocking the task.
 
 ---
 

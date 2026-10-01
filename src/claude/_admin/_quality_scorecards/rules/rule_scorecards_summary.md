@@ -17,7 +17,7 @@
 | 02_claude_standards | 6 | 8.0/10 | 2026-09-28 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_plans.md` (7.6/10) |
 | 03_authoring_guidelines | 4 | 8.2/10 | 2026-09-30 | • 💪 **Strongest:** `authoring_skills.md` (8.7/10)<br>• ⚠️ **Weakest:** `authoring_agents.md` (7.9/10) |
 | 04_claude_reference | 1 | 7.1/10 | 2026-09-28 | • 💪 **Only file:** `claude_operational_efficiency.md` (7.1/10) |
-| 05_lazy_load | 18 | 8.4/10 | 2026-10-01 | • 💪 **Strongest:** `latency_optimisation.md` (9.2/10)<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
+| 05_lazy_load | 17 | 8.4/10 | 2026-10-01 | • 💪 **Strongest:** `latency_optimisation.md` (9.2/10)<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
 | Non-tiered | 1 | 8.6/10 | 2026-09-28 | • 💪 **Only file:** `aliases.md` (8.6/10) |
 
 ---
@@ -48,7 +48,6 @@ Sorted by Overall score, highest first.
 | `05_lazy_load/style_guide_standards/scorecard_payroc_engineering_naming_standards.md` | 9.0/10 | 2026-10-01 | — (≥8.5) |
 | `05_lazy_load/style_guide_standards/utilities/scorecard_datetime.md` | 9.0/10 | 2026-10-01 | — (≥8.5) |
 | `01_essentials/scorecard_claude_usage_standards.md` | 8.9/10 | 2026-09-28 | — (≥8.5) |
-| `05_lazy_load/environment_setup/scorecard_ohmyzsh_setup.md` | 8.8/10 | 2026-10-01 | — (≥8.5) |
 | `05_lazy_load/style_guide_standards/infra/scorecard_ansible.md` | 8.8/10 | 2026-10-01 | — (≥8.5) |
 | `05_lazy_load/style_guide_standards/scorecard_sql.md` | 8.8/10 | 2026-10-01 | — (≥8.5) |
 | `03_authoring_guidelines/scorecard_authoring_skills.md` | 8.7/10 | 2026-09-29 | — (≥8.5) |
