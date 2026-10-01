@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.0
+# Version:           1.0.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -30,28 +30,28 @@ class TestPhaseOrchestration:
 
     def test_phase_1_gather_minimal(self):
         """Phase 1: gather accepts minimal input."""
-        result = phase_1_gather_details(title="Test", space="DA", pattern="general_page", sections=["Sec1"])
+        result = phase_1_gather_details(title="Test", space="DOCS", pattern="general_page", sections=["Sec1"])
         assert result["title"] == "Test"
-        assert result["space"] == "DA"
+        assert result["space"] == "DOCS"
         assert result["status"] == "draft"  # Default status
 
     def test_phase_2_validate_valid_page(self):
         """Phase 2: validate accepts valid page."""
         details = {
             "title": "Test Page",
-            "space": "da",
+            "space": "docs",
             "pattern": "general_page",
             "sections": ["Overview", "Details"],
-            "creator": "user@payroc.com",
+            "creator": "user@company.com",
             "status": "draft",
         }
         result = phase_2_validate(details)
         assert result["valid"] is True
-        assert result["details"]["space"] == "DA"  # Normalized to uppercase
+        assert result["details"]["space"] == "DOCS"  # Normalized to uppercase
 
     def test_phase_2_validate_missing_title(self):
         """Phase 2: validate rejects missing title."""
-        details = {"space": "DA", "pattern": "general_page", "sections": ["Sec1"]}
+        details = {"space": "DOCS", "pattern": "general_page", "sections": ["Sec1"]}
         result = phase_2_validate(details)
         assert result["valid"] is False
 
@@ -59,7 +59,7 @@ class TestPhaseOrchestration:
         """Phase 2: validate rejects invalid pattern."""
         details = {
             "title": "Test",
-            "space": "DA",
+            "space": "DOCS",
             "pattern": "invalid_pattern",
             "sections": ["Sec1"],
         }
@@ -71,7 +71,7 @@ class TestPhaseOrchestration:
         mock_mcp = MagicMock(return_value={"pageId": "123456", "url": "https://confluence.example.com/..."})
         details = {
             "title": "Test Page",
-            "space": "DA",
+            "space": "DOCS",
             "pattern": "general_page",
             "sections": ["Overview"],
             "creator": None,
@@ -88,7 +88,7 @@ class TestErrorHandling:
     def test_phase_3_timeout_error(self):
         """Phase 3: TimeoutError returns timeout message."""
         mock_mcp = MagicMock(side_effect=TimeoutError("Request timed out"))
-        details = {"title": "Test", "space": "DA", "sections": ["Sec1"]}
+        details = {"title": "Test", "space": "DOCS", "sections": ["Sec1"]}
         result = phase_3_publish_page(mock_mcp, details)
         assert result["success"] is False
         assert result["type"] == "timeout"
@@ -112,7 +112,7 @@ class TestErrorHandling:
     def test_phase_3_connection_error(self):
         """Phase 3: ConnectionError returns network error message."""
         mock_mcp = MagicMock(side_effect=ConnectionError("Network unreachable"))
-        details = {"title": "Test", "space": "DA", "sections": ["Sec1"]}
+        details = {"title": "Test", "space": "DOCS", "sections": ["Sec1"]}
         result = phase_3_publish_page(mock_mcp, details)
         assert result["success"] is False
         assert result["type"] == "network_error"
@@ -120,7 +120,7 @@ class TestErrorHandling:
     def test_phase_3_generic_exception(self):
         """Phase 3: Unexpected exception returns unknown error type."""
         mock_mcp = MagicMock(side_effect=RuntimeError("Unexpected failure"))
-        details = {"title": "Test", "space": "DA", "sections": ["Sec1"]}
+        details = {"title": "Test", "space": "DOCS", "sections": ["Sec1"]}
         result = phase_3_publish_page(mock_mcp, details)
         assert result["success"] is False
         assert result["type"] == "unknown"
@@ -133,19 +133,19 @@ class TestEndToEnd:
         """Full flow: valid page without MCP tool returns validated details."""
         result = create_confluence_page(
             title="Test Page",
-            space="DA",
+            space="DOCS",
             pattern="general_page",
             sections=["Overview", "Details"]
         )
         assert result["success"] is True
         assert result["validated_details"]["title"] == "Test Page"
-        assert result["validated_details"]["space"] == "DA"
+        assert result["validated_details"]["space"] == "DOCS"
 
     def test_create_page_invalid_title(self):
         """Full flow: invalid title rejected early."""
         result = create_confluence_page(
             title="",
-            space="DA",
+            space="DOCS",
             sections=["Sec1"]
         )
         assert result["success"] is False
@@ -155,7 +155,7 @@ class TestEndToEnd:
         """Full flow: invalid sections rejected."""
         result = create_confluence_page(
             title="Test",
-            space="DA",
+            space="DOCS",
             sections=[]
         )
         assert result["success"] is False
@@ -164,13 +164,13 @@ class TestEndToEnd:
         """Full flow: input whitespace is sanitized."""
         result = create_confluence_page(
             title="  Test Page  ",
-            space="  da  ",
+            space="  docs  ",
             pattern="GENERAL_PAGE",
             sections=["  Overview  ", "  Details  "]
         )
         assert result["success"] is True
         assert result["validated_details"]["title"] == "Test Page"
-        assert result["validated_details"]["space"] == "DA"
+        assert result["validated_details"]["space"] == "DOCS"
         assert result["validated_details"]["sections"] == ["Overview", "Details"]
 
     def test_create_page_with_mocked_mcp(self):
@@ -178,7 +178,7 @@ class TestEndToEnd:
         mock_mcp = MagicMock(return_value={"pageId": "789", "url": "https://confluence.com/..."})
         result = create_confluence_page(
             title="Test Page",
-            space="DA",
+            space="DOCS",
             sections=["Overview"],
             mcp_tool=mock_mcp
         )

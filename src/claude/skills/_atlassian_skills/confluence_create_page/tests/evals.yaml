@@ -45,7 +45,7 @@ evals:
       description: Title too short — phase_2_validate rejects before any draft is written
       input:
           title: Q
-          space: DA
+          space: DOCS
           pattern: general_page
           sections: [Overview]
       setup: {}
@@ -78,7 +78,7 @@ evals:
       description: Pattern name outside VALID_PATTERNS (only general_page exists)
       input:
           title: Data Platform Q4 Roadmap
-          space: DA
+          space: DOCS
           pattern: requirements
           sections: [Overview]
       setup: {}
@@ -94,7 +94,7 @@ evals:
       description: Duplicate section names — sections must be unique
       input:
           title: Data Platform Q4 Roadmap
-          space: DA
+          space: DOCS
           pattern: general_page
           sections: [Overview, Overview]
       setup: {}
@@ -145,7 +145,7 @@ evals:
       description: mcp_tool_call raises PermissionError — user lacks write access to the space
       input:
           title: Data Platform Q4 Roadmap
-          space: DA
+          space: DOCS
           pattern: general_page
           sections: [Overview]
       setup:
@@ -153,7 +153,7 @@ evals:
       expected_output: >
           phase_3_publish_page catches PermissionError and returns
           {"success": False, "error": "Permission denied: You lack write access
-          to space DA", "type": "permission_denied"}.
+          to space DOCS", "type": "permission_denied"}.
       assertions:
           - The returned error names the specific space the user lacks access to
           - The error type is 'permission_denied', not 'unknown' or 'validation_error'
