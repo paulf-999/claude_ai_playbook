@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.2.0
+# Version:           1.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -307,3 +307,77 @@ def test_missing_folder_returns_error(tmp_path, capsys):
     code = AUDIT.main(["--rules", str(tmp_path / "nope"), "--transcripts", str(tmp_path), "--out", str(tmp_path)])
     assert code == 1, f"expected exit 1, got {code}"
     assert "--rules folder not found" in capsys.readouterr().err, "stderr should name the missing folder"
+
+
+# --- All-time session ledger and summary ---
+
+def ledger_rows(out):
+    """Read the ledger CSV.
+
+    :param out: The output folder.
+    :return: Ledger rows.
+    :rtype: list[dict]
+    """
+    return list(csv.DictReader((out / AUDIT.LEDGER_NAME).open()))
+
+
+def python_row(out):
+    """Return the python.md line from the summary.
+
+    :param out: The output folder.
+    :return: The table line.
+    :rtype: str
+    """
+    return next(line for line in (out / AUDIT.SUMMARY_NAME).read_text().splitlines() if "python.md`" in line)
+
+
+def test_ledger_counts_each_session_once_across_runs(tmp_path):
+    """Two runs over the same logs record each session once per rule, not twice."""
+    rules_dir, transcripts, out = make_rules(tmp_path), make_transcripts(tmp_path), tmp_path / "out"
+    AUDIT.run(rules_dir, transcripts, out, TODAY)
+    first = ledger_rows(out)
+    AUDIT.run(rules_dir, transcripts, out, TODAY + timedelta(days=7))
+    assert ledger_rows(out) == first, "a second run over the same sessions changed the ledger"
+    keys = [(r["session"], r["rule"]) for r in first]
+    assert len(keys) == len(set(keys)), "a session appears twice for one rule"
+
+
+def test_ledger_keeps_sessions_whose_logs_are_gone(tmp_path):
+    """A session deleted from disk keeps its rows, so all-time totals don't shrink."""
+    rules_dir, transcripts, out = make_rules(tmp_path), make_transcripts(tmp_path), tmp_path / "out"
+    AUDIT.run(rules_dir, transcripts, out, TODAY)
+    (transcripts / "-repo" / "s1.jsonl").unlink()
+    AUDIT.run(rules_dir, transcripts, out, TODAY)
+    python = [r for r in ledger_rows(out) if r["rule"].endswith("python.md")]
+    assert sorted(r["session"] for r in python) == ["s1", "s2"], python
+
+
+def test_ledger_replaces_rows_for_a_session_seen_again(tmp_path):
+    """A session that grows between runs is re-measured, not added a second time."""
+    rules_dir, transcripts, out = make_rules(tmp_path), make_transcripts(tmp_path), tmp_path / "out"
+    AUDIT.run(rules_dir, transcripts, out, TODAY)
+    write_session(transcripts / "-repo", "s3", "2026-09-25", [tool("Edit", "/repo/late.py")])
+    AUDIT.run(rules_dir, transcripts, out, TODAY)
+    s3 = [r for r in ledger_rows(out) if r["session"] == "s3"]
+    assert [(r["rule"].rsplit("/", 1)[1], r["applied"]) for r in s3] == [("parent.md", "1"), ("python.md", "1")], s3
+
+
+def test_summary_shows_all_time_totals(tmp_path):
+    """The summary row gives applied, loaded, misses, miss rate, runs and dates for a rule."""
+    rules_dir, transcripts, out = make_rules(tmp_path), make_transcripts(tmp_path), tmp_path / "out"
+    AUDIT.run(rules_dir, transcripts, out, TODAY)
+    AUDIT.run(rules_dir, transcripts, out, TODAY + timedelta(days=1))
+    expected = "| `05_lazy_load/style_guide_standards/python.md` | 2 | 1 | 1 | 50% | 2 | 2026-09-10 | 2026-09-20 |"
+    assert python_row(out) == expected, python_row(out)
+    assert "**Sessions recorded:** 3 (2026-09-10 to 2026-09-25) · **Runs:** 2" in (out / AUDIT.SUMMARY_NAME).read_text()
+
+
+def test_summary_marks_removed_rules(tmp_path):
+    """A deleted rule keeps its rows from sessions whose logs are gone, and is marked removed."""
+    rules_dir, transcripts, out = make_rules(tmp_path), make_transcripts(tmp_path), tmp_path / "out"
+    AUDIT.run(rules_dir, transcripts, out, TODAY)
+    (rules_dir / GUIDES / "python.md").unlink()
+    (transcripts / "-repo" / "s1.jsonl").unlink()
+    AUDIT.run(rules_dir, transcripts, out, TODAY)
+    assert "(removed)" in python_row(out), python_row(out)
+    assert "| 1 | 1 | 0 | 0% |" in python_row(out), "only s1's row should survive, since s2 was re-measured"
