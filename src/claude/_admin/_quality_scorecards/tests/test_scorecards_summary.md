@@ -6,7 +6,7 @@
 
 ## 📋 Current scores
 
-- **Scored:** 45 test files, average 8.3/10.
+- **Scored:** 46 test files, average 8.3/10.
 - **Below 8.5:** 27 tests, each with recommended improvements.
 - **Order:** one table per `_tests/` folder, sorted by Overall score, highest first.
 
@@ -32,6 +32,7 @@
 | Scorecard | Overall | Recommended improvements |
 |---|---|---|
 | `rules/02_claude_standards/scorecard_test_test_metadata.md` | 9.3/10 | — (≥8.5) |
+| `rules/02_claude_standards/scorecard_test_test_score_floor.md` | 9.3/10 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_claude_config_metadata.md` | 9.1/10 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_plan_mode_phase_gates.md` | 9.0/10 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_skill_domains.md` | 9.0/10 | — (≥8.5) |
