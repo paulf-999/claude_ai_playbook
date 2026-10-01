@@ -3,22 +3,18 @@
 **Date Created:** 2026-09-30
 **Date Updated:** 2026-10-01
 
-**Overall score:** 8.3/10
-
-**Recommended improvements:**
-- Add test functions and assertions toward 10+ and 15+ (now 7 and 14)
-- Add a synthetic bad-input test that proves the check fails when it should
+**Overall score:** 9.4/10
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
-| **Complexity** | 9/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 9/10 (raw complexity 1) |
-| **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact |
-| **Coverage** | 6/10 | 2026-09-30 | • 📊 **Counts:** 7 test functions and 14 assertions |
-| **Structural Compliance** | 9/10 | 2026-10-01 | • ✅ **Header:** full metadata header, marked Python style compliant |
-| **Currency** | 9/10 | 2026-09-30 | • 🔍 **References:** passes against the current config, header last updated 2026-09-17 |
-| **Regression Value** | 7/10 | 2026-09-30 | • 🛡️ **Failure cases:** checks real files, but no function proves the check fails on a bad case |
-| **Overall** | **8.3/10** | 2026-10-01 | • 💪 **Strongest:** Clarity, Complexity, Evidence of Need, Structural Compliance and Currency (9/10)<br>• ⚠️ **Weakest:** Coverage (6/10) |
+| **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and every assertion names the clause that broke |
+| **Complexity** | 9/10 | 2026-09-30 | • 🧮 **Raw complexity 1:** Concepts 1 (writing_style.md clauses) + Scope 0 + Dependencies 0 + Prerequisites 0 |
+| **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** `writing_style.md` is imported every session and shapes every response |
+| **Coverage** | 10/10 | 2026-10-01 | • 📊 **Counts:** 11 test functions and 23 assertions<br>• 🧩 **New:** one sentence per bullet, British spelling, underscore dates in file names and the multifile child |
+| **Structural Compliance** | 10/10 | 2026-10-01 | • ✅ **Header:** full metadata header, marked Python style compliant and checked with `ruff` |
+| **Currency** | 10/10 | 2026-10-01 | • 🔍 **References:** passes against the current config, header last updated 2026-10-01 |
+| **Regression Value** | 9/10 | 2026-10-01 | • 🛡️ **Dates:** fails if a hyphenated `YYYY-MM-DD_` file-name pattern creeps back in |
+| **Overall** | **9.4/10** | 2026-10-01 | • 💪 **Strongest:** Coverage, Structural Compliance and Currency (10/10)<br>• ⚠️ **Weakest:** Clarity, Complexity, Evidence of Need and Regression Value (9/10) |
 
 ## 🔗 Related files
 

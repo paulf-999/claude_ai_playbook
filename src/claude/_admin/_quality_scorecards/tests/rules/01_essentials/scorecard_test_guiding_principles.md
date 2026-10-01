@@ -3,22 +3,18 @@
 **Date Created:** 2026-09-30
 **Date Updated:** 2026-10-01
 
-**Overall score:** 7.6/10
-
-**Recommended improvements:**
-- Add test functions and assertions toward 10+ and 15+ (now 3 and 3)
-- Replace the `< 20 imports` limit with a check tied to a documented budget
+**Overall score:** 9.4/10
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
-| **Complexity** | 10/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 10/10 (raw complexity 0) |
-| **Evidence of Need** | 7/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact<br>• ⚠️ **Finding:** the `< 20 imports` limit is an arbitrary stand-in for 'no speculative imports' |
-| **Coverage** | 3/10 | 2026-09-30 | • 📊 **Counts:** 3 test functions and 3 assertions |
-| **Structural Compliance** | 9/10 | 2026-10-01 | • ✅ **Header:** full metadata header, marked Python style compliant |
-| **Currency** | 9/10 | 2026-09-30 | • 🔍 **References:** passes against the current config, header last updated 2026-09-21 |
-| **Regression Value** | 6/10 | 2026-09-30 | • 🛡️ **Failure cases:** checks real files, but no function proves the check fails on a bad case<br>• ⚠️ **Finding:** the import-count check would pass a speculative import as long as the total stays under 20 |
-| **Overall** | **7.6/10** | 2026-10-01 | • 💪 **Strongest:** Complexity (10/10)<br>• ⚠️ **Weakest:** Coverage (3/10) |
+| **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and every assertion names the clause that broke |
+| **Complexity** | 9/10 | 2026-10-01 | • 🧮 **Raw complexity 1:** Concepts 1 (CLAUDE.md import discipline and its parser) + Scope 0 (`CLAUDE.md`) + Dependencies 0 + Prerequisites 0 |
+| **Evidence of Need** | 9/10 | 2026-10-01 | • 🔗 **Target:** every import costs tokens in every session, so the import list needs guarding |
+| **Coverage** | 9/10 | 2026-10-01 | • 📊 **Counts:** 13 test functions and 16 assertions<br>• 🧩 **Checks:** lazy-load tiers, purpose comments, count, duplicates, tier order, the Imports heading and the parser |
+| **Structural Compliance** | 10/10 | 2026-10-01 | • ✅ **Header:** full metadata header, marked Python style compliant and checked with `ruff` |
+| **Currency** | 10/10 | 2026-10-01 | • 🔍 **References:** passes against the current config, header last updated 2026-10-01 |
+| **Regression Value** | 10/10 | 2026-10-01 | • 🐛 **Bug fixed:** the old lazy-load check looked for `_rules/lazy_load/`, a path that doesn't exist, so it could never fail |
+| **Overall** | **9.4/10** | 2026-10-01 | • 💪 **Strongest:** Structural Compliance, Currency and Regression Value (10/10)<br>• ⚠️ **Weakest:** Clarity, Complexity, Evidence of Need and Coverage (9/10) |
 
 ## 🔗 Related files
 

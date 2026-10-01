@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           1.0.2
-# Test quality score: 5/10
+# Version:           1.1.0
+# Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
@@ -116,3 +116,35 @@ def test_writing_style_file_structure():
     # Check emoji headers
     assert content.count('# ✏️') >= 1, "Main heading should have emoji"
     assert content.count('## 🎨') >= 1, "Section headings should have emojis"
+
+
+def test_writing_style_one_sentence_per_bullet():
+    """The one-sentence-per-bullet rule survives, with child bullets as the fix."""
+    content = RULE_FILE.read_text()
+    assert "**One sentence per bullet:**" in content, "the one-sentence-per-bullet rule is missing"
+    assert "use child bullets" in content, "the rule should say to use child bullets instead"
+
+
+def test_writing_style_british_spelling():
+    """British spelling is the house style, with code identifiers exempt."""
+    content = RULE_FILE.read_text()
+    assert "**British English spelling:**" in content, "the British spelling rule is missing"
+    assert "code identifiers, filenames, and function names" in content, (
+        "the exemption for existing code identifiers is missing"
+    )
+
+
+def test_writing_style_dated_paths_use_underscores():
+    """Draft and error file names use YYYY_MM_DD, never hyphenated dates."""
+    content = RULE_FILE.read_text()
+    assert "`~/_drafts/<domain>/YYYY_MM_DD_<topic>.md`" in content, "the drafts path format changed"
+    assert "`~/_errors/<domain>/YYYY_MM_DD_<topic>.md`" in content, "the errors path format changed"
+    assert "YYYY-MM-DD_" not in content, "a hyphenated date prefix crept back into a file-name pattern"
+
+
+def test_writing_style_imports_multifile_child():
+    """The multifile-organisation child is imported and exists."""
+    content = RULE_FILE.read_text()
+    child = RULE_FILE.parent / "writing_style" / "_multifile_document_organisation.md"
+    assert "/writing_style/_multifile_document_organisation.md" in content, "the multifile child import is missing"
+    assert child.is_file(), f"the imported child is missing: {child}"

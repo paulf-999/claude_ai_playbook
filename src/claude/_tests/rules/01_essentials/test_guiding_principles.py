@@ -2,87 +2,134 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           1.0.2
-# Test quality score: 3/10
-# Test complexity score: 10/10
+# Version:           2.0.0
+# Test quality score: 9/10
+# Test complexity score: 9/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Tests for guiding_principles.md enforcement.
+"""Tests that CLAUDE.md's imports follow guiding_principles.md.
 
-Validates that lazy-load and context-efficiency principles are being followed:
-- Lazy-load by default: no lazy_load/ files imported in CLAUDE.md
-- Explicit over implicit: all imports have clear purpose comments
-- Intentionality gates everything: every import in CLAUDE.md is documented
+- **Lazy-load by default:** nothing under ``05_lazy_load/`` or a per-parent ``_lazy_load/`` is imported.
+- **Explicit over implicit:** every import has a purpose comment on the line above it.
+- **Context efficiency:** imports stay few, unique, and limited to the always-on tiers, in tier order.
 """
+from __future__ import annotations
+
 import re
 
-from _shared_paths import CLAUDE_DIR, CLAUDE_MD
-LAZY_LOAD_DIR = CLAUDE_DIR / "_rules" / "05_lazy_load"
+from _shared_paths import CLAUDE_MD
+
+IMPORT_PATTERN = re.compile(r"^@~/([^/\s]+)/(\S+)$", re.M)
+ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference")
+NON_RULE_IMPORTS = {"memory/MEMORY.md", "aliases.md"}
+MAX_IMPORTS = 20
 
 
-def test_no_lazy_load_imports_at_top_level():
-    """Lazy-load files must not be imported in CLAUDE.md — they're loaded on demand.
+def imports(text: str) -> list[tuple[str, str]]:
+    """Find the ``@~/<config-dir>/<path>`` import lines in a CLAUDE.md.
 
-    This validates the "lazy-load by default" principle: CLAUDE.md should only
-    import critical rules needed every session. Domain-specific rules go in
-    lazy_load/ and are read on-demand via hooks or agent initialization.
+    :param text: CLAUDE.md content.
+    :type text: str
+    :return: ``(config_dir, path)`` pairs in file order.
+    :rtype: list[tuple[str, str]]
     """
-    claude_content = CLAUDE_MD.read_text()
-
-    # Find all @import references (config-dir name varies: ~/.claude/, ~/claude/, etc.)
-    imports = re.findall(r"@~/[^/]+/(.+?)(?:\s|$)", claude_content)
-
-    # Check that none reference lazy_load/
-    lazy_load_imports = [imp for imp in imports if imp.startswith("_rules/lazy_load/")]
-
-    assert not lazy_load_imports, (
-        f"CLAUDE.md imports lazy_load files (violates lazy-load principle): "
-        f"{lazy_load_imports}. Move these to on-demand loading via hooks."
-    )
+    return IMPORT_PATTERN.findall(text)
 
 
-def test_all_imports_have_purpose_comments():
-    """Every import in CLAUDE.md must have a preceding comment explaining why.
+def import_paths() -> list[str]:
+    """List the paths the real CLAUDE.md imports, relative to the config dir.
 
-    This validates the "explicit over implicit" principle: future maintenance
-    depends on understanding why each import exists, not guessing.
+    :return: Import paths in file order.
+    :rtype: list[str]
     """
-    claude_content = CLAUDE_MD.read_text()
-
-    # Pattern: expect <!-- comment --> on the line before @import
-    lines = claude_content.split("\n")
-    for i, line in enumerate(lines):
-        if line.startswith("@"):
-            # Check if previous non-empty line is a comment
-            prev_idx = i - 1
-            while prev_idx >= 0 and lines[prev_idx].strip() == "":
-                prev_idx -= 1
-
-            if prev_idx >= 0:
-                prev_line = lines[prev_idx].strip()
-                assert prev_line.startswith("<!--"), (
-                    f"Line {i+1}: Import '{line}' lacks a purpose comment. "
-                    f"Add a <!-- comment --> on the preceding line explaining why this import exists."
-                )
+    return [path for _, path in imports(CLAUDE_MD.read_text())]
 
 
-def test_no_speculative_imports():
-    """No imports added without evidence they solve a real, recurring problem.
+def test_claude_md_has_imports():
+    """CLAUDE.md imports something, so the checks below can't pass on an empty list."""
+    assert import_paths(), "CLAUDE.md has no @~/<dir>/ imports — the import pattern may be broken"
 
-    This validates "intentionality gates everything" — every import in CLAUDE.md
-    must justify its token cost. If you can't articulate the problem it solves,
-    it doesn't belong at the top level.
-    """
-    # This test is manual/observational: audit each import against its comment.
-    # Automated detection is impractical, but the purpose-comment test above
-    # ensures each import can be evaluated.
 
-    # For now, verify that the count of imports is reasonable (< 20).
-    claude_content = CLAUDE_MD.read_text()
-    imports = re.findall(r"^@~/[^/]+/", claude_content, re.MULTILINE)
+def test_no_lazy_load_tier_imports():
+    """Nothing in _rules/05_lazy_load/ is imported — that tier is read on demand."""
+    bad = [p for p in import_paths() if p.startswith("_rules/05_lazy_load/")]
+    assert not bad, f"CLAUDE.md imports lazy-load rules {bad} — read them on demand instead"
 
-    assert len(imports) < 20, (
-        f"CLAUDE.md has {len(imports)} imports. This is high and suggests "
-        f"speculative bloat. Review each import: does it solve a real, recurring problem?"
-    )
+
+def test_no_per_parent_lazy_load_imports():
+    """Nothing in a <parent>/_lazy_load/ folder is imported — its parent names it instead."""
+    bad = [p for p in import_paths() if "/_lazy_load/" in p]
+    assert not bad, f"CLAUDE.md imports per-parent lazy-load files {bad} — use a 'Read on demand' pointer"
+
+
+def test_every_import_has_purpose_comment():
+    """Each import line follows a <!-- comment --> or another import that shares its comment."""
+    lines = CLAUDE_MD.read_text().splitlines()
+    for number, line in enumerate(lines):
+        if not line.startswith("@"):
+            continue
+        previous = next((lines[i].strip() for i in range(number - 1, -1, -1) if lines[i].strip()), "")
+        assert previous.startswith("<!--"), f"line {number + 1} '{line}' needs a <!-- purpose --> comment above it"
+
+
+def test_purpose_comments_say_something():
+    """Every HTML comment above an import has real text, not a placeholder."""
+    comments = re.findall(r"<!--(.*?)-->\n@", CLAUDE_MD.read_text())
+    assert comments, "expected purpose comments directly above imports"
+    short = [c.strip() for c in comments if len(c.strip()) < 15]
+    assert not short, f"purpose comments too short to explain anything: {short}"
+
+
+def test_import_count_under_cap():
+    """CLAUDE.md stays under the import cap, since each import costs tokens every session."""
+    count = len(import_paths())
+    assert count < MAX_IMPORTS, f"CLAUDE.md has {count} imports — review each against a real, recurring need"
+
+
+def test_no_duplicate_imports():
+    """No file is imported twice."""
+    paths = import_paths()
+    duplicates = sorted({p for p in paths if paths.count(p) > 1})
+    assert not duplicates, f"CLAUDE.md imports these more than once: {duplicates}"
+
+
+def test_imports_share_one_config_dir():
+    """Every import uses the same @~/<config-dir>/ prefix."""
+    dirs = {config_dir for config_dir, _ in imports(CLAUDE_MD.read_text())}
+    assert len(dirs) == 1, f"imports mix config-dir prefixes {sorted(dirs)} — use one"
+
+
+def test_rule_imports_come_from_always_on_tiers():
+    """Every rule import sits in tiers 01–04."""
+    rules = [p for p in import_paths() if p not in NON_RULE_IMPORTS]
+    assert rules, "expected rule imports besides memory and aliases"
+    bad = [p for p in rules if p.split("/")[1:2] and p.split("/")[1] not in ALWAYS_ON_TIERS]
+    assert not bad, f"rule imports outside the always-on tiers {ALWAYS_ON_TIERS}: {bad}"
+
+
+def test_rule_imports_are_in_tier_order():
+    """Rule imports run 01 → 04, so the file reads tier by tier."""
+    tiers = [p.split("/")[1] for p in import_paths() if p.startswith("_rules/")]
+    order = [ALWAYS_ON_TIERS.index(t) for t in tiers if t in ALWAYS_ON_TIERS]
+    assert order == sorted(order), f"rule imports are out of tier order: {tiers}"
+
+
+def test_imports_are_markdown():
+    """Every import is a markdown file."""
+    bad = [p for p in import_paths() if not p.endswith(".md")]
+    assert not bad, f"CLAUDE.md imports non-markdown files: {bad}"
+
+
+def test_import_parser_reads_any_config_dir():
+    """The parser handles .claude, claude and other config-dir names, and skips inline mentions."""
+    text = "@~/.claude/a.md\n@~/claude/_rules/b.md\nsee @~/claude/c.md inline\n"
+    assert imports(text) == [(".claude", "a.md"), ("claude", "_rules/b.md")], f"got {imports(text)}"
+
+
+def test_imports_sit_under_imports_heading():
+    """Every import is under the '## Imports' heading, so they're reviewed in one place."""
+    text = CLAUDE_MD.read_text()
+    assert "\n## Imports\n" in text, "CLAUDE.md needs an '## Imports' heading"
+    before = text.split("\n## Imports\n", 1)[0]
+    assert not imports(before), f"imports above the '## Imports' heading: {imports(before)}"

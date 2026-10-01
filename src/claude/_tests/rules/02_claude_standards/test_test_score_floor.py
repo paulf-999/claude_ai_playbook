@@ -36,10 +36,8 @@ SCORE_PATTERN = re.compile(
 # Files below the minimum when it was first enforced, keyed by path under _tests/,
 # with their recorded (quality, complexity, style) — remove each as it's fixed
 BASELINE = {
-    "rules/01_essentials/test_guiding_principles.py": (3, 10, "Yes"),
     "rules/01_essentials/test_rule_directory_organisation.py": (7, 6, "Yes"),
     "rules/01_essentials/test_skill_authoring_gate.py": (9, 5, "No"),
-    "rules/01_essentials/test_writing_style.py": (5, 9, "Yes"),
     "rules/02_claude_standards/test_always_on_reachability.py": (9, 3, "Yes"),
     "rules/02_claude_standards/test_decision_making.py": (5, 9, "Yes"),
     "rules/02_claude_standards/test_git.py": (5, 9, "Yes"),
@@ -48,7 +46,6 @@ BASELINE = {
     "rules/02_claude_standards/test_testing.py": (5, 7, "No"),
     "rules/03_authoring_guidelines/test_authoring_rules.py": (5, 9, "Yes"),
     "rules/03_authoring_guidelines/test_authoring_skills.py": (9, 6, "Yes"),
-    "rules/test_aliases_behavior.py": (5, 9, "Yes"),
     "rules/test_rules_structure.py": (9, 4, "Yes"),
     "skills/confluence_create_page/test_confluence_create_page_handler.py": (9, 4, "Yes"),
     "skills/confluence_create_page/test_confluence_create_page_timeout.py": (8, 4, "Yes"),
