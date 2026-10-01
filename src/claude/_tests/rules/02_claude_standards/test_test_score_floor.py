@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.6
+# Version:           1.0.7
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -38,8 +38,6 @@ SCORE_PATTERN = re.compile(
 BASELINE = {
     "rules/01_essentials/test_rule_directory_organisation.py": (7, 6, "Yes"),
     "rules/01_essentials/test_skill_authoring_gate.py": (9, 5, "No"),
-    "rules/02_claude_standards/test_always_on_reachability.py": (9, 3, "Yes"),
-    "rules/02_claude_standards/test_portable_paths.py": (9, 3, "Yes"),
     "rules/03_authoring_guidelines/test_authoring_skills.py": (9, 6, "Yes"),
     "rules/test_rules_structure.py": (9, 4, "Yes"),
     "skills/confluence_create_page/test_confluence_create_page_handler.py": (9, 4, "Yes"),
