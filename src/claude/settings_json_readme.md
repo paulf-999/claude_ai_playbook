@@ -155,6 +155,28 @@ See `~/.claude/_rules/guiding_principles.md` for the decision framework applied 
 
 ---
 
+### `syncClaudeAiSkills: false`
+
+**What it does:** Stops Claude Code from syncing skills from claude.ai into the config's `skills/` folder.
+
+**When set:** set on the live config first, then added to the repo on 2026-10-01 so `make install` keeps it.
+
+**Why:** this config's skills are authored and tested in the repo, and synced skills would land beside them unreviewed.
+
+**Guiding principle:** Explicit over implicit — skills enter the config only through the repo.
+
+---
+
+### Hook commands
+
+**What they do:** each registered hook runs as `bash "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hooks/<hook>.sh"`.
+
+**Why:** the shell finds the config dir when the hook runs, so the same `settings.json` works at `~/.claude` (the default) and at a custom location such as `~/claude`, per `portable_paths.md`.
+
+**Enforced by:** `_tests/hooks/test_hook_registry_utils.py`, which fails on any hook command with a hardcoded config dir.
+
+---
+
 ## Audit Trail
 
 | Date | Setting | Change | Reason |
@@ -168,6 +190,8 @@ See `~/.claude/_rules/guiding_principles.md` for the decision framework applied 
 | 2026-08-07 | `permissions.allow` | Added `git show *`, `grep *` | Transcript analysis: 4 and 48 uses/session respectively; both read-only, safe |
 | 2026-08-07 | `permissions.deny` | Added 7-pattern secrets + destructive-op firewall | Backs advisory `security.md` rules with a mechanical guard; zero context cost. Adopted from `_reference/settings_json_recommendations.md` |
 | 2026-08-07 | `cleanupPeriodDays` | Set to `30` (explicit form of documented default) | Makes transcript retention an auditable choice. Adopted from `_reference/settings_json_recommendations.md` |
+| 2026-10-01 | `hooks` | Commands read `CLAUDE_CONFIG_DIR`, falling back to `~/.claude` | The repo hardcoded `~/.claude/hooks/`, so installing at `~/claude` would have broken all 4 hooks |
+| 2026-10-01 | `syncClaudeAiSkills` | Added as `false` (was live-only) | Brings the repo in line with live, so `make install` no longer drops it |
 | 2026-10-01 | `cleanupPeriodDays` | Raised `30` → `90` | The rule-usage audit needs more sessions than 30 days holds; accepts 3× the transcript exposure on disk |
 | 2026-08-07 | `permissions.deny` | Added `rm -fr` / `rm -r -f` / `rm -f -r` flag-reordering variants | Widen destructive-op coverage; still defense-in-depth (Bash-text denial can't be airtight) |
 | 2026-08-07 | `model` + key order | Reconciled live `~/.claude/settings.json` with repo source (added missing `model`, aligned key order) | `src/claude/` must mirror `~/.claude/`; the two had drifted |

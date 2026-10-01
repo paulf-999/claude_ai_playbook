@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           2.1.0
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -31,6 +31,10 @@ RESERVED_HOOKS = {
     "hook_style_guide_response_standards.sh": "_rules/05_lazy_load/response_standards_enforcement.md",
 }
 RESERVED_MARKER = "RESERVED"
+
+# Every hook command starts this way, so it finds the config dir wherever it lives
+HOOK_COMMAND_PREFIX = 'bash "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hooks/'
+CONFIG_DIR_VAR = "${CLAUDE_CONFIG_DIR"
 
 # Hook events Claude Code fires — a name outside this set is never triggered
 KNOWN_EVENTS = {
@@ -62,10 +66,13 @@ def hook_paths(settings: dict) -> list[Path]:
         for group in event_groups:
             for hook in group.get("hooks", []):
                 parts = hook.get("command", "").split()
-                if len(parts) < 2 or not parts[-1].endswith(".sh"):
+                hook_ref = parts[-1].strip('"') if parts else ""
+                if len(parts) < 2 or not hook_ref.endswith(".sh"):
                     continue
-                hook_ref = parts[-1]
-                if hook_ref.startswith("~/"):
+                if hook_ref.startswith(CONFIG_DIR_VAR):
+                    # "${CLAUDE_CONFIG_DIR:-<fallback>}/rest" — the shell picks the dir at run time
+                    paths.append(CLAUDE_DIR / hook_ref.split("}/", 1)[1])
+                elif hook_ref.startswith("~/"):
                     # "~/<config-dir-name>/rest" — strip both segments and resolve
                     # against CLAUDE_DIR. Never .expanduser(): the config dir name
                     # varies (.claude, claude, a repo checkout), and expanduser()
@@ -144,6 +151,22 @@ def test_tilde_path_resolves_against_config_dir():
         settings = {"hooks": {"Stop": [{"hooks": [{"command": f"bash ~/{config_dir}/hooks/hook_a_b.sh"}]}]}}
         expected = [CLAUDE_DIR / "hooks" / "hook_a_b.sh"]
         assert hook_paths(settings) == expected, f"~/{config_dir}/ should map to CLAUDE_DIR"
+
+
+def test_config_dir_variable_resolves_against_config_dir():
+    """A "${CLAUDE_CONFIG_DIR:-...}/hooks/x.sh" command resolves under CLAUDE_DIR, quotes and all."""
+    settings = {"hooks": {"Stop": [{"hooks": [{"command": f'{HOOK_COMMAND_PREFIX}hook_a_b.sh"'}]}]}}
+    expected = [CLAUDE_DIR / "hooks" / "hook_a_b.sh"]
+    assert hook_paths(settings) == expected, f"should map to CLAUDE_DIR, got {hook_paths(settings)}"
+
+
+def test_hook_commands_find_config_dir_at_run_time():
+    """Every registered command reads CLAUDE_CONFIG_DIR, so hooks fire at ~/.claude or ~/claude alike."""
+    hardcoded = [h["command"] for h in registered_hooks() if not h["command"].startswith(HOOK_COMMAND_PREFIX)]
+    assert not hardcoded, (
+        f"hook commands with a hardcoded config dir: {hardcoded} — "
+        f"start each with {HOOK_COMMAND_PREFIX!r}, per portable_paths.md"
+    )
 
 
 def test_absolute_path_is_kept():
