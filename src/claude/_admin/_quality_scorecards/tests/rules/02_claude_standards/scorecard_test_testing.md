@@ -6,7 +6,7 @@
 **Overall score:** 7.6/10
 
 **Recommended improvements:**
-- Add test functions and assertions toward 10+ and 15+ (now 4 and 5)
+- Add test functions and assertions toward 10+ and 15+ (now 5 and 7)
 - Fix the style gaps and set `Python style compliant: Yes`
 - Add a synthetic bad-input test that proves the check fails when it should
 
@@ -15,7 +15,7 @@
 | **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
 | **Complexity** | 7/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 7/10 (raw complexity 3) |
 | **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact |
-| **Coverage** | 5/10 | 2026-09-30 | • 📊 **Counts:** 4 test functions and 5 assertions |
+| **Coverage** | 5/10 | 2026-09-30 | • 📊 **Counts:** 5 test functions and 7 assertions |
 | **Structural Compliance** | 7/10 | 2026-10-01 | • ✅ **Header:** header says `Python style compliant: No` |
 | **Currency** | 9/10 | 2026-09-30 | • 🔍 **References:** passes against the current config, header last updated 2026-09-17 |
 | **Regression Value** | 7/10 | 2026-09-30 | • 🛡️ **Failure cases:** checks real files, but no function proves the check fails on a bad case |

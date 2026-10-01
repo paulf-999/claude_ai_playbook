@@ -1,14 +1,20 @@
 #!/bin/bash
-# version: 1.0.0
+# version: 1.0.1
 # created: 2026-09-07
-# updated: 2026-09-18
+# updated: 2026-10-01
 # hook_style_guide_response_standards.sh
 #
 # Enforce Response Standards hook: validates response format compliance
 # Checks for Summary structure, offer line, response timing footer
 # Flags deviations but does not block execution
 #
-# Lifecycle event: PostResponse
+# RESERVED — deliberately NOT registered in settings.json. Do not delete it as unused.
+# It is the planned "walk" step if per-turn injection (hook_style_guide_response_standards_inject.sh)
+# stops keeping responses compliant — see _rules/05_lazy_load/response_standards_enforcement.md.
+# test_hook_registry_utils.py fails if this file is removed, registered or loses this note
+# without its RESERVED_HOOKS entry being updated to match.
+#
+# Lifecycle event (when wired): Stop
 
 set -euo pipefail
 
@@ -72,10 +78,8 @@ has_summary() {
 # ============================================================================
 has_offer_line() {
     local response="$1"
-    # Check for offer line on its own line (not part of other text)
-    if [[ "$response" =~ $'\n''More detail\?'$'\n' ]] || \
-       [[ "$response" =~ $'^More detail\?' ]] || \
-       [[ "$response" =~ $'\n''More detail\?'$ ]]; then
+    # The offer line starts its own line; a "pick a next step" suffix is allowed
+    if grep -qE '^More detail\? \(Y/N' <<< "$response"; then
         return 0  # Has offer line
     fi
     return 1  # Missing offer line
@@ -124,7 +128,7 @@ if is_substantive "$RESPONSE"; then
     fi
 
     if ! has_timing_footer "$RESPONSE"; then
-        FLAGS+=("❌ Missing response timing footer. Expected: 'Response time (post-reasoning): Xs' as final line")
+        FLAGS+=("❌ Missing response timing footer. Expected: 'Response time: Xs' (or 'Mmin Ss') as final line")
     fi
 
     if has_content_after_timing "$RESPONSE"; then

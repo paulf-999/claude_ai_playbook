@@ -13,7 +13,7 @@
 
 | Type | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
-| Tests | 48 | 8.5/10 | 2026-10-01 | • 💪 **Strongest:** 8 files tied at 9.3/10, including `test_test_metadata.py`<br>• ⚠️ **Weakest:** `test_confluence_create_page_timeout.py` (6.9/10) |
+| Tests | 49 | 8.6/10 | 2026-10-01 | • 💪 **Strongest:** 10 files tied at 9.3/10, including `test_test_metadata.py`<br>• ⚠️ **Weakest:** `test_confluence_create_page_timeout.py` (6.9/10) |
 | Skills | 7 | 8.4/10 | 2026-09-30 | • 💪 **Strongest:** `claude_setup_graphify` (9.9/10)<br>• ⚠️ **Weakest:** `claude_kaizen` (6.1/10) |
 | Rules — always-on | 16 | 8.0/10 | 2026-09-30 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_rule_loading_strategy.md` (6.4/10) |
 | Rules — lazy-load | 17 | 6.9/10 | 2026-09-28 | • 💪 **Strongest:** `payroc_engineering_naming_standards.md` (7.8/10)<br>• ⚠️ **Weakest:** `makefile.md` (5.2/10) |
@@ -30,7 +30,7 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 |---|---|---|---|
 | 1 | • 🆕 **Unscored hooks and agents:** write the first scorecards for hooks and agents | • 🙈 **Blind spot:** two of the five types have no quality signal at all | `hooks/hook_scorecards_summary.md`<br>`agents/agent_scorecards_summary.md` |
 | 2 | • 🔧 **Lowest skill score:** replace `claude_kaizen`'s placeholder eval runner | • 🔻 **Bottom of the table:** at 6.1/10 it is the lowest-scoring skill | `skills/skill_scorecards_summary.md` |
-| 3 | • ✂️ **Test complexity:** split the 10 tests whose complexity score is below 7 (raw complexity above 3) | • 📉 **Weakest test dimension:** 10 of 49 test files sit below the ≥7 complexity floor set for new tests | `tests/test_scorecards_summary.md` |
+| 3 | • ✂️ **Test complexity:** split `test_always_on_reachability.py` and `test_portable_paths.py` first, then the other 7 tests whose complexity score is below 7 | • 📉 **Lowest scores:** those two tests score 3/10 for complexity, the lowest of the 9 below the ≥7 floor | `tests/test_scorecards_summary.md` |
 | 4 | • 💬 **Failure messages:** add assertion failure messages to the Confluence and Jira handler tests | • 🔍 **Clarity:** only 0–1% of their assertions say how to fix a failure today | `tests/test_scorecards_summary.md` |
 | 5 | • 🧪 **Lazy-load test coverage:** re-score Test Coverage for the 15 `05_lazy_load` rules now guarded by `test_lazy_load_rule_structure.py` | • 📉 **Lowest dimension:** lazy-load rule Test Coverage averages 2.7/10, the lowest anywhere | `rules/rule_scorecards_summary.md` |
 | 6 | • 📝 **Missing Purpose statements:** add a `**Purpose:**` line to datetime, ohmyzsh_setup, ansible, terraform, mermaid, docker, jira and makefile | • 🧱 **Structure:** each of these 8 lazy-load rules loses Structural Compliance points for it | `rules/rule_scorecards_summary.md` |
