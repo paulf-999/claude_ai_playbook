@@ -140,7 +140,8 @@ alongside these tests and is imported directly via a relative import.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_file_structure_compliance.py` | All files and directories in the Claude config follow naming and placement conventions | 3/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
+| `test_file_structure_compliance.py` | All files and directories in the Claude config follow naming and placement conventions | 2/10 | 2026-08-28 | 2026-10-01 | 1.2.1 |
+| `test_file_structure_validator.py` | The file-structure scanner flags bad names and skips auto-generated, hidden and exempt files | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
 
 ---
 

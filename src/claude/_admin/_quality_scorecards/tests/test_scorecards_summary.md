@@ -6,7 +6,7 @@
 
 ## 📋 Current scores
 
-- **Scored:** 44 test files, average 8.1/10.
+- **Scored:** 45 test files, average 8.1/10.
 - **Below 8.5:** 32 tests, each with recommended improvements.
 - **Order:** one table per `_tests/` folder, sorted by Overall score, highest first.
 
@@ -80,8 +80,9 @@
 
 | Scorecard | Overall | Recommended improvements |
 |---|---|---|
+| `scorecard_test_file_structure_validator.md` | 9.3/10 | — (≥8.5) |
 | `scorecard_test_hook_metadata_header.md` | 9.0/10 | — (≥8.5) |
-| `scorecard_test_file_structure_compliance.md` | 7.4/10 | • Update the header quality score from 5/10 to reflect the current counts<br>• Add test functions and assertions toward 10+ and 15+ (now 1 and 1)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Correct the docstring: it is one scanning function, not a parametrized test |
+| `scorecard_test_file_structure_compliance.md` | 7.0/10 | • Add test functions and assertions toward 10+ and 15+ (now 1 and 1)<br>• Convert `scan()`'s Google-style `Returns:` docstring to reST so the file is Python style compliant<br>• Correct the docstring: it is one scanning function, not a parametrized test |
 
 ---
 
