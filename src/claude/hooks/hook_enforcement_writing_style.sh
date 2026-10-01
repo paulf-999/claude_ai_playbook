@@ -1,77 +1,58 @@
 #!/bin/bash
-# version: 1.0.0
+# version: 2.0.0
 # created: 2026-08-28
-# updated: 2026-09-18
-# enforcement_markdown_file_locations.sh
-# Validates .md files written to ~/.claude/ against writing_style.md conventions
-# Mode: blocking (returns exit code 1 for invalid paths)
+# updated: 2026-10-01
+# PostToolUse hook — checks where markdown files written inside the Claude config dir live.
+# Root: only the known top-level files may sit at the config root (see claude_directory_structure.md).
+# Reference: _reference/ files are snake_case topics with no date, or _<aspect>.md children of one topic.
+# Every other folder has its own conventions, and files outside the config dir are ignored.
+# The edit has already happened, so exit 2 feeds the fix back to Claude rather than blocking.
 
-FILE_PATH="${CLAUDE_TOOL_INPUT_FILE_PATH:-$1}"
+CLAUDE_HOOKS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CLAUDE_ROOT_DIR="$(dirname "${CLAUDE_HOOKS_DIR}")"
+STYLE_RULE="_rules/01_essentials/claude_usage_standards/writing_style.md"
 
-# Skip if not a .md file or not under ~/.claude/
-if [[ ! "$FILE_PATH" =~ \.md$ ]] || [[ ! "$FILE_PATH" =~ ^$HOME/\.claude/ ]]; then
+#=======================================================================
+# Variables
+#=======================================================================
+
+# Markdown files allowed at the config root
+ROOT_FILES=(CLAUDE.md README.md TODO.md aliases.md settings_json_readme.md)
+
+# Claude Code sends the payload as JSON on stdin; a path argument is kept for manual runs.
+FILE_PATH="${1:-}"
+if [[ -z "${FILE_PATH}" ]]; then
+  FILE_PATH=$(jq -r '.tool_input.file_path // empty' 2>/dev/null)
+fi
+
+#=======================================================================
+# Main script logic
+#=======================================================================
+
+# Only markdown files inside the config dir are checked.
+[[ "${FILE_PATH}" == *.md ]] || exit 0
+[[ "${FILE_PATH}" == "${CLAUDE_ROOT_DIR}/"* ]] || exit 0
+RELATIVE_PATH="${FILE_PATH#"${CLAUDE_ROOT_DIR}"/}"
+
+if [[ "${RELATIVE_PATH}" != */* ]]; then
+  for allowed in "${ROOT_FILES[@]}"; do
+    [[ "${RELATIVE_PATH}" == "${allowed}" ]] && exit 0
+  done
+  PROBLEM="Markdown files don't belong at the config root — move it to _reference/, _docs/ or another folder."
+elif [[ "${RELATIVE_PATH}" == _reference/* ]]; then
+  [[ "${RELATIVE_PATH}" == */README.md ]] && exit 0
+  [[ "${RELATIVE_PATH}" =~ ^_reference/[a-z][a-z0-9_]*\.md$ ]] && exit 0
+  [[ "${RELATIVE_PATH}" =~ ^_reference/[a-z][a-z0-9_]*/_[a-z0-9_]+\.md$ ]] && exit 0
+  PROBLEM="Reference files are _reference/<topic>.md (snake_case, no date) or _reference/<topic>/_<aspect>.md."
+else
   exit 0
 fi
 
-# Exempt patterns (these follow different conventions)
-EXEMPT_PATTERNS=(
-  "CLAUDE.md$"           # Config files
-  "MEMORY.md$"           # Global memory index
-  "README.md$"           # Directory readmes
-  "/_rules/.*README\.md$" # Rules documentation
-  "/skills/.*/SKILL\.md$" # Skill documentation
-  "/agents/.*/.*\.md$"   # Agent documentation
-  "/keybindings\.json"   # Non-markdown
-)
+cat >&2 << MESSAGE
+❌ Markdown file location breaks the writing style conventions:
+   Path: ${RELATIVE_PATH}
+   ${PROBLEM}
 
-# Check if file matches exemption patterns
-for pattern in "${EXEMPT_PATTERNS[@]}"; do
-  if [[ "$FILE_PATH" =~ $pattern ]]; then
-    exit 0
-  fi
-done
-
-# Valid domains for dated paths (_drafts, _errors)
-VALID_DOMAINS="(1on1|confluence|email|general|important|jira|meetings|plans|reference|teams)"
-
-# Valid path patterns from writing_style.md
-# Drafts:   ~/.claude/_drafts/<domain>/YYYY-MM-DD_<topic>.md
-# Errors:   ~/.claude/_errors/<domain>/YYYY-MM-DD_<topic>.md
-# Reference: ~/.claude/_reference/<topic>.md (no date)
-# Sessions: ~/.claude/_sessions/YYYY-MM-DD_<domain>_<topic>.md
-
-VALID_PATTERNS=(
-  "^$HOME/\.claude/_drafts/${VALID_DOMAINS}/[0-9]{4}-[0-9]{2}-[0-9]{2}_[a-z0-9_]+\.md$"
-  "^$HOME/\.claude/_errors/${VALID_DOMAINS}/[0-9]{4}-[0-9]{2}-[0-9]{2}_[a-z0-9_]+\.md$"
-  "^$HOME/\.claude/_reference/[a-z0-9_]+\.md$"
-  "^$HOME/\.claude/_sessions/[0-9]{4}-[0-9]{2}-[0-9]{2}_[a-z0-9_]+_[a-z0-9_]+\.md$"
-  "^$HOME/\.claude/memory/.*\.md$"
-  "^$HOME/\.claude/_rules/.*\.md$"
-  "^$HOME/\.claude/projects/.*/memory/.*\.md$"
-)
-
-# Check if file matches any valid pattern
-for pattern in "${VALID_PATTERNS[@]}"; do
-  if [[ "$FILE_PATH" =~ $pattern ]]; then
-    exit 0
-  fi
-done
-
-# If we get here, file doesn't match valid conventions — block write
-RELATIVE_PATH="${FILE_PATH#"$HOME"/}"
-cat >&2 << EOF
-❌ Error: Markdown file location does not follow writing_style.md conventions:
-   Path: $RELATIVE_PATH
-
-   Valid locations:
-   • Drafts:     ~/.claude/_drafts/<domain>/YYYY-MM-DD_<topic>.md
-   • Errors:     ~/.claude/_errors/<domain>/YYYY-MM-DD_<topic>.md
-   • Reference:  ~/.claude/_reference/<topic>.md
-   • Sessions:   ~/.claude/_sessions/YYYY-MM-DD_<domain>_<topic>.md
-
-   Domains: 1on1, confluence, email, general, important, jira, meetings, plans, reference, teams
-
-   See: ~/.claude/_rules/01_core/writing_style.md → Drafts and errors section
-EOF
-
-exit 1
+   See: ${STYLE_RULE} → Drafts and errors
+MESSAGE
+exit 2

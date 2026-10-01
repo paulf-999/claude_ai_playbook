@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.3
+# Version:           1.0.4
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -36,7 +36,6 @@ SCORE_PATTERN = re.compile(
 # Files below the minimum when it was first enforced, keyed by path under _tests/,
 # with their recorded (quality, complexity, style) — remove each as it's fixed
 BASELINE = {
-    "hooks/enforcement/test_enforcement_writing_style.py": (9, 5, "No"),
     "hooks/response_standards/test_style_guide_response_standards.py": (7, 5, "No"),
     "rules/01_essentials/test_guiding_principles.py": (3, 10, "Yes"),
     "rules/01_essentials/test_rule_directory_organisation.py": (7, 6, "Yes"),

@@ -2,194 +2,160 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           1.0.2
+# Version:           2.0.0
 # Test quality score: 9/10
-# Test complexity score: 5/10
-# Python style compliant: No
+# Test complexity score: 7/10
+# Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
+"""Test: hook_enforcement_writing_style.sh.
+
+The hook checks where markdown files written inside the Claude config dir live:
+only known top-level files may sit at the config root, and ``_reference/`` files
+must be snake_case topics with no date. Everything else is left alone. Each test
+sends the same JSON payload Claude Code sends on stdin, because the old hook
+read a path argument Claude Code never passes and so never fired.
 """
-Test: enforcement_markdown_file_locations hook
-
-Validates that markdown files written to the Claude config directory follow
-writing_style.md conventions. The hook itself matches on a literal ".claude/"
-path segment, independent of CLAUDE_CONFIG_DIR.
-- Drafts: ~/.claude/_drafts/<domain>/YYYY-MM-DD_<topic>.md
-- Errors: ~/.claude/_errors/<domain>/YYYY-MM-DD_<topic>.md
-- Reference: ~/.claude/_reference/<topic>.md
-- Sessions: ~/.claude/_sessions/YYYY-MM-DD_<domain>_<topic>.md
-
-Mode: blocking (returns exit code 1 for invalid paths)
-"""
-
+import json
 import subprocess
-from pathlib import Path
 
+import pytest
 
 from _shared_paths import CLAUDE_DIR
+from _shared_paths import HOOKS_DIR
 
-HOOK_PATH = CLAUDE_DIR / "hooks" / "hook_enforcement_writing_style.sh"
+HOOK_PATH = HOOKS_DIR / "hook_enforcement_writing_style.sh"
+STYLE_RULE = "writing_style.md"
 
 
-def run_hook(file_path):
-    """Run the hook and return exit code."""
+def run_hook(file_path: str, tool_name: str = "Write") -> subprocess.CompletedProcess:
+    """Run the hook with a PostToolUse payload for one file.
+
+    :param file_path: Value for the payload's ``tool_input.file_path``.
+    :type file_path: str
+    :param tool_name: Tool that wrote the file.
+    :type tool_name: str
+    :return: The completed hook run.
+    :rtype: subprocess.CompletedProcess
+    """
+    payload = {"hook_event_name": "PostToolUse", "tool_name": tool_name, "tool_input": {"file_path": file_path}}
+    return run_raw(json.dumps(payload))
+
+
+def run_raw(stdin: str) -> subprocess.CompletedProcess:
+    """Run the hook with raw stdin.
+
+    :param stdin: Text to send on stdin.
+    :type stdin: str
+    :return: The completed hook run.
+    :rtype: subprocess.CompletedProcess
+    """
+    return subprocess.run(["bash", str(HOOK_PATH)], input=stdin, text=True, capture_output=True)
+
+
+def config_path(relative: str) -> str:
+    """Build an absolute path inside the config dir.
+
+    :param relative: Path relative to the config dir.
+    :type relative: str
+    :return: The absolute path as a string.
+    :rtype: str
+    """
+    return str(CLAUDE_DIR / relative)
+
+
+def test_valid_reference_file_passes():
+    """A snake_case topic in _reference/ is allowed silently."""
+    result = run_hook(config_path("_reference/claude_code_automation.md"))
+    assert result.returncode == 0, f"valid reference file should pass, got {result.returncode}: {result.stderr}"
+    assert result.stderr == "", f"valid reference file should give no message, got {result.stderr}"
+
+
+def test_reference_child_file_passes():
+    """A _<aspect>.md child under a reference topic folder is allowed."""
+    result = run_hook(config_path("_reference/claude_config_architecture/_security.md"))
+    assert result.returncode == 0, f"reference child file should pass, got {result.returncode}: {result.stderr}"
+
+
+def test_reference_readme_passes():
+    """README.md in _reference/ is allowed."""
+    result = run_hook(config_path("_reference/README.md"))
+    assert result.returncode == 0, f"_reference/README.md should pass, got {result.returncode}: {result.stderr}"
+
+
+def test_dated_reference_file_is_flagged():
+    """Reference files carry no date, so a date prefix is flagged back to Claude."""
+    result = run_hook(config_path("_reference/2026_10_01_topic.md"))
+    assert result.returncode == 2, f"dated reference file should exit 2, got {result.returncode}"
+    assert "no date" in result.stderr, f"message should explain the no-date rule, got {result.stderr}"
+    assert STYLE_RULE in result.stderr, f"message should point to {STYLE_RULE}, got {result.stderr}"
+
+
+def test_badly_named_reference_file_is_flagged():
+    """Hyphens or capitals in a reference file name are flagged."""
+    for name in ("claude-code-automation.md", "ClaudeCode.md"):
+        result = run_hook(config_path(f"_reference/{name}"))
+        assert result.returncode == 2, f"_reference/{name} should exit 2, got {result.returncode}"
+
+
+def test_reference_child_without_prefix_is_flagged():
+    """A file inside a reference topic folder needs the _ child prefix."""
+    result = run_hook(config_path("_reference/claude_config_architecture/security.md"))
+    assert result.returncode == 2, f"unprefixed reference child should exit 2, got {result.returncode}"
+
+
+def test_known_root_files_pass():
+    """The top-level markdown files the config defines are allowed at the root."""
+    for name in ("CLAUDE.md", "README.md", "TODO.md", "aliases.md", "settings_json_readme.md"):
+        result = run_hook(config_path(name))
+        assert result.returncode == 0, f"{name} should be allowed at the root, got {result.returncode}"
+
+
+def test_stray_root_markdown_is_flagged():
+    """A new markdown file at the config root is flagged back to Claude."""
+    result = run_hook(config_path("random_note.md"))
+    assert result.returncode == 2, f"stray root markdown should exit 2, got {result.returncode}"
+    assert "config root" in result.stderr, f"message should say the root is the problem, got {result.stderr}"
+    assert "random_note.md" in result.stderr, f"message should name the file, got {result.stderr}"
+
+
+def test_other_config_folders_are_ignored():
+    """Folders with their own conventions are left to their own checks."""
+    for relative in ("_rules/05_lazy_load/Odd-Name.md", "skills/_git_skills/git_create_pr/SKILL.md", "_plans/x.md"):
+        result = run_hook(config_path(relative))
+        assert result.returncode == 0, f"{relative} should be ignored, got {result.returncode}"
+
+
+def test_non_markdown_is_ignored():
+    """Non-.md files are never checked."""
+    result = run_hook(config_path("some_script.sh"))
+    assert result.returncode == 0, f"non-markdown should be ignored, got {result.returncode}"
+    assert result.stderr == "", f"non-markdown should give no message, got {result.stderr}"
+
+
+def test_files_outside_config_are_ignored():
+    """Markdown outside the config dir, like a project's README, is never checked."""
+    result = run_hook(str(CLAUDE_DIR.parent / "random_note.md"))
+    assert result.returncode == 0, f"files outside the config dir should be ignored, got {result.returncode}"
+
+
+def test_bad_or_empty_payload_is_ignored():
+    """Bad JSON, an empty payload or a missing file_path never fails the hook."""
+    for stdin in ("{not json", "", json.dumps({"tool_input": {}})):
+        result = run_raw(stdin)
+        assert result.returncode == 0, f"payload {stdin!r} should be ignored, got {result.returncode}: {result.stderr}"
+
+
+@pytest.mark.parametrize("tool_name", ["Write", "Edit"])
+def test_both_registered_tools_are_checked(tool_name: str):
+    """The hook is registered for Edit and Write, and flags both the same way."""
+    result = run_hook(config_path("random_note.md"), tool_name)
+    assert result.returncode == 2, f"{tool_name} of a stray root file should exit 2, got {result.returncode}"
+
+
+def test_path_argument_still_works_for_manual_runs():
+    """A path passed as the first argument is checked without any stdin."""
     result = subprocess.run(
-        [str(HOOK_PATH), str(file_path)],
-        capture_output=True,
-        text=True
+        ["bash", str(HOOK_PATH), config_path("random_note.md")], input="", text=True, capture_output=True
     )
-    return result.returncode, result.stderr
-
-
-class TestMarkdownFileLocationHook:
-    """Test the markdown file location enforcement hook."""
-
-    def test_valid_draft_path(self):
-        """Valid drafts should exit 0 (no warning)."""
-        path = f"{Path.home()}/.claude/_drafts/jira/2026-08-19_dm43319_root_cause.md"
-        code, stderr = run_hook(path)
-        assert code == 0, f"Expected exit 0 for valid draft, got {code}\nStderr: {stderr}"
-
-    def test_valid_error_path(self):
-        """Valid error paths should exit 0."""
-        path = f"{Path.home()}/.claude/_errors/general/2026-08-19_failed_operation.md"
-        code, stderr = run_hook(path)
-        assert code == 0, f"Expected exit 0 for valid error, got {code}"
-
-    def test_valid_reference_path(self):
-        """Valid reference paths (no date) should exit 0."""
-        path = f"{Path.home()}/.claude/_reference/claude_code_automation.md"
-        code, stderr = run_hook(path)
-        assert code == 0, f"Expected exit 0 for valid reference, got {code}"
-
-    def test_valid_session_path(self):
-        """Valid session paths should exit 0."""
-        path = f"{Path.home()}/.claude/_sessions/2026-08-19_data_platform_planning.md"
-        code, stderr = run_hook(path)
-        assert code == 0, f"Expected exit 0 for valid session, got {code}"
-
-    def test_exempt_claude_config(self):
-        """CLAUDE.md config files should be exempt."""
-        path = f"{Path.home()}/.claude/CLAUDE.md"
-        code, stderr = run_hook(path)
-        assert code == 0, f"Expected exit 0 for exempt CLAUDE.md, got {code}"
-
-    def test_exempt_memory_index(self):
-        """MEMORY.md should be exempt."""
-        path = f"{Path.home()}/.claude/memory/MEMORY.md"
-        code, stderr = run_hook(path)
-        assert code == 0, f"Expected exit 0 for exempt MEMORY.md, got {code}"
-
-    def test_exempt_skill_documentation(self):
-        """Skill SKILL.md files should be exempt."""
-        path = f"{Path.home()}/.claude/skills/_git_skills/git_create_pr/SKILL.md"
-        code, stderr = run_hook(path)
-        assert code == 0, f"Expected exit 0 for exempt skill SKILL.md, got {code}"
-
-    def test_exempt_rules_readme(self):
-        """Rules README.md files should be exempt."""
-        path = f"{Path.home()}/.claude/_rules/01_core/README.md"
-        code, stderr = run_hook(path)
-        assert code == 0, f"Expected exit 0 for exempt rules README, got {code}"
-
-    def test_invalid_path_in_root(self):
-        """Random .md files in ~/.claude/ root should be blocked."""
-        path = f"{Path.home()}/.claude/random_note.md"
-        code, stderr = run_hook(path)
-        assert code == 1, f"Hook should block invalid path (exit 1), got {code}"
-        assert "❌" in stderr, f"Expected error marker in stderr:\n{stderr}"
-        assert "writing_style.md" in stderr, "Expected reference to writing_style.md"
-
-    def test_invalid_draft_missing_domain(self):
-        """Draft without domain should be blocked."""
-        path = f"{Path.home()}/.claude/_drafts/2026-08-19_topic.md"
-        code, stderr = run_hook(path)
-        assert code == 1, "Hook should block invalid path (exit 1)"
-        assert "❌" in stderr
-
-    def test_invalid_draft_wrong_date_format(self):
-        """Draft with wrong date format should be blocked."""
-        path = f"{Path.home()}/.claude/_drafts/jira/08-19-2026_topic.md"
-        code, stderr = run_hook(path)
-        assert code == 1, "Hook should block invalid path (exit 1)"
-        assert "❌" in stderr
-
-    def test_non_markdown_ignored(self):
-        """Non-.md files should be ignored (exit 0)."""
-        path = f"{Path.home()}/.claude/some_script.sh"
-        code, stderr = run_hook(path)
-        assert code == 0, "Non-.md files should be ignored"
-        assert stderr == "", "Should not warn for non-.md files"
-
-    def test_non_claude_directory_ignored(self):
-        """Files outside ~/.claude/ should be ignored."""
-        path = f"{Path.home()}/some_file.md"
-        code, stderr = run_hook(path)
-        assert code == 0, "Files outside ~/.claude/ should be ignored"
-        assert stderr == "", "Should not warn for files outside ~/.claude/"
-
-    # New blocking behavior tests
-
-    def test_invalid_draft_missing_underscore_prefix(self):
-        """Draft written to 'drafts/' (no underscore) should be BLOCKED."""
-        path = f"{Path.home()}/.claude/drafts/jira/2026-08-19_dm43319_root_cause.md"
-        code, stderr = run_hook(path)
-        assert code == 1, f"Hook MUST block invalid path (missing underscore), got exit {code}"
-        assert "❌" in stderr, f"Expected error marker in stderr:\n{stderr}"
-        assert "drafts/" in stderr or "_drafts/" in stderr, "Error should mention correct path"
-
-    def test_invalid_error_missing_underscore_prefix(self):
-        """Error path written to 'errors/' (no underscore) should be BLOCKED."""
-        path = f"{Path.home()}/.claude/errors/general/2026-08-19_failed.md"
-        code, stderr = run_hook(path)
-        assert code == 1, "Hook MUST block invalid path (missing underscore)"
-        assert "❌" in stderr
-
-    def test_valid_1on1_domain(self):
-        """Draft with '1on1' domain (contains digit) should be ALLOWED."""
-        path = f"{Path.home()}/.claude/_drafts/1on1/2026-08-19_meeting_prep.md"
-        code, stderr = run_hook(path)
-        assert code == 0, f"Hook should allow 1on1 domain, got exit {code}\nStderr: {stderr}"
-
-    def test_valid_all_draft_domains(self):
-        """Draft paths with all valid domains should be ALLOWED."""
-        domains = [
-            "1on1", "confluence", "email", "general", "important",
-            "jira", "meetings", "plans", "reference", "teams",
-        ]
-        for domain in domains:
-            path = f"{Path.home()}/.claude/_drafts/{domain}/2026-08-19_test.md"
-            code, stderr = run_hook(path)
-            assert code == 0, f"Hook should allow domain '{domain}', got exit {code}\nStderr: {stderr}"
-
-    def test_invalid_domain_in_draft(self):
-        """Draft with invalid domain should be BLOCKED."""
-        path = f"{Path.home()}/.claude/_drafts/invalid_domain/2026-08-19_topic.md"
-        code, stderr = run_hook(path)
-        assert code == 1, "Hook should block invalid domain"
-        assert "❌" in stderr
-
-    def test_valid_error_all_domains(self):
-        """Error paths with valid domains should be ALLOWED."""
-        domains = ["confluence", "email", "general", "important", "jira"]
-        for domain in domains:
-            path = f"{Path.home()}/.claude/_errors/{domain}/2026-08-19_error.md"
-            code, stderr = run_hook(path)
-            assert code == 0, f"Hook should allow error with domain '{domain}', got exit {code}"
-
-    def test_exempt_readme_in_rules(self):
-        """README files anywhere in _rules/ should be ALLOWED."""
-        path = f"{Path.home()}/.claude/_rules/README.md"
-        code, stderr = run_hook(path)
-        assert code == 0, "Hook should allow README.md in _rules"
-
-    def test_exempt_rules_all_paths(self):
-        """Any .md file in _rules/ should be ALLOWED (rules are exempt)."""
-        path = f"{Path.home()}/.claude/_rules/01_core/writing_style.md"
-        code, stderr = run_hook(path)
-        assert code == 0, "Hook should allow .md files anywhere in _rules"
-
-
-if __name__ == "__main__":
-    import pytest
-    pytest.main([__file__, "-v"])
+    assert result.returncode == 2, f"manual run with a stray root file should exit 2, got {result.returncode}"
