@@ -90,6 +90,39 @@ copy_claude_files() {
     log_message "${INFO}" "Copied Claude files to: ${TARGET_DIR}"
 }
 
+# Point ~/.claude/ paths in the installed markdown at the real config folder (e.g. ~/claude).
+# @ imports can't read environment variables, so this is the only way they resolve elsewhere.
+# Only paths into an entry that exists in the target are rewritten, so prose about Claude Code's
+# own ~/.claude/ state folder is left alone, and user-owned entries are never touched.
+rewrite_config_paths() {
+    local PREFIX NAMES ENTRY NAME
+    set_plans_directory
+    if [[ "${TARGET_DIR}" == "${HOME}/.claude" ]]; then
+        return 0
+    elif [[ "${TARGET_DIR}" == "${HOME}/"* ]]; then
+        # shellcheck disable=SC2088  # a literal ~ is intended: it's text written into markdown, not a path
+        PREFIX="~/${TARGET_DIR#"${HOME}/"}/"
+    else
+        PREFIX="${TARGET_DIR}/"
+    fi
+    NAMES=$(find "${TARGET_DIR}" -mindepth 1 -maxdepth 1 -exec basename {} \; | perl -ne 'chomp; push @n, quotemeta; END { print join("|", @n) }')
+    for ENTRY in "${SOURCE_DIR}"/*; do
+        NAME=$(basename "${ENTRY}")
+        is_user_owned "${NAME}" && continue
+        [[ -e "${TARGET_DIR}/${NAME}" ]] || continue
+        PREFIX="${PREFIX}" NAMES="${NAMES}" find "${TARGET_DIR}/${NAME}" -type f -name "*.md" \
+            -exec perl -pi -e 's{~/\.claude/(?=(?:$ENV{NAMES})\b)}{$ENV{PREFIX}}g' {} +
+    done
+    log_message "${INFO}" "Pointed ~/.claude/ paths at: ${PREFIX}"
+}
+
+# Set settings.json's plansDirectory to the target's own _plans/ folder
+set_plans_directory() {
+    local SETTINGS="${TARGET_DIR}/settings.json"
+    [[ -f "${SETTINGS}" ]] || return 0
+    PLANS="${TARGET_DIR}/_plans" perl -pi -e 's{("plansDirectory":\s*)"[^"]*"}{$1"$ENV{PLANS}"}' "${SETTINGS}"
+}
+
 # Flatten skill group directories in ~/.claude/skills/.
 # Group dirs are identified by a leading underscore (e.g. _meetings_skills/).
 # Each skill subdirectory is promoted directly to ~/.claude/skills/;
