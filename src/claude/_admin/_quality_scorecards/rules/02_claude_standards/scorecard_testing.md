@@ -1,9 +1,9 @@
 # Quality Scorecard — testing.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-01
 
-**Overall score:** 7.6/10
+**Overall score:** 7.7/10
 
 **Recommended improvements:**
 - Add a check to `test_testing.py` that verifies the content-regression-test recommendation this file makes is itself followed somewhere in the test suite.
@@ -16,8 +16,8 @@
 | **Token Cost Justification** | 10/10 | 2026-09-28 | • 🎯 **Scope:** Tier 2, always-on, blocking standard — unambiguously justified |
 | **Structural Compliance** | 6/10 | 2026-09-28 | • ✅ **Compliant:** emoji headers, Purpose statement, trailing newline<br>• ❌ **Broken anchor:** confirmed via `grep "^## "` — no heading matches "Child Files (Load As Needed)"; the Contents entry doesn't correspond to any real section |
 | **Currency** | 6/10 | 2026-09-28 | • 🔍 **Same root cause as above:** the Contents section wasn't updated when the file was restructured into its current 5 headings, leaving a dead link |
-| **Test Coverage** | 7/10 | 2026-09-28 | • 🧪 **Direct test exists:** `test_testing.py`, 4 functions, validates that enforcement hooks have tests<br>• ⚠️ **Not exhaustive:** doesn't cover every rule this file states (e.g. the content-regression-test recommendation isn't itself checked) |
-| **Overall** | **7.6/10** | 2026-09-28 | • 💪 **Strength:** foundational, load-bearing, clearly justified<br>• ⚠️ **Gap:** a broken internal anchor link in its own Contents section |
+| **Test Coverage** | 8/10 | 2026-10-01 | • 🧪 **Direct test exists:** `test_testing.py`, 10 functions — enforcement hooks have tests, testing.md's children exist, and the score minimum names its enforcer<br>• ⚠️ **Not exhaustive:** doesn't cover every rule this file states |
+| **Overall** | **7.7/10** | 2026-10-01 | • 💪 **Strength:** foundational, load-bearing, clearly justified<br>• ⚠️ **Gap:** a broken internal anchor link in its own Contents section |
 
 ## 🔗 Related files
 

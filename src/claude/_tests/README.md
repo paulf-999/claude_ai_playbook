@@ -46,8 +46,8 @@ Tests for Claude Code hook scripts in `~/.claude/hooks/`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_enforcement_mcp_stale_settings.py` | `hook_enforcement_mcp_stale_settings.sh` — warns once when the disabled MCP servers change mid-session | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.1 |
-| `test_enforcement_naming_convention.py` | `hook_enforcement_naming_convention.sh` — denies new config files whose names break the compliance checks, and lets everything else through | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.1 |
+| `test_enforcement_mcp_stale_settings.py` | `hook_enforcement_mcp_stale_settings.sh` — warns once when the disabled MCP servers change mid-session | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.3 |
+| `test_enforcement_naming_convention.py` | `hook_enforcement_naming_convention.sh` — denies new config files whose names break the compliance checks, and lets everything else through | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.3 |
 | `test_enforcement_writing_style.py` | `hook_enforcement_writing_style.sh` — flags stray markdown at the config root and badly named `_reference/` files, using the real stdin payload | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 
 ### `hooks/response_standards/`
@@ -90,7 +90,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_portable_paths_hooks.py` | Hooks resolve the config dir from their own location — no hardcoded `~/.claude/` file operations or guard substrings | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.0 |
 | `test_portable_paths_python.py` | Python test files use `CLAUDE_DIR` — no `.expanduser()` outside `_shared_paths.py`, home-directory constants or one-convention import prefixes | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.0 |
 | `test_security_guardrails.py` | `_security_guardrails.md` keeps each guardrail, and settings.json allows none of the wildcards it forbids | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
-| `test_test_metadata.py` | Every test's metadata header is complete, in order, well formed (banners, dates, semver, scores), and its quality score matches its own counts | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.0 |
+| `test_test_metadata.py` | Every test's metadata header is complete, in order, well formed (banners, dates, semver, scores), and its quality score matches its own counts | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.1 |
 | `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, with no exemptions, and the minimums match `_test_metadata.md` | 9/10 | 2026-10-01 | 2026-10-01 | 2.0.0 |
 | `test_testing.py` | Every enforcement hook has a test (aspect splits allowed), no orphaned hook tests, and testing.md's pointers exist | 9/10 | 2026-08-28 | 2026-10-01 | 1.2.0 |
 
@@ -143,7 +143,15 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_skill_structure_compliance.py` | Every installed skill passes the skill authoring gate's crawl checks, and each check is proven to fire | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.1 |
 | `test_no_orphaned_skill_files.py` | Every skill file is referenced somewhere in its skill, every `reference/` link in SKILL.md exists, and no SKILL.md @-imports a file | 9/10 | 2026-09-19 | 2026-10-01 | 2.0.0 |
 | `test_skill_authoring_gate_walk.py` | The gate linter's walk checks (W1–W6) fail or warn as intended on fake skills | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
-| `test_skill_authoring_gate_run.py` | The gate linter's run checks (R2–R4) on fake skills, and failures block while judgement calls only warn | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
+| `test_skill_authoring_gate_run.py` | The gate linter's run checks (R2–R4) on fake skills, and failures block while judgement calls only warn | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.1 |
+
+### `skills/claude_capture_session_prompts/`
+
+Tests for the skill's own script, `capture_session_prompts.py`, which lives in the skill folder.
+
+| File | What it tests | Quality | Created | Updated | Version |
+|---|---|---|---|---|---|
+| `test_capture_session_prompts.py` | The history file resolves from `CLAUDE_CONFIG_DIR`, output goes to `~/_sessions/` with a date-first name, and the categories and markdown match the skill's docs | 9/10 | 2026-09-30 | 2026-10-01 | 1.0.3 |
 
 ### `skills/confluence_create_page/`
 
@@ -173,7 +181,7 @@ these tests and is imported directly via a relative import.
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_file_structure_compliance.py` | Every file in the real Claude config passes the file-structure scan, checked area by area | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
-| `test_file_structure_validator.py` | The file-structure scanner flags bad names and skips auto-generated, hidden and exempt files | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.2 |
+| `test_file_structure_validator.py` | The file-structure scanner flags bad names and skips auto-generated, hidden and exempt files | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.3 |
 | `test_rule_reachability.py` | The rule-reachability detector flags orphans and broken imports, and honours its exemptions, on fake rule trees | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.0 |
 
 ---

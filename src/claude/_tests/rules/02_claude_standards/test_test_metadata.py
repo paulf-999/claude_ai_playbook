@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.1.0
+# Version:           1.1.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -174,20 +174,20 @@ def quality_error(source: str) -> str | None:
     return None
 
 
-def test_scan_finds_find_test_files() -> None:
+def test_scan_finds_find_test_files():
     """The scan finds this file, so a broken glob can't pass silently."""
     files = find_test_files()
     assert len(files) >= 10, f"expected many test files under {TESTS_DIR}, found {len(files)}"
     assert Path(__file__).resolve() in [p.resolve() for p in files], "the scan must include this file"
 
 
-def test_every_test_file_has_complete_header() -> None:
+def test_every_test_file_has_complete_header():
     """Every test file opens with the full metadata header, in order."""
     failures = [f"{p.relative_to(TESTS_DIR)}: {e}" for p in find_test_files() for e in header_errors(p.read_text())]
     assert not failures, "Incomplete metadata headers " + HINT + ":\n  " + "\n  ".join(failures)
 
 
-def test_every_quality_score_matches_counts() -> None:
+def test_every_quality_score_matches_counts():
     """Every header's quality score sits within ±1 of the band its counts support."""
     failures = []
     for path in find_test_files():
@@ -197,25 +197,25 @@ def test_every_quality_score_matches_counts() -> None:
     assert not failures, "Header quality scores have drifted " + HINT + ":\n  " + "\n  ".join(failures)
 
 
-def test_valid_header_has_no_errors() -> None:
+def test_valid_header_has_no_errors():
     """A complete, ordered header gives no errors."""
     assert header_errors(VALID_HEADER + ONE_TEST) == [], "the reference header must be valid"
 
 
-def test_missing_title_is_flagged() -> None:
+def test_missing_title_is_flagged():
     """A header without the title line is flagged."""
     errors = header_errors(VALID_HEADER.replace(TITLE, "# Metadata") + ONE_TEST)
     assert errors == [f"line 1 must be '{TITLE}'"], f"missing title should be the only error, got {errors}"
 
 
-def test_missing_field_is_flagged() -> None:
+def test_missing_field_is_flagged():
     """A header missing the complexity line names that field."""
     source = VALID_HEADER.replace("# Test complexity score: 9/10\n", "") + ONE_TEST
     errors = header_errors(source)
     assert errors == ["missing '# Test complexity score:'"], f"expected one missing-field error, got {errors}"
 
 
-def test_out_of_order_fields_are_flagged() -> None:
+def test_out_of_order_fields_are_flagged():
     """Swapping two fields is reported as out of order."""
     swapped = VALID_HEADER.replace(
         "# Date created:      2026-10-01\n# Date updated:      2026-10-01\n",
@@ -226,7 +226,7 @@ def test_out_of_order_fields_are_flagged() -> None:
     assert "out of order" in errors[0], f"error should say out of order, got {errors[0]}"
 
 
-def test_counts_include_class_methods_only_for_tests() -> None:
+def test_counts_include_class_methods_only_for_tests():
     """Test methods inside classes count, helper functions don't."""
     source = (
         "def helper():\n    assert True\n\n"
@@ -237,7 +237,7 @@ def test_counts_include_class_methods_only_for_tests() -> None:
     assert asserts == 3, f"all assert statements count, counted {asserts}"
 
 
-def test_band_floor_matches_table() -> None:
+def test_band_floor_matches_table():
     """The band floor follows the _test_metadata.md quality table."""
     assert band_floor(10, 15) == 9, "10+ functions and 15+ asserts is the 9–10 band"
     assert band_floor(8, 10) == 7, "8+ functions and 10–14 asserts is the 7–8 band"
@@ -245,12 +245,12 @@ def test_band_floor_matches_table() -> None:
     assert band_floor(1, 1) == 3, "fewer than 4 functions or 5 asserts is the 3–4 band"
 
 
-def test_band_floor_uses_lower_count() -> None:
+def test_band_floor_uses_lower_count():
     """Many asserts in few functions only reach the function band."""
     assert band_floor(3, 40) == 3, "3 functions cap the band at 3–4, whatever the assert count"
 
 
-def test_inflated_quality_is_flagged() -> None:
+def test_inflated_quality_is_flagged():
     """A 10/10 header on a one-assert test is reported as drift."""
     source = VALID_HEADER.replace("quality score: 3/10", "quality score: 10/10") + ONE_TEST
     error = quality_error(source)
@@ -258,20 +258,20 @@ def test_inflated_quality_is_flagged() -> None:
     assert "support 3–4" in error, f"message should name the 3–4 band, got {error}"
 
 
-def test_quality_within_one_of_band_passes() -> None:
+def test_quality_within_one_of_band_passes():
     """Scores one either side of the band are allowed."""
     for score in (2, 3, 4, 5):
         source = VALID_HEADER.replace("quality score: 3/10", f"quality score: {score}/10") + ONE_TEST
         assert quality_error(source) is None, f"{score}/10 is within ±1 of the 3–4 band and should pass"
 
 
-def test_missing_quality_score_is_flagged() -> None:
+def test_missing_quality_score_is_flagged():
     """A header with no quality score is reported."""
     source = VALID_HEADER.replace("# Test quality score: 3/10\n", "") + ONE_TEST
     assert quality_error(source) == "no quality score", "a missing quality score must be reported"
 
 
-def test_old_field_order_is_flagged() -> None:
+def test_old_field_order_is_flagged():
     """The pre-2026-10-01 order, scores first, is reported as out of order."""
     lines = VALID_HEADER.splitlines()
     old_order = lines[:2] + lines[5:8] + [lines[2], lines[4], lines[3]] + lines[8:]
@@ -279,7 +279,7 @@ def test_old_field_order_is_flagged() -> None:
     assert errors == [f"fields out of order — expected {', '.join(FIELDS)}"], f"got {errors}"
 
 
-def test_placeholder_date_is_flagged() -> None:
+def test_placeholder_date_is_flagged():
     """``[placeholder]`` is no longer a valid Date updated."""
     source = VALID_HEADER.replace("updated:      2026-10-01", "updated:      [placeholder]") + ONE_TEST
     errors = header_errors(source)
@@ -287,7 +287,7 @@ def test_placeholder_date_is_flagged() -> None:
     assert "'Date updated' value '[placeholder]'" in errors[0], f"error should name the field, got {errors[0]}"
 
 
-def test_bad_values_are_flagged() -> None:
+def test_bad_values_are_flagged():
     """Two-part versions, out-of-range scores and non Yes/No style values fail."""
     cases = {
         "# Version:           1.0.0": "# Version:           1.0",
@@ -299,7 +299,7 @@ def test_bad_values_are_flagged() -> None:
         assert len(errors) == 1, f"'{bad}' should give one error, got {errors}"
 
 
-def test_wrong_banner_is_flagged() -> None:
+def test_wrong_banner_is_flagged():
     """A closing banner of hyphens instead of ─ fails."""
     lines = VALID_HEADER.splitlines()
     lines[8] = "# -----"
@@ -307,14 +307,14 @@ def test_wrong_banner_is_flagged() -> None:
     assert errors == ["lines 2 and 9 must be '# ─…' banners"], f"got {errors}"
 
 
-def test_updated_before_created_is_flagged() -> None:
+def test_updated_before_created_is_flagged():
     """A Date updated earlier than Date created fails."""
     source = VALID_HEADER.replace("updated:      2026-10-01", "updated:      2026-09-01") + ONE_TEST
     errors = header_errors(source)
     assert errors == ["Date updated 2026-09-01 is earlier than Date created 2026-10-01"], f"got {errors}"
 
 
-def test_impossible_date_is_flagged() -> None:
+def test_impossible_date_is_flagged():
     """A well-shaped but impossible date fails."""
     errors = date_errors("2026-13-40", "2026-10-01")
     assert len(errors) == 1, f"expected one date error, got {errors}"

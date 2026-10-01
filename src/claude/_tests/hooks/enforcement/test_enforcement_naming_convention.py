@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           2.0.2
+# Version:           2.0.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -48,7 +48,7 @@ def deny_reason(relative_path: str) -> str:
     return output["permissionDecisionReason"]
 
 
-def assert_allowed(payload: dict, case: str) -> None:
+def assert_allowed(payload: dict, case: str):
     """Assert the hook exits cleanly with no output, which lets the Write through.
 
     :param payload: Claude Code PreToolUse payload.

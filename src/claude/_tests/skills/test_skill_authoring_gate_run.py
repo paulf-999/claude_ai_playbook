@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.0
+# Version:           1.0.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -28,7 +28,7 @@ HISTORY = "\n## 📜 Version history\n\n- 1.0.0: first tactical release\n"
 GAPS = "\n## 🕳️ Known gaps\n\n- None found yet, with a workaround noted here when one is.\n"
 
 
-def write_test_file(tests_dir: Path, body: str) -> None:
+def write_test_file(tests_dir: Path, body: str):
     """Write a fake skill's pytest file.
 
     :param tests_dir: Folder to write it in.
