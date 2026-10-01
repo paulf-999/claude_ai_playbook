@@ -1,6 +1,6 @@
 ---
 name: confluence_create_page
-description: Create a Confluence page using the general_page pattern. Requires Atlassian MCP enabled.
+description: Create, add, write or publish a Confluence page (or publish a local draft to Confluence) from the general_page template, with a local draft you approve first. Requires the Atlassian MCP server.
 maturity: tactical
 tags:
   criticality: should
@@ -8,11 +8,22 @@ tags:
   tested: true
   date_created: "2026-06-07"
   date_updated: "2026-10-01"
-tools: Read, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
+tools: Read, Write, mcp__atlassian__getAccessibleAtlassianResources, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
-<!-- version: 1.0.6 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-04-08 -->
 <!-- updated: 2026-10-01 -->
+
+## 🤖 Instructions for Claude
+
+- **Read first:** read `reference/_phases.md` before acting, and follow its phases in order.
+- **Pre-check:** call `getAccessibleAtlassianResources` to confirm Atlassian access works and to get the cloud ID.
+  - **On failure:** stop and tell the user to run `make enable_mcp server=Atlassian` and restart Claude Code.
+- **Never:** call `createConfluencePage` or `updateConfluencePage` until the user has approved the local draft — even when asked to "just publish".
+- **Never:** infer the target space or parent page — confirm both with the user, and never publish at the space root.
+- **Always:** write the draft to `~/_drafts/confluence/YYYY_MM_DD_<topic>.md`, expanding `~` to the user's absolute home path before calling Write.
+  - **Never:** write drafts inside the Claude config folder.
+- **Always:** create the page with `status: draft`, so nothing goes live without the user publishing it in Confluence.
 
 ## 🎯 Purpose
 

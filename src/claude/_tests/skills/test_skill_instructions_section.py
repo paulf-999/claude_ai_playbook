@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.0
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -38,7 +38,6 @@ BASELINE = {
     "claude_kaizen",
     "claude_review_config",
     "claude_setup_graphify",
-    "confluence_create_page",
     "git_create_pr",
     "jira_create",
 }
@@ -146,6 +145,14 @@ def test_skill_has_instructions_for_claude(name):
         pytest.skip(f"{name} is on BASELINE — written before the section was required")
     issues = instruction_issues(skill_md_for(name))
     assert not issues, f"{name}/SKILL.md: {issues} — see authoring_skills/_lazy_load/_core_standards.md"
+
+
+def test_confluence_skill_drafts_to_home_folder():
+    """The Confluence skill names ~/_drafts/confluence/ for drafts (incident 2026-10-01)."""
+    section = instructions_section(skill_md_for("confluence_create_page"))
+    assert section, "confluence_create_page has no Instructions for Claude section"
+    assert "~/_drafts/confluence/" in section, "drafts path ~/_drafts/confluence/ is missing"
+    assert "getAccessibleAtlassianResources" in section, "the Atlassian MCP pre-check is missing"
 
 
 @pytest.mark.parametrize("name", sorted(BASELINE))
