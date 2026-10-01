@@ -384,9 +384,11 @@ def save_draft(content: str, page_title: str) -> pathlib.Path:
     drafts_dir = pathlib.Path.home() / "_drafts" / "confluence"
     drafts_dir.mkdir(parents=True, exist_ok=True)
 
-    # Sanitize filename: replace spaces and special chars with underscores
-    safe_title = "".join(c if c.isalnum() or c == "_" else "_" for c in page_title.lower())
-    filename = f"{safe_title}_{int(time.time())}.md"
+    # YYYY_MM_DD_<slug>.md, as the skill and writing_style.md name drafts; redrafting the
+    # same page on the same day replaces the earlier draft rather than piling up copies
+    slug = "".join(c if c.isalnum() else "_" for c in page_title.lower())
+    slug = "_".join(part for part in slug.split("_") if part)
+    filename = f"{time.strftime('%Y_%m_%d')}_{slug}.md"
 
     draft_path = drafts_dir / filename
     draft_path.write_text(content)

@@ -7,12 +7,12 @@ tags:
   status: active
   tested: true
   date_created: "2026-06-07"
-  date_updated: "2026-09-30"
+  date_updated: "2026-10-01"
 tools: Read, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
-<!-- version: 1.0.4 -->
+<!-- version: 1.0.5 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
 
 ## 🎯 Purpose
 
@@ -27,7 +27,7 @@ Create a Confluence page from a team-approved template, with a local draft you r
 ```
 $ /confluence_create_page create a page about the Q3 roadmap
 [Phase 1] Gathering details: title, creator, status, purpose, sections
-[Phase 2] Local draft ready — review at ~/_drafts/confluence/q3_roadmap_2026-Sep-30.md
+[Phase 2] Local draft ready — review at ~/_drafts/confluence/2026_09_30_q3_roadmap.md
           Approve, request changes, or cancel? (y/e/n): y
 [Phase 3] Publishing to Confluence...
           ✓ Page created
