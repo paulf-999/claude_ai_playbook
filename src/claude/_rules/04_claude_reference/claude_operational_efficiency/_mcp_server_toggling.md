@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-31 -->
 <!-- updated: 2026-10-01 -->
 # ⚠️ MCP Server Toggling — Restart Requirement
@@ -17,7 +17,7 @@ Claude Code caches settings at session startup. Even though `settings.json` is u
 
 - **mcp_toggle.py** exits with code 1 when changes are made, displaying a **BLOCKING message** that lists the server toggled and restart instructions
 - **Makefile target** (`make enable_mcp`) shows as "failed," signaling user action needed
-- **Session-start hook** checks for recent setting changes and shows a gentle reminder if needed
+- **`hook_enforcement_mcp_stale_settings.sh`** warns once, on your next prompt, if the disabled MCP servers changed since the session started
 
 ## 🔄 How to proceed
 
