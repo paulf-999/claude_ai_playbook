@@ -1,9 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Test quality score: 7/10
+# Test complexity score: 6/10
+# Python style compliant: Yes
 # Date created:      2026-08-28
-# Version:           1.1.0
-# Date updated:      2026-09-29
+# Version:           1.1.1
+# Date updated:      2026-10-01
 # ─────────────────────────────────────────────────────────
 
 """

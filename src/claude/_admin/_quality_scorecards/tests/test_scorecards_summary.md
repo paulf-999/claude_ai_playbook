@@ -6,8 +6,8 @@
 
 ## 📋 Current scores
 
-- **Scored:** 45 test files, average 8.1/10.
-- **Below 8.5:** 32 tests, each with recommended improvements.
+- **Scored:** 44 test files, average 8.3/10.
+- **Below 8.5:** 27 tests, each with recommended improvements.
 - **Order:** one table per `_tests/` folder, sorted by Overall score, highest first.
 
 ### agents
@@ -20,12 +20,12 @@
 
 | Scorecard | Overall | Recommended improvements |
 |---|---|---|
-| `hooks/response_standards/scorecard_test_style_guide_response_standards_inject.md` | 8.4/10 | • Add failure messages that say how to fix each assertion (62% have one today)<br>• Fix the style gaps and set `Python style compliant: Yes` |
-| `hooks/response_standards/scorecard_test_style_guide_response_standards.md` | 7.9/10 | • Split the test by concept to bring raw complexity (5) down to 3 or less<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant` |
 | `hooks/enforcement/scorecard_test_enforcement_mcp_stale_settings.md` | 9.1/10 | • None blocking |
 | `hooks/enforcement/scorecard_test_enforcement_naming_convention.md` | 9.1/10 | • None blocking |
-| `hooks/enforcement/scorecard_test_enforcement_writing_style.md` | 7.7/10 | • Split the test by concept to bring raw complexity (5) down to 3 or less<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Rename the hook in the module docstring to `hook_enforcement_writing_style.sh`<br>• Update fixture paths from the retired `01_core` tier to a current tier name |
-| `hooks/scorecard_test_hook_registry_utils.md` | 7.7/10 | • Add test functions and assertions toward 10+ and 15+ (now 2 and 2)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant` |
+| `hooks/response_standards/scorecard_test_style_guide_response_standards_inject.md` | 8.4/10 | • Add failure messages that say how to fix each assertion (62% have one today)<br>• Fix the style gaps and set `Python style compliant: Yes` |
+| `hooks/scorecard_test_hook_registry_utils.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 2 and 2) |
+| `hooks/response_standards/scorecard_test_style_guide_response_standards.md` | 8.0/10 | • Split the test by concept to bring raw complexity (5) down to 3 or less<br>• Fix the style gaps and set `Python style compliant: Yes` |
+| `hooks/enforcement/scorecard_test_enforcement_writing_style.md` | 7.9/10 | • Split the test by concept to bring raw complexity (5) down to 3 or less<br>• Fix the style gaps and set `Python style compliant: Yes`<br>• Rename the hook in the module docstring to `hook_enforcement_writing_style.sh`<br>• Update fixture paths from the retired `01_core` tier to a current tier name |
 
 ### rules
 
@@ -39,30 +39,30 @@
 | `rules/03_authoring_guidelines/scorecard_test_authoring_agents.md` | 8.6/10 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_authoring_skills.md` | 8.6/10 | — (≥8.5) |
 | `rules/04_claude_reference/scorecard_test_claude_operational_efficiency.md` | 8.6/10 | — (≥8.5) |
+| `rules/05_lazy_load/scorecard_test_automation_controls.md` | 8.6/10 | — (≥8.5) |
 | `rules/04_claude_reference/scorecard_test_claude_rule_loading_strategy.md` | 8.4/10 | • Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/02_claude_standards/scorecard_test_always_on_reachability.md` | 8.3/10 | • Split the test by concept to bring raw complexity (7) down to 3 or less |
 | `rules/05_lazy_load/scorecard_test_lazy_load_coverage.md` | 8.3/10 | • Add failure messages that say how to fix each assertion (27% have one today) |
-| `rules/05_lazy_load/scorecard_test_automation_controls.md` | 8.1/10 | • Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Add a synthetic bad-input test that proves the check fails when it should |
+| `rules/01_essentials/scorecard_test_writing_style.md` | 8.3/10 | • Add test functions and assertions toward 10+ and 15+ (now 7 and 14)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/scorecard_test_rules_structure.md` | 8.1/10 | • Split the test by concept to bring raw complexity (6) down to 3 or less |
-| `rules/01_essentials/scorecard_test_writing_style.md` | 7.9/10 | • Add test functions and assertions toward 10+ and 15+ (now 7 and 14)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Add a synthetic bad-input test that proves the check fails when it should |
-| `rules/02_claude_standards/scorecard_test_git.md` | 7.7/10 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 6)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Add a synthetic bad-input test that proves the check fails when it should |
+| `rules/02_claude_standards/scorecard_test_git.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should |
+| `rules/02_claude_standards/scorecard_test_security_guardrails.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 6 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should |
+| `rules/03_authoring_guidelines/scorecard_test_authoring_rules.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should |
+| `rules/05_lazy_load/scorecard_test_latency_optimisation.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 4 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should |
+| `rules/scorecard_test_aliases_behavior.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 7)<br>• Add a synthetic bad-input test that proves the check fails when it should |
+| `rules/01_essentials/scorecard_test_rule_directory_organisation.md` | 8.0/10 | • Split the test by concept to bring raw complexity (4) down to 3 or less<br>• Add test functions and assertions toward 10+ and 15+ (now 11 and 13)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `rules/02_claude_standards/scorecard_test_portable_paths.md` | 7.7/10 | • Split the test by concept to bring raw complexity (7) down to 3 or less<br>• Update the header quality score from 9/10 to reflect the current counts<br>• Add test functions and assertions toward 10+ and 15+ (now 9 and 13) |
-| `rules/02_claude_standards/scorecard_test_security_guardrails.md` | 7.7/10 | • Add test functions and assertions toward 10+ and 15+ (now 6 and 6)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Add a synthetic bad-input test that proves the check fails when it should |
-| `rules/03_authoring_guidelines/scorecard_test_authoring_rules.md` | 7.7/10 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 6)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Add a synthetic bad-input test that proves the check fails when it should |
-| `rules/05_lazy_load/scorecard_test_latency_optimisation.md` | 7.7/10 | • Add test functions and assertions toward 10+ and 15+ (now 4 and 6)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Add a synthetic bad-input test that proves the check fails when it should |
-| `rules/scorecard_test_aliases_behavior.md` | 7.7/10 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 7)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Add a synthetic bad-input test that proves the check fails when it should |
-| `rules/01_essentials/scorecard_test_rule_directory_organisation.md` | 7.6/10 | • Split the test by concept to bring raw complexity (4) down to 3 or less<br>• Add test functions and assertions toward 10+ and 15+ (now 11 and 13)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Add a synthetic bad-input test that proves the check fails when it should |
-| `rules/01_essentials/scorecard_test_skill_authoring_gate.md` | 7.6/10 | • Split the test by concept to bring raw complexity (5) down to 3 or less<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Turn the manual-review skips into failures, or `xfail` with a tracked reason, so real gaps can't pass quietly |
-| `rules/02_claude_standards/scorecard_test_testing.md` | 7.4/10 | • Add test functions and assertions toward 10+ and 15+ (now 4 and 5)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Add a synthetic bad-input test that proves the check fails when it should |
-| `rules/02_claude_standards/scorecard_test_decision_making.md` | 7.3/10 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 6)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Add a synthetic bad-input test that proves the check fails when it should<br>• Fix the module docstring to name `02_claude_standards/behaviour/_decision_making.md` |
-| `rules/01_essentials/scorecard_test_guiding_principles.md` | 7.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 3 and 3)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Replace the `< 20 imports` limit with a check tied to a documented budget |
+| `rules/01_essentials/scorecard_test_skill_authoring_gate.md` | 7.7/10 | • Split the test by concept to bring raw complexity (5) down to 3 or less<br>• Fix the style gaps and set `Python style compliant: Yes`<br>• Turn the manual-review skips into failures, or `xfail` with a tracked reason, so real gaps can't pass quietly |
+| `rules/02_claude_standards/scorecard_test_decision_making.md` | 7.7/10 | • Add test functions and assertions toward 10+ and 15+ (now 5 and 6)<br>• Add a synthetic bad-input test that proves the check fails when it should<br>• Fix the module docstring to name `02_claude_standards/behaviour/_decision_making.md` |
+| `rules/02_claude_standards/scorecard_test_testing.md` | 7.6/10 | • Add test functions and assertions toward 10+ and 15+ (now 4 and 5)<br>• Fix the style gaps and set `Python style compliant: Yes`<br>• Add a synthetic bad-input test that proves the check fails when it should |
+| `rules/01_essentials/scorecard_test_guiding_principles.md` | 7.6/10 | • Add test functions and assertions toward 10+ and 15+ (now 3 and 3)<br>• Replace the `< 20 imports` limit with a check tied to a documented budget |
 
 ### settings
 
 | Scorecard | Overall | Recommended improvements |
 |---|---|---|
-| `settings/scorecard_test_settings.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 9 and 15)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant` |
-| `settings/scorecard_test_aliases.md` | 7.9/10 | • Add test functions and assertions toward 10+ and 15+ (now 7 and 10)<br>• Move the test next to `rules/test_aliases_behavior.py`, or merge the two<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant` |
+| `settings/scorecard_test_settings.md` | 8.6/10 | — (≥8.5) |
+| `settings/scorecard_test_aliases.md` | 8.0/10 | • Add test functions and assertions toward 10+ and 15+ (now 7 and 10)<br>• Move the test next to `rules/test_aliases_behavior.py`, or merge the two<br>• Fix the style gaps and set `Python style compliant: Yes` |
 
 ### skills
 
@@ -73,8 +73,8 @@
 | `skills/scorecard_test_no_orphaned_skill_files.md` | 8.3/10 | • Add failure messages that say how to fix each assertion (16% have one today)<br>• Split the test by concept to bring raw complexity (5) down to 3 or less |
 | `skills/claude_capture_session_prompts/scorecard_test_capture_session_prompts.md` | 8.1/10 | • Add failure messages that say how to fix each assertion (14% have one today)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 | `skills/confluence_create_page/scorecard_test_confluence_create_page_handler.md` | 7.7/10 | • Add failure messages that say how to fix each assertion (1% have one today)<br>• Split the test by concept to bring raw complexity (6) down to 3 or less<br>• Confirm the handler still mirrors what SKILL.md tells Claude to do, or move the handler into the skill so the test covers real behaviour |
+| `skills/jira_create/scorecard_test_jira_create_handler.md` | 7.4/10 | • Add failure messages that say how to fix each assertion (0% have one today)<br>• Fix the style gaps and set `Python style compliant: Yes`<br>• Confirm the handler still mirrors what SKILL.md tells Claude to do, or move the handler into the skill so the test covers real behaviour |
 | `skills/confluence_create_page/scorecard_test_confluence_create_page_timeout.md` | 6.9/10 | • Add failure messages that say how to fix each assertion (0% have one today)<br>• Split the test by concept to bring raw complexity (6) down to 3 or less<br>• Add test functions and assertions toward 10+ and 15+ (now 9 and 19)<br>• Add a synthetic bad-input test that proves the check fails when it should<br>• Confirm the handler still mirrors what SKILL.md tells Claude to do, or move the handler into the skill so the test covers real behaviour |
-| `skills/jira_create/scorecard_test_jira_create_handler.md` | 6.9/10 | • Add failure messages that say how to fix each assertion (0% have one today)<br>• Add the seven-line metadata header from `_test_metadata.md`<br>• Confirm the handler still mirrors what SKILL.md tells Claude to do, or move the handler into the skill so the test covers real behaviour |
 
 ### _tests root
 
