@@ -54,8 +54,11 @@ IMPORT_LINE = re.compile(r"^@~/[^/]+/_rules/(\S+\.md)\s*$", re.M)
 MISS_COST = re.compile(r"<!--\s*miss_cost:\s*(high|medium|low)\b", re.I)
 FILE_TOOLS = {"Read", "Edit", "Write", "MultiEdit", "NotebookEdit"}
 
-# First-guess globs for lazy rules without ``paths:`` frontmatter, keyed by path under 05_lazy_load/.
-# Phase 4 replaces these with an ``applies_to`` header in each rule.
+APPLIES_TO = re.compile(r"^<!--\s*applies_to:\s*(.+?)\s*-->$")
+HEADER_LINES = 6  # applies_to sits in the header block, never deep in a rule's body
+
+# First-guess globs for lazy rules with no ``applies_to`` header and no ``paths:`` frontmatter,
+# keyed by path under 05_lazy_load/.
 DEFAULT_APPLIES_TO = {
     "style_guide_standards/python.md": ["**/*.py"],
     "style_guide_standards/bash.md": ["**/*.sh"],
@@ -182,6 +185,21 @@ def frontmatter_paths(text: str) -> list[str]:
     return re.findall(r"^\s*-\s*[\"']?([^\"'\n]+?)[\"']?\s*$", block.split("paths:", 1)[1], re.M)
 
 
+def header_globs(text: str) -> list[str]:
+    """Read the globs from a rule's ``<!-- applies_to: … -->`` header line.
+
+    :param text: Rule file content.
+    :type text: str
+    :return: The globs, or an empty list when the rule has no header.
+    :rtype: list[str]
+    """
+    for line in text.splitlines()[:HEADER_LINES]:
+        match = APPLIES_TO.match(line)
+        if match:
+            return [glob.strip() for glob in match.group(1).split(",") if glob.strip()]
+    return []
+
+
 def token_count(rules_dir: Path, rels: list[str]) -> int:
     """Estimate tokens as characters divided by four.
 
@@ -213,10 +231,11 @@ def discover_rules(rules_dir: Path) -> list[Rule]:
             if tier_dir.name == LAZY_TIER:
                 files = [rel]
                 in_tier = path.relative_to(tier_dir).as_posix()
-                globs = frontmatter_paths(text) or DEFAULT_APPLIES_TO.get(in_tier, [])
+                fallback = frontmatter_paths(text) or DEFAULT_APPLIES_TO.get(in_tier, [])
             else:
                 files = imported_files(rules_dir, rel)
-                globs = [EVERY_SESSION]
+                fallback = [EVERY_SESSION]
+            globs = header_globs(text) or fallback
             cost = MISS_COST.search(text)
             rules.append(Rule(
                 rel=rel,
@@ -567,7 +586,8 @@ def render_report(
         "",
         "## 📖 How to read this",
         "",
-        "- **Applied:** sessions that touched a file matching the rule's globs; `*` means every session.",
+        "- **Applied:** sessions that touched a file matching the rule's `applies_to` globs (or its `paths:` "
+        "or a built-in default for lazy rules); `*` means every session.",
         "- **Loaded:** sessions where the rule reached Claude's context — imported, auto-loaded by `paths:`, or read.",
         "- **Misses:** sessions where the rule applied but was never loaded.",
         "- **Miss cost:** read from a `<!-- miss_cost: … -->` header; `—` until Phase 5 adds them.",

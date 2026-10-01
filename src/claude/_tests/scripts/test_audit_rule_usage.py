@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.0
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -148,6 +148,25 @@ def test_globs_come_from_paths_then_defaults(tmp_path):
     assert rules["sql.md"].globs == ["**/*.sql"], rules["sql.md"].globs
     assert rules["python.md"].globs == ["**/*.py"], rules["python.md"].globs
     assert rules["loose.md"].globs == [], "a rule with no trigger has no globs"
+
+
+def test_applies_to_header_wins_over_fallbacks(tmp_path):
+    """An applies_to header replaces * on an always-on rule and paths: on a lazy rule."""
+    rules_dir = make_rules(tmp_path)
+    parent = rules_dir / "01_essentials" / "parent.md"
+    parent.write_text("<!-- version: 1.0.0 -->\n<!-- applies_to: **/_rules/**, **/CLAUDE.md -->\n" + parent.read_text())
+    sql = rules_dir / GUIDES / "sql.md"
+    sql.write_text(sql.read_text().replace("---\n# SQL", "---\n<!-- applies_to: **/models/**/*.sql -->\n# SQL"))
+    rules = {r.rel.rsplit("/", 1)[1]: r for r in AUDIT.discover_rules(rules_dir)}
+    assert rules["parent.md"].globs == ["**/_rules/**", "**/CLAUDE.md"], rules["parent.md"].globs
+    assert rules["sql.md"].globs == ["**/models/**/*.sql"], rules["sql.md"].globs
+
+
+def test_header_globs_ignore_examples_in_the_body():
+    """Only an applies_to line in the header block counts, not an example further down."""
+    body = "# Rule\n" + "text\n" * AUDIT.HEADER_LINES + "<!-- applies_to: **/*.py -->\n"
+    assert AUDIT.header_globs(body) == [], "an example in the body was read as the header"
+    assert AUDIT.header_globs("<!-- applies_to: *, -->\n") == ["*"], "empty entries should be dropped"
 
 
 def test_miss_cost_read_from_header(tmp_path):
