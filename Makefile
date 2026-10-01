@@ -7,6 +7,7 @@ SHELL = /bin/bash
 # make test             # run structural validation tests
 # make lint_tags        # validate Tier 1 tags on all Claude components (run before committing)
 # make audit_components # run periodic health audit on the Claude component library
+# make audit_rule_usage # measure how often each rule applies and loads, from session transcripts
 # make install          # install Claude config files into $CLAUDE_CONFIG_DIR (previews, then asks you to type 'install')
 # make update           # [DISABLED] update Claude config files in ~/.claude/ (WSL)
 # make clean_plans      # archive executed/superseded plans to ~/.claude/plans/archive/
@@ -79,6 +80,13 @@ audit_components:
 	@echo "${INFO}\nRunning Claude component health audit${COLOUR_OFF}"
 	@python3 src/claude/_scripts/claude_component_audit.py src/claude
 
+audit_rule_usage:
+	@echo "${INFO}\nMeasuring rule usage from session transcripts${COLOUR_OFF}"
+	@python3 src/claude/_scripts/audit_rule_usage.py \
+		--rules src/claude/_rules \
+		--transcripts "$${CLAUDE_CONFIG_DIR:-$$HOME/.claude}/projects" \
+		--out src/claude/_admin/_audits
+
 clean_plans:
 	@echo "${INFO}\nArchiving executed/superseded plans to ~/.claude/plans/archive/${COLOUR_OFF}"
 	@python3 src/sh/claude/clean_plans.py
@@ -94,4 +102,4 @@ all:
 	@grep -E '^# make ' Makefile
 
 # .PHONY tells Make that these targets don't represent files
-.PHONY: all clean deps install install_windows update_windows install_plugins patch_plugins test lint lint_tags lint_skills audit_components clean_plans clean_backups
+.PHONY: all clean deps install install_windows update_windows install_plugins patch_plugins test lint lint_tags lint_skills audit_components audit_rule_usage clean_plans clean_backups

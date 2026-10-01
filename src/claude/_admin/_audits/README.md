@@ -11,6 +11,7 @@ Central index for audit scorecards across Claude config, skills, rules, and othe
 | **Reference files** | [`audit_reference_files.md`](audit_reference_files.md) | 2026-08-19 | 9 reference files | ✅ Complete |
 | **Always-on rules** | [`audit_rules_always_on.md`](audit_rules_always_on.md) | 2026-08-19 | 16 rule files | ✅ Complete |
 | **Lazy-load rules** | [`audit_rules_lazy_load.md`](audit_rules_lazy_load.md) | 2026-08-19 | 11 rule files | ✅ Complete |
+| **Rule usage** | [`audit_rule_usage.md`](audit_rule_usage.md) · [`rule_usage_history.csv`](rule_usage_history.csv) | 2026-10-01 | 36 entry-point rules, 115 sessions | 🔄 Re-run with `make audit_rule_usage` |
 
 ---
 
