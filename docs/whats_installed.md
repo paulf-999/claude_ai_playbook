@@ -63,6 +63,14 @@ Shell scripts that run at Claude Code lifecycle events once registered in `setti
 
 ---
 
+## 🐍 Scripts
+
+See [`src/claude/_scripts/`](../src/claude/_scripts/)
+
+Python tools for auditing the config, such as `make audit_components`, which reports on the health of skills, agents and rules.
+
+---
+
 ## 🧰 Templates and reference
 
 See [`src/claude/_templates/README.md`](../src/claude/_templates/README.md) · [`src/claude/_reference/README.md`](../src/claude/_reference/README.md)

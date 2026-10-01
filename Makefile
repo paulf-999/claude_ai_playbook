@@ -77,7 +77,7 @@ lint: lint_tags lint_skills
 
 audit_components:
 	@echo "${INFO}\nRunning Claude component health audit${COLOUR_OFF}"
-	@python3 src/sh/claude/claude_component_audit.py
+	@python3 src/claude/_scripts/claude_component_audit.py src/claude
 
 clean_plans:
 	@echo "${INFO}\nArchiving executed/superseded plans to ~/.claude/plans/archive/${COLOUR_OFF}"
