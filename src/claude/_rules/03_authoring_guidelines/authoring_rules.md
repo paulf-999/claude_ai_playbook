@@ -1,4 +1,4 @@
-<!-- version: 1.5.5 -->
+<!-- version: 1.5.6 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-01 -->
 <!-- applies_to: **/_rules/** -->
@@ -27,7 +27,7 @@ Before writing any rule, answer these five essential questions:
    - If speculative: defer or rephrase as question/guidance instead (per `guiding_principles.md`)
 
 4. **Related/conflicting rules?**
-   - Check **full rule list** in `~/.claude/_rules/04_claude_reference/claude_rule_loading_strategy.md`
+   - Check **full rule list** in `~/.claude/_rules/05_lazy_load/claude_rule_loading_strategy.md`
    - Search codebase for similar guidance to prevent duplication
    - Clarify which rules this complements or overlaps with
 

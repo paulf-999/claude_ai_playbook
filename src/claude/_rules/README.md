@@ -18,15 +18,15 @@ Rules are organized by **who they're for and what they do**, not by enforcement 
 
 | Tier | Audience | Purpose | Size (≈ tokens) |
 |---|---|---|---|
-| **01_essentials** | Users & stakeholders | Conventions and principles they need to understand | ≈13k every session (16 files) |
-| **02_claude_standards** | Claude (internally) | Foundational quality gates Claude applies to all work | ≈20k every session (27 files) |
-| **03_authoring_guidelines** | Claude (internally) | Meta-guidance for authoring rules, skills, agents | ≈11.5k every session (17 files) |
-| **04_claude_reference** | Claude (internally) | Technical reference material about the system | ≈8k every session (13 files) |
-| **05_lazy_load** | Domain-specific | Rules loaded only when needed in that domain | 0 baseline (≈49k if all read) |
+| **01_essentials** | Users & stakeholders | Conventions and principles they need to understand | ≈10.7k every session (12 imported files) |
+| **02_claude_standards** | Claude (internally) | Foundational quality gates Claude applies to all work | ≈16.8k every session (23 imported files) |
+| **03_authoring_guidelines** | Claude (internally) | Meta-guidance for authoring rules, skills, agents | ≈4.2k every session (5 imported files) |
+| **04_claude_reference** | Claude (internally) | Technical reference material about the system | ≈2.7k every session (5 imported files) |
+| **05_lazy_load** | Domain-specific | Rules loaded only when needed in that domain | 0 baseline (≈56k if all 79 files were read) |
 
-**Key insight:** 01, 02, 03, and 04 are always-on, about 53k tokens together before `_reference/` imports. 05 is lazy-loaded to preserve context.
+**Key insight:** 01, 02, 03, and 04 are always-on, about 34.4k tokens together before `_reference/` imports. 05 is lazy-loaded to preserve context.
 
-**Note:** sizes are characters ÷ 4, measured 2026-09-29 across each tier's non-README `.md` files — re-measure rather than trust them after big changes.
+**Note:** sizes are characters ÷ 4, measured 2026-10-01 over the files `CLAUDE.md` actually imports (a tier's `_lazy_load/` children don't count) — `make audit_rule_usage` reports the current total.
 
 ## 🔄 Instructional vs. Enforcement Rules
 
@@ -62,25 +62,25 @@ Rule files are `@import`ed every session, so every line in them costs always-on 
 - **Who it's for:** Users, stakeholders, teams reading/implementing these standards
 - **Scope:** Naming conventions, behaviour principles, writing style, authoring guidance
 - **Examples:** naming_standards.md, behaviour.md, writing_style.md, authoring_skills.md
-- **Imported:** Yes, always-on (≈13k tokens/session)
+- **Imported:** Yes, always-on (≈10.7k tokens/session)
 
 ### **02_claude_standards/** — Foundational quality gates (Claude-facing)
 - **Who it's for:** Claude's internal operation (not meant for stakeholder understanding)
 - **Scope:** Security practices, testing requirements — blocking standards Claude applies to all code
 - **Examples:** security.md (secure coding + prompt injection defence), testing.md (test requirements)
-- **Imported:** Yes, always-on (≈20k tokens/session)
+- **Imported:** Yes, always-on (≈16.8k tokens/session)
 
 ### **03_authoring_guidelines/** — Meta-guidance for authoring config artifacts
 - **Who it's for:** Claude when creating or maintaining rules, skills, agents, hooks
 - **Scope:** Standards for authoring; structure, naming, testing, maturity levels, and per-file metadata headers for artifacts
 - **Examples:** authoring_rules.md (children: common mistakes, hard-gates checklist), authoring_skills.md, shared_standards/_claude_config_metadata.md (shared version/created/updated standard)
-- **Imported:** Yes, always-on (≈11.5k tokens/session)
+- **Imported:** Yes, always-on (≈4.2k tokens/session)
 
 ### **04_claude_reference/** — System/platform knowledge and reference material
 - **Who it's for:** Claude's reference when implementing standards; understanding the system
 - **Scope:** How the config system works, git workflow patterns, efficiency guidance, external system access
 - **Examples:** loading_strategy_rules.md, git.md, external_system_access.md, claude_efficiency.md
-- **Imported:** Yes, always-on (≈8k tokens/session)
+- **Imported:** Yes, always-on (≈2.7k tokens/session)
 
 ### **05_lazy_load/** — Domain-specific rules (lazy-loaded)
 - **Who it's for:** Domain specialists (SQL, Airflow, dbt, Terraform, etc.)

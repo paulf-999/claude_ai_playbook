@@ -21,10 +21,7 @@
 | **_mcp_server_toggling.md** | Why Claude Code must be restarted after toggling MCP servers; recovery steps |
 | **_task_request_conventions.md** | Behavioral conventions for recurring user request types (task logging, hook proposals) |
 
-**Rule loading & classification:**
-| File | Purpose |
-|---|---|
-| **claude_rule_loading_strategy.md** | The five rule tiers, what belongs in each, and when a rule should be always-on or lazy-loaded |
+**Rule loading & classification:** moved to `05_lazy_load/claude_rule_loading_strategy.md` on 2026-10-01, and loads through `paths:` when a `_rules/` file or `CLAUDE.md` is read.
 
 ---
 
@@ -43,7 +40,7 @@ These rules explain **how the Claude config system works** and guide Claude's im
 
 ## 🚀 How to use these rules
 
-- **Understanding rule placement or the five tiers?** Check `claude_rule_loading_strategy.md`, then refer to CLAUDE.md and the filesystem for actual rule locations
+- **Understanding rule placement or the five tiers?** Check `05_lazy_load/claude_rule_loading_strategy.md`, then refer to CLAUDE.md and the filesystem for actual rule locations
 - **Accessing external systems?** Check `claude_operational_efficiency/_external_system_access.md` before claiming inaccessibility
 - **Managing MCP servers?** Check `claude_operational_efficiency/_mcp_server_toggling.md` for restart requirements
 - **Understanding user request patterns?** Check `claude_operational_efficiency/_task_request_conventions.md` for behavioral templates

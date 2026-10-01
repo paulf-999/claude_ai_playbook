@@ -1,6 +1,6 @@
-<!-- version: 2.0.6 -->
+<!-- version: 2.0.7 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
 # 🚪 Artefact Proposal Gates
 
 **Purpose:** Validate naming, placement, and duplication *before* proposing any new artefact (rule, skill, hook, agent, process), ensuring proposals already comply with established standards.
@@ -64,7 +64,7 @@ Before proposing any new artefact, run these gates in order:
 - Search for skills in `~/.claude/skills/` with matching domain or action
 - Search for hooks in `~/.claude/hooks/` with similar enforcement goal
 
-**Reference:** `~/.claude/_rules/04_claude_reference/claude_rule_loading_strategy.md` (full rule index table)
+**Reference:** `~/.claude/_rules/05_lazy_load/claude_rule_loading_strategy.md` (full rule index table)
 
 **Action:** If found, offer integration option: extend existing artefact vs. create new one (present options with rationale).
 

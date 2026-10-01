@@ -16,8 +16,8 @@
 | 01_essentials | 3 | 8.5/10 | 2026-09-30 | • 💪 **Strongest:** `claude_usage_standards.md` (8.9/10)<br>• ⚠️ **Weakest:** `claude_response_standards.md` (7.9/10) |
 | 02_claude_standards | 6 | 8.0/10 | 2026-09-28 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_plans.md` (7.6/10) |
 | 03_authoring_guidelines | 4 | 8.2/10 | 2026-09-30 | • 💪 **Strongest:** `authoring_skills.md` (8.7/10)<br>• ⚠️ **Weakest:** `authoring_agents.md` (7.9/10) |
-| 04_claude_reference | 2 | 7.9/10 | 2026-10-01 | • 💪 **Strongest:** `claude_rule_loading_strategy.md` (8.7/10)<br>• ⚠️ **Weakest:** `claude_operational_efficiency.md` (7.1/10) |
-| 05_lazy_load | 17 | 8.4/10 | 2026-10-01 | • 💪 **Strongest:** `latency_optimisation.md` (9.2/10)<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
+| 04_claude_reference | 1 | 7.1/10 | 2026-09-28 | • 💪 **Only file:** `claude_operational_efficiency.md` (7.1/10) |
+| 05_lazy_load | 18 | 8.4/10 | 2026-10-01 | • 💪 **Strongest:** `latency_optimisation.md` (9.2/10)<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
 | Non-tiered | 1 | 8.6/10 | 2026-09-28 | • 💪 **Only file:** `aliases.md` (8.6/10) |
 
 ---
@@ -52,7 +52,7 @@ Sorted by Overall score, highest first.
 | `05_lazy_load/style_guide_standards/infra/scorecard_ansible.md` | 8.8/10 | 2026-10-01 | — (≥8.5) |
 | `05_lazy_load/style_guide_standards/scorecard_sql.md` | 8.8/10 | 2026-10-01 | — (≥8.5) |
 | `03_authoring_guidelines/scorecard_authoring_skills.md` | 8.7/10 | 2026-09-29 | — (≥8.5) |
-| `04_claude_reference/scorecard_claude_rule_loading_strategy.md` | 8.7/10 | 2026-10-01 | — (≥8.5) |
+| `05_lazy_load/scorecard_claude_rule_loading_strategy.md` | 8.9/10 | 2026-10-01 | — (≥8.5) |
 | `05_lazy_load/style_guide_standards/infra/scorecard_terraform.md` | 8.7/10 | 2026-10-01 | — (≥8.5) |
 | `01_essentials/scorecard_guiding_principles.md` | 8.6/10 | 2026-09-30 | — (≥8.5) |
 | `scorecard_aliases.md` | 8.6/10 | 2026-09-28 | — (≥8.5) |

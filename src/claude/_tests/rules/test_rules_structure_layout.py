@@ -37,7 +37,6 @@ EXPECTED_ROOT_FILES = {"README.md"}
 # Files expected at the top of 04_claude_reference/ — no others allowed
 EXPECTED_CLAUDE_REFERENCE_FILES = {
     "claude_operational_efficiency.md",
-    "claude_rule_loading_strategy.md",
     "README.md",
 }
 

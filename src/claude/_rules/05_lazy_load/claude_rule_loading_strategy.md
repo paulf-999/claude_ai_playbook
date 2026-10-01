@@ -1,7 +1,11 @@
-<!-- version: 2.0.0 -->
+---
+paths:
+  - "**/_rules/**"
+  - "**/CLAUDE.md"
+---
+<!-- version: 2.1.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-01 -->
-<!-- applies_to: **/_rules/**, **/CLAUDE.md -->
 <!-- miss_cost: low — a rule lands in the wrong tier, which is easy to move -->
 # 📋 Rules Loading Strategy
 
@@ -20,7 +24,7 @@ Every import adds the imported file's full size to every session — measured ti
 | `01_essentials/` | Foundational decision-making principles and user-facing conventions (naming, writing style, response standards) that apply to every task | `guiding_principles.md` | Confused user experience, quality decay, violated conventions | Always-on |
 | `02_claude_standards/` | Blocking quality gates and safe operational conduct (testing, security, git, portable paths) that gate new features, rules and abstractions | `behaviour.md` | Quality decay, security vulnerabilities, scope creep, safety regression | Always-on |
 | `03_authoring_guidelines/` | Standards for authoring the config's own rules, skills and agents — used whenever an artefact is being created | `authoring_rules.md` | Inconsistent artefact structure, scope creep, missing tests | Always-on |
-| `04_claude_reference/` | How Claude Code and this config work (efficiency, delegation, turn budgets, external system access) — used during tool use and config decisions | `claude_operational_efficiency.md` | Wasted context and turns, wrong tool choices | Always-on; some files are lazy-load candidates |
+| `04_claude_reference/` | How Claude Code and this config work (efficiency, delegation, turn budgets, external system access) — used during tool use and config decisions | `claude_operational_efficiency.md` | Wasted context and turns, wrong tool choices | Always-on |
 | `05_lazy_load/` | Domain-specific style guides and niche tools (SQL, Airflow, dbt, Terraform) for real, recurring problems in one domain | `style_guide_standards/sql.md` | Nothing outside that domain — that's why it isn't imported | On demand; never imported |
 
 - **Source of truth:** each tier's directory is the current list of its rules, and `CLAUDE.md` shows what is actually imported — the examples above are illustrative only.

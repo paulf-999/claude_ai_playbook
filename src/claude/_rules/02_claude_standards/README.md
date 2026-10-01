@@ -67,7 +67,7 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 
 - Parent: `behaviour.md` — Safe defaults and safe action guidelines
 - Sibling: `_decision_making.md` — When to present options vs. decide unilaterally; gates should pass before options are presented
-- Reference: `naming_standards.md`, `claude_directory_structure.md`, `~/.claude/_rules/04_claude_reference/claude_rule_loading_strategy.md`
+- Reference: `naming_standards.md`, `claude_directory_structure.md`, `~/.claude/_rules/05_lazy_load/claude_rule_loading_strategy.md`
 
 ### `behaviour/_before_acting.md`
 
