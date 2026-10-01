@@ -1,9 +1,9 @@
 # Quality Scorecard — security.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-01
 
-**Overall score:** 7.6/10
+**Overall score:** 7.7/10
 
 **Recommended improvements:**
 - Add a "Related rules" section cross-linking to `behaviour.md` and other rules touching conduct/injection concerns.
@@ -17,8 +17,8 @@
 | **Token Cost Justification** | 9/10 | 2026-09-28 | • 🎯 **Scope:** Tier 2, always-on, safety-critical by nature |
 | **Structural Compliance** | 6/10 | 2026-09-28 | • ✅ **Compliant:** emoji headers, Purpose statement, trailing newline<br>• ❌ **Gap:** no "Related rules" section at all — unlike every sibling in this tier, no cross-links to `behaviour.md` or other rules touching conduct/injection concerns |
 | **Currency** | 8/10 | 2026-09-28 | • 🔍 **Check:** both children and the reference doc resolve; no stale references found |
-| **Test Coverage** | 6/10 | 2026-09-28 | • 🧪 **Partial:** `test_security_guardrails.py` (6 functions) covers `_security_guardrails.md`<br>• ⚠️ **Untested:** `_code_security.md` child and the parent itself have no dedicated test |
-| **Overall** | **7.6/10** | 2026-09-28 | • 💪 **Strength:** clean separation of concerns between the two children<br>• ⚠️ **Gap:** missing Related section and half the children untested |
+| **Test Coverage** | 7/10 | 2026-10-01 | • 🧪 **Partial:** `test_security_guardrails.py` (12 functions) checks each guardrail in `_security_guardrails.md` and that `settings.json` allows no forbidden wildcard<br>• ⚠️ **Untested:** `_code_security.md` child and the parent itself have no dedicated test |
+| **Overall** | **7.7/10** | 2026-10-01 | • 💪 **Strength:** clean separation of concerns between the two children<br>• ⚠️ **Gap:** missing Related section and half the children untested |
 
 ## 🔗 Related files
 

@@ -1,12 +1,9 @@
 # Quality Scorecard — git.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-01
 
-**Overall score:** 8.1/10
-
-**Recommended improvements:**
-- Fix the stale `_rules/claude_internal/git.md` reference in `test_git.py`'s module docstring to `_rules/02_claude_standards/git.md`.
+**Overall score:** 8.6/10
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
@@ -16,8 +13,8 @@
 | **Token Cost Justification** | 9/10 | 2026-09-28 | • 🎯 **Scope:** Tier 2, always-on — governs every git operation, used constantly |
 | **Structural Compliance** | 9/10 | 2026-09-28 | • ✅ **Compliant:** Contents matches headings, emoji headers, trailing newline, well organized |
 | **Currency** | 8/10 | 2026-09-28 | • 🔍 **Rule content itself:** accurate, no stale references in git.md |
-| **Test Coverage** | 7/10 | 2026-09-28 | • 🧪 **Direct test exists:** `test_git.py`, 5 functions, checks sections/patterns/line-limit<br>• 🚩 **Drift signal:** its own docstring says "Structural tests for `_rules/claude_internal/git.md`" — a stale pre-reorg path (actual constant on line 18 correctly uses `02_claude_standards/git.md`) |
-| **Overall** | **8.1/10** | 2026-09-28 | • 💪 **Strength:** heavily used and correctly followed all session<br>• ⚠️ **Gap:** its own test's docstring has drifted from the real path |
+| **Test Coverage** | 9/10 | 2026-10-01 | • 🧪 **Direct test exists:** `test_git.py`, 12 functions — one per rule clause, plus the branch-name pattern run against the file's own examples<br>• ✅ **Fixed:** its stale `claude_internal/` docstring is gone |
+| **Overall** | **8.6/10** | 2026-10-01 | • 💪 **Strength:** heavily used and correctly followed all session<br>• ⚠️ **Gap:** Complexity (7/10) is now the weakest dimension |
 
 ## 🔗 Related files
 

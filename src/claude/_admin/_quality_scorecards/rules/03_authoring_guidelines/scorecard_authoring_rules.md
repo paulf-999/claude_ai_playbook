@@ -1,9 +1,9 @@
 # Quality Scorecard — authoring_rules.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-30
+**Date Updated:** 2026-10-01
 
-**Overall score:** 7.9/10
+**Overall score:** 8.3/10
 
 **Recommended improvements:**
 - Extend `test_authoring_rules.py` to check the checklist's tier names against the actual directory structure, so tier-name drift is caught mechanically.
@@ -17,8 +17,8 @@
 | **Token Cost Justification** | 8/10 | 2026-09-29 | • 🎯 **Scope:** Tier 3, always-on — governs how every future rule gets created<br>• ⚖️ **Cost trimmed:** the two children moved to `authoring_rules/_lazy_load/` and load on demand |
 | **Structural Compliance** | 9/10 | 2026-09-29 | • ✅ **Compliant:** metadata header, emoji H1, Purpose statement, trailing newline and Related section in all three files<br>• 🔗 **Children wired:** both are named in `**Read on demand:**` pointers and exempt from the orphan scan |
 | **Currency** | 9/10 | 2026-09-29 | • ✅ **Matches the current config:** tier names, metadata standard and reachability test all reflect today's structure |
-| **Test Coverage** | 6/10 | 2026-09-28 | • 🧪 **Direct test exists:** `test_authoring_rules.py`, 5 functions, now checking the two new sections<br>• ⚠️ **Structural only:** checks that sections and patterns exist, not that their content is correct |
-| **Overall** | **7.9/10** | 2026-09-29 | • 💪 **Strength:** actively followed process, now with evidence-based mistakes and a finishing checklist<br>• ⚠️ **Gap:** tests remain structural, so content drift isn't caught |
+| **Test Coverage** | 9/10 | 2026-10-01 | • 🧪 **Direct test exists:** `test_authoring_rules.py`, 11 functions — the checklist, creation steps and gates, and every file the guide points to exists |
+| **Overall** | **8.3/10** | 2026-10-01 | • 💪 **Strength:** actively followed process, now with evidence-based mistakes and a finishing checklist<br>• ⚠️ **Gap:** Complexity (6/10) is now the weakest dimension |
 
 ## 🔗 Related files
 
