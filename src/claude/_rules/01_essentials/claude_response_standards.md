@@ -1,6 +1,7 @@
-<!-- version: 3.0.0 -->
+<!-- version: 3.0.1 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
+<!-- applies_to: * -->
 # 📝 Response Standards
 
 **Purpose:** Establish expected response format, delivery approach, and timing measurement for Claude when working on substantive tasks — ensuring clarity, efficiency, and measurable progress tracking.

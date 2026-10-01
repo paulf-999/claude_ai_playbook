@@ -1,6 +1,7 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
+<!-- applies_to: **/hooks/*.sh, **/_tests/**/*.py, **/_scripts/*.py -->
 # 🌍 Portable Paths
 
 **Purpose:** Prevent hooks and tests from hardcoding a specific machine's filesystem layout — the Claude config directory is not always at the OS default location, and code that assumes it is breaks silently elsewhere.

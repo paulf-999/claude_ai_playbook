@@ -1,6 +1,7 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
+<!-- applies_to: **/agents/** -->
 # 🛠️ Agent Authoring
 
 **Purpose:** Establish standardized process for creating agents that ensures clarity, consistency, and intentionality. One concept per agent.
