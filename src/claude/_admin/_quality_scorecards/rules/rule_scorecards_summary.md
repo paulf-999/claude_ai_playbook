@@ -32,6 +32,7 @@ Each tier is its own table, sorted descending by Overall score within the tier.
 | File | Overall | Recommended improvements |
 |---|---|---|
 | `scorecard_authoring_skills.md` | 8.7/10 | — (≥8.5) |
+| `scorecard_claude_config_metadata.md` | 8.4/10 | • Re-score Evidence of Need after one audit cycle has used the backfilled `updated` dates<br>• Decide whether shared authoring standards should stay always-on or move behind a reachability exemption, to recover the ~400 tokens/session |
 | `scorecard_authoring_agents.md` | 7.9/10 | • Cite a specific incident or usage evidence justifying always-on placement |
 | `scorecard_authoring_rules.md` | 7.1/10 | • Extend `test_authoring_rules.py` to check tier names against the real directory structure |
 
