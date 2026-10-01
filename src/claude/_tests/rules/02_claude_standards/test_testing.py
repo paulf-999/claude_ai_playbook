@@ -1,11 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
+# Date created:      2026-08-28
+# Date updated:      2026-10-01
+# Version:           1.0.3
 # Test quality score: 5/10
 # Test complexity score: 7/10
 # Python style compliant: No
-# Date created:      2026-08-28
-# Version:           1.0.2
-# Date updated:      2026-10-01
 # ─────────────────────────────────────────────────────────
 
 """Tests that the testing.md rule is self-consistently followed.

@@ -1,6 +1,6 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.1.0 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
 # 📅 Test Metadata Audit
 
 **Purpose:** The quarterly audit, worked update example and archival workflow that keep test metadata headers honest — the per-edit update rules stay always-on in `_test_metadata.md`.
@@ -27,23 +27,23 @@ Every 3 months, audit all tests in `~/.claude/_tests/`:
 # Before (unchanged)
 # Test Metadata
 # ─────────────────────────────────────────────────────────
+# Date created:      2026-09-16
+# Date updated:      2026-09-16
+# Version:           1.0.0
 # Test quality score: 5/10
 # Test complexity score: 3/10
 # Python style compliant: Yes
-# Date created:      2026-09-16
-# Version:           1.0.0
-# Date updated:      [placeholder]
 # ─────────────────────────────────────────────────────────
 
 # After (refactored; +3 assertions, +2 test funcs)
 # Test Metadata
 # ─────────────────────────────────────────────────────────
+# Date created:      2026-09-16
+# Date updated:      2026-09-20
+# Version:           1.0.0
 # Test quality score: 7/10
 # Test complexity score: 4/10
 # Python style compliant: Yes
-# Date created:      2026-09-16
-# Version:           1.0.0
-# Date updated:      2026-09-20
 # ─────────────────────────────────────────────────────────
 ```
 

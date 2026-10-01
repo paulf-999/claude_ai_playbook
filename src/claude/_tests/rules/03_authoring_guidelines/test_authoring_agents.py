@@ -1,11 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
+# Date created:      2026-09-28
+# Date updated:      2026-10-01
+# Version:           2.0.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
-# Date created:      2026-09-28
-# Version:           2.0.0
-# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """Structural tests for _rules/03_authoring_guidelines/authoring_agents.md.

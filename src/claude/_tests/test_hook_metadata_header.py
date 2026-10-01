@@ -1,11 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
+# Date created:      2026-09-29
+# Date updated:      2026-09-30
+# Version:           1.0.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
-# Date created:      2026-09-29
-# Version:           1.0.0
-# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """Validates the hook metadata header defined in _claude_config_metadata.md.
@@ -13,6 +13,7 @@
 Every hook script carries three ``#`` comment lines on lines 2–4, straight
 after the shebang, one field each: version, created, updated.
 """
+
 from pathlib import Path
 
 from _metadata_header import metadata_header_errors, shell_header_errors
@@ -46,6 +47,7 @@ def hook_scripts() -> list[Path]:
 
 # --- Accepted ---
 
+
 def test_valid_hook_header_accepted():
     """A shebang followed by a valid three-line header produces no errors."""
     assert shell_header_errors(build_hook()) == [], "valid hook header was rejected"
@@ -57,6 +59,7 @@ def test_env_shebang_accepted():
 
 
 # --- Rejected ---
+
 
 def test_missing_shebang_rejected():
     """The header can't replace the shebang on line 1."""
@@ -105,6 +108,7 @@ def test_shell_style_ignored_by_markdown_validator():
 
 
 # --- Real hooks ---
+
 
 def test_hooks_exist():
     """The scan below is meaningful only if hooks are found."""

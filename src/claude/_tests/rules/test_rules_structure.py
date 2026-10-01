@@ -1,11 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
+# Date created:      2026-08-28
+# Date updated:      2026-10-01
+# Version:           1.4.2
 # Test quality score: 9/10
 # Test complexity score: 4/10
 # Python style compliant: Yes
-# Date created:      2026-08-28
-# Version:           1.4.1
-# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """Tests for _rules/ directory structure and content standards.

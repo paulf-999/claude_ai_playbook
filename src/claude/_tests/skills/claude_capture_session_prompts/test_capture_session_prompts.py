@@ -1,11 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
+# Date created:      2026-09-30
+# Date updated:      2026-10-01
+# Version:           1.0.2
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
-# Date created:      2026-09-30
-# Version:           1.0.1
-# Date updated:      2026-09-30
 # ─────────────────────────────────────────────────────────
 
 """Tests for claude_capture_session_prompts' capture_session_prompts.py script.

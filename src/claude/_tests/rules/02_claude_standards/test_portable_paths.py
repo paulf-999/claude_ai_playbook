@@ -1,11 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
+# Date created:      2026-09-18
+# Date updated:      2026-10-01
+# Version:           1.0.1
 # Test quality score: 9/10
 # Test complexity score: 3/10
 # Python style compliant: Yes
-# Date created:      2026-09-18
-# Version:           1.0.0
-# Date updated:      2026-09-18
 # ─────────────────────────────────────────────────────────
 
 """Tests for portable_paths.md — no hardcoded local-filesystem assumptions.
