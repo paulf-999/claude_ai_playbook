@@ -59,16 +59,15 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_rules_structure.py` | File quality across all `_rules/` files — line limits, H1 and H2 heading emoji, trailing newlines, import resolution, expected file set | 9/10 | 2026-08-28 | 2026-10-01 | 1.5.0 |
-| `test_aliases_behavior.py` | Aliases are documented, properly formatted, and validated as functional (spot-check representative aliases) | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
 
 ### `rules/01_essentials/`
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_guiding_principles.py` | Lazy-load and context-efficiency principles — no `05_lazy_load/` imports in CLAUDE.md, all imports documented | 3/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
+| `test_guiding_principles.py` | CLAUDE.md's imports follow guiding_principles.md — no lazy-load imports, a purpose comment on each, few, unique, always-on tiers in order | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_rule_directory_organisation.py` | Rule directory organization patterns — expected top-level files per tier | 7/10 | 2026-08-28 | 2026-10-01 | 1.1.2 |
 | `test_skill_authoring_gate.py` | Skills meet the authoring gate's quality (walk) and comprehensive (run) criteria | 9/10 | 2026-08-28 | 2026-10-01 | 1.1.4 |
-| `test_writing_style.py` | `writing_style.md` behavioral rules and documentation completeness | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
+| `test_writing_style.py` | `writing_style.md` keeps its tables rule, one sentence per bullet, British spelling, underscore file-name dates and its multifile child | 9/10 | 2026-08-28 | 2026-10-01 | 1.1.0 |
 
 ### `rules/02_claude_standards/`
 
@@ -118,8 +117,10 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_aliases.py` | Each `aliases.md` entry is complete, well formed and unique, and its links and controls note stay in sync | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
+| `test_aliases.py` | Each `aliases.md` entry is complete, well formed and unique, its links and controls note stay in sync, and core aliases stay documented | 9/10 | 2026-08-28 | 2026-10-01 | 2.1.0 |
 | `test_settings.py` | `settings.json` permission structure, security denies, no broad destructive allows and no real secrets | 9/10 | 2026-08-28 | 2026-10-01 | 1.1.0 |
+
+**Merged (2026-10-01):** `rules/test_aliases_behavior.py` — its unique checks moved into `settings/test_aliases.py`, so one test covers `aliases.md`.
 
 **Removed (2026-09-18):** `settings/test_aliases_behavior.py` — written to run as a standalone script (per its own docstring/README), not as native pytest: 3 of its 5 functions required positional arguments pytest couldn't supply (collection errors), and the other 2 used `print`/`return` instead of `assert`, so they never actually failed regardless of outcome. `rules/test_aliases_behavior.py` already covers "aliases are documented and functional" with real assertions. **Lost, not replaced:** the skill/command-existence and convention-documentation checks this file's logic described but never actually enforced as pytest.
 

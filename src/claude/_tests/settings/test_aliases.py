@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           2.0.0
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -13,6 +13,8 @@
 Every row needs the four columns filled in, a known status, a unique and
 well-formed input, and a substantive meaning. Rule paths a meaning names must
 exist, and experimental automation aliases must point to their controls.
+Merged in from the old ``rules/test_aliases_behavior.py``: the core aliases stay
+documented, at least one is Ready, and every Testing alias names its exit doc.
 """
 import re
 
@@ -131,6 +133,34 @@ def test_controls_note_matches_table():
     assert named == testing, (
         f"note names {sorted(named)} but the table's Testing automation aliases are {sorted(testing)}"
     )
+
+
+def test_core_aliases_documented():
+    """The core aliases stay in the table."""
+    inputs = {alias["input"].strip("`") for alias in load_aliases()}
+    missing = sorted({"/fewer-permission-prompts", "/batch", "plan"} - inputs)
+    assert not missing, f"core aliases missing from aliases.md: {missing}"
+
+
+def test_some_alias_is_ready():
+    """At least one alias is Ready, so the table isn't all experiments."""
+    assert any(alias["status"] == "Ready" for alias in load_aliases()), "no alias is marked Ready"
+
+
+def test_every_testing_alias_names_its_exit_doc():
+    """Every Testing alias points to the rule that says when it graduates."""
+    for alias in load_aliases():
+        if alias["status"] == "Testing":
+            assert re.search(r"_rules/[\w/]+\.md", alias["meaning"]), (
+                f"{alias['input']} is Testing but names no rule with its exit criteria"
+            )
+
+
+def test_plan_alias_enters_plan_mode():
+    """The plan alias says it enters plan mode."""
+    plan = next((a for a in load_aliases() if a["input"] == "`plan`"), None)
+    assert plan, "the plan alias is missing"
+    assert "plan mode" in plan["meaning"].lower(), f"plan alias meaning should mention plan mode: {plan['meaning']}"
 
 
 def test_parser_rejects_missing_table():
