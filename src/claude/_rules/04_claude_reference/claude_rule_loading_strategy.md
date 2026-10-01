@@ -1,7 +1,8 @@
-<!-- version: 1.2.1 -->
+<!-- version: 1.2.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-01 -->
 <!-- applies_to: **/_rules/**, **/CLAUDE.md -->
+<!-- miss_cost: low — a rule lands in the wrong tier, which is easy to move -->
 # 📋 Rules Loading Strategy
 
 **Purpose:** Decide which of the five tiers a rule belongs in — and so whether it loads every session or only on demand.

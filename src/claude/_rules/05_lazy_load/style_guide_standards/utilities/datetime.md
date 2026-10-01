@@ -1,6 +1,7 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-04-11 -->
 <!-- updated: 2026-10-01 -->
+<!-- miss_cost: medium — dates that sort or compare wrongly unnoticed; high once it has a trigger -->
 # 📅 Date & Time Standards
 
 **Purpose:** Set one date and time format for technical contexts, so code, metadata and logs sort and compare consistently.

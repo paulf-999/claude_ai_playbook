@@ -1,7 +1,8 @@
-<!-- version: 1.1.2 -->
+<!-- version: 1.1.3 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-01 -->
 <!-- applies_to: * -->
+<!-- miss_cost: low — wasted turns and tokens -->
 # 🔧 Claude Operational Discipline
 
 **Purpose:** Establish principles and decision frameworks for how Claude operates intentionally — preserving reasoning capability through deliberate choices about tool usage, automation, and monitoring for inefficiency.

@@ -1,6 +1,7 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
+<!-- miss_cost: medium — models that break naming or layering and fail review -->
 # 🔵 dbt Style Guide & Standards
 
 **Purpose:** Define standards for `da-etl-dbtanalytics` — covering model organization, naming, YAML properties, testing, snapshots, and macros. Standards ensure consistency, maintainability, and correctness across the dbt project.

@@ -1,7 +1,8 @@
-<!-- version: 3.0.1 -->
+<!-- version: 3.0.2 -->
 <!-- created: 2026-09-07 -->
 <!-- updated: 2026-10-01 -->
 <!-- applies_to: * -->
+<!-- miss_cost: medium — replies in the wrong shape, which the user asks to redo -->
 # 📝 Response Standards
 
 **Purpose:** Establish expected response format, delivery approach, and timing measurement for Claude when working on substantive tasks — ensuring clarity, efficiency, and measurable progress tracking.

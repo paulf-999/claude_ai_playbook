@@ -1,6 +1,7 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.0.3 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-01 -->
+<!-- miss_cost: low — diagram style drift -->
 # 🔀 Mermaid Diagram Standards
 
 **Purpose:** Keep Mermaid diagrams consistent and readable across skills and READMEs.

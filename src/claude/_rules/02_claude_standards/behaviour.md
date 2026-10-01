@@ -1,7 +1,8 @@
-<!-- version: 2.0.1 -->
+<!-- version: 2.0.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-01 -->
 <!-- applies_to: * -->
+<!-- miss_cost: high — irreversible or external actions taken without confirmation -->
 # 🛡️ Behaviour
 
 **Purpose:** Establish safe defaults for how Claude approaches tasks, ensuring intentional action, minimal assumptions, and careful handling of risky operations.
