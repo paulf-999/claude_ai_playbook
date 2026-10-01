@@ -5,16 +5,16 @@
 
 **Overall score:** 9.3/10
 
-| Dimension | Score | Notes |
-|---|---|---|
-| **Clarity** | 9/10 | • 🔍 **Messages:** every test function has a docstring, and every assertion carries a failure message |
-| **Complexity** | 9/10 | • 🧮 **Raw complexity 1:** Concepts 1 (registry integrity and its path parser) + Scope 0 (`settings.json`) + Dependencies 0 + Prerequisites 0 |
-| **Evidence of Need** | 9/10 | • 🔗 **Target:** a stale hook reference makes Claude Code skip the hook with no error |
-| **Coverage** | 9/10 | • 📊 **Counts:** 11 test functions and 15 assertions<br>• 🧩 **New:** unknown event names, hook type, location and naming, duplicates, and the path parser on synthetic settings |
-| **Structural Compliance** | 10/10 | • ✅ **Header:** full metadata header, marked Python style compliant and checked with `ruff` |
-| **Currency** | 10/10 | • 🔍 **References:** passes against the current config, header last updated 2026-10-01 |
-| **Regression Value** | 9/10 | • 🛡️ **Parser:** `~/.claude/` and `~/claude/` both resolve to the config dir, so the portable-paths fix can't regress |
-| **Overall** | **9.3/10** | • 💪 **Strongest:** Structural Compliance and Currency (10/10)<br>• ⚠️ **Weakest:** none below 9/10 |
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and every assertion carries a failure message |
+| **Complexity** | 9/10 | 2026-10-01 | • 🧮 **Raw complexity 1:** Concepts 1 (registry integrity and its path parser) + Scope 0 (`settings.json`) + Dependencies 0 + Prerequisites 0 |
+| **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** a stale hook reference makes Claude Code skip the hook with no error |
+| **Coverage** | 9/10 | 2026-10-01 | • 📊 **Counts:** 11 test functions and 15 assertions<br>• 🧩 **New:** unknown event names, hook type, location and naming, duplicates, and the path parser on synthetic settings |
+| **Structural Compliance** | 10/10 | 2026-10-01 | • ✅ **Header:** full metadata header, marked Python style compliant and checked with `ruff` |
+| **Currency** | 10/10 | 2026-10-01 | • 🔍 **References:** passes against the current config, header last updated 2026-10-01 |
+| **Regression Value** | 9/10 | 2026-10-01 | • 🛡️ **Parser:** `~/.claude/` and `~/claude/` both resolve to the config dir, so the portable-paths fix can't regress |
+| **Overall** | **9.3/10** | 2026-10-01 | • 💪 **Strongest:** Structural Compliance and Currency (10/10)<br>• ⚠️ **Weakest:** none below 9/10 |
 
 ## 🔗 Related files
 

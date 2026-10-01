@@ -8,16 +8,16 @@
 **Recommended improvements:**
 - Fix the stale `_rules/claude_internal/git.md` reference in `test_git.py`'s module docstring to `_rules/02_claude_standards/git.md`.
 
-| Dimension | Score | Notes |
-|---|---|---|
-| **Clarity** | 9/10 | • 📋 **Concrete:** branch-naming regex, PR file-count limit, and Conventional Commits format are all unambiguous |
-| **Complexity** | 7/10 | • 🧮 **Raw complexity 3:** ~4 concepts (complex-ops, protected branches, branch naming, PRs) plus 3 children |
-| **Evidence of Need** | 9/10 | • 🔗 **Followed exactly, repeatedly:** every commit and PR created this session matched this rule's format and branch-naming pattern |
-| **Token Cost Justification** | 9/10 | • 🎯 **Scope:** Tier 2, always-on — governs every git operation, used constantly |
-| **Structural Compliance** | 9/10 | • ✅ **Compliant:** Contents matches headings, emoji headers, trailing newline, well organized |
-| **Currency** | 8/10 | • 🔍 **Rule content itself:** accurate, no stale references in git.md |
-| **Test Coverage** | 7/10 | • 🧪 **Direct test exists:** `test_git.py`, 5 functions, checks sections/patterns/line-limit<br>• 🚩 **Drift signal:** its own docstring says "Structural tests for `_rules/claude_internal/git.md`" — a stale pre-reorg path (actual constant on line 18 correctly uses `02_claude_standards/git.md`) |
-| **Overall** | **8.1/10** | • 💪 **Strength:** heavily used and correctly followed all session<br>• ⚠️ **Gap:** its own test's docstring has drifted from the real path |
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Clarity** | 9/10 | 2026-09-28 | • 📋 **Concrete:** branch-naming regex, PR file-count limit, and Conventional Commits format are all unambiguous |
+| **Complexity** | 7/10 | 2026-09-28 | • 🧮 **Raw complexity 3:** ~4 concepts (complex-ops, protected branches, branch naming, PRs) plus 3 children |
+| **Evidence of Need** | 9/10 | 2026-09-28 | • 🔗 **Followed exactly, repeatedly:** every commit and PR created this session matched this rule's format and branch-naming pattern |
+| **Token Cost Justification** | 9/10 | 2026-09-28 | • 🎯 **Scope:** Tier 2, always-on — governs every git operation, used constantly |
+| **Structural Compliance** | 9/10 | 2026-09-28 | • ✅ **Compliant:** Contents matches headings, emoji headers, trailing newline, well organized |
+| **Currency** | 8/10 | 2026-09-28 | • 🔍 **Rule content itself:** accurate, no stale references in git.md |
+| **Test Coverage** | 7/10 | 2026-09-28 | • 🧪 **Direct test exists:** `test_git.py`, 5 functions, checks sections/patterns/line-limit<br>• 🚩 **Drift signal:** its own docstring says "Structural tests for `_rules/claude_internal/git.md`" — a stale pre-reorg path (actual constant on line 18 correctly uses `02_claude_standards/git.md`) |
+| **Overall** | **8.1/10** | 2026-09-28 | • 💪 **Strength:** heavily used and correctly followed all session<br>• ⚠️ **Gap:** its own test's docstring has drifted from the real path |
 
 ## 🔗 Related files
 

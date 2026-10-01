@@ -8,16 +8,16 @@
 **Recommended improvements:**
 - Add a dedicated structural test for this file.
 
-| Dimension | Score | Notes |
-|---|---|---|
-| **Clarity** | 9/10 | • 📋 **Concrete:** a worked reST docstring example, an explicit PEP 8 override (120 chars, ruff-enforced), specific comment-placement rules |
-| **Complexity** | 7/10 | • 🧮 **Raw complexity 3:** 10 distinct sections (layout, naming, imports, strings, errors, docstrings, functions, type hints, comments, general), single file, no dependencies |
-| **Evidence of Need** | 8/10 | • 🔗 **Concrete tooling tie-in:** the 120-character override is specific and `ruff`-enforced, not generic style advice |
-| **Token Cost Justification** | N/A | • N/A — lazy-loaded, not always-on |
-| **Structural Compliance** | 9/10 | • ✅ **Fixed:** "## 🔗 Related" now has its emoji, matching every other heading in the file<br>• ✅ **Otherwise compliant:** Purpose statement, Contents section, well within line limit |
-| **Currency** | 9/10 | • ✅ **Fixed:** the `[[python_environment]]` wiki-link is now a real markdown link<br>• ✅ **Fixed:** the parent now links all 4 genuine sibling pages (`testing.md`, `logging.md`, `module_organisation.md`, `code_complexity.md`)<br>• ✅ **Fixed:** both orphaned duplicates removed — `python/python.md`, and `python/python_standards.md` (found during this same cleanup; not merely an unreferenced sibling as first assessed, but a second near-identical copy of this parent) |
-| **Test Coverage** | 2/10 | • 🧪 **Gap:** confirmed via `find` — no test file references this rule by name |
-| **Overall** | **6.8/10** | • 💪 **Strength:** concrete, tooling-backed conventions, now fully connected to its real children with no orphans left<br>• ⚠️ **Gap:** zero test coverage remains the only open item |
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Clarity** | 9/10 | 2026-09-28 | • 📋 **Concrete:** a worked reST docstring example, an explicit PEP 8 override (120 chars, ruff-enforced), specific comment-placement rules |
+| **Complexity** | 7/10 | 2026-09-28 | • 🧮 **Raw complexity 3:** 10 distinct sections (layout, naming, imports, strings, errors, docstrings, functions, type hints, comments, general), single file, no dependencies |
+| **Evidence of Need** | 8/10 | 2026-09-28 | • 🔗 **Concrete tooling tie-in:** the 120-character override is specific and `ruff`-enforced, not generic style advice |
+| **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
+| **Structural Compliance** | 9/10 | 2026-09-28 | • ✅ **Fixed:** "## 🔗 Related" now has its emoji, matching every other heading in the file<br>• ✅ **Otherwise compliant:** Purpose statement, Contents section, well within line limit |
+| **Currency** | 9/10 | 2026-09-28 | • ✅ **Fixed:** the `[[python_environment]]` wiki-link is now a real markdown link<br>• ✅ **Fixed:** the parent now links all 4 genuine sibling pages (`testing.md`, `logging.md`, `module_organisation.md`, `code_complexity.md`)<br>• ✅ **Fixed:** both orphaned duplicates removed — `python/python.md`, and `python/python_standards.md` (found during this same cleanup; not merely an unreferenced sibling as first assessed, but a second near-identical copy of this parent) |
+| **Test Coverage** | 2/10 | 2026-09-28 | • 🧪 **Gap:** confirmed via `find` — no test file references this rule by name |
+| **Overall** | **6.8/10** | 2026-09-28 | • 💪 **Strength:** concrete, tooling-backed conventions, now fully connected to its real children with no orphans left<br>• ⚠️ **Gap:** zero test coverage remains the only open item |
 
 ## 🔗 Related files
 

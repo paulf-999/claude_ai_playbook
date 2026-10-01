@@ -10,16 +10,16 @@
 - Add a synthetic bad-input test that proves the check fails when it should
 - Fix the module docstring to name `02_claude_standards/behaviour/_decision_making.md`
 
-| Dimension | Score | Notes |
-|---|---|---|
-| **Clarity** | 8/10 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message<br>• ⚠️ **Docstring:** module docstring names the retired path `_rules/01_core/behaviour/_decision_making.md` |
-| **Complexity** | 9/10 | • 🧮 **Complexity:** header complexity score 9/10 (raw complexity 1) |
-| **Evidence of Need** | 9/10 | • 🔗 **Target:** guards a real, installed artefact |
-| **Coverage** | 5/10 | • 📊 **Counts:** 5 test functions and 6 assertions |
-| **Structural Compliance** | 9/10 | • ✅ **Header:** full metadata header, marked Python style compliant |
-| **Currency** | 7/10 | • 🔍 **References:** passes against the current config, header last updated 2026-09-17<br>• ⚠️ **Finding:** docstring path is stale, although the constant it tests is current |
-| **Regression Value** | 7/10 | • 🛡️ **Failure cases:** checks real files, but no function proves the check fails on a bad case |
-| **Overall** | **7.7/10** | • 💪 **Strongest:** Complexity, Evidence of Need and Structural Compliance (9/10)<br>• ⚠️ **Weakest:** Coverage (5/10) |
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Clarity** | 8/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message<br>• ⚠️ **Docstring:** module docstring names the retired path `_rules/01_core/behaviour/_decision_making.md` |
+| **Complexity** | 9/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 9/10 (raw complexity 1) |
+| **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact |
+| **Coverage** | 5/10 | 2026-09-30 | • 📊 **Counts:** 5 test functions and 6 assertions |
+| **Structural Compliance** | 9/10 | 2026-10-01 | • ✅ **Header:** full metadata header, marked Python style compliant |
+| **Currency** | 7/10 | 2026-09-30 | • 🔍 **References:** passes against the current config, header last updated 2026-09-17<br>• ⚠️ **Finding:** docstring path is stale, although the constant it tests is current |
+| **Regression Value** | 7/10 | 2026-09-30 | • 🛡️ **Failure cases:** checks real files, but no function proves the check fails on a bad case |
+| **Overall** | **7.7/10** | 2026-10-01 | • 💪 **Strongest:** Complexity, Evidence of Need and Structural Compliance (9/10)<br>• ⚠️ **Weakest:** Coverage (5/10) |
 
 ## 🔗 Related files
 

@@ -8,16 +8,16 @@
 **Recommended improvements:**
 - Extend `test_rules_structure.py`'s emoji check to cover all `##` subheadings, not just the H1, so this class of gap is caught mechanically.
 
-| Dimension | Score | Notes |
-|---|---|---|
-| **Clarity** | 6/10 | • 📋 **Principle is clear:** "lazy-load by default" is stated plainly<br>• 🚩 **Self-undermining:** claims to be the "Source of Truth" for the tier system, but its own "Filesystem structure" list is incomplete (see Currency) |
-| **Complexity** | 7/10 | • 🧮 **Raw complexity 3:** 3 concepts (source of truth, when-adding-a-rule, tier classification), 1 child |
-| **Evidence of Need** | 8/10 | • 🔗 **Load-bearing:** directly referenced by `authoring_rules.md`'s checklist as the place to check for the full rule list and always-on/lazy-load placement |
-| **Token Cost Justification** | 8/10 | • 🎯 **Scope:** Tier 4, always-on — moderate session relevance, foundational for rule-placement decisions specifically |
-| **Structural Compliance** | 4/10 | • 🚩 **Missing emoji headings:** confirmed via `grep "^## "` — 4 of 5 `##` headings ("Source of Truth", "When Adding a Rule", "Tier Classification", "Related References") have no emoji, violating `writing_style.md`'s "use on all major headings" rule; only the H1 does |
-| **Currency** | 5/10 | • 🐛 **Incomplete tier list:** the "Filesystem structure" section (lines 14–18) lists `01_essentials/`, `02_claude_standards/`, `04_claude_reference/`, `05_lazy_load/` — but omits `03_authoring_guidelines/`, which is a real, current tier |
-| **Test Coverage** | 7/10 | • 🧪 **No file literally named for this rule**, but `test_always_on_reachability.py` (11 functions) directly mechanizes the reachability principle it documents, and `test_lazy_load_coverage.py` (2 functions) covers the lazy-load side |
-| **Overall** | **6.4/10** | • 💪 **Strength:** the underlying reachability mechanism is well-tested even without a rule-specific test<br>• ⚠️ **Gap:** the two lowest scores in this survey — missing subheading emoji and an incomplete tier list, in the one file whose job is being the tier reference |
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Clarity** | 6/10 | 2026-09-28 | • 📋 **Principle is clear:** "lazy-load by default" is stated plainly<br>• 🚩 **Self-undermining:** claims to be the "Source of Truth" for the tier system, but its own "Filesystem structure" list is incomplete (see Currency) |
+| **Complexity** | 7/10 | 2026-09-28 | • 🧮 **Raw complexity 3:** 3 concepts (source of truth, when-adding-a-rule, tier classification), 1 child |
+| **Evidence of Need** | 8/10 | 2026-09-28 | • 🔗 **Load-bearing:** directly referenced by `authoring_rules.md`'s checklist as the place to check for the full rule list and always-on/lazy-load placement |
+| **Token Cost Justification** | 8/10 | 2026-09-28 | • 🎯 **Scope:** Tier 4, always-on — moderate session relevance, foundational for rule-placement decisions specifically |
+| **Structural Compliance** | 4/10 | 2026-09-28 | • 🚩 **Missing emoji headings:** confirmed via `grep "^## "` — 4 of 5 `##` headings ("Source of Truth", "When Adding a Rule", "Tier Classification", "Related References") have no emoji, violating `writing_style.md`'s "use on all major headings" rule; only the H1 does |
+| **Currency** | 5/10 | 2026-09-28 | • 🐛 **Incomplete tier list:** the "Filesystem structure" section (lines 14–18) lists `01_essentials/`, `02_claude_standards/`, `04_claude_reference/`, `05_lazy_load/` — but omits `03_authoring_guidelines/`, which is a real, current tier |
+| **Test Coverage** | 7/10 | 2026-09-28 | • 🧪 **No file literally named for this rule**, but `test_always_on_reachability.py` (11 functions) directly mechanizes the reachability principle it documents, and `test_lazy_load_coverage.py` (2 functions) covers the lazy-load side |
+| **Overall** | **6.4/10** | 2026-09-28 | • 💪 **Strength:** the underlying reachability mechanism is well-tested even without a rule-specific test<br>• ⚠️ **Gap:** the two lowest scores in this survey — missing subheading emoji and an incomplete tier list, in the one file whose job is being the tier reference |
 
 ## 🔗 Related files
 
