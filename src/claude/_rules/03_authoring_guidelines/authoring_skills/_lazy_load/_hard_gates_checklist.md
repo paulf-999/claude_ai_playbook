@@ -1,4 +1,4 @@
-<!-- version: 3.0.1 -->
+<!-- version: 3.1.0 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-10-01 -->
 # ✅ Skill Hard Gates Checklist
@@ -22,13 +22,15 @@
   - [ ] Each permission is listed in `dependencies.permissions`, with no more than the skill needs
 - [ ] **3. SKILL.md structure [REQUIRED]:** start from `~/.claude/_templates/skills/SKILL.md.template`
   - [ ] Frontmatter: name, description, maturity, tags
+  - [ ] Description carries the phrases users type to ask for the skill
   - [ ] Metadata header straight after the frontmatter: version (matching the contract), created, updated
+  - [ ] Instructions for Claude: pre-checks, **Always:**/**Never:** constraints, `$HOME`-based paths, and which `reference/` file to read first
   - [ ] Purpose: 1 sentence value prop + 3–4 bullets
   - [ ] Example Usage: realistic scenario showing complete journey
   - [ ] Best For: use cases, explicit caveats, and a one-sentence maturity justification
   - [ ] References: links to reference/ files (no inline detail)
   - [ ] Every `##` heading has an emoji
-  - [ ] Total length: ≤60 lines (if longer, detail belongs in reference/)
+  - [ ] Total length: ≤60 lines, not counting Instructions for Claude (if longer, detail belongs in reference/)
 - [ ] **4. tests/evals.yaml [REQUIRED]:** written before any handler code, organized by phase
   - [ ] Lives at `tests/evals.yaml`, not skill root
   - [ ] Each eval: name, description, input, setup, expected_output

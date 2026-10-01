@@ -27,7 +27,7 @@ Minimal, focused structure. Each skill directory contains **only**:
 
 ```
 skill_name/
-├── SKILL.md               # User-facing overview (5 sections, ~60 lines)
+├── SKILL.md               # Instructions for Claude + overview (6 sections, ~60 lines)
 ├── skill.contract.yaml    # Machine-readable contract (scope, triggers, maturity)
 ├── reference/             # Runtime docs Claude reads while executing (keep SKILL.md lean)
 │   ├── _implementation.md # Phases, logic, error handling

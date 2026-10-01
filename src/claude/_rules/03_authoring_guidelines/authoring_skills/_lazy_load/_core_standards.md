@@ -1,9 +1,9 @@
-<!-- version: 3.0.1 -->
+<!-- version: 3.1.0 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-10-01 -->
 # 📐 Skill Core Standards
 
-**Purpose:** Define the baseline every skill must follow — naming, SKILL.md's 5-section structure, what `skill.contract.yaml` must declare, and how to choose a maturity level.
+**Purpose:** Define the baseline every skill must follow — naming, SKILL.md's 6-section structure, what `skill.contract.yaml` must declare, and how to choose a maturity level.
 
 ---
 
@@ -17,12 +17,29 @@
 
 ## 📄 SKILL.md Structure [REQUIRED]
 
-5-section canonical structure, ~60 lines, scannable in <2 minutes:
+6-section canonical structure, ~60 lines plus the instructions section, scannable in <2 minutes:
 1. **Frontmatter** — name, description, maturity, tags, followed by the three-line metadata header (version, created, updated)
-2. **Purpose** — 1 sentence value prop + 3–4 bullets of key capabilities
-3. **Example Usage** — Realistic scenario showing complete user journey end-to-end
-4. **Best For** — Use case guidance + explicit caveats/limitations
-5. **References** — Pointers to supporting docs in `reference/` subdirectory
+2. **Instructions for Claude** — `## 🤖 Instructions for Claude`, straight after the metadata header (see below)
+3. **Purpose** — 1 sentence value prop + 3–4 bullets of key capabilities
+4. **Example Usage** — Realistic scenario showing complete user journey end-to-end
+5. **Best For** — Use case guidance + explicit caveats/limitations
+6. **References** — Pointers to supporting docs in `reference/` subdirectory
+
+## 🤖 Instructions for Claude [REQUIRED]
+
+Claude reliably reads only `SKILL.md` when a skill loads, so every must-follow step lives there, not in `reference/`.
+
+- **Pre-checks:** the calls to make before anything else (e.g. confirm an MCP server responds), and what to tell the user if one fails.
+- **Hard constraints:** one bullet per rule, opening with a bold **Always:** or **Never:** (e.g. "never call the publish tool before the draft is approved").
+- **Paths:** any file the skill writes, given from `$HOME` (e.g. `~/_drafts/<domain>/`), never relative to the Claude config folder.
+- **Read first:** tell Claude to read the `reference/` file holding the phases before acting.
+- **Line budget:** this section doesn't count towards the ~60 lines.
+  - **Why:** a hard 60-line cap pushed these instructions into `reference/`, and Claude skipped them (incident 2026-10-01).
+
+## 🏷️ Description [REQUIRED]
+
+- **Dispatch phrases:** the frontmatter `description` must carry the verbs and phrasings users type (e.g. "create, add, write or publish a Confluence page").
+  - **Why:** Claude Code picks a skill from its name and `description` only — it never reads `skill.contract.yaml` triggers.
 
 **Example: Good SKILL.md Frontmatter**
 
@@ -44,7 +61,7 @@ tags:
 
 **What makes this good:**
 - ✅ name matches `<domain>_<action>` pattern (git_create_pr)
-- ✅ description is 1 sentence, non-technical, shows user value
+- ✅ description is 1 sentence, non-technical, shows user value, and carries the phrases users type (create, GitHub PR)
 - ✅ version sits in the metadata header straight after the frontmatter, follows semver, and matches `skill.contract.yaml` (see `_claude_config_metadata.md`)
 - ✅ maturity justified (tactical = battle-tested, widely used)
 - ✅ tags capture status + criticality for quick scanning
