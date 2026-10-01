@@ -2,11 +2,11 @@
 
 **Generated:** 2026-10-01 by `make audit_rule_usage` · **Sessions:** 115 across 10 projects · **Window:** 2026-08-31 to 2026-10-01
 
-**Always-on load:** ≈34,687 tokens per session (characters ÷ 4).
+**Always-on load:** ≈35,025 tokens per session (characters ÷ 4).
 
 ## 📖 How to read this
 
-- **Applied:** sessions that touched a file matching the rule's globs; `*` means every session.
+- **Applied:** sessions that touched a file matching the rule's `applies_to` globs (or its `paths:` or a built-in default for lazy rules); `*` means every session.
 - **Loaded:** sessions where the rule reached Claude's context — imported, auto-loaded by `paths:`, or read.
 - **Misses:** sessions where the rule applied but was never loaded.
 - **Miss cost:** read from a `<!-- miss_cost: … -->` header; `—` until Phase 5 adds them.
@@ -18,20 +18,20 @@
 
 | Rule | Tier | Tokens | Applied | Loaded | Misses | Miss cost | Last applied | Last loaded | Flag |
 |---|---|---|---|---|---|---|---|---|---|
-| `01_essentials/claude_response_standards.md` | 01 | 1,535 | 100% (115) | 90% (104) | 11 | — | 2026-10-01 | 2026-10-01 | — |
-| `01_essentials/claude_usage_standards.md` | 01 | 6,638 | 100% (115) | 76% (87) | 28 | — | 2026-10-01 | 2026-10-01 | — |
-| `01_essentials/guiding_principles.md` | 01 | 2,466 | 100% (115) | 90% (104) | 11 | — | 2026-10-01 | 2026-10-01 | — |
-| `02_claude_standards/behaviour.md` | 02 | 6,365 | 100% (115) | 90% (104) | 11 | — | 2026-10-01 | 2026-10-01 | — |
-| `02_claude_standards/claude_plans.md` | 02 | 2,118 | 100% (115) | 76% (87) | 28 | — | 2026-10-01 | 2026-10-01 | — |
-| `02_claude_standards/git.md` | 02 | 2,547 | 100% (115) | 90% (104) | 11 | — | 2026-10-01 | 2026-10-01 | — |
-| `02_claude_standards/portable_paths.md` | 02 | 937 | 100% (115) | 76% (87) | 28 | — | 2026-10-01 | 2026-10-01 | — |
-| `02_claude_standards/security.md` | 02 | 1,625 | 100% (115) | 90% (104) | 11 | — | 2026-10-01 | 2026-10-01 | — |
-| `02_claude_standards/testing.md` | 02 | 3,740 | 100% (115) | 90% (104) | 11 | — | 2026-10-01 | 2026-10-01 | — |
-| `03_authoring_guidelines/authoring_agents.md` | 03 | 570 | 100% (115) | 70% (81) | 34 | — | 2026-10-01 | 2026-10-01 | — |
-| `03_authoring_guidelines/authoring_rules.md` | 03 | 1,902 | 100% (115) | 76% (87) | 28 | — | 2026-10-01 | 2026-10-01 | — |
-| `03_authoring_guidelines/authoring_skills.md` | 03 | 746 | 100% (115) | 76% (87) | 28 | — | 2026-10-01 | 2026-10-01 | — |
-| `04_claude_reference/claude_operational_efficiency.md` | 04 | 2,642 | 100% (115) | 76% (87) | 28 | — | 2026-10-01 | 2026-10-01 | — |
-| `04_claude_reference/claude_rule_loading_strategy.md` | 04 | 856 | 100% (115) | 51% (59) | 56 | — | 2026-10-01 | 2026-10-01 | — |
+| `01_essentials/claude_response_standards.md` | 01 | 1,541 | 100% (115) | 90% (104) | 11 | — | 2026-10-01 | 2026-10-01 | — |
+| `01_essentials/claude_usage_standards.md` | 01 | 6,643 | 100% (115) | 76% (87) | 28 | — | 2026-10-01 | 2026-10-01 | — |
+| `01_essentials/guiding_principles.md` | 01 | 2,478 | 77% (88) | 90% (104) | 5 | — | 2026-10-01 | 2026-10-01 | — |
+| `02_claude_standards/behaviour.md` | 02 | 6,371 | 100% (115) | 90% (104) | 11 | — | 2026-10-01 | 2026-10-01 | — |
+| `02_claude_standards/claude_plans.md` | 02 | 2,124 | 100% (115) | 76% (87) | 28 | — | 2026-10-01 | 2026-10-01 | — |
+| `02_claude_standards/git.md` | 02 | 2,553 | 100% (115) | 90% (104) | 11 | — | 2026-10-01 | 2026-10-01 | — |
+| `02_claude_standards/portable_paths.md` | 02 | 955 | 23% (27) | 76% (87) | 2 | — | 2026-10-01 | 2026-10-01 | — |
+| `02_claude_standards/security.md` | 02 | 1,630 | 100% (115) | 90% (104) | 11 | — | 2026-10-01 | 2026-10-01 | — |
+| `02_claude_standards/testing.md` | 02 | 3,752 | 32% (37) | 90% (104) | 1 | — | 2026-10-01 | 2026-10-01 | — |
+| `03_authoring_guidelines/authoring_agents.md` | 03 | 579 | 2% (2) | 70% (81) | 1 | — | 2026-09-29 | 2026-10-01 | not enough data |
+| `03_authoring_guidelines/authoring_rules.md` | 03 | 2,130 | 28% (32) | 76% (87) | 5 | — | 2026-10-01 | 2026-10-01 | — |
+| `03_authoring_guidelines/authoring_skills.md` | 03 | 754 | 15% (17) | 76% (87) | 4 | — | 2026-09-30 | 2026-10-01 | — |
+| `04_claude_reference/claude_operational_efficiency.md` | 04 | 2,647 | 100% (115) | 76% (87) | 28 | — | 2026-10-01 | 2026-10-01 | — |
+| `04_claude_reference/claude_rule_loading_strategy.md` | 04 | 868 | 30% (35) | 51% (59) | 19 | — | 2026-10-01 | 2026-10-01 | — |
 | `05_lazy_load/automation_controls.md` | 05 | 1,621 | — | 0% (0) | — | — | — | — | no trigger |
 | `05_lazy_load/delegating_to_subagent.md` | 05 | 982 | — | 0% (0) | — | — | — | — | no trigger |
 | `05_lazy_load/environment_setup/ohmyzsh_setup.md` | 05 | 646 | — | 0% (0) | — | — | — | — | no trigger |
@@ -73,7 +73,7 @@
 | `01_essentials/claude_usage_standards/naming_standards/_naming_principles.md` | 📋 Core Principles | 425 |
 | `03_authoring_guidelines/authoring_rules.md` | 📏 Quality Gates | 421 |
 | `01_essentials/guiding_principles.md` | 📊 How to gather usage evidence | 400 |
-| `03_authoring_guidelines/shared_standards/_claude_config_metadata.md` | 📍 One format, three lines, every artefact | 377 |
+| `03_authoring_guidelines/shared_standards/_claude_config_metadata.md` | 📍 One format, three lines, every artefact | 379 |
 
 ## 🗺️ Session spread
 
