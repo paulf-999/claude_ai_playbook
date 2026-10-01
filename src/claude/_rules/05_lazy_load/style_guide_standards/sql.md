@@ -2,9 +2,9 @@
 paths:
   - "**/*.sql"
 ---
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
 # 🗄️ SQL Style Guide & Standards
 
 **Purpose:** Define team SQL standards for consistency, readability, and cost optimization. Standards apply to all SQL written in the warehouse (dbt, Airflow, ad-hoc queries).
@@ -100,9 +100,9 @@ Before committing SQL changes:
 
 ---
 
-## Imports
+## 📚 Read on demand
 
-@./sql/formatting.md
-@./sql/cte_style_guide.md
-@./sql/snowflake_data_type_standards.md
-@./sql/sqlfluff.md
+- **Read on demand:** `~/claude/_rules/05_lazy_load/style_guide_standards/sql/formatting.md` — keywords, naming, structure, joins, indentation and commenting.
+- **Read on demand:** `~/claude/_rules/05_lazy_load/style_guide_standards/sql/cte_style_guide.md` — CTE grouping pattern for dbt models and queries.
+- **Read on demand:** `~/claude/_rules/05_lazy_load/style_guide_standards/sql/snowflake_data_type_standards.md` — which Snowflake data type to use.
+- **Read on demand:** `~/claude/_rules/05_lazy_load/style_guide_standards/sql/sqlfluff.md` — SQLFluff dialect, templater and excluded rules.
