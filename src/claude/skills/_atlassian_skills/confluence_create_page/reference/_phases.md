@@ -1,6 +1,6 @@
 ---
 date_created: "2026-08-28"
-date_updated: "2026-09-19"
+date_updated: "2026-10-01"
 status: active
 ---
 
@@ -74,7 +74,7 @@ After gathering all page content via the pattern phases, before creating anythin
 
 1. **Write the draft** — Save the page content as a markdown file:
    - Directory: `~/_drafts/confluence/`
-   - Filename: `<slug>_YYYY-MMM-DD.md` (slug: lowercase, words separated by underscores, no special characters)
+   - Filename: `YYYY_MM_DD_<slug>.md` — date first, underscores only, per `writing_style.md` (slug: lowercase, words separated by underscores, no special characters)
    - Render the content faithfully — use markdown equivalents of ADF components (e.g. `> ℹ️` for info panels, `> 📝` for note panels, `**bold**` for labels, tables for structured data)
 
 2. **Ask for feedback** — Inform the user of the file path and request review:
