@@ -1,6 +1,6 @@
-<!-- version: 4.1.1 -->
+<!-- version: 4.1.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-01 -->
 # 🏷️ Naming patterns — files, objects, and artefacts
 
 **Purpose:** Establish self-describing naming patterns for rules, skills, hooks, and other Claude config artefacts.
@@ -42,9 +42,9 @@
 |---|---|---|
 | `hook_<type>_<domain>.sh` | `hook_enforcement_naming_convention.sh` | Blocks badly named new files under the config directory |
 | | `hook_style_guide_response_standards_inject.sh` | Injects the response-format directive each turn |
-| | `hook_session_start_mcp_stale_settings.sh` | Reminds you to restart after MCP settings change |
+| | `hook_enforcement_mcp_stale_settings.sh` | Reminds you to restart after MCP settings change mid-session |
 | `hook_<type>_dispatch.sh` | None yet | Fan-out hook that calls several same-type domain hooks and combines their output |
 
 - **Prefix:** all hook files must start with `hook_` — distinguishes them from other shell scripts
 - **Type:** `enforcement` (blocks or injects a warning), `style_guide` (injects style context) or `session_start` (runs when a session opens)
-- **Domain:** the concern being enforced, e.g. `sql`, `dir_structure`, `naming_convention`
+- **Domain:** the concern being enforced, e.g. `sql`, `mcp_stale_settings`, `naming_convention`

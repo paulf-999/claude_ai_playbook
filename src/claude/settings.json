@@ -51,6 +51,10 @@
           {
             "type": "command",
             "command": "bash ~/.claude/hooks/hook_style_guide_response_standards_inject.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/hook_enforcement_mcp_stale_settings.sh"
           }
         ]
       }
