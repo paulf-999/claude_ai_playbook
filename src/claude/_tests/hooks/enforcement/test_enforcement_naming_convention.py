@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           2.0.1
+# Version:           2.0.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -11,7 +11,7 @@
 """Test: enforcement_naming_convention hook.
 
 Validates that the hook denies a Write only when the new file's name has an error under
-``test_file_structure_compliance.py``'s checks, and lets every other Write through silently:
+``_file_structure_validator.py``'s checks, and lets every other Write through silently:
 well-named files, existing files, files outside the config dir, and Claude Code's own folders.
 """
 import json

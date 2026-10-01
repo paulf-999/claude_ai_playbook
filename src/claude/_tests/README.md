@@ -12,6 +12,8 @@ Each table's **Quality**, **Created**, **Updated**, and **Version** columns are 
 the test file's own metadata header — see `testing.md`'s Test Metadata Standard section for the
 format and scoring rubric.
 
+**Utility (not a scored test):** `_file_structure_validator.py` — the file-structure scanner, and the `--check` mode the naming hook calls for one new path.
+
 **Utility (not a scored test):** `_shared_paths.py` — resolves `CLAUDE_DIR` (via `CLAUDE_CONFIG_DIR`,
 default `~/.claude`) plus the handful of path constants (`CLAUDE_MD`, `ALIASES_FILE`,
 `SETTINGS_FILE`, `SKILLS_DIR`, `HOOKS_DIR`, `RULES_DIR`) that were independently redeclared with
@@ -80,7 +82,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_portable_paths.py` | Hooks and tests resolve the config directory at runtime instead of hardcoding paths or usernames | 9/10 | 2026-09-18 | 2026-10-01 | 1.0.1 |
 | `test_security_guardrails.py` | Claude never recommends wildcard permissions for destructive commands, and related security guardrails | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
 | `test_test_metadata.py` | Every test's metadata header is complete, in order, well formed (banners, dates, semver, scores), and its quality score matches its own counts | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.0 |
-| `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, or holds its `BASELINE` scores and never gets worse | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
+| `test_test_score_floor.py` | Every test meets quality 9, complexity 7 and style Yes, or holds its `BASELINE` scores and never gets worse | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.1 |
 | `test_testing.py` | Self-consistency: enforcement hooks have tests, and testing.md documents the enforcement pattern | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.3 |
 
 ### `rules/03_authoring_guidelines/`
@@ -151,8 +153,8 @@ these tests and is imported directly via a relative import.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_file_structure_compliance.py` | All files and directories in the Claude config follow naming and placement conventions | 2/10 | 2026-08-28 | 2026-10-01 | 1.3.1 |
-| `test_file_structure_validator.py` | The file-structure scanner flags bad names and skips auto-generated, hidden and exempt files | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.1 |
+| `test_file_structure_compliance.py` | Every file in the real Claude config passes the file-structure scan, checked area by area | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
+| `test_file_structure_validator.py` | The file-structure scanner flags bad names and skips auto-generated, hidden and exempt files | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.2 |
 
 ---
 

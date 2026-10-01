@@ -15,7 +15,7 @@
 
 | Hook | Event | Reason |
 |---|---|---|
-| `hook_enforcement_naming_convention.sh` | PreToolUse (Write) | Block before the file is created — naming can't be fixed after the fact without a rename. Denies only names with an error under `test_file_structure_compliance.py`, which it calls for that one path |
+| `hook_enforcement_naming_convention.sh` | PreToolUse (Write) | Block before the file is created — naming can't be fixed after the fact without a rename. Denies only names with an error under `_tests/_file_structure_validator.py`, which it calls for that one path |
 | `hook_enforcement_writing_style.sh` | PostToolUse (Edit/Write) | Inject style reminder after an edit — the edit is valid, but style compliance should follow |
 | `hook_style_guide_response_standards_inject.sh` | UserPromptSubmit | Only place to act before Claude starts reasoning — adds the response-format reminder to every prompt |
 

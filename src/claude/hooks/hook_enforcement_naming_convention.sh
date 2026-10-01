@@ -1,16 +1,16 @@
 #!/bin/bash
-# version: 2.0.0
+# version: 2.0.1
 # created: 2026-08-28
 # updated: 2026-10-01
 # PreToolUse hook — checks the name of each new file written under the Claude config dir.
-# Runs the same file checks as _tests/test_file_structure_compliance.py on that one path,
+# Runs the same file checks as _tests/_file_structure_validator.py on that one path,
 # and denies the Write only when the name has an error (e.g. not snake_case), giving the fix.
 # Advisory notes are ignored: the "child file" note also fires on correctly named tier rules.
 set -e
 
 CLAUDE_HOOKS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_ROOT_DIR="$(dirname "${CLAUDE_HOOKS_DIR}")"
-CHECKER="${CLAUDE_ROOT_DIR}/_tests/test_file_structure_compliance.py"
+CHECKER="${CLAUDE_ROOT_DIR}/_tests/_file_structure_validator.py"
 
 #=======================================================================
 # Variables

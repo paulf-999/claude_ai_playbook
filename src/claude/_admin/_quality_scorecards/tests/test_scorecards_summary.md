@@ -6,8 +6,8 @@
 
 ## 📋 Current scores
 
-- **Scored:** 46 test files, average 8.3/10.
-- **Below 8.5:** 27 tests, each with recommended improvements.
+- **Scored:** 46 test files, average 8.4/10.
+- **Below 8.5:** 26 tests, each with recommended improvements.
 - **Order:** one table per `_tests/` folder, sorted by Overall score, highest first.
 
 ### agents
@@ -84,7 +84,7 @@
 |---|---|---|
 | `scorecard_test_file_structure_validator.md` | 9.3/10 | — (≥8.5) |
 | `scorecard_test_hook_metadata_header.md` | 9.0/10 | — (≥8.5) |
-| `scorecard_test_file_structure_compliance.md` | 7.0/10 | • Add test functions and assertions toward 10+ and 15+ (now 1 and 1)<br>• Convert `scan()`'s Google-style `Returns:` docstring to reST so the file is Python style compliant<br>• Correct the docstring: it is one scanning function, not a parametrized test |
+| `scorecard_test_file_structure_compliance.md` | 8.9/10 | — (≥8.5) |
 
 ---
 
