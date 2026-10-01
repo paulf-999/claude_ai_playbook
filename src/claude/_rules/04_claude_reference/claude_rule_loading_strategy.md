@@ -1,4 +1,4 @@
-<!-- version: 1.2.2 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-01 -->
 <!-- applies_to: **/_rules/**, **/CLAUDE.md -->
@@ -31,17 +31,29 @@ Every import adds the imported file's full size to every session — measured ti
 
 ## ⚖️ Always-on or lazy-load?
 
-**Always-on (tiers 01–04) when the rule is:**
-- **Safety-critical:** e.g. behaviour, guiding principles
-- **A quality gate:** e.g. testing, security
-- **Needed in most sessions:** more than 70%
-- **Foundational for all work:** e.g. naming, writing style
+Decide from two numbers per rule, both in `_admin/_audits/audit_rule_usage.md`:
 
-**Lazy-load (`05_lazy_load/`) when the rule is:**
-- **Domain-specific:** e.g. style guides for SQL, Airflow, dbt
-- **Needed in fewer than 70% of sessions**
-- **Tied to a clear trigger:** a command, a tool, a file type
-- **Safe to omit:** no safety cost in sessions that don't need it
+- **Applied %:** the share of sessions matching the rule's `applies_to` globs, measured by `make audit_rule_usage`.
+- **Miss cost:** what breaks when the rule applies but isn't loaded, from its `miss_cost` header.
+
+| Miss cost | Applied in half of sessions or more | Applied in fewer |
+|---|---|---|
+| **High** | Always-on | Lazy only with `paths:` or a hook that loads it, otherwise always-on |
+| **Medium** | Always-on | Lazy, with a trigger where one exists |
+| **Low** | Always-on only if small | Lazy |
+
+- **Domain style guides:** SQL, Airflow, dbt and similar guides are lazy, triggered by `paths:` on their file type.
+- **Pointers aren't triggers:** a `**Read on demand:**` pointer works only if Claude remembers it, so it never counts for a high-cost rule.
+
+---
+
+## 🚩 Audit flags
+
+- **Promote:** a lazy rule with `miss_cost: high` that the report shows missed — add a trigger or move it to tiers 01–04.
+- **Demote:** an always-on rule with `miss_cost: low` applied in under half of sessions — move it to `05_lazy_load/` or a per-parent `_lazy_load/`.
+- **Stale:** a rule with no use for 90 days, per `rule_usage_history.csv` — archive it or refresh its evidence.
+- **Not enough data:** fewer than 10 applied sessions — no decision yet.
+- **Cut-offs:** 10 sessions, half and 90 days are first guesses in `audit_rule_usage.py`, reviewed after 3 reports.
 
 ---
 
@@ -49,7 +61,8 @@ Every import adds the imported file's full size to every session — measured ti
 
 1. Read `CLAUDE.md` to see what's currently imported.
 2. Check the tier directories to see what already lives where.
-3. Assess: does this rule apply to more than 70% of sessions? Is it blocking or safety-critical?
-4. Decide placement with human judgment (session coverage, criticality, size) — not a flowchart.
+3. Give the rule `applies_to` and `miss_cost` headers, per `_claude_config_metadata.md`.
+4. Run `make audit_rule_usage` and compare the closest existing rules' applied % and misses.
+5. Place it with the table above, judging on criticality and size where the numbers don't decide.
 
 If unsure, lazy-load it. Always-on rules are the exception, not the default.

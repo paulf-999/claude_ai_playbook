@@ -2,7 +2,7 @@
 
 **Generated:** 2026-10-01 by `make audit_rule_usage` · **Sessions:** 115 across 10 projects · **Window:** 2026-08-31 to 2026-10-01
 
-**Always-on load:** ≈35,025 tokens per session (characters ÷ 4).
+**Always-on load:** ≈35,528 tokens per session (characters ÷ 4).
 
 ## 📖 How to read this
 
@@ -18,42 +18,42 @@
 
 | Rule | Tier | Tokens | Applied | Loaded | Misses | Miss cost | Last applied | Last loaded | Flag |
 |---|---|---|---|---|---|---|---|---|---|
-| `01_essentials/claude_response_standards.md` | 01 | 1,541 | 100% (115) | 90% (104) | 11 | — | 2026-10-01 | 2026-10-01 | — |
-| `01_essentials/claude_usage_standards.md` | 01 | 6,643 | 100% (115) | 76% (87) | 28 | — | 2026-10-01 | 2026-10-01 | — |
-| `01_essentials/guiding_principles.md` | 01 | 2,478 | 77% (88) | 90% (104) | 5 | — | 2026-10-01 | 2026-10-01 | — |
-| `02_claude_standards/behaviour.md` | 02 | 6,371 | 100% (115) | 90% (104) | 11 | — | 2026-10-01 | 2026-10-01 | — |
-| `02_claude_standards/claude_plans.md` | 02 | 2,124 | 100% (115) | 76% (87) | 28 | — | 2026-10-01 | 2026-10-01 | — |
-| `02_claude_standards/git.md` | 02 | 2,553 | 100% (115) | 90% (104) | 11 | — | 2026-10-01 | 2026-10-01 | — |
-| `02_claude_standards/portable_paths.md` | 02 | 955 | 23% (27) | 76% (87) | 2 | — | 2026-10-01 | 2026-10-01 | — |
-| `02_claude_standards/security.md` | 02 | 1,630 | 100% (115) | 90% (104) | 11 | — | 2026-10-01 | 2026-10-01 | — |
-| `02_claude_standards/testing.md` | 02 | 3,752 | 32% (37) | 90% (104) | 1 | — | 2026-10-01 | 2026-10-01 | — |
-| `03_authoring_guidelines/authoring_agents.md` | 03 | 579 | 2% (2) | 70% (81) | 1 | — | 2026-09-29 | 2026-10-01 | not enough data |
-| `03_authoring_guidelines/authoring_rules.md` | 03 | 2,130 | 28% (32) | 76% (87) | 5 | — | 2026-10-01 | 2026-10-01 | — |
-| `03_authoring_guidelines/authoring_skills.md` | 03 | 754 | 15% (17) | 76% (87) | 4 | — | 2026-09-30 | 2026-10-01 | — |
-| `04_claude_reference/claude_operational_efficiency.md` | 04 | 2,647 | 100% (115) | 76% (87) | 28 | — | 2026-10-01 | 2026-10-01 | — |
-| `04_claude_reference/claude_rule_loading_strategy.md` | 04 | 868 | 30% (35) | 51% (59) | 19 | — | 2026-10-01 | 2026-10-01 | — |
-| `05_lazy_load/automation_controls.md` | 05 | 1,621 | — | 0% (0) | — | — | — | — | no trigger |
-| `05_lazy_load/delegating_to_subagent.md` | 05 | 982 | — | 0% (0) | — | — | — | — | no trigger |
-| `05_lazy_load/environment_setup/ohmyzsh_setup.md` | 05 | 646 | — | 0% (0) | — | — | — | — | no trigger |
-| `05_lazy_load/hooks_decision_framework.md` | 05 | 969 | 3% (3) | 0% (0) | 3 | — | 2026-09-30 | — | not enough data |
-| `05_lazy_load/latency_optimisation.md` | 05 | 973 | — | 3% (3) | — | — | — | 2026-10-01 | no trigger |
-| `05_lazy_load/mcp_trust_model.md` | 05 | 1,045 | — | 0% (0) | — | — | — | — | no trigger |
-| `05_lazy_load/response_standards_enforcement.md` | 05 | 880 | 2% (2) | 1% (1) | 1 | — | 2026-09-30 | 2026-09-30 | not enough data |
-| `05_lazy_load/style_guide_standards/airflow.md` | 05 | 1,117 | 0% (0) | 0% (0) | 0 | — | — | — | not enough data |
-| `05_lazy_load/style_guide_standards/bash.md` | 05 | 635 | 10% (11) | 1% (1) | 10 | — | 2026-10-01 | 2026-09-19 | — |
-| `05_lazy_load/style_guide_standards/dbt.md` | 05 | 1,455 | 0% (0) | 0% (0) | 0 | — | — | — | not enough data |
-| `05_lazy_load/style_guide_standards/infra/ansible.md` | 05 | 979 | 0% (0) | 0% (0) | 0 | — | — | — | not enough data |
-| `05_lazy_load/style_guide_standards/infra/docker.md` | 05 | 115 | 0% (0) | 0% (0) | 0 | — | — | — | not enough data |
-| `05_lazy_load/style_guide_standards/infra/terraform.md` | 05 | 387 | 0% (0) | 0% (0) | 0 | — | — | — | not enough data |
-| `05_lazy_load/style_guide_standards/jira.md` | 05 | 380 | — | 0% (0) | — | — | — | — | no trigger |
-| `05_lazy_load/style_guide_standards/payroc_engineering_naming_standards.md` | 05 | 429 | — | 0% (0) | — | — | — | — | no trigger |
-| `05_lazy_load/style_guide_standards/python.md` | 05 | 1,167 | 26% (30) | 1% (1) | 29 | — | 2026-10-01 | 2026-09-19 | — |
-| `05_lazy_load/style_guide_standards/sql.md` | 05 | 1,223 | 4% (5) | 3% (4) | 1 | — | 2026-10-01 | 2026-10-01 | not enough data |
-| `05_lazy_load/style_guide_standards/utilities/datetime.md` | 05 | 540 | — | 0% (0) | — | — | — | — | no trigger |
-| `05_lazy_load/style_guide_standards/utilities/makefile.md` | 05 | 121 | 4% (5) | 1% (1) | 5 | — | 2026-10-01 | 2026-09-28 | not enough data |
-| `05_lazy_load/style_guide_standards/utilities/mermaid.md` | 05 | 162 | 0% (0) | 0% (0) | 0 | — | — | — | not enough data |
-| `05_lazy_load/testing_guidance.md` | 05 | 185 | 24% (28) | 0% (0) | 28 | — | 2026-10-01 | — | — |
-| `05_lazy_load/turn_budgets.md` | 05 | 420 | — | 0% (0) | — | — | — | — | no trigger |
+| `01_essentials/claude_response_standards.md` | 01 | 1,562 | 100% (115) | 90% (104) | 11 | medium | 2026-10-01 | 2026-10-01 | — |
+| `01_essentials/claude_usage_standards.md` | 01 | 6,658 | 100% (115) | 76% (87) | 28 | low | 2026-10-01 | 2026-10-01 | — |
+| `01_essentials/guiding_principles.md` | 01 | 2,496 | 77% (88) | 90% (104) | 5 | medium | 2026-10-01 | 2026-10-01 | — |
+| `02_claude_standards/behaviour.md` | 02 | 6,392 | 100% (115) | 90% (104) | 11 | high | 2026-10-01 | 2026-10-01 | — |
+| `02_claude_standards/claude_plans.md` | 02 | 2,145 | 100% (115) | 76% (87) | 28 | medium | 2026-10-01 | 2026-10-01 | — |
+| `02_claude_standards/git.md` | 02 | 2,572 | 100% (115) | 90% (104) | 11 | high | 2026-10-01 | 2026-10-01 | — |
+| `02_claude_standards/portable_paths.md` | 02 | 974 | 23% (27) | 76% (87) | 2 | high | 2026-10-01 | 2026-10-01 | — |
+| `02_claude_standards/security.md` | 02 | 1,650 | 100% (115) | 90% (104) | 11 | high | 2026-10-01 | 2026-10-01 | — |
+| `02_claude_standards/testing.md` | 02 | 3,769 | 32% (37) | 90% (104) | 1 | medium | 2026-10-01 | 2026-10-01 | — |
+| `03_authoring_guidelines/authoring_agents.md` | 03 | 595 | 2% (2) | 70% (81) | 1 | low | 2026-09-29 | 2026-10-01 | not enough data |
+| `03_authoring_guidelines/authoring_rules.md` | 03 | 2,149 | 28% (32) | 76% (87) | 5 | medium | 2026-10-01 | 2026-10-01 | — |
+| `03_authoring_guidelines/authoring_skills.md` | 03 | 771 | 15% (17) | 76% (87) | 4 | medium | 2026-09-30 | 2026-10-01 | — |
+| `04_claude_reference/claude_operational_efficiency.md` | 04 | 2,660 | 100% (115) | 76% (87) | 28 | low | 2026-10-01 | 2026-10-01 | — |
+| `04_claude_reference/claude_rule_loading_strategy.md` | 04 | 1,135 | 30% (35) | 51% (59) | 19 | low | 2026-10-01 | 2026-10-01 | demote |
+| `05_lazy_load/automation_controls.md` | 05 | 1,645 | — | 0% (0) | — | medium | — | — | no trigger |
+| `05_lazy_load/delegating_to_subagent.md` | 05 | 1,001 | — | 0% (0) | — | low | — | — | no trigger |
+| `05_lazy_load/environment_setup/ohmyzsh_setup.md` | 05 | 664 | — | 0% (0) | — | low | — | — | no trigger |
+| `05_lazy_load/hooks_decision_framework.md` | 05 | 983 | 3% (3) | 0% (0) | 3 | low | 2026-09-30 | — | not enough data |
+| `05_lazy_load/latency_optimisation.md` | 05 | 989 | — | 3% (3) | — | low | — | 2026-10-01 | no trigger |
+| `05_lazy_load/mcp_trust_model.md` | 05 | 1,067 | — | 0% (0) | — | medium | — | — | no trigger |
+| `05_lazy_load/response_standards_enforcement.md` | 05 | 898 | 2% (2) | 1% (1) | 1 | low | 2026-09-30 | 2026-09-30 | not enough data |
+| `05_lazy_load/style_guide_standards/airflow.md` | 05 | 1,136 | 0% (0) | 0% (0) | 0 | medium | — | — | not enough data |
+| `05_lazy_load/style_guide_standards/bash.md` | 05 | 653 | 10% (11) | 1% (1) | 10 | medium | 2026-10-01 | 2026-09-19 | — |
+| `05_lazy_load/style_guide_standards/dbt.md` | 05 | 1,476 | 0% (0) | 0% (0) | 0 | medium | — | — | not enough data |
+| `05_lazy_load/style_guide_standards/infra/ansible.md` | 05 | 999 | 0% (0) | 0% (0) | 0 | medium | — | — | not enough data |
+| `05_lazy_load/style_guide_standards/infra/docker.md` | 05 | 130 | 0% (0) | 0% (0) | 0 | medium | — | — | not enough data |
+| `05_lazy_load/style_guide_standards/infra/terraform.md` | 05 | 404 | 0% (0) | 0% (0) | 0 | medium | — | — | not enough data |
+| `05_lazy_load/style_guide_standards/jira.md` | 05 | 393 | — | 0% (0) | — | low | — | — | no trigger |
+| `05_lazy_load/style_guide_standards/payroc_engineering_naming_standards.md` | 05 | 444 | — | 0% (0) | — | low | — | — | no trigger |
+| `05_lazy_load/style_guide_standards/python.md` | 05 | 1,178 | 26% (30) | 1% (1) | 29 | low | 2026-10-01 | 2026-09-19 | — |
+| `05_lazy_load/style_guide_standards/sql.md` | 05 | 1,242 | 4% (5) | 3% (4) | 1 | medium | 2026-10-01 | 2026-10-01 | not enough data |
+| `05_lazy_load/style_guide_standards/utilities/datetime.md` | 05 | 566 | — | 0% (0) | — | medium | — | — | no trigger |
+| `05_lazy_load/style_guide_standards/utilities/makefile.md` | 05 | 132 | 4% (5) | 1% (1) | 5 | low | 2026-10-01 | 2026-09-28 | not enough data |
+| `05_lazy_load/style_guide_standards/utilities/mermaid.md` | 05 | 174 | 0% (0) | 0% (0) | 0 | low | — | — | not enough data |
+| `05_lazy_load/testing_guidance.md` | 05 | 204 | 24% (28) | 0% (0) | 28 | medium | 2026-10-01 | — | — |
+| `05_lazy_load/turn_budgets.md` | 05 | 441 | — | 0% (0) | — | medium | — | — | no trigger |
 
 ## 📐 Largest always-on sections (top 15)
 

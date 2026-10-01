@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.1.0
+# Version:           1.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -160,6 +160,15 @@ def test_applies_to_header_wins_over_fallbacks(tmp_path):
     rules = {r.rel.rsplit("/", 1)[1]: r for r in AUDIT.discover_rules(rules_dir)}
     assert rules["parent.md"].globs == ["**/_rules/**", "**/CLAUDE.md"], rules["parent.md"].globs
     assert rules["sql.md"].globs == ["**/models/**/*.sql"], rules["sql.md"].globs
+
+
+def test_header_globs_found_below_paths_frontmatter():
+    """A path-scoped rule's applies_to, below its frontmatter and 3-line header, is still read."""
+    text = (
+        '---\npaths:\n  - "**/*.sql"\n---\n<!-- version: 1.0.0 -->\n<!-- created: 2026-10-01 -->\n'
+        "<!-- updated: 2026-10-01 -->\n<!-- applies_to: **/models/**/*.sql -->\n# SQL\n"
+    )
+    assert AUDIT.header_globs(text) == ["**/models/**/*.sql"], AUDIT.header_globs(text)
 
 
 def test_header_globs_ignore_examples_in_the_body():
