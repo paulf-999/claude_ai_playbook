@@ -1,9 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Test quality score: 5/10
+# Test complexity score: 9/10
+# Python style compliant: Yes
 # Date created:      2026-08-28
-# Version:           1.0.0
-# Date updated:      2026-09-17
+# Version:           1.0.1
+# Date updated:      2026-10-01
 # ─────────────────────────────────────────────────────────
 
 """Tests for aliases.md — validates that documented aliases actually work.

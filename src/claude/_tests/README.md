@@ -26,7 +26,7 @@ Tests for Claude Code hook scripts in `~/.claude/hooks/`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_hook_registry_utils.py` | `settings.json` hook registry — every referenced hook file must exist on disk | 3/10 | 2026-08-28 | 2026-09-18 | 1.0.0 |
+| `test_hook_registry_utils.py` | `settings.json` hook registry — every referenced hook file must exist on disk | 3/10 | 2026-08-28 | 2026-10-01 | 1.0.1 |
 
 **Archived:** `test_auto_rotate_todo.py` moved to `_tests/_archived/` (2026-09-18) — `rotate_todo.sh` and `hook_auto_rotate_todo.sh` were never built despite a stale "Ready for production" claim in `TODO.md`; see the file's own archival note.
 
@@ -37,13 +37,13 @@ Tests for Claude Code hook scripts in `~/.claude/hooks/`.
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_enforcement_naming_convention.py` | `hook_enforcement_naming_convention.sh` — denies new config files whose names break the compliance checks, and lets everything else through | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
-| `test_enforcement_writing_style.py` | `hook_enforcement_writing_style.sh` — validates markdown file locations against writing_style.md | 9/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
+| `test_enforcement_writing_style.py` | `hook_enforcement_writing_style.sh` — validates markdown file locations against writing_style.md | 9/10 | 2026-08-28 | 2026-10-01 | 1.0.1 |
 
 ### `hooks/response_standards/`
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_style_guide_response_standards.py` | `hook_style_guide_response_standards.sh` — response-format compliance (Summary, offer line, timing footer) | 7/10 | 2026-09-07 | 2026-09-18 | 1.0.0 |
+| `test_style_guide_response_standards.py` | `hook_style_guide_response_standards.sh` — response-format compliance (Summary, offer line, timing footer) | 7/10 | 2026-09-07 | 2026-10-01 | 1.0.1 |
 | `test_style_guide_response_standards_inject.py` | `hook_style_guide_response_standards_inject.sh` — per-turn salience injection, timestamp, waiver handling | 9/10 | 2026-09-07 | 2026-09-18 | 1.0.0 |
 
 ### `hooks/session_start/`
@@ -61,16 +61,16 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_rules_structure.py` | File quality across all `_rules/` files — line limits, trailing newlines, import resolution, expected file set | 9/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
-| `test_aliases_behavior.py` | Aliases are documented, properly formatted, and validated as functional (spot-check representative aliases) | 5/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
+| `test_aliases_behavior.py` | Aliases are documented, properly formatted, and validated as functional (spot-check representative aliases) | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.1 |
 
 ### `rules/01_essentials/`
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_guiding_principles.py` | Lazy-load and context-efficiency principles — no `05_lazy_load/` imports in CLAUDE.md, all imports documented | 3/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
-| `test_rule_directory_organisation.py` | Rule directory organization patterns — expected top-level files per tier | 7/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
-| `test_skill_authoring_gate.py` | Skills meet the authoring gate's quality (walk) and comprehensive (run) criteria | 9/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
-| `test_writing_style.py` | `writing_style.md` behavioral rules and documentation completeness | 5/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
+| `test_guiding_principles.py` | Lazy-load and context-efficiency principles — no `05_lazy_load/` imports in CLAUDE.md, all imports documented | 3/10 | 2026-08-28 | 2026-10-01 | 1.0.1 |
+| `test_rule_directory_organisation.py` | Rule directory organization patterns — expected top-level files per tier | 7/10 | 2026-08-28 | 2026-10-01 | 1.1.1 |
+| `test_skill_authoring_gate.py` | Skills meet the authoring gate's quality (walk) and comprehensive (run) criteria | 9/10 | 2026-08-28 | 2026-10-01 | 1.1.3 |
+| `test_writing_style.py` | `writing_style.md` behavioral rules and documentation completeness | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.1 |
 
 ### `rules/02_claude_standards/`
 
@@ -79,20 +79,20 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_always_on_reachability.py` | Every always-on rule file is reachable from `CLAUDE.md` via `@import`, and `_lazy_load/` folders are exempt | 9/10 | 2026-09-18 | 2026-09-30 | 1.1.0 |
 | `test_artefact_proposal_gates.py` | The three artefact proposal gates — naming, placement, duplication | 9/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
 | `test_concurrent_sessions.py` | `git/_concurrent_sessions.md` keeps its incident record and shared-working-tree safety guidance | 9/10 | 2026-09-21 | 2026-09-29 | 1.2.0 |
-| `test_decision_making.py` | `_decision_making.md` is present, well-formed, and contains the intentionality-gate sections | 5/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
-| `test_git.py` | `git.md` is present, well-formed, and contains its expected section headings | 5/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
+| `test_decision_making.py` | `_decision_making.md` is present, well-formed, and contains the intentionality-gate sections | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.1 |
+| `test_git.py` | `git.md` is present, well-formed, and contains its expected section headings | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.1 |
 | `test_plan_mode_phase_gates.py` | Mandatory plan-mode phase gates — blocking requirements, plan-type examples | 8/10 | 2026-09-16 | — | 1.0.0 |
 | `test_portable_paths.py` | Hooks and tests resolve the config directory at runtime instead of hardcoding paths or usernames | 9/10 | 2026-09-18 | 2026-09-18 | 1.0.0 |
-| `test_security_guardrails.py` | Claude never recommends wildcard permissions for destructive commands, and related security guardrails | 5/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
-| `test_testing.py` | Self-consistency: enforcement hooks have tests, and testing.md documents the enforcement pattern | 5/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
+| `test_security_guardrails.py` | Claude never recommends wildcard permissions for destructive commands, and related security guardrails | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.1 |
+| `test_testing.py` | Self-consistency: enforcement hooks have tests, and testing.md documents the enforcement pattern | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
 
 ### `rules/03_authoring_guidelines/`
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_authoring_rules.py` | The rule authoring guide's pre-creation checklist and quality gate sections | 5/10 | 2026-08-28 | 2026-09-28 | 1.0.0 |
+| `test_authoring_rules.py` | The rule authoring guide's pre-creation checklist and quality gate sections | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.1 |
 | `test_authoring_agents.py` | `authoring_agents.md` is always-on and points to each of its 5 on-demand children, which are present and well-formed | 9/10 | 2026-09-28 | 2026-09-30 | 2.0.0 |
-| `test_authoring_skills.py` | `authoring_skills.md` contains its 7 required improvements | 5/10 | 2026-09-16 | 2026-09-30 | 3.1.2 |
+| `test_authoring_skills.py` | `authoring_skills.md` contains its 7 required improvements | 9/10 | 2026-09-16 | 2026-10-01 | 3.1.3 |
 | `test_claude_config_metadata.py` | Every rule opens with the three-line version, created and updated metadata header | 9/10 | 2026-09-28 | 2026-09-28 | 2.1.0 |
 
 ### `rules/04_claude_reference/`
@@ -106,8 +106,8 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_automation_controls.py` | Turn budgets and gates for `/loop`, `/batch`, `/goal` are documented and reasonable | 9/10 | 2026-09-16 | 2026-09-17 | 1.0.0 |
-| `test_latency_optimisation.py` | `latency_optimisation.md` exists under its correct (British) name, frontmatter, and key sections | 5/10 | 2026-09-17 | — | 1.0.0 |
+| `test_automation_controls.py` | Turn budgets and gates for `/loop`, `/batch`, `/goal` are documented and reasonable | 9/10 | 2026-09-16 | 2026-10-01 | 1.0.1 |
+| `test_latency_optimisation.py` | `latency_optimisation.md` exists under its correct (British) name, frontmatter, and key sections | 5/10 | 2026-09-17 | 2026-10-01 | 1.0.1 |
 | `test_lazy_load_coverage.py` | Every `05_lazy_load/` file is reachable from at least one hook (direct or via a parent index file) | 3/10 | 2026-09-16 | 2026-09-17 | 1.0.0 |
 
 ---
@@ -116,8 +116,8 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_aliases.py` | Each `aliases.md` entry is documented, formatted, and structurally valid | 5/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
-| `test_settings.py` | `settings.json` permission structure, hook registration, and principle compliance | 7/10 | 2026-08-28 | 2026-09-17 | 1.0.0 |
+| `test_aliases.py` | Each `aliases.md` entry is documented, formatted, and structurally valid | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.1 |
+| `test_settings.py` | `settings.json` permission structure, hook registration, and principle compliance | 7/10 | 2026-08-28 | 2026-10-01 | 1.0.1 |
 
 **Removed (2026-09-18):** `settings/test_aliases_behavior.py` — written to run as a standalone script (per its own docstring/README), not as native pytest: 3 of its 5 functions required positional arguments pytest couldn't supply (collection errors), and the other 2 used `print`/`return` instead of `assert`, so they never actually failed regardless of outcome. `rules/test_aliases_behavior.py` already covers "aliases are documented and functional" with real assertions. **Lost, not replaced:** the skill/command-existence and convention-documentation checks this file's logic described but never actually enforced as pytest.
 

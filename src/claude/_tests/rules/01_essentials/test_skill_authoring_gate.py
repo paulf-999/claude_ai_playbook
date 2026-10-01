@@ -1,9 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Test quality score: 9/10
+# Test complexity score: 5/10
+# Python style compliant: No
 # Date created:      2026-08-28
-# Version:           1.1.2
-# Date updated:      2026-09-21
+# Version:           1.1.3
+# Date updated:      2026-10-01
 # ─────────────────────────────────────────────────────────
 
 """Skill authoring gate tests — validates walk (W1–W6) and run (R1–R4) criteria.

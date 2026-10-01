@@ -1,11 +1,11 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
-# Test quality score: 5/10
+# Test quality score: 9/10
 # Test complexity score: 6/10
 # Python style compliant: Yes
 # Date created:      2026-09-16
-# Version:           3.1.2
-# Date updated:      2026-09-30
+# Version:           3.1.3
+# Date updated:      2026-10-01
 # ─────────────────────────────────────────────────────────
 
 #!/usr/bin/env python3
