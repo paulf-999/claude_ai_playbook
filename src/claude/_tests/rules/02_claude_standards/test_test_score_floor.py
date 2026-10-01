@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.11
+# Version:           1.0.12
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -38,8 +38,6 @@ SCORE_PATTERN = re.compile(
 BASELINE = {
     "skills/confluence_create_page/test_confluence_create_page_handler.py": (9, 4, "Yes"),
     "skills/confluence_create_page/test_confluence_create_page_timeout.py": (8, 4, "Yes"),
-    "skills/jira_create/test_jira_create_handler.py": (9, 7, "No"),
-    "skills/test_no_orphaned_skill_files.py": (9, 5, "Yes"),
 }
 
 

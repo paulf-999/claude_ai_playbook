@@ -30,7 +30,7 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 |---|---|---|---|
 | 1 | • 🆕 **Unscored hooks and agents:** write the first scorecards for hooks and agents | • 🙈 **Blind spot:** two of the five types have no quality signal at all | `hooks/hook_scorecards_summary.md`<br>`agents/agent_scorecards_summary.md` |
 | 2 | • 🔧 **Lowest skill score:** replace `claude_kaizen`'s placeholder eval runner | • 🔻 **Bottom of the table:** at 6.1/10 it is the lowest-scoring skill | `skills/skill_scorecards_summary.md` |
-| 3 | • ✂️ **Test complexity:** split the two `confluence_create_page` tests first, then `test_no_orphaned_skill_files.py`, the only other test whose complexity score is below 7 | • 📉 **Lowest scores:** those two tests score 4/10 for complexity, the lowest of the 3 below the ≥7 floor | `tests/test_scorecards_summary.md` |
+| 3 | • ✂️ **Test complexity:** split the two `confluence_create_page` tests, the only tests whose complexity score is below 7 | • 📉 **Lowest scores:** both score 4/10 for complexity, the last 2 below the ≥7 floor | `tests/test_scorecards_summary.md` |
 | 4 | • 💬 **Failure messages:** add assertion failure messages to `test_jira_create_handler.py` and `test_confluence_create_page_timeout.py` first, then `test_confluence_create_page_handler.py` | • 🔍 **Lowest scores:** the first two have failure messages on 0% of assertions, and the third on 1% | `tests/test_scorecards_summary.md` |
 | 5 | • 🔧 **Lowest lazy-load rule score:** fix or remove `makefile.md`'s broken templates reference, then add inline principles | • 🔻 **Bottom of the table:** at 6.8/10 it is the lowest-scoring lazy-load rule | `rules/rule_scorecards_summary.md` |
 
