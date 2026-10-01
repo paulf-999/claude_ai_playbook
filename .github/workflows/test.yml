@@ -5,6 +5,8 @@ on:
     pull_request:
         paths:
             - src/claude/**
+            - src/sh/**
+            - Makefile
             - tests/**
             - requirements.txt
             - pytest.ini
@@ -13,6 +15,8 @@ on:
             - main
         paths:
             - src/claude/**
+            - src/sh/**
+            - Makefile
 
 jobs:
     test:
