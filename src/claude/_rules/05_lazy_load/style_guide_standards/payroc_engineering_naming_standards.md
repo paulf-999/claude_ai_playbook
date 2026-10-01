@@ -1,6 +1,7 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-01 -->
+<!-- miss_cost: low — resource names that need renaming -->
 # 🏷️ Payroc Engineering Naming Standards (Index)
 
 **Purpose:** Company-wide naming standards for all Payroc engineering resources — repositories, infrastructure, and automation jobs.

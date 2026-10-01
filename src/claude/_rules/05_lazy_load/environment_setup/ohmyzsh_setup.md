@@ -1,6 +1,7 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-04-08 -->
 <!-- updated: 2026-10-01 -->
+<!-- miss_cost: low — shell setup differs from the documented one -->
 # 🐚 Oh My Zsh Setup
 
 **Purpose:** Give the team one standard shell setup — theme, plugins and editor integration — so terminals behave the same on every machine.

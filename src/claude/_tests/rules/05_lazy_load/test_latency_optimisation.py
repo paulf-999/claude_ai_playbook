@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-17
 # Date updated:      2026-10-01
-# Version:           2.0.0
+# Version:           2.0.1
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -45,10 +45,11 @@ def test_no_memory_frontmatter():
 
 
 def test_opens_with_metadata_and_emoji_h1():
-    """The rule opens with its 3-line metadata header and then an emoji H1."""
+    """The rule opens with its metadata header comments and then an emoji H1."""
     lines = content().splitlines()
     assert lines[0].startswith("<!-- version: "), f"line 1 should be the version comment, got {lines[0]}"
-    assert re.match(r"# [^\w\s]", lines[3]), f"line 4 should be an emoji H1, got {lines[3]}"
+    first_body = next(line for line in lines if not line.startswith("<!-- "))
+    assert re.match(r"# [^\w\s]", first_body), f"the header should be followed by an emoji H1, got {first_body}"
 
 
 def test_only_when_blocking():

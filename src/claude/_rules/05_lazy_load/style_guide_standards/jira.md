@@ -1,6 +1,7 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.0.3 -->
 <!-- created: 2026-05-20 -->
 <!-- updated: 2026-10-01 -->
+<!-- miss_cost: low — tickets in the wrong format -->
 # 🎫 Jira Style Guide & Standards
 
 **Purpose:** Define standards for the DM Jira project — field requirements, ticket structure, component and sprint assignment, and hygiene expectations.

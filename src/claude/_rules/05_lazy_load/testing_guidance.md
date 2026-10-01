@@ -1,6 +1,7 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-09-29 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
+<!-- miss_cost: medium — tests below the quality floor that need rework -->
 # 🧪 Testing Guidance
 
 **Purpose:** How-to detail behind `testing.md`, read on demand before writing a new test or auditing existing ones.

@@ -2,24 +2,29 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.0.0
+# Version:           1.1.0
 # Test quality score: 9/10
-# Test complexity score: 8/10
+# Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Validates the rule-only ``applies_to`` header defined in _claude_config_metadata.md.
+"""Validates the rule-only ``applies_to`` and ``miss_cost`` headers defined in _claude_config_metadata.md.
 
 Every always-on entry-point rule (the top-level files in tiers 01–04) declares which
 sessions need it, as comma-separated globs or ``*`` alone, on the line after ``updated``.
-``make audit_rule_usage`` reads it, so a missing or malformed value skews the report.
+Every entry-point rule, always-on or lazy, declares what a miss costs. A lazy rule whose
+miss is ``high`` must load mechanically — through ``paths:`` or a hook — never on recall alone.
+``make audit_rule_usage`` reads both headers, so a missing or malformed value skews the report.
 """
 import re
 
-from _shared_paths import RULES_DIR
+from _shared_paths import HOOKS_DIR, RULES_DIR
 
 ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference")
+LAZY_TIER = "05_lazy_load"
 APPLIES_TO = re.compile(r"^<!-- applies_to: (.+) -->$", re.M)
+MISS_COST = re.compile(r"^<!-- miss_cost: (high|medium|low) — \S.* -->$")
+MISS_COST_PREFIX = "<!-- miss_cost:"
 HEADER_PREFIX = "<!-- applies_to:"
 EVERY_SESSION = "*"
 HEADER_LINES = 6  # version, created, updated, applies_to, miss_cost, plus paths: frontmatter slack
@@ -157,3 +162,134 @@ def test_header_example_in_the_body_is_not_a_header():
     body = f"{VALID}# 🗂️ Child\n" + "text\n" * HEADER_LINES + "<!-- applies_to: * -->\n"
     assert not has_header(body), "an example in the body was taken for a header"
     assert has_header(f"{VALID}<!-- applies_to: * -->\n"), "a real header on line 4 was missed"
+
+
+# --- miss_cost ---
+
+def miss_cost_errors(content: str) -> list[str]:
+    """Return problems with a rule's ``miss_cost`` header; empty when it is valid.
+
+    :param content: Rule file text.
+    :type content: str
+    :return: One message per problem.
+    :rtype: list[str]
+    """
+    lines = content.splitlines()
+    found = [i for i, line in enumerate(lines) if line.startswith(MISS_COST_PREFIX)]
+    if not found:
+        return ["no miss_cost header"]
+    if len(found) > 1:
+        return ["more than one miss_cost header"]
+    position = found[0]
+    above = lines[position - 1] if position else ""
+    if not above.startswith(("<!-- updated:", HEADER_PREFIX)):
+        return ["miss_cost must sit straight after updated or applies_to"]
+    if not MISS_COST.match(lines[position]):
+        return ["miss_cost must be high, medium or low, then ' — ' and a reason"]
+    return []
+
+
+def miss_cost_of(content: str) -> str:
+    """Return a rule's miss cost level, or an empty string when it has none.
+
+    :param content: Rule file text.
+    :type content: str
+    :return: ``high``, ``medium``, ``low`` or ``""``.
+    :rtype: str
+    """
+    match = next((MISS_COST.match(line) for line in content.splitlines() if MISS_COST.match(line)), None)
+    return match.group(1) if match else ""
+
+
+def has_mechanical_trigger(rel: str, content: str, hook_texts: list[str]) -> bool:
+    """Tell whether a lazy rule loads without Claude having to remember it.
+
+    :param rel: Rule path relative to ``_rules``.
+    :type rel: str
+    :param content: Rule file text.
+    :type content: str
+    :param hook_texts: Text of every hook script.
+    :type hook_texts: list[str]
+    :return: True with ``paths:`` frontmatter or a hook that names the rule.
+    :rtype: bool
+    """
+    frontmatter = content.split("\n---", 1)[0] if content.startswith("---\n") else ""
+    return "paths:" in frontmatter or any(rel in text for text in hook_texts)
+
+
+def lazy_entry_points() -> list:
+    """List the lazy rules that stand alone rather than belonging to a parent topic.
+
+    :return: Paths of the lazy entry-point rules.
+    :rtype: list
+    """
+    tier = RULES_DIR / LAZY_TIER
+    found = []
+    for path in sorted(tier.rglob("*.md")):
+        if path.name == "README.md" or path.name.startswith("_") or "_lazy_load" in path.parts:
+            continue
+        parents = [p for p in path.parents if p != tier and tier in p.parents]
+        if not any(p.with_suffix(".md").is_file() for p in parents):
+            found.append(path)
+    return found
+
+
+def test_miss_cost_after_updated_accepted():
+    """A miss_cost line straight after updated, as on a lazy rule, is valid."""
+    assert miss_cost_errors(f"{VALID}<!-- miss_cost: low — style drift -->\n") == []
+
+
+def test_miss_cost_after_applies_to_accepted():
+    """A miss_cost line straight after applies_to, as on an always-on rule, is valid."""
+    assert miss_cost_errors(f"{VALID}<!-- applies_to: * -->\n<!-- miss_cost: high — leaks secrets -->\n") == []
+
+
+def test_miss_cost_problems_rejected():
+    """Missing, duplicate, misplaced, unknown-level and reasonless headers are each reported."""
+    assert miss_cost_errors(VALID) == ["no miss_cost header"]
+    twice = f"{VALID}<!-- miss_cost: low — a -->\n<!-- miss_cost: low — b -->\n"
+    assert miss_cost_errors(twice) == ["more than one miss_cost header"]
+    assert miss_cost_errors(f"{VALID}# 🐍 Rule\n<!-- miss_cost: low — a -->\n") == [
+        "miss_cost must sit straight after updated or applies_to"]
+    bad_format = ["miss_cost must be high, medium or low, then ' — ' and a reason"]
+    assert miss_cost_errors(f"{VALID}<!-- miss_cost: severe — a -->\n") == bad_format
+    assert miss_cost_errors(f"{VALID}<!-- miss_cost: low -->\n") == bad_format
+
+
+def test_trigger_detection():
+    """paths: frontmatter or a hook naming the rule counts as a trigger, and a pointer alone doesn't."""
+    rel = "05_lazy_load/x.md"
+    assert has_mechanical_trigger(rel, '---\npaths:\n  - "**/*.sql"\n---\n# X\n', [])
+    assert has_mechanical_trigger(rel, "# X\n", [f'cat "$ROOT/_rules/{rel}"'])
+    assert not has_mechanical_trigger(rel, "# X\n", ["echo unrelated"]), "a rule nothing loads has no trigger"
+
+
+def test_lazy_tier_has_entry_points():
+    """The lazy scan finds rules, and skips children of a parent topic."""
+    names = [p.name for p in lazy_entry_points()]
+    assert len(names) >= 15, f"expected at least 15 lazy entry points, found {len(names)}"
+    assert "formatting.md" not in names, "sql/formatting.md is a child of sql.md, not an entry point"
+
+
+def test_every_entry_point_declares_miss_cost():
+    """Each always-on and lazy entry point carries a valid miss_cost header."""
+    problems = {
+        p.relative_to(RULES_DIR).as_posix(): miss_cost_errors(p.read_text())
+        for p in always_on_entry_points() + lazy_entry_points()
+    }
+    problems = {path: errors for path, errors in problems.items() if errors}
+    assert not problems, f"miss_cost problems {HINT}:\n  " + "\n  ".join(f"{k}: {v}" for k, v in problems.items())
+
+
+def test_high_cost_lazy_rules_load_mechanically():
+    """A lazy rule that is costly to miss must have paths: or a hook, not rely on Claude remembering it."""
+    hook_texts = [h.read_text() for h in HOOKS_DIR.glob("*.sh")]
+    untriggered = [
+        p.relative_to(RULES_DIR).as_posix() for p in lazy_entry_points()
+        if miss_cost_of(p.read_text()) == "high"
+        and not has_mechanical_trigger(p.relative_to(RULES_DIR).as_posix(), p.read_text(), hook_texts)
+    ]
+    assert not untriggered, (
+        f"high miss_cost lazy rules with no trigger: {untriggered} — add paths: frontmatter, "
+        f"a hook that loads it, or move it to an always-on tier {HINT}"
+    )

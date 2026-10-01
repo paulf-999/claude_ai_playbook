@@ -1,6 +1,7 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-01 -->
+<!-- miss_cost: low — slower or costlier API calls than needed -->
 # ⚡ Latency Optimisation
 
 **Purpose:** Establish when and how to make Claude API responses faster or cheaper for interactive, high-volume or cost-sensitive work, without giving up the quality the task needs.

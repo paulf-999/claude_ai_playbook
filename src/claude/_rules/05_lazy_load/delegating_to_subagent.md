@@ -1,6 +1,7 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.0.3 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
+<!-- miss_cost: low — a sub-agent spawned where direct work was cheaper -->
 # 🤖 Delegating to Sub-Agent
 
 **Purpose:** Decision framework, constraints, and cost analysis for when to spawn a sub-agent vs. work directly.

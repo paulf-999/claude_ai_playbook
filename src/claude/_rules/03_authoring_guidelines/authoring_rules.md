@@ -1,7 +1,8 @@
-<!-- version: 1.5.4 -->
+<!-- version: 1.5.5 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-01 -->
 <!-- applies_to: **/_rules/** -->
+<!-- miss_cost: medium — rules ship without tests or in the wrong tier -->
 # 🛠️ Rule Authoring
 
 **Purpose:** Establish a standardized process for creating rules that ensures intentionality, proper scoping, and mechanical rigor.

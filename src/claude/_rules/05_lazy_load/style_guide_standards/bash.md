@@ -1,6 +1,7 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-28 -->
+<!-- updated: 2026-10-01 -->
+<!-- miss_cost: medium — scripts without strict mode that fail review -->
 # 🖥️ Bash Style Guide
 
 **Purpose:** Establish shell scripting conventions for safety, consistency, and maintainability across all Bash scripts in the team.

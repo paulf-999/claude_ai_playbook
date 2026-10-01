@@ -1,6 +1,7 @@
-<!-- version: 1.2.0 -->
+<!-- version: 1.2.1 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-10-01 -->
+<!-- miss_cost: low — the enforcement hook changes without its tests -->
 # 🔒 Response Standards Enforcement
 
 **Purpose:** Explain the mechanism that keeps response formatting reliable turn-to-turn, and where its implementation lives.

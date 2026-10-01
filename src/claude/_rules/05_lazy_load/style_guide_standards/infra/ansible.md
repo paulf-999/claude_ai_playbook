@@ -1,6 +1,7 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-04-08 -->
 <!-- updated: 2026-10-01 -->
+<!-- miss_cost: medium — playbooks that fail review or idempotency checks -->
 # 📦 Ansible Style Guide & Standards
 
 **Purpose:** Define the team's standards for writing and structuring Ansible projects.

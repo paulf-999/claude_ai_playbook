@@ -1,6 +1,7 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.0.3 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-01 -->
+<!-- miss_cost: low — Makefile style drift -->
 # 🛠️ Makefile Style Guide & Standards
 
 **Purpose:** Define the team's standards for writing and structuring Makefiles.

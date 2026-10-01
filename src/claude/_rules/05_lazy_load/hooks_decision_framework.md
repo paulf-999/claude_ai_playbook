@@ -1,6 +1,7 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.0.3 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-01 -->
+<!-- miss_cost: low — a low-value hook gets proposed -->
 # 🪝 Hooks Decision Framework
 
 **Purpose:** Behavioral guardrail for hook proposals — prevents low-ROI hooks by providing clear ROI criteria before suggesting any automation.

@@ -1,7 +1,8 @@
-<!-- version: 1.2.1 -->
+<!-- version: 1.2.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-01 -->
 <!-- applies_to: **/*.py, **/*.sh, **/*.sql -->
+<!-- miss_cost: medium — untested code the user catches in review -->
 # 🧪 Testing
 
 **Purpose:** Every new code artifact needs a test to prevent regressions and validate intended behavior.
