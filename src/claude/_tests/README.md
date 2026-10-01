@@ -36,6 +36,7 @@ Tests for Claude Code hook scripts in `~/.claude/hooks/`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
+| `test_enforcement_mcp_stale_settings.py` | `hook_enforcement_mcp_stale_settings.sh` — warns once when the disabled MCP servers change mid-session | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.0 |
 | `test_enforcement_naming_convention.py` | `hook_enforcement_naming_convention.sh` — denies new config files whose names break the compliance checks, and lets everything else through | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_enforcement_writing_style.py` | `hook_enforcement_writing_style.sh` — validates markdown file locations against writing_style.md | 9/10 | 2026-08-28 | 2026-10-01 | 1.0.1 |
 
@@ -45,12 +46,6 @@ Tests for Claude Code hook scripts in `~/.claude/hooks/`.
 |---|---|---|---|---|---|
 | `test_style_guide_response_standards.py` | `hook_style_guide_response_standards.sh` — response-format compliance (Summary, offer line, timing footer) | 7/10 | 2026-09-07 | 2026-10-01 | 1.0.1 |
 | `test_style_guide_response_standards_inject.py` | `hook_style_guide_response_standards_inject.sh` — per-turn salience injection, timestamp, waiver handling | 9/10 | 2026-09-07 | 2026-09-18 | 1.0.0 |
-
-### `hooks/session_start/`
-
-| File | What it tests | Quality | Created | Updated | Version |
-|---|---|---|---|---|---|
-| `test_session_start_mcp_stale_settings.py` | `hook_session_start_mcp_stale_settings.sh` — stale-settings restart reminder, once-per-session dedup, portable path resolution | 9/10 | 2026-09-18 | 2026-09-18 | 1.0.0 |
 
 ---
 
@@ -84,7 +79,6 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_plan_mode_phase_gates.py` | Mandatory plan-mode phase gates — blocking requirements, plan-type examples | 8/10 | 2026-09-16 | — | 1.0.0 |
 | `test_portable_paths.py` | Hooks and tests resolve the config directory at runtime instead of hardcoding paths or usernames | 9/10 | 2026-09-18 | 2026-09-18 | 1.0.0 |
 | `test_security_guardrails.py` | Claude never recommends wildcard permissions for destructive commands, and related security guardrails | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.1 |
-| `test_test_metadata.py` | Every test's metadata header is complete, in order, and its quality score matches its own counts | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
 | `test_testing.py` | Self-consistency: enforcement hooks have tests, and testing.md documents the enforcement pattern | 5/10 | 2026-08-28 | 2026-10-01 | 1.0.2 |
 
 ### `rules/03_authoring_guidelines/`

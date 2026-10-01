@@ -6,8 +6,8 @@
 
 ## 📋 Current scores
 
-- **Scored:** 46 test files, average 8.3/10.
-- **Below 8.5:** 30 tests, each with recommended improvements.
+- **Scored:** 44 test files, average 8.3/10.
+- **Below 8.5:** 27 tests, each with recommended improvements.
 - **Order:** one table per `_tests/` folder, sorted by Overall score, highest first.
 
 ### agents
@@ -20,19 +20,17 @@
 
 | Scorecard | Overall | Recommended improvements |
 |---|---|---|
+| `hooks/enforcement/scorecard_test_enforcement_mcp_stale_settings.md` | 9.1/10 | • None blocking |
+| `hooks/enforcement/scorecard_test_enforcement_naming_convention.md` | 9.1/10 | • None blocking |
 | `hooks/response_standards/scorecard_test_style_guide_response_standards_inject.md` | 8.4/10 | • Add failure messages that say how to fix each assertion (62% have one today)<br>• Fix the style gaps and set `Python style compliant: Yes` |
 | `hooks/scorecard_test_hook_registry_utils.md` | 8.1/10 | • Add test functions and assertions toward 10+ and 15+ (now 2 and 2) |
 | `hooks/response_standards/scorecard_test_style_guide_response_standards.md` | 8.0/10 | • Split the test by concept to bring raw complexity (5) down to 3 or less<br>• Fix the style gaps and set `Python style compliant: Yes` |
-| `hooks/enforcement/scorecard_test_enforcement_dir_structure.md` | 7.9/10 | • Add test functions and assertions toward 10+ and 15+ (now 8 and 9)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Update fixture paths from the retired `01_core` tier to a current tier name |
-| `hooks/session_start/scorecard_test_session_start_mcp_stale_settings.md` | 7.9/10 | • Add failure messages that say how to fix each assertion (14% have one today)<br>• Split the test by concept to bring raw complexity (7) down to 3 or less |
 | `hooks/enforcement/scorecard_test_enforcement_writing_style.md` | 7.9/10 | • Split the test by concept to bring raw complexity (5) down to 3 or less<br>• Fix the style gaps and set `Python style compliant: Yes`<br>• Rename the hook in the module docstring to `hook_enforcement_writing_style.sh`<br>• Update fixture paths from the retired `01_core` tier to a current tier name |
-| `hooks/enforcement/scorecard_test_enforcement_naming_convention.md` | 7.7/10 | • Add test functions and assertions toward 10+ and 15+ (now 7 and 7)<br>• Complete the metadata header: add `Test complexity score` and `Python style compliant`<br>• Update fixture paths from the retired `01_core` tier to a current tier name |
 
 ### rules
 
 | Scorecard | Overall | Recommended improvements |
 |---|---|---|
-| `rules/02_claude_standards/scorecard_test_test_metadata.md` | 9.3/10 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_claude_config_metadata.md` | 9.1/10 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_plan_mode_phase_gates.md` | 9.0/10 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_skill_domains.md` | 9.0/10 | — (≥8.5) |
