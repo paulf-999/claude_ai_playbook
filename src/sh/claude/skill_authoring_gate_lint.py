@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""Skill authoring gate linter — validates crawl criteria (C0–C7).
+"""Skill authoring gate linter — validates crawl (C0–C7), walk (W1–W6) and run (R2–R4) criteria.
 
-Validates skill.contract.yaml and SKILL.md against the skill authoring gate
-foundation criteria (crawl level). Ensures all skills meet basic structure,
-contract, and no problematic coupling before merging.
+Validates skill.contract.yaml and SKILL.md against the skill authoring gate.
+Crawl checks basic structure and contract; walk checks readability, style,
+test coverage and focus; run checks test depth, maturity history and gaps.
+Walk and run checks that fail a skill outright are reported as FAIL; those
+that need a human to judge are reported as WARN and never block. R1 (version
+matches maturity) is the same check as C3, so it is reported once, as C3.
 
 Usage:
     python3 src/sh/claude/skill_authoring_gate_lint.py          # scan src/claude/skills/ (default)
@@ -14,6 +17,8 @@ Exit codes:
     0 — all skills pass
     1 — one or more skills have violations
 """
+
+from __future__ import annotations
 
 import argparse
 import re
@@ -27,6 +32,24 @@ import yaml
 # Script lives at src/sh/claude/; repo root is three levels up.
 _REPO_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 DEFAULT_ROOT = _REPO_ROOT / "src" / "claude" / "skills"
+DEFAULT_TESTS_DIR = _REPO_ROOT / "src" / "claude" / "_tests" / "skills"
+
+# W4: Claude jargon a reader may not know, when it appears in a SKILL.md's opening prose
+JARGON = {
+    r"\bmaturity\b": "maturity (development stage)",
+    r"\bscope gate\b": "scope gate (feature limitation)",
+    r"\btriggers\b": "triggers (invocation phrases)",
+    r"\bmcp\b": "MCP (Model Context Protocol)",
+    # The compound phrase only: a bare "run" or "walk" is ordinary prose
+    r"\bcrawl\b.{0,5}\bwalk\b.{0,5}\brun\b": "crawl/walk/run (progression tiers)",
+}
+# W1: jargon that is fine in the opening once it's explained in the same opening
+EXPLAINED_JARGON = {
+    r"\bmaturity\b": "context about skill development stages",
+    r"\bscope gate\b": "feature limitations by development tier",
+}
+# W3: how many test functions each maturity expects in a _tests/skills/ file
+TEST_COUNT_RANGE = {"draft": (0, 5), "tactical": (5, 12), "strategic": (12, None)}
 
 
 # ── validation logic ──────────────────────────────────────────────────────────
@@ -174,7 +197,211 @@ def validate_skill(skill_dir: Path) -> tuple[list[str], list[str]]:
 
     warnings = _check_c7_requires_section(contract)
 
+    walk_run_failures, walk_run_warnings = check_walk_run(skill_dir, contract)
+    failures.extend(walk_run_failures)
+    warnings.extend(walk_run_warnings)
+
     return failures, warnings
+
+
+def _skill_md_parts(skill_dir: Path) -> tuple[str, dict, list[str]]:
+    """Split a skill's SKILL.md into its text, frontmatter and prose lines.
+
+    :param skill_dir: Path to the skill directory.
+    :type skill_dir: Path
+    :return: The full text, the parsed frontmatter (empty if none) and the lines after it.
+    :rtype: tuple[str, dict, list[str]]
+    """
+    path = skill_dir / "SKILL.md"
+    text = path.read_text(encoding="utf-8") if path.exists() else ""
+    lines = text.split("\n")
+    if lines and lines[0].strip() == "---":
+        end = next((i for i, line in enumerate(lines[1:], start=1) if line.strip() == "---"), None)
+        if end is not None:
+            try:
+                frontmatter = yaml.safe_load("\n".join(lines[1:end])) or {}
+            except yaml.YAMLError:
+                frontmatter = {}
+            return text, frontmatter if isinstance(frontmatter, dict) else {}, lines[end + 1:]
+    return text, {}, lines
+
+
+def find_test_file(skill_dir: Path, tests_dir: Path = DEFAULT_TESTS_DIR) -> Path | None:
+    """Locate a skill's pytest file under the skill tests folder.
+
+    :param skill_dir: Path to the skill directory.
+    :type skill_dir: Path
+    :param tests_dir: Folder holding ``test_<skill_name>*.py`` files.
+    :type tests_dir: Path
+    :return: The first matching test file, or None.
+    :rtype: Path | None
+    """
+    # Top level only, as the walk/run gate always has: skill tests in subfolders aren't counted yet
+    return next(iter(sorted(tests_dir.glob(f"test_{skill_dir.name}*.py"))), None) if tests_dir.exists() else None
+
+
+def _check_w1_w2_readability(lines: list[str], prose: list[str]) -> tuple[list[str], list[str]]:
+    """W1–W2: the opening reads in a minute, and headings and length follow writing_style.md.
+
+    :param lines: SKILL.md lines.
+    :type lines: list[str]
+    :param prose: SKILL.md lines after the frontmatter, where W1 looks for jargon.
+    :type prose: list[str]
+    :return: Tuple of (failures, warnings).
+    :rtype: tuple[list[str], list[str]]
+    """
+    failures: list[str] = []
+    warnings: list[str] = []
+    opening_end = next((i for i, line in enumerate(lines) if line.startswith("## ") and i > 5), len(lines))
+    if opening_end >= 100:
+        failures.append(f"W1: opening is {opening_end} lines — keep it under 100 so it reads in a minute")
+    # Frontmatter keys such as "maturity:" are metadata, not prose, so skip them as W4 does
+    prose_end = next((i for i, line in enumerate(prose) if line.startswith("## ")), len(prose))
+    opening = "\n".join(prose[:prose_end]).lower()
+    for pattern, explanation in EXPLAINED_JARGON.items():
+        if re.search(pattern, opening) and explanation not in opening:
+            warnings.append(f"W1: '{pattern.strip(chr(92) + 'b')}' in the opening isn't explained — review it")
+    bare = [line for line in lines if line.startswith("## ") and not re.search(r"[^\x00-\x7F]", line)]
+    if bare:
+        warnings.append(f"W2: {len(bare)} ## heading(s) have no emoji")
+    if len(lines) > 150:
+        warnings.append(f"W2: SKILL.md is {len(lines)} lines — consider moving detail to reference/")
+    return failures, warnings
+
+
+def _check_w3_coverage(
+    skill_dir: Path, frontmatter: dict, maturity: str, tests_dir: Path
+) -> tuple[list[str], list[str]]:
+    """W3: test coverage matches maturity, and a tested: true claim is backed by tests.
+
+    :param skill_dir: Path to the skill directory.
+    :type skill_dir: Path
+    :param frontmatter: SKILL.md's parsed frontmatter.
+    :type frontmatter: dict
+    :param maturity: The contract's maturity level.
+    :type maturity: str
+    :param tests_dir: Folder holding the skills' pytest files.
+    :type tests_dir: Path
+    :return: Tuple of (failures, warnings).
+    :rtype: tuple[list[str], list[str]]
+    """
+    test_file = find_test_file(skill_dir, tests_dir)
+    if test_file is None:
+        if (skill_dir / "tests" / "evals.yaml").exists():
+            return [], []
+        tags = frontmatter.get("tags") or {}
+        if isinstance(tags, dict) and tags.get("tested") is True:
+            return ["W3: SKILL.md claims tags.tested: true, but there's no test file or tests/evals.yaml"], []
+        return [], ["W3: no test file or tests/evals.yaml yet — disclosed as untested"]
+    count = len(re.findall(r"^def test_|@pytest.mark.parametrize", test_file.read_text(encoding="utf-8"), re.M))
+    low, high = TEST_COUNT_RANGE.get(maturity, (0, None))
+    if count < low or (high is not None and count > high):
+        expected = f"{low}+" if high is None else f"{low}–{high}"
+        return [f"W3: {maturity} skill has {count} tests in {test_file.name}, expected {expected}"], []
+    return [], []
+
+
+def _check_w4_to_w6_focus(skill_dir: Path, text: str, prose: list[str], maturity: str) -> list[str]:
+    """W4–W6: no unexplained jargon, no open TODOs once tactical, and complete phase files.
+
+    :param skill_dir: Path to the skill directory.
+    :type skill_dir: Path
+    :param text: Full SKILL.md text.
+    :type text: str
+    :param prose: SKILL.md lines after the frontmatter.
+    :type prose: list[str]
+    :param maturity: The contract's maturity level.
+    :type maturity: str
+    :return: Failures.
+    :rtype: list[str]
+    """
+    failures: list[str] = []
+    opening_prose = "\n".join(prose[:30]).lower()
+    unexplained = [term for pattern, term in JARGON.items() if re.search(pattern, opening_prose)]
+    if unexplained:
+        failures.append(f"W4: unexplained jargon in the opening: {', '.join(unexplained)} — explain or remove it")
+    if maturity in ("tactical", "strategic"):
+        todos = len(re.findall(r"\bTODO\b|\bFIXME\b", text, re.IGNORECASE))
+        if todos:
+            failures.append(f"W5: {maturity} skill has {todos} open TODO/FIXME — resolve them before release")
+    for phase_file in sorted(skill_dir.glob("phase*.md")):
+        if len(phase_file.read_text(encoding="utf-8")) <= 100:
+            failures.append(f"W6: {phase_file.name} is under 100 characters — make it complete")
+    return failures
+
+
+def _check_walk(skill_dir: Path, maturity: str, tests_dir: Path) -> tuple[list[str], list[str]]:
+    """W1–W6: readability, style, test coverage, jargon, open TODOs and phase files.
+
+    :param skill_dir: Path to the skill directory.
+    :type skill_dir: Path
+    :param maturity: The contract's maturity level.
+    :type maturity: str
+    :param tests_dir: Folder holding the skills' pytest files.
+    :type tests_dir: Path
+    :return: Tuple of (failures, warnings).
+    :rtype: tuple[list[str], list[str]]
+    """
+    text, frontmatter, prose = _skill_md_parts(skill_dir)
+    readability_failures, readability_warnings = _check_w1_w2_readability(text.split("\n"), prose)
+    coverage_failures, coverage_warnings = _check_w3_coverage(skill_dir, frontmatter, maturity, tests_dir)
+    focus_failures = _check_w4_to_w6_focus(skill_dir, text, prose, maturity)
+    return readability_failures + coverage_failures + focus_failures, readability_warnings + coverage_warnings
+
+
+def _check_run(skill_dir: Path, maturity: str, tests_dir: Path) -> tuple[list[str], list[str]]:
+    """R2–R4: test depth, maturity history and documented gaps.
+
+    :param skill_dir: Path to the skill directory.
+    :type skill_dir: Path
+    :param maturity: The contract's maturity level.
+    :type maturity: str
+    :param tests_dir: Folder holding the skills' pytest files.
+    :type tests_dir: Path
+    :return: Tuple of (failures, warnings).
+    :rtype: tuple[list[str], list[str]]
+    """
+    failures: list[str] = []
+    warnings: list[str] = []
+    text, _, _ = _skill_md_parts(skill_dir)
+
+    # R2: a pytest file, where one exists, has real depth
+    test_file = find_test_file(skill_dir, tests_dir)
+    if test_file is not None:
+        content = test_file.read_text(encoding="utf-8")
+        if len(content.split("\n")) <= 30:
+            failures.append(f"R2: {test_file.name} is 30 lines or fewer — add error and edge cases")
+        if not re.search(r"@pytest|def test_|assert ", content):
+            failures.append(f"R2: {test_file.name} has no pytest tests")
+
+    # R3: tactical and strategic skills record how they got there
+    if maturity in ("tactical", "strategic") and not re.search(r"##.*(?:version|history|changelog)", text, re.I):
+        warnings.append("R3: no version history section recording the maturity progression — review it")
+
+    # R4: strategic skills document their known gaps and workarounds
+    if maturity == "strategic" and not re.search(r"##.*known gaps", text, re.IGNORECASE):
+        failures.append("R4: strategic skill has no 'Known gaps' section with workarounds")
+    return failures, warnings
+
+
+def check_walk_run(
+    skill_dir: Path, contract: dict, tests_dir: Path = DEFAULT_TESTS_DIR
+) -> tuple[list[str], list[str]]:
+    """Validate a skill against the walk (W1–W6) and run (R2–R4) criteria.
+
+    :param skill_dir: Path to the skill directory.
+    :type skill_dir: Path
+    :param contract: The parsed skill.contract.yaml.
+    :type contract: dict
+    :param tests_dir: Folder holding the skills' pytest files.
+    :type tests_dir: Path
+    :return: Tuple of (failures, warnings).
+    :rtype: tuple[list[str], list[str]]
+    """
+    maturity = contract.get("maturity", "draft")
+    walk_failures, walk_warnings = _check_walk(skill_dir, maturity, tests_dir)
+    run_failures, run_warnings = _check_run(skill_dir, maturity, tests_dir)
+    return walk_failures + run_failures, walk_warnings + run_warnings
 
 
 def _is_semantic_version(version: str) -> bool:
@@ -407,7 +634,7 @@ def main() -> int:
         print(f"No skills found under {root}")
         return 0
 
-    print(f"Validating {len(skills)} skill(s) against authoring gate (crawl criteria)...\n")
+    print(f"Validating {len(skills)} skill(s) against the authoring gate (crawl, walk and run)...\n")
 
     n_clean = 0
     n_warn_only = 0

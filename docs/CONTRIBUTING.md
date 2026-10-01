@@ -42,7 +42,7 @@ All skills are validated against a **three-level gate** before merging:
 **What:** Readability, style compliance, test coverage, clarity.
 
 **Enforcement:** Manual code review + local testing
-- You run tests locally before submitting PR: `CLAUDE_CONFIG_DIR=$PWD/src/claude pytest src/claude/_tests/rules/01_essentials/test_skill_authoring_gate.py`
+- You run the gate locally before submitting a PR: `make lint_skills` (crawl, walk and run in one linter)
 - Reviewers spot-check during code review
 - **Doesn't block merge** (advisory feedback)
 
@@ -198,14 +198,11 @@ def test_skill_name_creates_output():
 Before committing, run:
 
 ```bash
-# Check crawl criteria (C0–C7)
+# Check crawl, walk and run criteria (C0–C7, W1–W6, R2–R4) — FAIL blocks, WARN is advisory
 make lint_skills
 
-# Check walk/run criteria (W1–R5)
-CLAUDE_CONFIG_DIR=$PWD/src/claude pytest src/claude/_tests/rules/01_essentials/test_skill_authoring_gate.py -v
-
-# Optional: just test your skill
-CLAUDE_CONFIG_DIR=$PWD/src/claude pytest src/claude/_tests/rules/01_essentials/test_skill_authoring_gate.py -k skill_name -v
+# Optional: just your skill's group
+python3 src/sh/claude/skill_authoring_gate_lint.py src/claude/skills/_<group>_skills
 ```
 
 Fix any failures. Tests that skip are advisory (reviewer will spot-check).
