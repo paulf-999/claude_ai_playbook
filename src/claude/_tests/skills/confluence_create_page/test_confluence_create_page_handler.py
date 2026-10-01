@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           2.0.0
+# Version:           2.0.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -70,15 +70,15 @@ class TestValidation:
     # Space validation
     def test_validate_space_valid(self):
         """Valid space key passes."""
-        is_valid, space = validate_space("DA")
+        is_valid, space = validate_space("DOCS")
         assert is_valid is True
-        assert space == "DA"
+        assert space == "DOCS"
 
     def test_validate_space_lowercase_converted(self):
         """Lowercase space key is converted to uppercase."""
-        is_valid, space = validate_space("da")
+        is_valid, space = validate_space("docs")
         assert is_valid is True
-        assert space == "DA"
+        assert space == "DOCS"
 
     def test_validate_space_with_numbers(self):
         """Space key with numbers is valid."""
@@ -97,7 +97,7 @@ class TestValidation:
 
     def test_validate_space_invalid_chars(self):
         """Space key with special chars fails."""
-        is_valid, message = validate_space("DA-1")
+        is_valid, message = validate_space("DOCS-1")
         assert is_valid is False
         assert "alphanumeric" in message.lower() or "letters and numbers" in message.lower()
 

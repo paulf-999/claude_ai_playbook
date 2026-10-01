@@ -1,7 +1,7 @@
 # Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:  2026-08-28
-# Date updated:  2026-09-19
+# Date updated:  2026-10-01
 # Status:        active
 # ─────────────────────────────────────────────────────────
 
@@ -12,10 +12,10 @@ Three-phase flow: gather details → draft review (local) → publish to Conflue
 Example usage:
     result = create_confluence_page(
         title="Data Platform Q4 Roadmap",
-        space="DA",
+        space="DOCS",
         pattern="general_page",
         sections=["Overview", "Deliverables", "Risks"],
-        creator="user@payroc.com"
+        creator="user@company.com"
     )
 """
 
@@ -115,7 +115,7 @@ def validate_space(space: Any) -> Tuple[bool, str]:
     """Validate Confluence space key: non-empty, 2-10 chars, uppercase.
 
     Args:
-        space: Confluence space key (e.g., "DA", "INFRA")
+        space: Confluence space key (e.g., "DOCS", "INFRA")
 
     Returns:
         (is_valid, space_or_error_message): Tuple of validation status and result
@@ -149,7 +149,7 @@ def phase_1_gather_details(
 
     Args:
         title: Page title (required)
-        space: Confluence space key, e.g., "DA", "INFRA" (required)
+        space: Confluence space key, e.g., "DOCS", "INFRA" (required)
         pattern: Content pattern, one of: general_page, requirements, etc. (required)
         sections: List of section titles (required)
         creator: Page creator email (optional)
@@ -314,7 +314,7 @@ def create_confluence_page(
 
     Args:
         title: Page title (required, 3-255 chars)
-        space: Confluence space key (required, e.g., "DA", "INFRA")
+        space: Confluence space key (required, e.g., "DOCS", "INFRA")
         pattern: Content pattern (required, default "general_page")
         sections: List of section titles (required, 1-10 unique sections)
         creator: Page creator email (optional)
@@ -334,10 +334,10 @@ def create_confluence_page(
     Example:
         result = create_confluence_page(
             title="Q4 Data Platform Roadmap",
-            space="DA",
+            space="DOCS",
             pattern="general_page",
             sections=["Overview", "Deliverables", "Timeline"],
-            creator="user@payroc.com",
+            creator="user@company.com",
             mcp_tool=atlassian_mcp.createConfluencePage
         )
         if result["success"]:
@@ -561,7 +561,7 @@ if __name__ == "__main__":
     # Quick smoke test
     result = create_confluence_page(
         title="Test Page",
-        space="DA",
+        space="DOCS",
         pattern="general_page",
         sections=["Section 1", "Section 2"]
     )

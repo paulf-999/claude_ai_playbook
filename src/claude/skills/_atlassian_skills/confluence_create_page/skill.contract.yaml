@@ -1,6 +1,6 @@
 ---
 name: confluence_create_page
-version: 1.0.5
+version: 1.0.6
 summary: Create Confluence pages using the general_page pattern with local draft review and explicit approval
 maturity: tactical
 test_coverage_level: comprehensive
@@ -41,7 +41,7 @@ requires:
     tools:
         - Atlassian MCP server enabled (mcp__atlassian__createConfluencePage)
     resources:
-        - Confluence space "DA" (accessible)
+        - Target Confluence space "<SPACE_KEY>" (accessible)
     mcp_servers:
         - Atlassian
     external: []

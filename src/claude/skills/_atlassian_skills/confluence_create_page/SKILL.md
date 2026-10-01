@@ -10,7 +10,7 @@ tags:
   date_updated: "2026-10-01"
 tools: Read, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
-<!-- version: 1.0.5 -->
+<!-- version: 1.0.6 -->
 <!-- created: 2026-04-08 -->
 <!-- updated: 2026-10-01 -->
 
@@ -32,12 +32,12 @@ $ /confluence_create_page create a page about the Q3 roadmap
 [Phase 3] Publishing to Confluence...
           ✓ Page created
 
-Page created: https://yourteam.atlassian.net/wiki/spaces/DA/pages/12345
+Page created: https://yourteam.atlassian.net/wiki/spaces/<SPACE_KEY>/pages/12345
 ```
 
 ## ✨ Best For
 
-One-off pages using the general_page pattern in the `DA` space. Currently at the **tactical** development stage — main path plus light error handling, not full edge-case coverage. Only the general_page pattern is supported (more patterns are planned); the wide-view toggle still has to be set manually in Confluence.
+One-off pages using the general_page pattern in the space you confirm (`<SPACE_KEY>`). Currently at the **tactical** development stage — main path plus light error handling, not full edge-case coverage. Only the general_page pattern is supported (more patterns are planned); the wide-view toggle still has to be set manually in Confluence.
 
 ## 📚 References
 
@@ -50,4 +50,4 @@ One-off pages using the general_page pattern in the `DA` space. Currently at the
 ## 📌 Prerequisites
 
 - Atlassian MCP server enabled: `make enable_mcp server=Atlassian` + restart Claude Code
-- Confluence space `DA` exists and is accessible
+- The target Confluence space (`<SPACE_KEY>`) exists and you can write to it
