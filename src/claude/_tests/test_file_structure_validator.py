@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-01
-# Version:           1.1.1
+# Version:           1.1.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -10,14 +10,14 @@
 
 """Proves the file-structure scanner flags bad names and skips what it should.
 
-``test_file_structure_compliance.py`` runs the scanner over the real config, so it
-only shows the config is clean today. These tests build small fake config trees in
+``test_file_structure_compliance.py`` runs the scanner in ``_file_structure_validator.py``
+over the real config, so it only shows the config is clean today. These tests build small fake config trees in
 a temp directory and check the scanner catches each kind of bad case — so a change
 that silences it fails here.
 """
 from pathlib import Path
 
-from test_file_structure_compliance import FileStructureValidator
+from _file_structure_validator import FileStructureValidator
 
 HINT = "— see claude_directory_structure/_claude_directory_naming.md"
 

@@ -23,4 +23,4 @@
 
 - `src/claude/_tests/hooks/enforcement/test_enforcement_naming_convention.py` — the test being scored
 - `src/claude/hooks/hook_enforcement_naming_convention.sh` — what the test guards
-- `src/claude/_tests/test_file_structure_compliance.py` — the checks the hook calls
+- `src/claude/_tests/_file_structure_validator.py` — the checks the hook calls

@@ -3,25 +3,22 @@
 **Date Created:** 2026-09-30
 **Date Updated:** 2026-10-01
 
-**Overall score:** 7.0/10
-
-**Recommended improvements:**
-- Add test functions and assertions toward 10+ and 15+ (now 1 and 1)
-- Convert `scan()`'s Google-style `Returns:` docstring to reST so the file is Python style compliant
-- Correct the docstring: it is one scanning function, not a parametrized test
+**Overall score:** 8.9/10
 
 | Dimension | Score | Notes |
 |---|---|---|
-| **Clarity** | 8/10 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message<br>• ⚠️ **Docstring:** docstring says the test is parametrized, but it is one function that scans everything |
-| **Complexity** | 5/10 | • 🧮 **Complexity:** raw 5 — Concepts 2 (naming, placement) + Scope 3 (whole-config scan), matching the header's 5/10 |
-| **Evidence of Need** | 9/10 | • 🔗 **Target:** guards a real, installed artefact |
-| **Coverage** | 2/10 | • 📊 **Counts:** 1 test functions and 1 assertions |
-| **Structural Compliance** | 8/10 | • ✅ **Header:** all 7 metadata lines present, in order<br>• ⚠️ **Style:** `Python style compliant: No` — `scan()` uses a Google-style docstring |
-| **Currency** | 9/10 | • 🔍 **References:** passes against the current config, header last updated 2026-10-01 |
-| **Regression Value** | 8/10 | • 🛡️ **Failure cases:** checks real files, but no function proves the check fails on a bad case<br>• ⚠️ **Finding:** runs the real scanner over the whole config, so any naming or placement violation fails it |
-| **Overall** | **7.0/10** | • 💪 **Strongest:** Evidence of Need and Currency (9/10)<br>• ⚠️ **Weakest:** Coverage (2/10) |
+| **Clarity** | 9/10 | • 🔍 **Goal:** module docstring says what the scan covers and why each area has its own test<br>• 🔍 **Messages:** every assertion names the folder and lists each error |
+| **Complexity** | 7/10 | • 🧮 **Raw complexity 3:** Concepts 0 (the real config passes the scan) + Scope 3 (whole-config scan) + Dependencies 0 + Prerequisites 0 |
+| **Evidence of Need** | 9/10 | • 🔗 **Target:** guards the naming conventions in `claude_directory_structure.md` on the real config |
+| **Coverage** | 9/10 | • 📊 **Counts:** 11 test functions and 20 assertions<br>• 🧩 **Areas:** root files, `_rules/`, `_tests/`, `_templates/`, `_reference/`, `hooks/`, `skills/`, `agents/`, `rules/` and a whole-config catch-all |
+| **Structural Compliance** | 10/10 | • ✅ **Header:** full metadata header, marked Python style compliant and checked with `ruff` |
+| **Currency** | 10/10 | • 🔍 **References:** passes against the current config, header last updated 2026-10-01 |
+| **Regression Value** | 8/10 | • 🛡️ **Missing folders:** each area test fails if its folder is gone, so a move can't pass silently<br>• ⚠️ **Bad cases:** proven in `test_file_structure_validator.py`, not here |
+| **Overall** | **8.9/10** | • 💪 **Strongest:** Structural Compliance and Currency (10/10)<br>• ⚠️ **Weakest:** Complexity (7/10), held at the minimum by the whole-config scan |
 
 ## 🔗 Related files
 
 - `src/claude/_tests/test_file_structure_compliance.py` — the test being scored
+- `src/claude/_tests/_file_structure_validator.py` — the scanner it runs
+- `src/claude/_tests/test_file_structure_validator.py` — proves the scanner on fake config trees
 - `src/claude/_rules/01_essentials/claude_usage_standards/claude_directory_structure.md` — what the test guards
