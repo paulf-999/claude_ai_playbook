@@ -28,7 +28,9 @@ How to fill this template:
     (criteria in `_admin/_quality_scorecards/tests/README.md`).
   - Skills: Design, Complexity, Test Coverage, Code Quality, Security, Documentation, Standards Compliance
     (criteria in `_templates/skills/_quality_scorecard_template.md`).
-  - Hooks and agents: define their dimensions in their folder's README when the first one is scored.
+  - Hooks: Clarity, Complexity, Evidence of Need, Test Coverage, Structural Compliance, Failure Safety, Runtime Cost
+    (criteria in `_admin/_quality_scorecards/hooks/README.md`).
+  - Agents: define their dimensions in their folder's README when the first one is scored.
 - Overall: the mean of the dimension scores, rounded to 0.1; the "Overall score" line repeats it.
 - Recommended improvements: include only when Overall is below 8.5, and omit the heading and bullets entirely otherwise.
 - Notes: one point per bullet, joined with <br>, each `• <emoji> **<keyword>:** <point>`.
