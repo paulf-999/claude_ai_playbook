@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-29
-# Date updated:      2026-10-01
-# Version:           1.0.1
+# Date updated:      2026-10-02
+# Version:           1.0.2
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -17,7 +17,12 @@ version matches its maturity (0.x draft, 1.x tactical, 2+.x strategic).
 from pathlib import Path
 
 import yaml
-from _metadata_header import FRONTMATTER_RE, frontmatter_header_errors, header_version_after_frontmatter
+
+from _metadata_header import (
+    FRONTMATTER_RE,
+    frontmatter_header_errors,
+    header_version_after_frontmatter,
+)
 from _shared_paths import CLAUDE_DIR
 
 AGENTS_DIR = CLAUDE_DIR / "agents"

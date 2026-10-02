@@ -87,6 +87,8 @@ repos:
                 - --select=E,F,W,C90,N,I,UP031,UP032,BLE,PTH,B006,D100,D101,D102,D103,D104,D105,D106,D107
                 # Rule-tier test folders mirror the tier names (01_essentials etc.), which can't be valid module names
                 - --per-file-ignores=src/claude/_tests/rules/*/__init__.py:N999
+                # Treat the _tests/ helpers (e.g. _shared_paths) as local imports, so they sort into their own group
+                - --config=src = ["src/claude/_tests", "src/claude/_tests/**"]
         # Illustrative style-guide snippets, not executable code — not meant to pass linting
             exclude: style_guide_standards/.*/(examples|templates)/.*\.py$
 

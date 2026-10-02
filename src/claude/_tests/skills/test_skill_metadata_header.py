@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-28
-# Date updated:      2026-10-01
-# Version:           1.0.2
+# Date updated:      2026-10-02
+# Version:           1.0.3
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Optional
 
 import yaml
+
 from _metadata_header import FRONTMATTER_RE
 from _metadata_header import frontmatter_header_errors as skill_header_errors
 from _metadata_header import header_version_after_frontmatter as header_version

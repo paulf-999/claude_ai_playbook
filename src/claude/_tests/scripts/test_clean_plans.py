@@ -20,6 +20,7 @@ import importlib.util
 from datetime import date
 
 import pytest
+
 from _shared_paths import CLAUDE_DIR
 
 SCRIPT = CLAUDE_DIR / "_scripts" / "_clean_scripts" / "clean_plans.py"

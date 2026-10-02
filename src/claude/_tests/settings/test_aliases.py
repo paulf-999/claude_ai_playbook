@@ -19,6 +19,7 @@ documented, at least one is Ready, and every Testing alias names its exit doc.
 import re
 
 import pytest
+
 from _shared_paths import ALIASES_FILE, CLAUDE_DIR
 
 COLUMNS = ["Input", "Theme", "Status", "Meaning"]

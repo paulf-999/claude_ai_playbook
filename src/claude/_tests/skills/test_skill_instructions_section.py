@@ -24,6 +24,7 @@ from __future__ import annotations
 import re
 
 import pytest
+
 from _shared_paths import SKILLS_DIR
 
 HEADING = re.compile(r"^## .*Instructions for Claude\s*$", re.MULTILINE)

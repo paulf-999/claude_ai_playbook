@@ -22,6 +22,7 @@ from pathlib import Path
 
 import pytest
 import yaml
+
 from _shared_paths import SKILLS_DIR
 
 # Grouped in the playbook repo (skills/_claude_skills/<name>/), flat in a live config (skills/<name>/)

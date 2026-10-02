@@ -21,6 +21,7 @@ from __future__ import annotations
 import re
 
 import pytest
+
 from _shared_paths import CLAUDE_DIR
 
 TESTS_DIR = CLAUDE_DIR / "_tests"

@@ -19,7 +19,12 @@ import time
 from pathlib import Path
 from unittest.mock import patch
 
-from .confluence_create_page_handler import _handle_timeout_choice, format_timeout_dialog, parse_timeout_arg, save_draft
+from .confluence_create_page_handler import (
+    _handle_timeout_choice,
+    format_timeout_dialog,
+    parse_timeout_arg,
+    save_draft,
+)
 
 MAX_WAIT = 360
 

@@ -17,6 +17,7 @@ proven to work rather than just passing on today's config.
 ``rules/02_claude_standards/test_always_on_reachability.py`` runs it on the real config.
 """
 import pytest
+
 from _rule_reachability import find_reachability_issues
 
 

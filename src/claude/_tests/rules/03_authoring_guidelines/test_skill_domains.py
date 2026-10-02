@@ -23,6 +23,7 @@ from pathlib import Path
 
 import pytest
 import yaml
+
 from _shared_paths import RULES_DIR, SKILLS_DIR
 
 DOMAINS_FILE = RULES_DIR / "03_authoring_guidelines" / "authoring_skills" / "skill_domains.yaml"

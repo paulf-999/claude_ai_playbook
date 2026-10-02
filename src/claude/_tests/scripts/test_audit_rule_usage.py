@@ -22,6 +22,7 @@ import sys
 from datetime import date, timedelta
 
 import pytest
+
 from _shared_paths import CLAUDE_DIR
 
 SCRIPT = CLAUDE_DIR / "_scripts" / "_audit_scripts" / "audit_rule_usage.py"

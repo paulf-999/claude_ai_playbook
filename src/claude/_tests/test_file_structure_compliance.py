@@ -20,6 +20,7 @@ missing folder can't pass by being skipped.
 from functools import cache
 
 import pytest
+
 from _file_structure_validator import CLAUDE_HOME, FileStructureValidator
 
 HINT = "— see _rules/01_essentials/claude_usage_standards/claude_directory_structure.md"

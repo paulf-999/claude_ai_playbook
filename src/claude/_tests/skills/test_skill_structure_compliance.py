@@ -23,6 +23,7 @@ import sys
 from pathlib import Path
 
 import pytest
+
 from _shared_paths import CLAUDE_DIR, SKILLS_DIR
 
 # The linter lives beside the config in the playbook repo (src/sh/claude/), so

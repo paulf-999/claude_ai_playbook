@@ -20,6 +20,7 @@ import json
 import subprocess
 
 import pytest
+
 from _shared_paths import CLAUDE_DIR, HOOKS_DIR
 
 HOOK_PATH = HOOKS_DIR / "hook_enforcement_writing_style.sh"
