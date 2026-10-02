@@ -239,7 +239,7 @@ class FileStructureValidator:
         # the part before ".template" instead of the literal template name
         if filename.endswith(".template"):
             filename = filename[: -len(".template")]
-            if filename in ["AGENT.md", "RULE.md", "SKILL.md", "TODO.md", "skill.contract.yaml"]:
+            if filename in ["AGENT.md", "SKILL.md", "TODO.md", "skill.contract.yaml"]:
                 return
 
         # Check if child file (should start with underscore)

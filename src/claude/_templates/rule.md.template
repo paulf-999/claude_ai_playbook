@@ -1,4 +1,4 @@
-# 🧭 RULE.md Template — Decision Tree
+# 🧭 Rule Template — Decision Tree
 
 Use **Template A** (Principle-based) for single, focused principles with Why/How structure (e.g., guiding_principles.md).
 Use **Template B** (Constraint/Pattern-based) for multiple related patterns with emoji headers and callout blocks (e.g., behaviour.md, security.md).

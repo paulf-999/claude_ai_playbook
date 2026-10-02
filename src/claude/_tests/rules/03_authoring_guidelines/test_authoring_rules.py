@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-02
-# Version:           2.0.1
+# Version:           2.0.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -69,8 +69,8 @@ def test_creation_has_five_steps():
 
 def test_template_exists():
     """The rule template the guide names exists."""
-    assert "_templates/RULE.md.template" in content(), "the guide no longer names the rule template"
-    assert (CLAUDE_DIR / "_templates" / "RULE.md.template").is_file(), "_templates/RULE.md.template is missing"
+    assert "_templates/rule.md.template" in content(), "the guide no longer names the rule template"
+    assert (CLAUDE_DIR / "_templates" / "rule.md.template").is_file(), "_templates/rule.md.template is missing"
 
 
 def test_every_tier_named_exists():

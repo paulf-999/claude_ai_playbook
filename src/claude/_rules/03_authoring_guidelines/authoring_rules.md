@@ -1,6 +1,6 @@
-<!-- version: 1.5.6 -->
+<!-- version: 1.5.7 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- applies_to: **/_rules/** -->
 <!-- miss_cost: medium — rules ship without tests or in the wrong tier -->
 # 🛠️ Rule Authoring
@@ -43,7 +43,7 @@ Before writing any rule, answer these five essential questions:
 ## 🚀 Rule Creation (5 Steps)
 
 1. **Answer the checklist above** — clarify scope before writing
-2. **Pick a template:** Use `~/.claude/_templates/RULE.md.template`
+2. **Pick a template:** Use `~/.claude/_templates/rule.md.template`
    - Template A (single principle, ~60 lines) vs. Template B (multiple patterns, ~100 lines)
 3. **Write the rule** — follow template structure, emoji headers, one sentence per bullet
 4. **Write tests:** Enforcement rules require tests in `_tests/rules/`. Instructional rules use structural checks.
