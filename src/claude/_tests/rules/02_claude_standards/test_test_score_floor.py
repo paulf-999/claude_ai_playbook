@@ -2,9 +2,9 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-02
-# Version:           2.0.2
+# Version:           2.1.1
 # Test quality score: 9/10
-# Test complexity score: 8/10
+# Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
@@ -21,7 +21,7 @@ import re
 from pathlib import Path
 
 from _shared_paths import RULES_DIR
-from test_test_metadata import HINT, TESTS_DIR, VALID_HEADER, find_test_files
+from test_test_metadata import HINT, VALID_HEADER, find_test_files, label
 
 QUALITY_FLOOR = 9
 COMPLEXITY_FLOOR = 7
@@ -92,7 +92,7 @@ def header(quality: int, complexity: int, style: str) -> str:
 def test_every_test_meets_the_minimum():
     """Every test file scores quality 9, complexity 7 and style Yes or better."""
     failures = [
-        f"{path.relative_to(TESTS_DIR).as_posix()}: {e}"
+        f"{label(path)}: {e}"
         for path in find_test_files()
         for e in floor_errors(path.read_text())
     ]
