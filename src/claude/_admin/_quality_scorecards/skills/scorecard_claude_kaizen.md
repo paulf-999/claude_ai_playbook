@@ -1,25 +1,24 @@
 # Quality Scorecard — claude_kaizen
 
 **Date Created:** 2026-09-29
-**Date Updated:** 2026-09-29
+**Date Updated:** 2026-10-02
 
-**Overall score:** 6.1/10
+**Overall score:** 7.1/10
 
 **Recommended improvements:**
-- Replace the placeholder `_run_case` in `evals/runner.py` with a real before/after eval run.
 - Add a `reference/_implementation.md` covering the audit and promotion logic, including the promotion threshold.
-- Get the `regression_blocks_promotion` eval passing once the runner is real.
+- Confirm the `regression_blocks_promotion` eval now passes against the real runner.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Design** | 7/10 | 2026-09-29 | Clear loop (audit → promote → validate → propose) with diff-only output and explicit `not_for` limits; the "promote with proof" step depends on an eval harness that doesn't exist yet. |
+| **Design** | 8/10 | 2026-10-02 | Clear loop (audit → promote → validate → propose) with diff-only output and explicit `not_for` limits; the "promote with proof" step now runs real evals against the rules under test. |
 | **Complexity** | 5/10 | 2026-09-29 | Several moving parts: error-log audit, candidate counting, rule and eval drafting, before/after runs and staleness checks, plus a Python runner and a dataset. |
-| **Test Coverage** | 6/10 | 2026-09-29 | 7 `evals.yaml` scenarios (draft: 5–8) covering promotion, the one-off threshold, a declined diff, regressions, stale rules, a missing error log and out-of-scope requests; `regression_blocks_promotion` can't pass until the runner is real. |
-| **Code Quality** | 3/10 | 2026-09-29 | `evals/runner.py` is a placeholder whose `_run_case` marks every case as passed without running it, so before/after comparisons don't yet detect anything. |
+| **Test Coverage** | 7/10 | 2026-10-02 | 7 `evals.yaml` scenarios (draft: 5–8) covering promotion, the one-off threshold, a declined diff, regressions, stale rules, a missing error log and out-of-scope requests, plus `test_claude_kaizen_runner.py` (14 cases) for the runner itself. |
+| **Code Quality** | 8/10 | 2026-10-02 | `evals/runner.py` sends each prompt to `claude -p` with no tools in a throwaway folder, checks `must_match` / `must_not_match` regexes, and fails a case with a reason when the CLI is missing, times out or errors. |
 | **Security** | 8/10 | 2026-09-29 | Never auto-applies changes; every rule arrives as a diff for review; no secrets or external services involved. |
 | **Documentation** | 6/10 | 2026-09-29 | `SKILL.md` has a clear step-by-step example and scope limits; there is no reference doc for the audit or promotion logic, and the promotion threshold is only shown by example. |
 | **Standards Compliance** | 8/10 | 2026-09-29 | `domain_action` naming ✓, 4 canonical `SKILL.md` sections ✓, complete `skill.contract.yaml` ✓, `tests/evals.yaml` + `tests/README.md` ✓, roadmap kept in `reference/` ✓; no `reference/_implementation.md`. |
-| **Overall** | **6.1/10** | 2026-09-29 | Well-bounded draft skill with safe diff-only output, held back by a placeholder eval runner that can't yet prove anything. |
+| **Overall** | **7.1/10** | 2026-10-02 | Well-bounded draft skill with safe diff-only output and a real eval runner; held back by its many moving parts and the missing implementation reference. |
 
 ## 🔗 Related files
 

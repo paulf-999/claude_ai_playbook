@@ -8,4 +8,3 @@
 
 - **SessionStart hook** — Auto-trigger at session start (pending Claude Code hook support)
 - **Cross-repo global promotion** — Promote rules to global config after 2+ repo promotions
-- **Real eval harness** — Replace dummy runner with actual Claude prompting backend
