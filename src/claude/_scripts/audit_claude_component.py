@@ -6,14 +6,14 @@ and produces a structured health report. Components with YAML frontmatter contai
 a 'maturity' key are fully analysed for health signals. All others are counted as
 untagged and grouped by directory.
 
-Unlike the lint validator (claude_tag_lint.py), this script:
+Unlike the lint validator (lint_claude_tags.py), this script:
   - Is not a CI gate — always exits 0
   - Reports untagged components (agents, rules, process docs not yet on the schema)
   - Checks health signals: dormant+critical, untested+critical, stale/missing
     review dates, deprecated components, and broken depends-on chains
 
 Usage:
-    python3 src/claude/_scripts/claude_component_audit.py <root>   # e.g. src/claude
+    python3 src/claude/_scripts/audit_claude_component.py <root>   # e.g. src/claude
     make audit_components                                           # passes src/claude
 
 The root is required: the script is installed into the live config too, so it
@@ -35,7 +35,7 @@ SCAN_DIRS = ["skills", "agents", "rules", "process", "commands"]
 EXCLUDE_DIRS = {"style_guide_standards", "patches"}
 EXCLUDE_NAMES = {"README.md"}
 STALENESS_WARN_DAYS = 90
-USAGE = "usage: claude_component_audit.py <root>   e.g. src/claude"
+USAGE = "usage: audit_claude_component.py <root>   e.g. src/claude"
 
 
 # ── file discovery ────────────────────────────────────────────────────────────

@@ -1,14 +1,14 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.0.0
+# Date updated:      2026-10-02
+# Version:           1.0.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Validates how claude_component_audit.py chooses the folder it scans.
+"""Validates how audit_claude_component.py chooses the folder it scans.
 
 The script is installed into the live config as well as the repo, so it must
 never guess the repo from its own location. It takes the root as a required
@@ -21,7 +21,7 @@ from datetime import date
 
 from _shared_paths import CLAUDE_DIR
 
-SCRIPT = CLAUDE_DIR / "_scripts" / "claude_component_audit.py"
+SCRIPT = CLAUDE_DIR / "_scripts" / "audit_claude_component.py"
 
 
 def load_audit():
@@ -30,7 +30,7 @@ def load_audit():
     :return: The loaded module.
     :rtype: module
     """
-    spec = importlib.util.spec_from_file_location("claude_component_audit", SCRIPT)
+    spec = importlib.util.spec_from_file_location("audit_claude_component", SCRIPT)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -45,7 +45,7 @@ def run_audit(monkeypatch, capsys, *args: str) -> tuple:
     :return: The exit code, stdout and stderr.
     :rtype: tuple
     """
-    monkeypatch.setattr(sys, "argv", ["claude_component_audit.py", *args])
+    monkeypatch.setattr(sys, "argv", ["audit_claude_component.py", *args])
     code = load_audit().main()
     out = capsys.readouterr()
     return code, out.out, out.err

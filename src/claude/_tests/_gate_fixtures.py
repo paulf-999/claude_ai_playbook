@@ -11,11 +11,13 @@ from pathlib import Path
 
 import pytest
 
-LINTER_PATH = Path(__file__).resolve().parents[2] / "sh" / "claude" / "skill_authoring_gate_lint.py"
+from _shared_paths import CLAUDE_DIR
+
+LINTER_PATH = CLAUDE_DIR / "_scripts" / "lint_skill_authoring_gate.py"
 if not LINTER_PATH.exists():
     pytest.skip(f"skill authoring gate linter not found at {LINTER_PATH}", allow_module_level=True)
 
-_spec = importlib.util.spec_from_file_location("skill_authoring_gate_lint", LINTER_PATH)
+_spec = importlib.util.spec_from_file_location("lint_skill_authoring_gate", LINTER_PATH)
 gate = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(gate)
 

@@ -201,7 +201,7 @@ Before committing, run:
 make lint_skills
 
 # Optional: just your skill's group
-python3 src/sh/claude/skill_authoring_gate_lint.py src/claude/skills/_<group>_skills
+python3 src/claude/_scripts/lint_skill_authoring_gate.py src/claude/skills/_<group>_skills
 ```
 
 Fix any failures. Tests that skip are advisory (reviewer will spot-check).

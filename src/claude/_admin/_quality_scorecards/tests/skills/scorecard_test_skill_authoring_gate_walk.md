@@ -19,5 +19,5 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/skills/test_skill_authoring_gate_walk.py` — the test being scored
-- `src/sh/claude/skill_authoring_gate_lint.py` — the gate linter whose checks it proves
+- `src/claude/_scripts/lint_skill_authoring_gate.py` — the gate linter whose checks it proves
 - `src/claude/_tests/_gate_fixtures.py` — builds the fake skills

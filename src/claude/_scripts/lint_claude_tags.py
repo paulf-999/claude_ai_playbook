@@ -6,14 +6,16 @@ mandatory Tier 1 tags as defined in the Claude component tag schema. Run manuall
 before committing new or updated components.
 
 Usage:
-    python3 src/sh/claude/claude_tag_lint.py          # scan src/claude/ (default)
-    python3 src/sh/claude/claude_tag_lint.py <root>   # scan an explicit root dir
+    python3 src/claude/_scripts/lint_claude_tags.py          # scan src/claude/ (default)
+    python3 src/claude/_scripts/lint_claude_tags.py <root>   # scan an explicit root dir
     make lint_tags                                      # via Makefile target
 
 Exit codes:
     0 — all components pass (warnings allowed)
     1 — one or more components have FAIL-level issues
 """
+
+from __future__ import annotations
 
 import argparse
 import sys
@@ -31,9 +33,9 @@ STALENESS_WARN_DAYS = 90
 
 # ── script location ───────────────────────────────────────────────────────────
 
-# Script lives at src/sh/claude/; repo root is three levels up.
-_REPO_ROOT = Path(__file__).resolve().parent.parent.parent.parent
-DEFAULT_ROOT = _REPO_ROOT / "src" / "claude"
+# Script lives in <config>/_scripts/, so the config root is one level up.
+_CONFIG_ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_ROOT = _CONFIG_ROOT
 
 
 # ── validation logic ──────────────────────────────────────────────────────────

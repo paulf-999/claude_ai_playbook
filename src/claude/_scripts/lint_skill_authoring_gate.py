@@ -9,8 +9,8 @@ that need a human to judge are reported as WARN and never block. R1 (version
 matches maturity) is the same check as C3, so it is reported once, as C3.
 
 Usage:
-    python3 src/sh/claude/skill_authoring_gate_lint.py          # scan src/claude/skills/ (default)
-    python3 src/sh/claude/skill_authoring_gate_lint.py <root>   # scan an explicit root dir
+    python3 src/claude/_scripts/lint_skill_authoring_gate.py          # scan src/claude/skills/ (default)
+    python3 src/claude/_scripts/lint_skill_authoring_gate.py <root>   # scan an explicit root dir
     make lint_skills                                             # via Makefile target
 
 Exit codes:
@@ -29,10 +29,10 @@ import yaml
 
 # ── script location ───────────────────────────────────────────────────────────
 
-# Script lives at src/sh/claude/; repo root is three levels up.
-_REPO_ROOT = Path(__file__).resolve().parent.parent.parent.parent
-DEFAULT_ROOT = _REPO_ROOT / "src" / "claude" / "skills"
-DEFAULT_TESTS_DIR = _REPO_ROOT / "src" / "claude" / "_tests" / "skills"
+# Script lives in <config>/_scripts/, so the config root is one level up.
+_CONFIG_ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_ROOT = _CONFIG_ROOT / "skills"
+DEFAULT_TESTS_DIR = _CONFIG_ROOT / "_tests" / "skills"
 
 # W4: Claude jargon a reader may not know, when it appears in a SKILL.md's opening prose
 JARGON = {
