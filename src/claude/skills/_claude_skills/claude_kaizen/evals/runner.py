@@ -13,7 +13,6 @@ Usage:
 
 import sys
 import yaml
-import re
 from pathlib import Path
 from typing import Dict, List, Any
 
@@ -22,6 +21,7 @@ class EvalRunner:
     """Runs eval cases and reports results."""
 
     def __init__(self, eval_file: Path):
+        """Load the eval cases from the given YAML file."""
         self.eval_file = eval_file
         self.evals = self._load_evals()
 
@@ -73,7 +73,6 @@ class EvalRunner:
         """
         name = eval_case.get('name')
         description = eval_case.get('description', '')
-        pass_indicator = eval_case.get('pass_indicator', '')
 
         # Placeholder: in real implementation, this would:
         # 1. Extract the prompt
