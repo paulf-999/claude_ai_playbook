@@ -1,16 +1,16 @@
 ---
 name: claude_setup_graphify
 description: Set up Graphify on a repo to generate a local AST-based knowledge graph, reducing token cost for codebase exploration
-maturity: draft
+maturity: tactical
 tags:
   criticality: could
   status: active
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 0.1.1 -->
+<!-- version: 1.0.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-02 -->
 
 ## 🎯 Purpose
 
@@ -51,7 +51,7 @@ Setup complete! Graph ready for queries.
 
 ## ✨ Best For
 
-Creating knowledge graphs for large codebases where token cost for file reads is a constraint. Best for repos with 1,000+ files or deeply nested structures.
+Creating knowledge graphs for large codebases where token cost for file reads is a constraint. Best for repos with 1,000+ files or deeply nested structures. Currently at the **tactical** stage — setup, pre-flight checks and error recovery are covered, but scope may still change.
 
 **Caveats:** One-time setup per repo. Language support limited to Python, JavaScript, and TypeScript (best AST coverage). Requires graphifyy v2.0+. Updates to repo require re-extraction (not incremental).
 
@@ -68,5 +68,10 @@ Creating knowledge graphs for large codebases where token cost for file reads is
 - `tests/evals.yaml` — 15 test scenarios covering all phases
 
 **Quality:**
-- `_admin/_quality_scorecards/skills/scorecard_claude_setup_graphify.md` — Quality assessment and Draft maturity justification
+- `_admin/_quality_scorecards/skills/scorecard_claude_setup_graphify.md` — Quality assessment and Tactical maturity justification
 - `reference/_security.md` — Input validation and file-permission safeguards
+
+## 📜 Version history
+
+- **0.1.x:** draft, first release and fixes.
+- **1.0.0 (2026-10-02):** promoted to tactical after regular use.

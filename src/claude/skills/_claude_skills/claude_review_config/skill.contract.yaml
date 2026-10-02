@@ -1,8 +1,8 @@
 ---
 name: claude_review_config
-version: 0.1.1
+version: 1.0.0
 summary: Audit your global Claude config across six quality dimensions, with an A-F grade, gap analysis and recommendations.
-maturity: draft
+maturity: tactical
 test_coverage_level: comprehensive
 
 dispatch:

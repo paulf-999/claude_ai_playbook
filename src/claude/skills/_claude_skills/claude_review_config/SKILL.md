@@ -1,16 +1,16 @@
 ---
 name: claude_review_config
 description: Audit your global Claude config across six quality dimensions. Receive scorecard with A–F grade, gap analysis, and actionable recommendations
-maturity: draft
+maturity: tactical
 tags:
   criticality: should
   status: active
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 0.1.1 -->
+<!-- version: 1.0.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-02 -->
 
 ## 🎯 Purpose
 
@@ -62,7 +62,7 @@ Apply fixes? [y/n] → n
 
 ## ✨ Best For
 
-Periodic config health checks (monthly/quarterly) to maintain quality standards and identify gaps. Use to justify config cleanup priorities.
+Periodic config health checks (monthly/quarterly) to maintain quality standards and identify gaps. Use to justify config cleanup priorities. Currently at the **tactical** stage — main paths and error cases are covered, but not adversarial or edge-case inputs yet.
 
 **Caveats:** Scoring is subjective (heuristic-based). Doesn't audit playbook repo structure (use `/audit_skills` instead). No historical tracking (each audit is standalone).
 
@@ -79,4 +79,9 @@ Periodic config health checks (monthly/quarterly) to maintain quality standards 
 - `tests/evals.yaml` — 11 test scenarios covering all phases and edge cases
 
 **Quality & Design:**
-- `_admin/_quality_scorecards/skills/scorecard_claude_review_config.md` — Quality assessment and Draft maturity justification
+- `_admin/_quality_scorecards/skills/scorecard_claude_review_config.md` — Quality assessment and Tactical maturity justification
+
+## 📜 Version history
+
+- **0.1.x:** draft, first release and fixes.
+- **1.0.0 (2026-10-02):** promoted to tactical after regular use.
