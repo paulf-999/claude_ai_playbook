@@ -2,7 +2,7 @@
 paths:
   - "**/*.py"
 ---
-<!-- version: 1.2.0 -->
+<!-- version: 1.3.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-02 -->
 <!-- miss_cost: low — Python style drift -->
@@ -15,17 +15,7 @@ PEP 8 is the baseline. One override: maximum line length is **120 characters** (
 
 ## 📋 Contents
 
-- [🗂️ Code layout](#-code-layout)
-- [🏷️ Naming conventions](#-naming-conventions)
-- [📥 Imports](#-imports)
-- [💬 String formatting](#-string-formatting)
-- [⚠️ Error handling](#-error-handling)
-- [📝 Docstrings](#-docstrings)
-- [🔧 Functions and methods](#-functions-and-methods)
-- [🔖 Type hints](#-type-hints)
-- [💬 Inline comments](#-inline-comments)
-- [📌 General](#-general)
-- [📂 Child files](#-child-files)
+[Code layout](#-code-layout) · [Naming](#-naming-conventions) · [Imports](#-imports) · [Strings](#-string-formatting) · [Errors](#-error-handling) · [Docstrings](#-docstrings) · [Functions](#-functions-and-methods) · [Type hints](#-type-hints) · [Comments](#-inline-comments) · [General](#-general) · [Child files](#-child-files)
 
 ---
 ## 🗂️ Code layout
@@ -102,26 +92,7 @@ Add type hints when they add value — i.e., when the type is non-obvious or spe
 
 ## 💬 Inline comments
 
-Comments reduce cognitive load — err on the side of over-commenting rather than under-commenting.
-
-- **Non-obvious logic:** anything a reader would need to pause to understand
-- **Non-trivial conditionals:** explain the purpose, not just mechanics
-- **Fallback behaviour:** constraints not apparent from code
-- **Logical phases:** label distinct steps in functions longer than ~10 lines
-- **`TODO` / `FIXME`:** always include brief explanation of what and why
-  - **Placement:** always above the code they describe — never at end of line
-  - **Accuracy:** keep comments accurate — stale comments are worse than none
-  - **No restatement:** do not restate obvious code (e.g., `i += 1  # increment i`)
-
-Also label groups of related module-level constants:
-
-```python
-# The four possible actions a planned change can resolve to
-CREATE = "CREATE"
-UPDATE = "UPDATE"
-DISABLE = "DISABLE"
-NOOP = "NOOP"
-```
+Err on the side of over-commenting: explain non-obvious logic and purpose, put comments above the code they describe, and keep them accurate — full guidance in [`python/comments.md`](python/comments.md).
 
 ## 📌 General
 
@@ -133,5 +104,6 @@ NOOP = "NOOP"
 - [`python/python_environment.md`](python/python_environment.md) — Virtual environment setup, dependency management, and tooling
 - [`python/testing.md`](python/testing.md) — Pytest conventions: test naming, structure, fixtures, mocking, assertions
 - [`python/logging.md`](python/logging.md) — Logging standards for debugging, monitoring, and auditing
+- [`python/comments.md`](python/comments.md) — When and how to write inline comments
 - [`python/code_complexity.md`](python/code_complexity.md) — Metrics to identify and prevent overly complex code
 - [`python/module_organisation.md`](python/module_organisation.md) — Module docstrings, metadata, and public/private organisation
