@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-19
-# Date updated:      2026-10-01
-# Version:           1.0.2
+# Date updated:      2026-10-02
+# Version:           1.0.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -18,12 +18,12 @@ from unittest.mock import MagicMock
 import pytest
 
 from .jira_create_handler import (
-    validate_story_points,
-    validate_title,
+    create_jira_ticket,
     phase_1_gather_details,
     phase_2_validate,
     phase_3_create_ticket,
-    create_jira_ticket,
+    validate_story_points,
+    validate_title,
 )
 
 

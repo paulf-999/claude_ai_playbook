@@ -1,1 +1,1 @@
-# Admin artefact tests
+"""Tests for the _scripts/ helper scripts."""

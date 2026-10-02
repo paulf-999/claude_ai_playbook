@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-01
-# Version:           1.2.0
+# Date updated:      2026-10-02
+# Version:           1.2.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -21,9 +21,7 @@ from __future__ import annotations
 
 import re
 
-from _shared_paths import CLAUDE_DIR
-from _shared_paths import HOOKS_DIR
-from _shared_paths import RULES_DIR
+from _shared_paths import CLAUDE_DIR, HOOKS_DIR, RULES_DIR
 
 TESTS_HOOKS_DIR = CLAUDE_DIR / "_tests/hooks"
 TESTS_RULES_DIR = CLAUDE_DIR / "_tests/rules"

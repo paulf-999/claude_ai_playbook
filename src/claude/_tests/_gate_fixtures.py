@@ -10,7 +10,6 @@ import importlib.util
 from pathlib import Path
 
 import pytest
-
 from _shared_paths import CLAUDE_DIR
 
 LINTER_PATH = CLAUDE_DIR / "_scripts" / "_lint_scripts" / "lint_skill_authoring_gate.py"

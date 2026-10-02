@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
-# Date updated:      2026-10-01
-# Version:           1.0.3
+# Date updated:      2026-10-02
+# Version:           1.0.4
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -22,7 +22,6 @@ from datetime import date, datetime
 from pathlib import Path
 
 import pytest
-
 from _shared_paths import SKILLS_DIR
 
 # Grouped in the playbook repo (skills/_claude_skills/<name>/), flat in a live

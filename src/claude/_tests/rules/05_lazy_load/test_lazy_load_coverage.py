@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
-# Date updated:      2026-10-01
-# Version:           1.5.4
+# Date updated:      2026-10-02
+# Version:           1.5.5
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -28,6 +28,7 @@ import re
 from pathlib import Path
 
 from _shared_paths import CLAUDE_DIR, HOOKS_DIR
+
 LAZY_LOAD_DIR = CLAUDE_DIR / "_rules" / "05_lazy_load"
 README_FILE = LAZY_LOAD_DIR / "README.md"
 

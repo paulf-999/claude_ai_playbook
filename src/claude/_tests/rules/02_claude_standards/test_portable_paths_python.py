@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
-# Date updated:      2026-10-01
-# Version:           2.0.0
+# Date updated:      2026-10-02
+# Version:           2.0.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -21,7 +21,6 @@ from __future__ import annotations
 import re
 
 import pytest
-
 from _shared_paths import CLAUDE_DIR
 
 TESTS_DIR = CLAUDE_DIR / "_tests"

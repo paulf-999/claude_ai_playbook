@@ -81,8 +81,12 @@ repos:
       hooks:
           - id: ruff
             name: Python fixes & lint — Ruff
-        # Enable complexity checks
-            args: [--line-length=120, '--select=E,F,W,C90']
+        # Enforce python.md: PEP 8, complexity, naming, import order, f-strings, specific excepts, pathlib, docstrings
+            args:
+                - --line-length=120
+                - --select=E,F,W,C90,N,I,UP031,UP032,BLE,PTH,B006,D100,D101,D102,D103,D104,D105,D106,D107
+                # Rule-tier test folders mirror the tier names (01_essentials etc.), which can't be valid module names
+                - --per-file-ignores=src/claude/_tests/rules/*/__init__.py:N999
         # Illustrative style-guide snippets, not executable code — not meant to pass linting
             exclude: style_guide_standards/.*/(examples|templates)/.*\.py$
 

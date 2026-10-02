@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
-# Date updated:      2026-10-01
-# Version:           1.0.1
+# Date updated:      2026-10-02
+# Version:           1.0.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -23,7 +23,6 @@ from pathlib import Path
 
 import pytest
 import yaml
-
 from _shared_paths import RULES_DIR, SKILLS_DIR
 
 DOMAINS_FILE = RULES_DIR / "03_authoring_guidelines" / "authoring_skills" / "skill_domains.yaml"

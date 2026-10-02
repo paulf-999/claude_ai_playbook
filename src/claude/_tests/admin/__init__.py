@@ -1,1 +1,1 @@
-# Admin artefact tests
+"""Tests for admin artefacts."""

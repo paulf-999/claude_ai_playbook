@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-07
-# Date updated:      2026-10-01
-# Version:           2.0.2
+# Date updated:      2026-10-02
+# Version:           2.0.3
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -28,7 +28,6 @@ import subprocess
 from pathlib import Path
 
 import pytest
-
 from _shared_paths import CLAUDE_DIR
 
 HOOK_SCRIPT = str(CLAUDE_DIR / "hooks" / "hook_style_guide_response_standards_inject.sh")

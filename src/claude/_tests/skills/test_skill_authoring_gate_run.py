@@ -19,10 +19,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from _gate_fixtures import codes
-from _gate_fixtures import gate
-from _gate_fixtures import make_skill
-from _gate_fixtures import walk_run
+from _gate_fixtures import codes, gate, make_skill, walk_run
 
 HISTORY = "\n## 📜 Version history\n\n- 1.0.0: first tactical release\n"
 GAPS = "\n## 🕳️ Known gaps\n\n- None found yet, with a workaround noted here when one is.\n"

@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
-# Date updated:      2026-10-01
-# Version:           1.2.0
+# Date updated:      2026-10-02
+# Version:           1.2.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -16,8 +16,7 @@ example files, loading claims or key guidance quietly go stale.
 """
 import re
 
-from _shared_paths import CLAUDE_MD
-from _shared_paths import RULES_DIR
+from _shared_paths import CLAUDE_MD, RULES_DIR
 
 RULE = RULES_DIR / "05_lazy_load" / "claude_rule_loading_strategy.md"
 

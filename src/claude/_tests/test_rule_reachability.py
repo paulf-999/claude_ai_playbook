@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
-# Date updated:      2026-10-01
-# Version:           2.0.0
+# Date updated:      2026-10-02
+# Version:           2.0.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -17,7 +17,6 @@ proven to work rather than just passing on today's config.
 ``rules/02_claude_standards/test_always_on_reachability.py`` runs it on the real config.
 """
 import pytest
-
 from _rule_reachability import find_reachability_issues
 
 

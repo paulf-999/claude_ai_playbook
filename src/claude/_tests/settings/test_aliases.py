@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-01
-# Version:           2.1.0
+# Date updated:      2026-10-02
+# Version:           2.1.1
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -19,9 +19,7 @@ documented, at least one is Ready, and every Testing alias names its exit doc.
 import re
 
 import pytest
-
-from _shared_paths import ALIASES_FILE
-from _shared_paths import CLAUDE_DIR
+from _shared_paths import ALIASES_FILE, CLAUDE_DIR
 
 COLUMNS = ["Input", "Theme", "Status", "Meaning"]
 VALID_STATUSES = {"Ready", "Testing"}

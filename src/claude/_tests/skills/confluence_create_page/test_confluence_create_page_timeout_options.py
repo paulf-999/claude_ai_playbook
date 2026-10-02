@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.2.0
+# Date updated:      2026-10-02
+# Version:           1.2.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -19,10 +19,7 @@ import time
 from pathlib import Path
 from unittest.mock import patch
 
-from .confluence_create_page_handler import _handle_timeout_choice
-from .confluence_create_page_handler import format_timeout_dialog
-from .confluence_create_page_handler import parse_timeout_arg
-from .confluence_create_page_handler import save_draft
+from .confluence_create_page_handler import _handle_timeout_choice, format_timeout_dialog, parse_timeout_arg, save_draft
 
 MAX_WAIT = 360
 

@@ -17,7 +17,6 @@ import shutil
 import sys
 from pathlib import Path
 
-
 PATCH_MARKER = "<!-- [TEAM-PATCH:skill-contract-first-design] -->"
 PLUGIN_CACHE_ROOT = Path.home() / ".claude" / "plugins" / "cache" / "claude-plugins-official" / "skill-creator"
 SCHEMA_SRC = Path(__file__).parent / "claude-tag-schema.md"

@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.0.0
+# Date updated:      2026-10-02
+# Version:           1.0.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -17,8 +17,8 @@ and none may be later than the file's header ``Date Updated``.
 
 import re
 from datetime import date
-from typing import Optional
 from pathlib import Path
+from typing import Optional
 
 from _shared_paths import CLAUDE_DIR
 
