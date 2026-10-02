@@ -13,7 +13,7 @@
 
 | Type | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
-| Tests | 56 | 9.1/10 | 2026-10-02 | • 💪 **Strongest:** 3 files tied at 9.6/10, including `test_latency_optimisation.py`<br>• ⚠️ **Weakest:** `test_jira_create_handler.py` (7.9/10) |
+| Tests | 57 | 9.1/10 | 2026-10-02 | • 💪 **Strongest:** 3 files tied at 9.6/10, including `test_latency_optimisation.py`<br>• ⚠️ **Weakest:** `test_jira_create_handler.py` (7.9/10) |
 | Skills | 7 | 8.5/10 | 2026-10-02 | • 💪 **Strongest:** `claude_setup_graphify` (9.9/10)<br>• ⚠️ **Weakest:** `claude_kaizen` (7.1/10) |
 | Rules — always-on | 15 | 8.2/10 | 2026-10-01 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_operational_efficiency.md` (7.1/10) |
 | Rules — lazy-load | 17 | 8.4/10 | 2026-10-01 | • 💪 **Strongest:** `latency_optimisation.md` (9.2/10)<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
@@ -39,7 +39,7 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 
 | Summary | Scored | Overall | Date Updated |
 |---|---|---|---|
-| `tests/test_scorecards_summary.md` | 56 | 9.1/10 | 2026-10-02 |
+| `tests/test_scorecards_summary.md` | 57 | 9.1/10 | 2026-10-02 |
 | `skills/skill_scorecards_summary.md` | 7 | 8.5/10 | 2026-10-02 |
 | `rules/rule_scorecards_summary.md` | 32 | 8.3/10 | 2026-10-01 |
 | `hooks/hook_scorecards_summary.md` | 0 | — | — |

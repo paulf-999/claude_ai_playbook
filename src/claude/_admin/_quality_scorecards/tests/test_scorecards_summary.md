@@ -17,7 +17,7 @@
 | hooks | 7 | 9.2/10 | 2026-10-01 | • 💪 **Strongest:** 5 files tied at 9.3/10, including `test_enforcement_writing_style.py`<br>• ⚠️ **Weakest:** `test_enforcement_mcp_stale_settings.py` (9.1/10) |
 | rules | 29 | 9.1/10 | 2026-10-01 | • 💪 **Strongest:** `test_latency_optimisation.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_lazy_load_coverage.py` (8.3/10) |
 | settings | 2 | 9.5/10 | 2026-10-01 | • 💪 **Strongest:** `test_aliases.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_settings.py` (9.3/10) |
-| skills | 12 | 8.8/10 | 2026-10-02 | • 💪 **Strongest:** 3 files tied at 9.4/10, including `test_no_orphaned_skill_files.py`<br>• ⚠️ **Weakest:** `test_jira_create_handler.py` (7.9/10) |
+| skills | 13 | 8.8/10 | 2026-10-02 | • 💪 **Strongest:** 3 files tied at 9.4/10, including `test_no_orphaned_skill_files.py`<br>• ⚠️ **Weakest:** `test_jira_create_handler.py` (7.9/10) |
 | _tests root | 4 | 9.2/10 | 2026-10-01 | • 💪 **Strongest:** `test_rule_reachability.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_file_structure_compliance.py` (8.9/10) |
 
 ---
@@ -79,6 +79,7 @@ Sorted by Overall score, highest first.
 | `rules/scorecard_test_rules_structure.md` | 9.0/10 | 2026-10-01 | — (≥8.5) |
 | `rules/scorecard_test_rules_structure_layout.md` | 9.0/10 | 2026-10-01 | — (≥8.5) |
 | `scorecard_test_hook_metadata_header.md` | 9.0/10 | 2026-09-30 | — (≥8.5) |
+| `skills/scorecard_test_skill_instructions_section.md` | 9.0/10 | 2026-10-02 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_artefact_proposal_gates.md` | 8.9/10 | 2026-09-30 | — (≥8.5) |
 | `scorecard_test_file_structure_compliance.md` | 8.9/10 | 2026-10-01 | — (≥8.5) |
 | `skills/confluence_create_page/scorecard_test_confluence_create_page_timeout.md` | 8.9/10 | 2026-10-01 | — (≥8.5) |
