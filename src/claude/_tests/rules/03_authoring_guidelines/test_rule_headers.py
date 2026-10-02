@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-02
-# Version:           1.2.0
+# Version:           1.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -15,7 +15,7 @@ sessions need it, as comma-separated globs or ``*`` alone, on the line after ``u
 Every entry-point rule, always-on or lazy, declares what a miss costs. A lazy rule whose
 miss is ``high`` must load mechanically — through ``paths:`` or a hook — never on recall alone.
 ``make audit_rule_usage`` reads both headers, so a missing or malformed value skews the report.
-Every always-on entry point also says how it loads and why, and the mode must match its folder.
+Every entry point also says how it loads and why, and the mode must match its folder.
 """
 import re
 
@@ -375,21 +375,11 @@ def test_expected_loading_follows_folder_and_frontmatter():
     assert expected_loading(lazy, "# X\n") == "lazy"
 
 
-def test_every_always_on_entry_point_declares_loading():
-    """Each always-on entry point says how it loads and why, matching its folder."""
+def test_every_entry_point_declares_loading():
+    """Each always-on and lazy entry point says how it loads and why, matching its folder and frontmatter."""
     problems = {
         p.relative_to(RULES_DIR).as_posix(): loading_errors(p.read_text(), expected_loading(p, p.read_text()))
-        for p in always_on_entry_points()
-    }
-    problems = {path: errors for path, errors in problems.items() if errors}
-    assert not problems, f"loading problems {HINT}:\n  " + "\n  ".join(f"{k}: {v}" for k, v in problems.items())
-
-
-def test_lazy_loading_headers_match_when_present():
-    """A lazy rule that already declares loading names the right mode, so the rollout can't drift."""
-    problems = {
-        p.relative_to(RULES_DIR).as_posix(): loading_errors(p.read_text(), expected_loading(p, p.read_text()))
-        for p in lazy_entry_points() if LOADING_PREFIX in p.read_text()
+        for p in always_on_entry_points() + lazy_entry_points()
     }
     problems = {path: errors for path, errors in problems.items() if errors}
     assert not problems, f"loading problems {HINT}:\n  " + "\n  ".join(f"{k}: {v}" for k, v in problems.items())

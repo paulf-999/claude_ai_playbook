@@ -1,7 +1,8 @@
-<!-- version: 1.1.1 -->
+<!-- version: 1.1.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: medium — uncapped /loop, /batch or /goal runs; high once it has a trigger -->
+<!-- loading: lazy — only matters when setting up /loop, /batch or /goal, which few sessions do -->
 # ⚙️ Automation Controls
 
 **Purpose:** Establish guardrails for experimental automation features (`/loop`, `/batch`, `/goal`) to prevent runaway sessions, excessive token usage, and unintended side effects.

@@ -1,7 +1,8 @@
-<!-- version: 1.0.3 -->
+<!-- version: 1.0.4 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: low — a sub-agent spawned where direct work was cheaper -->
+<!-- loading: lazy — only matters just before spawning a sub-agent, so a pointer loads it then -->
 # 🤖 Delegating to Sub-Agent
 
 **Purpose:** Decision framework, constraints, and cost analysis for when to spawn a sub-agent vs. work directly.

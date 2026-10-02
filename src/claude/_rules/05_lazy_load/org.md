@@ -1,7 +1,8 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-10-01 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: medium — resources named or wired up against the wrong organisation conventions -->
+<!-- loading: lazy — only applies to organisation-specific work, so a pointer loads it when naming or wiring resources -->
 # 🏢 Organisation Standards (Index)
 
 **Purpose:** Index the standards that apply only inside your organisation — naming, secrets and estate-specific deployment rules — kept apart from the general style guides.

@@ -1,4 +1,4 @@
-<!-- version: 2.3.0 -->
+<!-- version: 2.4.0 -->
 <!-- created: 2026-09-28 -->
 <!-- updated: 2026-10-02 -->
 # 🗂️ Claude Config Metadata
@@ -66,7 +66,7 @@ Entry-point rules add up to three more lines straight after `updated`:
 - **miss_cost:** `high` (safety, security, data loss or a silent wrong result), `medium` (rework the user would catch) or `low` (style drift), then ` — ` and a reason.
 - **loading:** `always-on` (tiers 01–04), `path-scoped` (lazy with `paths:` frontmatter) or `lazy` (any other lazy rule), then ` — ` and a one-line reason it loads that way.
   - **Matches the folder:** `test_rule_headers.py` fails when the value disagrees with where the rule lives, so it can't drift.
-  - **Required:** on every always-on entry point.
+  - **Required:** on every entry point, always-on or lazy.
 - **Read by:** `make audit_rule_usage` reads `applies_to` and `miss_cost`, while `loading` is for people reading the rule.
 - **Entry points only:** a child file inherits its parent's fields.
 - **No dates:** last-used dates live in the audit's history CSV, so running an audit never edits a rule.
