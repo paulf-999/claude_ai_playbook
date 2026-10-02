@@ -1,4 +1,4 @@
-<!-- version: 1.5.7 -->
+<!-- version: 1.6.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-02 -->
 <!-- applies_to: **/_rules/** -->
@@ -65,6 +65,8 @@ Before writing any rule, answer these five essential questions:
 - **Staleness reviews** — per `guiding_principles.md` reset cycles, audit all rules every ~6 months, archiving unused rules and refreshing evidence for kept ones
 
 @~/.claude/_rules/03_authoring_guidelines/shared_standards/_claude_config_metadata.md
+
+@~/.claude/_rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md
 
 ## 🚫 Common Mistakes & ✅ Hard Gates Checklist
 

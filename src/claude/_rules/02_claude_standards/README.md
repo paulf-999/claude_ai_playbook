@@ -24,7 +24,6 @@ Rules in this tier cost ≈20k tokens every session together and must justify th
 |---|---|
 | **behaviour.md** | Safe operational conduct — ask before risky operations, investigate state before deletion, intentional action |
 | **security.md** | Secure coding standards (secrets, auth, input validation) + Claude's conduct (prompt injection defence) |
-| **testing.md** | Requirements and patterns for test creation; all code artifacts must be tested |
 
 ---
 
@@ -32,7 +31,6 @@ Rules in this tier cost ≈20k tokens every session together and must justify th
 
 - **`behaviour/`** — Child files covering decision-making and artefact proposal gates
 - **`git/`** — Child files covering safe git patterns, commits, and pull requests
-- **`testing/`** — Child files covering test design patterns, anti-patterns, maintenance, and the test metadata/scoring standard
 
 ---
 
@@ -154,15 +152,3 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - Parent: `security.md` — security overview and guardrails
 - Sibling: `_security_guardrails.md` — Claude's conduct and prompt injection defence
 - Reference: `~/.claude/_reference/claude_design_patterns/_security.md` — security architecture
-
-### `testing/_test_metadata.md`
-
-- Parent: `testing.md` — When tests are required; test design pattern and gates
-- `claude_plans.md` — Gate testing before merging
-- `~/.claude/_tests/` — Location of all test files and metadata headers
-- `_tests/rules/02_claude_standards/test_test_score_floor.py` — enforces the score minimum
-
-### `testing/_test_metadata_complexity_scoring.md`
-
-- Parent: `_test_metadata.md` — the quality-score rubric this complements
-- `_complexity_scoring.md` (in `03_authoring_guidelines/shared_standards/`) — the shared formula this file applies

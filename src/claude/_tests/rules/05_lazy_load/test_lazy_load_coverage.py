@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-02
-# Version:           1.5.5
+# Version:           1.5.6
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -130,6 +130,7 @@ ENTRY_POINT_RELATIVE_PATHS = {
     "latency_optimisation.md",
     "mcp_trust_model.md",
     "response_standards_enforcement.md",
+    "testing.md",
     "testing_guidance.md",
     "turn_budgets.md",
     "style_guide_standards/airflow.md",

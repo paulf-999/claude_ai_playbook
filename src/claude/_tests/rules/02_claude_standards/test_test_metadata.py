@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-02
-# Version:           1.2.0
+# Version:           1.2.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -26,7 +26,7 @@ from _shared_paths import CLAUDE_DIR
 TESTS_DIR = CLAUDE_DIR / "_tests"
 # The repo's shell tooling tests sit beside the config in src/sh/; a live install has none, so this is skipped there
 SH_TESTS_DIR = CLAUDE_DIR.parent / "sh" / "claude" / "_tests"
-HINT = "— see _rules/02_claude_standards/testing/_test_metadata.md"
+HINT = "— see _rules/05_lazy_load/testing/_test_metadata.md"
 TITLE = "# Test Metadata"
 FIELDS = [
     "Date created",

@@ -1,6 +1,6 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 # 📊 Test Metadata Standard
 
 **Purpose:** Track test quality, creation date, and maintenance status via structured metadata headers. Enable quick assessment of test staleness and coverage before running or updating.
@@ -71,7 +71,7 @@ Every test file in `~/.claude/_tests/` must open with this metadata header:
 
 ## 🧮 Complexity Scoring
 
-@~/.claude/_rules/02_claude_standards/testing/_test_metadata_complexity_scoring.md
+- **Read on demand:** [`~/.claude/_rules/05_lazy_load/testing/_test_metadata_complexity_scoring.md`](_test_metadata_complexity_scoring.md) — when scoring a test's complexity.
 
 ---
 
