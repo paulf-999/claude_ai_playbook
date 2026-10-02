@@ -2,9 +2,9 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
 # Date updated:      2026-10-02
-# Version:           1.0.2
+# Version:           1.0.3
 # Test quality score: 9/10
-# Test complexity score: 6/10
+# Test complexity score: 3/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 """Tests for the ``make install`` approval gate (issue #150).
