@@ -39,7 +39,7 @@ DEFAULT_ROOT = _REPO_ROOT / "src" / "claude"
 # ── validation logic ──────────────────────────────────────────────────────────
 
 
-def validate_component(metadata: dict) -> tuple[list[str], list[str]]:
+def validate_component(metadata: dict) -> tuple[list[str], list[str]]:  # noqa: C901
     """Validate Tier 1 tags in a component's frontmatter metadata.
 
     Checks for presence and valid values of: maturity, tags.criticality,
@@ -193,7 +193,7 @@ def _rel(path: Path, root: Path) -> str:
 # ── entry point ───────────────────────────────────────────────────────────────
 
 
-def main() -> int:
+def main() -> int:  # noqa: C901
     """Run the tag lint scan and print a summary report.
 
     :return: Exit code — 0 if all components pass, 1 if any FAILs found.
