@@ -7,8 +7,8 @@ set -e
 ##
 ## Description: Inspects staged files and runs only the pytest
 ##              test modules that cover the affected areas of
-##              src/claude/. Exits cleanly if no testable files
-##              are staged.
+##              src/claude/ and src/sh/. Exits cleanly if no
+##              testable files are staged.
 ##
 ## Usage: Invoked automatically by pre-commit. Not intended to
 ##        be run directly.
@@ -30,6 +30,9 @@ TESTS_TO_RUN=()
 # only ever pass one or the other.
 WHOLE_SUITE="src/claude/_tests/"
 
+# Tests for the installer and other shell tooling — separate from the config suite, so never superseded by it
+SH_SUITE="src/sh/claude/_tests/"
+
 #=======================================================================
 # Functions
 #=======================================================================
@@ -37,14 +40,20 @@ WHOLE_SUITE="src/claude/_tests/"
 add_test() {
     local test_file="$1"
 
-    # Whole suite already queued — every more specific path is redundant.
-    for existing in "${TESTS_TO_RUN[@]+"${TESTS_TO_RUN[@]}"}"; do
-        [[ "$existing" == "$WHOLE_SUITE" ]] && return
-    done
+    # Whole suite already queued — every more specific path inside it is redundant.
+    if [[ "$test_file" == "$WHOLE_SUITE"* ]]; then
+        for existing in "${TESTS_TO_RUN[@]+"${TESTS_TO_RUN[@]}"}"; do
+            [[ "$existing" == "$WHOLE_SUITE" ]] && return
+        done
+    fi
 
-    # Adding the whole suite now — it supersedes every specific path queued so far.
+    # Adding the whole suite now — it supersedes every path inside it queued so far, and nothing else.
     if [[ "$test_file" == "$WHOLE_SUITE" ]]; then
-        TESTS_TO_RUN=("$WHOLE_SUITE")
+        local kept=()
+        for existing in "${TESTS_TO_RUN[@]+"${TESTS_TO_RUN[@]}"}"; do
+            [[ "$existing" == "$WHOLE_SUITE"* ]] || kept+=("$existing")
+        done
+        TESTS_TO_RUN=("${kept[@]+"${kept[@]}"}" "$WHOLE_SUITE")
         return
     fi
 
@@ -75,8 +84,13 @@ while IFS= read -r file; do
             add_test "src/claude/_tests/hooks/" ;;
         src/claude/_rules/*)
             add_test "src/claude/_tests/rules/" ;;
-        src/claude/_tests/* | requirements.txt | pytest.ini)
+        src/claude/_tests/*)
             add_test "src/claude/_tests/" ;;
+        src/sh/*)
+            add_test "$SH_SUITE" ;;
+        requirements.txt | pytest.ini)
+            add_test "$WHOLE_SUITE"
+            add_test "$SH_SUITE" ;;
     esac
 done <<< "$STAGED_FILES"
 
