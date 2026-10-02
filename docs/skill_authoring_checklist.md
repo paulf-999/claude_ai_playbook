@@ -218,7 +218,7 @@ These criteria apply to **strategic skills only** — production-ready skills ex
 make lint_skills
 
 # Or just your skill's group
-python3 src/claude/_scripts/lint_skill_authoring_gate.py src/claude/skills/_<group>_skills
+python3 src/claude/_scripts/_lint_scripts/lint_skill_authoring_gate.py src/claude/skills/_<group>_skills
 ```
 
 If linter fails, fix the issues and retry. If tests skip/warn, review the feedback and address in your PR.

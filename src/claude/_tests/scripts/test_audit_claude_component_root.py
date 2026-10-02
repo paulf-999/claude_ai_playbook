@@ -21,7 +21,7 @@ from datetime import date
 
 from _shared_paths import CLAUDE_DIR
 
-SCRIPT = CLAUDE_DIR / "_scripts" / "audit_claude_component.py"
+SCRIPT = CLAUDE_DIR / "_scripts" / "_audit_scripts" / "audit_claude_component.py"
 
 
 def load_audit():

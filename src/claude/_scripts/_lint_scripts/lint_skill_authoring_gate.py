@@ -9,8 +9,8 @@ that need a human to judge are reported as WARN and never block. R1 (version
 matches maturity) is the same check as C3, so it is reported once, as C3.
 
 Usage:
-    python3 src/claude/_scripts/lint_skill_authoring_gate.py          # scan src/claude/skills/ (default)
-    python3 src/claude/_scripts/lint_skill_authoring_gate.py <root>   # scan an explicit root dir
+    python3 src/claude/_scripts/_lint_scripts/lint_skill_authoring_gate.py          # scan src/claude/skills/ (default)
+    python3 src/claude/_scripts/_lint_scripts/lint_skill_authoring_gate.py <root>   # scan an explicit root dir
     make lint_skills                                             # via Makefile target
 
 Exit codes:
@@ -29,8 +29,8 @@ import yaml
 
 # ── script location ───────────────────────────────────────────────────────────
 
-# Script lives in <config>/_scripts/, so the config root is one level up.
-_CONFIG_ROOT = Path(__file__).resolve().parent.parent
+# Script lives in <config>/_scripts/_lint_scripts/, so the config root is two levels up.
+_CONFIG_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_ROOT = _CONFIG_ROOT / "skills"
 DEFAULT_TESTS_DIR = _CONFIG_ROOT / "_tests" / "skills"
 

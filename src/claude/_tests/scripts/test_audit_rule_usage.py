@@ -25,7 +25,7 @@ import pytest
 
 from _shared_paths import CLAUDE_DIR
 
-SCRIPT = CLAUDE_DIR / "_scripts" / "audit_rule_usage.py"
+SCRIPT = CLAUDE_DIR / "_scripts" / "_audit_scripts" / "audit_rule_usage.py"
 TODAY = date(2026, 10, 1)
 GUIDES = "05_lazy_load/style_guide_standards"
 

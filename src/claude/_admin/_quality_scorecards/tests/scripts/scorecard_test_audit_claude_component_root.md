@@ -19,5 +19,5 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/scripts/test_audit_claude_component_root.py` — the test being scored
-- `src/claude/_scripts/audit_claude_component.py` — what the test guards
+- `src/claude/_scripts/_audit_scripts/audit_claude_component.py` — what the test guards
 - `src/claude/_rules/02_claude_standards/portable_paths.md` — why the root is never guessed

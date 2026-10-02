@@ -14,7 +14,7 @@ Standard library only, no LLM calls. Every location is a required argument, beca
 script is installed into the live config too and must never guess the repo.
 
 Usage:
-    python3 src/claude/_scripts/audit_rule_usage.py \\
+    python3 src/claude/_scripts/_audit_scripts/audit_rule_usage.py \\
         --rules src/claude/_rules --transcripts ~/.claude/projects --out src/claude/_admin/_audits
     make audit_rule_usage
 """

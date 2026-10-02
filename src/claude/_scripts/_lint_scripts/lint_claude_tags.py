@@ -6,8 +6,8 @@ mandatory Tier 1 tags as defined in the Claude component tag schema. Run manuall
 before committing new or updated components.
 
 Usage:
-    python3 src/claude/_scripts/lint_claude_tags.py          # scan src/claude/ (default)
-    python3 src/claude/_scripts/lint_claude_tags.py <root>   # scan an explicit root dir
+    python3 src/claude/_scripts/_lint_scripts/lint_claude_tags.py          # scan src/claude/ (default)
+    python3 src/claude/_scripts/_lint_scripts/lint_claude_tags.py <root>   # scan an explicit root dir
     make lint_tags                                      # via Makefile target
 
 Exit codes:
@@ -33,8 +33,8 @@ STALENESS_WARN_DAYS = 90
 
 # ── script location ───────────────────────────────────────────────────────────
 
-# Script lives in <config>/_scripts/, so the config root is one level up.
-_CONFIG_ROOT = Path(__file__).resolve().parent.parent
+# Script lives in <config>/_scripts/_lint_scripts/, so the config root is two levels up.
+_CONFIG_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_ROOT = _CONFIG_ROOT
 
 

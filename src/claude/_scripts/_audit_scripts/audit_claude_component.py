@@ -13,7 +13,7 @@ Unlike the lint validator (lint_claude_tags.py), this script:
     review dates, deprecated components, and broken depends-on chains
 
 Usage:
-    python3 src/claude/_scripts/audit_claude_component.py <root>   # e.g. src/claude
+    python3 src/claude/_scripts/_audit_scripts/audit_claude_component.py <root>   # e.g. src/claude
     make audit_components                                           # passes src/claude
 
 The root is required: the script is installed into the live config too, so it

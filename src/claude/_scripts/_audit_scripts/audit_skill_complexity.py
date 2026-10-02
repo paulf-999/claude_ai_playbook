@@ -8,7 +8,7 @@ Scores a skill on a 0-10 scale based on:
   4. Prerequisite knowledge required (0-2 pts)
 
 Usage:
-    python3 src/claude/_scripts/skill_complexity_scorer.py <skill_dir>
+    python3 src/claude/_scripts/_audit_scripts/audit_skill_complexity.py <skill_dir>
 
 Returns:
     JSON with complexity score and breakdown
