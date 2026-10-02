@@ -20,6 +20,8 @@ gate = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(gate)
 
 VERSION_FOR = {"draft": "0.1.0", "tactical": "1.0.0", "strategic": "2.0.0"}
+# An evals.yaml scenario count inside each maturity's W3 range
+EVALS_FOR = {"draft": 6, "tactical": 9, "strategic": 12}
 SECTIONS = """\
 ## 🎯 Purpose
 
@@ -46,6 +48,7 @@ def make_skill(
     extra: str = "",
     tested: bool | None = None,
     evals: bool = True,
+    eval_count: int | None = None,
 ) -> Path:
     """Write a fake skill that passes every crawl check.
 
@@ -61,6 +64,8 @@ def make_skill(
     :type tested: bool | None
     :param evals: Whether to write ``tests/evals.yaml``.
     :type evals: bool
+    :param eval_count: Scenarios to write, or None for a count inside the maturity's range.
+    :type eval_count: int | None
     :return: The fake skill's directory.
     :rtype: Path
     """
@@ -80,7 +85,9 @@ def make_skill(
     )
     if evals:
         (skill_dir / "tests").mkdir()
-        (skill_dir / "tests" / "evals.yaml").write_text("evals: []\n")
+        count = EVALS_FOR[maturity] if eval_count is None else eval_count
+        scenarios = "".join(f"  - name: case_{i}\n" for i in range(count))
+        (skill_dir / "tests" / "evals.yaml").write_text(f"evals:\n{scenarios}" if count else "evals: []\n")
     return skill_dir
 
 
