@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.0.0
+# Date updated:      2026-10-02
+# Version:           1.0.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -40,7 +40,7 @@ PORTABLE = Path("_rules/02_claude_standards/portable_paths.md")
 BARE_PROSE = "`~/.claude/` exists (Claude Code's own state dir"
 
 
-def install(home: Path, target: Path, steps: str = STEPS) -> None:
+def install(home: Path, target: Path, steps: str = STEPS):
     """Run the install steps from ``claude_file_utils.sh`` into ``target``.
 
     :param home: Temp ``HOME``.
@@ -53,7 +53,7 @@ def install(home: Path, target: Path, steps: str = STEPS) -> None:
 
 
 @pytest.fixture(scope="module")
-def custom(tmp_path_factory) -> dict:
+def custom(tmp_path_factory) -> dict[str, Path]:
     """Install into ``$HOME/claude`` once, with a seeded user-owned file and runtime file.
 
     :param tmp_path_factory: pytest's module-scoped temp factory.
@@ -80,13 +80,13 @@ def imports(path: Path) -> list[str]:
 
 # --- Imports resolve in a custom folder ---
 
-def test_no_default_prefix_imports_left(custom: dict) -> None:
+def test_no_default_prefix_imports_left(custom: dict[str, Path]):
     """No installed file has an import line that still points at ``~/.claude/``."""
     left = [str(p) for p in custom["target"].rglob("*.md") if any(i.startswith("~/.claude/") for i in imports(p))]
     assert not left, f"files still importing from ~/.claude/: {left[:5]}"
 
 
-def test_every_import_resolves(custom: dict) -> None:
+def test_every_import_resolves(custom: dict[str, Path]):
     """Each import in CLAUDE.md points at a real file in the installed folder."""
     found = imports(custom["target"] / "CLAUDE.md")
     assert len(found) >= 10, f"expected the always-on imports, found {len(found)}"
@@ -94,7 +94,7 @@ def test_every_import_resolves(custom: dict) -> None:
     assert not missing, f"imports that don't resolve: {missing}"
 
 
-def test_always_on_rules_reachable(custom: dict) -> None:
+def test_always_on_rules_reachable(custom: dict[str, Path]):
     """The repo's reachability test passes against the installed folder."""
     env = {**os.environ, "CLAUDE_CONFIG_DIR": str(custom["target"])}
     command = ["python3", "-m", "pytest", str(REACHABILITY_TEST), "-q", "--no-cov", "-p", "no:cacheprovider"]
@@ -102,7 +102,7 @@ def test_always_on_rules_reachable(custom: dict) -> None:
     assert result.returncode == 0, result.stdout[-1500:]
 
 
-def test_pointers_use_the_real_folder(custom: dict) -> None:
+def test_pointers_use_the_real_folder(custom: dict[str, Path]):
     """Read-on-demand pointers in rules point at the installed folder too."""
     text = (custom["target"] / SQL_GUIDE).read_text()
     pointer = "`~/claude/_rules/05_lazy_load/style_guide_standards/sql/formatting.md`"
@@ -112,25 +112,25 @@ def test_pointers_use_the_real_folder(custom: dict) -> None:
 
 # --- What the rewrite leaves alone ---
 
-def test_prose_about_the_default_folder_is_kept(custom: dict) -> None:
+def test_prose_about_the_default_folder_is_kept(custom: dict[str, Path]):
     """A bare mention of Claude Code's own ``~/.claude/`` folder isn't rewritten."""
     assert BARE_PROSE in (REPO_ROOT / "src" / "claude" / PORTABLE).read_text(), "fixture text changed in the repo"
     assert BARE_PROSE in (custom["target"] / PORTABLE).read_text(), "prose about ~/.claude/ itself was rewritten"
 
 
-def test_user_owned_and_runtime_files_untouched(custom: dict) -> None:
+def test_user_owned_and_runtime_files_untouched(custom: dict[str, Path]):
     """The rewrite never edits memory/ or runtime data."""
     for rel in ("memory/MEMORY.md", "projects/note.md"):
         assert (custom["target"] / rel).read_text() == "see ~/.claude/_rules/x.md\n", f"{rel} was rewritten"
 
 
-def test_plans_directory_is_the_targets(custom: dict) -> None:
+def test_plans_directory_is_the_targets(custom: dict[str, Path]):
     """plansDirectory points at the installed folder's own _plans/."""
     settings = json.loads((custom["target"] / "settings.json").read_text())
     assert settings["plansDirectory"] == str(custom["target"] / "_plans"), settings["plansDirectory"]
 
 
-def test_rewrite_is_idempotent(custom: dict) -> None:
+def test_rewrite_is_idempotent(custom: dict[str, Path]):
     """Running the rewrite again changes nothing."""
     before = (custom["target"] / "CLAUDE.md").read_text()
     install(custom["home"], custom["target"], "rewrite_config_paths")
@@ -139,7 +139,7 @@ def test_rewrite_is_idempotent(custom: dict) -> None:
 
 # --- Other locations ---
 
-def test_default_folder_is_left_as_shipped(tmp_path: Path) -> None:
+def test_default_folder_is_left_as_shipped(tmp_path: Path):
     """In ``~/.claude`` imports stay as shipped, and plansDirectory is still made absolute."""
     target = tmp_path / ".claude"
     install(tmp_path, target)
@@ -149,7 +149,7 @@ def test_default_folder_is_left_as_shipped(tmp_path: Path) -> None:
     assert settings["plansDirectory"] == str(target / "_plans"), settings["plansDirectory"]
 
 
-def test_folder_outside_home_uses_absolute_paths(tmp_path: Path) -> None:
+def test_folder_outside_home_uses_absolute_paths(tmp_path: Path):
     """A config outside HOME gets absolute import paths."""
     home, target = tmp_path / "home", tmp_path / "elsewhere" / "cfg"
     home.mkdir()
@@ -159,7 +159,7 @@ def test_folder_outside_home_uses_absolute_paths(tmp_path: Path) -> None:
     assert found and all(i.startswith(f"{target}/") for i in found), found[:3]
 
 
-def test_scripts_that_rewrite() -> None:
+def test_scripts_that_rewrite():
     """Install and update rewrite paths, while the Windows sync, which targets another machine's folder, doesn't."""
     for name in ("install_claude_files.sh", "update_claude_files.sh"):
         assert "rewrite_config_paths" in (SCRIPTS / name).read_text(), f"{name} doesn't rewrite paths"

@@ -13,13 +13,11 @@ INSTALL_SCRIPT = REPO_ROOT / "src" / "sh" / "claude" / "install_claude_files.sh"
 MARKER_TEXT = "keep me"
 
 
-def make_sandbox(tmp_path: Path) -> dict:
+def make_sandbox(tmp_path: Path):
     """Build a temp home and config folder, with a marker file in the config folder.
 
     :param tmp_path: pytest's per-test temp directory.
-    :type tmp_path: Path
     :return: Paths for ``home``, ``target`` and ``marker``, plus a clean ``env``.
-    :rtype: dict
     """
     home = tmp_path / "home"
     target = tmp_path / "cfg"
@@ -32,15 +30,12 @@ def make_sandbox(tmp_path: Path) -> dict:
     return {"home": home, "target": target, "marker": marker, "env": env}
 
 
-def run_without_tty(env: dict, stdin_text: str | None = None) -> subprocess.CompletedProcess:
+def run_without_tty(env: dict[str, str], stdin_text: str | None = None) -> subprocess.CompletedProcess:
     """Run the install script without a terminal, as Claude's Bash tool would.
 
     :param env: Environment for the script.
-    :type env: dict
     :param stdin_text: Text piped to the script, or None for ``/dev/null``.
-    :type stdin_text: str | None
     :return: The finished process, stdout and stderr merged.
-    :rtype: subprocess.CompletedProcess
     """
     stdin = subprocess.DEVNULL if stdin_text is None else None
     return subprocess.run(
@@ -49,15 +44,12 @@ def run_without_tty(env: dict, stdin_text: str | None = None) -> subprocess.Comp
     )
 
 
-def run_with_tty(env: dict, keystrokes: bytes) -> tuple[int, str]:
+def run_with_tty(env: dict[str, str], keystrokes: bytes) -> tuple[int, str]:
     """Run the install script on a pseudo-terminal and type ``keystrokes`` into it.
 
     :param env: Environment for the script.
-    :type env: dict
     :param keystrokes: Bytes typed at the prompt, e.g. ``b"no\\n"``.
-    :type keystrokes: bytes
     :return: The exit code and the script's output.
-    :rtype: tuple[int, str]
     """
     primary, secondary = os.openpty()
     proc = subprocess.Popen(
@@ -71,13 +63,11 @@ def run_with_tty(env: dict, keystrokes: bytes) -> tuple[int, str]:
     return proc.returncode, output.decode()
 
 
-def nothing_changed(box: dict) -> list[str]:
+def nothing_changed(box) -> list[str]:
     """List the ways an install ran past the gate: a changed marker, copied files or a backup.
 
     :param box: A sandbox from :func:`make_sandbox`.
-    :type box: dict
     :return: One message per change found, or an empty list when nothing changed.
-    :rtype: list[str]
     """
     problems = []
     if box["marker"].read_text() != MARKER_TEXT:
