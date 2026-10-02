@@ -1,7 +1,8 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.0.3 -->
 <!-- created: 2026-04-11 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: medium — dates that sort or compare wrongly unnoticed; high once it has a trigger -->
+<!-- loading: lazy — only matters when writing dates into names, code or logs, which no single file type marks -->
 # 📅 Date & Time Standards
 
 **Purpose:** Set one date and time format for technical contexts, so code, metadata and logs sort and compare consistently.

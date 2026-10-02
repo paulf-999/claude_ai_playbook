@@ -1,7 +1,8 @@
-<!-- version: 1.0.3 -->
+<!-- version: 1.0.4 -->
 <!-- created: 2026-05-20 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: low — tickets in the wrong format -->
+<!-- loading: lazy — only applies when writing Jira tickets, which have no local file to trigger on -->
 # 🎫 Jira Style Guide & Standards
 
 **Purpose:** Define standards for the DM Jira project — field requirements, ticket structure, component and sprint assignment, and hygiene expectations.

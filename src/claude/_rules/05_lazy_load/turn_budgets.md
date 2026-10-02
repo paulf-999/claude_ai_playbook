@@ -1,7 +1,8 @@
-<!-- version: 1.0.3 -->
+<!-- version: 1.0.4 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: medium — non-interactive runs without a turn cap overrun cost -->
+<!-- loading: lazy — only matters for non-interactive runs such as skills, automation or CI -->
 # 🔄 Turn Budgets
 
 **Purpose:** Establish constraints on turns for non-interactive automation to prevent runaway sessions and cost overrun.
