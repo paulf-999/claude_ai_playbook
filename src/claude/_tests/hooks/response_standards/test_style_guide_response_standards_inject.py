@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-07
 # Date updated:      2026-10-02
-# Version:           2.0.3
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -134,6 +134,28 @@ class TestResponseStandardsInjectHook:
             f"Directive should ban placeholder footers. Got: {context}"
         assert "last tool call" in context.lower(), \
             f"Directive should order the timestamp as the last tool call. Got: {context}"
+
+    def test_directive_stays_short(self):
+        """Every injection stays in the transcript, so the directive must stay a short reminder."""
+        context = json.loads(self.run_hook().stdout)["hookSpecificOutput"]["additionalContext"]
+        assert len(context) < 1200, \
+            f"Directive is {len(context)} characters — keep it under 1,200 and leave detail to the rule"
+
+    def test_falls_back_to_plain_text_without_jq(self, tmp_path):
+        """Without jq the hook still injects, as plain text that Claude Code adds as context."""
+        bin_dir = tmp_path / "bin"
+        bin_dir.mkdir()
+        for tool in ("bash", "cat", "date", "dirname", "grep"):
+            (bin_dir / tool).symlink_to(shutil.which(tool))
+        result = subprocess.run(
+            ["bash", HOOK_SCRIPT], input='{"prompt": "hi"}', text=True, capture_output=True,
+            env={"PATH": str(bin_dir)},
+        )
+        assert result.returncode == 0, f"Hook should exit 0 without jq. Stderr: {result.stderr}"
+        assert result.stdout.startswith("RESPONSE STANDARDS"), \
+            f"Without jq the hook should print the plain directive. Got: {result.stdout}"
+        assert re.search(r"PROMPT_SUBMITTED_AT=\d{10}", result.stdout), \
+            f"The plain directive should still carry the timestamp. Got: {result.stdout}"
 
 
 class TestSkillWaiver:
