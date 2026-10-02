@@ -10,8 +10,13 @@ _templates/
 │   ├── SKILL.md.template
 │   ├── skill.contract.yaml.template
 │   └── _quality_scorecard_template.md
+├── AGENT.md.template        # Starting point for a new agent
+├── rule.md.template         # Starting point for a new rule
+├── TODO.md.template         # Starting point for a project TODO list
 ├── scorecard.md.template  # Layout for every individual scorecard
 ├── scorecard_summary.md.template  # Layout for every scorecard summary
+├── utils/
+│   └── shell_utils.sh       # Shared shell helpers: log colours and common variables
 └── README.md                # This file
 ```
 
@@ -32,6 +37,22 @@ _templates/
 **`skills/_quality_scorecard_template.md`**
 - Table-only layout for each skill's scorecard at `_admin/_quality_scorecards/skills/scorecard_<skill_name>.md`: 7 dimensions plus Overall
 - Includes the scoring scale and per-dimension criteria
+
+### Agents, rules and TODOs
+
+**`AGENT.md.template`**
+- Starting point for a new agent at `agents/<group>/<name>/AGENT.md`: frontmatter, metadata header and the standard sections
+- Keeps its uppercase name because it mirrors the `AGENT.md` file it produces
+- Used by: `authoring_agents/_lazy_load/_core_standards.md`
+
+**`rule.md.template`**
+- Two starting points for a new rule: Template A (one principle) and Template B (several related patterns)
+- Ends with a quality checklist that applies to both templates
+- Used by: `authoring_rules.md`
+
+**`TODO.md.template`**
+- Table layout for a project's `TODO.md`, with pending and completed items
+- Keeps its uppercase name because it mirrors the `TODO.md` file it produces
 
 ### Scorecards
 
