@@ -18,7 +18,7 @@
 | Rules — always-on | 15 | 8.2/10 | 2026-10-01 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_operational_efficiency.md` (7.1/10) |
 | Rules — lazy-load | 17 | 8.4/10 | 2026-10-01 | • 💪 **Strongest:** `latency_optimisation.md` (9.2/10)<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
 | Hooks | 5 | 8.3/10 | 2026-10-02 | • 💪 **Strongest:** `hook_enforcement_mcp_stale_settings.sh` (8.7/10)<br>• ⚠️ **Weakest:** `hook_enforcement_writing_style.sh` (7.7/10) |
-| Agents | 0 | — | — | • ⚠️ **Gap:** no agents are scored yet |
+| Agents | 1 | 6.0/10 | 2026-10-02 | • ⚠️ **Only agent:** `technical_writer` (6.0/10) overlaps two skills and has no tool allowlist |
 
 ---
 
@@ -28,7 +28,7 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 
 | # | Action | Why | Source |
 |---|---|---|---|
-| 1 | • 🆕 **Unscored agents:** write the first agent scorecards | • 🙈 **Blind spot:** one of the five types has no quality signal at all | `agents/agent_scorecards_summary.md` |
+| 1 | • 🔒 **Lowest score overall:** add a `tools:` allowlist to `technical_writer` and resolve its overlap with two skills | • 🔻 **Bottom of every table:** at 6.0/10 it is the lowest-scoring artefact | `agents/agent_scorecards_summary.md` |
 | 2 | • 🏷️ **Misleading hook name:** rename `hook_enforcement_writing_style.sh` after the location check it runs | • 🔻 **Weakest hook:** at 7.7/10 it is the lowest-scoring hook | `hooks/hook_scorecards_summary.md` |
 | 3 | • 🔧 **Lowest skill score:** add `claude_kaizen`'s implementation reference | • 🔻 **Bottom of the table:** at 7.1/10 it is the lowest-scoring skill | `skills/skill_scorecards_summary.md` |
 | 4 | • 💬 **Failure messages:** add assertion failure messages to `test_jira_create_handler.py`, then the two confluence handler tests (`_handler.py` and `_phases.py`) | • 🔍 **Lowest scores:** `test_jira_create_handler.py` and `_phases.py` have failure messages on 0% of assertions, and `_handler.py` on 3% | `tests/test_scorecards_summary.md` |
@@ -44,7 +44,7 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 | `skills/skill_scorecards_summary.md` | 7 | 8.5/10 | 2026-10-02 |
 | `rules/rule_scorecards_summary.md` | 32 | 8.3/10 | 2026-10-01 |
 | `hooks/hook_scorecards_summary.md` | 5 | 8.3/10 | 2026-10-02 |
-| `agents/agent_scorecards_summary.md` | 0 | — | — |
+| `agents/agent_scorecards_summary.md` | 1 | 6.0/10 | 2026-10-02 |
 
 ---
 
