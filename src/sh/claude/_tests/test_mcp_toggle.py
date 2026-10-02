@@ -13,6 +13,10 @@ from typing import Optional
 
 import pytest
 
+# mcp_toggle.py lives in the helpers folder beside this one
+HELPERS_DIR = Path(__file__).resolve().parents[1] / "helpers"
+sys.path.insert(0, str(HELPERS_DIR))
+
 
 @pytest.fixture
 def temp_settings_file():
@@ -168,7 +172,7 @@ def test_invalid_action_exit_code():
     assert exc_info.value.code == 1
 
 
-MCP_TOGGLE = Path(__file__).with_name("mcp_toggle.py")
+MCP_TOGGLE = HELPERS_DIR / "mcp_toggle.py"
 
 
 def run_toggle(home: Path, config_dir: Optional[Path]) -> subprocess.CompletedProcess:
