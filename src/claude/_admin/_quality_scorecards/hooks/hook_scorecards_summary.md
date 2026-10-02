@@ -12,7 +12,7 @@
 
 | Group | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
-| Hooks | 0 | — | — | • ⚠️ **Gap:** no hooks are scored yet |
+| Hooks | 5 | 8.1/10 | 2026-10-02 | • 💪 **Strongest:** `hook_enforcement_mcp_stale_settings.sh` (8.7/10)<br>• ⚠️ **Weakest:** `hook_enforcement_writing_style.sh` and `hook_style_guide_response_standards_inject.sh` (7.7/10) |
 
 ---
 
@@ -22,7 +22,11 @@ Ranked by impact, highest first.
 
 | # | Action | Why | Source |
 |---|---|---|---|
-| 1 | • 🆕 **First scorecards:** score the first hooks | • 🙈 **Blind spot:** no hook has a quality signal yet | `README.md` |
+| 1 | • ✂️ **Injected text:** trim the response-standards directive | • 💸 **Every prompt:** about 680 tokens are added to every turn | `scorecard_hook_style_guide_response_standards_inject.md` |
+| 2 | • 🏷️ **Misleading name:** rename `hook_enforcement_writing_style.sh` after the location check it runs | • 🔍 **Clarity:** the name sends readers to the wrong rule | `scorecard_hook_enforcement_writing_style.md` |
+| 3 | • 🐍 **Python dependency:** build the injection JSON without `python3` | • 🛡️ **Silent loss:** without `python3` the directive is dropped | `scorecard_hook_style_guide_response_standards_inject.md` |
+| 4 | • 🧪 **Validator check:** test the naming validator's `--check` mode directly | • 🤫 **Fails open:** a broken validator would switch the hook off silently | `scorecard_hook_enforcement_naming_convention.md` |
+| 5 | • 📅 **Reserved hook:** set a date to wire in or remove `hook_style_guide_response_standards.sh` | • 💤 **Unused:** it has been reserved since it was added | `scorecard_hook_style_guide_response_standards.md` |
 
 ---
 
@@ -32,7 +36,11 @@ Sorted by Overall score, highest first.
 
 | Scorecard | Overall | Date Updated | Recommended improvements |
 |---|---|---|---|
-| — | — | — | • ⚠️ **Gap:** no hooks are scored yet |
+| `scorecard_hook_enforcement_mcp_stale_settings.md` | 8.7/10 | 2026-10-02 | — (≥8.5) |
+| `scorecard_hook_enforcement_naming_convention.md` | 8.4/10 | 2026-10-02 | • Test the validator's `--check` mode directly. |
+| `scorecard_hook_style_guide_response_standards.md` | 8.0/10 | 2026-10-02 | • Set a date to wire in or remove the reserved hook. |
+| `scorecard_hook_enforcement_writing_style.md` | 7.7/10 | 2026-10-02 | • Rename the hook after its location check.<br>• Record the incident that justified it. |
+| `scorecard_hook_style_guide_response_standards_inject.md` | 7.7/10 | 2026-10-02 | • Trim the injected directive.<br>• Build the JSON without `python3`. |
 
 ---
 
