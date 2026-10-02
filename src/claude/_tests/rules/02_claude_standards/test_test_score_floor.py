@@ -2,9 +2,9 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-02
-# Version:           2.0.2
+# Version:           2.1.0
 # Test quality score: 9/10
-# Test complexity score: 8/10
+# Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
@@ -21,7 +21,7 @@ import re
 from pathlib import Path
 
 from _shared_paths import RULES_DIR
-from test_test_metadata import HINT, TESTS_DIR, VALID_HEADER, find_test_files, label
+from test_test_metadata import HINT, VALID_HEADER, find_test_files, label
 
 QUALITY_FLOOR = 9
 COMPLEXITY_FLOOR = 7
@@ -91,12 +91,9 @@ def header(quality: int, complexity: int, style: str) -> str:
 
 def test_every_test_meets_the_minimum():
     """Every test file scores quality 9, complexity 7 and style Yes or better."""
-    # src/sh/ tests have headers checked by test_test_metadata.py, but join this minimum only once
-    # test_install_claude_files.py is split into focused files that can each meet it
     failures = [
         f"{label(path)}: {e}"
         for path in find_test_files()
-        if path.is_relative_to(TESTS_DIR)
         for e in floor_errors(path.read_text())
     ]
     assert not failures, "Tests below the score minimum " + HINT + ":\n  " + "\n  ".join(failures)
