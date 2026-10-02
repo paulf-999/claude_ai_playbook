@@ -10,7 +10,7 @@ SHELL = /bin/bash
 # make audit_rule_usage # measure how often each rule applies and loads, from session transcripts
 # make install          # install Claude config files into $CLAUDE_CONFIG_DIR (previews, then asks you to type 'install')
 # make update           # [DISABLED] update Claude config files in ~/.claude/ (WSL)
-# make clean_plans      # archive executed/superseded plans to ~/.claude/plans/archive/
+# make clean_plans      # archive executed/superseded plans to $CLAUDE_CONFIG_DIR/_plans/archive/
 # make clean_backups    # move old ~/.claude_backup_* dirs to ~/.claude_backup_archive/
 # make clean            # run clean_plans and clean_backups
 # make all              # print this usage list

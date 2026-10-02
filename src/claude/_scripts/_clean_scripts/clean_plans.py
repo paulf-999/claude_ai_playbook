@@ -1,17 +1,31 @@
-"""Archive executed/superseded plans from ~/.claude/plans/PLANS.md.
+"""Archive executed/superseded plans from <config>/_plans/PLANS.md.
 
 Reads the PLANS.md catalogue, lists all entries with status 'executed' or
 'superseded', asks for confirmation, then moves those plan files to
-~/.claude/plans/archive/ and removes their rows from PLANS.md.
+<config>/_plans/archive/ and removes their rows from PLANS.md.
+
+<config> is $CLAUDE_CONFIG_DIR, falling back to ~/.claude, matching the
+plansDirectory the installer writes into settings.json.
 """
 
 from __future__ import annotations
 
+import os
 import re
 import shutil
 import sys
 from datetime import date
 from pathlib import Path
+
+
+def _default_plans_dir() -> Path:
+    """Return the _plans/ folder of the config named by CLAUDE_CONFIG_DIR.
+
+    :return: ``$CLAUDE_CONFIG_DIR/_plans``, or ``~/.claude/_plans`` when the variable is unset.
+    :rtype: Path
+    """
+    config_dir = os.environ.get("CLAUDE_CONFIG_DIR") or "~/.claude"
+    return Path(config_dir).expanduser() / "_plans"
 
 
 def _find_candidates(  # noqa: C901
@@ -109,7 +123,7 @@ def main(
 ):
     """Run the clean_plans archival workflow.
 
-    :param plans_dir: Override the plans directory path. Defaults to ~/.claude/plans.
+    :param plans_dir: Override the plans directory path. Defaults to $CLAUDE_CONFIG_DIR/_plans.
         Intended for use in tests.
     :type plans_dir: str or Path or None
     :param min_age_days: Only archive plans this many days old or older.
@@ -118,7 +132,7 @@ def main(
         Intended for use in tests.
     :type today: date or None
     """
-    plans_dir = Path("~/.claude/plans").expanduser() if plans_dir is None else Path(plans_dir)
+    plans_dir = _default_plans_dir() if plans_dir is None else Path(plans_dir)
     index_path = plans_dir / "PLANS.md"
 
     if not index_path.exists():
