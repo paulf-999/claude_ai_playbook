@@ -4,10 +4,11 @@ paths:
   - "**/*.sh"
   - "**/*.sql"
 ---
-<!-- version: 1.3.0 -->
+<!-- version: 1.3.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-02 -->
 <!-- miss_cost: medium — untested code the user catches in review -->
+<!-- loading: path-scoped — only matters when writing code, so it loads when a Python, shell or SQL file is open -->
 # 🧪 Testing
 
 **Purpose:** Every new code artifact needs a test to prevent regressions and validate intended behavior.

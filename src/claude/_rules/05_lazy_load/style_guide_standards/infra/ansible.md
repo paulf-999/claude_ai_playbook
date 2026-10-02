@@ -3,10 +3,11 @@ paths:
   - "**/playbooks/**/*.yml"
   - "**/roles/**/*.yml"
 ---
-<!-- version: 1.2.1 -->
+<!-- version: 1.2.2 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: medium — playbooks that fail review or idempotency checks -->
+<!-- loading: path-scoped — only applies to Ansible, so it loads when a playbook or role file is open -->
 # 📦 Ansible Style Guide & Standards
 
 **Purpose:** Define the team's standards for writing and structuring Ansible projects.

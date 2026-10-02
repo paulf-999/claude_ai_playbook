@@ -3,10 +3,11 @@ paths:
   - "**/models/**/*.sql"
   - "**/dbt_project.yml"
 ---
-<!-- version: 1.1.1 -->
+<!-- version: 1.1.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: medium — models that break naming or layering and fail review -->
+<!-- loading: path-scoped — only applies to dbt models, so it loads when a model or dbt_project.yml is open -->
 # 🔵 dbt Style Guide & Standards
 
 **Purpose:** Define standards for the dbt project — covering model organization, naming, YAML properties, testing, snapshots, and macros. Standards ensure consistency, maintainability, and correctness across the dbt project.
