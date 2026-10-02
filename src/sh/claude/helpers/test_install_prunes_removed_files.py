@@ -17,6 +17,7 @@ flatten and prune steps from ``claude_file_utils.sh`` against a fake source and 
 """
 
 import os
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -129,8 +130,7 @@ def test_moved_file_leaves_no_copy_behind(tmp_path: Path) -> None:
 def test_removed_skill_is_removed_from_flattened_path(tmp_path: Path) -> None:
     """Deleting a skill from its group removes its flattened folder from the target."""
     target = setup(tmp_path)
-    for rel in ("SKILL.md", "reference/_phases.md"):
-        (tmp_path / "src/skills/_g_skills/demo" / rel).unlink()
+    shutil.rmtree(tmp_path / "src/skills/_g_skills/demo")  # git never leaves an empty folder behind
     install(tmp_path)
     assert not (target / "skills/demo").exists(), "the removed skill's folder is still installed"
 
