@@ -2,10 +2,11 @@
 paths:
   - "**/*.mmd"
 ---
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: low — diagram style drift -->
+<!-- loading: path-scoped — only applies to Mermaid diagrams, so it loads when a .mmd file is open -->
 # 🔀 Mermaid Diagram Standards
 
 **Purpose:** Keep Mermaid diagrams consistent and readable across skills and READMEs.

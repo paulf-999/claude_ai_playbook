@@ -2,10 +2,11 @@
 paths:
   - "**/*.sql"
 ---
-<!-- version: 1.2.2 -->
+<!-- version: 1.2.3 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: medium — SQL that fails SQLFluff or costs more to run -->
+<!-- loading: path-scoped — only applies to SQL, so it loads when a .sql file is open -->
 # 🗄️ SQL Style Guide & Standards
 
 **Purpose:** Define team SQL standards for consistency, readability, and cost optimization. Standards apply to all SQL written in the warehouse (dbt, Airflow, ad-hoc queries).

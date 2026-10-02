@@ -3,10 +3,11 @@ paths:
   - "**/_rules/**"
   - "**/CLAUDE.md"
 ---
-<!-- version: 2.1.0 -->
+<!-- version: 2.1.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: low — a rule lands in the wrong tier, which is easy to move -->
+<!-- loading: path-scoped — only needed when placing or moving a rule, so it loads when _rules/ files or CLAUDE.md are open -->
 # 📋 Rules Loading Strategy
 
 **Purpose:** Decide which of the five tiers a rule belongs in — and so whether it loads every session or only on demand.

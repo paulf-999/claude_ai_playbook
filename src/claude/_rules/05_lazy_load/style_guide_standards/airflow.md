@@ -2,10 +2,11 @@
 paths:
   - "**/dags/**/*.py"
 ---
-<!-- version: 1.2.0 -->
+<!-- version: 1.2.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: medium — DAGs that fail review or misbehave on schedule -->
+<!-- loading: path-scoped — only applies to Airflow DAGs, so it loads when a DAG file is open -->
 # 🌬️ Airflow Style Guide & Standards
 
 **Purpose:** Define standards for Apache Airflow DAGs and pipelines. Standards ensure reliability, debuggability, and maintainability across all workflows in the platform.

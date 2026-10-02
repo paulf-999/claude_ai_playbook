@@ -2,10 +2,11 @@
 paths:
   - "**/*.py"
 ---
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: low — Python style drift -->
+<!-- loading: path-scoped — only applies to Python, so it loads when a .py file is open -->
 # 🐍 Python Coding Standards
 
 **Purpose:** Establish Python coding conventions extending PEP 8, ensuring consistent, readable, and maintainable code across the team.

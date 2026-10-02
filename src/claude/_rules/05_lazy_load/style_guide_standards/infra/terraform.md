@@ -2,10 +2,11 @@
 paths:
   - "**/*.tf"
 ---
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: medium — modules that fail review or plan checks -->
+<!-- loading: path-scoped — only applies to Terraform, so it loads when a .tf file is open -->
 # 🏗️ Terraform Style Guide & Standards
 
 **Purpose:** Define the team's standards for writing and structuring Terraform code.

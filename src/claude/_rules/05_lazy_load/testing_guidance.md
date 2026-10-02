@@ -3,10 +3,11 @@ paths:
   - "**/_tests/**"
   - "**/test_*.py"
 ---
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-09-29 -->
 <!-- updated: 2026-10-02 -->
 <!-- miss_cost: medium — tests below the quality floor that need rework -->
+<!-- loading: path-scoped — only matters when writing or auditing tests, so it loads when a test file is open -->
 # 🧪 Testing Guidance
 
 **Purpose:** How-to detail behind `testing.md`, read on demand before writing a new test or auditing existing ones.
