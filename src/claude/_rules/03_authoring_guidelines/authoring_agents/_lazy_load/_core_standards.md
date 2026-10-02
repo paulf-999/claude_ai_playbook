@@ -1,6 +1,6 @@
-<!-- version: 1.1.3 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 # 📐 Agent Core Standards
 
 **Purpose:** The baseline every agent follows — 5-section structure, naming pattern, frontmatter fields, maturity levels, and testing requirements.
@@ -41,6 +41,7 @@ maturity: draft  # draft | tactical | strategic
 triggers:
   - /agent_name
   - "invoke agent_name"
+tools: Read, Grep, Glob
 model: inherit
 isolation: worktree
 ---
@@ -55,6 +56,7 @@ isolation: worktree
 - `maturity` — draft | tactical | strategic (same as skills)
 - `triggers` — how users invoke this agent (slash command + natural language variants)
 - `model` — `inherit` (use active model) or specific model override
+- `tools` — allowlist of only the tools the job needs, because leaving it out grants every tool, Bash and MCP included
 - `isolation` — `worktree` (recommended for agents that modify files) or none
 - **Metadata header** — straight after the frontmatter: `version` (0.x = draft, 1.x = tactical, 2.x = strategic), `created`, `updated`; see `_claude_config_metadata.md`
 
