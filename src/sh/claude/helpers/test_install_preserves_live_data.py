@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.0.0
+# Date updated:      2026-10-02
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -128,6 +128,23 @@ def test_skills_are_flattened(live: dict) -> None:
     """Skill group folders are flattened, as before."""
     groups = [p.name for p in (live["target"] / "skills").glob("_*") if p.is_dir()]
     assert not groups, f"skill group folders left behind: {groups}"
+
+
+def test_reinstall_does_not_nest_skills(tmp_path: Path) -> None:
+    """Installing over already-flattened skills merges them, never nesting skills/<name>/<name>/.
+
+    GNU cp copies ``src/`` into an existing ``dest`` as ``dest/src``, so on Linux every reinstall
+    used to add another nested copy of each skill.
+    """
+    home, target = tmp_path / "home", tmp_path / "claude"
+    home.mkdir()
+    target.mkdir()
+    run_install_steps(home, target)
+    run_install_steps(home, target)
+    skills = [p for p in (target / "skills").iterdir() if p.is_dir() and not p.name.startswith(".")]
+    assert skills, "no skills were installed"
+    nested = [p.name for p in skills if (p / p.name).is_dir()]
+    assert not nested, f"skills nested inside themselves after a reinstall: {nested}"
 
 
 def test_backup_is_a_copy_not_a_move(live: dict) -> None:
