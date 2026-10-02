@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-02
-# Version:           1.2.2
+# Version:           1.2.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -217,7 +217,7 @@ def test_score_minimum_names_its_enforcer():
     assert "`test_test_score_floor.py` fails any test file below quality 9" in TEST_METADATA_MD.read_text(), (
         "_test_metadata.md should say test_test_score_floor.py enforces the minimum"
     )
-    assert (TESTS_RULES_DIR / "02_claude_standards" / "test_test_score_floor.py").is_file(), (
+    assert (TESTS_RULES_DIR / "05_lazy_load" / "test_test_score_floor.py").is_file(), (
         "test_test_score_floor.py is missing, so the score minimum is no longer enforced"
     )
 

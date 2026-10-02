@@ -259,7 +259,7 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 ### `testing.md`
 
 - Children: `testing/_testing_file_organization.md` and `testing/_test_metadata.md`, read on demand
-- `_tests/rules/02_claude_standards/test_test_score_floor.py` — enforces the test score minimum
+- `_tests/rules/05_lazy_load/test_test_score_floor.py` — enforces the test score minimum
 
 ### `testing/_test_metadata.md`
 
