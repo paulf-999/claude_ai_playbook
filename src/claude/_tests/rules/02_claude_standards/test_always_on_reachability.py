@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
-# Date updated:      2026-10-01
-# Version:           2.0.0
+# Date updated:      2026-10-02
+# Version:           2.0.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -22,10 +22,7 @@ import re
 from functools import cache
 
 from _rule_reachability import find_reachability_issues
-from _shared_paths import ALIASES_FILE
-from _shared_paths import CLAUDE_DIR
-from _shared_paths import CLAUDE_MD
-from _shared_paths import RULES_DIR
+from _shared_paths import ALIASES_FILE, CLAUDE_DIR, CLAUDE_MD, RULES_DIR
 
 ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference")
 ENTRY_FILES = [CLAUDE_MD, ALIASES_FILE]

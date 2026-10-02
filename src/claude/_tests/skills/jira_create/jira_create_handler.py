@@ -190,7 +190,8 @@ def phase_3_create_ticket(
             "error": "Network error: Cannot reach Jira. Check your internet connection.",
             "type": "network_error",
         }
-    except Exception as e:
+    # Last-resort boundary: any other failure becomes an "unknown" result instead of a crash
+    except Exception as e:  # noqa: BLE001
         return {
             "success": False,
             "error": f"Unexpected error: {str(e)}",

@@ -20,8 +20,8 @@ Example usage:
 """
 
 import pathlib
-import time
 import threading
+import time
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 # Field constraints
@@ -288,7 +288,8 @@ def phase_3_publish_page(
             "error": "Network error: Cannot reach Confluence. Check your internet connection.",
             "type": "network_error",
         }
-    except Exception as e:
+    # Last-resort boundary: any other failure becomes an "unknown" result instead of a crash
+    except Exception as e:  # noqa: BLE001
         return {
             "success": False,
             "error": f"Unexpected error: {str(e)}",
@@ -502,7 +503,8 @@ def create_page_with_timeout(
     def run_tool():
         try:
             result_container[0] = tool_call()
-        except Exception as e:
+        # Capture any failure so the calling thread can re-raise it
+        except Exception as e:  # noqa: BLE001
             exception_container[0] = e
 
     # Start tool call in background thread

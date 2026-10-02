@@ -6,14 +6,14 @@ and produces a structured health report. Components with YAML frontmatter contai
 a 'maturity' key are fully analysed for health signals. All others are counted as
 untagged and grouped by directory.
 
-Unlike the lint validator (claude_tag_lint.py), this script:
+Unlike the lint validator (lint_claude_tags.py), this script:
   - Is not a CI gate — always exits 0
   - Reports untagged components (agents, rules, process docs not yet on the schema)
   - Checks health signals: dormant+critical, untested+critical, stale/missing
     review dates, deprecated components, and broken depends-on chains
 
 Usage:
-    python3 src/claude/_scripts/claude_component_audit.py <root>   # e.g. src/claude
+    python3 src/claude/_scripts/_audit_scripts/audit_claude_component.py <root>   # e.g. src/claude
     make audit_components                                           # passes src/claude
 
 The root is required: the script is installed into the live config too, so it
@@ -26,6 +26,7 @@ import sys
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
+from typing import Any
 
 import frontmatter
 
@@ -35,7 +36,7 @@ SCAN_DIRS = ["skills", "agents", "rules", "process", "commands"]
 EXCLUDE_DIRS = {"style_guide_standards", "patches"}
 EXCLUDE_NAMES = {"README.md"}
 STALENESS_WARN_DAYS = 90
-USAGE = "usage: claude_component_audit.py <root>   e.g. src/claude"
+USAGE = "usage: audit_claude_component.py <root>   e.g. src/claude"
 
 
 # ── file discovery ────────────────────────────────────────────────────────────
@@ -99,11 +100,11 @@ def _collect_names(tagged: list[Path]) -> set[str]:
 # ── health checks ─────────────────────────────────────────────────────────────
 
 
-def check_health(metadata: dict, known_names: set[str]) -> dict[str, str | None]:
+def check_health(metadata: dict[str, Any], known_names: set[str]) -> dict[str, str | None]:
     """Check a tagged component's metadata for health signals.
 
     :param metadata: Parsed YAML frontmatter as a plain dict.
-    :type metadata: dict
+    :type metadata: dict[str, Any]
     :param known_names: Set of all known component names for depends-on validation.
     :type known_names: set[str]
     :return: Dict mapping signal keys to detail strings, or None if signal absent.
@@ -119,7 +120,7 @@ def check_health(metadata: dict, known_names: set[str]) -> dict[str, str | None]
         "BROKEN_DEP": None,
     }
 
-    tags: dict = metadata.get("tags") or {}
+    tags: dict[str, Any] = metadata.get("tags") or {}
     criticality = tags.get("criticality", "")
     status = tags.get("status", "")
     tested_raw = tags.get("tested")
@@ -233,7 +234,7 @@ def _top_dir(path: Path, root: Path) -> str:
 # ── report ────────────────────────────────────────────────────────────────────
 
 
-def build_report(root: Path) -> None:
+def build_report(root: Path):
     """Orchestrate scan, health checks, and printed report.
 
     :param root: Root directory to scan (e.g. src/claude/).
@@ -300,7 +301,7 @@ def _print_signal_section(
     signal_groups: dict[str, list[tuple[str, str]]],
     key: str,
     label: str,
-) -> None:
+):
     """Print one health signal section.
 
     :param signal_groups: Collected signals grouped by key.

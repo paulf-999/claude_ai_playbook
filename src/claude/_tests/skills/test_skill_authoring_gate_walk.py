@@ -19,9 +19,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from _gate_fixtures import codes
-from _gate_fixtures import make_skill
-from _gate_fixtures import walk_run
+from _gate_fixtures import codes, make_skill, walk_run
 
 
 def test_clean_skill_has_no_walk_findings(tmp_path: Path):

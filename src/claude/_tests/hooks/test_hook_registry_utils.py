@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-01
-# Version:           2.2.0
+# Date updated:      2026-10-02
+# Version:           2.2.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -22,9 +22,7 @@ lingering unnoticed.
 import json
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR
-from _shared_paths import HOOKS_DIR
-from _shared_paths import SETTINGS_FILE
+from _shared_paths import CLAUDE_DIR, HOOKS_DIR, SETTINGS_FILE
 
 # Hooks kept on purpose but not registered, mapped to the rule that explains why
 RESERVED_HOOKS = {

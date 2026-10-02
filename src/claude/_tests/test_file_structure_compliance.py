@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-01
-# Version:           2.0.0
+# Date updated:      2026-10-02
+# Version:           2.0.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -21,8 +21,7 @@ from functools import cache
 
 import pytest
 
-from _file_structure_validator import CLAUDE_HOME
-from _file_structure_validator import FileStructureValidator
+from _file_structure_validator import CLAUDE_HOME, FileStructureValidator
 
 HINT = "— see _rules/01_essentials/claude_usage_standards/claude_directory_structure.md"
 

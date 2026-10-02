@@ -6,8 +6,8 @@ mandatory Tier 1 tags as defined in the Claude component tag schema. Run manuall
 before committing new or updated components.
 
 Usage:
-    python3 src/sh/claude/claude_tag_lint.py          # scan src/claude/ (default)
-    python3 src/sh/claude/claude_tag_lint.py <root>   # scan an explicit root dir
+    python3 src/claude/_scripts/_lint_scripts/lint_claude_tags.py          # scan src/claude/ (default)
+    python3 src/claude/_scripts/_lint_scripts/lint_claude_tags.py <root>   # scan an explicit root dir
     make lint_tags                                      # via Makefile target
 
 Exit codes:
@@ -15,12 +15,16 @@ Exit codes:
     1 — one or more components have FAIL-level issues
 """
 
+from __future__ import annotations
+
 import argparse
 import sys
 from datetime import date
 from pathlib import Path
+from typing import Any
 
 import frontmatter
+import yaml
 
 # ── valid values ──────────────────────────────────────────────────────────────
 
@@ -31,15 +35,15 @@ STALENESS_WARN_DAYS = 90
 
 # ── script location ───────────────────────────────────────────────────────────
 
-# Script lives at src/sh/claude/; repo root is three levels up.
-_REPO_ROOT = Path(__file__).resolve().parent.parent.parent.parent
-DEFAULT_ROOT = _REPO_ROOT / "src" / "claude"
+# Script lives in <config>/_scripts/_lint_scripts/, so the config root is two levels up.
+_CONFIG_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_ROOT = _CONFIG_ROOT
 
 
 # ── validation logic ──────────────────────────────────────────────────────────
 
 
-def validate_component(metadata: dict) -> tuple[list[str], list[str]]:
+def validate_component(metadata: dict[str, Any]) -> tuple[list[str], list[str]]:  # noqa: C901
     """Validate Tier 1 tags in a component's frontmatter metadata.
 
     Checks for presence and valid values of: maturity, tags.criticality,
@@ -47,7 +51,7 @@ def validate_component(metadata: dict) -> tuple[list[str], list[str]]:
     components and stale or absent last-reviewed dates.
 
     :param metadata: Parsed YAML frontmatter as a plain dict.
-    :type metadata: dict
+    :type metadata: dict[str, Any]
     :return: Tuple of (failures, warnings). Failures block; warnings are advisory.
     :rtype: tuple[list[str], list[str]]
     """
@@ -63,7 +67,7 @@ def validate_component(metadata: dict) -> tuple[list[str], list[str]]:
 
     # ── tags block ────────────────────────────────────────────────────────────
     tags_raw = metadata.get("tags")
-    tags: dict = tags_raw if isinstance(tags_raw, dict) else {}
+    tags: dict[str, Any] = tags_raw if isinstance(tags_raw, dict) else {}
 
     # criticality
     criticality = tags.get("criticality")
@@ -123,7 +127,7 @@ def _normalise_bool(value: object) -> bool | None:
     return None
 
 
-def _check_staleness(last_reviewed: object, warnings: list[str]) -> None:
+def _check_staleness(last_reviewed: object, warnings: list[str]):
     """Append a warning if last-reviewed is older than STALENESS_WARN_DAYS.
 
     :param last_reviewed: Raw last-reviewed value from frontmatter.
@@ -165,7 +169,8 @@ def find_components(root: Path) -> list[Path]:
             post = frontmatter.load(str(p))
             if "maturity" in post.metadata:
                 other_tagged.add(p)
-        except Exception:  # noqa: BLE001 — skip unreadable files silently
+        except (OSError, UnicodeDecodeError, ValueError, yaml.YAMLError):
+            # Skip unreadable files silently
             pass
 
     return sorted(skill_files | other_tagged)
@@ -193,7 +198,7 @@ def _rel(path: Path, root: Path) -> str:
 # ── entry point ───────────────────────────────────────────────────────────────
 
 
-def main() -> int:
+def main() -> int:  # noqa: C901
     """Run the tag lint scan and print a summary report.
 
     :return: Exit code — 0 if all components pass, 1 if any FAILs found.
@@ -231,7 +236,7 @@ def main() -> int:
         try:
             post = frontmatter.load(str(path))
             metadata = dict(post.metadata)
-        except Exception as exc:
+        except (OSError, UnicodeDecodeError, ValueError, yaml.YAMLError) as exc:
             print(f"{_rel(path, root)}")
             print(f"  FAIL  could not parse frontmatter: {exc}\n")
             n_fail += 1

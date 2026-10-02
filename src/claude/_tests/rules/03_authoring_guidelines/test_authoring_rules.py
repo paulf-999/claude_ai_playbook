@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-01
-# Version:           2.0.0
+# Date updated:      2026-10-02
+# Version:           2.0.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -20,8 +20,7 @@ from __future__ import annotations
 
 import re
 
-from _shared_paths import CLAUDE_DIR
-from _shared_paths import RULES_DIR
+from _shared_paths import CLAUDE_DIR, RULES_DIR
 
 AUTHORING_RULES = RULES_DIR / "03_authoring_guidelines" / "authoring_rules.md"
 TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference", "05_lazy_load")

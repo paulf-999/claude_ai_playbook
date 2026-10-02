@@ -14,8 +14,8 @@ set -e
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../" && pwd)"
 export CLAUDE_CONFIG_DIR="${REPO_ROOT}/src/claude"
-LINTER="$REPO_ROOT/src/sh/claude/skill_authoring_gate_lint.py"
-COMPLEXITY_SCORER="$REPO_ROOT/src/claude/_scripts/skill_complexity_scorer.py"
+LINTER="$REPO_ROOT/src/claude/_scripts/_lint_scripts/lint_skill_authoring_gate.py"
+COMPLEXITY_SCORER="$REPO_ROOT/src/claude/_scripts/_audit_scripts/audit_skill_complexity.py"
 SKILLS_ROOT="$REPO_ROOT/src/claude/skills"
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

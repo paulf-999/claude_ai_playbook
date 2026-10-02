@@ -10,7 +10,7 @@ SHELL = /bin/bash
 # make audit_rule_usage # measure how often each rule applies and loads, from session transcripts
 # make install          # install Claude config files into $CLAUDE_CONFIG_DIR (previews, then asks you to type 'install')
 # make update           # [DISABLED] update Claude config files in ~/.claude/ (WSL)
-# make clean_plans      # archive executed/superseded plans to ~/.claude/plans/archive/
+# make clean_plans      # archive finished plans (every phase Done) to $CLAUDE_CONFIG_DIR/_plans/archive/
 # make clean_backups    # move old ~/.claude_backup_* dirs to ~/.claude_backup_archive/
 # make clean            # run clean_plans and clean_backups
 # make all              # print this usage list
@@ -67,33 +67,33 @@ test:
 
 lint_tags:
 	@echo "${INFO}\nValidating Tier 1 tags on Claude components${COLOUR_OFF}"
-	@python3 src/sh/claude/claude_tag_lint.py
+	@python3 src/claude/_scripts/_lint_scripts/lint_claude_tags.py
 
 lint_skills:
 	@echo "${INFO}\nValidating skill authoring gate (crawl criteria)${COLOUR_OFF}"
-	@python3 src/sh/claude/skill_authoring_gate_lint.py
+	@python3 src/claude/_scripts/_lint_scripts/lint_skill_authoring_gate.py
 
 lint: lint_tags lint_skills
 	@echo "${INFO}\nLinting complete${COLOUR_OFF}"
 
 audit_components:
 	@echo "${INFO}\nRunning Claude component health audit${COLOUR_OFF}"
-	@python3 src/claude/_scripts/claude_component_audit.py src/claude
+	@python3 src/claude/_scripts/_audit_scripts/audit_claude_component.py src/claude
 
 audit_rule_usage:
 	@echo "${INFO}\nMeasuring rule usage from session transcripts${COLOUR_OFF}"
-	@python3 src/claude/_scripts/audit_rule_usage.py \
+	@python3 src/claude/_scripts/_audit_scripts/audit_rule_usage.py \
 		--rules src/claude/_rules \
 		--transcripts "$${CLAUDE_CONFIG_DIR:-$$HOME/.claude}/projects" \
 		--out src/claude/_admin/_audits
 
 clean_plans:
 	@echo "${INFO}\nArchiving executed/superseded plans to ~/.claude/plans/archive/${COLOUR_OFF}"
-	@python3 src/sh/claude/clean_plans.py
+	@python3 src/claude/_scripts/_clean_scripts/clean_plans.py
 
 clean_backups:
 	@echo "${INFO}\nMoving old ~/.claude_backup_* dirs to ~/.claude_backup_archive/${COLOUR_OFF}"
-	@python3 src/sh/claude/clean_backups.py
+	@python3 src/claude/_scripts/_clean_scripts/clean_backups.py
 
 clean: clean_plans clean_backups
 

@@ -14,7 +14,7 @@ Standard library only, no LLM calls. Every location is a required argument, beca
 script is installed into the live config too and must never guess the repo.
 
 Usage:
-    python3 src/claude/_scripts/audit_rule_usage.py \\
+    python3 src/claude/_scripts/_audit_scripts/audit_rule_usage.py \\
         --rules src/claude/_rules --transcripts ~/.claude/projects --out src/claude/_admin/_audits
     make audit_rule_usage
 """
@@ -31,12 +31,16 @@ from dataclasses import dataclass, field
 from datetime import date, timedelta
 from fnmatch import fnmatch
 from pathlib import Path
+from typing import Any
 
 # ── first-guess cut-offs — review after 3 reports ─────────────────────────────
 
-MIN_SAMPLE_SESSIONS = 10  # first guess: fewer applied sessions than this shows "not enough data"
-DEMOTE_APPLIED_BELOW = 0.5  # first guess: an always-on rule applying in fewer sessions may be lazy
-STALE_AFTER_DAYS = 90  # first guess: no use for this long marks a rule stale
+# First guess: fewer applied sessions than this shows "not enough data"
+MIN_SAMPLE_SESSIONS = 10
+# First guess: an always-on rule applying in fewer sessions may be lazy
+DEMOTE_APPLIED_BELOW = 0.5
+# First guess: no use for this long marks a rule stale
+STALE_AFTER_DAYS = 90
 
 # ── constants ─────────────────────────────────────────────────────────────────
 
@@ -66,7 +70,8 @@ MISS_COST = re.compile(r"<!--\s*miss_cost:\s*(high|medium|low)\b", re.I)
 FILE_TOOLS = {"Read", "Edit", "Write", "MultiEdit", "NotebookEdit"}
 
 APPLIES_TO = re.compile(r"^<!--\s*applies_to:\s*(.+?)\s*-->$")
-HEADER_LINES = 10  # paths: frontmatter (up to 4) + version, created, updated, applies_to, miss_cost
+# paths: frontmatter (up to 4) + version, created, updated, applies_to, miss_cost
+HEADER_LINES = 10
 
 # First-guess globs for lazy rules with no ``applies_to`` header and no ``paths:`` frontmatter,
 # keyed by path under 05_lazy_load/.
@@ -306,11 +311,11 @@ def rule_rel(raw: str, rules_dir: Path) -> str | None:
     return None
 
 
-def record_date(record: dict) -> date | None:
+def record_date(record: dict[str, Any]) -> date | None:
     """Read the day from a record's ISO timestamp.
 
     :param record: One transcript record.
-    :type record: dict
+    :type record: dict[str, Any]
     :return: The day, or None when the record has no valid timestamp.
     :rtype: date | None
     """
@@ -323,11 +328,11 @@ def record_date(record: dict) -> date | None:
         return None
 
 
-def tool_calls(record: dict) -> list[tuple[str, str]]:
+def tool_calls(record: dict[str, Any]) -> list[tuple[str, str]]:
     """List the file tools an assistant record calls.
 
     :param record: One transcript record.
-    :type record: dict
+    :type record: dict[str, Any]
     :return: ``(tool name, file path)`` pairs.
     :rtype: list[tuple[str, str]]
     """
@@ -343,11 +348,11 @@ def tool_calls(record: dict) -> list[tuple[str, str]]:
     return calls
 
 
-def attachment_paths(attachment: dict) -> tuple[list[str], list[str]]:
+def attachment_paths(attachment: dict[str, Any]) -> tuple[list[str], list[str]]:
     """Split an attachment into files it loaded into context and files it says were edited.
 
     :param attachment: The record's ``attachment`` object.
-    :type attachment: dict
+    :type attachment: dict[str, Any]
     :return: ``(loaded paths, touched paths)``.
     :rtype: tuple[list[str], list[str]]
     """
@@ -525,7 +530,7 @@ def read_history(path: Path) -> tuple[dict[str, date], date | None]:
     return last_used, first_run
 
 
-def append_history(path: Path, usages: list[Usage], today: date) -> None:
+def append_history(path: Path, usages: list[Usage], today: date):
     """Append one row per rule to the history CSV, writing the header on first use.
 
     :param path: The history file.
@@ -724,13 +729,13 @@ def run_dates(path: Path) -> dict[str, set[str]]:
     return dates
 
 
-def rule_totals(rows: list[dict[str, str]]) -> dict:
+def rule_totals(rows: list[dict[str, str]]) -> dict[str, Any]:
     """Total one rule's ledger rows.
 
     :param rows: The rule's ledger rows.
     :type rows: list[dict[str, str]]
     :return: ``applied``, ``loaded``, ``misses``, ``rate`` (a fraction, or None) and ``first``/``last`` dates.
-    :rtype: dict
+    :rtype: dict[str, Any]
     """
     applied = sum(r["applied"] == "1" for r in rows)
     misses = sum(r["applied"] == "1" and r["loaded"] == "0" for r in rows)

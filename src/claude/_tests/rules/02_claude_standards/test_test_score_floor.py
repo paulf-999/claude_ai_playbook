@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           2.0.0
+# Date updated:      2026-10-02
+# Version:           2.0.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -21,10 +21,7 @@ import re
 from pathlib import Path
 
 from _shared_paths import RULES_DIR
-from test_test_metadata import HINT
-from test_test_metadata import TESTS_DIR
-from test_test_metadata import VALID_HEADER
-from test_test_metadata import find_test_files
+from test_test_metadata import HINT, TESTS_DIR, VALID_HEADER, find_test_files
 
 QUALITY_FLOOR = 9
 COMPLEXITY_FLOOR = 7

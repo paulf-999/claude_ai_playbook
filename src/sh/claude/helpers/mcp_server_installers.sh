@@ -28,8 +28,9 @@ install_github_server() {
     fi
 
     log_message "${DEBUG}" "Installing 'github' MCP server (remote HTTP)..."
+    # PAT injected at runtime, never stored
     claude mcp add-json github \
-        "{\"type\":\"http\",\"url\":\"https://api.githubcopilot.com/mcp\",\"headers\":{\"Authorization\":\"Bearer ${GITHUB_PAT}\"}}" \  # PAT injected at runtime, never stored
+        "{\"type\":\"http\",\"url\":\"https://api.githubcopilot.com/mcp\",\"headers\":{\"Authorization\":\"Bearer ${GITHUB_PAT}\"}}" \
         --scope user
     log_message "${INFO}" "Installed 'github'."
 

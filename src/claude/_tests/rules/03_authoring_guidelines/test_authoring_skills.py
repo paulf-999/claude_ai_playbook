@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
-# Date updated:      2026-10-01
-# Version:           4.1.0
+# Date updated:      2026-10-02
+# Version:           4.1.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -21,8 +21,7 @@ from __future__ import annotations
 
 import re
 
-from _resolved_rule import child_paths
-from _resolved_rule import resolved_content
+from _resolved_rule import child_paths, resolved_content
 from _shared_paths import RULES_DIR
 
 RULE_FILE = RULES_DIR / "03_authoring_guidelines" / "authoring_skills.md"

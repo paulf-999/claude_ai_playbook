@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-19
-# Date updated:      2026-10-01
-# Version:           2.0.0
+# Date updated:      2026-10-02
+# Version:           2.0.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -21,14 +21,15 @@ so each case below is proven on a small in-memory skill with no fixtures.
 """
 from __future__ import annotations
 
-from _shared_paths import CLAUDE_DIR
-from _shared_paths import SKILLS_DIR
-from _skill_orphans import find_broken_links
-from _skill_orphans import find_eager_imports
-from _skill_orphans import find_orphans
-from _skill_orphans import read_external_tests
-from _skill_orphans import read_skill
-from _skill_orphans import skill_dirs
+from _shared_paths import CLAUDE_DIR, SKILLS_DIR
+from _skill_orphans import (
+    find_broken_links,
+    find_eager_imports,
+    find_orphans,
+    read_external_tests,
+    read_skill,
+    skill_dirs,
+)
 
 TESTS_DIR = CLAUDE_DIR / "_tests" / "skills"
 

@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.0.1
+# Date updated:      2026-10-02
+# Version:           1.0.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -24,9 +24,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR
-from _shared_paths import CLAUDE_MD
-from _shared_paths import RULES_DIR
+from _shared_paths import CLAUDE_DIR, CLAUDE_MD, RULES_DIR
 
 REFERENCE_DIR = CLAUDE_DIR / "_reference"
 IMPORT_LINE = re.compile(r"^@~/[^/\s]+/(\S+)$", re.M)

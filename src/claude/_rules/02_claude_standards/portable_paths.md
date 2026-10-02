@@ -1,7 +1,7 @@
-<!-- version: 1.0.3 -->
+<!-- version: 1.0.4 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-10-01 -->
-<!-- applies_to: **/hooks/*.sh, **/_tests/**/*.py, **/_scripts/*.py -->
+<!-- updated: 2026-10-02 -->
+<!-- applies_to: **/hooks/*.sh, **/_tests/**/*.py, **/_scripts/**/*.py -->
 <!-- miss_cost: high — hooks and tests fail silently on another machine -->
 # 🌍 Portable Paths
 

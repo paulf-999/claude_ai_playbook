@@ -1,1 +1,1 @@
-# Settings configuration tests
+"""Tests for settings configuration."""

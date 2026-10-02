@@ -5,19 +5,20 @@ install_claude_files.sh and update_claude_files.sh, and moves those older
 than min_age_days to ~/.claude_backup_archive/.
 """
 
-import os
+from __future__ import annotations
+
 import re
 import shutil
 import sys
 from datetime import date
-
+from pathlib import Path
 
 # Pattern: .claude_backup_YYYYMMDD_HHMMSS
 _BACKUP_RE = re.compile(r"^\.claude_backup_(\d{4})(\d{2})(\d{2})_\d{6}$")
 
 
 def _find_candidates(
-    home_dir: str,
+    home_dir: Path,
     min_age_days: int = 14,
     today: date | None = None,
 ) -> list[str]:
@@ -26,7 +27,7 @@ def _find_candidates(
     Dirs with an unparseable date segment are included conservatively.
 
     :param home_dir: Directory to scan for backup dirs (normally HOME).
-    :type home_dir: str
+    :type home_dir: Path
     :param min_age_days: Minimum age in days for a dir to be considered for archival.
     :type min_age_days: int
     :param today: Reference date for age calculations. Defaults to date.today().
@@ -39,7 +40,7 @@ def _find_candidates(
 
     candidates = []
     try:
-        entries = sorted(os.listdir(home_dir))
+        entries = sorted(entry.name for entry in home_dir.iterdir())
     except OSError:
         return []
 
@@ -47,12 +48,13 @@ def _find_candidates(
         m = _BACKUP_RE.match(name)
         if not m:
             continue
-        if not os.path.isdir(os.path.join(home_dir, name)):
+        if not (home_dir / name).is_dir():
             continue
         try:
             backup_date = date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
         except ValueError:
-            candidates.append(name)  # Unparseable — include conservatively.
+            # Unparseable — include conservatively.
+            candidates.append(name)
             continue
         if (today - backup_date).days >= min_age_days:
             candidates.append(name)
@@ -60,13 +62,13 @@ def _find_candidates(
     return candidates
 
 
-def _write_review_md(candidates: list[str], review_path: str, min_age_days: int) -> None:
+def _write_review_md(candidates: list[str], review_path: Path, min_age_days: int):
     """Write a list of archive candidates to a review file.
 
     :param candidates: Directory names as returned by _find_candidates.
     :type candidates: list[str]
     :param review_path: Absolute path to write the review file.
-    :type review_path: str
+    :type review_path: Path
     :param min_age_days: Age threshold used for this run (shown in the file header).
     :type min_age_days: int
     """
@@ -76,28 +78,26 @@ def _write_review_md(candidates: list[str], review_path: str, min_age_days: int)
     ]
     for name in candidates:
         lines.append(f"- `{name}`\n")
-    with open(review_path, "w") as f:
-        f.writelines(lines)
+    review_path.write_text("".join(lines))
 
 
 def main(
-    home_dir: str | None = None,
+    home_dir: str | Path | None = None,
     min_age_days: int = 14,
     today: date | None = None,
-) -> None:
+):
     """Run the clean_backups archival workflow.
 
     :param home_dir: Override the home directory to scan. Defaults to ~/.
         Intended for use in tests.
-    :type home_dir: str or None
+    :type home_dir: str or Path or None
     :param min_age_days: Only archive backup dirs this many days old or older.
     :type min_age_days: int
     :param today: Reference date for age calculations. Defaults to date.today().
         Intended for use in tests.
     :type today: date or None
     """
-    if home_dir is None:
-        home_dir = os.path.expanduser("~")
+    home_dir = Path.home() if home_dir is None else Path(home_dir)
 
     candidates = _find_candidates(home_dir, min_age_days=min_age_days, today=today)
 
@@ -105,7 +105,7 @@ def main(
         print(f"No backup directories older than {min_age_days} days to archive.")
         sys.exit(0)
 
-    review_path = os.path.join(home_dir, ".claude_backup_review.md")
+    review_path = home_dir / ".claude_backup_review.md"
     _write_review_md(candidates, review_path, min_age_days)
     print(f"Review file: {review_path}\n")
 
@@ -123,12 +123,11 @@ def main(
         print("Aborted.")
         sys.exit(0)
 
-    archive_dir = os.path.join(home_dir, ".claude_backup_archive")
-    os.makedirs(archive_dir, exist_ok=True)
+    archive_dir = home_dir / ".claude_backup_archive"
+    archive_dir.mkdir(parents=True, exist_ok=True)
 
     for name in candidates:
-        src = os.path.join(home_dir, name)
-        shutil.move(src, os.path.join(archive_dir, name))
+        shutil.move(home_dir / name, archive_dir / name)
         print(f"  Archived: {name}")
 
     print(f"\nDone. {len(candidates)} directories moved to {archive_dir}")

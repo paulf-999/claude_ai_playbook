@@ -17,7 +17,6 @@ import re
 import sys
 from pathlib import Path
 
-
 from _shared_paths import CLAUDE_DIR as CLAUDE_HOME
 
 # Directories that are auto-generated, third-party, or out-of-scope and

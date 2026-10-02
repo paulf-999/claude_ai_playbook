@@ -57,4 +57,3 @@ For each Must/Should item in the gap analysis:
 5. Generate git commit with summary
 
 **Output:** Updated config files + git commit (if fixes applied)
-

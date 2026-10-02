@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-01
-# Version:           2.0.0
+# Date updated:      2026-10-02
+# Version:           2.0.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -23,8 +23,7 @@ from unittest.mock import patch
 
 import pytest
 
-from .confluence_create_page_handler import create_page_with_timeout
-from .confluence_create_page_handler import save_draft
+from .confluence_create_page_handler import create_page_with_timeout, save_draft
 
 
 class MockToolCall:

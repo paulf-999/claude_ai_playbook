@@ -10,7 +10,6 @@ import os
 import pathlib
 import sys
 
-
 # Live Claude config dir — never ~/.claude, which holds Claude Code's own state.
 # None when CLAUDE_CONFIG_DIR is unset; main() refuses to run in that case.
 _CONFIG_DIR = os.environ.get("CLAUDE_CONFIG_DIR")
@@ -30,16 +29,13 @@ GROUPS = {
 def load_settings() -> dict:
     """Read settings.json, or return an empty dict if it does not exist."""
     if SETTINGS_PATH.exists():
-        with open(SETTINGS_PATH) as f:
-            return json.load(f)
+        return json.loads(SETTINGS_PATH.read_text())
     return {}
 
 
 def save_settings(settings: dict) -> None:
     """Write settings back to settings.json with a trailing newline."""
-    with open(SETTINGS_PATH, "w") as f:
-        json.dump(settings, f, indent=2)
-        f.write("\n")
+    SETTINGS_PATH.write_text(json.dumps(settings, indent=2) + "\n")
 
 
 def get_denied(settings: dict) -> list[dict]:

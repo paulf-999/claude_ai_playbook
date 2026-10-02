@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-01
-# Version:           2.0.0
+# Date updated:      2026-10-02
+# Version:           2.0.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -21,8 +21,7 @@ import subprocess
 
 import pytest
 
-from _shared_paths import CLAUDE_DIR
-from _shared_paths import HOOKS_DIR
+from _shared_paths import CLAUDE_DIR, HOOKS_DIR
 
 HOOK_PATH = HOOKS_DIR / "hook_enforcement_writing_style.sh"
 STYLE_RULE = "writing_style.md"
