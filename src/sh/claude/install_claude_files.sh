@@ -24,9 +24,10 @@ confirm_install() {
     echo "  1. Back up the existing target to the backup path (a copy — the target stays in place)"
     echo "  2. Copy the repo's Claude files over the target, keeping your memory/, TODO.md, _plans/,"
     echo "     settings.local.json and all runtime data (transcripts, history, app state)"
-    echo "  3. Install the Claude CLI via npm"
-    echo "  4. Install the core MCP servers"
-    echo "  5. Install the Claude Code plugins"
+    echo "  3. Remove files an earlier install added that the repo has since deleted or moved"
+    echo "  4. Install the Claude CLI via npm"
+    echo "  5. Install the core MCP servers"
+    echo "  6. Install the Claude Code plugins"
     echo
 
     local ANSWER
@@ -44,6 +45,7 @@ install_claude_files() {
     backup_target_dir "copy"     # from claude_file_utils.sh — never move: the target holds runtime data
     copy_claude_files            # from claude_file_utils.sh
     flatten_skills               # from claude_file_utils.sh
+    prune_removed_files          # from claude_file_utils.sh — drops files the repo removed since the last install
     rewrite_config_paths         # from claude_file_utils.sh — @ imports can't read CLAUDE_CONFIG_DIR
 }
 
