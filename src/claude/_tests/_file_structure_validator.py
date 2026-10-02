@@ -29,25 +29,44 @@ AUTO_GENERATED_DIRS = {
     "plugins",
     ".git",
     "__pycache__",
-    "graphify-out",  # third-party tool's own generated cache/output, not Claude-authored
-    "_admin",  # personal audit/decision-log scratch area with its own ALL-CAPS convention
-    "file-history",  # Claude Code's own version-history store — UUID/hash@vN filenames
-    ".trash",  # Claude Code's own sync-cleanup holding area (see syncClaudeAiSkills)
-    "cache",  # Claude Code's own cache (model catalog, GitHub issue exports, etc.)
-    "chrome",  # Claude Code's own Chrome extension host binary
-    "daemon",  # Claude Code's own background daemon state (roster.json, control.key)
-    "feedback",  # Claude Code's own feedback queue
-    "ide",  # Claude Code's own IDE integration lock files (PID-named)
-    "jobs",  # Claude Code's own scheduled-job state
-    "mcp",  # Claude Code's own MCP server state
-    "paste-cache",  # Claude Code's own pasted-content cache (hash-named)
-    "plans",  # Claude Code's own plan-mode scratch files (ephemeral; see claude_plans.md)
-    "security",  # Claude Code's own security-warning state (UUID-named)
-    "session-env",  # Claude Code's own per-session environment state
-    "shell-snapshots",  # Claude Code's own shell state snapshots
-    "state",  # Claude Code's own persisted state (e.g. mcp-discover-verdicts.json)
-    "tasks",  # Claude Code's own background-task state
-    "telemetry",  # Claude Code's own telemetry queue
+    # third-party tool's own generated cache/output, not Claude-authored
+    "graphify-out",
+    # personal audit/decision-log scratch area with its own ALL-CAPS convention
+    "_admin",
+    # Claude Code's own version-history store — UUID/hash@vN filenames
+    "file-history",
+    # Claude Code's own sync-cleanup holding area (see syncClaudeAiSkills)
+    ".trash",
+    # Claude Code's own cache (model catalog, GitHub issue exports, etc.)
+    "cache",
+    # Claude Code's own Chrome extension host binary
+    "chrome",
+    # Claude Code's own background daemon state (roster.json, control.key)
+    "daemon",
+    # Claude Code's own feedback queue
+    "feedback",
+    # Claude Code's own IDE integration lock files (PID-named)
+    "ide",
+    # Claude Code's own scheduled-job state
+    "jobs",
+    # Claude Code's own MCP server state
+    "mcp",
+    # Claude Code's own pasted-content cache (hash-named)
+    "paste-cache",
+    # Claude Code's own plan-mode scratch files (ephemeral; see claude_plans.md)
+    "plans",
+    # Claude Code's own security-warning state (UUID-named)
+    "security",
+    # Claude Code's own per-session environment state
+    "session-env",
+    # Claude Code's own shell state snapshots
+    "shell-snapshots",
+    # Claude Code's own persisted state (e.g. mcp-discover-verdicts.json)
+    "state",
+    # Claude Code's own background-task state
+    "tasks",
+    # Claude Code's own telemetry queue
+    "telemetry",
 }
 
 # Root-level files Claude Code itself generates — not authored content
@@ -120,7 +139,6 @@ class FileStructureValidator:
         """Start a validator with no violations.
 
         :param claude_home: Root of the Claude config directory.
-        :type claude_home: Path
         """
         self.claude_home = claude_home
         self.violations = []
@@ -129,7 +147,6 @@ class FileStructureValidator:
         """Scan the configured Claude directory and collect all violations.
 
         :return: Violation dicts with keys path, rule, severity and message.
-        :rtype: list[dict]
         """
         if not self.claude_home.exists():
             self.violations.append({
@@ -147,9 +164,7 @@ class FileStructureValidator:
         """Scan a directory and everything below it for violations.
 
         :param directory: Directory to scan.
-        :type directory: Path
         :param depth: How many levels below the config root ``directory``'s children sit.
-        :type depth: int
         """
         if not directory.exists():
             return
@@ -177,9 +192,7 @@ class FileStructureValidator:
         """Check a directory has the subdirectories its ``DIR_RULES`` entry expects.
 
         :param directory: Directory to check.
-        :type directory: Path
         :param depth: Depth of the directory below the config root.
-        :type depth: int
         """
         # Check directory-specific rules
         if directory.name in DIR_RULES:
@@ -191,9 +204,7 @@ class FileStructureValidator:
         """Record a warning for each expected subdirectory that is missing.
 
         :param directory: Directory that should hold the subdirectories.
-        :type directory: Path
         :param expected_subdirs: Names of the subdirectories it should hold.
-        :type expected_subdirs: list[str]
         """
         for expected in expected_subdirs:
             subdir = directory / expected
@@ -210,9 +221,7 @@ class FileStructureValidator:
         """Check one file's name and record any violations.
 
         :param file: File to check.
-        :type file: Path
         :param depth: Depth of the file below the config root.
-        :type depth: int
         """
         rel_path = file.relative_to(self.claude_home)
         filename = file.name
@@ -221,8 +230,10 @@ class FileStructureValidator:
         if filename in [
             "CLAUDE.md", "README.md", "SKILL.md", "AGENT.md", "TODO.md",
             "settings.json", "aliases.md", "keybindings.json",
-            "skill.contract.yaml",  # required exact name, see authoring_skills.md
-            "__init__.py",  # Python package marker, not a naming-convention target
+            # required exact name, see authoring_skills.md
+            "skill.contract.yaml",
+            # Python package marker, not a naming-convention target
+            "__init__.py",
             # Eval fixture deliberately named after a real external repo slug
             # (some organisations' repos use hyphens)
             "claude_ai_playbook.yaml",
@@ -271,9 +282,7 @@ class FileStructureValidator:
         """Say whether a file name is snake_case.
 
         :param filename: File name to check.
-        :type filename: str
         :return: ``True`` when the name is lowercase snake_case with an extension.
-        :rtype: bool
         """
         # Allow special files
         if filename in ["CLAUDE.md", "README.md", "SKILL.md", "settings.json", "keybindings.json"]:
@@ -293,11 +302,8 @@ def check_new_path(file_path: Path, claude_home: Path = CLAUDE_HOME) -> list[dic
     return an empty list — the same files the full scan never looks at.
 
     :param file_path: Absolute path of the file about to be created.
-    :type file_path: Path
     :param claude_home: Root of the Claude config directory.
-    :type claude_home: Path
     :return: Violation dicts with keys path, rule, severity and message.
-    :rtype: list[dict]
     """
     try:
         rel_path = file_path.relative_to(claude_home)

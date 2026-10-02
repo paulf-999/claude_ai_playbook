@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-02
-# Version:           1.3.0
+# Version:           1.3.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -18,6 +18,7 @@ miss is ``high`` must load mechanically — through ``paths:`` or a hook — nev
 Every entry point also says how it loads and why, and the mode must match its folder.
 """
 import re
+from pathlib import Path
 
 from _shared_paths import HOOKS_DIR, RULES_DIR
 
@@ -28,7 +29,8 @@ MISS_COST = re.compile(r"^<!-- miss_cost: (high|medium|low) — \S.* -->$")
 MISS_COST_PREFIX = "<!-- miss_cost:"
 HEADER_PREFIX = "<!-- applies_to:"
 EVERY_SESSION = "*"
-HEADER_LINES = 11  # paths: frontmatter (up to 4) + version, created, updated, applies_to, miss_cost, loading
+# paths: frontmatter (up to 4) + version, created, updated, applies_to, miss_cost, loading
+HEADER_LINES = 11
 LOADING = re.compile(r"^<!-- loading: (always-on|path-scoped|lazy) — \S.* -->$")
 LOADING_PREFIX = "<!-- loading:"
 GLOB = re.compile(r"^[A-Za-z0-9_.*/\-{}?\[\]]+$")
@@ -41,9 +43,7 @@ def applies_to_errors(content: str) -> list[str]:
     """Return problems with a rule's ``applies_to`` header; empty when it is valid.
 
     :param content: Rule file text.
-    :type content: str
     :return: One message per problem.
-    :rtype: list[str]
     """
     found = APPLIES_TO.findall(content)
     if not found:
@@ -65,18 +65,15 @@ def has_header(content: str) -> bool:
     """Tell whether a file carries applies_to in its header block, not just in its body.
 
     :param content: File text.
-    :type content: str
     :return: True when one of the first ``HEADER_LINES`` lines is an applies_to line.
-    :rtype: bool
     """
     return any(line.startswith(HEADER_PREFIX) for line in content.splitlines()[:HEADER_LINES])
 
 
-def always_on_entry_points() -> list:
+def always_on_entry_points() -> list[Path]:
     """List the top-level rule files in tiers 01–04.
 
     :return: Paths of the always-on entry-point rules.
-    :rtype: list
     """
     return sorted(p for tier in ALWAYS_ON_TIERS for p in (RULES_DIR / tier).glob("*.md") if p.name != "README.md")
 
@@ -173,9 +170,7 @@ def miss_cost_errors(content: str) -> list[str]:
     """Return problems with a rule's ``miss_cost`` header; empty when it is valid.
 
     :param content: Rule file text.
-    :type content: str
     :return: One message per problem.
-    :rtype: list[str]
     """
     lines = content.splitlines()
     found = [i for i, line in enumerate(lines) if line.startswith(MISS_COST_PREFIX)]
@@ -196,9 +191,7 @@ def miss_cost_of(content: str) -> str:
     """Return a rule's miss cost level, or an empty string when it has none.
 
     :param content: Rule file text.
-    :type content: str
     :return: ``high``, ``medium``, ``low`` or ``""``.
-    :rtype: str
     """
     match = next((MISS_COST.match(line) for line in content.splitlines() if MISS_COST.match(line)), None)
     return match.group(1) if match else ""
@@ -208,23 +201,18 @@ def has_mechanical_trigger(rel: str, content: str, hook_texts: list[str]) -> boo
     """Tell whether a lazy rule loads without Claude having to remember it.
 
     :param rel: Rule path relative to ``_rules``.
-    :type rel: str
     :param content: Rule file text.
-    :type content: str
     :param hook_texts: Text of every hook script.
-    :type hook_texts: list[str]
     :return: True with ``paths:`` frontmatter or a hook that names the rule.
-    :rtype: bool
     """
     frontmatter = content.split("\n---", 1)[0] if content.startswith("---\n") else ""
     return "paths:" in frontmatter or any(rel in text for text in hook_texts)
 
 
-def lazy_entry_points() -> list:
+def lazy_entry_points() -> list[Path]:
     """List the lazy rules that stand alone rather than belonging to a parent topic.
 
     :return: Paths of the lazy entry-point rules.
-    :rtype: list
     """
     tier = RULES_DIR / LAZY_TIER
     found = []
@@ -304,11 +292,8 @@ def loading_errors(content: str, expected: str) -> list[str]:
     """Return problems with a rule's ``loading`` header; empty when it is valid.
 
     :param content: Rule file text.
-    :type content: str
     :param expected: The mode the rule's folder and frontmatter imply.
-    :type expected: str
     :return: One message per problem.
-    :rtype: list[str]
     """
     lines = content.splitlines()
     found = [i for i, line in enumerate(lines) if line.startswith(LOADING_PREFIX)]
@@ -331,11 +316,8 @@ def expected_loading(path, content: str) -> str:
     """Return the loading mode a rule's location and frontmatter imply.
 
     :param path: Rule file path.
-    :type path: Path
     :param content: Rule file text.
-    :type content: str
     :return: ``always-on``, ``path-scoped`` or ``lazy``.
-    :rtype: str
     """
     if path.relative_to(RULES_DIR).parts[0] in ALWAYS_ON_TIERS:
         return "always-on"

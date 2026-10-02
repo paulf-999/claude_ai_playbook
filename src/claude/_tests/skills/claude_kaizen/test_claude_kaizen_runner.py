@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
 # Date updated:      2026-10-02
-# Version:           1.0.0
+# Version:           1.0.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -38,18 +38,14 @@ runner = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(runner)
 
 
-def fake_claude(monkeypatch, stdout: str = "", returncode: int = 0, error: Exception | None = None) -> list:
+def fake_claude(monkeypatch, stdout: str = "", returncode: int = 0, error: Exception | None = None):
     """Replace ``subprocess.run`` with a fake ``claude -p`` and record each call.
 
     :param monkeypatch: pytest's monkeypatch fixture.
     :param stdout: The reply the fake returns.
-    :type stdout: str
     :param returncode: The fake's exit code.
-    :type returncode: int
     :param error: An exception to raise instead of replying.
-    :type error: Exception | None
     :return: A list that collects ``(command, prompt, env, cwd)`` for every call.
-    :rtype: list
     """
     calls = []
 
@@ -67,9 +63,7 @@ def write_evals(tmp_path: Path, *cases: dict) -> Path:
     """Write an eval file holding the given cases.
 
     :param tmp_path: Folder to write it in.
-    :type tmp_path: Path
     :return: The eval file's path.
-    :rtype: Path
     """
     path = tmp_path / "evals.yaml"
     path.write_text(yaml.safe_dump({"evals": list(cases)}))

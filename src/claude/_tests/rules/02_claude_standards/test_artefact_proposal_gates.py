@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-01
-# Version:           2.0.1
+# Date updated:      2026-10-02
+# Version:           2.0.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -16,6 +16,7 @@ point to. Every check reads the real rule or a file it names, so the suite
 fails if the rule is deleted, trimmed, or left pointing at moved files.
 """
 import re
+from pathlib import Path
 
 from _shared_paths import CLAUDE_DIR, HOOKS_DIR, RULES_DIR, SKILLS_DIR
 
@@ -31,11 +32,8 @@ def gate_section(content: str, number: int) -> str:
     """Return the text of one gate, from its heading to the next ``---`` rule.
 
     :param content: Full text of the rule file.
-    :type content: str
     :param number: Gate number, 1 to 3.
-    :type number: int
     :return: The gate's section, or an empty string if the heading is missing.
-    :rtype: str
     """
     start = content.find(GATE_HEADINGS[number - 1])
     if start == -1:
@@ -44,7 +42,7 @@ def gate_section(content: str, number: int) -> str:
     return content[start:] if end == -1 else content[start:end]
 
 
-def referenced_rule_files(section: str) -> list:
+def referenced_rule_files(section: str) -> list[Path]:
     """Resolve every file a gate's **Reference:** line names to a real path.
 
     The parent is written as ``~/<config_dir>/_rules/...md`` (any config
@@ -52,9 +50,7 @@ def referenced_rule_files(section: str) -> list:
     ``_child.md`` names living in a folder named after the parent.
 
     :param section: One gate's text, from :func:`gate_section`.
-    :type section: str
     :return: Paths of the parent and each named child.
-    :rtype: list
     """
     match = re.search(r"\*\*Reference:\*\* `~/[^/`]+/(_rules/[^`]+)\.md`(.*)", section)
     if not match:

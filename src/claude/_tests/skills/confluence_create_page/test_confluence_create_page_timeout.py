@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-02
-# Version:           2.0.1
+# Version:           2.0.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -33,18 +33,15 @@ class MockToolCall:
         """Set how long the call takes and what it returns.
 
         :param duration_seconds: Seconds to sleep before returning.
-        :type duration_seconds: float
         :param result: What to return, or None for the default page.
-        :type result: dict | None
         """
         self.duration = duration_seconds
         self.result = {"pageId": "123456", "url": "https://confluence.example.com/x"} if result is None else result
 
-    def __call__(self) -> dict:
+    def __call__(self):
         """Sleep, then return the result.
 
         :return: The configured result.
-        :rtype: dict
         """
         time.sleep(self.duration)
         return self.result
@@ -53,11 +50,10 @@ class MockToolCall:
 class BlockingToolCall:
     """A tool call that never returns, so only the timeout path can end the test."""
 
-    def __call__(self) -> dict:
+    def __call__(self):
         """Block forever on an event nothing sets.
 
         :return: Never returns.
-        :rtype: dict
         """
         threading.Event().wait()
         return {}
@@ -68,7 +64,6 @@ def answers():
     """Patch input() so each test can script the user's answers to the dialog.
 
     :return: The mock standing in for input().
-    :rtype: unittest.mock.MagicMock
     """
     with patch("builtins.input") as mock_input:
         yield mock_input
@@ -136,7 +131,7 @@ def test_fast_call_never_asks(answers):
 def test_failing_call_reports_its_error(answers):
     """A call that raises is reported as an error with its message."""
 
-    def failing_call() -> dict:
+    def failing_call():
         raise ConnectionError("network down")
 
     result = create_page_with_timeout(tool_call=failing_call, timeout_seconds=1)

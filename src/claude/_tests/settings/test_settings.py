@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-01
-# Version:           1.2.0
+# Date updated:      2026-10-02
+# Version:           1.2.1
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -39,11 +39,10 @@ EXPECTED_CLEANUP_PERIOD_DAYS = 90
 BROAD_DESTRUCTIVE_ALLOWS = {"Bash(*)", "Bash(git:*)", "Bash(rm:*)", "Bash(rm -rf:*)", "Bash(sudo:*)"}
 
 
-def _load_settings() -> dict:
+def _load_settings():
     """Load and parse settings.json.
 
     :return: The parsed settings.
-    :rtype: dict
     """
     content = SETTINGS_FILE.read_text()
     return json.loads(content)
@@ -122,10 +121,14 @@ def test_allow_list_intentional():
 
     # Whitelist of intentional wildcards for common operations
     intentional_wildcards = {
-        "Bash(find:*)",      # Used for file discovery
-        "Bash(grep:*)",      # Used for code search
-        "Bash(git -C:*)",    # Git in any directory
-        "Bash(gh api:*)",    # GitHub API flexibility
+        # Used for file discovery
+        "Bash(find:*)",
+        # Used for code search
+        "Bash(grep:*)",
+        # Git in any directory
+        "Bash(git -C:*)",
+        # GitHub API flexibility
+        "Bash(gh api:*)",
     }
 
     # Verify each intentional wildcard is present

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
 # Date updated:      2026-10-02
-# Version:           1.2.1
+# Version:           1.2.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -28,7 +28,8 @@ ROW_PATTERN = re.compile(
 # Matches any config-dir name (~/.claude/, ~/claude/, ...) per portable_paths.md.
 IMPORT_PATTERN = re.compile(r"^@~/[^/]+/_rules/(\d{2}_[a-z_]+)/", re.MULTILINE)
 LAZY_TIER = "05_lazy_load"
-HEADER_LINES = 9  # paths: frontmatter (5 lines) + version, created, updated, miss_cost
+# paths: frontmatter (5 lines) + version, created, updated, miss_cost
+HEADER_LINES = 9
 LINE_LIMIT = 110
 
 

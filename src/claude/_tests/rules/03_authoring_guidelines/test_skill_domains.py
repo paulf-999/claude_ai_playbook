@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
 # Date updated:      2026-10-02
-# Version:           1.0.2
+# Version:           1.0.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -30,24 +30,20 @@ DOMAINS_FILE = RULES_DIR / "03_authoring_guidelines" / "authoring_skills" / "ski
 REQUIRED_FIELDS = {"id", "prefix", "directory", "description", "stable"}
 
 
-def load_domains(path: Path = DOMAINS_FILE) -> list:
+def load_domains(path: Path = DOMAINS_FILE):
     """Return the domain entries from a skill_domains.yaml file.
 
     :param path: The YAML file to read.
-    :type path: Path
     :return: One dict per domain.
-    :rtype: list
     """
     return yaml.safe_load(path.read_text())["domains"]
 
 
-def installed_skills(skills_dir: Path = SKILLS_DIR) -> list:
+def installed_skills(skills_dir: Path = SKILLS_DIR) -> list[Path]:
     """Return the folder of every installed skill (any folder holding a SKILL.md).
 
     :param skills_dir: The skills/ directory to scan.
-    :type skills_dir: Path
     :return: Skill folders, sorted by path.
-    :rtype: list
     """
     return sorted(path.parent for path in skills_dir.rglob("SKILL.md"))
 
@@ -56,22 +52,17 @@ def has_group_folders(skills_dir: Path = SKILLS_DIR) -> bool:
     """Return True when skills sit in ``_<group>_skills/`` folders, as in the repo.
 
     :param skills_dir: The skills/ directory to inspect.
-    :type skills_dir: Path
     :return: Whether any underscore-prefixed group folder exists.
-    :rtype: bool
     """
     return any(path.is_dir() and path.name.startswith("_") for path in skills_dir.iterdir())
 
 
-def misplaced_skills(domains: list, skills: list) -> list:
+def misplaced_skills(domains, skills: list[Path]) -> list[str]:
     """Describe every skill with an unregistered prefix or in the wrong folder.
 
     :param domains: Domain entries, as returned by :func:`load_domains`.
-    :type domains: list
     :param skills: Skill folders, as returned by :func:`installed_skills`.
-    :type skills: list
     :return: One human-readable problem per bad skill; empty when all is well.
-    :rtype: list
     """
     problems = []
     for skill in skills:
