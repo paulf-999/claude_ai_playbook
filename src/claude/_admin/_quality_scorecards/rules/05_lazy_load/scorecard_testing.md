@@ -21,8 +21,8 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/02_claude_standards/testing.md` — the rule being scored
-- `src/claude/_tests/rules/02_claude_standards/test_testing.py` — Test Coverage dimension
+- `src/claude/_rules/05_lazy_load/testing.md` — the rule being scored
+- `src/claude/_tests/rules/05_lazy_load/test_testing.py` — Test Coverage dimension
 
 ---
 

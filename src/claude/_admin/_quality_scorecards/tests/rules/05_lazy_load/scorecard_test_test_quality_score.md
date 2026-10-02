@@ -18,6 +18,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/rules/02_claude_standards/test_test_quality_score.py` — the test being scored
-- `src/claude/_tests/rules/02_claude_standards/test_test_metadata.py` — the header helpers it reuses
-- `src/claude/_rules/02_claude_standards/testing/_test_metadata.md` — the quality table the test guards
+- `src/claude/_tests/rules/05_lazy_load/test_test_quality_score.py` — the test being scored
+- `src/claude/_tests/rules/05_lazy_load/test_test_metadata.py` — the header helpers it reuses
+- `src/claude/_rules/05_lazy_load/testing/_test_metadata.md` — the quality table the test guards
