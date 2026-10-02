@@ -15,6 +15,9 @@ BACKUP_DIR="${HOME}/.claude_backup_${TIMESTAMP}"  # timestamped backup location
 # Top-level entries the user owns once installed: copied on first install only, never overwritten
 USER_OWNED_ENTRIES=("memory" "TODO.md" "_plans" "settings.local.json")
 
+# Lists every file the last install put in the target, so the next one can remove what the repo dropped
+MANIFEST_NAME=".install_manifest"
+
 #=======================================================================
 # Shared functions
 #=======================================================================
@@ -142,6 +145,50 @@ flatten_skills() {
         rm -rf "${GROUP_DIR}"
         log_message "${INFO}" "Removed skill group dir: $(basename "${GROUP_DIR}")"
     done
+}
+
+# Print the files an install puts in the target, relative to it and sorted, laid out as flatten_skills leaves them.
+# User-owned entries are left out, so pruning can never remove them.
+list_installed_files() {
+    local REL
+    (cd "${SOURCE_DIR}" && find . -type f) | sed 's#^\./##' | while IFS= read -r REL; do
+        is_user_owned "${REL%%/*}" && continue
+        if [[ "${REL}" =~ ^skills/_[^/]+/([^/]+/.+)$ ]]; then
+            echo "skills/${BASH_REMATCH[1]}"
+        elif [[ ! "${REL}" =~ ^skills/_[^/]+/[^/]+$ ]]; then  # a group's own files go with its folder
+            echo "${REL}"
+        fi
+    done | LC_ALL=C sort -u
+}
+
+# Remove empty folders from a path upwards, stopping at the target itself
+remove_empty_parents() {
+    local DIR="$1"  # folder a file was just removed from
+    while [[ "${DIR}" != "${TARGET_DIR}" && "${DIR}" == "${TARGET_DIR}/"* ]] && rmdir "${DIR}" 2>/dev/null; do
+        DIR=$(dirname "${DIR}")
+    done
+}
+
+# Remove files the last install put in the target that the repo no longer ships, then record this install.
+# Only paths on the previous manifest are candidates, so files the user added to the target are never touched.
+# The first install with this step has no manifest yet: it removes nothing and just writes one.
+prune_removed_files() {
+    local MANIFEST="${TARGET_DIR}/${MANIFEST_NAME}"
+    local CURRENT REL
+    CURRENT=$(list_installed_files)
+    if [[ -f "${MANIFEST}" ]]; then
+        LC_ALL=C comm -23 <(LC_ALL=C sort -u "${MANIFEST}") <(echo "${CURRENT}") | while IFS= read -r REL; do
+            [[ -z "${REL}" || "${REL}" == /* || "/${REL}/" == */../* ]] && continue  # stay inside the target
+            is_user_owned "${REL%%/*}" && continue
+            [[ -f "${TARGET_DIR}/${REL}" ]] || continue
+            rm "${TARGET_DIR}/${REL}"
+            log_message "${INFO}" "Removed (no longer in the repo): ${REL}"
+            remove_empty_parents "$(dirname "${TARGET_DIR}/${REL}")"
+        done
+    else
+        log_message "${INFO}" "No install manifest yet — nothing removed; the next install can prune"
+    fi
+    echo "${CURRENT}" > "${MANIFEST}"
 }
 
 # Print summary of Claude file operation (install/update)

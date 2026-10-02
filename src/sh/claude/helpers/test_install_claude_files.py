@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
-# Date updated:      2026-10-01
-# Version:           1.0.1
+# Date updated:      2026-10-02
+# Version:           1.0.2
 # Test quality score: 9/10
 # Test complexity score: 6/10
 # Python style compliant: Yes
@@ -145,15 +145,16 @@ def test_tty_preview_shows_paths(sandbox: dict) -> None:
     assert "Type 'install' to continue" in output, "Preview must ask for the typed confirmation"
 
 
-def test_tty_preview_lists_five_steps(sandbox: dict) -> None:
-    """The preview lists all five install steps."""
+def test_tty_preview_lists_six_steps(sandbox: dict) -> None:
+    """The preview lists all six install steps."""
     _, output = run_with_tty(sandbox["env"], b"no\n")
     steps = (
         "1. Back up",
         "2. Copy",
-        "3. Install the Claude CLI",
-        "4. Install the core MCP",
-        "5. Install the Claude Code plugins",
+        "3. Remove files",
+        "4. Install the Claude CLI",
+        "5. Install the core MCP",
+        "6. Install the Claude Code plugins",
     )
     for step in steps:
         assert step in output, f"Preview is missing step: {step}"
