@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.0.0
+# Date updated:      2026-10-02
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -71,13 +71,34 @@ def test_w3_disclosed_gap_warns(tmp_path: Path):
     assert "W3" not in codes(failures), "an honest, disclosed gap shouldn't block"
 
 
-def test_w3_test_count_outside_maturity_range_fails(tmp_path: Path):
-    """A tactical skill with only 2 test functions fails W3's 5–12 range."""
+def test_w3_too_few_evals_fails(tmp_path: Path):
+    """A tactical skill with 3 evals fails W3's 8–12 range."""
+    failures, _ = walk_run(make_skill(tmp_path, maturity="tactical", eval_count=3), tmp_path)
+    assert any(f.startswith("W3: tactical skill has 3 evals") for f in failures), f"got {failures}"
+
+
+def test_w3_too_many_evals_warns_to_promote(tmp_path: Path):
+    """A draft skill with 11 evals is above 5–8, so W3 suggests promoting it rather than blocking."""
+    failures, warnings = walk_run(make_skill(tmp_path, eval_count=11), tmp_path)
+    assert "W3" not in codes(failures), f"too many evals shouldn't block, got {failures}"
+    assert any("may be ready to promote" in w for w in warnings), f"got {warnings}"
+
+
+def test_w3_pytest_functions_dont_count_as_evals(tmp_path: Path):
+    """Pytest files are extra coverage: 20 test functions don't make up for 0 evals."""
     tests_dir = tmp_path / "tests_dir"
     tests_dir.mkdir()
-    (tests_dir / "test_demo_skill.py").write_text("def test_a():\n    pass\n\ndef test_b():\n    pass\n")
-    failures, _ = walk_run(make_skill(tmp_path, maturity="tactical"), tests_dir)
-    assert any(f.startswith("W3: tactical skill has 2 tests") for f in failures), f"got {failures}"
+    (tests_dir / "test_demo_skill.py").write_text("".join(f"def test_{i}():\n    pass\n\n" for i in range(20)))
+    failures, _ = walk_run(make_skill(tmp_path, eval_count=0), tests_dir)
+    assert any(f.startswith("W3: draft skill has 0 evals") for f in failures), f"got {failures}"
+
+
+def test_w3_evals_file_without_list_fails(tmp_path: Path):
+    """An evals.yaml with no top-level evals list fails W3."""
+    skill = make_skill(tmp_path)
+    (skill / "tests" / "evals.yaml").write_text("scenarios: []\n")
+    failures, _ = walk_run(skill, tmp_path)
+    assert any("no top-level 'evals' list" in f for f in failures), f"got {failures}"
 
 
 def test_w4_jargon_in_opening_prose_fails(tmp_path: Path):

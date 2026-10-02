@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.0.1
+# Date updated:      2026-10-02
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -36,7 +36,7 @@ def write_test_file(tests_dir: Path, body: str):
     :param body: File content.
     :type body: str
     """
-    tests_dir.mkdir(exist_ok=True)
+    tests_dir.mkdir(parents=True, exist_ok=True)
     (tests_dir / "test_demo_skill.py").write_text(body)
 
 
@@ -59,6 +59,13 @@ def test_r2_deep_test_file_passes(tmp_path: Path):
     write_test_file(tmp_path / "t", "".join(f"def test_{i}():\n    assert {i} == {i}\n\n" for i in range(4)) * 4)
     failures, _ = walk_run(make_skill(tmp_path), tmp_path / "t")
     assert "R2" not in codes(failures), f"a deep test file should pass R2, got {failures}"
+
+
+def test_r2_checks_test_files_in_subfolders(tmp_path: Path):
+    """A short pytest file in the skill's own subfolder still fails R2."""
+    write_test_file(tmp_path / "t" / "demo_skill", "def test_handler():\n    assert True\n")
+    failures, _ = walk_run(make_skill(tmp_path), tmp_path / "t")
+    assert any(f.startswith("R2: test_demo_skill.py") for f in failures), f"subfolder tests go unchecked: {failures}"
 
 
 def test_r3_missing_history_warns(tmp_path: Path):

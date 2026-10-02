@@ -43,8 +43,8 @@ All skills are validated against a **three-level gate** before merging:
 
 **Enforcement:** the same pre-commit linter as crawl, plus code review
 - You run the gate locally before submitting a PR: `make lint_skills` (crawl, walk and run in one linter)
-- **FAIL blocks** the commit: a long opening, a false `tested: true` claim, test counts outside the maturity range, unexplained jargon, open TODOs once tactical, or stub phase files
-- **WARN is advisory:** unexplained terms, headings without emoji, a long SKILL.md, or an honestly untested skill
+- **FAIL blocks** the commit: a long opening, a false `tested: true` claim, too few `evals.yaml` scenarios for the maturity, unexplained jargon, open TODOs once tactical, or stub phase files
+- **WARN is advisory:** unexplained terms, headings without emoji, a long SKILL.md, more evals than the maturity needs (ready to promote?), or a skill with no evals yet
 
 **Examples of walk criteria:**
 - W1: SKILL.md readable in <60 seconds

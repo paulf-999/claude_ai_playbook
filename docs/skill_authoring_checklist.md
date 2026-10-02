@@ -83,10 +83,14 @@ These criteria ensure the skill is clear, well-tested, and follows style standar
 - **How to test:** `grep "^## " SKILL.md | grep -v "[^[:ascii:]]*"` (look for emojis)
 
 ### W3: Test coverage matches maturity
-- Draft: 1–2 tests (happy path)
-- Tactical: 5–8 tests (main path + error cases)
-- Strategic: 15+ tests (main path, errors, edge cases)
-- **How to test locally:** `CLAUDE_CONFIG_DIR=$PWD/src/claude pytest src/claude/_tests/skills/<skill_name>/ -v`
+- **Counted:** scenarios in the skill's `tests/evals.yaml`, matching the maturity table in the authoring guide.
+- Draft: 5–8 evals (happy paths + basic validation)
+- Tactical: 8–12 evals (+ error cases, retries, clarifying questions)
+- Strategic: 12+ evals (+ edge cases, adversarial inputs, security)
+- **Too few:** the linter fails the skill.
+- **Too many:** the linter warns that the skill may be ready to promote.
+- **Pytest files:** extra coverage in any folder under `src/claude/_tests/skills/`, never counted or capped by W3.
+- **How to test locally:** `CLAUDE_CONFIG_DIR=$PWD/src/claude python3 src/sh/claude/skill_authoring_gate_lint.py`
 
 ### W4: No unexplained Claude jargon
 - ❌ Don't use jargon without explanation:
@@ -179,9 +183,9 @@ These criteria apply to **strategic skills only** — production-ready skills ex
 - ❌ `## How it works`
 - ✅ `## 📋 How it works`
 
-**W3 mistake:** Test file too small
-- ❌ Tactical skill with 2 tests
-- ✅ Tactical skill with 5–8 tests
+**W3 mistake:** Too few evals for the maturity
+- ❌ Tactical skill with 3 evals
+- ✅ Tactical skill with 8–12 evals
 
 **W4 mistake:** Using jargon without explanation
 - ❌ "This skill uses the maturity framework..."

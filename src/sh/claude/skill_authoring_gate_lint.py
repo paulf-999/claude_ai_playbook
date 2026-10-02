@@ -48,8 +48,8 @@ EXPLAINED_JARGON = {
     r"\bmaturity\b": "context about skill development stages",
     r"\bscope gate\b": "feature limitations by development tier",
 }
-# W3: how many test functions each maturity expects in a _tests/skills/ file
-TEST_COUNT_RANGE = {"draft": (0, 5), "tactical": (5, 12), "strategic": (12, None)}
+# W3: how many evals.yaml scenarios each maturity expects, per authoring_skills.md's maturity table
+EVAL_COUNT_RANGE = {"draft": (5, 8), "tactical": (8, 12), "strategic": (12, None)}
 
 
 # ── validation logic ──────────────────────────────────────────────────────────
@@ -226,18 +226,41 @@ def _skill_md_parts(skill_dir: Path) -> tuple[str, dict, list[str]]:
     return text, {}, lines
 
 
-def find_test_file(skill_dir: Path, tests_dir: Path = DEFAULT_TESTS_DIR) -> Path | None:
-    """Locate a skill's pytest file under the skill tests folder.
+def find_test_files(skill_dir: Path, tests_dir: Path = DEFAULT_TESTS_DIR) -> list[Path]:
+    """Locate a skill's pytest files: ``test_<skill>*.py`` anywhere, plus every test in ``<tests_dir>/<skill>/``.
 
     :param skill_dir: Path to the skill directory.
     :type skill_dir: Path
-    :param tests_dir: Folder holding ``test_<skill_name>*.py`` files.
+    :param tests_dir: Folder holding the skills' pytest files.
     :type tests_dir: Path
-    :return: The first matching test file, or None.
-    :rtype: Path | None
+    :return: The matching test files, sorted.
+    :rtype: list[Path]
     """
-    # Top level only, as the walk/run gate always has: skill tests in subfolders aren't counted yet
-    return next(iter(sorted(tests_dir.glob(f"test_{skill_dir.name}*.py"))), None) if tests_dir.exists() else None
+    if not tests_dir.exists():
+        return []
+    named = set(tests_dir.rglob(f"test_{skill_dir.name}*.py"))
+    own_folder = tests_dir / skill_dir.name
+    in_folder = set(own_folder.rglob("test_*.py")) if own_folder.is_dir() else set()
+    return sorted(named | in_folder)
+
+
+def count_evals(skill_dir: Path) -> int | None:
+    """Count the scenarios in a skill's tests/evals.yaml.
+
+    :param skill_dir: Path to the skill directory.
+    :type skill_dir: Path
+    :return: The number of entries in the top-level ``evals`` list, or None if the file is missing.
+    :rtype: int | None
+    :raises ValueError: If the file exists but has no ``evals`` list.
+    """
+    path = skill_dir / "tests" / "evals.yaml"
+    if not path.exists():
+        return None
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    evals = data.get("evals") if isinstance(data, dict) else None
+    if not isinstance(evals, list):
+        raise ValueError("tests/evals.yaml has no top-level 'evals' list")
+    return len(evals)
 
 
 def _check_w1_w2_readability(lines: list[str], prose: list[str]) -> tuple[list[str], list[str]]:
@@ -272,7 +295,9 @@ def _check_w1_w2_readability(lines: list[str], prose: list[str]) -> tuple[list[s
 def _check_w3_coverage(
     skill_dir: Path, frontmatter: dict, maturity: str, tests_dir: Path
 ) -> tuple[list[str], list[str]]:
-    """W3: test coverage matches maturity, and a tested: true claim is backed by tests.
+    """W3: the evals.yaml scenario count fits the maturity, and a tested: true claim is backed by tests.
+
+    Pytest files are extra coverage on top of evals.yaml, so they never count toward or cap the range.
 
     :param skill_dir: Path to the skill directory.
     :type skill_dir: Path
@@ -285,19 +310,21 @@ def _check_w3_coverage(
     :return: Tuple of (failures, warnings).
     :rtype: tuple[list[str], list[str]]
     """
-    test_file = find_test_file(skill_dir, tests_dir)
-    if test_file is None:
-        if (skill_dir / "tests" / "evals.yaml").exists():
-            return [], []
+    try:
+        count = count_evals(skill_dir)
+    except (ValueError, yaml.YAMLError) as exc:
+        return [f"W3: {exc}"], []
+    if count is None:
         tags = frontmatter.get("tags") or {}
-        if isinstance(tags, dict) and tags.get("tested") is True:
-            return ["W3: SKILL.md claims tags.tested: true, but there's no test file or tests/evals.yaml"], []
-        return [], ["W3: no test file or tests/evals.yaml yet — disclosed as untested"]
-    count = len(re.findall(r"^def test_|@pytest.mark.parametrize", test_file.read_text(encoding="utf-8"), re.M))
-    low, high = TEST_COUNT_RANGE.get(maturity, (0, None))
-    if count < low or (high is not None and count > high):
-        expected = f"{low}+" if high is None else f"{low}–{high}"
-        return [f"W3: {maturity} skill has {count} tests in {test_file.name}, expected {expected}"], []
+        if isinstance(tags, dict) and tags.get("tested") is True and not find_test_files(skill_dir, tests_dir):
+            return ["W3: SKILL.md claims tags.tested: true, but there's no tests/evals.yaml or pytest file"], []
+        return [], ["W3: no tests/evals.yaml yet — every skill needs one"]
+    low, high = EVAL_COUNT_RANGE.get(maturity, (0, None))
+    expected = f"{low}+" if high is None else f"{low}–{high}"
+    if count < low:
+        return [f"W3: {maturity} skill has {count} evals, expected {expected} — add scenarios"], []
+    if high is not None and count > high:
+        return [], [f"W3: {maturity} skill has {count} evals, above {expected} — it may be ready to promote"]
     return [], []
 
 
@@ -365,9 +392,8 @@ def _check_run(skill_dir: Path, maturity: str, tests_dir: Path) -> tuple[list[st
     warnings: list[str] = []
     text, _, _ = _skill_md_parts(skill_dir)
 
-    # R2: a pytest file, where one exists, has real depth
-    test_file = find_test_file(skill_dir, tests_dir)
-    if test_file is not None:
+    # R2: every pytest file a skill has shows real depth
+    for test_file in find_test_files(skill_dir, tests_dir):
         content = test_file.read_text(encoding="utf-8")
         if len(content.split("\n")) <= 30:
             failures.append(f"R2: {test_file.name} is 30 lines or fewer — add error and edge cases")
