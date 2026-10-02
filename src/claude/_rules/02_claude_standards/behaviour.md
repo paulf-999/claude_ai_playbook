@@ -1,8 +1,9 @@
-<!-- version: 2.0.2 -->
+<!-- version: 2.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- applies_to: * -->
 <!-- miss_cost: high — irreversible or external actions taken without confirmation -->
+<!-- loading: always-on — safety gates must be in place before any action, in every session -->
 # 🛡️ Behaviour
 
 **Purpose:** Establish safe defaults for how Claude approaches tasks, ensuring intentional action, minimal assumptions, and careful handling of risky operations.

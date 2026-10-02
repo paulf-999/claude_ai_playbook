@@ -1,20 +1,21 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.1.1
+# Date updated:      2026-10-02
+# Version:           1.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Validates the rule-only ``applies_to`` and ``miss_cost`` headers defined in _claude_config_metadata.md.
+"""Validates the rule-only ``applies_to``, ``miss_cost`` and ``loading`` headers defined in _claude_config_metadata.md.
 
 Every always-on entry-point rule (the top-level files in tiers 01–04) declares which
 sessions need it, as comma-separated globs or ``*`` alone, on the line after ``updated``.
 Every entry-point rule, always-on or lazy, declares what a miss costs. A lazy rule whose
 miss is ``high`` must load mechanically — through ``paths:`` or a hook — never on recall alone.
 ``make audit_rule_usage`` reads both headers, so a missing or malformed value skews the report.
+Every always-on entry point also says how it loads and why, and the mode must match its folder.
 """
 import re
 
@@ -27,7 +28,9 @@ MISS_COST = re.compile(r"^<!-- miss_cost: (high|medium|low) — \S.* -->$")
 MISS_COST_PREFIX = "<!-- miss_cost:"
 HEADER_PREFIX = "<!-- applies_to:"
 EVERY_SESSION = "*"
-HEADER_LINES = 10  # paths: frontmatter (up to 4) + version, created, updated, applies_to, miss_cost
+HEADER_LINES = 11  # paths: frontmatter (up to 4) + version, created, updated, applies_to, miss_cost, loading
+LOADING = re.compile(r"^<!-- loading: (always-on|path-scoped|lazy) — \S.* -->$")
+LOADING_PREFIX = "<!-- loading:"
 GLOB = re.compile(r"^[A-Za-z0-9_.*/\-{}?\[\]]+$")
 HINT = "— see 03_authoring_guidelines/shared_standards/_claude_config_metadata.md"
 
@@ -293,3 +296,100 @@ def test_high_cost_lazy_rules_load_mechanically():
         f"high miss_cost lazy rules with no trigger: {untriggered} — add paths: frontmatter, "
         f"a hook that loads it, or move it to an always-on tier {HINT}"
     )
+
+
+# --- loading ---
+
+def loading_errors(content: str, expected: str) -> list[str]:
+    """Return problems with a rule's ``loading`` header; empty when it is valid.
+
+    :param content: Rule file text.
+    :type content: str
+    :param expected: The mode the rule's folder and frontmatter imply.
+    :type expected: str
+    :return: One message per problem.
+    :rtype: list[str]
+    """
+    lines = content.splitlines()
+    found = [i for i, line in enumerate(lines) if line.startswith(LOADING_PREFIX)]
+    if not found:
+        return ["no loading header"]
+    if len(found) > 1:
+        return ["more than one loading header"]
+    position = found[0]
+    if not position or not lines[position - 1].startswith(MISS_COST_PREFIX):
+        return ["loading must sit straight after miss_cost"]
+    match = LOADING.match(lines[position])
+    if not match:
+        return ["loading must be always-on, path-scoped or lazy, then ' — ' and a reason"]
+    if match.group(1) != expected:
+        return [f"loading says {match.group(1)} but the rule is {expected}"]
+    return []
+
+
+def expected_loading(path, content: str) -> str:
+    """Return the loading mode a rule's location and frontmatter imply.
+
+    :param path: Rule file path.
+    :type path: Path
+    :param content: Rule file text.
+    :type content: str
+    :return: ``always-on``, ``path-scoped`` or ``lazy``.
+    :rtype: str
+    """
+    if path.relative_to(RULES_DIR).parts[0] in ALWAYS_ON_TIERS:
+        return "always-on"
+    frontmatter = content.split("\n---", 1)[0] if content.startswith("---\n") else ""
+    return "path-scoped" if "paths:" in frontmatter else "lazy"
+
+
+LOADING_LINE = "<!-- miss_cost: low — a -->\n<!-- loading: {} — a reason -->\n"
+
+
+def test_loading_after_miss_cost_accepted():
+    """Each mode is valid when it matches the rule and sits straight after miss_cost."""
+    for mode in ("always-on", "path-scoped", "lazy"):
+        assert loading_errors(VALID + LOADING_LINE.format(mode), mode) == [], f"{mode} was rejected"
+
+
+def test_loading_problems_rejected():
+    """Missing, duplicate, misplaced, unknown, reasonless and mismatched headers are each reported."""
+    miss = "<!-- miss_cost: low — a -->\n"
+    assert loading_errors(VALID + miss, "lazy") == ["no loading header"]
+    twice = VALID + LOADING_LINE.format("lazy") + "<!-- loading: lazy — b -->\n"
+    assert loading_errors(twice, "lazy") == ["more than one loading header"]
+    assert loading_errors(VALID + "<!-- loading: lazy — a -->\n", "lazy") == [
+        "loading must sit straight after miss_cost"]
+    bad_format = ["loading must be always-on, path-scoped or lazy, then ' — ' and a reason"]
+    assert loading_errors(VALID + miss + "<!-- loading: sometimes — a -->\n", "lazy") == bad_format
+    assert loading_errors(VALID + miss + "<!-- loading: lazy -->\n", "lazy") == bad_format
+    assert loading_errors(VALID + LOADING_LINE.format("lazy"), "always-on") == [
+        "loading says lazy but the rule is always-on"]
+
+
+def test_expected_loading_follows_folder_and_frontmatter():
+    """Tiers 01–04 are always-on, and lazy rules are path-scoped only with paths: frontmatter."""
+    lazy = RULES_DIR / LAZY_TIER / "x.md"
+    assert expected_loading(RULES_DIR / "02_claude_standards" / "x.md", "# X\n") == "always-on"
+    assert expected_loading(lazy, '---\npaths:\n  - "**/*.sql"\n---\n# X\n') == "path-scoped"
+    assert expected_loading(lazy, "# X\n") == "lazy"
+
+
+def test_every_always_on_entry_point_declares_loading():
+    """Each always-on entry point says how it loads and why, matching its folder."""
+    problems = {
+        p.relative_to(RULES_DIR).as_posix(): loading_errors(p.read_text(), expected_loading(p, p.read_text()))
+        for p in always_on_entry_points()
+    }
+    problems = {path: errors for path, errors in problems.items() if errors}
+    assert not problems, f"loading problems {HINT}:\n  " + "\n  ".join(f"{k}: {v}" for k, v in problems.items())
+
+
+def test_lazy_loading_headers_match_when_present():
+    """A lazy rule that already declares loading names the right mode, so the rollout can't drift."""
+    problems = {
+        p.relative_to(RULES_DIR).as_posix(): loading_errors(p.read_text(), expected_loading(p, p.read_text()))
+        for p in lazy_entry_points() if LOADING_PREFIX in p.read_text()
+    }
+    problems = {path: errors for path, errors in problems.items() if errors}
+    assert not problems, f"loading problems {HINT}:\n  " + "\n  ".join(f"{k}: {v}" for k, v in problems.items())

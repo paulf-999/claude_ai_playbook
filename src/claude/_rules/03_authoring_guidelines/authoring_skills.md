@@ -1,8 +1,9 @@
-<!-- version: 4.0.2 -->
+<!-- version: 4.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- applies_to: **/skills/** -->
 <!-- miss_cost: medium — skills ship without contracts or evals -->
+<!-- loading: always-on — a new skill can start before any skills/ file is open, so a path trigger would miss it -->
 # 🛠️ Skill Authoring
 
 **Purpose:** Create focused, well-documented, properly tested skills. One concept per skill.

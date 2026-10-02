@@ -1,8 +1,9 @@
-<!-- version: 1.0.3 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- applies_to: * -->
 <!-- miss_cost: high — commits to main or stages another session's work -->
+<!-- loading: always-on — commits can happen in any session, and a miss is costly -->
 # 🌿 Rules — Git
 
 **Purpose:** Establish best practices for git workflow, commits, branch management, and pull requests to maintain clean history, safe operations, and clear communication.
