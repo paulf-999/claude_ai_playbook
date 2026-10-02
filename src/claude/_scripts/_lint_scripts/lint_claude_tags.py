@@ -21,8 +21,10 @@ import argparse
 import sys
 from datetime import date
 from pathlib import Path
+from typing import Any
 
 import frontmatter
+import yaml
 
 # ── valid values ──────────────────────────────────────────────────────────────
 
@@ -41,7 +43,7 @@ DEFAULT_ROOT = _CONFIG_ROOT
 # ── validation logic ──────────────────────────────────────────────────────────
 
 
-def validate_component(metadata: dict) -> tuple[list[str], list[str]]:  # noqa: C901
+def validate_component(metadata: dict[str, Any]) -> tuple[list[str], list[str]]:  # noqa: C901
     """Validate Tier 1 tags in a component's frontmatter metadata.
 
     Checks for presence and valid values of: maturity, tags.criticality,
@@ -49,7 +51,7 @@ def validate_component(metadata: dict) -> tuple[list[str], list[str]]:  # noqa: 
     components and stale or absent last-reviewed dates.
 
     :param metadata: Parsed YAML frontmatter as a plain dict.
-    :type metadata: dict
+    :type metadata: dict[str, Any]
     :return: Tuple of (failures, warnings). Failures block; warnings are advisory.
     :rtype: tuple[list[str], list[str]]
     """
@@ -65,7 +67,7 @@ def validate_component(metadata: dict) -> tuple[list[str], list[str]]:  # noqa: 
 
     # ── tags block ────────────────────────────────────────────────────────────
     tags_raw = metadata.get("tags")
-    tags: dict = tags_raw if isinstance(tags_raw, dict) else {}
+    tags: dict[str, Any] = tags_raw if isinstance(tags_raw, dict) else {}
 
     # criticality
     criticality = tags.get("criticality")
@@ -125,7 +127,7 @@ def _normalise_bool(value: object) -> bool | None:
     return None
 
 
-def _check_staleness(last_reviewed: object, warnings: list[str]) -> None:
+def _check_staleness(last_reviewed: object, warnings: list[str]):
     """Append a warning if last-reviewed is older than STALENESS_WARN_DAYS.
 
     :param last_reviewed: Raw last-reviewed value from frontmatter.
@@ -167,7 +169,8 @@ def find_components(root: Path) -> list[Path]:
             post = frontmatter.load(str(p))
             if "maturity" in post.metadata:
                 other_tagged.add(p)
-        except Exception:  # noqa: BLE001 — skip unreadable files silently
+        except (OSError, UnicodeDecodeError, ValueError, yaml.YAMLError):
+            # Skip unreadable files silently
             pass
 
     return sorted(skill_files | other_tagged)
@@ -233,7 +236,7 @@ def main() -> int:  # noqa: C901
         try:
             post = frontmatter.load(str(path))
             metadata = dict(post.metadata)
-        except Exception as exc:
+        except (OSError, UnicodeDecodeError, ValueError, yaml.YAMLError) as exc:
             print(f"{_rel(path, root)}")
             print(f"  FAIL  could not parse frontmatter: {exc}\n")
             n_fail += 1

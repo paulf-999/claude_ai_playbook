@@ -24,6 +24,7 @@ import argparse
 import re
 import sys
 from pathlib import Path
+from typing import Any
 
 import yaml
 
@@ -55,13 +56,13 @@ EVAL_COUNT_RANGE = {"draft": (5, 8), "tactical": (8, 12), "strategic": (12, None
 # ── validation logic ──────────────────────────────────────────────────────────
 
 
-def _check_c1_contract_fields(contract: dict) -> list[str]:
+def _check_c1_contract_fields(contract: dict[str, Any]) -> list[str]:
     """C1: skill.contract.yaml has all required core fields and a trigger/dependency block.
 
     Supports both new format (when, requires) and legacy format (dispatch, dependencies).
 
     :param contract: Parsed skill.contract.yaml content.
-    :type contract: dict
+    :type contract: dict[str, Any]
     :return: List of failure messages (empty if the contract is complete).
     :rtype: list[str]
     """
@@ -81,11 +82,11 @@ def _check_c1_contract_fields(contract: dict) -> list[str]:
     return failures
 
 
-def _check_c3_version_maturity(contract: dict) -> list[str]:
+def _check_c3_version_maturity(contract: dict[str, Any]) -> list[str]:
     """C3: version is semantic (X.Y.Z) and its major aligns with maturity.
 
     :param contract: Parsed skill.contract.yaml content.
-    :type contract: dict
+    :type contract: dict[str, Any]
     :return: List of failure messages (empty if version/maturity are aligned).
     :rtype: list[str]
     """
@@ -128,29 +129,29 @@ def _check_c2_and_c4_and_c5_skill_md(skill_dir: Path) -> list[str]:
         skill_md_content = skill_md_path.read_text(encoding="utf-8")
         name_issues = _check_hardcoded_skill_names(skill_md_content, skill_dir.name)
         failures.extend([f"C2: {issue}" for issue in name_issues])
-    except Exception as exc:
+    except (OSError, UnicodeDecodeError) as exc:
         failures.append(f"C2: SKILL.md read error: {exc}")
 
     try:
         structure_issues = _check_skill_md_structure(skill_md_path)
         failures.extend([f"C4: {issue}" for issue in structure_issues])
-    except Exception as exc:
+    except (OSError, UnicodeDecodeError) as exc:
         failures.append(f"C4: SKILL.md structure check failed: {exc}")
 
     try:
         frontmatter_issues = _has_valid_frontmatter(skill_md_path)
         failures.extend([f"C5: {issue}" for issue in frontmatter_issues])
-    except Exception as exc:
+    except (OSError, UnicodeDecodeError) as exc:
         failures.append(f"C5: SKILL.md frontmatter check failed: {exc}")
 
     return failures
 
 
-def _check_c7_requires_section(contract: dict) -> list[str]:
+def _check_c7_requires_section(contract: dict[str, Any]) -> list[str]:
     """C7: requires section documents tools/mcp_servers/external (advisory only).
 
     :param contract: Parsed skill.contract.yaml content.
-    :type contract: dict
+    :type contract: dict[str, Any]
     :return: List of warning messages.
     :rtype: list[str]
     """
@@ -181,9 +182,8 @@ def validate_skill(skill_dir: Path) -> tuple[list[str], list[str]]:
         return ["C1: skill.contract.yaml missing"], []
 
     try:
-        with open(contract_path, encoding="utf-8") as f:
-            contract = yaml.safe_load(f) or {}
-    except Exception as exc:
+        contract = yaml.safe_load(contract_path.read_text(encoding="utf-8")) or {}
+    except (OSError, UnicodeDecodeError, yaml.YAMLError) as exc:
         return [f"C1: skill.contract.yaml parse error: {exc}"], []
 
     failures: list[str] = []
@@ -293,7 +293,7 @@ def _check_w1_w2_readability(lines: list[str], prose: list[str]) -> tuple[list[s
 
 
 def _check_w3_coverage(
-    skill_dir: Path, frontmatter: dict, maturity: str, tests_dir: Path
+    skill_dir: Path, frontmatter: dict[str, Any], maturity: str, tests_dir: Path
 ) -> tuple[list[str], list[str]]:
     """W3: the evals.yaml scenario count fits the maturity, and a tested: true claim is backed by tests.
 
@@ -302,7 +302,7 @@ def _check_w3_coverage(
     :param skill_dir: Path to the skill directory.
     :type skill_dir: Path
     :param frontmatter: SKILL.md's parsed frontmatter.
-    :type frontmatter: dict
+    :type frontmatter: dict[str, Any]
     :param maturity: The contract's maturity level.
     :type maturity: str
     :param tests_dir: Folder holding the skills' pytest files.
@@ -411,14 +411,14 @@ def _check_run(skill_dir: Path, maturity: str, tests_dir: Path) -> tuple[list[st
 
 
 def check_walk_run(
-    skill_dir: Path, contract: dict, tests_dir: Path = DEFAULT_TESTS_DIR
+    skill_dir: Path, contract: dict[str, Any], tests_dir: Path = DEFAULT_TESTS_DIR
 ) -> tuple[list[str], list[str]]:
     """Validate a skill against the walk (W1–W6) and run (R2–R4) criteria.
 
     :param skill_dir: Path to the skill directory.
     :type skill_dir: Path
     :param contract: The parsed skill.contract.yaml.
-    :type contract: dict
+    :type contract: dict[str, Any]
     :param tests_dir: Folder holding the skills' pytest files.
     :type tests_dir: Path
     :return: Tuple of (failures, warnings).
@@ -572,7 +572,7 @@ def _has_valid_frontmatter(skill_md_path: Path) -> list[str]:
 
     try:
         data = yaml.safe_load(parts[1]) or {}
-    except Exception as exc:
+    except yaml.YAMLError as exc:
         issues.append(f"SKILL.md frontmatter is not valid YAML: {exc}")
         return issues
 

@@ -5,11 +5,13 @@ Reads the PLANS.md catalogue, lists all entries with status 'executed' or
 ~/.claude/plans/archive/ and removes their rows from PLANS.md.
 """
 
-import os
+from __future__ import annotations
+
 import re
 import shutil
 import sys
 from datetime import date
+from pathlib import Path
 
 
 def _find_candidates(  # noqa: C901
@@ -69,7 +71,8 @@ def _find_candidates(  # noqa: C901
                 if (today - plan_date).days < min_age_days:
                     continue
             except ValueError:
-                pass  # Unparseable date — include the row conservatively.
+                # Unparseable date — include the row conservatively.
+                pass
         # Extract filename from the markdown link [filename.md](filename.md)
         m = re.search(r"\[([^\]]+)\]\([^)]+\)", parts[file_col])
         filename = m.group(1) if m else None
@@ -77,13 +80,13 @@ def _find_candidates(  # noqa: C901
     return candidates
 
 
-def _write_review_md(candidates: list[tuple[int, str, str | None]], review_path: str, min_age_days: int) -> None:
+def _write_review_md(candidates: list[tuple[int, str, str | None]], review_path: Path, min_age_days: int):
     """Write a formatted markdown table of archive candidates to a review file.
 
     :param candidates: Candidate tuples as returned by _find_candidates.
     :type candidates: list[tuple[int, str, str | None]]
     :param review_path: Absolute path to write the review file.
-    :type review_path: str
+    :type review_path: Path
     :param min_age_days: Age threshold used for this run (shown in the file header).
     :type min_age_days: int
     """
@@ -96,36 +99,33 @@ def _write_review_md(candidates: list[tuple[int, str, str | None]], review_path:
     for _, row, _ in candidates:
         # row is already a pipe-delimited table row — write it as-is.
         lines.append(row + "\n")
-    with open(review_path, "w") as f:
-        f.writelines(lines)
+    review_path.write_text("".join(lines))
 
 
 def main(
-    plans_dir: str | None = None,
+    plans_dir: str | Path | None = None,
     min_age_days: int = 14,
     today: date | None = None,
-) -> None:
+):
     """Run the clean_plans archival workflow.
 
     :param plans_dir: Override the plans directory path. Defaults to ~/.claude/plans.
         Intended for use in tests.
-    :type plans_dir: str or None
+    :type plans_dir: str or Path or None
     :param min_age_days: Only archive plans this many days old or older.
     :type min_age_days: int
     :param today: Reference date for age calculations. Defaults to date.today().
         Intended for use in tests.
     :type today: date or None
     """
-    if plans_dir is None:
-        plans_dir = os.path.expanduser("~/.claude/plans")
-    index_path = os.path.join(plans_dir, "PLANS.md")
+    plans_dir = Path("~/.claude/plans").expanduser() if plans_dir is None else Path(plans_dir)
+    index_path = plans_dir / "PLANS.md"
 
-    if not os.path.exists(index_path):
+    if not index_path.exists():
         print(f"No PLANS.md found at {index_path}.")
         sys.exit(0)
 
-    with open(index_path) as f:
-        lines = f.readlines()
+    lines = index_path.read_text().splitlines(keepends=True)
 
     candidates = _find_candidates(lines, min_age_days=min_age_days, today=today)
 
@@ -133,7 +133,7 @@ def main(
         print(f"No executed/superseded plans older than {min_age_days} days to archive.")
         sys.exit(0)
 
-    review_path = os.path.join(plans_dir, "archive_review.md")
+    review_path = plans_dir / "archive_review.md"
     _write_review_md(candidates, review_path, min_age_days)
     print(f"Review file: {review_path}\n")
 
@@ -151,25 +151,24 @@ def main(
         print("Aborted.")
         sys.exit(0)
 
-    archive_dir = os.path.join(plans_dir, "archive")
-    os.makedirs(archive_dir, exist_ok=True)
+    archive_dir = plans_dir / "archive"
+    archive_dir.mkdir(parents=True, exist_ok=True)
 
     archived_indices: set[int] = set()
     for idx, _, filename in candidates:
         archived_indices.add(idx)
         if not filename:
             continue
-        src = os.path.join(plans_dir, filename)
-        if not os.path.exists(src):
+        src = plans_dir / filename
+        if not src.exists():
             print(f"  Not found (skipped): {filename}")
             continue
-        shutil.move(src, os.path.join(archive_dir, filename))
+        shutil.move(src, archive_dir / filename)
         print(f"  Archived: {filename}")
 
     # Remove archived rows from PLANS.md
     new_lines = [line for i, line in enumerate(lines) if i not in archived_indices]
-    with open(index_path, "w") as f:
-        f.writelines(new_lines)
+    index_path.write_text("".join(new_lines))
 
     print(f"\nDone. View archived plans at {archive_dir}")
 

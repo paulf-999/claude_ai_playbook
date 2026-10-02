@@ -26,6 +26,7 @@ import sys
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
+from typing import Any
 
 import frontmatter
 
@@ -99,11 +100,11 @@ def _collect_names(tagged: list[Path]) -> set[str]:
 # ── health checks ─────────────────────────────────────────────────────────────
 
 
-def check_health(metadata: dict, known_names: set[str]) -> dict[str, str | None]:
+def check_health(metadata: dict[str, Any], known_names: set[str]) -> dict[str, str | None]:
     """Check a tagged component's metadata for health signals.
 
     :param metadata: Parsed YAML frontmatter as a plain dict.
-    :type metadata: dict
+    :type metadata: dict[str, Any]
     :param known_names: Set of all known component names for depends-on validation.
     :type known_names: set[str]
     :return: Dict mapping signal keys to detail strings, or None if signal absent.
@@ -119,7 +120,7 @@ def check_health(metadata: dict, known_names: set[str]) -> dict[str, str | None]
         "BROKEN_DEP": None,
     }
 
-    tags: dict = metadata.get("tags") or {}
+    tags: dict[str, Any] = metadata.get("tags") or {}
     criticality = tags.get("criticality", "")
     status = tags.get("status", "")
     tested_raw = tags.get("tested")
@@ -233,7 +234,7 @@ def _top_dir(path: Path, root: Path) -> str:
 # ── report ────────────────────────────────────────────────────────────────────
 
 
-def build_report(root: Path) -> None:
+def build_report(root: Path):
     """Orchestrate scan, health checks, and printed report.
 
     :param root: Root directory to scan (e.g. src/claude/).
@@ -300,7 +301,7 @@ def _print_signal_section(
     signal_groups: dict[str, list[tuple[str, str]]],
     key: str,
     label: str,
-) -> None:
+):
     """Print one health signal section.
 
     :param signal_groups: Collected signals grouped by key.

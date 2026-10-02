@@ -20,9 +20,9 @@ import argparse
 import json
 import sys
 from pathlib import Path
+from typing import Any
 
 import yaml
-
 
 # Maturity limits (hard gates)
 MATURITY_LIMITS = {
@@ -123,11 +123,11 @@ def score_scope(phases: int, lines: int) -> int:
         return 0
 
 
-def count_dependencies(contract: dict) -> int:
+def count_dependencies(contract: dict[str, Any]) -> int:
     """Count external dependencies from contract.
 
     :param contract: Parsed skill.contract.yaml
-    :type contract: dict
+    :type contract: dict[str, Any]
     :return: Dependency count
     :rtype: int
     """
@@ -224,13 +224,13 @@ def score_prerequisites(domain_count: int) -> int:
         return 2
 
 
-def calculate_complexity(skill_dir: Path) -> dict:
+def calculate_complexity(skill_dir: Path) -> dict[str, Any]:
     """Calculate complexity score for a skill.
 
     :param skill_dir: Path to skill directory
     :type skill_dir: Path
     :return: Dict with score, breakdown, and maturity check
-    :rtype: dict
+    :rtype: dict[str, Any]
     """
     contract_path = skill_dir / "skill.contract.yaml"
     skill_md_path = skill_dir / "SKILL.md"
@@ -238,8 +238,7 @@ def calculate_complexity(skill_dir: Path) -> dict:
     # Load contract
     contract = {}
     if contract_path.exists():
-        with open(contract_path, encoding="utf-8") as f:
-            contract = yaml.safe_load(f) or {}
+        contract = yaml.safe_load(contract_path.read_text(encoding="utf-8")) or {}
 
     # Calculate each dimension
     concepts = count_concepts(skill_md_path)
