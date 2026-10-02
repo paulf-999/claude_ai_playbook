@@ -2,13 +2,13 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-02
-# Version:           2.0.1
+# Version:           2.0.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Test: hook_enforcement_writing_style.sh.
+"""Test: hook_enforcement_markdown_location.sh.
 
 The hook checks where markdown files written inside the Claude config dir live:
 only known top-level files may sit at the config root, and ``_reference/`` files
@@ -23,7 +23,7 @@ import pytest
 
 from _shared_paths import CLAUDE_DIR, HOOKS_DIR
 
-HOOK_PATH = HOOKS_DIR / "hook_enforcement_writing_style.sh"
+HOOK_PATH = HOOKS_DIR / "hook_enforcement_markdown_location.sh"
 STYLE_RULE = "writing_style.md"
 
 

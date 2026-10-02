@@ -48,7 +48,7 @@ Tests for Claude Code hook scripts in `~/.claude/hooks/`.
 |---|---|---|---|---|---|
 | `test_enforcement_mcp_stale_settings.py` | `hook_enforcement_mcp_stale_settings.sh` — warns once when the disabled MCP servers change mid-session | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.3 |
 | `test_enforcement_naming_convention.py` | `hook_enforcement_naming_convention.sh` — denies new config files whose names break the compliance checks, and lets everything else through | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.3 |
-| `test_enforcement_writing_style.py` | `hook_enforcement_writing_style.sh` — flags stray markdown at the config root and badly named `_reference/` files, using the real stdin payload | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
+| `test_enforcement_markdown_location.py` | `hook_enforcement_markdown_location.sh` — flags stray markdown at the config root and badly named `_reference/` files, using the real stdin payload | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 
 ### `hooks/response_standards/`
 

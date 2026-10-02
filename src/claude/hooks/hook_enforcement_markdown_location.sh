@@ -1,7 +1,7 @@
 #!/bin/bash
-# version: 2.0.0
+# version: 2.0.1
 # created: 2026-08-28
-# updated: 2026-10-01
+# updated: 2026-10-02
 # PostToolUse hook — checks where markdown files written inside the Claude config dir live.
 # Root: only the known top-level files may sit at the config root (see claude_directory_structure.md).
 # Reference: _reference/ files are snake_case topics with no date, or _<aspect>.md children of one topic.

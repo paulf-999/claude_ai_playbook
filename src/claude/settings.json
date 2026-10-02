@@ -66,7 +66,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hooks/hook_enforcement_writing_style.sh\""
+            "command": "bash \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hooks/hook_enforcement_markdown_location.sh\""
           }
         ]
       }
