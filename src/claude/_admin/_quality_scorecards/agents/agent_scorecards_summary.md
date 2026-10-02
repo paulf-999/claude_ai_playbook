@@ -12,7 +12,7 @@
 
 | Group | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
-| Agents | 1 | 6.0/10 | 2026-10-02 | • 💪 **Strongest:** `technical_writer` is the only agent (6.0/10)<br>• ⚠️ **Gap:** overlaps two skills and has no tool allowlist |
+| Agents | 1 | 8.1/10 | 2026-10-02 | • 💪 **Strongest:** `technical_writer` is the only agent (8.1/10)<br>• ⚠️ **Gap:** no recorded usage |
 
 ---
 
@@ -22,8 +22,7 @@ Ranked by impact, highest first.
 
 | # | Action | Why | Source |
 |---|---|---|---|
-| 1 | • 🔒 **Tool allowlist:** add `tools:` to `technical_writer` | • 🛡️ **Least privilege:** a writing agent can currently run any tool | `scorecard_technical_writer.md` |
-| 2 | • 🧭 **Overlap:** decide how `technical_writer` relates to `git_create_pr` and `confluence_create_page` | • 🔁 **Duplication:** two skills already do its two jobs | `scorecard_technical_writer.md` |
+| 1 | • 📊 **Usage evidence:** record real uses of `technical_writer` | • 🔻 **Weakest dimension:** Evidence of Need is 5/10 | `scorecard_technical_writer.md` |
 
 ---
 
@@ -33,7 +32,7 @@ Sorted by Overall score, highest first.
 
 | Scorecard | Overall | Date Updated | Recommended improvements |
 |---|---|---|---|
-| `scorecard_technical_writer.md` | 6.0/10 | 2026-10-02 | • Add a `tools:` allowlist.<br>• Resolve the overlap with two skills.<br>• Record usage or downgrade maturity.<br>• Structure the evals.<br>• Drop the GitHub MCP requirement. |
+| `scorecard_technical_writer.md` | 8.1/10 | 2026-10-02 | • Record real uses of the agent. |
 
 ---
 
