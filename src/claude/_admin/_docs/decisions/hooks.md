@@ -17,6 +17,7 @@
 |---|---|---|
 | `hook_enforcement_naming_convention.sh` | PreToolUse (Write) | Block before the file is created — naming can't be fixed after the fact without a rename. Denies only names with an error under `_tests/_file_structure_validator.py`, which it calls for that one path |
 | `hook_enforcement_writing_style.sh` | PostToolUse (Edit/Write) | Flag stray markdown at the config root and badly named `_reference/` files after the edit — exit 2 feeds the fix back to Claude, since the file is already written |
+| `hook_enforcement_mcp_stale_settings.sh` | UserPromptSubmit | Warn once when `deniedMcpServers` in `settings.json` changes mid-session — Claude Code reads it only at startup, so a toggle doesn't apply until restart (a disabled server kept working on 2026-10-01). Silent otherwise |
 | `hook_style_guide_response_standards_inject.sh` | UserPromptSubmit | Only place to act before Claude starts reasoning — adds the response-format reminder to every prompt |
 | `hook_style_guide_response_standards.sh` | Stop (**reserved — not registered**) | Kept on purpose as the post-response check to wire in if injection stops working — see `response_standards_enforcement.md`. `test_hook_registry_utils.py` lists it in `RESERVED_HOOKS`, so it can't be deleted or wired in silently |
 

@@ -12,7 +12,7 @@
 
 | Group | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
-| Hooks | 5 | 8.3/10 | 2026-10-02 | • 💪 **Strongest:** `hook_enforcement_mcp_stale_settings.sh` (8.7/10)<br>• ⚠️ **Weakest:** `hook_enforcement_writing_style.sh` (7.7/10) |
+| Hooks | 5 | 8.3/10 | 2026-10-02 | • 💪 **Strongest:** `hook_enforcement_mcp_stale_settings.sh` (9.0/10)<br>• ⚠️ **Weakest:** `hook_enforcement_writing_style.sh` (7.7/10) |
 
 ---
 
@@ -34,7 +34,7 @@ Sorted by Overall score, highest first.
 
 | Scorecard | Overall | Date Updated | Recommended improvements |
 |---|---|---|---|
-| `scorecard_hook_enforcement_mcp_stale_settings.md` | 8.7/10 | 2026-10-02 | — (≥8.5) |
+| `scorecard_hook_enforcement_mcp_stale_settings.md` | 9.0/10 | 2026-10-02 | — (≥8.5) |
 | `scorecard_hook_style_guide_response_standards_inject.md` | 8.6/10 | 2026-10-02 | — (≥8.5) |
 | `scorecard_hook_enforcement_naming_convention.md` | 8.4/10 | 2026-10-02 | • Test the validator's `--check` mode directly. |
 | `scorecard_hook_style_guide_response_standards.md` | 8.0/10 | 2026-10-02 | • Set a date to wire in or remove the reserved hook. |
