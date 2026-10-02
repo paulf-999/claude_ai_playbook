@@ -162,6 +162,10 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - Parent: `../python.md` — Python coding standards
 - Sibling: `../_inline_comments_example.py` — Commenting complex code
 
+### `style_guide_standards/python/comments.md`
+
+- Parent: `../python.md` — Python coding standards, which keeps a one-line summary of this file
+
 ### `style_guide_standards/python/logging/_error_handling.md`
 
 - Parent: `logging.md` — Logging overview and links
