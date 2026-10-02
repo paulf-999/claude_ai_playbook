@@ -3,25 +3,21 @@
 **Date Created:** 2026-10-02
 **Date Updated:** 2026-10-02
 
-**Overall score:** 6.0/10
+**Overall score:** 8.1/10
 
 **Recommended improvements:**
-- Add a `tools:` allowlist to the frontmatter, limited to reading files and the Confluence tools it needs
-- Decide how it relates to the `git_create_pr` and `confluence_create_page` skills, then narrow its scope or hand off to them
-- Record real uses of the agent, or downgrade its maturity from tactical
-- Rewrite the evals as structured name, input, setup and expected-output fields, per the hard gates
-- Drop the GitHub MCP requirement, because the PR template is a local file
+- Record real uses of the agent, so its tactical maturity rests on evidence
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 8/10 | 2026-10-02 | • 🔍 **Description:** says what it drafts, when to use it and what it isn't for<br>• 🎯 **Triggers:** a slash command plus four natural phrases |
-| **Scope Boundaries** | 5/10 | 2026-10-02 | • ✅ **Not-for list:** explicit in both "When to use" and "Constraints"<br>• ⚠️ **Overlap:** `git_create_pr` already drafts PR bodies, and `confluence_create_page` already creates pages |
-| **Complexity** | 6/10 | 2026-10-02 | • 🧮 **Raw complexity 4:** PR bodies and Confluence pages (Concepts 1), repo templates (Scope 1), Atlassian and GitHub MCP (Dependencies 2) |
+| **Clarity** | 9/10 | 2026-10-02 | • 🔍 **Description:** says what it drafts, that it never publishes and which skills do<br>• 🎯 **Triggers:** a slash command plus four drafting phrases |
+| **Scope Boundaries** | 9/10 | 2026-10-02 | • ✅ **Distinct job:** drafts only, while `git_create_pr` and `confluence_create_page` publish<br>• ✅ **Not-for list:** publishing, editing existing docs, ADRs, runbooks, READMEs and diagrams |
+| **Complexity** | 8/10 | 2026-10-02 | • 🧮 **Raw complexity 2:** PR bodies and page text (Concepts 1), repo templates (Scope 1), no external services |
 | **Evidence of Need** | 5/10 | 2026-10-02 | • ⚠️ **No record:** nothing documents how often it's used, although its maturity is tactical |
-| **Test Coverage** | 6/10 | 2026-10-02 | • 📊 **Count:** 12 scenarios, matching the tactical range of 8–12<br>• ⚠️ **Format:** prose headings with no setup field, and nothing runs them |
-| **Structural Compliance** | 7/10 | 2026-10-02 | • ✅ **Basics:** frontmatter, metadata header and all five sections<br>• ⚠️ **Length:** 68 lines, over the 40–60 target<br>• ⚠️ **Version notes:** "v1.0" labels on constraints read as plans for later versions |
-| **Tool Safety** | 5/10 | 2026-10-02 | • ✅ **Isolation:** runs in a worktree<br>• ⚠️ **No allowlist:** without `tools:` it can use every tool, including Bash and Write |
-| **Overall** | **6.0/10** | 2026-10-02 | • 💪 **Strongest:** Clarity (8/10)<br>• ⚠️ **Weakest:** Scope Boundaries, Evidence of Need and Tool Safety (5/10) |
+| **Test Coverage** | 8/10 | 2026-10-02 | • 📊 **Count:** 12 structured evals with assertions, within the tactical range<br>• ✅ **Boundaries:** covers the publishing hand-off and both declines<br>• ⚠️ **Not run:** nothing executes them yet |
+| **Structural Compliance** | 9/10 | 2026-10-02 | • ✅ **Hard gates:** frontmatter, metadata header, all five sections, 57 lines and no future-version notes |
+| **Tool Safety** | 9/10 | 2026-10-02 | • 🔒 **Allowlist:** Read, Grep, Glob and Write only, with no Bash or MCP<br>• ✅ **Isolation:** runs in a worktree |
+| **Overall** | **8.1/10** | 2026-10-02 | • 💪 **Strongest:** Clarity, Scope Boundaries, Structural Compliance and Tool Safety (9/10)<br>• ⚠️ **Weakest:** Evidence of Need (5/10) |
 
 ## 🔗 Related files
 
