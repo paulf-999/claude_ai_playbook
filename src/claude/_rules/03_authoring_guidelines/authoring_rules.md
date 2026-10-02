@@ -1,8 +1,9 @@
-<!-- version: 1.6.0 -->
+<!-- version: 1.7.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-02 -->
 <!-- applies_to: **/_rules/** -->
 <!-- miss_cost: medium — rules ship without tests or in the wrong tier -->
+<!-- loading: always-on — a new rule can start before any _rules/ file is open, and it imports the shared complexity formula -->
 # 🛠️ Rule Authoring
 
 **Purpose:** Establish a standardized process for creating rules that ensures intentionality, proper scoping, and mechanical rigor.

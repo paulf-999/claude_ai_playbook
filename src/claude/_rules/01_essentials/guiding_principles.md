@@ -1,8 +1,9 @@
-<!-- version: 1.1.3 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-02 -->
 <!-- applies_to: **/claude/**, **/.claude/** -->
 <!-- miss_cost: medium — config bloat the user later has to prune -->
+<!-- loading: always-on — every file in this config matches its paths, so path-scoping would save nothing -->
 # 🧭 Guiding Principles — Claude Config
 
 **Purpose:** Establish decision-making principles that prevent configuration bloat and ensure every setting, hook, and import justifies its token cost.

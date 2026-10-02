@@ -1,8 +1,9 @@
-<!-- version: 1.1.2 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- applies_to: **/agents/** -->
 <!-- miss_cost: low — agents drift from the house structure -->
+<!-- loading: always-on — a new agent can start before any agents/ file is open, so a path trigger would miss it -->
 # 🛠️ Agent Authoring
 
 **Purpose:** Establish standardized process for creating agents that ensures clarity, consistency, and intentionality. One concept per agent.

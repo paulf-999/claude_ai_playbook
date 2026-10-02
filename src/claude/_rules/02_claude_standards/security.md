@@ -1,8 +1,9 @@
-<!-- version: 1.1.2 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- applies_to: * -->
 <!-- miss_cost: high — secrets leak or injected instructions get followed -->
+<!-- loading: always-on — secrets and prompt injection can turn up in any session -->
 # 🔐 Rules — Security
 
 **Purpose:** Establish security standards across two concerns: (1) secure coding practices for user-generated code, and (2) Claude's own conduct guardrails to prevent prompt injection and secret exposure.

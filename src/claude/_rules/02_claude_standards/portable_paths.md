@@ -1,8 +1,9 @@
-<!-- version: 1.0.4 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-10-02 -->
 <!-- applies_to: **/hooks/*.sh, **/_tests/**/*.py, **/_scripts/**/*.py -->
 <!-- miss_cost: high — hooks and tests fail silently on another machine -->
+<!-- loading: always-on — a miss fails silently on another machine, and a new hook or test can start before a matching file is open -->
 # 🌍 Portable Paths
 
 **Purpose:** Prevent hooks and tests from hardcoding a specific machine's filesystem layout — the Claude config directory is not always at the OS default location, and code that assumes it is breaks silently elsewhere.

@@ -1,8 +1,9 @@
-<!-- version: 1.0.3 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- applies_to: * -->
 <!-- miss_cost: low — naming and writing-style drift -->
+<!-- loading: always-on — naming and writing style apply to everything Claude writes -->
 # 📐 Claude Usage Standards
 
 **Purpose:** Index the conventions that govern how Claude names, structures, and writes everything it produces — directory structure, naming, and writing style.

@@ -1,6 +1,6 @@
-<!-- version: 2.2.0 -->
+<!-- version: 2.3.0 -->
 <!-- created: 2026-09-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 # 🗂️ Claude Config Metadata
 
 **Purpose:** One shared per-file metadata standard (version, created, updated) for every authored artefact type in this config — rules, skills, agents, and hooks — defined once here so each domain references it instead of redefining it.
@@ -52,16 +52,21 @@ Each field sits on its own line, in the order version → created → updated, w
 
 ## 🎯 Rule-only usage fields
 
-Entry-point rules add up to two more lines straight after `updated`, which `make audit_rule_usage` reads:
+Entry-point rules add up to three more lines straight after `updated`:
 
 ```markdown
 <!-- applies_to: **/*.py, **/*.pyi -->
 <!-- miss_cost: high — commits secrets if missed -->
+<!-- loading: always-on — secrets can turn up in any session -->
 ```
 
 - **applies_to:** comma-separated globs for the files whose sessions need the rule, or `*` alone for every session.
   - **Required:** on every always-on entry point (tiers 01–04).
   - **Lazy rules:** optional, since `paths:` frontmatter or the audit's built-in defaults apply otherwise.
 - **miss_cost:** `high` (safety, security, data loss or a silent wrong result), `medium` (rework the user would catch) or `low` (style drift), then ` — ` and a reason.
+- **loading:** `always-on` (tiers 01–04), `path-scoped` (lazy with `paths:` frontmatter) or `lazy` (any other lazy rule), then ` — ` and a one-line reason it loads that way.
+  - **Matches the folder:** `test_rule_headers.py` fails when the value disagrees with where the rule lives, so it can't drift.
+  - **Required:** on every always-on entry point.
+- **Read by:** `make audit_rule_usage` reads `applies_to` and `miss_cost`, while `loading` is for people reading the rule.
 - **Entry points only:** a child file inherits its parent's fields.
 - **No dates:** last-used dates live in the audit's history CSV, so running an audit never edits a rule.
