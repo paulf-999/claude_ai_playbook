@@ -7,7 +7,7 @@ tags:
   tested: true
   disable_model_invocation: false
 ---
-<!-- version: 0.3.0 -->
+<!-- version: 0.3.1 -->
 <!-- created: 2026-09-07 -->
 <!-- updated: 2026-10-02 -->
 
@@ -53,7 +53,7 @@ Self-improving development loop: capture recurring mistakes, promote only verifi
 
 - `evals/runner.py` — asks headless Claude (`claude -p`, no tools) each eval prompt against the rules under test and checks the reply with `must_match` / `must_not_match` regexes; one Claude call per case
 - `evals/claude_ai_playbook.yaml` — seed eval cases proving each promoted rule works
-- `~/.claude/_rules/learned/` — Auto-promoted rules with validation dates
+- `<config-dir>/_rules/learned/` — Auto-promoted rules with validation dates, where `<config-dir>` is `$CLAUDE_CONFIG_DIR` (or `~/.claude` when it's unset)
 - `reference/_roadmap.md` — planned v2 enhancements
 - `tests/evals.yaml` — 7 test scenarios covering promotion, validation, pruning and scope
 - `_admin/_quality_scorecards/skills/scorecard_claude_kaizen.md` — 7-dimension quality scorecard
