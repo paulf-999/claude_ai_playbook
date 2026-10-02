@@ -50,7 +50,7 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 
 ### `shared_standards/_claude_config_metadata.md`
 
-- `authoring_rules.md` — imports this file; rule template at `~/.claude/_templates/RULE.md.template`
+- `authoring_rules.md` — imports this file; rule template at `~/.claude/_templates/rule.md.template`
 - `authoring_skills.md`, `authoring_agents.md` — apply the placement above
 - `_complexity_scoring.md` — sibling shared standard, same "define once" pattern
 
@@ -121,7 +121,7 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - `~/.claude/_rules/05_lazy_load/claude_rule_loading_strategy.md` — full rule list; duplication detection + always-on vs. lazy-load placement
 
 **Authoring & testing:**
-- `~/.claude/_templates/RULE.md.template` — two templates (principle-based vs. constraint-based)
+- `~/.claude/_templates/rule.md.template` — two templates (principle-based vs. constraint-based)
 - `testing.md` — when tests are required; enforcement rules always need tests
 - `shared_standards/_complexity_scoring.md` — shared complexity formula; no maturity/complexity gate is defined for rules yet, but reference this rather than inventing a new formula if one is added
 - `_admin/_quality_scorecards/rules/README.md` — quality scorecard template and per-dimension criteria for rules
