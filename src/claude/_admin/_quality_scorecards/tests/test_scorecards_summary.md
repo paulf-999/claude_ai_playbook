@@ -15,7 +15,7 @@
 | admin | 1 | 9.3/10 | 2026-10-01 | • 💪 **Only file:** `test_scorecard_dates.py` (9.3/10) |
 | agents | 1 | 9.0/10 | 2026-09-30 | • 💪 **Only file:** `test_agent_metadata_header.py` (9.0/10) |
 | hooks | 7 | 9.2/10 | 2026-10-01 | • 💪 **Strongest:** 5 files tied at 9.3/10, including `test_enforcement_writing_style.py`<br>• ⚠️ **Weakest:** `test_enforcement_mcp_stale_settings.py` (9.1/10) |
-| rules | 29 | 9.1/10 | 2026-10-01 | • 💪 **Strongest:** `test_latency_optimisation.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_lazy_load_coverage.py` (8.3/10) |
+| rules | 30 | 9.1/10 | 2026-10-02 | • 💪 **Strongest:** `test_latency_optimisation.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_lazy_load_coverage.py` (8.3/10) |
 | settings | 2 | 9.5/10 | 2026-10-01 | • 💪 **Strongest:** `test_aliases.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_settings.py` (9.3/10) |
 | skills | 13 | 8.8/10 | 2026-10-02 | • 💪 **Strongest:** 3 files tied at 9.4/10, including `test_no_orphaned_skill_files.py`<br>• ⚠️ **Weakest:** `test_jira_create_handler.py` (7.9/10) |
 | _tests root | 4 | 9.2/10 | 2026-10-01 | • 💪 **Strongest:** `test_rule_reachability.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_file_structure_compliance.py` (8.9/10) |
@@ -57,7 +57,7 @@ Sorted by Overall score, highest first.
 | `hooks/scorecard_test_hook_registry_utils.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
 | `rules/01_essentials/scorecard_test_rule_directory_organisation.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_git.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
-| `rules/02_claude_standards/scorecard_test_test_metadata.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
+| `rules/02_claude_standards/scorecard_test_test_quality_score.md` | 9.3/10 | 2026-10-02 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_test_score_floor.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_authoring_skills.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
 | `scorecard_test_file_structure_validator.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
@@ -66,6 +66,7 @@ Sorted by Overall score, highest first.
 | `hooks/enforcement/scorecard_test_enforcement_naming_convention.md` | 9.1/10 | 2026-10-01 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_always_on_reachability.md` | 9.1/10 | 2026-10-01 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_security_guardrails.md` | 9.1/10 | 2026-10-01 | — (≥8.5) |
+| `rules/02_claude_standards/scorecard_test_test_metadata.md` | 9.1/10 | 2026-10-02 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_authoring_rules.md` | 9.1/10 | 2026-10-01 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_claude_config_metadata.md` | 9.1/10 | 2026-09-30 | — (≥8.5) |
 | `skills/confluence_create_page/scorecard_test_confluence_create_page_timeout_options.md` | 9.1/10 | 2026-10-01 | — (≥8.5) |
