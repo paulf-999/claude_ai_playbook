@@ -17,7 +17,7 @@
 | Skills | 7 | 8.5/10 | 2026-10-02 | • 💪 **Strongest:** `claude_setup_graphify` (9.9/10)<br>• ⚠️ **Weakest:** `claude_kaizen` (7.1/10) |
 | Rules — always-on | 15 | 8.2/10 | 2026-10-01 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_operational_efficiency.md` (7.1/10) |
 | Rules — lazy-load | 17 | 8.4/10 | 2026-10-01 | • 💪 **Strongest:** `latency_optimisation.md` (9.2/10)<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
-| Hooks | 5 | 8.3/10 | 2026-10-02 | • 💪 **Strongest:** `hook_enforcement_mcp_stale_settings.sh` (8.7/10)<br>• ⚠️ **Weakest:** `hook_enforcement_writing_style.sh` (7.7/10) |
+| Hooks | 5 | 8.3/10 | 2026-10-02 | • 💪 **Strongest:** `hook_enforcement_mcp_stale_settings.sh` (9.0/10)<br>• ⚠️ **Weakest:** `hook_enforcement_writing_style.sh` (7.7/10) |
 | Agents | 1 | 8.1/10 | 2026-10-02 | • ⚠️ **Only agent:** `technical_writer` (8.1/10) has no recorded usage |
 
 ---
