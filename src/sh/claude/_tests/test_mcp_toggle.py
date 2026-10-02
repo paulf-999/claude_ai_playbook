@@ -2,10 +2,10 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-31
 # Date updated:      2026-10-02
-# Version:           1.0.0
+# Version:           1.0.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
-# Python style compliant: No
+# Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 """Unit tests for mcp_toggle.py — MCP server enable/disable toggle.
 
@@ -29,27 +29,16 @@ sys.path.insert(0, str(HELPERS_DIR))
 
 @pytest.fixture
 def temp_settings_file():
-    """Create a temporary settings.json for testing."""
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
-        json.dump({"deniedMcpServers": []}, f)
-        temp_path = f.name
+    """Create a temporary settings.json with no denied servers, and delete it afterwards.
+
+    :return: Path to the temporary file, as a string.
+    :rtype: str
+    """
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as handle:
+        json.dump({"deniedMcpServers": []}, handle)
+        temp_path = handle.name
     yield temp_path
     Path(temp_path).unlink()
-
-
-@pytest.fixture
-def mock_settings_path(temp_settings_file, monkeypatch):
-    """Mock settings.json path to use temporary file."""
-    monkeypatch.setenv("HOME", str(Path(temp_settings_file).parent))
-    monkeypatch.setattr(
-        "pathlib.Path.home",
-        lambda: Path(temp_settings_file).parent
-    )
-    Path(temp_settings_file).parent.mkdir(parents=True, exist_ok=True)
-    (Path(temp_settings_file).parent / ".claude").mkdir(exist_ok=True)
-    (Path(temp_settings_file).parent / ".claude" / "settings.json").write_text(
-        json.dumps({"deniedMcpServers": []})
-    )
 
 
 def test_enable_idempotency():
@@ -171,11 +160,11 @@ def test_multiple_servers():
     assert len(settings["deniedMcpServers"]) == 2
 
 
-def test_invalid_action_exit_code():
+def test_invalid_action_exit_code(monkeypatch):
     """Invalid action exits with code 1."""
     import mcp_toggle
 
-    sys.argv = ["mcp_toggle.py", "invalid", "server"]
+    monkeypatch.setattr(sys, "argv", ["mcp_toggle.py", "invalid", "server"])
     with pytest.raises(SystemExit) as exc_info:
         mcp_toggle.main()
     assert exc_info.value.code == 1
@@ -185,7 +174,15 @@ MCP_TOGGLE = HELPERS_DIR / "mcp_toggle.py"
 
 
 def run_toggle(home: Path, config_dir: Optional[Path]) -> subprocess.CompletedProcess:
-    """Run mcp_toggle.py as a script with a temp HOME and an optional CLAUDE_CONFIG_DIR."""
+    """Run mcp_toggle.py as a script to disable atlassian, with a temp HOME and an optional CLAUDE_CONFIG_DIR.
+
+    :param home: Folder to use as ``HOME``.
+    :type home: Path
+    :param config_dir: Folder to use as ``CLAUDE_CONFIG_DIR``, or None to leave it unset.
+    :type config_dir: Optional[Path]
+    :return: The finished process.
+    :rtype: subprocess.CompletedProcess
+    """
     env = {k: v for k, v in os.environ.items() if k != "CLAUDE_CONFIG_DIR"}
     env["HOME"] = str(home)
     if config_dir is not None:
