@@ -1,6 +1,6 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.0.3 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-02 -->
 # 📅 Hooks ROI — Precedent & Examples
 
 **Purpose:** The real incidents behind the hooks decision framework — one negative (5 low-ROI hooks removed), one positive — grounding the framework in evidence, not theory.
@@ -26,7 +26,7 @@
 
 ## ✅ Success example
 
-**enforcement_writing_style.sh** (active):
+**hook_enforcement_markdown_location.sh** (active):
 - Real problem: many sessions produce output violating writing style
 - Frequency: ~40+ times/month across all sessions
 - Manual alternative: user would review, ask Claude to rewrite (~15 min/violation)

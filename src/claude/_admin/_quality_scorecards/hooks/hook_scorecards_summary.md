@@ -12,7 +12,7 @@
 
 | Group | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
-| Hooks | 5 | 8.3/10 | 2026-10-02 | • 💪 **Strongest:** `hook_enforcement_mcp_stale_settings.sh` (9.0/10)<br>• ⚠️ **Weakest:** `hook_enforcement_writing_style.sh` (7.7/10) |
+| Hooks | 5 | 8.5/10 | 2026-10-02 | • 💪 **Strongest:** `hook_enforcement_mcp_stale_settings.sh` (9.0/10)<br>• ⚠️ **Weakest:** `hook_style_guide_response_standards.sh` (8.0/10) |
 
 ---
 
@@ -22,9 +22,9 @@ Ranked by impact, highest first.
 
 | # | Action | Why | Source |
 |---|---|---|---|
-| 1 | • 🏷️ **Misleading name:** rename `hook_enforcement_writing_style.sh` after the location check it runs | • 🔍 **Clarity:** the name sends readers to the wrong rule | `scorecard_hook_enforcement_writing_style.md` |
+| 1 | • 📅 **Reserved hook:** set a date to wire in or remove `hook_style_guide_response_standards.sh` | • 💤 **Unused:** it has been reserved since it was added | `scorecard_hook_style_guide_response_standards.md` |
 | 2 | • 🧪 **Validator check:** test the naming validator's `--check` mode directly | • 🤫 **Fails open:** a broken validator would switch the hook off silently | `scorecard_hook_enforcement_naming_convention.md` |
-| 3 | • 📅 **Reserved hook:** set a date to wire in or remove `hook_style_guide_response_standards.sh` | • 💤 **Unused:** it has been reserved since it was added | `scorecard_hook_style_guide_response_standards.md` |
+| 3 | • 📌 **First hit:** record the first real catch of `hook_enforcement_markdown_location.sh`, or retire it after 90 days | • 📭 **No evidence yet:** it has only run since 2026-10-01 | `scorecard_hook_enforcement_markdown_location.md` |
 
 ---
 
@@ -37,8 +37,8 @@ Sorted by Overall score, highest first.
 | `scorecard_hook_enforcement_mcp_stale_settings.md` | 9.0/10 | 2026-10-02 | — (≥8.5) |
 | `scorecard_hook_style_guide_response_standards_inject.md` | 8.6/10 | 2026-10-02 | — (≥8.5) |
 | `scorecard_hook_enforcement_naming_convention.md` | 8.4/10 | 2026-10-02 | • Test the validator's `--check` mode directly. |
+| `scorecard_hook_enforcement_markdown_location.md` | 8.4/10 | 2026-10-02 | • Record its first real hit, or retire it after 90 days. |
 | `scorecard_hook_style_guide_response_standards.md` | 8.0/10 | 2026-10-02 | • Set a date to wire in or remove the reserved hook. |
-| `scorecard_hook_enforcement_writing_style.md` | 7.7/10 | 2026-10-02 | • Rename the hook after its location check.<br>• Record the incident that justified it. |
 
 ---
 

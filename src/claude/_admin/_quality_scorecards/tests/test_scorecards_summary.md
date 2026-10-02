@@ -14,7 +14,7 @@
 |---|---|---|---|---|
 | admin | 1 | 9.3/10 | 2026-10-01 | • 💪 **Only file:** `test_scorecard_dates.py` (9.3/10) |
 | agents | 1 | 9.0/10 | 2026-09-30 | • 💪 **Only file:** `test_agent_metadata_header.py` (9.0/10) |
-| hooks | 7 | 9.2/10 | 2026-10-01 | • 💪 **Strongest:** 5 files tied at 9.3/10, including `test_enforcement_writing_style.py`<br>• ⚠️ **Weakest:** `test_enforcement_mcp_stale_settings.py` (9.1/10) |
+| hooks | 7 | 9.2/10 | 2026-10-01 | • 💪 **Strongest:** 5 files tied at 9.3/10, including `test_enforcement_markdown_location.py`<br>• ⚠️ **Weakest:** `test_enforcement_mcp_stale_settings.py` (9.1/10) |
 | rules | 30 | 9.1/10 | 2026-10-02 | • 💪 **Strongest:** `test_latency_optimisation.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_lazy_load_coverage.py` (8.3/10) |
 | settings | 2 | 9.5/10 | 2026-10-01 | • 💪 **Strongest:** `test_aliases.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_settings.py` (9.3/10) |
 | skills | 13 | 8.8/10 | 2026-10-02 | • 💪 **Strongest:** 3 files tied at 9.4/10, including `test_no_orphaned_skill_files.py`<br>• ⚠️ **Weakest:** `test_jira_create_handler.py` (7.9/10) |
@@ -50,7 +50,7 @@ Sorted by Overall score, highest first.
 | `skills/scorecard_test_skill_authoring_gate_run.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
 | `skills/scorecard_test_skill_authoring_gate_walk.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
 | `admin/scorecard_test_scorecard_dates.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
-| `hooks/enforcement/scorecard_test_enforcement_writing_style.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
+| `hooks/enforcement/scorecard_test_enforcement_markdown_location.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
 | `hooks/response_standards/scorecard_test_style_guide_response_standards_flags.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
 | `hooks/response_standards/scorecard_test_style_guide_response_standards_inject.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
 | `hooks/response_standards/scorecard_test_style_guide_response_standards_waivers.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
