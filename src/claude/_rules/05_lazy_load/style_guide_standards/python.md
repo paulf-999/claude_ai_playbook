@@ -2,7 +2,7 @@
 paths:
   - "**/*.py"
 ---
-<!-- version: 1.1.1 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-02 -->
 <!-- miss_cost: low — Python style drift -->
@@ -62,21 +62,30 @@ PEP 8 is the baseline. One override: maximum line length is **120 characters** (
 
 ## 📝 Docstrings
 
-All functions, classes, and modules must have docstrings using reST format:
+All functions, classes, and modules must have a docstring, and a one-line summary is the default:
+
+```python
+def build_hook(header: str = VALID_HEADER, shebang: str = "#!/bin/bash") -> str:
+    """Build a minimal hook script from a shebang, header and body."""
+```
+
+Add reST fields only for public or complex functions, and only the ones a reader needs:
 
 ```python
 def get_secret_by_name(secret_name: str) -> str:
     """Retrieve a secret value by name from the configured secret manager.
 
-    :param secret_name: The name of the secret to retrieve.
-    :type secret_name: str
+    :param secret_name: The name the secret is stored under, not its path.
     :raises KeyError: If the secret name does not exist.
-    :return: The secret value.
-    :rtype: str
+    :return: The secret value, never logged.
     """
 ```
 
-- **Format:** reST only — no Google-style or NumPy-style docstrings
+- **Default:** one line saying what the function does — enough for most private helpers and tests.
+- **Fields when they add meaning:** `:param:` for an argument its name doesn't explain, `:raises:` for exceptions callers must handle, `:return:` when the value isn't obvious.
+- **No `:type:` or `:rtype:`:** the type hints already say this, and only the hints are checked by tools.
+- **Format:** reST only — no Google-style or NumPy-style docstrings.
+- **Existing code:** trim long docstrings when a file is next edited, not in bulk sweeps.
 
 ## 🔧 Functions and methods
 
