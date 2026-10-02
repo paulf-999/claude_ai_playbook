@@ -1,6 +1,11 @@
-<!-- version: 1.0.1 -->
+---
+paths:
+  - "**/_tests/**"
+  - "**/test_*.py"
+---
+<!-- version: 1.1.0 -->
 <!-- created: 2026-09-29 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: medium — tests below the quality floor that need rework -->
 # 🧪 Testing Guidance
 

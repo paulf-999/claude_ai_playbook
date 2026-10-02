@@ -19,10 +19,10 @@ Rules are organized by **who they're for and what they do**, not by enforcement 
 | Tier | Audience | Purpose | Size (≈ tokens) |
 |---|---|---|---|
 | **01_essentials** | Users & stakeholders | Conventions and principles they need to understand | ≈10.7k every session (12 imported files) |
-| **02_claude_standards** | Claude (internally) | Foundational quality gates Claude applies to all work | ≈16.8k every session (23 imported files) |
+| **02_claude_standards** | Claude (internally) | Foundational quality gates Claude applies to all work | ≈13.7k every session (19 imported files) |
 | **03_authoring_guidelines** | Claude (internally) | Meta-guidance for authoring rules, skills, agents | ≈4.2k every session (5 imported files) |
 | **04_claude_reference** | Claude (internally) | Technical reference material about the system | ≈2.7k every session (5 imported files) |
-| **05_lazy_load** | Domain-specific | Rules loaded only when needed in that domain | 0 baseline (≈56k if all 79 files were read) |
+| **05_lazy_load** | Domain-specific | Rules loaded only when needed in that domain | 0 baseline (≈59k if all 83 files were read) |
 
 **Key insight:** 01, 02, 03, and 04 are always-on, about 34.4k tokens together before `_reference/` imports. 05 is lazy-loaded to preserve context.
 
@@ -34,7 +34,7 @@ Not all rules have mechanical triggers. Understand the difference:
 
 ### Instructional rules
 - **What:** Rules that Claude reads and follows — human guidance informing behavior
-- **Examples:** behaviour.md, security.md, writing_style.md, guiding_principles.md, testing.md
+- **Examples:** behaviour.md, security.md, writing_style.md, guiding_principles.md
 - **Testing:** Structure tests only (file quality, line limits) in `_tests/rules/`; intended behavior validated by behavior tests
 - **Enforcement:** By Claude's reasoning — no automatic block
 
@@ -66,9 +66,9 @@ Rule files are `@import`ed every session, so every line in them costs always-on 
 
 ### **02_claude_standards/** — Foundational quality gates (Claude-facing)
 - **Who it's for:** Claude's internal operation (not meant for stakeholder understanding)
-- **Scope:** Security practices, testing requirements — blocking standards Claude applies to all code
-- **Examples:** security.md (secure coding + prompt injection defence), testing.md (test requirements)
-- **Imported:** Yes, always-on (≈16.8k tokens/session)
+- **Scope:** Security practices and git workflow — blocking standards Claude applies to all code
+- **Examples:** security.md (secure coding + prompt injection defence), git.md (commits, branches and PRs)
+- **Imported:** Yes, always-on (≈13.7k tokens/session)
 
 ### **03_authoring_guidelines/** — Meta-guidance for authoring config artifacts
 - **Who it's for:** Claude when creating or maintaining rules, skills, agents, hooks

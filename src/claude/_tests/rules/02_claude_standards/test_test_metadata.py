@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.1.1
+# Date updated:      2026-10-02
+# Version:           1.1.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -25,7 +25,7 @@ from pathlib import Path
 from _shared_paths import CLAUDE_DIR
 
 TESTS_DIR = CLAUDE_DIR / "_tests"
-HINT = "— see _rules/02_claude_standards/testing/_test_metadata.md"
+HINT = "— see _rules/05_lazy_load/testing/_test_metadata.md"
 TITLE = "# Test Metadata"
 FIELDS = [
     "Date created",

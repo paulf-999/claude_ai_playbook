@@ -1,6 +1,6 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 # 🧮 Test Complexity Scoring (0–10)
 
 **Purpose:** Apply the config's shared complexity formula to tests — reward genuinely simple tests, and make "simple" and "thorough" achievable together rather than in tension.
@@ -9,7 +9,7 @@
 
 ## 📐 The formula
 
-@~/.claude/_rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md
+- **Formula:** defined in `~/.claude/_rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md`, which always loads through `authoring_rules.md`.
 
 Tests use the *inverted score* defined above: **complexity score = 10 − raw sum**, so a higher number means a simpler test — one concept, one file, no external dependencies, no fixtures scores 10; a sprawling, multi-directory, multi-dependency test scores near 0.
 

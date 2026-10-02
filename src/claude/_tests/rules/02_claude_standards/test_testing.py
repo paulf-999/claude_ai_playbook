@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-02
-# Version:           1.2.1
+# Version:           1.2.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -25,8 +25,8 @@ from _shared_paths import CLAUDE_DIR, HOOKS_DIR, RULES_DIR
 
 TESTS_HOOKS_DIR = CLAUDE_DIR / "_tests/hooks"
 TESTS_RULES_DIR = CLAUDE_DIR / "_tests/rules"
-TESTING_MD = RULES_DIR / "02_claude_standards" / "testing.md"
-TEST_METADATA_MD = RULES_DIR / "02_claude_standards" / "testing" / "_test_metadata.md"
+TESTING_MD = RULES_DIR / "05_lazy_load" / "testing.md"
+TEST_METADATA_MD = RULES_DIR / "05_lazy_load" / "testing" / "_test_metadata.md"
 
 
 def _get_hook_files() -> set[str]:
@@ -205,11 +205,11 @@ def test_hook_to_test_name():
 
 
 def test_testing_md_children_exist():
-    """Every child testing.md imports exists, so none is silently unloaded."""
-    children = re.findall(r"^@~/[^/]+/(\S+)$", TESTING_MD.read_text(), re.M)
-    assert children, "testing.md should import its children"
+    """Every child testing.md points to exists, so none is silently unreachable."""
+    children = re.findall(r"\*\*Read on demand:\*\* \[?`~/[^/]+/(\S+?)`", TESTING_MD.read_text())
+    assert children, "testing.md should point to its children with 'Read on demand' pointers"
     missing = [c for c in children if not (CLAUDE_DIR / c).is_file()]
-    assert not missing, f"testing.md imports files that don't exist: {missing}"
+    assert not missing, f"testing.md points to files that don't exist: {missing}"
 
 
 def test_score_minimum_names_its_enforcer():

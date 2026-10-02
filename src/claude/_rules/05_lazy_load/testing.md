@@ -1,7 +1,12 @@
-<!-- version: 1.2.2 -->
+---
+paths:
+  - "**/*.py"
+  - "**/*.sh"
+  - "**/*.sql"
+---
+<!-- version: 1.3.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
-<!-- applies_to: **/*.py, **/*.sh, **/*.sql -->
+<!-- updated: 2026-10-02 -->
 <!-- miss_cost: medium — untested code the user catches in review -->
 # 🧪 Testing
 
@@ -61,7 +66,7 @@ Define the goal before writing the test. Tests validate *intended behavior*, not
 
 ## 📁 File Organization
 
-@~/.claude/_rules/02_claude_standards/testing/_testing_file_organization.md
+- **Read on demand:** [`~/.claude/_rules/05_lazy_load/testing/_testing_file_organization.md`](testing/_testing_file_organization.md) — before creating a test file: where it lives and how to name it.
 
 ## 🔄 Maintenance
 
@@ -70,7 +75,7 @@ Define the goal before writing the test. Tests validate *intended behavior*, not
 
 ## 📊 Test Metadata Standard
 
-@~/.claude/_rules/02_claude_standards/testing/_test_metadata.md
+- **Read on demand:** [`~/.claude/_rules/05_lazy_load/testing/_test_metadata.md`](testing/_test_metadata.md) — before writing or editing a test: the required header, and the quality ≥9 and complexity ≥7 floor that `test_test_score_floor.py` enforces.
 
 ---
 
