@@ -13,8 +13,8 @@
 
 | Type | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
-| Tests | 55 | 9.1/10 | 2026-10-01 | • 💪 **Strongest:** 3 files tied at 9.6/10, including `test_latency_optimisation.py`<br>• ⚠️ **Weakest:** `test_jira_create_handler.py` (7.9/10) |
-| Skills | 7 | 8.4/10 | 2026-09-30 | • 💪 **Strongest:** `claude_setup_graphify` (9.9/10)<br>• ⚠️ **Weakest:** `claude_kaizen` (6.1/10) |
+| Tests | 56 | 9.1/10 | 2026-10-02 | • 💪 **Strongest:** 3 files tied at 9.6/10, including `test_latency_optimisation.py`<br>• ⚠️ **Weakest:** `test_jira_create_handler.py` (7.9/10) |
+| Skills | 7 | 8.5/10 | 2026-10-02 | • 💪 **Strongest:** `claude_setup_graphify` (9.9/10)<br>• ⚠️ **Weakest:** `claude_kaizen` (7.1/10) |
 | Rules — always-on | 15 | 8.2/10 | 2026-10-01 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_operational_efficiency.md` (7.1/10) |
 | Rules — lazy-load | 17 | 8.4/10 | 2026-10-01 | • 💪 **Strongest:** `latency_optimisation.md` (9.2/10)<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
 | Hooks | 0 | — | — | • ⚠️ **Gap:** no hooks are scored yet |
@@ -29,7 +29,7 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 | # | Action | Why | Source |
 |---|---|---|---|
 | 1 | • 🆕 **Unscored hooks and agents:** write the first scorecards for hooks and agents | • 🙈 **Blind spot:** two of the five types have no quality signal at all | `hooks/hook_scorecards_summary.md`<br>`agents/agent_scorecards_summary.md` |
-| 2 | • 🔧 **Lowest skill score:** replace `claude_kaizen`'s placeholder eval runner | • 🔻 **Bottom of the table:** at 6.1/10 it is the lowest-scoring skill | `skills/skill_scorecards_summary.md` |
+| 2 | • 🔧 **Lowest skill score:** add `claude_kaizen`'s implementation reference | • 🔻 **Bottom of the table:** at 7.1/10 it is the lowest-scoring skill | `skills/skill_scorecards_summary.md` |
 | 3 | • 💬 **Failure messages:** add assertion failure messages to `test_jira_create_handler.py`, then the two confluence handler tests (`_handler.py` and `_phases.py`) | • 🔍 **Lowest scores:** `test_jira_create_handler.py` and `_phases.py` have failure messages on 0% of assertions, and `_handler.py` on 3% | `tests/test_scorecards_summary.md` |
 | 4 | • 🔧 **Lowest lazy-load rule score:** fix or remove `makefile.md`'s broken templates reference, then add inline principles | • 🔻 **Bottom of the table:** at 6.8/10 it is the lowest-scoring lazy-load rule | `rules/rule_scorecards_summary.md` |
 
@@ -39,8 +39,8 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 
 | Summary | Scored | Overall | Date Updated |
 |---|---|---|---|
-| `tests/test_scorecards_summary.md` | 55 | 9.1/10 | 2026-10-01 |
-| `skills/skill_scorecards_summary.md` | 7 | 8.4/10 | 2026-09-30 |
+| `tests/test_scorecards_summary.md` | 56 | 9.1/10 | 2026-10-02 |
+| `skills/skill_scorecards_summary.md` | 7 | 8.5/10 | 2026-10-02 |
 | `rules/rule_scorecards_summary.md` | 32 | 8.3/10 | 2026-10-01 |
 | `hooks/hook_scorecards_summary.md` | 0 | — | — |
 | `agents/agent_scorecards_summary.md` | 0 | — | — |
