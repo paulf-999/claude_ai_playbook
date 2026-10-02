@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-01
-# Version:           2.0.3
+# Date updated:      2026-10-02
+# Version:           2.0.4
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -22,13 +22,11 @@ from hooks.hook_test_utils import run_hook
 HOOK_PATH = CLAUDE_DIR / "hooks" / "hook_enforcement_naming_convention.sh"
 
 
-def write_payload(relative_path: str) -> dict:
+def write_payload(relative_path: str):
     """Build a Write payload for a file under the config dir.
 
     :param relative_path: Path relative to the config dir.
-    :type relative_path: str
     :return: Claude Code PreToolUse payload.
-    :rtype: dict
     """
     return {"tool_name": "Write", "tool_input": {"file_path": str(CLAUDE_DIR / relative_path)}}
 
@@ -37,9 +35,7 @@ def deny_reason(relative_path: str) -> str:
     """Run the hook for a new file and return its deny reason, failing if it didn't deny.
 
     :param relative_path: Path relative to the config dir.
-    :type relative_path: str
     :return: The ``permissionDecisionReason`` text.
-    :rtype: str
     """
     result = run_hook(HOOK_PATH, write_payload(relative_path))
     assert result.returncode == 0, f"hook crashed for {relative_path}: {result.stderr}"
@@ -48,13 +44,11 @@ def deny_reason(relative_path: str) -> str:
     return output["permissionDecisionReason"]
 
 
-def assert_allowed(payload: dict, case: str):
+def assert_allowed(payload, case: str):
     """Assert the hook exits cleanly with no output, which lets the Write through.
 
     :param payload: Claude Code PreToolUse payload.
-    :type payload: dict
     :param case: Description of the case, for the failure message.
-    :type case: str
     """
     result = run_hook(HOOK_PATH, payload)
     assert result.returncode == 0, f"{case}: hook exited {result.returncode} — {result.stderr}"

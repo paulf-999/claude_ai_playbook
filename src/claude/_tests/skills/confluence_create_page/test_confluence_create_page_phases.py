@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.0.1
+# Date updated:      2026-10-02
+# Version:           1.0.2
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -33,7 +33,8 @@ class TestPhaseOrchestration:
         result = phase_1_gather_details(title="Test", space="DOCS", pattern="general_page", sections=["Sec1"])
         assert result["title"] == "Test"
         assert result["space"] == "DOCS"
-        assert result["status"] == "draft"  # Default status
+        # Default status
+        assert result["status"] == "draft"
 
     def test_phase_2_validate_valid_page(self):
         """Phase 2: validate accepts valid page."""
@@ -47,7 +48,8 @@ class TestPhaseOrchestration:
         }
         result = phase_2_validate(details)
         assert result["valid"] is True
-        assert result["details"]["space"] == "DOCS"  # Normalized to uppercase
+        # Normalized to uppercase
+        assert result["details"]["space"] == "DOCS"
 
     def test_phase_2_validate_missing_title(self):
         """Phase 2: validate rejects missing title."""

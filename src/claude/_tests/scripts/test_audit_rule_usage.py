@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-02
-# Version:           1.4.1
+# Version:           1.4.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -34,11 +34,11 @@ def load_audit():
     """Import the audit script as a module.
 
     :return: The loaded module.
-    :rtype: module
     """
     spec = importlib.util.spec_from_file_location("audit_rule_usage", SCRIPT)
     module = importlib.util.module_from_spec(spec)
-    sys.modules[spec.name] = module  # dataclasses look their module up by name
+    # dataclasses look their module up by name
+    sys.modules[spec.name] = module
     spec.loader.exec_module(module)
     return module
 
@@ -51,7 +51,6 @@ def make_rules(tmp_path):
 
     :param tmp_path: Pytest tmp_path fixture.
     :return: The ``_rules`` folder.
-    :rtype: Path
     """
     rules = tmp_path / "_rules"
     (rules / "01_essentials" / "parent").mkdir(parents=True)
@@ -86,7 +85,6 @@ def tool(name, path):
     :param name: Tool name, e.g. ``Read``.
     :param path: The file path argument.
     :return: The record.
-    :rtype: dict
     """
     call = {"type": "tool_use", "name": name, "input": {"file_path": path}}
     return {"type": "assistant", "message": {"content": [call]}}
@@ -101,7 +99,6 @@ def make_transcripts(tmp_path):
 
     :param tmp_path: Pytest tmp_path fixture.
     :return: The transcripts folder.
-    :rtype: Path
     """
     project = tmp_path / "projects" / "-repo"
     startup = {"type": "attachment", "attachment": {"type": "instructions", "files": [
@@ -121,7 +118,6 @@ def usage_by_rule(tmp_path):
 
     :param tmp_path: Pytest tmp_path fixture.
     :return: Usage keyed by the rule's file name.
-    :rtype: dict
     """
     rules_dir = make_rules(tmp_path)
     sessions = AUDIT.discover_sessions(make_transcripts(tmp_path), rules_dir)
@@ -244,7 +240,6 @@ def usage(always_on, applied, misses, miss_cost):
     """Build a Usage row for flag tests.
 
     :return: The row.
-    :rtype: Usage
     """
     tier = "01_essentials" if always_on else "05_lazy_load"
     rule = AUDIT.Rule(rel="x.md", tier=tier, tokens=1, globs=["*"], miss_cost=miss_cost)
@@ -316,7 +311,6 @@ def ledger_rows(out):
 
     :param out: The output folder.
     :return: Ledger rows.
-    :rtype: list[dict]
     """
     return list(csv.DictReader((out / AUDIT.LEDGER_NAME).open()))
 
@@ -326,7 +320,6 @@ def python_row(out):
 
     :param out: The output folder.
     :return: The table line.
-    :rtype: str
     """
     lines = (out / AUDIT.SUMMARY_NAME).read_text().splitlines()
     return next(line for line in lines if line.startswith("| `") and "python.md`" in line)
@@ -398,7 +391,6 @@ def totals(applied, loaded, misses):
     """Build one rule's totals for insight tests.
 
     :return: The totals dict.
-    :rtype: dict
     """
     return {"applied": applied, "loaded": loaded, "misses": misses,
             "rate": misses / applied if applied else None, "first": "—", "last": "—"}

@@ -376,11 +376,8 @@ def save_draft(content: str, page_title: str) -> pathlib.Path:
     doesn't depend on where the config is installed.
 
     :param content: Markdown content to save.
-    :type content: str
     :param page_title: Page title, sanitised into the filename.
-    :type page_title: str
     :return: Path to the saved draft file.
-    :rtype: pathlib.Path
     """
     drafts_dir = pathlib.Path.home() / "_drafts" / "confluence"
     drafts_dir.mkdir(parents=True, exist_ok=True)
@@ -465,7 +462,6 @@ def _handle_timeout_choice(
     :return: (result, new_timeout) — result is set (and the caller should
         return it) for abort/retry/invalid; new_timeout is set (and the
         caller should keep polling) for continue.
-    :rtype: tuple
     """
     if choice == "R":
         return {"status": "retry_requested", "elapsed": elapsed}, None
@@ -512,7 +508,8 @@ def create_page_with_timeout(
     thread.start()
 
     # Monitor for timeout
-    max_total_wait = 360  # 6 minutes maximum
+    # 6 minutes maximum
+    max_total_wait = 360
     current_timeout = timeout_seconds
 
     while thread.is_alive():

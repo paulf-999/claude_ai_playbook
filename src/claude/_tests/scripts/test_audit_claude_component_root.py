@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-02
-# Version:           1.0.1
+# Version:           1.0.2
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -28,7 +28,6 @@ def load_audit():
     """Import the audit script as a module.
 
     :return: The loaded module.
-    :rtype: module
     """
     spec = importlib.util.spec_from_file_location("audit_claude_component", SCRIPT)
     module = importlib.util.module_from_spec(spec)
@@ -36,14 +35,13 @@ def load_audit():
     return module
 
 
-def run_audit(monkeypatch, capsys, *args: str) -> tuple:
+def run_audit(monkeypatch, capsys, *args: str) -> tuple[int, str, str]:
     """Run the audit's main() with the given arguments.
 
     :param monkeypatch: Pytest monkeypatch fixture.
     :param capsys: Pytest capsys fixture.
     :param args: Command-line arguments after the script name.
     :return: The exit code, stdout and stderr.
-    :rtype: tuple
     """
     monkeypatch.setattr(sys, "argv", ["audit_claude_component.py", *args])
     code = load_audit().main()
@@ -56,7 +54,6 @@ def make_root(tmp_path):
 
     :param tmp_path: Pytest tmp_path fixture.
     :return: The root folder.
-    :rtype: Path
     """
     root = tmp_path / "claude"
     (root / "skills" / "demo").mkdir(parents=True)

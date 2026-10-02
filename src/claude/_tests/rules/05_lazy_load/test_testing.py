@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-02
-# Version:           1.2.3
+# Version:           1.2.4
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -33,7 +33,6 @@ def _get_hook_files() -> set[str]:
     """Return the hook script names, e.g. ``hook_enforcement_naming_convention.sh``.
 
     :return: File names of every ``hook_*.sh`` in hooks/.
-    :rtype: set[str]
     """
     if not HOOKS_DIR.exists():
         return set()
@@ -47,7 +46,6 @@ def _get_test_files() -> set[str]:
     ``enforcement/`` and ``response_standards/``.
 
     :return: File names of every ``test_*.py`` under _tests/hooks/.
-    :rtype: set[str]
     """
     if not TESTS_HOOKS_DIR.exists():
         return set()
@@ -58,9 +56,7 @@ def _hook_to_test_name(hook_name: str) -> str:
     """Convert a hook file name to its expected test file name.
 
     :param hook_name: Hook file name, e.g. ``hook_enforcement_naming_convention.sh``.
-    :type hook_name: str
     :return: The test name, e.g. ``test_enforcement_naming_convention.py``.
-    :rtype: str
     """
     # Remove 'hook_' prefix and .sh extension, add 'test_' prefix and .py extension
     base = hook_name.replace("hook_", "").replace(".sh", "")
@@ -75,11 +71,8 @@ def _owning_hook(test_name: str, hook_bases: set[str]) -> str | None:
     ``hook_x_inject.sh`` rather than ``hook_x.sh``.
 
     :param test_name: Test file name, e.g. ``test_enforcement_naming_convention.py``.
-    :type test_name: str
     :param hook_bases: Hook names without the ``hook_`` prefix and ``.sh`` suffix.
-    :type hook_bases: set[str]
     :return: The matching hook base, or ``None`` when no hook matches.
-    :rtype: str | None
     """
     base = test_name.removeprefix("test_").removesuffix(".py")
     matches = [hook for hook in hook_bases if base == hook or base.startswith(f"{hook}_")]
@@ -153,8 +146,10 @@ def test_testing_rule_documents_enforcement_pattern():
 
     required_sections = [
         "When Tests Are Required",
-        "hook",  # Should mention hooks
-        "test goals",  # Should document test patterns
+        # Should mention hooks
+        "hook",
+        # Should document test patterns
+        "test goals",
     ]
 
     for section in required_sections:

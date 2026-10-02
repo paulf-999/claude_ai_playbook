@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-02
-# Version:           2.2.1
+# Version:           2.2.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -51,13 +51,11 @@ KNOWN_EVENTS = {
 }
 
 
-def hook_paths(settings: dict) -> list[Path]:
+def hook_paths(settings) -> list[Path]:
     """Return the hook script paths a settings dict registers.
 
     :param settings: Parsed settings.json.
-    :type settings: dict
     :return: One path per command that ends in a ``.sh`` file.
-    :rtype: list[Path]
     """
     paths = []
     for event_groups in settings.get("hooks", {}).values():
@@ -82,11 +80,10 @@ def hook_paths(settings: dict) -> list[Path]:
     return paths
 
 
-def load_settings() -> dict:
+def load_settings():
     """Parse the real settings.json.
 
     :return: The parsed settings.
-    :rtype: dict
     """
     return json.loads(SETTINGS_FILE.read_text())
 
@@ -95,7 +92,6 @@ def registered_hooks() -> list[dict]:
     """List every hook entry in the real settings.json.
 
     :return: The hook dicts, each with its ``type`` and ``command``.
-    :rtype: list[dict]
     """
     return [
         hook

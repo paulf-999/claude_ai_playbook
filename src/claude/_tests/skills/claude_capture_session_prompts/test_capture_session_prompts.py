@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
 # Date updated:      2026-10-02
-# Version:           1.0.4
+# Version:           1.0.5
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -58,7 +58,7 @@ def _ms(moment: datetime) -> int:
     return int(moment.timestamp() * 1000)
 
 
-def _write_history(path: Path, entries: list):
+def _write_history(path: Path, entries):
     """Write history entries (dicts or raw strings) as JSON lines.
 
     :param path: File to write.
