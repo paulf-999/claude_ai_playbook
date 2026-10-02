@@ -139,7 +139,9 @@ flatten_skills() {
             [[ -d "${SKILL_DIR}" ]] || continue
             local SKILL_NAME
             SKILL_NAME=$(basename "${SKILL_DIR}")
-            cp -R "${SKILL_DIR}" "${SKILLS_DIR}/${SKILL_NAME}"
+            # Copy the contents (dir/.) so an existing skill folder is merged into, not nested, on GNU and BSD cp
+            mkdir -p "${SKILLS_DIR}/${SKILL_NAME}"
+            cp -R "${SKILL_DIR}." "${SKILLS_DIR}/${SKILL_NAME}/"
             log_message "${INFO}" "Flattened skill: ${SKILL_NAME}"
         done
         rm -rf "${GROUP_DIR}"
