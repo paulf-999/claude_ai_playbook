@@ -6,6 +6,8 @@ SHELL = /bin/bash
 # make deps             # install Python test dependencies into the active environment
 # make test             # run structural validation tests
 # make lint_tags        # validate Tier 1 tags on all Claude components (run before committing)
+# make lint_skills      # validate every skill against the skill authoring gate
+# make lint             # run lint_tags and lint_skills
 # make audit_components # run periodic health audit on the Claude component library
 # make audit_rule_usage # measure how often each rule applies and loads, from session transcripts
 # make install          # install Claude config files into $CLAUDE_CONFIG_DIR (previews, then asks you to type 'install')
