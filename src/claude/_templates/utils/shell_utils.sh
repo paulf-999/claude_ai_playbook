@@ -13,7 +13,9 @@ export ERROR='\033[0;31m'          # red — errors
 export CRITICAL='\033[1;31m'       # bold red — critical failures
 export COLOUR_OFF='\033[0m'
 
+# shellcheck disable=SC2034  # read by the scripts that source this file
 ROOT_DIR="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+# shellcheck disable=SC2034
 TIMESTAMP="$(date +%Y%m%d_%H%M%S)"
 
 #=======================================================================

@@ -12,7 +12,7 @@ import sys
 from datetime import date
 
 
-def _find_candidates(
+def _find_candidates(  # noqa: C901
     lines: list[str],
     min_age_days: int = 14,
     today: date | None = None,

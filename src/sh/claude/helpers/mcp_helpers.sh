@@ -28,7 +28,9 @@ install_npx_server() {
         log_message "${INFO}" "Skipping '${NAME}' — already registered."
     else
         log_message "${DEBUG}" "Installing '${NAME}'..."
-        claude mcp add --scope user "${NAME}" -- ${COMMAND}  # -- separates claude args from the npx command
+        # -- separates claude args from the npx command; COMMAND is left unquoted so it splits into words
+        # shellcheck disable=SC2086
+        claude mcp add --scope user "${NAME}" -- ${COMMAND}
         log_message "${INFO}" "Installed '${NAME}'."
         verify_installation "${NAME}"
     fi

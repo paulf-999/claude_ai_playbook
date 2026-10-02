@@ -30,6 +30,7 @@ detect_windows_user() {
 set_windows_target_dirs() {
     local WIN_USER="$1"
     TARGET_DIR="/mnt/c/Users/${WIN_USER}/.claude"
+    # shellcheck disable=SC2034  # read by the sourced claude_file_utils.sh functions
     BACKUP_DIR="/mnt/c/Users/${WIN_USER}/.claude_backup_${TIMESTAMP}"
     log_message "${DEBUG}" "Windows target directory: ${TARGET_DIR}"
 }
@@ -98,7 +99,8 @@ sync_windows_claude_files() {
 
 # Print a reminder if the Claude CLI is not yet installed on Windows.
 check_windows_claude_cli() {
-    local CLAUDE_WIN_PATH="/mnt/c/Users/$(detect_windows_user)/AppData/Roaming/npm/claude"
+    local CLAUDE_WIN_PATH
+    CLAUDE_WIN_PATH="/mnt/c/Users/$(detect_windows_user)/AppData/Roaming/npm/claude"
     if [[ ! -f "${CLAUDE_WIN_PATH}" ]]; then
         log_message "${WARNING}" "Claude CLI not detected on Windows."
         log_message "${WARNING}" "To install it, run from a Windows terminal (PowerShell/CMD):"

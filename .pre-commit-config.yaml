@@ -48,8 +48,9 @@ repos:
       hooks:
           - id: checkmake
             name: Makefile check - linter
-        # Skip doc files whose name happens to match (e.g. makefile.md style guides)
-            exclude: \.md$
+        # Skip doc files whose name happens to match (e.g. makefile.md style guides),
+        # and src/make/ fragments, which the root Makefile includes rather than runs
+            exclude: (\.md$|^src/make/)
     # YAML hooks
     - repo: https://github.com/adrienverge/yamllint.git
       rev: v1.30.0
