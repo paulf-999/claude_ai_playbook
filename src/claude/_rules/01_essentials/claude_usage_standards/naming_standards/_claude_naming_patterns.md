@@ -1,9 +1,9 @@
-<!-- version: 4.1.2 -->
+<!-- version: 4.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-02 -->
 # 🏷️ Naming patterns — files, objects, and artefacts
 
-**Purpose:** Establish self-describing naming patterns for rules, skills, hooks, and other Claude config artefacts.
+**Purpose:** Establish self-describing naming patterns for rules, skills, hooks, scripts, and other Claude config artefacts.
 
 ## 📝 Rule naming
 
@@ -48,3 +48,16 @@
 - **Prefix:** all hook files must start with `hook_` — distinguishes them from other shell scripts
 - **Type:** `enforcement` (blocks or injects a warning), `style_guide` (injects style context) or `session_start` (runs when a session opens)
 - **Domain:** the concern being enforced, e.g. `sql`, `mcp_stale_settings`, `naming_convention`
+
+## 🐍 Script naming
+
+| Pattern | Example | What it's for |
+|---|---|---|
+| `_scripts/_<verb>_scripts/<verb>_<subject>.py` | `_audit_scripts/audit_rule_usage.py` | Reports on the config without changing it |
+| | `_clean_scripts/clean_plans.py` | Archives or removes old files |
+| | `_lint_scripts/lint_claude_tags.py` | Checks files against a standard and fails on breaches |
+
+- **Group folder:** every script sits in a `_<verb>_scripts/` folder, never loose in `_scripts/`.
+- **Verb first:** the filename starts with its folder's verb, so the name says what the script does.
+- **New verb:** add a new `_<verb>_scripts/` folder only once two scripts share that verb.
+- **Enforced by:** `_tests/scripts/test_script_naming.py`.
