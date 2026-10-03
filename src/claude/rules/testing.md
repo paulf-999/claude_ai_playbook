@@ -1,1 +1,0 @@
-../_rules/05_lazy_load/testing.md

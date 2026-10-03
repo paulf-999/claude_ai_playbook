@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-02
-# Version:           2.0.1
+# Date updated:      2026-10-03
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -133,9 +133,8 @@ def test_agents_are_compliant():
 
 
 def test_rule_links_are_compliant():
-    """Every path-scoped rule link under rules/ passes the scan."""
-    assert (CLAUDE_HOME / "rules").is_dir(), missing_area("rules")
-    errors = errors_under("rules")
+    """An installed rules/ folder passes the scan; the repo doesn't ship one, since make install builds it."""
+    errors = errors_under("rules") if (CLAUDE_HOME / "rules").is_dir() else []
     assert not errors, error_report("rules", errors)
 
 
