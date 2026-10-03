@@ -94,6 +94,7 @@ sync_windows_claude_files() {
     remove_managed_files
     copy_claude_files                 # from claude_file_utils.sh
     flatten_skills                    # from claude_file_utils.sh
+    build_path_scoped_rules           # from claude_file_utils.sh
     restore_user_editable_files
 }
 

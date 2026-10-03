@@ -193,6 +193,30 @@ prune_removed_files() {
     echo "${CURRENT}" > "${MANIFEST}"
 }
 
+# Rebuild rules/ from the path-scoped rules in _rules/05_lazy_load/, as links named after each rule.
+# Claude Code only reads path-scoped rules from a folder named exactly rules/, so the repo keeps every
+# rule in _rules/ and the install links the ones with paths: frontmatter here.
+# Only links are replaced, so a real file the user put in rules/ is kept.
+build_path_scoped_rules() {
+    local RULES_LINK_DIR="${TARGET_DIR}/rules"
+    local RULE NAME COUNT=0
+    mkdir -p "${RULES_LINK_DIR}"
+    find "${RULES_LINK_DIR}" -maxdepth 1 -type l -name "*.md" -delete
+    while IFS= read -r RULE; do
+        # A path-scoped rule has paths: inside the frontmatter block that opens the file
+        awk 'NR == 1 { if ($0 != "---") exit; next } $0 == "---" { exit } /^paths:/ { found = 1; exit } END { exit !found }' "${RULE}" || continue
+        NAME=$(basename "${RULE}")
+        # Two path-scoped rules with one filename would collide, so keep the first and warn
+        if [[ -e "${RULES_LINK_DIR}/${NAME}" ]]; then
+            log_message "${WARNING}" "Skipped path-scoped rule with a duplicate name: ${RULE#"${TARGET_DIR}/"}"
+            continue
+        fi
+        ln -s "../${RULE#"${TARGET_DIR}/"}" "${RULES_LINK_DIR}/${NAME}"
+        COUNT=$((COUNT + 1))
+    done < <(find "${TARGET_DIR}/_rules/05_lazy_load" -name "*.md" 2>/dev/null | LC_ALL=C sort)
+    log_message "${INFO}" "Linked ${COUNT} path-scoped rules into: ${RULES_LINK_DIR}"
+}
+
 # Print summary of Claude file operation (install/update)
 print_operation_summary() {
     local OPERATION="$1"  # operation type: "installation" or "update"
