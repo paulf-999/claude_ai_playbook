@@ -25,9 +25,9 @@ Five numbered tiers of rules: tiers 01–04 load every session, and `05_lazy_loa
 
 ### 🎯 Path-scoped rules
 
-See [`src/claude/rules/`](../src/claude/rules/)
+See [`src/claude/_rules/05_lazy_load/`](../src/claude/_rules/05_lazy_load/)
 
-Links to lazy-load rules that Claude Code loads automatically when Claude reads a matching file, such as `sql.md` for `.sql` files.
+Lazy-load rules with `paths:` frontmatter, which Claude Code loads automatically when Claude reads a matching file, such as `sql.md` for `.sql` files. `make install` links them into the `rules/` folder of your config, the only place Claude Code looks for them.
 
 ---
 
