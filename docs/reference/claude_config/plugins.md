@@ -22,7 +22,9 @@ Only proceed if there is a clear, justified use case not already covered. Log th
 
 ---
 
-## ✅ Installed
+## 📦 Installed, not enabled
+
+`make install` installs these plugins, but none are enabled by default — `settings.json` deliberately has no `enabledPlugins` key (see [`settings_json_readme.md`](../../../src/claude/settings_json_readme.md)). Add a plugin to `enabledPlugins` to turn it on.
 
 | Plugin | Commands / behaviour | Hooks | Token cost | Notes |
 |---|---|---|---|---|
