@@ -10,7 +10,6 @@ Practices that pay off once you are comfortable with the basics. Each one reduce
 | ✅ Quality commands | Team | 5 mid-session slash commands for stress-testing, reviewing, and debugging work in progress. | [commands/](../../src/claude/commands/README.md) |
 | 🤖 Automate repetitive instructions | Anthropic | Turn recurring instructions (run the linter, follow these conventions) into hooks or skills so they fire automatically. | [`claude_prompt_reviewer.py`](../../src/claude/hooks/claude_prompt_reviewer.py), [`claude_session_cost.py`](../../src/claude/hooks/claude_session_cost.py) |
 | 🏷️ Tag schema | Team | Stamp maturity and criticality metadata on every skill you create — makes auditing the skill library meaningful. | [Tag schema](#tag-schema) |
-| 🧰 CLAUDE.md maintenance | Team | Periodically audit and improve CLAUDE.md files using the built-in plugin. | [CLAUDE.md maintenance](#claudemd-maintenance) |
 
 ---
 
@@ -84,22 +83,3 @@ The maturity tier also controls a scope gate block in the skill body:
 | `strategic` | Full coverage — edge cases, documentation, evals expected |
 
 Full schema (Tier 1 + optional Tier 2 tags): `src/claude/plugins/claude-tag-schema.md`
-
----
-
-### 🧰 CLAUDE.md maintenance
-
-The `claude-md-management` plugin provides `/revise-claude-md`, which audits all CLAUDE.md files in a project against a quality rubric and proposes targeted improvements.
-
-Invoke it when:
-- Setting up a new project for the first time
-- After significant architectural changes (new layers, renamed directories, changed tooling)
-- At session wrap-up to keep project context current
-
-```
-/revise-claude-md
-```
-
-The plugin scores each file on commands, architecture clarity, non-obvious patterns, conciseness, currency, and actionability. It outputs a scored report and shows diffs before making any changes.
-
-> **Tip:** Press `#` during any Claude session to have Claude auto-incorporate session learnings into the active project CLAUDE.md without a full audit.

@@ -5,7 +5,6 @@ Practices for users running Claude regularly who want sessions to start fast, fi
 | Practice | Source | Description | Example |
 |---|---|---|---|
 | 🔀 Run sessions in parallel | Anthropic | Writer + reviewer pattern for independent critique, or parallel workstreams on isolated branches. | [reviewer prompt + worktree commands](#parallel-sessions) |
-| 🔄 Session continuity via `context.md` | Team | Manual handoff between sessions — deliberate, structured, distinct from auto-memory. | [`/wrap_up`](../../src/claude/commands/wrap_up.md) → [`context.md`](../../src/claude/context.md) — [how it works](#context-md-handoff) |
 | 🚀 Structured session startup | Team | Remove the dependency on ad-hoc prompts — capture the sub-agent, task, and integration needs in a session input file before launching so the session starts correctly every time. | [`session_input.md`](../../src/claude/process/session_input.md) — [template](#startup-protocol) |
 
 ---
@@ -35,26 +34,6 @@ git worktree add ../dbt_project-feature-a feature/add_salesforce_mart
 git worktree add ../dbt_project-feature-b feature/refactor_crm_staging
 # Open Claude in each worktree directory separately
 ```
-
----
-
-### 🔄 `context.md` handoff
-
-Auto-memory records what Claude learns about the codebase. [`context.md`](../../src/claude/context.md) records what *you* want the next session to know — decisions made, open questions, known issues.
-
-At the end of a session, run [`/wrap_up`](../../src/claude/commands/wrap_up.md). Claude produces:
-
-```
-Project: dbt analytics — Salesforce mart model
-What changed: Added mart_salesforce_opportunity_revenue; staging model updated to expose opportunity_stage
-Decisions made: Materialised as table (not incremental) — row count is small enough
-Open questions: Should closed_lost opportunities be excluded from the mart? Check with analytics team.
-Known issues: DA_FILE_YEARMONTH not yet populated in staging_salesforce_opportunity — Airbyte doesn't provide it
-```
-
-Paste into `~/.claude/context.md`. The file is `@import`ed into every session via [`CLAUDE.md`](../../src/claude/CLAUDE.md) — the next session starts with the full picture of where things were left.
-
-The paste is manual so you can edit or trim the summary before it becomes permanent context.
 
 ---
 
