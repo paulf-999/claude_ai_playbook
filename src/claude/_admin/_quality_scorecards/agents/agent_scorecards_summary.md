@@ -12,7 +12,7 @@
 
 | Group | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
-| Agents | 1 | 8.1/10 | 2026-10-02 | • 💪 **Strongest:** `technical_writer` is the only agent (8.1/10)<br>• ⚠️ **Gap:** no recorded usage |
+| Agents | 1 | 8.1/10 | 2026-10-02 | • 💪 **Only file:** `technical_writer` (8.1/10) |
 
 ---
 
@@ -22,7 +22,7 @@ Ranked by impact, highest first.
 
 | # | Action | Why | Source |
 |---|---|---|---|
-| 1 | • 📊 **Usage evidence:** record real uses of `technical_writer` | • 🔻 **Weakest dimension:** Evidence of Need is 5/10 | `scorecard_technical_writer.md` |
+| 1 | • 🔧 **`technical_writer`:** record real uses of the agent | • 🔻 **Score:** 8.1/10 | `scorecard_technical_writer.md` |
 
 ---
 
@@ -32,7 +32,7 @@ Sorted by Overall score, highest first.
 
 | Scorecard | Overall | Date Updated | Recommended improvements |
 |---|---|---|---|
-| `scorecard_technical_writer.md` | 8.1/10 | 2026-10-02 | • Record real uses of the agent. |
+| `scorecard_technical_writer.md` | 8.1/10 | 2026-10-02 | • Record real uses of the agent |
 
 ---
 
