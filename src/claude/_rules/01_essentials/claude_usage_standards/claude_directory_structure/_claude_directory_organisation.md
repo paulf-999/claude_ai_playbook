@@ -1,6 +1,6 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-03 -->
 # 🏗️ Directory Organisation — `~/.claude/`
 
 **Purpose:** Define what directories exist in the Claude config, their purpose, and the distinction between user-created and auto-generated directories.
@@ -31,12 +31,13 @@
 **Tier 3: Infrastructure (_tests/, _templates/, _reference/, _docs/)**
 - Tests, templates, evergreen reference docs, and additional documentation
 
-**Tier 4: Domain-specific (agents/, hooks/, rules/, skills/, wip/)**
+**Tier 4: Domain-specific (agents/, hooks/, skills/, wip/)**
 - Custom sub-agents, enforcement/style-guide hooks, reusable skills, work-in-progress features
-- **`rules/`:** Claude Code only reads path-scoped rules from a folder with exactly this name, so it has no underscore — it holds symlinks into `_rules/05_lazy_load/`, never original files
+- **No `rules/` in the repo:** every rule lives in `_rules/`, including path-scoped ones
 
 **Tier 5: Auto-generated (backups/, memory/, projects/, sessions/)**
 - Claude Code-managed; excluded from version control; never manually edited
+- **`rules/`:** built by `make install`, which links each `_rules/05_lazy_load/` rule with `paths:` frontmatter into it, because Claude Code only reads path-scoped rules from a folder with exactly this name — never edit it
 
 **Authoritative source:** For the current, always-up-to-date directory listing, consult the README.md in each tier (e.g., `_rules/README.md`, `agents/README.md`, `hooks/README.md`). These are maintained by humans and tools; this document describes the organisational *principle*, not a comprehensive inventory.
 

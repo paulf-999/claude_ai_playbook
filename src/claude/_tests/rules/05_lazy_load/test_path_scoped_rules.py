@@ -1,14 +1,14 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.0.0
+# Date updated:      2026-10-03
+# Version:           2.0.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Tests for path-scoped rules in rules/.
+"""Tests for the path-scoped rules in _rules/05_lazy_load/.
 
 Claude Code only loads a rule with ``paths:`` frontmatter when a matching
 file is read, but any ``@`` import inside that rule still loads at session
@@ -16,9 +16,10 @@ start. That is how sql.md's four ``@./sql/*.md`` children loaded in every
 session and pushed the always-on total over the 150k-char limit (fixed in
 PR #184). This test fails if a path-scoped rule regains an ``@`` import.
 
-Also verifies the rules/ folder convention from
-``_claude_directory_organisation.md``: it holds only symlinks into
-``_rules/05_lazy_load/``, never original files.
+Claude Code reads path-scoped rules only from a folder named ``rules/``, which
+``make install`` builds by linking each rule here by filename, so filenames must
+be unique. Where a ``rules/`` folder exists (an installed config), it must hold
+only those links, never original files.
 """
 import re
 from pathlib import Path
@@ -85,7 +86,7 @@ def find_violations(rules_dir: Path) -> list[str]:
     :rtype: list[str]
     """
     violations = []
-    for rule in sorted(rules_dir.glob("*.md")):
+    for rule in sorted(rules_dir.rglob("*.md")):
         text = rule.read_text(encoding="utf-8")
         if not frontmatter_paths(text):
             continue
@@ -94,50 +95,51 @@ def find_violations(rules_dir: Path) -> list[str]:
 
 
 def _scoped_rules() -> list[Path]:
-    """Return every .md file in rules/."""
-    return sorted(PATH_SCOPED_DIR.glob("*.md"))
+    """Return every rule in _rules/05_lazy_load/ with ``paths:`` frontmatter."""
+    return sorted(p for p in LAZY_LOAD_DIR.rglob("*.md") if frontmatter_paths(p.read_text(encoding="utf-8")))
+
+
+def _installed_links() -> list[Path]:
+    """Return the entries of an installed rules/ folder, or nothing in the repo, which doesn't ship one."""
+    return sorted(PATH_SCOPED_DIR.iterdir()) if PATH_SCOPED_DIR.is_dir() else []
 
 
 # ── Real config ─────────────────────────────────────────────────────────
 
 
-def test_rules_folder_has_scoped_rules():
-    """rules/ exists and holds at least one rule, so the checks below run."""
-    assert PATH_SCOPED_DIR.is_dir(), f"Missing folder: {PATH_SCOPED_DIR}"
-    assert _scoped_rules(), "rules/ is empty — nothing for the checks to verify"
+def test_lazy_load_has_path_scoped_rules():
+    """_rules/05_lazy_load/ holds path-scoped rules, so the checks below run."""
+    assert len(_scoped_rules()) >= 10, f"expected at least 10 path-scoped rules, found {len(_scoped_rules())}"
 
 
-def test_every_entry_is_a_markdown_symlink():
-    """rules/ holds only .md symlinks, never original files."""
-    for entry in PATH_SCOPED_DIR.iterdir():
+def test_path_scoped_filenames_are_unique():
+    """make install links each path-scoped rule into rules/ by filename, so two with one name would collide."""
+    names = [rule.name for rule in _scoped_rules()]
+    duplicates = sorted({name for name in names if names.count(name) > 1})
+    assert not duplicates, f"path-scoped rules share a filename, so only one would load: {duplicates}"
+
+
+def test_installed_entries_are_markdown_links():
+    """An installed rules/ holds only .md links that make install built, never original files."""
+    for entry in _installed_links():
         assert entry.suffix == ".md", f"Non-markdown entry in rules/: {entry.name}"
         assert entry.is_symlink(), (
-            f"rules/{entry.name} is a real file — move it to _rules/05_lazy_load/ "
-            "and symlink it here instead"
+            f"rules/{entry.name} is a real file — keep rules in _rules/05_lazy_load/ and let make install link them"
         )
 
 
-def test_every_symlink_resolves_into_lazy_load():
-    """Each symlink points at an existing file under _rules/05_lazy_load/."""
-    for rule in _scoped_rules():
-        target = rule.resolve()
-        assert target.is_file(), f"rules/{rule.name} is a broken symlink"
-        assert target.is_relative_to(LAZY_LOAD_DIR.resolve()), (
-            f"rules/{rule.name} points outside _rules/05_lazy_load/: {target}"
-        )
-
-
-def test_every_rule_declares_paths():
-    """Each rule in rules/ is path-scoped, or it would load every session."""
-    for rule in _scoped_rules():
-        assert frontmatter_paths(rule.read_text(encoding="utf-8")), (
-            f"rules/{rule.name} has no `paths:` frontmatter, so it loads in every session"
-        )
+def test_installed_links_resolve_to_path_scoped_rules():
+    """Each installed link points at an existing path-scoped rule under _rules/05_lazy_load/."""
+    for link in _installed_links():
+        target = link.resolve()
+        assert target.is_file(), f"rules/{link.name} is a broken link — re-run make install"
+        assert target.is_relative_to(LAZY_LOAD_DIR.resolve()), f"rules/{link.name} points outside 05_lazy_load"
+        assert frontmatter_paths(target.read_text(encoding="utf-8")), f"rules/{link.name} has no paths: frontmatter"
 
 
 def test_no_imports_in_path_scoped_rules():
     """No path-scoped rule contains an ``@`` import, which would load at startup."""
-    violations = find_violations(PATH_SCOPED_DIR)
+    violations = find_violations(LAZY_LOAD_DIR)
     assert not violations, (
         "`@` imports in path-scoped rules load in every session regardless of "
         "`paths:` — replace them with `**Read on demand:**` pointers:\n  "

@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.0.0
+# Date updated:      2026-10-03
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -10,8 +10,8 @@
 
 """Validates that every lazy rule has something that makes Claude load it.
 
-A lazy rule loads only through a trigger: ``paths:`` frontmatter (with a ``rules/``
-symlink), a hook that names it, or a pointer in a file Claude already has — an
+A lazy rule loads only through a trigger: ``paths:`` frontmatter (``make install``
+links it into ``rules/``), a hook that names it, or a pointer in a file Claude already has — an
 always-on rule reached from ``CLAUDE.md``, or a skill's own files. A mention in a
 README doesn't count, because no README is ever loaded.
 """
@@ -21,7 +21,6 @@ from pathlib import Path
 from _shared_paths import CLAUDE_DIR, CLAUDE_MD, HOOKS_DIR, RULES_DIR, SKILLS_DIR
 
 LAZY_DIR = RULES_DIR / "05_lazy_load"
-SCOPED_DIR = CLAUDE_DIR / "rules"
 IMPORT = re.compile(r"^@~/[^/\s]+/(\S+\.md)\s*$", re.M)
 
 
@@ -185,18 +184,10 @@ def test_every_lazy_rule_has_a_trigger():
         if not trigger_for(p.relative_to(LAZY_DIR).as_posix(), p.read_text(), loaded, hooks)
     ]
     assert not orphans, (
-        f"lazy rules nothing loads: {orphans} — add paths: frontmatter with a rules/ symlink, "
+        f"lazy rules nothing loads: {orphans} — add paths: frontmatter (make install links it into rules/), "
         "a 'Read on demand' pointer with the full 05_lazy_load path in an always-on rule or skill, "
         "or move the file to _archive/"
     )
-
-
-def test_every_paths_rule_has_a_symlink():
-    """Claude Code reads paths: rules only from rules/, so each needs a symlink there."""
-    linked = {link.resolve() for link in SCOPED_DIR.glob("*.md")}
-    missing = [p.relative_to(LAZY_DIR).as_posix() for p in entry_points(LAZY_DIR)
-               if has_paths(p.read_text()) and p.resolve() not in linked]
-    assert not missing, f"paths: rules with no rules/ symlink, so they never load: {missing}"
 
 
 def test_triggers_added_on_2026_10_01_stay():
