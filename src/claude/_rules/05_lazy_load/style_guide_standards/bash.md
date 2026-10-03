@@ -2,9 +2,9 @@
 paths:
   - "**/*.sh"
 ---
-<!-- version: 1.1.1 -->
+<!-- version: 1.1.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-02 -->
+<!-- updated: 2026-10-03 -->
 <!-- miss_cost: medium — scripts without strict mode that fail review -->
 <!-- loading: path-scoped — only applies to shell scripts, so it loads when a .sh file is open -->
 # 🖥️ Bash Style Guide
@@ -27,7 +27,7 @@ paths:
 
 All new scripts must start from the canonical template for correct section order (shebang, safety flags, shell_utils source, section headers, trap, logging):
 
-- **Template location:** `~/.claude/_rules/05_lazy_load/style_guide_standards/bash/templates/template_bash_script.sh`
+- **Template location:** `~/.claude/_templates/template_bash_script.sh`
 - **Always reference:** read the template before writing a new script
 
 ## 🛡️ Safety flags

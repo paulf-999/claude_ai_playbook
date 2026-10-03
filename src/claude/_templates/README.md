@@ -15,6 +15,7 @@ _templates/
 ├── TODO.md.template         # Starting point for a project TODO list
 ├── scorecard.md.template  # Layout for every individual scorecard
 ├── scorecard_summary.md.template  # Layout for every scorecard summary
+├── template_bash_script.sh  # Starting point for a new bash script
 ├── utils/
 │   └── shell_utils.sh       # Shared shell helpers: log colours and common variables
 └── README.md                # This file
@@ -53,6 +54,12 @@ _templates/
 **`TODO.md.template`**
 - Table layout for a project's `TODO.md`, with pending and completed items
 - Keeps its uppercase name because it mirrors the `TODO.md` file it produces
+
+### Scripts
+
+**`template_bash_script.sh`**
+- Starting point for a new bash script: shebang, safety flags, `shell_utils.sh` source, section headers, trap and logging
+- Used by: `05_lazy_load/style_guide_standards/bash.md`
 
 ### Scorecards
 
