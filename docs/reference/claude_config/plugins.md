@@ -22,13 +22,14 @@ Only proceed if there is a clear, justified use case not already covered. Log th
 
 ---
 
-## ✅ Installed
+## 📦 Installed, not enabled
+
+`make install` installs these plugins, but none are enabled by default — `settings.json` deliberately has no `enabledPlugins` key (see [`settings_json_readme.md`](../../../src/claude/settings_json_readme.md)). Add a plugin to `enabledPlugins` to turn it on.
 
 | Plugin | Commands / behaviour | Hooks | Token cost | Notes |
 |---|---|---|---|---|
 | [Ralph Loop](https://claude.com/plugins/ralph-loop) | `/ralph-loop <prompt> [--max-iterations N] [--completion-promise TEXT]`, `/cancel-ralph` | Yes — Stop hook intercepts session exit to feed the same prompt back | **High** — each iteration is a full Claude session; always set `--max-iterations` or `--completion-promise` to cap it; without both it runs indefinitely | Installed but not embedded in standard workflows — invoke explicitly for well-defined iterative tasks only |
 | [Skill Creator](https://claude.com/plugins/skill-creator) | `/skill-creator` (skill) | No | Moderate — multi-step but bounded; invoked explicitly | Use when creating, evaluating, or improving skills in this repo |
-| [CLAUDE.md Management](https://claude.com/plugins/claude-md-management) | `/revise-claude-md` (command), `/claude-md-improver` (skill) | No | Low — reads files and proposes targeted edits | `/revise-claude-md` runs at session wrap-up; `/claude-md-improver` for periodic full audits |
 | [Pyright LSP](https://claude.com/plugins/pyright-lsp) | Automatic on `.py`/`.pyi` file edits | No | Low — small consistent overhead per Python file edit | Requires `pip install pyright` (or `pipx install pyright`) to be installed separately |
 | [Security Guidance](https://claude.com/plugins/security-guidance) | Automatic — fires before every Edit/Write/MultiEdit | Yes — PreToolUse hook | Low — fires only on file edits | Auto-warns on command injection, XSS, pickle, `eval`, and similar vulnerabilities; no commands to learn |
 
@@ -53,3 +54,11 @@ Ordered by recommended evaluation priority. Score reflects potential usefulness 
 | [Code Review](https://claude.com/plugins/code-review) | ✅ | Duplicates existing `code_reviewer` sub-agent and `/review` command |
 | [Microsoft Docs](https://claude.com/plugins/microsoft-docs) | ❌ | Not Anthropic verified; only 2.9k installs; low value alongside existing O365 MCP server |
 | [Remember](https://claude.com/plugins/remember) | ❌ | Not Anthropic verified; overlaps with the auto-memory system already configured in this playbook |
+
+---
+
+## 🗑️ Removed
+
+| Date | Plugin | Reason |
+|---|---|---|
+| 2026-10-03 | [CLAUDE.md Management](https://claude.com/plugins/claude-md-management) | Never invoked in any session transcript, and the `/wrap_up` flow that called it no longer exists |

@@ -16,7 +16,6 @@ PLUGINS=(
     "ralph-loop"
     "security-guidance"
     "skill-creator"
-    "claude-md-management"
     "pyright-lsp"
 )
 

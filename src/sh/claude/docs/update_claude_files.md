@@ -24,7 +24,7 @@ flowchart TD
 
 ## 🚀 Usage
 
-> **⚠️ `make update` is disabled.** Re-run `make install` to update, or call the script directly. Either way the target is `$CLAUDE_CONFIG_DIR`, not `~/.claude/`, and the script exits if it's unset.
+> **⚠️ `make update` is disabled.** Re-run `make install` to update, or call the script directly. Either way the target is `$CLAUDE_CONFIG_DIR` when set, otherwise Claude Code's default `~/.claude/`.
 
 ```bash
 bash src/sh/claude/update_claude_files.sh         # direct invocation (from repo root)

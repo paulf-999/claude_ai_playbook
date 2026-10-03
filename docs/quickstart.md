@@ -28,14 +28,9 @@ claude
 
 ## 🧭 Step 3: Session startup
 
-Claude starts in [plan mode](reference/advanced_usage/permission_modes.md) automatically *(read-only — won't make changes without your approval)* and runs through the session startup protocol:
+Claude starts in [plan mode](reference/advanced_usage/permission_modes.md) automatically *(read-only — won't make changes without your approval)*.
 
-1. 🤖 **Sub-agent** — Claude defaults to `architect` (general dev work) — name a different one for specialised tasks or press enter to continue ([full list](reference/claude_config/sub_agents.md)).
-
-   > **💡 Tip:** To skip this prompt, pre-populate `~/.claude/process/session_input.md` before launching — Claude reads it automatically at the start of every session.
-
-2. 📋 **Context** — Claude reads your configuration and any saved project context, summarises the current state, and asks you to confirm.
-3. 💬 **Task** — Claude asks what the task is for the session. Describe the work you want to do.
+Describe the task you want to do, and Claude outlines its approach before changing anything. To hand a task to a specialist, see [sub-agents](reference/claude_config/sub_agents.md).
 
 ---
 
@@ -43,22 +38,6 @@ Claude starts in [plan mode](reference/advanced_usage/permission_modes.md) autom
 
 - 📋 Claude outlines its approach before any non-trivial change — review and confirm before it proceeds.
 - ✅ Tests must pass before a task is complete — Claude flags any coverage gaps before proceeding.
-
----
-
-## 🏁 Step 5: End of session
-
-Say **`/wrap_up`**. Claude first runs `/revise-claude-md` (from the `claude-md-management` plugin) to capture any session learnings into `CLAUDE.md`, then produces a context summary:
-
-```
-Project: ...
-What changed: ...
-Decisions made: ...
-Open questions: ...
-Known issues: ...
-```
-
-Paste this into `~/.claude/context.md` — Claude loads it automatically at the start of every session. Skip it and the next session starts with no memory of previous work. *(Nothing to paste on your first session.)*
 
 ---
 

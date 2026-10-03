@@ -25,9 +25,9 @@ Subdirectory CLAUDE.md files (e.g. `src/claude/CLAUDE.md`) are loaded on demand 
 This repo is the source of truth for the team's Claude configuration. `src/claude/` mirrors `~/.claude/` and is installed via `make install`. The user-level `~/.claude/CLAUDE.md` composes the full instruction set using `@import`:
 
 ```text
-@~/.claude/process/planning.md
-@~/.claude/rules/git.md
-@~/.claude/style_guide_standards/python.md
+@~/.claude/_rules/01_essentials/guiding_principles.md
+@~/.claude/_rules/02_claude_standards/claude_plans.md
+@~/.claude/_rules/02_claude_standards/git.md
 ```
 
 To add or change a rule, edit the relevant file in `src/claude/` and run `make install` from your own terminal to sync to `$CLAUDE_CONFIG_DIR`.
