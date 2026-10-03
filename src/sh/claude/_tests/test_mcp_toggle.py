@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-31
-# Date updated:      2026-10-02
-# Version:           1.0.1
+# Date updated:      2026-10-03
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -193,12 +193,13 @@ def run_toggle(home: Path, config_dir: Optional[Path]) -> subprocess.CompletedPr
     )
 
 
-def test_unset_config_dir_refuses(tmp_path):
-    """An unset CLAUDE_CONFIG_DIR exits 1, explains the fix, and never falls back to ~/.claude."""
+def test_unset_config_dir_uses_default_folder(tmp_path):
+    """An unset CLAUDE_CONFIG_DIR falls back to Claude Code's default ~/.claude, like make install."""
     result = run_toggle(tmp_path, None)
-    assert result.returncode == 1
-    assert "CLAUDE_CONFIG_DIR is not set" in result.stderr
-    assert not (tmp_path / ".claude").exists(), "mcp_toggle fell back to ~/.claude"
+    assert result.returncode == 1, "A change should exit 1 to signal a restart"
+    denied = json.loads((tmp_path / ".claude" / "settings.json").read_text())["deniedMcpServers"]
+    assert any(e.get("serverName") == "atlassian" for e in denied), "the default folder's settings weren't updated"
+    assert "CLAUDE_CONFIG_DIR is not set" not in result.stderr, "an unset variable is no longer an error"
 
 
 def test_writes_to_config_dir(tmp_path):

@@ -10,7 +10,7 @@ SHELL = /bin/bash
 # make lint             # run lint_tags and lint_skills
 # make audit_components # run periodic health audit on the Claude component library
 # make audit_rule_usage # measure how often each rule applies and loads, from session transcripts
-# make install          # install Claude config files into $CLAUDE_CONFIG_DIR (previews, then asks you to type 'install')
+# make install          # install Claude config files into $CLAUDE_CONFIG_DIR, or ~/.claude (previews, then asks you to type 'install')
 # make update           # [DISABLED] update Claude config files in ~/.claude/ (WSL)
 # make clean_plans      # archive finished plans (every phase Done) to $CLAUDE_CONFIG_DIR/_plans/archive/
 # make clean_backups    # move old ~/.claude_backup_* dirs to ~/.claude_backup_archive/
@@ -40,7 +40,7 @@ deps:
 	@pip install -r requirements.txt
 
 install:
-	@echo "${INFO}\nInstalling Claude config files into \$$CLAUDE_CONFIG_DIR${COLOUR_OFF}"
+	@echo "${INFO}\nInstalling Claude config files into $${CLAUDE_CONFIG_DIR:-$$HOME/.claude}${COLOUR_OFF}"
 	@bash src/sh/claude/install_claude_files.sh
 
 # update:

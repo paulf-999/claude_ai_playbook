@@ -72,7 +72,7 @@ make install          # WSL — previews, then asks you to type 'install'
 make install_windows  # Windows C:\Users\<username>\.claude
 ```
 
-Both need `CLAUDE_CONFIG_DIR` exported first — see the [README](../README.md#getting-started).
+Both install into Claude Code's default `.claude` folder — to use another folder, see the "Custom folder" note in the [quickstart](quickstart.md).
 
 Restart any open Claude Code sessions after syncing to pick up the changes.
 
