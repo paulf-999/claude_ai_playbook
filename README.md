@@ -8,17 +8,16 @@ This repo provides a starting point for every session across every project: how 
 
 ### Getting started
 
-Set the folder the config installs into, then run the install from your own terminal:
+Run the install from your own terminal:
 
 ```bash
-export CLAUDE_CONFIG_DIR="$HOME/claude"
 make install
 ```
 
-- **Preview first:** it shows the source, target and backup paths and the five install steps before changing anything.
+- **Preview first:** it shows the source, target and backup paths and the six install steps before changing anything.
 - **Typed confirm:** type `install` to go ahead — any other answer cancels and nothing changes.
 - **Your terminal only:** it refuses to run without a real terminal, so Claude can't run it for you.
-- **Backup:** your existing config folder is moved to `~/.claude_backup_<timestamp>` before the new files are copied in.
+- **Backup:** your existing config folder is copied to `~/.claude_backup_<timestamp>` before the new files are copied in.
 
 > **First-time install:** open a new terminal after `make install` before running `claude`.
 
@@ -33,7 +32,7 @@ git pull
 make install
 ```
 
-- **Local edits:** any changes you made in `$CLAUDE_CONFIG_DIR` end up in the backup folder, so copy back anything you want to keep.
+- **Local edits:** changes you made to installed files are replaced, and the backup folder keeps a copy, so copy back anything you want to keep.
 
 ### What's installed
 

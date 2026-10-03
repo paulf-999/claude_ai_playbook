@@ -5,13 +5,14 @@
 Run this from your own terminal — the install refuses to run anywhere else, including from Claude:
 
 ```bash
-export CLAUDE_CONFIG_DIR="$HOME/claude"
 make install
 ```
 
-It previews the target, backup path and five install steps, then asks you to type `install` — any other answer cancels with nothing changed.
+It previews the target, backup path and six install steps, then asks you to type `install` — any other answer cancels with nothing changed.
 
 > **First-time install:** open a new terminal after `make install` before running `claude`.
+
+> **Custom folder:** the config installs into Claude Code's default folder, `~/.claude`. To use another one, such as `~/claude`, add `export CLAUDE_CONFIG_DIR="$HOME/claude"` to your shell profile (e.g. `~/.zshrc`) and open a new terminal before running `make install` — Claude Code reads the same variable to find it.
 
 ---
 
@@ -69,7 +70,7 @@ After any `git pull`, re-run the install from your own terminal:
 make install
 ```
 
-Your current config folder is moved to `~/.claude_backup_<timestamp>` first, so copy back any local edits you want to keep.
+Your current config folder is copied to `~/.claude_backup_<timestamp>` first, so copy back any local edits you want to keep.
 
 ---
 
