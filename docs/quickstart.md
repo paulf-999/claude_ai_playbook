@@ -28,12 +28,9 @@ claude
 
 ## 🧭 Step 3: Session startup
 
-Claude starts in [plan mode](reference/advanced_usage/permission_modes.md) automatically *(read-only — won't make changes without your approval)* and runs through the session startup protocol:
+Claude starts in [plan mode](reference/advanced_usage/permission_modes.md) automatically *(read-only — won't make changes without your approval)*.
 
-1. 🤖 **Sub-agent** — Claude defaults to `architect` (general dev work) — name a different one for specialised tasks or press enter to continue ([full list](reference/claude_config/sub_agents.md)).
-
-2. 📋 **Context** — Claude reads your configuration and any saved project context, summarises the current state, and asks you to confirm.
-3. 💬 **Task** — Claude asks what the task is for the session. Describe the work you want to do.
+Describe the task you want to do, and Claude outlines its approach before changing anything. To hand a task to a specialist, see [sub-agents](reference/claude_config/sub_agents.md).
 
 ---
 
