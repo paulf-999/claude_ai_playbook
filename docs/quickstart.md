@@ -32,8 +32,6 @@ Claude starts in [plan mode](reference/advanced_usage/permission_modes.md) autom
 
 1. 🤖 **Sub-agent** — Claude defaults to `architect` (general dev work) — name a different one for specialised tasks or press enter to continue ([full list](reference/claude_config/sub_agents.md)).
 
-   > **💡 Tip:** To skip this prompt, pre-populate `~/.claude/process/session_input.md` before launching — Claude reads it automatically at the start of every session.
-
 2. 📋 **Context** — Claude reads your configuration and any saved project context, summarises the current state, and asks you to confirm.
 3. 💬 **Task** — Claude asks what the task is for the session. Describe the work you want to do.
 

@@ -9,4 +9,4 @@ Practices for getting consistently good results from Claude Code — from first 
 | [Pro tips for beginners](best_practices/pro_tips_for_beginners.md) | Foundational | Be specific, describe the end user, step-by-step instructions, explore first, shortcuts |
 | [AI Fluency](best_practices/ai_fluency.md) | Foundational | 4D Framework (Delegation, Description, Discernment, Diligence), evaluating Claude with evals |
 | [Intermediate](best_practices/intermediate.md) | Intermediate | Auto-memory, MCP discipline, trivial vs non-trivial, quality commands, automate repetitive tasks, tag schema |
-| [Advanced](best_practices/advanced.md) | Advanced | Parallel sessions, structured session startup |
+| [Advanced](best_practices/advanced.md) | Advanced | Parallel sessions |
