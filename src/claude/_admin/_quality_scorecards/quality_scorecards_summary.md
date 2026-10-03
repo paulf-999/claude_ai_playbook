@@ -18,7 +18,7 @@
 | Rules — always-on | 14 | 8.3/10 | 2026-10-01 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_operational_efficiency.md` (7.1/10) |
 | Rules — lazy-load | 17 | 8.3/10 | 2026-10-01 | • 💪 **Strongest:** `latency_optimisation.md` (9.2/10)<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
 | Hooks | 5 | 8.5/10 | 2026-10-02 | • 💪 **Strongest:** `hook_enforcement_mcp_stale_settings.sh` (9.0/10)<br>• ⚠️ **Weakest:** `hook_style_guide_response_standards.sh` (8.0/10) |
-| Agents | 1 | 8.1/10 | 2026-10-02 | • ⚠️ **Only agent:** `technical_writer` (8.1/10) has no recorded usage |
+| Agents | 1 | 8.1/10 | 2026-10-02 | • 💪 **Only file:** `technical_writer` (8.1/10) |
 
 ---
 
