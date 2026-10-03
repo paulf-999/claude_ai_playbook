@@ -46,22 +46,6 @@ Claude starts in [plan mode](reference/advanced_usage/permission_modes.md) autom
 
 ---
 
-## 🏁 Step 5: End of session
-
-Say **`/wrap_up`**. Claude first runs `/revise-claude-md` (from the `claude-md-management` plugin) to capture any session learnings into `CLAUDE.md`, then produces a context summary:
-
-```
-Project: ...
-What changed: ...
-Decisions made: ...
-Open questions: ...
-Known issues: ...
-```
-
-Paste this into `~/.claude/context.md` — Claude loads it automatically at the start of every session. Skip it and the next session starts with no memory of previous work. *(Nothing to paste on your first session.)*
-
----
-
 ## ➕ Extras: Keeping up to date
 
 After any `git pull`, re-run the install from your own terminal:

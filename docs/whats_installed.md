@@ -1,6 +1,6 @@
 # 📦 What's installed
 
-Last updated: 1st October 2026
+Last updated: 3rd October 2026
 
 This page gives a one-line overview of each part of `src/claude/`, and links to where the detail lives.
 
@@ -22,12 +22,6 @@ The root config, settings and aliases that every session starts from.
 See [`src/claude/_rules/README.md`](../src/claude/_rules/README.md)
 
 Five numbered tiers of rules: tiers 01–04 load every session, and `05_lazy_load/` is read on demand.
-
-### 🎯 Path-scoped rules
-
-See [`src/claude/_rules/05_lazy_load/`](../src/claude/_rules/05_lazy_load/)
-
-Lazy-load rules with `paths:` frontmatter, which Claude Code loads automatically when Claude reads a matching file, such as `sql.md` for `.sql` files. `make install` links them into the `rules/` folder of your config, the only place Claude Code looks for them.
 
 ---
 
@@ -63,32 +57,8 @@ Shell scripts that run at Claude Code lifecycle events once registered in `setti
 
 ---
 
-## 🐍 Scripts
-
-See [`src/claude/_scripts/`](../src/claude/_scripts/)
-
-Python tools for auditing the config, such as `make audit_components`, which reports on the health of skills, agents and rules, and `make audit_rule_usage`, which measures how often each rule applies and loads.
-
----
-
 ## 🧰 Templates and reference
 
 See [`src/claude/_templates/README.md`](../src/claude/_templates/README.md) · [`src/claude/_reference/README.md`](../src/claude/_reference/README.md)
 
 Starting templates for new artefacts, and architecture docs that are read on demand.
-
----
-
-## 🔌 MCP servers
-
-See [`docs/reference/claude_config/mcp/mcp_setup.md`](reference/claude_config/mcp/mcp_setup.md)
-
-Connections to external tools, such as Atlassian, toggled with `make enable_mcp` and `make disable_mcp`.
-
----
-
-## 🧩 Plugins
-
-See [`docs/reference/claude_config/plugins.md`](reference/claude_config/plugins.md)
-
-Add-ons that bring extra skills, commands and hooks to the CLI, installed with `make install_plugins`.
