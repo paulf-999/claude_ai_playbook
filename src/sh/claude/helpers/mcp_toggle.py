@@ -10,10 +10,10 @@ import os
 import pathlib
 import sys
 
-# Live Claude config dir — never ~/.claude, which holds Claude Code's own state.
-# None when CLAUDE_CONFIG_DIR is unset; main() refuses to run in that case.
-_CONFIG_DIR = os.environ.get("CLAUDE_CONFIG_DIR")
-SETTINGS_PATH = pathlib.Path(_CONFIG_DIR) / "settings.json" if _CONFIG_DIR else None
+# Live Claude config dir: CLAUDE_CONFIG_DIR when set, otherwise Claude Code's default ~/.claude,
+# matching make install
+_CONFIG_DIR = os.environ.get("CLAUDE_CONFIG_DIR") or str(pathlib.Path.home() / ".claude")
+SETTINGS_PATH = pathlib.Path(_CONFIG_DIR) / "settings.json"
 
 # Known integration servers (disabled by default)
 INTEGRATION_SERVERS = ["github", "atlassian"]
@@ -35,6 +35,7 @@ def load_settings() -> dict:
 
 def save_settings(settings: dict) -> None:
     """Write settings back to settings.json with a trailing newline."""
+    SETTINGS_PATH.parent.mkdir(parents=True, exist_ok=True)
     SETTINGS_PATH.write_text(json.dumps(settings, indent=2) + "\n")
 
 
@@ -111,13 +112,6 @@ def main() -> None:
     action = sys.argv[1].lower()
     if action not in ("enable", "disable"):
         print(f"Error: action must be 'enable' or 'disable', got '{action}'", file=sys.stderr)
-        sys.exit(1)
-
-    if SETTINGS_PATH is None:
-        print(
-            'Error: CLAUDE_CONFIG_DIR is not set — export it (e.g. export CLAUDE_CONFIG_DIR="$HOME/claude") and re-run',
-            file=sys.stderr,
-        )
         sys.exit(1)
 
     servers = resolve_servers(sys.argv[2:])

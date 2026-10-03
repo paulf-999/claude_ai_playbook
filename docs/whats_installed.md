@@ -4,7 +4,7 @@ Last updated: 1st October 2026
 
 This page gives a one-line overview of each part of `src/claude/`, and links to where the detail lives.
 
-- **Install:** `make install` is disabled, so the live config is edited directly in the folder `CLAUDE_CONFIG_DIR` points at.
+- **Install:** `make install` copies `src/claude/` into `CLAUDE_CONFIG_DIR`, or Claude Code's default `~/.claude` when it isn't set.
 - **Loading:** Claude Code reads `CLAUDE.md` at startup, which `@import`s the always-on rules.
 
 ---
