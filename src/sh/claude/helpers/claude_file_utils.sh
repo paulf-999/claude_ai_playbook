@@ -8,8 +8,9 @@ source src/sh/shell_utils.sh
 #=======================================================================
 
 SOURCE_DIR="${ROOT_DIR}/src/claude"        # repo-managed Claude files (source of truth)
-# Live Claude config dir — never ~/.claude, which holds Claude Code's own state
-TARGET_DIR="${CLAUDE_CONFIG_DIR:?CLAUDE_CONFIG_DIR is not set — export it (e.g. export CLAUDE_CONFIG_DIR=\"\$HOME/claude\") and re-run}"
+# Live Claude config dir: CLAUDE_CONFIG_DIR when set, otherwise Claude Code's default ~/.claude.
+# The install copies over the target and keeps its runtime data, so the default folder is safe to use.
+TARGET_DIR="${CLAUDE_CONFIG_DIR:-${HOME}/.claude}"
 BACKUP_DIR="${HOME}/.claude_backup_${TIMESTAMP}"  # timestamped backup location
 
 # Top-level entries the user owns once installed: copied on first install only, never overwritten
