@@ -8,8 +8,8 @@
 
 | Folder | Scores | File pattern |
 |---|---|---|
-| `agents/` | Agents in `agents/` — none scored yet | `agents/scorecard_<agent_name>.md` |
-| `hooks/` | Hooks in `hooks/` — none scored yet | `hooks/scorecard_<hook_name>.md` |
+| `agents/` | Agents in `agents/`, one flat folder | `agents/scorecard_<agent_name>.md` |
+| `hooks/` | Hooks in `hooks/`, one flat folder | `hooks/scorecard_<hook_name>.md` |
 | `rules/` | Rules in `_rules/`, mirroring the tier path | `rules/<tier>/scorecard_<rule_name>.md` |
 | `skills/` | Skills in `skills/`, one flat folder | `skills/scorecard_<skill_name>.md` |
 | `tests/` | Tests in `_tests/`, mirroring the `_tests/` path | `tests/<subpath>/scorecard_<test_file_stem>.md` |
