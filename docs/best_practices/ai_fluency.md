@@ -28,8 +28,8 @@ No tooling needed. No scoring framework. Just an honest read on quality and fail
 
 The playbook has a mature eval infrastructure for skills. Whether you're building something new or assessing an existing workflow, these are worth reading:
 
-- [`style_guide_standards/claude.md`](../../src/claude/style_guide_standards/claude.md) — the full skill development cycle (create → eval → improve → benchmark) and when evals become mandatory
+- [`authoring_skills/_lazy_load/_core_standards.md`](../../src/claude/_rules/03_authoring_guidelines/authoring_skills/_lazy_load/_core_standards.md) — how many evals each maturity level needs
 - [`authoring_skills.md`](../../src/claude/_rules/03_authoring_guidelines/authoring_skills.md) — maturity tiers (draft / tactical / strategic); strategic maturity requires evals to demonstrate reliability
-- Simple evals (prompts only): [`skills/_admin_skills/archive_claude_config_snapshots/evals/`](../../src/claude/skills/_admin_skills/archive_claude_config_snapshots/evals/)
-- Complex evals with fixtures: [`skills/_git_skills/git_review_pr/evals/`](../../src/claude/skills/_git_skills/git_review_pr/evals/)
-- Behavioural tests: [`tests/skills/`](../../tests/skills/)
+- Small eval set: [`skills/_claude_skills/claude_capture_session_prompts/tests/`](../../src/claude/skills/_claude_skills/claude_capture_session_prompts/tests/)
+- Larger eval set: [`skills/_git_skills/git_create_pr/tests/`](../../src/claude/skills/_git_skills/git_create_pr/tests/)
+- Behavioural tests: [`_tests/skills/`](../../src/claude/_tests/skills/)

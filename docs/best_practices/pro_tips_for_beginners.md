@@ -37,4 +37,4 @@ Reference specific file paths and column names. Name the constraint upfront — 
 | `/clear` | Clear conversation context and start fresh |
 | `Tab` | Autocomplete file paths in your prompt |
 
-Slash commands are the highest-leverage shortcut — [`/commit`](../../src/claude/skills/commit/SKILL.md), [`/review`](../../src/claude/commands/review.md), and [`/grill_me`](../../src/claude/commands/grill_me.md) invoke multi-step workflows in one word rather than several prompts.
+Slash commands are the highest-leverage shortcut — [`/git_create_pr`](../../src/claude/skills/_git_skills/git_create_pr/SKILL.md), [`/jira_create`](../../src/claude/skills/_atlassian_skills/jira_create/SKILL.md), and [`/claude_review_config`](../../src/claude/skills/_claude_skills/claude_review_config/SKILL.md) invoke multi-step workflows in one word rather than several prompts.

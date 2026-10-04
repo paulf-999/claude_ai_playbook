@@ -61,4 +61,4 @@ deactivate
 
 - The `venv/` folder is ignored via `.gitignore` and should not be committed.
 - Each project should have its own virtual environment — do not share environments across projects.
-- See the [Python dependency management standard](../src/claude/style_guide_standards/python/python_environment/python_dependencies.md) for `requirements.txt` conventions and pinning rules.
+- See the [Python environment standard](../../../src/claude/_rules/05_lazy_load/style_guide_standards/python/python_environment.md) for `requirements.txt` conventions and pinning rules.

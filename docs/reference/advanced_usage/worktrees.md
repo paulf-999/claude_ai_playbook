@@ -75,7 +75,7 @@ For other agents, you can request worktree isolation on demand:
 Use worktrees for your agents.
 ```
 
-See [`src/claude/agents/core/architect.md`](../../src/claude/agents/core/architect.md) for the frontmatter reference.
+See [`src/claude/agents/core/technical_writer/AGENT.md`](../../../src/claude/agents/core/technical_writer/AGENT.md) for the frontmatter reference — it sets `isolation: worktree`.
 
 ---
 

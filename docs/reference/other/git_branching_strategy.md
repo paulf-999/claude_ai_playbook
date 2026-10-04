@@ -1,6 +1,6 @@
 # 🌿 Git Branching Strategy
 
-This repository uses a simplified branching strategy, with branch naming enforced via a [pre-commit hook](../src/sh/pre_commit_hooks/git_validate_branch_name.sh).
+This repository uses a simplified branching strategy, with branch naming enforced via a [pre-commit hook](../../../src/sh/pre_commit_hooks/git_validate_branch_name.sh).
 
 ---
 
@@ -39,4 +39,4 @@ Regex pattern:
 | `hotfix/issue_42`                                 | `feature/feature_with$symbol`    | Special characters not allowed |
 | `release/new_col_all_int_dim_merchant_models`     | `release/New-Column-Changes`     | Uppercase and hyphens not allowed |
 
-The script [`git_validate_branch_name.sh`](../src/sh/pre_commit_hooks/git_validate_branch_name.sh) enforces these rules — a commit on a non-conforming branch will be rejected with a descriptive error message.
+The script [`git_validate_branch_name.sh`](../../../src/sh/pre_commit_hooks/git_validate_branch_name.sh) enforces these rules — a commit on a non-conforming branch will be rejected with a descriptive error message.
