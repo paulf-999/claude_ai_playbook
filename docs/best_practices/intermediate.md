@@ -7,8 +7,7 @@ Practices that pay off once you are comfortable with the basics. Each one reduce
 | 🧠 Enable auto-memory | Anthropic | Persist project knowledge across sessions — dbt patterns, DAG conventions, decisions — without manual effort. | [`"autoMemoryEnabled": true`](../../src/claude/settings.json#L2) |
 | 🔌 MCP server discipline | Team | Integration servers (Jira, Confluence, email) enabled per session, not always-on — keeps attack surface small. | [enable/disable config](#mcp-discipline) |
 | ⚖️ Frame work as trivial or non-trivial | Anthropic | Match your process to task complexity — not every change deserves the same approach. | [Trivial vs non-trivial](#trivial-vs-non-trivial) |
-| ✅ Quality commands | Team | 5 mid-session slash commands for stress-testing, reviewing, and debugging work in progress. | [commands/](../../src/claude/commands/README.md) |
-| 🤖 Automate repetitive instructions | Anthropic | Turn recurring instructions (run the linter, follow these conventions) into hooks or skills so they fire automatically. | [`claude_prompt_reviewer.py`](../../src/claude/hooks/claude_prompt_reviewer.py), [`claude_session_cost.py`](../../src/claude/hooks/claude_session_cost.py) |
+| 🤖 Automate repetitive instructions | Anthropic | Turn recurring instructions (run the linter, follow these conventions) into hooks or skills so they fire automatically. | [`hook_enforcement_naming_convention.sh`](../../src/claude/hooks/hook_enforcement_naming_convention.sh), [`hook_style_guide_response_standards_inject.sh`](../../src/claude/hooks/hook_style_guide_response_standards_inject.sh) |
 | 🏷️ Tag schema | Team | Stamp maturity and criticality metadata on every skill you create — makes auditing the skill library meaningful. | [Tag schema](#tag-schema) |
 
 ---
@@ -24,7 +23,7 @@ Practices that pay off once you are comfortable with the basics. Each one reduce
 - Gather requirements first: *"I want to add a mart model for Salesforce opportunity revenue. Ask me questions about the grain, dimensions, and aggregations until you have what you need. Then write a spec."*
 - Ask Claude to reason carefully: *"think step by step about the tradeoffs"* or *"think carefully about whether this should be incremental or table materialisation"* before responding.
 
-Use [`/grill_me`](../../src/claude/commands/grill_me.md) to run a structured design interview — Claude asks one question at a time until the approach is solid before any model is written.
+Ask for a structured design interview — *"interview me about this design one question at a time until the approach is solid"* — before any model is written.
 
 ---
 
