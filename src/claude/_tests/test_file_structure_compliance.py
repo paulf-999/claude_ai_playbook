@@ -23,7 +23,7 @@ import pytest
 
 from _file_structure_validator import CLAUDE_HOME, FileStructureValidator
 
-HINT = "— see _rules/01_essentials/claude_usage_standards/claude_directory_structure.md"
+HINT = "— see _rules/05_lazy_load/claude_directory_structure.md"
 
 
 @cache

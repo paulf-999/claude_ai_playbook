@@ -3,9 +3,9 @@ paths:
   - "**/_rules/**"
   - "**/CLAUDE.md"
 ---
-<!-- version: 2.1.1 -->
+<!-- version: 2.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-02 -->
+<!-- updated: 2026-10-06 -->
 <!-- miss_cost: low — a rule lands in the wrong tier, which is easy to move -->
 <!-- loading: path-scoped — only needed when placing or moving a rule, so it loads when _rules/ files or CLAUDE.md are open -->
 # 📋 Rules Loading Strategy
@@ -49,6 +49,20 @@ Decide from two numbers per rule, both in `_admin/_audits/audit_rule_usage.md`:
 
 - **Domain style guides:** SQL, Airflow, dbt and similar guides are lazy, triggered by `paths:` on their file type.
 - **Pointers aren't triggers:** a `**Read on demand:**` pointer works only if Claude remembers it, so it never counts for a high-cost rule.
+
+---
+
+## 🎯 When `paths:` fits
+
+A lazy rule with `paths:` frontmatter and a `rules/` symlink loads whenever Claude reads a matching file — the most reliable lazy trigger.
+
+- **Clear file type:** the rule is about one kind of file, for example `**/*.sql` or `**/agents/**`.
+- **Read before write:** Claude reads a matching file before editing it, so the trigger fires in time.
+- **New-file gap:** creating the first file of its kind reads nothing, so keep a `**Read on demand:**` pointer in an always-on rule for that case.
+- **Backstop for high cost:** a high miss cost also needs a hook or test that catches the mistake, such as the naming-convention hook.
+- **Not for every-session rules:** a rule about how Claude works, rather than which file it touches, stays always-on.
+- **Proven:** `test_path_scoped_rules_live.py` shows in a real session that a `paths:` rule loads with a matching file and not otherwise.
+- **Stays pointer-based:** a rule with no file type of its own, such as delegation, MCP trust or date formats — its `load:` reason names the pointer.
 
 ---
 

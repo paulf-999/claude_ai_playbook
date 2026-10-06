@@ -1,6 +1,11 @@
-<!-- version: 1.2.0 -->
+---
+paths:
+  - "**/.claude/**"
+  - "**/claude/**"
+---
+<!-- version: 1.3.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-03 -->
+<!-- updated: 2026-10-06 -->
 # 🏗️ Directory Organisation — `~/.claude/`
 
 **Purpose:** Define what directories exist in the Claude config, their purpose, and the distinction between user-created and auto-generated directories.

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
 # Date updated:      2026-10-06
-# Version:           2.1.0
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import re
 from functools import cache
+from pathlib import Path
 
 from _rule_reachability import find_reachability_issues
 from _shared_paths import ALIASES_FILE, CLAUDE_DIR, CLAUDE_MD, RULES_DIR
@@ -152,7 +153,7 @@ def test_nothing_imports_lazy_load_children():
 
 # Config files loaded at every session start through CLAUDE.md imports. Lower it when a
 # rule is demoted; raising it needs the evidence guiding_principles.md asks for.
-MAX_STARTUP_FILES = 43
+MAX_STARTUP_FILES = 39
 STARTUP_IMPORT = re.compile(r"^@~/[^/\s]+/(\S+\.md)\s*$", re.M)
 
 
@@ -187,4 +188,36 @@ def test_demoted_rules_stay_out_of_startup():
     """Rules moved to path-scoping on 2026-10-01 must not creep back into the startup imports."""
     files = startup_files()
     assert not [f for f in files if f.endswith("/authoring_agents.md")], "authoring_agents.md is back at startup"
+    assert not [f for f in files if "claude_directory_structure" in f], "directory-structure rule is back at startup"
     assert not [f for f in files if "05_lazy_load/" in f], "a lazy rule is imported at startup"
+
+
+DIRECTORY_RULE = RULES_DIR / "05_lazy_load" / "claude_directory_structure.md"
+DIRECTORY_RULES = [
+    "claude_directory_structure.md",
+    "claude_directory_structure/_claude_directory_organisation.md",
+    "claude_directory_structure/_claude_directory_naming.md",
+    "claude_directory_structure/_file_structure_validation.md",
+]
+
+
+def test_directory_structure_loads_with_config_files():
+    """The directory-structure rule and its 3 children load through paths: whenever a config file is read."""
+    for target in DIRECTORY_RULES:
+        path = RULES_DIR / "05_lazy_load" / target
+        assert path.read_text().startswith('---\npaths:\n  - "**/.claude/**"\n'), f"{target} lost its paths: trigger"
+        # make install links each paths: rule into rules/ by file name, so only an installed config has the link
+        symlink = CLAUDE_DIR / "rules" / Path(target).name
+        if symlink.parent.is_dir():
+            linked = symlink.is_symlink() and symlink.resolve() == path.resolve()
+            assert linked, f"rules/{symlink.name} is missing or wrong"
+
+
+def test_directory_structure_keeps_a_pointer_and_a_backstop():
+    """New config files rely on an always-on pointer, with the naming hook catching what slips through."""
+    usage = (RULES_DIR / "01_essentials" / "claude_usage_standards.md").read_text()
+    assert "05_lazy_load/claude_directory_structure.md" in usage, "claude_usage_standards.md lost its pointer"
+    assert (CLAUDE_DIR / "hooks" / "hook_enforcement_naming_convention.sh").is_file(), (
+        "the naming-convention hook is the backstop that makes this rule safe to lazy-load — keep it"
+    )
+    assert DIRECTORY_RULE.is_file(), "the directory-structure rule is missing"
