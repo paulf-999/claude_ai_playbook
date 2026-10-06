@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-28
 # Date updated:      2026-10-06
-# Version:           2.2.0
+# Version:           2.2.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -19,7 +19,7 @@ had zero test coverage, unlike its two siblings in the same tier
 05_lazy_load/ again on 2026-10-01, once ``paths:`` scoping proved it loads
 whenever an agent file is read; it was used in 2 of 115 sessions. Moved back to
 rules/03_authoring_guidelines/ on 2026-10-06 with its ``paths:`` kept, to sit with the
-other authoring rules. Its children sit in `_rules_lazy_load/authoring_agents/` and are
+other authoring rules. Its children sit in `_rules_lazy_load/authoring_guidelines/authoring_agents/` and are
 only read on demand.
 """
 from pathlib import Path
@@ -28,7 +28,7 @@ from _shared_paths import CLAUDE_DIR, LAZY_RULES_DIR, RULES_DIR
 
 AUTHORING_RULES = RULES_DIR / "03_authoring_guidelines" / "authoring_rules.md"
 AUTHORING_AGENTS = RULES_DIR / "03_authoring_guidelines" / "authoring_agents.md"
-CHILDREN_DIR = LAZY_RULES_DIR / "authoring_agents"
+CHILDREN_DIR = LAZY_RULES_DIR / "authoring_guidelines" / "authoring_agents"
 TIER_README = LAZY_RULES_DIR / "README.md"
 
 EXPECTED_SECTIONS = [
@@ -126,7 +126,7 @@ def test_parent_points_to_every_child_on_demand():
         if line.startswith("- **Read on demand:**")
     ]
     for child in EXPECTED_CHILDREN:
-        assert any(f"_rules_lazy_load/authoring_agents/{child}" in p for p in pointers), (
+        assert any(f"_rules_lazy_load/authoring_guidelines/authoring_agents/{child}" in p for p in pointers), (
             f"authoring_agents.md has no read-on-demand pointer to: {child}"
         )
 
@@ -187,7 +187,7 @@ def test_each_child_ends_with_newline():
 def test_each_child_links_back_to_parent():
     """Every child's tier README Related entry must name authoring_agents.md as its parent."""
     for child in EXPECTED_CHILDREN:
-        entry = readme_related_entry(TIER_README, f"authoring_agents/{child}")
+        entry = readme_related_entry(TIER_README, f"authoring_guidelines/authoring_agents/{child}")
         assert "authoring_agents.md" in entry, (
             f"{child}: _rules_lazy_load/README.md Related entry doesn't name "
             f"authoring_agents.md as its parent"

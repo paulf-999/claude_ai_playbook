@@ -1,4 +1,4 @@
-<!-- version: 4.1.1 -->
+<!-- version: 4.1.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-06 -->
 <!-- applies_to: **/skills/** -->
@@ -14,11 +14,11 @@ Before creating or reviewing a skill, read the children below in order, and fini
 
 ## 📚 Read on demand
 
-- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_skills/_core_standards.md` — naming, SKILL.md structure, contract fields and maturity levels.
-- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_skills/_trigger_design.md` — how to write trigger phrases so the skill runs when users ask for it.
-- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_skills/_scope_and_maintenance.md` — declaring `not_for` boundaries and designing for stability.
-- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_skills/_no_orphaned_files.md` — making sure every file in the skill is referenced.
-- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_skills/_hard_gates_checklist.md` — the final checklist before submitting a skill.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_skills/_core_standards.md` — naming, SKILL.md structure, contract fields and maturity levels.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_skills/_trigger_design.md` — how to write trigger phrases so the skill runs when users ask for it.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_skills/_scope_and_maintenance.md` — declaring `not_for` boundaries and designing for stability.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_skills/_no_orphaned_files.md` — making sure every file in the skill is referenced.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_skills/_hard_gates_checklist.md` — the final checklist before submitting a skill.
 
 ---
 

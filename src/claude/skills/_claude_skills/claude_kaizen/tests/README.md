@@ -8,7 +8,7 @@
 |---|---|---|---|
 | 1 | `happy_path_promotes_recurring_pattern` | Promote | A mistake seen twice becomes a rule and eval, shown as a diff for review |
 | 2 | `one_off_mistake_not_promoted` | Promote | A mistake seen once stays a candidate |
-| 3 | `declined_diff_writes_nothing` | Promote | Rejecting the proposal leaves `_rules_lazy_load/learned/` unchanged |
+| 3 | `declined_diff_writes_nothing` | Promote | Rejecting the proposal leaves `_rules_lazy_load/_learned/` unchanged |
 | 4 | `regression_blocks_promotion` | Validate | A rule that breaks a previously passing eval isn't presented as ready |
 | 5 | `stale_rule_flagged_not_removed` | Prune | A rule older than 6 months is flagged, not deleted |
 | 6 | `missing_errors_dir` | Setup | No `~/claude/_errors/` means no audit, and no invented patterns |

@@ -6,9 +6,9 @@ Meta-guidance for authoring and maintaining Claude config artifacts — rules th
 
 | File | Purpose | Type |
 |------|---------|------|
-| **authoring_rules.md** | Standards for rule creation: naming, structure, directory placement, testing, scope boundaries; children in `_rules_lazy_load/authoring_rules/` (read on demand) cover common mistakes and a hard-gates checklist | Instructional |
-| **authoring_skills.md** | Standards for skill creation: naming, contract fields, structure, complexity scoring, testing, maturity levels; children in `_rules_lazy_load/authoring_skills/` are read on demand | Instructional |
-| **authoring_agents.md** | Standards for agent creation: naming, structure, maturity levels, testing; loads only with `agents/` files through `paths:`; children in `_rules_lazy_load/authoring_agents/` (read on demand) | Instructional |
+| **authoring_rules.md** | Standards for rule creation: naming, structure, directory placement, testing, scope boundaries; children in `_rules_lazy_load/authoring_guidelines/authoring_rules/` (read on demand) cover common mistakes and a hard-gates checklist | Instructional |
+| **authoring_skills.md** | Standards for skill creation: naming, contract fields, structure, complexity scoring, testing, maturity levels; children in `_rules_lazy_load/authoring_guidelines/authoring_skills/` are read on demand | Instructional |
+| **authoring_agents.md** | Standards for agent creation: naming, structure, maturity levels, testing; loads only with `agents/` files through `paths:`; children in `_rules_lazy_load/authoring_guidelines/authoring_agents/` (read on demand) | Instructional |
 
 ## 🎯 Why authoring_guidelines?
 
@@ -60,14 +60,14 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - `authoring_agents.md` — agent maturity gates, same raw-sum convention as skills
 - `testing.md` — test complexity scoring, applying the inverted score
 - `authoring_rules.md` — rule authoring; no complexity gate defined yet
-- `_rules_lazy_load/authoring_skills/_hard_gates_checklist.md` and equivalents — where a domain's specific gate thresholds live once defined
+- `_rules_lazy_load/authoring_guidelines/authoring_skills/_hard_gates_checklist.md` and equivalents — where a domain's specific gate thresholds live once defined
 
-### `_rules_lazy_load/authoring_rules/_common_mistakes.md`
+### `_rules_lazy_load/authoring_guidelines/authoring_rules/_common_mistakes.md`
 
 - Parent: `authoring_rules.md` — pre-creation checklist, creation steps and quality gates
 - Sibling: `_hard_gates_checklist.md` — the tick-box check to run before finishing a rule
 
-### `_rules_lazy_load/authoring_rules/_hard_gates_checklist.md`
+### `_rules_lazy_load/authoring_guidelines/authoring_rules/_hard_gates_checklist.md`
 
 - Parent: `authoring_rules.md` — pre-creation checklist, creation steps and quality gates
 - Sibling: `_common_mistakes.md` — the mistakes these gates are designed to catch
@@ -88,26 +88,26 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - `guiding_principles.md` — intentionality principle; evidence-gathering methods; review cadence (reset every ~6 months per Boris Cherny)
 - `behaviour.md` — includes decision-making as child file (_decision_making.md); when to present options vs. decide unilaterally
 
-### `_rules_lazy_load/authoring_skills/_core_standards.md`
+### `_rules_lazy_load/authoring_guidelines/authoring_skills/_core_standards.md`
 
 - Parent: `authoring_skills.md` — child index and file organisation
 - Sibling: `_trigger_design.md` — trigger phrase design
 
-### `_rules_lazy_load/authoring_skills/_hard_gates_checklist.md`
+### `_rules_lazy_load/authoring_guidelines/authoring_skills/_hard_gates_checklist.md`
 
 - Parent: `authoring_skills.md` — child index and file organisation
 - Sibling: `_core_standards.md` — naming, SKILL.md structure, contract fields, maturity levels
 
-### `_rules_lazy_load/authoring_skills/_no_orphaned_files.md`
+### `_rules_lazy_load/authoring_guidelines/authoring_skills/_no_orphaned_files.md`
 
 - Parent: `authoring_skills.md` — child index and file organisation
 - `guiding_principles.md` — "Reversible by design" and "no speculative work" — the same reasoning this rule mechanizes for skill files specifically
 
-### `_rules_lazy_load/authoring_skills/_scope_and_maintenance.md`
+### `_rules_lazy_load/authoring_guidelines/authoring_skills/_scope_and_maintenance.md`
 
 - Parent: `authoring_skills.md` — child index and file organisation
 
-### `_rules_lazy_load/authoring_skills/_trigger_design.md`
+### `_rules_lazy_load/authoring_guidelines/authoring_skills/_trigger_design.md`
 
 - Parent: `authoring_skills.md` — child index and file organisation
 - Sibling: `_core_standards.md` — naming, SKILL.md structure, contract fields, maturity levels

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-06
-# Version:           2.1.0
+# Version:           2.1.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -31,7 +31,7 @@ from _shared_paths import CLAUDE_DIR, HOOKS_DIR, LAZY_RULES_DIR, RULES_DIR
 
 LAZY_LOAD_DIR = LAZY_RULES_DIR
 # Folders under _rules_lazy_load/ that hold indexes or ledgers rather than rules
-NON_RULE_FOLDERS = {"_tier_readmes", "learned"}
+NON_RULE_FOLDERS = {"_tier_readmes", "_learned"}
 README_FILE = LAZY_LOAD_DIR / "README.md"
 
 

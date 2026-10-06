@@ -1,4 +1,4 @@
-<!-- version: 3.0.0 -->
+<!-- version: 3.0.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-06 -->
 <!-- applies_to: **/rules/**, **/_rules_lazy_load/** -->
@@ -72,5 +72,5 @@ Before writing any rule, answer these five essential questions:
 
 ## 🚫 Common Mistakes & ✅ Hard Gates Checklist
 
-- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_rules/_common_mistakes.md` — before writing or reviewing a rule, for the mistakes this config has already shipped.
-- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_rules/_hard_gates_checklist.md` — before finishing or merging a rule, for the final tick-box check.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_rules/_common_mistakes.md` — before writing or reviewing a rule, for the mistakes this config has already shipped.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_rules/_hard_gates_checklist.md` — before finishing or merging a rule, for the final tick-box check.

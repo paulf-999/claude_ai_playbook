@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-06
-# Version:           4.2.0
+# Version:           4.2.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -25,7 +25,7 @@ from _resolved_rule import child_paths, resolved_content
 from _shared_paths import LAZY_RULES_DIR, RULES_DIR
 
 RULE_FILE = RULES_DIR / "03_authoring_guidelines" / "authoring_skills.md"
-CHECKLIST = LAZY_RULES_DIR / "authoring_skills" / "_hard_gates_checklist.md"
+CHECKLIST = LAZY_RULES_DIR / "authoring_guidelines" / "authoring_skills" / "_hard_gates_checklist.md"
 SECTIONS = ["Frontmatter", "Instructions for Claude", "Purpose", "Example Usage", "Best For", "References"]
 CONTRACT_FIELDS = ["`name`, `version`, `summary`, `maturity`", "`dispatch.triggers`", "`dispatch.not_for`", "`output`"]
 MATURITY_LEVELS = {"draft", "tactical", "strategic"}

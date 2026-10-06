@@ -1,6 +1,6 @@
 # Recurring Candidates — claude_kaizen Tally
 
-Tracks patterns observed 1+ times in `~/claude/_errors/`. Only candidates reaching the promotion threshold (default: 2 occurrences) move forward into `_rules_lazy_load/learned/`.
+Tracks patterns observed 1+ times in `~/claude/_errors/`. Only candidates reaching the promotion threshold (default: 2 occurrences) move forward into `_rules_lazy_load/_learned/`.
 
 | Pattern | Domain | Count | First Seen | Last Seen | Status | Notes |
 |---------|--------|-------|-----------|-----------|--------|-------|
@@ -13,5 +13,5 @@ Tracks patterns observed 1+ times in `~/claude/_errors/`. Only candidates reachi
 - **Count:** Number of times observed across all `~/claude/_errors/` entries
 - **First Seen:** Date first observed (YYYY-MM-DD)
 - **Last Seen:** Date most recently observed
-- **Status:** `📋 pending` (awaiting promotion threshold) | `✅ promoted` (moved to `_rules_lazy_load/learned/`) | `⏸️ archived` (no longer recurring)
+- **Status:** `📋 pending` (awaiting promotion threshold) | `✅ promoted` (moved to `_rules_lazy_load/_learned/`) | `⏸️ archived` (no longer recurring)
 - **Notes:** Additional context; rationale for deferral or promotion

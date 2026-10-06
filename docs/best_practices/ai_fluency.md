@@ -28,7 +28,7 @@ No tooling needed. No scoring framework. Just an honest read on quality and fail
 
 The playbook has a mature eval infrastructure for skills. Whether you're building something new or assessing an existing workflow, these are worth reading:
 
-- [`_rules_lazy_load/authoring_skills/_core_standards.md`](../../src/claude/_rules_lazy_load/authoring_skills/_core_standards.md) — how many evals each maturity level needs
+- [`_rules_lazy_load/authoring_guidelines/authoring_skills/_core_standards.md`](../../src/claude/_rules_lazy_load/authoring_guidelines/authoring_skills/_core_standards.md) — how many evals each maturity level needs
 - [`authoring_skills.md`](../../src/claude/rules/03_authoring_guidelines/authoring_skills.md) — maturity tiers (draft / tactical / strategic); strategic maturity requires evals to demonstrate reliability
 - Small eval set: [`skills/_claude_skills/claude_capture_session_prompts/tests/`](../../src/claude/skills/_claude_skills/claude_capture_session_prompts/tests/)
 - Larger eval set: [`skills/_git_skills/git_create_pr/tests/`](../../src/claude/skills/_git_skills/git_create_pr/tests/)
