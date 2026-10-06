@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-06
-# Version:           2.0.0
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -35,8 +35,6 @@ NON_CONFIG_DRAFTS = re.compile(r"~/(\.claude/)?_drafts")
 
 BASELINE = {
     "claude_capture_session_prompts",
-    "claude_kaizen",
-    "claude_review_config",
     "claude_setup_graphify",
     "git_create_pr",
     "jira_create",

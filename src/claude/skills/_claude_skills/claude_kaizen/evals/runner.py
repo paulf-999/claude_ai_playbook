@@ -27,6 +27,12 @@ from typing import Any
 import yaml
 
 DEFAULT_TIMEOUT_SECONDS = 300
+CREDENTIALS_FILE = ".credentials.json"
+# Folders and files Claude Code writes its own state into: left unlinked so a run can't write into the rules under test
+STATE_ENTRIES = frozenset({
+    ".claude.json", "backups", "cache", "debug", "file-history", "history.jsonl", "ide",
+    "plugins", "projects", "sessions", "shell-snapshots", "statsig", "todos",
+})
 
 
 def find_config_dir(start: Path) -> Path | None:
@@ -40,6 +46,42 @@ def find_config_dir(start: Path) -> Path | None:
     if os.environ.get("CLAUDE_CONFIG_DIR"):
         return Path(os.environ["CLAUDE_CONFIG_DIR"])
     return next((p for p in [start, *start.parents] if (p / "_rules").is_dir()), None)
+
+
+def find_credentials(config_dir: Path) -> Path | None:
+    """Return the first login credentials file found: in the rules under test, the caller's config, then the default.
+
+    :param config_dir: Config folder whose rules are under test.
+    :return: Path to ``.credentials.json``, or None (for example when the login lives in the macOS keychain).
+    """
+    candidates = [config_dir]
+    if os.environ.get("CLAUDE_CONFIG_DIR"):
+        candidates.append(Path(os.environ["CLAUDE_CONFIG_DIR"]))
+    # Claude Code's own default when CLAUDE_CONFIG_DIR is unset
+    candidates.append(Path.home() / ".claude")
+    return next((folder / CREDENTIALS_FILE for folder in candidates if (folder / CREDENTIALS_FILE).is_file()), None)
+
+
+def build_isolated_config(config_dir: Path, root: Path) -> Path:
+    """Link the rules under test, plus existing login credentials, into a private throwaway config folder.
+
+    Claude Code reads its login from the config folder, so pointing it at a rules-only folder fails with
+    "Not logged in". The credentials are only ever symlinked, never copied, and Claude Code's own state
+    folders are left out so it creates throwaway ones instead of writing into the rules under test.
+
+    :param config_dir: Config folder whose rules are under test.
+    :param root: Private temporary folder to build in.
+    :return: The isolated config folder to pass as ``CLAUDE_CONFIG_DIR``.
+    """
+    isolated = root / "config"
+    isolated.mkdir(mode=0o700)
+    for entry in config_dir.iterdir():
+        if entry.name != CREDENTIALS_FILE and entry.name not in STATE_ENTRIES:
+            (isolated / entry.name).symlink_to(entry)
+    credentials = find_credentials(config_dir)
+    if credentials:
+        (isolated / CREDENTIALS_FILE).symlink_to(credentials)
+    return isolated
 
 
 def judge(output: str, must_match: list[str], must_not_match: list[str]) -> tuple[str, str]:
@@ -98,23 +140,29 @@ class EvalRunner:
         :rtype: str
         :raises RuntimeError: If the CLI is missing, times out or exits non-zero.
         """
+        if self.config_dir and not self.config_dir.is_dir():
+            raise RuntimeError(f"config folder {self.config_dir} doesn't exist")
         env = dict(os.environ)
-        if self.config_dir:
-            env["CLAUDE_CONFIG_DIR"] = str(self.config_dir)
         # No tools and an empty working folder: Claude answers from the rules alone and can't touch any files.
         # The prompt goes on stdin because --tools takes every following argument as a tool name.
         try:
-            with tempfile.TemporaryDirectory() as workdir:
+            with tempfile.TemporaryDirectory() as root:
+                workdir = Path(root) / "work"
+                workdir.mkdir()
+                if self.config_dir:
+                    env["CLAUDE_CONFIG_DIR"] = str(build_isolated_config(self.config_dir, Path(root)))
                 done = subprocess.run(
                     ["claude", "-p", "--tools", ""], input=prompt,
-                    capture_output=True, text=True, env=env, cwd=workdir, timeout=self.timeout, check=False,
+                    capture_output=True, text=True, env=env, cwd=str(workdir), timeout=self.timeout, check=False,
                 )
         except FileNotFoundError as exc:
             raise RuntimeError("the claude CLI isn't installed or on PATH") from exc
         except subprocess.TimeoutExpired as exc:
             raise RuntimeError(f"claude didn't answer within {self.timeout}s") from exc
         if done.returncode != 0:
-            raise RuntimeError(f"claude exited {done.returncode}: {done.stderr.strip()[:200]}")
+            # Claude prints some failures, such as "Not logged in", to stdout rather than stderr
+            detail = (done.stderr.strip() or done.stdout.strip())[:200]
+            raise RuntimeError(f"claude exited {done.returncode}: {detail}")
         return done.stdout
 
     def run(self, context: str = "current") -> dict[str, Any]:

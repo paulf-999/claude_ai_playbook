@@ -1,6 +1,6 @@
 ---
 name: claude_review_config
-version: 1.0.0
+version: 1.1.0
 summary: Audit your global Claude config across six quality dimensions, with an A-F grade, gap analysis and recommendations.
 maturity: tactical
 test_coverage_level: comprehensive
@@ -22,10 +22,10 @@ dispatch:
 
 output:
     type: conversational
-    confirmation_required: false
+    confirmation_required: true
     reversible: true
     artifacts:
-        - ~/.claude_config_review.md
+        - ~/claude/_drafts/general/YYYY_MM_DD_claude_config_review.md
 
 waives_response_standards: true
 # Multi-phase audit workflow (scan → score → recommend) requires free-form prompts
