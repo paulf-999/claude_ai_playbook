@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-06
-# Version:           2.1.0
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -33,10 +33,8 @@ CONSTRAINT = re.compile(r"^\s*- \*\*(Always|Never):\*\*", re.MULTILINE)
 REFERENCE = re.compile(r"reference/_\w+\.md")
 NON_CONFIG_DRAFTS = re.compile(r"~/(\.claude/)?_drafts")
 
-BASELINE = {
-    "git_create_pr",
-    "jira_create",
-}
+# Every skill now has the section (2026-10-06); keep this empty so new skills can't be grandfathered in
+BASELINE: set[str] = set()
 
 VALID_SKILL_MD = """\
 ---

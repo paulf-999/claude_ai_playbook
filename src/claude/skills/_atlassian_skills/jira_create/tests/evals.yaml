@@ -31,10 +31,10 @@ evals:
           mcp_available: false
       expected_output: >
           Claude tells the user to run 'make enable_mcp server=Atlassian' and
-          restart Claude Code, per reference/error_handling.md's MCP Connection
+          restart Claude Code, per reference/_error_handling.md's MCP Connection
           Errors section, instead of attempting to gather ticket details.
       assertions:
-          - Claude points the user to reference/error_handling.md's MCP Connection Errors section
+          - Claude points the user to reference/_error_handling.md's MCP Connection Errors section
           - Claude does not proceed to Phase 1 (gather details) without a working MCP connection
           - Claude does not fabricate a ticket ID or link when the MCP call cannot be made
 

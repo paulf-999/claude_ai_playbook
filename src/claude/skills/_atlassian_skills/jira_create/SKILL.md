@@ -8,9 +8,18 @@ tags:
   tested: true
 tools: Read, mcp__atlassian__createJiraIssue
 ---
-<!-- version: 0.1.3 -->
+<!-- version: 0.2.0 -->
 <!-- created: 2026-04-11 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-06 -->
+
+## 🤖 Instructions for Claude
+
+- **Pre-check:** call `getAccessibleAtlassianResources` to confirm Atlassian access and get the cloud ID.
+  - **On failure:** stop and tell the user to run `make enable_mcp server=Atlassian` and restart Claude Code.
+- **Read first:** read `reference/_field_constraints.md` before drafting, and `reference/_error_handling.md` if a call fails.
+- **Always:** show the full ticket (project, type, title, description, assignee, story points) and wait for a yes before creating it.
+- **Never:** infer the Jira project, so confirm it with the user.
+- **Never:** create a ticket with story points below 0.5.
 
 ## 🎯 Purpose
 
@@ -37,12 +46,7 @@ One ticket at a time, with basic fields. Currently at the **draft** development 
 
 ## 📚 References
 
-- `reference/error_handling.md` — Atlassian connection errors and recovery steps
-- `reference/field_constraints.md` — story point rules and other field validation
+- `reference/_error_handling.md` — Atlassian connection errors and recovery steps
+- `reference/_field_constraints.md` — story point rules and other field validation
 - `~/.claude/_rules/05_lazy_load/style_guide_standards/jira.md` — team ticket conventions, read before drafting the ticket
 - `_admin/_quality_scorecards/skills/scorecard_jira_create.md` — 7-dimension quality assessment
-
-## 📌 Prerequisites
-
-- **Atlassian MCP enabled:** `make enable_mcp server=Atlassian` and Claude Code restarted
-- **Jira project access:** Write permission to target project

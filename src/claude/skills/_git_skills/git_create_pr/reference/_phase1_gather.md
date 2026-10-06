@@ -32,7 +32,7 @@ If working tree is clean (nothing to commit), stop.
   - ✅ `chore(settings): remove personal configuration from version control`
   - ❌ `chore(settings.local.json): untrack .claude/settings.local.json` (contains filename)
 
-**PR body:** Use Agent tool (`subagent_type: technical-writer`) to draft following template structure exactly:
+**PR body:** Use Agent tool (`subagent_type: technical_writer`) to draft following template structure exactly:
 - **Summary:** 1 punchy sentence max. 2 sentences only if critical context would be lost. No jargon, no code refs. State what + why.
 - **Additional Details:** Omit if not needed. 1 line for single point; bullets (max 3) for multiple. Never mix prose and bullets.
 - **Checkboxes:** Tick only applicable one
