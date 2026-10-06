@@ -1,9 +1,9 @@
-<!-- version: 1.0.0 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-05-20 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-06 -->
 # 🎫 Ticket Conventions
 
-Standards for summary naming, description structure, acceptance criteria format, and issue type usage across the DM Jira project.
+Standards for summary naming, description structure, acceptance criteria format, and issue type usage for Jira tickets.
 
 ## 📋 Contents
 
@@ -49,7 +49,7 @@ Every ticket body follows a **two-section structure**:
 - Acceptance criteria are observable outcomes — specific, testable, written so it is clear when done
 - No prose walls — every description must be scannable in under 10 seconds
 
-**Canonical example (DM-38528):**
+**Canonical example:**
 
 *Description:*
 
@@ -58,14 +58,14 @@ Sprint planning prep for Sprint 63.
 
 * Review roadmap priorities
 * Assess what's complete, in-flight, and outstanding from Sprint 62
-* Confirm availability/capacity for myself and Imelda
-* Identify and size Sprint 63 candidates for myself and Imelda
+* Confirm availability/capacity for myself and a teammate
+* Identify and size Sprint 63 candidates for us both
 ```
 
 *Acceptance criteria:*
 
 ```
-* Availability/capacity confirmed for myself and Imelda for Sprint 63
+* Availability/capacity confirmed for myself and a teammate for Sprint 63
 * Sprint 63 backlog finalised and tickets moved into sprint in Jira
 ```
 

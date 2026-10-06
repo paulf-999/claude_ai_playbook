@@ -1,48 +1,40 @@
-<!-- version: 1.0.0 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-05-20 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-06 -->
 # 📅 Sprint Planning
 
-Sprint ID mapping, quarter-to-component mapping, parent epic references, and capacity conventions for the DM project (board 217).
+Sprint IDs, quarter-to-component mapping, parent epic references, and capacity conventions. Your project's board, sprint IDs and component IDs live in the Jira values in `~/.claude/_rules/05_lazy_load/org.md`.
 
 ## 📋 Contents
 
-- [🔢 Sprint ID mapping (board 217)](#-sprint-id-mapping-board-217)
-- [📦 Quarter component mapping (2026)](#-quarter-component-mapping-2026)
-- [🏆 Parent epics (2026)](#-parent-epics-2026)
+- [🔢 Sprint IDs](#-sprint-ids)
+- [📦 Quarter components](#-quarter-components)
+- [🏆 Parent epics](#-parent-epics)
 - [⚖️ Capacity conventions](#-capacity-conventions)
 - [🔄 Sprint assignment rule](#-sprint-assignment-rule)
 
 ---
 
-## 🔢 Sprint ID mapping (board 217)
+## 🔢 Sprint IDs
 
-| Sprint | ID | Sprint | ID |
-|---|---|---|---|
-| 61 | 15560 | 67 | 15566 |
-| 62 | 15561 | 68 | 15567 |
-| 63 | 15562 | 69 | 15568 |
-| 64 | 15563 | 70 | 15569 |
-| 65 | 15564 | 71 | 15570 |
-| 66 | 15565 | | |
+The Sprint field takes Jira's internal sprint ID, not the sprint number shown on the board.
 
-Sprint IDs increment by 1 per sprint. For sprints beyond the table, extrapolate from the last known value or confirm via `searchJiraIssuesUsingJql`.
+- Look the ID up in the sprint table in `org.md`.
+- Sprint IDs usually increment by 1 per sprint, so extrapolate from the last known value for a sprint beyond the table.
+- Confirm an extrapolated ID via `searchJiraIssuesUsingJql` before using it.
 
 ---
 
-## 📦 Quarter component mapping (2026)
+## 📦 Quarter components
 
-| Quarter | Component name | Component ID | Sprints |
-|---|---|---|---|
-| Q2 | `Data Platform Initiatives 2026 Q2` | `13444` | 63–65 |
-| Q3 | `Data Platform Initiatives 2026 Q3` | `13445` | 66–69 |
-| Q4 | `Data Platform Initiatives 2026 Q4` | `13446` | 70–73 |
+If your project tags tickets by quarter, derive the quarter component from the sprint the ticket is assigned to.
 
-Always combine the quarter component with the year-level component `Data Platform Initiatives 2026` (ID `13377`). Every ticket requires both.
+- Take the component names and IDs from the components table in `org.md`.
+- Combine the quarter component with any year-level component that table lists as required on every ticket.
 
 ---
 
-## 🏆 Parent epics (2026)
+## 🏆 Parent epics
 
 Parent epics are **initiative-specific** — there is no single shared planning epic to default to. Select the parent epic based on the work being done:
 
