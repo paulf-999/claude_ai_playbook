@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-06
-# Version:           2.1.0
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -26,7 +26,7 @@ SKILL_DOMAINS = RULES_DIR / "03_authoring_guidelines" / "authoring_skills" / "sk
 
 GATE_HEADINGS = ["### Gate 1️⃣: Naming", "### Gate 2️⃣: Placement", "### Gate 3️⃣: Duplication"]
 RULE_TIERS = (
-    "01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference", "05_path_scoped",
+    "01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_path_scoped",
 )
 TIERS = {tier: RULES_DIR / tier for tier in RULE_TIERS} | {"_rules_lazy_load": LAZY_RULES_DIR}
 
@@ -129,7 +129,7 @@ def test_naming_gate_example_domains_are_registered():
 
 
 def test_placement_gate_names_every_tier():
-    """Gate 2 lists all six rule folders, and each one exists."""
+    """Gate 2 lists all five rule folders, and each one exists."""
     section = gate_section(RULE_FILE.read_text(), 2)
     for tier, folder in TIERS.items():
         assert f"**{tier}/**" in section, f"Gate 2 no longer lists the {tier}/ tier"

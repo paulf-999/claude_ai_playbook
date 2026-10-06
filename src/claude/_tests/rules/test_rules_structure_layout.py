@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-06
-# Version:           2.0.0
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -10,7 +10,7 @@
 
 """Tests where rules/ files live and what CLAUDE.md still imports.
 
-- **Layout:** no files at the ``rules/`` root, the expected ``04_claude_reference/`` files,
+- **Layout:** no files at the ``rules/`` root, no retired ``04_claude_reference/`` tier,
   ``aliases.md`` at the config root, and no paths dissolved in the 2026-08 restructure.
 - **Import graph:** every import in CLAUDE.md or ``rules/`` resolves, and no import chain
   from CLAUDE.md reaches ``_reference/``.
@@ -32,11 +32,6 @@ IMPORT_LINE = re.compile(r"^@~/[^/\s]+/(\S+)$", re.M)
 # rules/ root holds only tier folders — any file there would load every session
 EXPECTED_ROOT_FILES: set[str] = set()
 
-# Files expected at the top of 04_claude_reference/ — no others allowed
-EXPECTED_CLAUDE_REFERENCE_FILES = {
-    "claude_operational_efficiency.md",
-}
-
 # Paths removed during the 2026-08 restructure that must never reappear
 DISSOLVED_PATHS = [
     RULES_DIR / "behaviour" / "general.md",
@@ -51,6 +46,8 @@ DISSOLVED_PATHS = [
     RULES_DIR / "lazy_load" / "speculative_features.md",
     RULES_DIR / "speculative_features.md",
     RULES_DIR / "claude_internal.md",
+    # Tier 04 was retired on 2026-10-06 (#330); its one rule moved to 02_claude_standards/
+    RULES_DIR / "04_claude_reference",
 ]
 
 
@@ -97,20 +94,12 @@ def test_rules_root_contains_only_expected_files():
     )
 
 
-def test_claude_reference_contains_expected_files():
-    """04_claude_reference/ top level must contain exactly the expected files.
 
-    02_claude_internal/ (this test's original target) was retired across two
-    reorgs — its contents were redistributed: git.md -> 02_claude_standards/,
-    claude_efficiency.md -> renamed and consolidated here as
-    claude_operational_efficiency.md, automation_controls.md -> 05_lazy_load/,
-    memory.md / security_guardrails.md -> folded into other files.
-    """
-    reference_dir = RULES_DIR / "04_claude_reference"
-    actual = {rule_file.name for rule_file in reference_dir.iterdir() if rule_file.is_file()}
-    assert actual == EXPECTED_CLAUDE_REFERENCE_FILES, (
-        f"04_claude_reference/ mismatch — expected: {EXPECTED_CLAUDE_REFERENCE_FILES}, got: {actual}"
-    )
+def test_rules_holds_exactly_the_four_tiers():
+    """rules/ holds tiers 01–03 and 04_path_scoped/ only — tier 04 was retired on 2026-10-06 (#330)."""
+    tiers = {d.name for d in RULES_DIR.iterdir() if d.is_dir()}
+    expected = {"01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_path_scoped"}
+    assert tiers == expected, f"rules/ tier folders drifted — missing {expected - tiers}, extra {tiers - expected}"
 
 
 def test_aliases_at_claude_root():

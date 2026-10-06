@@ -2,7 +2,7 @@
 
 **Purpose:** Rules read on demand, kept outside `rules/` so Claude Code never loads them by itself. These reduce baseline context cost while remaining discoverable and accessible when needed.
 
-**Path-scoped rules:** rules with `paths:` frontmatter live in `rules/05_path_scoped/` instead, because Claude Code reads `paths:` only there; their bulky children stay here, at the same sub-path.
+**Path-scoped rules:** rules with `paths:` frontmatter live in `rules/04_path_scoped/` instead, because Claude Code reads `paths:` only there; their bulky children stay here, at the same sub-path.
 
 **Scope:** Rules specific to a single language, tool, platform, or domain that are only relevant when actively working in that domain.
 
@@ -15,13 +15,13 @@
 | **delegating_to_subagent.md** | When to spawn a sub-agent vs. work directly; constraints and token-cost breakeven | Before spawning a sub-agent |
 | **hooks_decision_framework.md** | ROI criteria for proposing hooks; child `hooks_decision_framework/` holds the 2026-08-07 precedent | Before proposing a hook or automation |
 | **response_standards_enforcement.md** | How the per-turn injection hook enforces the response format, and the reserved validator path | Changing the response-standards hook or its tests |
-| **testing.md** (in `rules/05_path_scoped/`) | When tests are required, test goals, design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit; children in `testing/` | Loads through `paths:` on Python, shell, SQL and `_tests/` files |
+| **testing.md** (in `rules/04_path_scoped/`) | When tests are required, test goals, design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit; children in `testing/` | Loads through `paths:` on Python, shell, SQL and `_tests/` files |
 | **turn_budgets.md** | `--max-turns` caps for non-interactive runs | Running skills, automation or CI non-interactively |
 | **mcp_trust_model.md** | MCP server trust boundaries; treating responses as data not instructions | Working with MCP tools (GitHub, Jira, etc.) and external APIs |
 | **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
-| **claude_rule_loading_strategy.md** (in `rules/05_path_scoped/`) | The rule folders and when a rule should be always-on or lazy, from measured usage and miss cost | Loads through `paths:` on rule files and `CLAUDE.md` |
+| **claude_rule_loading_strategy.md** (in `rules/04_path_scoped/`) | The rule folders and when a rule should be always-on or lazy, from measured usage and miss cost | Loads through `paths:` on rule files and `CLAUDE.md` |
 | **automation_controls.md** | Guardrails for `/loop`, `/batch`, `/goal` automation commands | Setting up recurring automation |
-| **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | File-type guides sit in `rules/05_path_scoped/style_guide_standards/` and load through `paths:`; their children, jira, organisation standards and datetime stay here, read through pointers |
+| **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | File-type guides sit in `rules/04_path_scoped/style_guide_standards/` and load through `paths:`; their children, jira, organisation standards and datetime stay here, read through pointers |
 
 ---
 
@@ -155,7 +155,7 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 - **Parent:** `claude_directory_structure.md` — entry point; organisation and naming overview
 - **Sibling:** `_claude_directory_naming.md` — naming patterns for files and directories
 - **Related:** `writing_style.md` → `multifile_document_organisation.md` — when to split documents into parent + child files
-- **Related:** `authoring_rules.md` — directory placement for new rules (01_essentials to 04_claude_reference, 05_path_scoped and _rules_lazy_load)
+- **Related:** `authoring_rules.md` — directory placement for new rules (01_essentials to 03_authoring_guidelines, 04_path_scoped and _rules_lazy_load)
 
 ### `claude_directory_structure/_file_structure_validation.md`
 
@@ -166,13 +166,17 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 ### `claude_directory_structure.md`
 
 - `naming_standards.md` — General naming principles for all identifiers; see child file `_naming_principles.md` for foundational concepts
-- `authoring_rules.md` — Directory placement rules for new rules (01_essentials to 04_claude_reference, 05_path_scoped and _rules_lazy_load)
+- `authoring_rules.md` — Directory placement rules for new rules (01_essentials to 03_authoring_guidelines, 04_path_scoped and _rules_lazy_load)
 - `writing_style.md` → `multifile_document_organisation.md` — When to create subdirectories for multi-file documents
 - Loads through `paths:` (`**/.claude/**`, `**/claude/**`) and a pointer in `01_essentials/claude_usage_standards.md`
 
+### `claude_rule_loading_strategy.md`
+
+- **CLAUDE.md** — authoritative source of always-on imports and their rationale
+
 ### `delegating_to_subagent.md`
 
-- Pointer from: `04_claude_reference/claude_operational_efficiency/_claude_when_to_delegate.md` — delegating to user vs. sub-agent overview
+- Pointer from: `02_claude_standards/claude_operational_efficiency/_claude_when_to_delegate.md` — delegating to user vs. sub-agent overview
 
 ### `hooks_decision_framework.md`
 

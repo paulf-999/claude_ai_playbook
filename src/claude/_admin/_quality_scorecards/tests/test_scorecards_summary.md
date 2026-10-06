@@ -101,7 +101,7 @@ Sorted by Overall score, highest first.
 | `skills/claude_kaizen/scorecard_test_claude_kaizen_runner.md` | 8.9/10 | 2026-10-06 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_concurrent_sessions.md` | 8.7/10 | 2026-09-30 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_authoring_agents.md` | 8.6/10 | 2026-09-30 | — (≥8.5) |
-| `rules/04_claude_reference/scorecard_test_claude_operational_efficiency.md` | 8.6/10 | 2026-09-30 | — (≥8.5) |
+| `rules/02_claude_standards/scorecard_test_claude_operational_efficiency.md` | 8.6/10 | 2026-09-30 | — (≥8.5) |
 | `rules/05_lazy_load/scorecard_test_automation_controls.md` | 8.6/10 | 2026-10-01 | — (≥8.5) |
 | `rules/05_lazy_load/scorecard_test_claude_rule_loading_strategy.md` | 8.4/10 | 2026-10-01 | • Add a synthetic bad-input test that proves the check fails when it should |
 | `skills/confluence_create_page/scorecard_test_confluence_create_page_handler.md` | 8.4/10 | 2026-10-01 | • Add failure messages that say how to fix each assertion (3% have one today)<br>• Confirm the handler still mirrors what SKILL.md tells Claude to do, or move the handler into the skill so the test covers real behaviour |

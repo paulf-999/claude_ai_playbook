@@ -21,4 +21,4 @@
 - `src/claude/_tests/test_file_structure_compliance.py` — the test being scored
 - `src/claude/_tests/_file_structure_validator.py` — the scanner it runs
 - `src/claude/_tests/test_file_structure_validator.py` — proves the scanner on fake config trees
-- `src/claude/rules/05_path_scoped/claude_directory_structure.md` — what the test guards
+- `src/claude/rules/04_path_scoped/claude_directory_structure.md` — what the test guards

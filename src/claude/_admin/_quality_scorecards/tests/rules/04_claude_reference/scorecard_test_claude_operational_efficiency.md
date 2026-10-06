@@ -18,5 +18,5 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/rules/04_claude_reference/test_claude_operational_efficiency.py` — the test being scored
-- `src/claude/rules/04_claude_reference/claude_operational_efficiency.md` — what the test guards
+- `src/claude/_tests/rules/02_claude_standards/test_claude_operational_efficiency.py` — the test being scored
+- `src/claude/rules/02_claude_standards/claude_operational_efficiency.md` — what the test guards

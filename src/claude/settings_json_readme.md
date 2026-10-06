@@ -203,7 +203,7 @@ See `~/.claude/rules/01_essentials/guiding_principles.md` for the decision frame
 
 - **`~/.claude/rules/01_essentials/guiding_principles.md`** — Decision framework (lazy-load, explicit, context-efficient, intentional, reversible)
 - **`~/.claude/rules/02_claude_standards/behaviour.md`** — Operational rules (ask first, simplest approach, friction reduction)
-- **`~/.claude/rules/04_claude_reference/claude_operational_efficiency.md`** — Model selection, sub-agent constraints, token awareness
+- **`~/.claude/rules/02_claude_standards/claude_operational_efficiency.md`** — Model selection, sub-agent constraints, token awareness
 - **`~/.claude/_wip/disabled_plugins.md`** — Disabled plugins; conditions for re-enabling
 - **`~/.claude/_wip/hooks/`** — Disabled hook files; restorable if needed
 - **`~/.claude/memory/MEMORY.md`** — Cross-session memories

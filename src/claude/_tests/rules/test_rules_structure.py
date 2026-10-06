@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-06
-# Version:           2.1.0
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -36,14 +36,14 @@ def rule_files() -> list[Path]:
     """Return all .md files in rules/ eligible for quality checks.
 
     Excludes README.md (documentation, not a rule file) and anything
-    under 05_path_scoped/ (lazy style guides; different standards apply there).
+    under 04_path_scoped/ (lazy style guides; different standards apply there).
 
     :return: List of rule markdown files to validate.
     :rtype: list[Path]
     """
     return [
         rule_file for rule_file in RULES_DIR.rglob("*.md")
-        if rule_file.name != "README.md" and "05_path_scoped" not in rule_file.parts
+        if rule_file.name != "README.md" and "04_path_scoped" not in rule_file.parts
     ]
 
 
@@ -112,15 +112,15 @@ def imported_content_files() -> list[Path]:
 
 
 def test_rule_files_found():
-    """The scan finds rule files and skips READMEs and 05_path_scoped/."""
+    """The scan finds rule files and skips READMEs and 04_path_scoped/."""
     files = rule_files()
     assert files, f"no rule files found under {RULES_DIR}"
-    leaked = [f for f in files if f.name == "README.md" or "05_path_scoped" in f.parts]
+    leaked = [f for f in files if f.name == "README.md" or "04_path_scoped" in f.parts]
     assert not leaked, f"READMEs or lazy-load files leaked into the scan: {leaked}"
 
 
 def test_line_limits():
-    """No rules/ file (excluding README and 05_path_scoped) exceeds 110 lines, header aside."""
+    """No rules/ file (excluding README and 04_path_scoped) exceeds 110 lines, header aside."""
     counts = {f.name: len(body_lines(f.read_text())) for f in rule_files()}
     over = [f"{name}: {count}" for name, count in counts.items() if count > LINE_LIMIT]
     assert not over, f"files over {LINE_LIMIT} lines — split into a parent and children: {over}"

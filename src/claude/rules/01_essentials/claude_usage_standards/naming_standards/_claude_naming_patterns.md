@@ -1,4 +1,4 @@
-<!-- version: 4.3.0 -->
+<!-- version: 4.3.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-06 -->
 # 🏷️ Naming patterns — files, objects, and artefacts
@@ -12,12 +12,12 @@
 | `<concept>.md` | `naming_standards.md` | Naming conventions for every artefact |
 | | `security.md` | Secure coding and Claude's security guardrails |
 | | `mcp_trust_model.md` | Trust boundaries for MCP servers |
-| `05_path_scoped/<domain>/<concept>.md` | `style_guide_standards/sql.md` | SQL style guide |
+| `04_path_scoped/<domain>/<concept>.md` | `style_guide_standards/sql.md` | SQL style guide |
 | | `style_guide_standards/dbt.md` | dbt style guide |
 
 - **Format:** snake_case, named for the concept the rule covers
-- **Subdomains:** group related lazy rules under `rules/05_path_scoped/<domain>/` or `_rules_lazy_load/<domain>/`
-- **Location:** pick the tier per `claude_rule_loading_strategy.md`, which says what belongs in each of `01_essentials/` to `05_path_scoped/` and `_rules_lazy_load/`
+- **Subdomains:** group related lazy rules under `rules/04_path_scoped/<domain>/` or `_rules_lazy_load/<domain>/`
+- **Location:** pick the tier per `claude_rule_loading_strategy.md`, which says what belongs in each of `01_essentials/` to `04_path_scoped/` and `_rules_lazy_load/`
 - **Name for scale:** fit the likely higher grouping, not just today's problem — e.g. `naming_standards.md` over `hook_naming.md` (see `_naming_principles.md`)
 
 **Load details on-demand:** See `~/.claude/rules/03_authoring_guidelines/authoring_rules.md` for full rule creation checklist, directory placement, and testing requirements.

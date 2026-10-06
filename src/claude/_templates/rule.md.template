@@ -125,4 +125,4 @@ Rules governing [domain/concern].
 - [ ] **Clear scope:** One concept per file, related patterns grouped
 - [ ] **Contents only when earned:** Add a `## 📋 Contents` section only when the rule has 3 or more real `##` headings
 - [ ] **No Related section:** Put parent, sibling and dependency links in the tier README in `_rules_lazy_load/_tier_readmes/` under "🔗 Related rules" (tiers 02–05 only, as `01_essentials/` keeps none), not in the rule
-  - **Why:** files in `rules/` tiers 01–04 load every session, so every line costs always-on context; READMEs live outside `rules/` and never load by themselves.
+  - **Why:** files in `rules/` tiers 01–03 load every session, so every line costs always-on context; READMEs live outside `rules/` and never load by themselves.

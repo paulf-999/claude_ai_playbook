@@ -48,7 +48,7 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 
 - **Guiding principles:** `~/.claude/rules/01_essentials/guiding_principles.md`
 - **Lazy-load guide:** `~/.claude/_rules_lazy_load/README.md`
-- **Testing rules:** `~/.claude/rules/05_path_scoped/testing.md`
+- **Testing rules:** `~/.claude/rules/04_path_scoped/testing.md`
 - **Naming standards:** `~/.claude/rules/01_essentials/claude_usage_standards/naming_standards.md`
 - **Parent doc:** `claude_config_architecture.md`
 
@@ -63,7 +63,7 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 ### `claude_config_architecture/_testing.md`
 
 - **Test documentation:** `~/.claude/_tests/README.md`
-- **Testing rules:** `~/.claude/rules/05_path_scoped/testing.md`
+- **Testing rules:** `~/.claude/rules/04_path_scoped/testing.md`
 - **Parent doc:** `claude_config_architecture.md`
 
 ### `claude_config_architecture.md`

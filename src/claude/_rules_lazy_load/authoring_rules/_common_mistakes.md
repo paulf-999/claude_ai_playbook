@@ -1,4 +1,4 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-09-28 -->
 <!-- updated: 2026-10-06 -->
 # 🚫 Rule Common Mistakes & Anti-Patterns
@@ -32,7 +32,7 @@
 
 **Wrong:** a rule or test refers to `02_claude_internal/`, `03_lazy_load/` or another directory name from before the tier reorganisation.
 
-**Right:** use the current `rules/01_essentials/`–`05_path_scoped/` and `_rules_lazy_load/` names, and check the directory tree instead of copying a path from an older file.
+**Right:** use the current `rules/01_essentials/`–`04_path_scoped/` and `_rules_lazy_load/` names, and check the directory tree instead of copying a path from an older file.
 
 - **Why:** PR #94 had to replace pre-reorg names across the config, because the old ones had been copied from file to file.
 

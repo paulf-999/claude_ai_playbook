@@ -2,13 +2,13 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
 # Date updated:      2026-10-06
-# Version:           1.1.0
+# Version:           1.2.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Content-regression tests for rules/04_claude_reference/claude_operational_efficiency.md.
+"""Content-regression tests for rules/02_claude_standards/claude_operational_efficiency.md.
 
 Tier 04 is instructional, so these tests don't prove compliance. They catch
 a section, child import or key phrase that gets silently dropped in an edit,
@@ -18,7 +18,7 @@ import re
 
 from _shared_paths import LAZY_RULES_DIR, RULES_DIR
 
-TIER_DIR = RULES_DIR / "04_claude_reference"
+TIER_DIR = RULES_DIR / "02_claude_standards"
 RULE = TIER_DIR / "claude_operational_efficiency.md"
 CHILD_DIR = TIER_DIR / "claude_operational_efficiency"
 
@@ -57,7 +57,7 @@ def _content():
 def _imports():
     """Return every child the rule says loads on its own, relative to ``rules/``.
 
-    :return: import paths such as ``04_claude_reference/.../_x.md``
+    :return: paths such as ``02_claude_standards/.../_x.md``
     """
     return IMPORT_PATTERN.findall(_content())
 
