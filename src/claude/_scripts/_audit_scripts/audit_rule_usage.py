@@ -85,7 +85,6 @@ DEFAULT_APPLIES_TO = {
     "style_guide_standards/infra/docker.md": ["**/Dockerfile*", "**/docker-compose*.yml"],
     "style_guide_standards/utilities/makefile.md": ["**/Makefile", "**/*.mk"],
     "style_guide_standards/utilities/mermaid.md": ["**/*.mmd"],
-    "testing_guidance.md": ["**/test_*.py"],
     "response_standards_enforcement.md": ["**/hook_style_guide_response_standards*.sh"],
     "hooks_decision_framework.md": ["**/hooks/hook_*.sh"],
 }
