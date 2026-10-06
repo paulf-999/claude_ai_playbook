@@ -2,6 +2,10 @@
 name: technical_writer
 description: Drafts PR/MR descriptions (following the repo's .github/pull_request_template.md) as local files, adjusting tone and depth to the audience. Use when asked to draft or write a PR body or PR description. For a new Confluence page, use the confluence_create_page skill, which applies this agent's writing approach. Never publishes — git_create_pr and confluence_create_page do that. Not for editing existing docs, ADRs, runbooks, READMEs or diagrams.
 maturity: tactical
+tags:
+  criticality: should
+  status: active
+  tested: true
 triggers:
   - /technical_writer
   - "draft pr body"
@@ -10,7 +14,7 @@ tools: Read, Grep, Glob, Write
 model: inherit
 isolation: worktree
 ---
-<!-- version: 1.4.1 -->
+<!-- version: 1.5.0 -->
 <!-- created: 2026-09-07 -->
 <!-- updated: 2026-10-06 -->
 

@@ -2,6 +2,10 @@
 name: code_reviewer
 description: Reviews a pull request or diff against the repo's own rules and returns a scored six-theme verdict (correctness, complexity, testing, security, documentation, standards) with prioritised fixes. Use when asked to review a PR, review my changes or score a diff, or when the git_review_pr skill needs its analysis. Read-only — it never edits files or posts comments.
 maturity: draft
+tags:
+  criticality: should
+  status: active
+  tested: true
 triggers:
   - /code_reviewer
   - "review this diff"
@@ -12,7 +16,7 @@ tools: Read, Grep, Glob
 model: inherit
 isolation: none
 ---
-<!-- version: 0.2.1 -->
+<!-- version: 0.3.0 -->
 <!-- created: 2026-10-05 -->
 <!-- updated: 2026-10-06 -->
 
