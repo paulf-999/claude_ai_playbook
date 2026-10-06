@@ -80,7 +80,7 @@ Files under `rules/` tiers 01–04 load every session, so every line in them cos
 ### **04_claude_reference/** — System/platform knowledge and reference material
 - **Who it's for:** Claude's reference when implementing standards; understanding the system
 - **Scope:** How the config system works, git workflow patterns, efficiency guidance, external system access
-- **Examples:** loading_strategy_rules.md, git.md, external_system_access.md, claude_efficiency.md
+- **Examples:** claude_operational_efficiency.md and its children (delegation, external system access, MCP server toggling)
 - **Loaded:** Yes, always-on (≈2.7k tokens/session)
 
 ### **05_path_scoped/** and **_rules_lazy_load/** — Domain-specific rules (lazy-loaded)

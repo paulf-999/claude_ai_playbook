@@ -3,11 +3,12 @@ name: claude_kaizen
 description: Self-improving loop—audit recent corrections for recurring patterns, promote verified ones into rules with proof (evals), prune stale rules. Run at session start after repeating a correction, or manually via /claude_kaizen. Always outputs diffs for review, never auto-applies.
 maturity: draft
 tags:
+  criticality: could
   status: active
   tested: true
   disable_model_invocation: false
 ---
-<!-- version: 0.5.0 -->
+<!-- version: 0.6.0 -->
 <!-- created: 2026-09-07 -->
 <!-- updated: 2026-10-06 -->
 
