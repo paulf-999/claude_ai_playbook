@@ -1,6 +1,6 @@
-<!-- version: 1.7.0 -->
+<!-- version: 1.8.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-02 -->
+<!-- updated: 2026-10-06 -->
 <!-- applies_to: **/_rules/** -->
 <!-- miss_cost: medium — rules ship without tests or in the wrong tier -->
 <!-- loading: always-on — a new rule can start before any _rules/ file is open, and it imports the shared complexity formula -->
@@ -58,7 +58,7 @@ Before writing any rule, answer these five essential questions:
 - **~100-line limit** — split into parent + child files if needed (see writing_style.md)
 - **Trailing newline** — exactly one `\n` at EOF
 - **Contents only with 3+ headings** — add a Contents section only when the rule has 3 or more real `##` headings
-- **No Related section in the rule** — parent, sibling and dependency links go in the tier's `README.md` under "🔗 Related rules", which isn't `@import`ed
+- **No Related section in the rule** — parent, sibling and dependency links go in the tier's `README.md` under "🔗 Related rules", which isn't `@import`ed — tiers 02–05 only, as `01_essentials/` keeps no links (#310)
 - **Wire up every documented child** — if a parent rule describes child files (e.g. under a "Load details on-demand" section), each one needs a real `@import` line, not just prose naming it. A file mentioned but never imported is silently unreachable — see `test_always_on_reachability.py`, which fails the build if any file under `01_essentials/`–`04_claude_reference/` exists on disk but isn't reachable from `CLAUDE.md`.
   - **Exception:** children kept in a parent's `<parent>/_lazy_load/` folder are read on demand, so the parent names them in a `**Read on demand:**` pointer instead.
 - **Test validation** — enforcement rules pass custom tests; all rules pass test_rules_structure.py
