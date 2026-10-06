@@ -19,6 +19,18 @@ from collections import defaultdict
 from datetime import date, datetime
 from pathlib import Path
 
+# Credential formats masked before any prompt text reaches the report
+SECRET_PATTERNS = [
+    re.compile(r"AKIA[0-9A-Z]{16}"),
+    re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"),
+    re.compile(r"gh[pousr]_[A-Za-z0-9]{36}"),
+    re.compile(r"xox[abprs]-[A-Za-z0-9-]+"),
+    re.compile(r"sk-[A-Za-z0-9_-]{20,}"),
+]
+# Keeps the key name so the reader still sees what was there, masking only the value
+KEY_VALUE_SECRET = re.compile(r"(?i)\b(password|secret|token|api[_-]?key)(\s*[:=]\s*)\S{8,}")
+REDACTED = "[REDACTED]"
+
 STATUSES = [
     "✅ Done",
     "⏳ Pending",
@@ -236,14 +248,22 @@ def extract_moscow(status: str, prompt: str) -> str:
     return ""
 
 
+def mask_secrets(text: str) -> str:
+    """Replace known credential formats, and the values of password/secret/token/api_key pairs, with a marker."""
+    for pattern in SECRET_PATTERNS:
+        text = pattern.sub(REDACTED, text)
+    return KEY_VALUE_SECRET.sub(rf"\1\2{REDACTED}", text)
+
+
 def build_row(entry_num: int, timestamp_ms: int, prompt: str) -> dict:
-    """Build one table row from a history entry.
+    """Build one table row from a history entry, masking secrets before any field is derived.
 
     :param entry_num: 1-based row number.
     :param timestamp_ms: Entry timestamp in milliseconds.
     :param prompt: Prompt text.
     :return: Row fields keyed by column.
     """
+    prompt = mask_secrets(prompt)
     hour, minute = extract_time(timestamp_ms)
     status = determine_status(prompt)
     return {
