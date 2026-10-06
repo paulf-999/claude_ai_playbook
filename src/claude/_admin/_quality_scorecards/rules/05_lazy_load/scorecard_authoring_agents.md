@@ -21,7 +21,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/03_authoring_guidelines/authoring_agents.md` — the rule being scored
+- `src/claude/_rules/05_lazy_load/authoring_agents.md` — the rule being scored
 - `src/claude/_tests/rules/03_authoring_guidelines/test_authoring_agents.py` — Test Coverage dimension
 - `src/claude/_rules/03_authoring_guidelines/authoring_rules.md` — sibling authoring guide, for comparison
 - `src/claude/_rules/03_authoring_guidelines/authoring_skills.md` — sibling authoring guide, for comparison

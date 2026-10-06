@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
-# Date updated:      2026-10-02
-# Version:           1.5.6
+# Date updated:      2026-10-06
+# Version:           1.6.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -123,6 +123,7 @@ def test_no_orphaned_lazy_load_files():
 # from some other file in the tree — not just live under a covered folder.
 
 ENTRY_POINT_RELATIVE_PATHS = {
+    "authoring_agents.md",
     "automation_controls.md",
     "claude_rule_loading_strategy.md",
     "delegating_to_subagent.md",
@@ -154,6 +155,9 @@ MARKDOWN_LINK_PATTERN = re.compile(r"\]\(([^)#]+\.md)\)")
 # (absolute, handled by test_always_on_reachability.py) nor a bare "@word:"
 # prose marker (e.g. "@brief:", no .md suffix) should match here.
 RELATIVE_IMPORT_PATTERN = re.compile(r"@(?!~)\.?/?([\w][\w/-]*\.md)")
+# "**Read on demand:**" pointers name a child by its full config path, e.g.
+# `~/.claude/_rules/05_lazy_load/x/_lazy_load/_child.md` — the convention for children kept in <parent>/_lazy_load/.
+READ_ON_DEMAND_PATTERN = re.compile(r"`~/[^/`\s]+/_rules/([^`\s]+\.md)`")
 
 
 def _is_entry_point(md_file: Path, lazy_load_dir: Path) -> bool:
@@ -191,6 +195,10 @@ def _outgoing_references(md_file: Path) -> set[Path]:
         for match in pattern.finditer(text):
             candidate = (md_file.parent / match.group(1)).resolve()
             targets.add(candidate)
+    rules_dir = next((p for p in md_file.parents if p.name == "_rules"), None)
+    if rules_dir is not None:
+        for match in READ_ON_DEMAND_PATTERN.finditer(text):
+            targets.add((rules_dir / match.group(1)).resolve())
     return targets
 
 
@@ -332,3 +340,15 @@ def test_detector_ignores_a_same_named_sibling_when_parent_is_exempt(tmp_path):
     orphans = find_unreferenced_content_files(tmp_path)
 
     assert [p.parent.name for p in orphans] == ["dbt"]
+
+
+def test_read_on_demand_pointer_counts_as_a_reference(tmp_path):
+    """A child named by a parent's Read on demand pointer is referenced, even without a markdown link."""
+    lazy = tmp_path / "_rules" / "05_lazy_load"
+    (lazy / "guide" / "_lazy_load").mkdir(parents=True)
+    child = lazy / "guide" / "_lazy_load" / "_child.md"
+    child.write_text("# Child\n")
+    parent = lazy / "guide.md"
+    parent.write_text("- **Read on demand:** `~/.claude/_rules/05_lazy_load/guide/_lazy_load/_child.md` — detail\n")
+    assert child.resolve() in _outgoing_references(parent), "the pointer's target was not recognised"
+    assert (lazy / "x.md").resolve() not in _outgoing_references(parent), "an unnamed file must not count"

@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
-# Date updated:      2026-10-02
-# Version:           2.0.1
+# Date updated:      2026-10-06
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -146,3 +146,45 @@ def test_nothing_imports_lazy_load_children():
     """No always-on file imports a per-parent _lazy_load/ child, which is read on demand."""
     bad = [i for i in import_lines() if "/_lazy_load/" in i]
     assert not bad, f"always-on files import _lazy_load/ children: {bad}"
+
+
+# ── startup budget ───────────────────────────────────────────────────────────
+
+# Config files loaded at every session start through CLAUDE.md imports. Lower it when a
+# rule is demoted; raising it needs the evidence guiding_principles.md asks for.
+MAX_STARTUP_FILES = 43
+STARTUP_IMPORT = re.compile(r"^@~/[^/\s]+/(\S+\.md)\s*$", re.M)
+
+
+def startup_files() -> list[str]:
+    """Follow CLAUDE.md's imports through every level, returning each file loaded at startup.
+
+    :return: Paths relative to the config directory, CLAUDE.md first.
+    :rtype: list[str]
+    """
+    seen, pending = [], ["CLAUDE.md"]
+    while pending:
+        rel = pending.pop(0)
+        path = CLAUDE_DIR / rel
+        if rel in seen or not path.is_file():
+            continue
+        seen.append(rel)
+        pending += STARTUP_IMPORT.findall(path.read_text())
+    return seen
+
+
+def test_startup_file_count_stays_within_budget():
+    """Startup loads no more config files than the budget, so new always-on rules need a decision."""
+    files = startup_files()
+    assert files[0] == "CLAUDE.md", "the startup scan must begin at CLAUDE.md"
+    assert len(files) <= MAX_STARTUP_FILES, (
+        f"{len(files)} files load at startup, over the budget of {MAX_STARTUP_FILES} — "
+        "make the new rule lazy, or justify raising MAX_STARTUP_FILES"
+    )
+
+
+def test_demoted_rules_stay_out_of_startup():
+    """Rules moved to path-scoping on 2026-10-01 must not creep back into the startup imports."""
+    files = startup_files()
+    assert not [f for f in files if f.endswith("/authoring_agents.md")], "authoring_agents.md is back at startup"
+    assert not [f for f in files if "05_lazy_load/" in f], "a lazy rule is imported at startup"
