@@ -4,7 +4,7 @@ paths:
   - "**/_rules_lazy_load/**"
   - "**/CLAUDE.md"
 ---
-<!-- version: 4.0.0 -->
+<!-- version: 4.0.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-06 -->
 <!-- miss_cost: low — a rule lands in the wrong tier, which is easy to move -->
@@ -32,7 +32,7 @@ Claude Code loads every `.md` under `rules/` on its own, so every always-on file
 - **Source of truth:** each folder is the current list of its rules — the examples above are illustrative only.
 - **Folder sets the mode:** tiers 01–03 load every session, unless a rule there has `paths:` (e.g. `authoring_agents.md`), and nothing under `rules/` is `@import`ed.
 - **Placement rationale:** each rule's `Purpose` statement explains why it sits in its tier.
-- **On-demand children:** an always-on parent keeps bulky children in `_rules_lazy_load/<parent>/`, named in its `**Read on demand:**` pointers (e.g. `_rules_lazy_load/authoring_skills/`).
+- **On-demand children:** an always-on parent keeps bulky children in `_rules_lazy_load/<parent>/`, named in its `**Read on demand:**` pointers (e.g. `_rules_lazy_load/authoring_guidelines/authoring_skills/`).
 
 ---
 

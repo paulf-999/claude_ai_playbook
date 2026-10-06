@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-06
-# Version:           1.5.0
+# Version:           1.5.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -234,7 +234,7 @@ def lazy_entry_points() -> list[Path]:
     for root in (PATH_SCOPED_DIR, LAZY_RULES_DIR):
         for path in sorted(root.rglob("*.md")):
             rel = path.relative_to(root)
-            if path.name == "README.md" or path.name.startswith("_") or rel.parts[0] in ("_tier_readmes", "learned"):
+            if path.name == "README.md" or path.name.startswith("_") or rel.parts[0] in ("_tier_readmes", "_learned"):
                 continue
             folders = [rel.parents[i] for i in range(len(rel.parts) - 1)]
             if not any((r / f).with_suffix(".md").is_file() for f in folders for r in roots):

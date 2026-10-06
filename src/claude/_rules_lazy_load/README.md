@@ -100,23 +100,23 @@ A rule should be promoted from lazy-load to an always-on tier in `rules/` if:
 
 Parent, sibling and dependency links for each lazy and path-scoped file — kept here, not in the file, because this README never loads by itself (#121).
 
-### `authoring_agents/_common_mistakes.md`
+### `authoring_guidelines/authoring_agents/_common_mistakes.md`
 
 - Parent: `authoring_agents.md` — quick navigation and hard gates checklist
 
-### `authoring_agents/_core_standards.md`
+### `authoring_guidelines/authoring_agents/_core_standards.md`
 
 - Parent: `authoring_agents.md` — quick navigation and hard gates checklist
 
-### `authoring_agents/_decision_tree_and_process.md`
+### `authoring_guidelines/authoring_agents/_decision_tree_and_process.md`
 
 - Parent: `authoring_agents.md` — quick navigation and hard gates checklist
 
-### `authoring_agents/_hard_gates_checklist.md`
+### `authoring_guidelines/authoring_agents/_hard_gates_checklist.md`
 
 - Parent: `authoring_agents.md` — quick navigation and core standards
 
-### `authoring_agents/_scope_and_maturity.md`
+### `authoring_guidelines/authoring_agents/_scope_and_maturity.md`
 
 - Parent: `authoring_agents.md` — quick navigation and hard gates checklist
 

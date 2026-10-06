@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-06
-# Version:           1.3.0
+# Version:           1.3.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -24,7 +24,7 @@ LAZY_DIR = LAZY_RULES_DIR
 PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
 ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines")
 # Folders under _rules_lazy_load/ that hold indexes or ledgers rather than rules
-NON_RULE_FOLDERS = {"_tier_readmes", "learned"}
+NON_RULE_FOLDERS = {"_tier_readmes", "_learned"}
 IMPORT = re.compile(r"^@~/[^/\s]+/(\S+\.md)\s*$", re.M)
 
 

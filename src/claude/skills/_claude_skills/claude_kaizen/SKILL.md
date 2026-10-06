@@ -8,7 +8,7 @@ tags:
   tested: true
   disable_model_invocation: false
 ---
-<!-- version: 0.6.0 -->
+<!-- version: 0.6.1 -->
 <!-- created: 2026-09-07 -->
 <!-- updated: 2026-10-06 -->
 
@@ -16,7 +16,7 @@ tags:
 
 - **Pre-check:** confirm `~/claude/_errors/` exists and holds logs, and if not, say so and stop without proposing any rule.
 - **Read first:** read `reference/_implementation.md` for the audit, promote, validate and prune phases.
-- **Always:** show every rule and eval case as a diff with before/after results, and wait for an explicit yes before writing to `_rules_lazy_load/learned/`.
+- **Always:** show every rule and eval case as a diff with before/after results, and wait for an explicit yes before writing to `_rules_lazy_load/_learned/`.
 - **Always:** tell the user that `evals/runner.py` makes one Claude call per case before running it.
 - **Never:** promote a pattern seen fewer than 2 times, or one whose after-run shows a regression.
 - **Never:** delete or edit a stale rule, which only gets flagged for re-validation.
@@ -36,11 +36,11 @@ Self-improving development loop: capture recurring mistakes, promote only verifi
 
 1. Run `/claude_kaizen` (manually or auto-triggered at session start)
 2. Skill audits `~/claude/_errors/` and finds 2 occurrences of the same mistake
-3. Candidate is already in `_rules_lazy_load/learned/candidates.md` with count = 2
+3. Candidate is already in `_rules_lazy_load/_learned/candidates.md` with count = 2
 4. Meets promotion threshold; skill drafts a rule + eval case
 5. Runs full test suite (before/after) to catch regressions
 6. Outputs a **diff proposal** showing the new rule, eval case, and test results
-7. You review the diff, approve, and it's written to `_rules_lazy_load/learned/`
+7. You review the diff, approve, and it's written to `_rules_lazy_load/_learned/`
 
 ## ✨ Best For
 
@@ -62,7 +62,7 @@ Currently at the **draft** stage — one repo at a time, with no SessionStart tr
 
 - `evals/runner.py` — asks headless Claude (`claude -p`, no tools) each eval prompt against the rules under test and checks the reply with `must_match` / `must_not_match` regexes; one Claude call per case
 - `evals/claude_ai_playbook.yaml` — seed eval cases proving each promoted rule works
-- `<config-dir>/_rules_lazy_load/learned/` — Auto-promoted rules with validation dates, where `<config-dir>` is `$CLAUDE_CONFIG_DIR` (or `~/.claude` when it's unset)
+- `<config-dir>/_rules_lazy_load/_learned/` — Auto-promoted rules with validation dates, where `<config-dir>` is `$CLAUDE_CONFIG_DIR` (or `~/.claude` when it's unset)
 - `reference/_implementation.md` — audit, promote, validate and prune phases
 - `reference/_roadmap.md` — planned v2 enhancements
 - `tests/evals.yaml` — 7 test scenarios covering promotion, validation, pruning and scope

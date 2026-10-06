@@ -44,7 +44,7 @@ _templates/
 **`AGENT.md.template`**
 - Starting point for a new agent at `agents/<group>/<name>/AGENT.md`: frontmatter, metadata header and the standard sections
 - Keeps its uppercase name because it mirrors the `AGENT.md` file it produces
-- Used by: `_rules_lazy_load/authoring_agents/_core_standards.md`
+- Used by: `_rules_lazy_load/authoring_guidelines/authoring_agents/_core_standards.md`
 
 **`rule.md.template`**
 - Two starting points for a new rule: Template A (one principle) and Template B (several related patterns)

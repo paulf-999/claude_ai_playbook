@@ -251,7 +251,7 @@ def discover_rules(rules_dir: Path) -> list[Rule]:
     for tier_dir in roots:
         for path in sorted(tier_dir.rglob("*.md")):
             in_tier = path.relative_to(tier_dir)
-            if path.name == "README.md" or in_tier.parts[0] in ("_tier_readmes", "learned"):
+            if path.name == "README.md" or in_tier.parts[0] in ("_tier_readmes", "_learned"):
                 continue
             if is_child(path, tier_dir, tuple(r for r in roots if r != tier_dir)):
                 continue

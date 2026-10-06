@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-28
 # Date updated:      2026-10-06
-# Version:           2.3.0
+# Version:           2.3.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -18,7 +18,7 @@ from _metadata_header import FRONTMATTER_RE, metadata_header_errors
 from _shared_paths import RULES_DIR
 
 # Non-rule content under the rule folders: a skill-managed tally
-EXCLUDED_DIRS = {"learned"}
+EXCLUDED_DIRS = {"_learned"}
 
 HINT = "— see 03_authoring_guidelines/shared_standards/_claude_config_metadata.md"
 
