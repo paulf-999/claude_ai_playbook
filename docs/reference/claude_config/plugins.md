@@ -37,7 +37,7 @@ Only proceed if there is a clear, justified use case not already covered. Log th
 
 ## 🔭 Candidates for evaluation
 
-Ordered by recommended evaluation priority. Score reflects potential usefulness to the DM team (1–10).
+Ordered by recommended evaluation priority. Score reflects potential usefulness to a data team (1–10).
 
 | Priority | Plugin | Verified | Installs | Hooks | MCP required | Token cost | Score | What to evaluate |
 |---|---|---|---|---|---|---|---|---|

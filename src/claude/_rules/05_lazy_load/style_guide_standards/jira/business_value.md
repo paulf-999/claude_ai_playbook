@@ -1,9 +1,9 @@
-<!-- version: 1.0.1 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-06-07 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-06 -->
 # 💼 Business Value Tab
 
-Standards for populating the Business Value tab (`customfield_10650`) on DM project Jira tickets — covering format, audience, scoring framework, and a worked example.
+Standards for populating the Business Value tab on Jira tickets — covering format, audience, scoring framework, and a worked example. The field ID, framework name, matrix link and weights live in the Jira values in `~/.claude/_rules/05_lazy_load/org.md`.
 
 ## 📋 Contents
 
@@ -39,7 +39,7 @@ The Business Value tab is read by external stakeholders and non-technical audien
 Always append the following block after the intro and bullets:
 
 ```
-Impact Rating (per Data Team Prioritization Framework):
+Impact Rating (per <your prioritisation framework>):
 * a. Prioritization Matrix: <link to your team's prioritisation matrix>
 * b. Priority Value Driver: <driver> – Score: <N>
 * c. Secondary Value Driver: <driver> – Score: <N>
@@ -55,47 +55,18 @@ Fill in scores when the driver and rating are clear at creation time. Use `< TOD
 
 ## Scoring frameworks
 
-### Standard (6-category) — official Data Team framework
+Use your organisation's framework, with the categories and weights listed in `org.md`.
 
-Use for all general work. Reference: your team's prioritisation matrix page — see `~/.claude/_rules/05_lazy_load/org.md` if present
-
-| Category | Weight |
-|---|---|
-| Compliance & Risk | 25% |
-| Transaction Integrity | 20% |
-| Ops Efficiency | 15% |
-| M&A Synergy | 15% |
-| Exit Readiness | 15% |
-| Customer Value | 10% |
+- **Second framework:** if your team weights some work differently (for example platform reliability or operational continuity), list that framework in `org.md` too, and say when it applies.
+- **No framework yet:** leave the Impact Rating scores as `< TODO >` rather than inventing categories or weights.
 
 **Scoring rubric:**
-- [5] Critical / Immediate — regulatory fine imminent, transaction bug dropping >1% of volume, Due Diligence failure risk
-- [3] Strategic / Important — schema mapping, automating 10+ hrs/week of manual work, new merchant data insight
+- [5] Critical / Immediate — imminent regulatory, financial or customer impact, or a production outage if not addressed
+- [3] Strategic / Important — removes significant recurring manual work, or unlocks a new insight or capability
 - [1] Maintenance / Low Impact — minor tweaks, nice-to-have metadata, R&D with no clear ROI path
-
-### Data Platform manager working convention (7-category)
-
-Use when the ticket is primarily about **platform reliability or operational continuity** — e.g. dependency migrations before deprecation, preventing production outages, technical debt that creates operational risk.
-
-The 6-category framework has no dedicated driver for this class of work; the closest proxies (Ops Efficiency, Compliance & Risk) do not cleanly cover infrastructure continuity work.
-
-| Category | Weight |
-|---|---|
-| Compliance & Risk | 25% |
-| Transaction Integrity | 20% |
-| **Platform Reliability & Technical Risk** | **15%** |
-| Ops Efficiency | 15% |
-| M&A Synergy | 10% |
-| Exit Readiness | 10% |
-| Customer Value | 5% |
-
-**Scoring rubric for Platform Reliability & Technical Risk:**
-- [5] = imminent production outage or SLA breach if not addressed
-- [3] = critical dependency reaching end-of-life within the quarter
-- [1] = technical debt reduction with no near-term operational risk
 
 ---
 
 ## Worked example
 
-See: `~/.claude/_rules/lazy_load/style_guide_standards/jira/templates/template_business_value_example.txt`
+See: `~/.claude/_rules/05_lazy_load/style_guide_standards/jira/templates/template_business_value_example.txt`

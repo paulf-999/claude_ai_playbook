@@ -1,5 +1,5 @@
-DM-38936 — Airflow: Git Migration Impact - Discovery - Cloudsmith Docker Image Integration
-Framework: 7-category (Platform reliability ticket)
+PROJ-123 — Data pipelines: source-control migration impact - discovery
+Framework: platform-reliability framework (example weights: 15% and 20%)
 Score calculation: 5 × 0.15 + 4 × 0.20 = 0.75 + 0.80 = 1.55
 
 ---
@@ -11,8 +11,8 @@ data platform from running its automated processes unless addressed before the d
 - Non-negotiable timeline — driven by a migration outside the team's control
 - Scope: identify the solution now; implementation follows as a separate piece of work
 
-Impact Rating (per Data Team Prioritization Framework):
+Impact Rating (per <your prioritisation framework>):
 * a. Prioritization Matrix: <link to your team's prioritisation matrix>
 * b. Priority Value Driver: Platform Reliability & Technical Risk – Score: 5
-* c. Secondary Value Driver: Transaction Integrity – Score: 4
+* c. Secondary Value Driver: Ops Efficiency – Score: 4
 * d. Calculated Score: 1.55

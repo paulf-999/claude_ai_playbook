@@ -1,17 +1,17 @@
-<!-- version: 1.0.0 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-05-20 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-06 -->
 # 📋 Field Standards
 
-Required fields, default values, custom field IDs, component conventions, label rules, and the business value field format.
+Required fields, default values, custom fields, component conventions, label rules, and the business value field format. Your project's field IDs, components and label live in the Jira values in `~/.claude/_rules/05_lazy_load/org.md`.
 
 ## 📋 Contents
 
 - [✅ Required fields](#-required-fields)
-- [🔧 Custom field IDs](#-custom-field-ids)
+- [🔧 Custom fields](#-custom-fields)
 - [🏷️ Labels](#-labels)
 - [📦 Components](#-components)
-- [💼 Business value field (`customfield_10650`)](#-business-value-field-customfield_10650)
+- [💼 Business value field](#-business-value-field)
 
 ---
 
@@ -24,46 +24,45 @@ Every ticket must have the following fields set before it enters a sprint:
 | Summary | Yes | — | See naming convention in `ticket_conventions.md` |
 | Description | Yes | — | Two-section format: intro bullets + acceptance criteria |
 | Priority | Yes | **Medium** | Deviate only with explicit justification |
-| Story points | Yes | — | Must be > 0; field `customfield_10028` |
-| Sprint | Yes | — | Integer sprint ID; field `customfield_10020` |
+| Story points | Yes | — | Must be > 0 |
+| Sprint | Yes | — | Integer sprint ID — see `sprint_planning.md` |
 | Assignee | Yes | — | Must be set before sprint entry |
-| Components | Yes | — | Always exactly 2 — see component conventions below |
-| Parent epic | Yes | — | Set to the relevant H1/H2 planning epic |
+| Components | Yes | — | The components `org.md` lists as required |
+| Parent epic | Yes | — | Set to the relevant planning or initiative epic |
 | Status | Yes | **Backlog** | Triage is a hygiene failure — transition to Backlog immediately |
 | Business Value | Yes | — | Must follow format and scoring convention — see [`business_value.md`](business_value.md) |
 
 ---
 
-## 🔧 Custom field IDs
+## 🔧 Custom fields
 
-| Field | Jira ID | Type | Notes |
-|---|---|---|---|
-| Story points | `customfield_10028` | Number | Decimal allowed (e.g. `0.5`) |
-| Sprint | `customfield_10020` | Integer | Sprint ID from board 217 — see `sprint_planning.md` |
-| Business value | `customfield_10650` | ADF document | See format below |
+Story points, Sprint and Business value are custom fields, and their `customfield_<n>` IDs differ between Jira sites.
+
+| Field | Type | Notes |
+|---|---|---|
+| Story points | Number | Decimal allowed (e.g. `0.5`) |
+| Sprint | Integer | Sprint ID, not the sprint number — see `sprint_planning.md` |
+| Business value | ADF document | See format below |
+
+- **IDs:** take each field's ID from `org.md`.
+- **Unknown ID:** if the table there is still a placeholder, look the field up with `getJiraIssueTypeMetaWithFields` rather than guessing.
 
 ---
 
 ## 🏷️ Labels
 
-- `dm-claude-created` — **required** on all tickets created by Claude; enables hygiene check filtering and auditability
+- The Claude-created label named in `org.md` — **required** on all tickets created by Claude; enables hygiene check filtering and auditability
 - Additional labels may be added where useful; no other standard labels are currently defined
 
 ---
 
 ## 📦 Components
 
-Every ticket must have exactly two components:
-
-| Component | ID | When to use |
-|---|---|---|
-| `Data Platform Initiatives 2026` | `13377` | Always — applied to every ticket |
-| `Data Platform Initiatives 2026 Q{N}` | See `sprint_planning.md` | Current quarter — derived from the sprint the ticket is assigned to |
-
-The quarter component changes each quarter. See `sprint_planning.md` for the sprint-to-quarter-to-component-ID mapping.
+- **Which ones:** apply the components `org.md` lists as required on every ticket.
+- **Quarter component:** where your project uses one, derive it from the ticket's sprint — see `sprint_planning.md`.
 
 ---
 
-## 💼 Business value field (`customfield_10650`)
+## 💼 Business value field
 
 See [`business_value.md`](business_value.md) for the full format, audience guidance, scoring framework, and worked example.
