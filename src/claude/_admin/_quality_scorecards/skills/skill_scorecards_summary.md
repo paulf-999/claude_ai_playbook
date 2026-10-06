@@ -12,7 +12,7 @@
 
 | Group | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
-| Skills | 8 | 8.7/10 | 2026-10-06 | • 💪 **Strongest:** `claude_setup_graphify` (9.9/10)<br>• ⚠️ **Weakest:** `jira_create` (7.6/10) |
+| Skills | 8 | 8.6/10 | 2026-10-06 | • 💪 **Strongest:** `claude_setup_graphify` (9.9/10)<br>• ⚠️ **Weakest:** `jira_create` (7.6/10) |
 
 ---
 
@@ -36,8 +36,8 @@ Sorted by Overall score, highest first.
 | Scorecard | Overall | Date Updated | Recommended improvements |
 |---|---|---|---|
 | `scorecard_claude_setup_graphify.md` | 9.9/10 | 2026-10-02 | — (≥8.5) |
-| `scorecard_claude_capture_session_prompts.md` | 9.7/10 | 2026-09-07 | — (≥8.5) |
 | `scorecard_claude_review_config.md` | 9.4/10 | 2026-10-06 | — (≥8.5) |
+| `scorecard_claude_capture_session_prompts.md` | 9.0/10 | 2026-10-06 | — (≥8.5) |
 | `scorecard_git_review_pr.md` | 8.7/10 | 2026-10-06 | — (≥8.5) |
 | `scorecard_confluence_create_page.md` | 8.1/10 | 2026-09-19 | • Add adversarial-input scenarios to `tests/evals.yaml`<br>• Add retry logic for transient MCP failures in `phase_3_publish_page`<br>• Add a short FAQ section to the documentation |
 | `scorecard_claude_kaizen.md` | 7.9/10 | 2026-10-06 | • Record one real promotion end to end, since the evals cover the runner but not a full skill run |

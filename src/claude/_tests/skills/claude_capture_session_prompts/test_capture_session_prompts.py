@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
-# Date updated:      2026-10-02
-# Version:           1.0.5
+# Date updated:      2026-10-06
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -14,7 +14,8 @@ Covers the fixes made when the script was restored into the skill folder
 (2026-09-30): the history file resolves from CLAUDE_CONFIG_DIR, output goes to
 ~/_sessions/ with a snake_case date-first name, and dates use local time.
 Also pins the categorisation heuristics and markdown output the skill's
-docs describe.
+docs describe, and the secret masking added on 2026-10-06 so a pasted
+credential is never written into the report.
 """
 import importlib.util
 import json
@@ -181,6 +182,50 @@ def test_main_reports_empty_day_without_writing(monkeypatch, tmp_path, capsys):
     assert csp.main(["--date", "2026-08-20", "--output-dir", str(out_dir)]) == 0
     assert "No history entries found for 2026-08-20" in capsys.readouterr().out
     assert not out_dir.exists()
+
+
+FAKE_AWS_KEY = "AKIA" + "ABCDEFGHIJKLMNOP"
+FAKE_GITHUB_TOKEN = "ghp_" + "a" * 36
+# Split so the pre-commit private-key detector doesn't flag this test fixture
+FAKE_KEY_HEADER = "-----BEGIN RSA " + "PRIVATE KEY-----"
+
+
+def test_mask_secrets_redacts_known_formats():
+    """AWS keys, GitHub tokens, private-key headers and sk- API keys are replaced with a marker."""
+    assert csp.mask_secrets(f"key {FAKE_AWS_KEY} here") == "key [REDACTED] here", "AWS key not masked"
+    assert csp.mask_secrets(f"use {FAKE_GITHUB_TOKEN}") == "use [REDACTED]", "GitHub token not masked"
+    assert "PRIVATE KEY" not in csp.mask_secrets(FAKE_KEY_HEADER), "private-key header not masked"
+    assert csp.mask_secrets("sk-" + "x" * 30) == "[REDACTED]", "sk- API key not masked"
+
+
+def test_mask_secrets_keeps_key_names_and_ordinary_text():
+    """Key-value pairs keep the key name, and prose that only mentions a keyword is untouched."""
+    assert csp.mask_secrets("api_key = abcd1234efgh") == "api_key = [REDACTED]", "key name lost or value kept"
+    assert csp.mask_secrets("the token budget is fine") == "the token budget is fine", "ordinary text was masked"
+    assert csp.mask_secrets("password: short") == "password: short", "a value under 8 characters was masked"
+
+
+def test_build_row_masks_every_prompt_derived_field():
+    """No column built from the prompt can carry the secret."""
+    row = csp.build_row(1, _ms(datetime(2026, 8, 20, 9, 15)), f"fix the rule with {FAKE_AWS_KEY}")
+    leaked = [column for column, value in row.items() if FAKE_AWS_KEY in str(value)]
+    assert not leaked, f"secret leaked into columns {leaked} — mask before deriving fields"
+    assert "[REDACTED]" in row["prompt"], "prompt column should show the redaction marker"
+
+
+def test_main_report_contains_no_secret(monkeypatch, tmp_path):
+    """End to end: a credential in history never reaches the written report."""
+    config = tmp_path / "config"
+    config.mkdir()
+    _write_history(config / "history.jsonl", [
+        {"display": f"deploy with {FAKE_GITHUB_TOKEN}", "timestamp": _ms(datetime(2026, 8, 20, 9, 15))},
+    ])
+    monkeypatch.setenv("CLAUDE_CONFIG_DIR", str(config))
+    out_dir = tmp_path / "out"
+    assert csp.main(["--date", "2026-08-20", "--output-dir", str(out_dir)]) == 0
+    report = (out_dir / "2026_08_20_claude_prompts.md").read_text()
+    assert FAKE_GITHUB_TOKEN not in report, "secret reached the report — mask in build_row"
+    assert "[REDACTED]" in report, "report should show where a secret was removed"
 
 
 def test_script_has_no_hardcoded_config_paths():

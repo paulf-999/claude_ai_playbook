@@ -34,7 +34,6 @@ REFERENCE = re.compile(r"reference/_\w+\.md")
 NON_CONFIG_DRAFTS = re.compile(r"~/(\.claude/)?_drafts")
 
 BASELINE = {
-    "claude_capture_session_prompts",
     "claude_setup_graphify",
     "git_create_pr",
     "jira_create",
