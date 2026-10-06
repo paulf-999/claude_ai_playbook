@@ -18,7 +18,7 @@
 | rules | 32 | 9.1/10 | 2026-10-02 | • 💪 **Strongest:** `test_latency_optimisation.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_lazy_load_coverage.py` (8.3/10) |
 | scripts | 4 | 9.3/10 | 2026-10-02 | • 💪 **Strongest:** 3 files tied at 9.3/10, including `test_clean_plans.py`<br>• ⚠️ **Weakest:** `test_audit_rule_usage.py` (9.1/10) |
 | settings | 2 | 9.5/10 | 2026-10-01 | • 💪 **Strongest:** `test_aliases.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_settings.py` (9.3/10) |
-| skills | 13 | 8.8/10 | 2026-10-06 | • 💪 **Strongest:** 3 files tied at 9.4/10, including `test_no_orphaned_skill_files.py`<br>• ⚠️ **Weakest:** `test_jira_create_handler.py` (7.9/10) |
+| skills | 14 | 8.9/10 | 2026-10-06 | • 💪 **Strongest:** 3 files tied at 9.4/10, including `test_no_orphaned_skill_files.py`<br>• ⚠️ **Weakest:** `test_jira_create_handler.py` (7.9/10) |
 | _tests root | 4 | 9.2/10 | 2026-10-01 | • 💪 **Strongest:** `test_rule_reachability.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_file_structure_compliance.py` (8.9/10) |
 
 ---
@@ -83,6 +83,7 @@ Sorted by Overall score, highest first.
 | `rules/05_lazy_load/scorecard_test_lazy_load_triggers.md` | 9.1/10 | 2026-10-01 | — (≥8.5) |
 | `scripts/scorecard_test_audit_rule_usage.md` | 9.1/10 | 2026-10-01 | — (≥8.5) |
 | `skills/scorecard_test_skill_metadata_header.md` | 9.1/10 | 2026-09-30 | — (≥8.5) |
+| `skills/scorecard_test_skill_index_versions.md` | 9.1/10 | 2026-10-05 | — (≥8.5) |
 | `agents/scorecard_test_agent_metadata_header.md` | 9.0/10 | 2026-09-30 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_decision_making.md` | 9.0/10 | 2026-10-01 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_plan_mode_phase_gates.md` | 9.0/10 | 2026-09-30 | — (≥8.5) |

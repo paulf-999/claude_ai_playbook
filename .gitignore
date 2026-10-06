@@ -82,3 +82,13 @@ pids/
 # Tool caches
 #=======================================================================
 .sqlfluff_cache
+
+#=======================================================================
+# Claude Code live state (never commit from a live ~/.claude copy)
+#=======================================================================
+src/claude/history.jsonl
+src/claude/projects/
+src/claude/file-history/
+src/claude/security/
+src/claude/sessions/
+src/claude/shell-snapshots/
