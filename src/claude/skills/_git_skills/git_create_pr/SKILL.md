@@ -8,9 +8,18 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 1.3.1 -->
+<!-- version: 1.4.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-06 -->
+
+## 🤖 Instructions for Claude
+
+- **Pre-check:** run `gh auth status` and confirm `.github/pull_request_template.md` exists, and stop and tell the user if either fails.
+- **Read first:** read `reference/_phase1_gather.md`, then `reference/_phase2_execute.md` before running any git command.
+- **Always:** confirm the PR title, then the full plan, before creating a branch, committing or pushing.
+- **Always:** stage files by name, and draft the PR body from the repo template using `subagent_type: technical_writer`.
+- **Never:** commit to `main`, force-push, or use `--no-verify` unless the user explicitly asks.
+- **Never:** open a PR of 20 or more files without flagging it and suggesting a split.
 
 ## 🎯 Purpose
 
@@ -40,7 +49,7 @@ PR #1234 created: https://github.com/org/repo/pull/1234
 
 ## ✨ Best For
 
-Routine feature/hotfix PRs. Faster than manual git workflow; enforces Conventional Commits automatically; minimal setup required.
+Routine feature and hotfix PRs, faster than the manual git workflow and with Conventional Commits enforced. Currently at the **tactical** stage — main path, both confirmation steps and push errors are covered, but not merge conflicts or non-main base branches.
 
 ## 📚 References
 
