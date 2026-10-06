@@ -1,7 +1,7 @@
 ---
 _metadata:
     date_created: '2026-09-07'
-    date_updated: '2026-10-02'
+    date_updated: '2026-10-06'
     status: active
 
 agent_name: technical_writer
@@ -31,12 +31,12 @@ evals:
           prompt: Draft the PR description for this branch
       setup:
           pr_template_exists: true
-          current_branch: feature/dm_1234_retry_backoff
+          current_branch: feature/proj_1234_retry_backoff
       expected_output: >
-          The agent puts DM-1234 in the Related Jira Issue section as a link and leaves
+          The agent puts PROJ-1234 in the Related Jira Issue section as a link and leaves
           the rest of the template intact.
       assertions:
-          - The Related Jira Issue section contains DM-1234
+          - The Related Jira Issue section contains PROJ-1234
           - No template section is added or removed
 
     - name: pr_body_missing_template_stops

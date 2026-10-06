@@ -88,7 +88,7 @@ Each session counts once per rule, however many runs saw it. Sessions stay in th
 | `05_lazy_load/style_guide_standards/infra/docker.md` | 0 | 0 | 0 | — | 1 | — | — |
 | `05_lazy_load/style_guide_standards/infra/terraform.md` | 0 | 0 | 0 | — | 1 | — | — |
 | `05_lazy_load/style_guide_standards/jira.md` | 0 | 0 | 0 | — | 1 | — | — |
-| `05_lazy_load/style_guide_standards/payroc_engineering_naming_standards.md` | 0 | 0 | 0 | — | 1 | — | — |
+| `05_lazy_load/style_guide_standards/org_naming_standards.md` | 0 | 0 | 0 | — | 1 | — | — |
 | `05_lazy_load/style_guide_standards/python.md` | 30 | 1 | 29 | 97% | 1 | 2026-08-31 | 2026-10-01 |
 | `05_lazy_load/style_guide_standards/sql.md` | 5 | 4 | 1 | 20% | 1 | 2026-09-09 | 2026-10-01 |
 | `05_lazy_load/style_guide_standards/utilities/datetime.md` | 0 | 0 | 0 | — | 1 | — | — |
