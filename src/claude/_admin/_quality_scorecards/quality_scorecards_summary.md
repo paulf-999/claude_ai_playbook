@@ -14,7 +14,7 @@
 | Type | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
 | Tests | 64 | 9.1/10 | 2026-10-02 | • 💪 **Strongest:** 3 files tied at 9.6/10, including `test_latency_optimisation.py`<br>• ⚠️ **Weakest:** `test_jira_create_handler.py` (7.9/10) |
-| Skills | 7 | 8.5/10 | 2026-10-02 | • 💪 **Strongest:** `claude_setup_graphify` (9.9/10)<br>• ⚠️ **Weakest:** `claude_kaizen` (7.1/10) |
+| Skills | 8 | 8.6/10 | 2026-10-06 | • 💪 **Strongest:** `claude_setup_graphify` (9.9/10)<br>• ⚠️ **Weakest:** `claude_kaizen` (7.1/10) |
 | Rules — always-on | 14 | 8.3/10 | 2026-10-01 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_operational_efficiency.md` (7.1/10) |
 | Rules — lazy-load | 17 | 8.3/10 | 2026-10-01 | • 💪 **Strongest:** `latency_optimisation.md` (9.2/10)<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
 | Hooks | 5 | 8.5/10 | 2026-10-02 | • 💪 **Strongest:** `hook_enforcement_mcp_stale_settings.sh` (9.0/10)<br>• ⚠️ **Weakest:** `hook_style_guide_response_standards.sh` (8.0/10) |
@@ -40,7 +40,7 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 | Summary | Scored | Overall | Date Updated |
 |---|---|---|---|
 | `tests/test_scorecards_summary.md` | 64 | 9.1/10 | 2026-10-02 |
-| `skills/skill_scorecards_summary.md` | 7 | 8.5/10 | 2026-10-02 |
+| `skills/skill_scorecards_summary.md` | 8 | 8.6/10 | 2026-10-06 |
 | `rules/rule_scorecards_summary.md` | 31 | 8.3/10 | 2026-10-01 |
 | `hooks/hook_scorecards_summary.md` | 5 | 8.5/10 | 2026-10-02 |
 | `agents/agent_scorecards_summary.md` | 2 | 8.5/10 | 2026-10-05 |

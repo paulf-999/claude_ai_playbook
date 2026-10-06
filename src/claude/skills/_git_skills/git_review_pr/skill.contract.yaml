@@ -1,0 +1,69 @@
+---
+name: git_review_pr
+version: 0.5.0
+summary: Review a GitHub PR with the code_reviewer agent and post a scored review comment once approved
+maturity: draft
+test_coverage_level: basic
+
+dispatch:
+    triggers:
+        explicit:
+            - /git_review_pr
+            - /git_review_pr <number or url>
+            - /git_review_pr <number or url> --dry-run
+            - dry run a pr review
+            - dry run a PR review
+            - preview a pr review
+            - preview a PR review
+            - review this pr
+            - review this PR
+            - review the pr
+            - review the PR
+            - review pr
+            - review PR
+            - review pr <number>
+            - review PR <number>
+            - review a pull request
+            - review this pull request
+            - check this pr
+            - check this PR
+            - score this pr
+            - score this PR
+            - post a claude review
+            - post a Claude review
+            - post a review comment on the pr
+            - post a review comment on the PR
+        contextual:
+            - user wants a scored review of a GitHub pull request
+            - user wants a Claude review comment posted on a PR
+    not_for:
+        - creating a PR — use /git_create_pr instead
+        - reviewing a local diff that has no GitHub PR — call the code_reviewer agent directly
+        - approving or requesting changes as a formal GitHub review — it posts a comment only
+        - editing the PR's code to fix the findings
+        - a bug hunt at a chosen effort level — use the built-in /code-review skill
+
+output:
+    type: mixed
+    confirmation_required: true
+    reversible: false
+    returns:
+        - the formatted review comment, shown before posting
+        - the saved draft path
+        - the posted or updated comment URL
+
+requires:
+    tools:
+        - Bash
+        - Agent (code_reviewer)
+        - gh CLI (authenticated)
+    resources:
+        - an open GitHub pull request the user can read
+
+dependencies:
+    external:
+        - gh
+    permissions:
+        - read access to the PR's repository
+        - permission to comment on the PR
+        - permission to edit your own earlier review comment
