@@ -10,9 +10,9 @@ tags:
   date_updated: "2026-10-01"
 tools: Read, Write, mcp__atlassian__getAccessibleAtlassianResources, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-06 -->
 
 ## 🤖 Instructions for Claude
 
@@ -21,7 +21,7 @@ tools: Read, Write, mcp__atlassian__getAccessibleAtlassianResources, mcp__atlass
   - **On failure:** stop and tell the user to run `make enable_mcp server=Atlassian` and restart Claude Code.
 - **Never:** call `createConfluencePage` or `updateConfluencePage` until the user has approved the local draft — even when asked to "just publish".
 - **Never:** infer the target space or parent page — confirm both with the user, and never publish at the space root.
-- **Always:** write the draft to `~/_drafts/confluence/YYYY_MM_DD_<topic>.md`, expanding `~` to the user's absolute home path before calling Write.
+- **Always:** write the draft to `~/claude/_drafts/confluence/YYYY_MM_DD_<topic>.md`, expanding `~` to the user's absolute home path before calling Write.
   - **Never:** write drafts inside the Claude config folder.
 - **Always:** create the page with `status: draft`, so nothing goes live without the user publishing it in Confluence.
 
@@ -38,7 +38,7 @@ Create a Confluence page from a team-approved template, with a local draft you r
 ```
 $ /confluence_create_page create a page about the Q3 roadmap
 [Phase 1] Gathering details: title, creator, status, purpose, sections
-[Phase 2] Local draft ready — review at ~/_drafts/confluence/2026_09_30_q3_roadmap.md
+[Phase 2] Local draft ready — review at ~/claude/_drafts/confluence/2026_09_30_q3_roadmap.md
           Approve, request changes, or cancel? (y/e/n): y
 [Phase 3] Publishing to Confluence...
           ✓ Page created

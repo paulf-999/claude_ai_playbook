@@ -1,7 +1,7 @@
 # Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:  2026-08-28
-# Date updated:  2026-10-01
+# Date updated:  2026-10-06
 # Status:        active
 # ─────────────────────────────────────────────────────────
 
@@ -23,6 +23,8 @@ import pathlib
 import threading
 import time
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+
+from _shared_paths import CLAUDE_DIR
 
 # Field constraints
 MIN_TITLE_LENGTH = 3
@@ -370,16 +372,16 @@ def create_confluence_page(
 
 
 def save_draft(content: str, page_title: str) -> pathlib.Path:
-    """Save a draft to ~/_drafts/confluence/, where the skill and writing_style.md keep drafts.
+    """Save a draft to ~/claude/_drafts/confluence/, where the skill and writing_style.md keep drafts.
 
-    Drafts live in the user's home folder, not the Claude config folder, so the path
-    doesn't depend on where the config is installed.
+    The folder is resolved from ``CLAUDE_DIR``, so it follows the config wherever it is
+    installed rather than a hardcoded ``~/claude``.
 
     :param content: Markdown content to save.
     :param page_title: Page title, sanitised into the filename.
     :return: Path to the saved draft file.
     """
-    drafts_dir = pathlib.Path.home() / "_drafts" / "confluence"
+    drafts_dir = CLAUDE_DIR / "_drafts" / "confluence"
     drafts_dir.mkdir(parents=True, exist_ok=True)
 
     # YYYY_MM_DD_<slug>.md, as the skill and writing_style.md name drafts; redrafting the
@@ -411,7 +413,7 @@ def format_timeout_dialog(elapsed: int, remaining_attempts: int) -> str:
 Your page has been publishing for {minutes} minute{'s' if minutes != 1 else ''} ({elapsed} seconds).
 Confluence is not responding. Choose an action:
 
-[A]bort  — Cancel now, preserve draft in ~/_drafts/confluence/
+[A]bort  — Cancel now, preserve draft in ~/claude/_drafts/confluence/
 [R]etry  — Cancel and start a fresh publish attempt
 [C]ontinue — Wait 4 more minutes (max 6 minutes total)
 

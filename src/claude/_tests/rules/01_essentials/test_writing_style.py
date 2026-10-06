@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-01
-# Version:           1.1.1
+# Date updated:      2026-10-06
+# Version:           2.0.0
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -137,8 +137,8 @@ def test_writing_style_british_spelling():
 def test_writing_style_dated_paths_use_underscores():
     """Draft and error file names use YYYY_MM_DD, never hyphenated dates."""
     content = RULE_FILE.read_text()
-    assert "`~/_drafts/<domain>/YYYY_MM_DD_<topic>.md`" in content, "the drafts path format changed"
-    assert "`~/_errors/<domain>/YYYY_MM_DD_<topic>.md`" in content, "the errors path format changed"
+    assert "`~/claude/_drafts/<domain>/YYYY_MM_DD_<topic>.md`" in content, "the drafts path format changed"
+    assert "`~/claude/_errors/<domain>/YYYY_MM_DD_<topic>.md`" in content, "the errors path format changed"
     assert "YYYY-MM-DD_" not in content, "a hyphenated date prefix crept back into a file-name pattern"
 
 

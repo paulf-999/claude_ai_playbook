@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-02
-# Version:           1.2.1
+# Date updated:      2026-10-06
+# Version:           2.0.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -12,13 +12,14 @@
 
 Covers parsing ``--timeout-seconds``, the dialog's wording, how each [A]bort,
 [R]etry or [C]ontinue answer resolves, including the 6-minute cap on [C]ontinue,
-and where [A]bort's draft is kept: ``~/_drafts/confluence/``, not the config folder.
+and where [A]bort's draft is kept: ``~/claude/_drafts/confluence/``, inside the config folder.
 ``test_confluence_create_page_timeout.py`` covers the timed behaviour.
 """
 import time
 from pathlib import Path
 from unittest.mock import patch
 
+from . import confluence_create_page_handler as handler
 from .confluence_create_page_handler import (
     _handle_timeout_choice,
     format_timeout_dialog,
@@ -107,24 +108,25 @@ def test_unknown_answer_aborts():
     assert new_timeout is None, "an unknown answer shouldn't extend the timeout"
 
 
-def test_draft_is_saved_in_home_drafts_folder(tmp_path: Path):
-    """A draft lands in ~/_drafts/confluence/ with its content, never under the config folder."""
-    with patch("pathlib.Path.home", return_value=tmp_path):
+def test_draft_is_saved_in_config_drafts_folder(tmp_path: Path):
+    """A draft lands in <config>/_drafts/confluence/ with its content, wherever the config is installed."""
+    with patch.object(handler, "CLAUDE_DIR", tmp_path):
         draft = save_draft("# Page\n\nBody.", "Q3 Roadmap")
     assert draft.parent == tmp_path / "_drafts" / "confluence", f"draft saved in the wrong folder: {draft}"
-    assert ".claude" not in draft.parts, f"drafts must not depend on the config folder: {draft}"
     assert draft.read_text() == "# Page\n\nBody.", "the draft should hold the content unchanged"
 
 
 def test_dialog_names_the_drafts_folder():
     """[A]bort's line in the dialog names the same folder the draft is saved in."""
     dialog = format_timeout_dialog(elapsed=120, remaining_attempts=1)
-    assert "preserve draft in ~/_drafts/confluence/" in dialog, f"dialog should name the drafts folder, got {dialog!r}"
+    assert "preserve draft in ~/claude/_drafts/confluence/" in dialog, (
+        f"dialog should name the drafts folder, got {dialog!r}"
+    )
 
 
 def test_draft_name_is_date_first_slug(tmp_path: Path):
     """A draft is named YYYY_MM_DD_<slug>.md, with the title folded to a clean slug."""
-    with patch("pathlib.Path.home", return_value=tmp_path):
+    with patch.object(handler, "CLAUDE_DIR", tmp_path):
         draft = save_draft("Body.", "Q3 Roadmap -- 2026!")
     expected = f"{time.strftime('%Y_%m_%d')}_q3_roadmap_2026.md"
     assert draft.name == expected, f"expected {expected}, got {draft.name}"
@@ -132,7 +134,7 @@ def test_draft_name_is_date_first_slug(tmp_path: Path):
 
 def test_redraft_on_the_same_day_replaces_the_draft(tmp_path: Path):
     """Saving the same page twice in a day updates one draft rather than adding a copy."""
-    with patch("pathlib.Path.home", return_value=tmp_path):
+    with patch.object(handler, "CLAUDE_DIR", tmp_path):
         first = save_draft("First.", "Q3 Roadmap")
         second = save_draft("Second.", "Q3 Roadmap")
     assert first == second, f"same-day drafts of one page should share a file, got {first} and {second}"

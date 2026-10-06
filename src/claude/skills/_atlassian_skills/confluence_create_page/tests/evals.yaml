@@ -15,12 +15,12 @@ evals:
       setup: {}
       expected_output: >
           Claude gathers page details for the general_page pattern, writes a local
-          draft to ~/_drafts/confluence/, asks for review, iterates on feedback,
+          draft to ~/claude/_drafts/confluence/, asks for review, iterates on feedback,
           then publishes to Confluence only after the user explicitly approves
           the draft.
       assertions:
           - Claude reads reference/_phases.md and follows the general_page pattern inline (Phase 2)
-          - Claude writes a draft to ~/_drafts/confluence/ before creating anything in Confluence
+          - Claude writes a draft to ~/claude/_drafts/confluence/ before creating anything in Confluence
           - Draft filename uses lowercase with underscores (no spaces, no hyphens)
           - Claude asks the user to review the draft and requests approval before publishing
           - Claude does not call createConfluencePage until the user explicitly approves the draft

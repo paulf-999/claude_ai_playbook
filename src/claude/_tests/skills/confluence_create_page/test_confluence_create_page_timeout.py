@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-02
-# Version:           2.0.2
+# Date updated:      2026-10-06
+# Version:           2.0.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -23,6 +23,7 @@ from unittest.mock import patch
 
 import pytest
 
+from . import confluence_create_page_handler as handler
 from .confluence_create_page_handler import create_page_with_timeout, save_draft
 
 
@@ -80,7 +81,7 @@ def test_dialog_fires_once_the_timeout_passes(answers):
 
 def test_abort_keeps_the_draft(answers, tmp_path):
     """[A]bort reports the draft's path, and the draft is still there with its content."""
-    with patch("pathlib.Path.home", return_value=tmp_path):
+    with patch.object(handler, "CLAUDE_DIR", tmp_path):
         draft = save_draft("# Test Page\n\nBody.", "test_page")
         answers.return_value = "A"
         result = create_page_with_timeout(tool_call=MockToolCall(2.5), timeout_seconds=1, draft_path=draft)

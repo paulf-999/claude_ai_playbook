@@ -73,13 +73,13 @@ Use the ADF conventions in `_common_header.md` throughout. Return the draft URL.
 After gathering all page content via the pattern phases, before creating anything in Confluence:
 
 1. **Write the draft** — Save the page content as a markdown file:
-   - Directory: `~/_drafts/confluence/`
+   - Directory: `~/claude/_drafts/confluence/`
    - Filename: `YYYY_MM_DD_<slug>.md` — date first, underscores only, per `writing_style.md` (slug: lowercase, words separated by underscores, no special characters)
    - Path: expand `~` to the user's absolute home path before calling Write — never write inside the Claude config folder
    - Render the content faithfully — use markdown equivalents of ADF components (e.g. `> ℹ️` for info panels, `> 📝` for note panels, `**bold**` for labels, tables for structured data)
 
 2. **Ask for feedback** — Inform the user of the file path and request review:
-   > "Draft written to `~/_drafts/confluence/<filename>`. Please review and let me know any changes before I publish to Confluence."
+   > "Draft written to `~/claude/_drafts/confluence/<filename>`. Please review and let me know any changes before I publish to Confluence."
 
 3. **Iterate** — Apply feedback and rewrite the file until the user explicitly approves.
 

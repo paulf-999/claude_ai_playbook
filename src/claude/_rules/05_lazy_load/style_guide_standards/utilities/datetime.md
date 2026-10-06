@@ -1,6 +1,6 @@
-<!-- version: 1.0.3 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-04-11 -->
-<!-- updated: 2026-10-02 -->
+<!-- updated: 2026-10-06 -->
 <!-- miss_cost: medium — dates that sort or compare wrongly unnoticed; high once it has a trigger -->
 <!-- loading: lazy — only matters when writing dates into names, code or logs, which no single file type marks -->
 # 📅 Date & Time Standards
@@ -52,9 +52,7 @@ Use ISO format where dates are machine-readable, sortable, or stored:
 
 ## ⚠️ Known exceptions
 
-| Context | Format | Reason |
-|---|---|---|
-| Draft filenames (`~/_drafts/`) | `YYYY-MMM-DD` | 3-letter month abbreviation is easier to read at a glance in `ls` output — e.g. `rundeck_page_2026-May-20.md` |
+- **None:** draft and error filenames follow `writing_style.md`'s `YYYY_MM_DD_<topic>.md`, like every other filename.
 
 ---
 

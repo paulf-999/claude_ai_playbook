@@ -17,7 +17,7 @@ evals:
           candidate: missing input validation
           candidate_count: 2
       expected_output: >
-          Claude audits ~/_errors/, finds the candidate in
+          Claude audits ~/claude/_errors/, finds the candidate in
           _rules/learned/candidates.md at the promotion threshold, drafts a rule
           and an eval case, runs the evals before and after, and presents a diff
           proposal with the results for review.
@@ -91,7 +91,7 @@ evals:
 
   # Setup and scope
     - name: missing_errors_dir
-      description: ~/_errors/ doesn't exist
+      description: ~/claude/_errors/ doesn't exist
       input:
           prompt: /claude_kaizen
       setup:
@@ -101,7 +101,7 @@ evals:
           instead of inventing patterns.
       assertions:
           - Claude does not propose any rule
-          - Claude names the missing ~/_errors/ directory
+          - Claude names the missing ~/claude/_errors/ directory
 
     - name: cross_repo_request_out_of_scope
       description: User asks for cross-repo pattern analysis, which is a v2 feature
