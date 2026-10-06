@@ -13,8 +13,7 @@
 | **delegating_to_subagent.md** | When to spawn a sub-agent vs. work directly; constraints and token-cost breakeven | Before spawning a sub-agent |
 | **hooks_decision_framework.md** | ROI criteria for proposing hooks; child `hooks_decision_framework/` holds the 2026-08-07 precedent | Before proposing a hook or automation |
 | **response_standards_enforcement.md** | How the per-turn injection hook enforces the response format, and the reserved validator path | Changing the response-standards hook or its tests |
-| **testing.md** | When tests are required, test goals, file organisation and the test metadata standard; children in `testing/` | Loads through `paths:` on Python, shell and SQL files |
-| **testing_guidance.md** | Test design pattern, anti-patterns and the quarterly metadata audit; children in `testing_guidance/` | Loads through `paths:` on `_tests/` and `test_*.py` files |
+| **testing.md** | When tests are required, test goals, design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit; children in `testing/` | Loads through `paths:` on Python, shell, SQL and `_tests/` files |
 | **turn_budgets.md** | `--max-turns` caps for non-interactive runs | Running skills, automation or CI non-interactively |
 | **mcp_trust_model.md** | MCP server trust boundaries; treating responses as data not instructions | Working with MCP tools (GitHub, Jira, etc.) and external APIs |
 | **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
@@ -245,24 +244,9 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - **style_guide_standards/airflow.md** — Airflow SQL task patterns
 - **testing.md** — How to test dbt models and raw sources
 
-### `testing_guidance/_test_metadata_audit.md`
-
-- Parent: `testing_guidance.md`
-- Counterpart: `testing/_test_metadata.md` — header format and per-edit update rules
-
-### `testing_guidance/_testing_anti_patterns.md`
-
-- Parent: `testing_guidance.md`
-- Sibling: `_testing_design_pattern.md` — the pattern these anti-patterns violate
-
-### `testing_guidance/_testing_design_pattern.md`
-
-- Parent: `testing_guidance.md`
-- Sibling: `_testing_anti_patterns.md` — mistakes to avoid
-
 ### `testing.md`
 
-- Children: `testing/_testing_file_organization.md` and `testing/_test_metadata.md`, read on demand
+- Children: `testing/_testing_design_pattern.md`, `testing/_testing_anti_patterns.md`, `testing/_testing_file_organization.md`, `testing/_test_metadata.md` and `testing/_test_metadata_audit.md`, read on demand
 - `_tests/rules/05_lazy_load/test_test_score_floor.py` — enforces the test score minimum
 
 ### `testing/_test_metadata.md`
@@ -270,9 +254,20 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - Parent: `testing.md`
 - Child: `_test_metadata_complexity_scoring.md` — applies the shared formula in `03_authoring_guidelines/shared_standards/_complexity_scoring.md`
 
-### `testing_guidance.md`
+### `testing/_test_metadata_audit.md`
 
-- Pointer from: `testing.md` and `testing/_test_metadata.md`
+- Parent: `testing.md`
+- Sibling: `_test_metadata.md` — header format and per-edit update rules
+
+### `testing/_testing_anti_patterns.md`
+
+- Parent: `testing.md`
+- Sibling: `_testing_design_pattern.md` — the pattern these anti-patterns violate
+
+### `testing/_testing_design_pattern.md`
+
+- Parent: `testing.md`
+- Sibling: `_testing_anti_patterns.md` — mistakes to avoid
 
 ### `turn_budgets.md`
 

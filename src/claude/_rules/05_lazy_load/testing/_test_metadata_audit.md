@@ -1,6 +1,6 @@
-<!-- version: 2.1.0 -->
+<!-- version: 2.1.1 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-06 -->
 # 📅 Test Metadata Audit
 
 **Purpose:** The quarterly audit, worked update example and archival workflow that keep test metadata headers honest — the per-edit update rules stay always-on in `_test_metadata.md`.

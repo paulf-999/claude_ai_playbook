@@ -131,7 +131,6 @@ ENTRY_POINT_RELATIVE_PATHS = {
     "mcp_trust_model.md",
     "response_standards_enforcement.md",
     "testing.md",
-    "testing_guidance.md",
     "turn_budgets.md",
     "style_guide_standards/airflow.md",
     "style_guide_standards/bash.md",

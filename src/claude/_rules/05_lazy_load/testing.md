@@ -3,10 +3,11 @@ paths:
   - "**/*.py"
   - "**/*.sh"
   - "**/*.sql"
+  - "**/_tests/**"
 ---
-<!-- version: 1.3.1 -->
+<!-- version: 1.4.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-02 -->
+<!-- updated: 2026-10-06 -->
 <!-- miss_cost: medium — untested code the user catches in review -->
 <!-- loading: path-scoped — only matters when writing code, so it loads when a Python, shell or SQL file is open -->
 # 🧪 Testing
@@ -63,7 +64,9 @@ Define the goal before writing the test. Tests validate *intended behavior*, not
 
 ## 📐 Test Design Pattern & Anti-Patterns
 
-- **Read on demand:** `~/.claude/_rules/05_lazy_load/testing_guidance.md` — before writing a new test: the 4-step design pattern, anti-patterns to avoid, and the quarterly test audit.
+- **Read on demand:** [`~/.claude/_rules/05_lazy_load/testing/_testing_design_pattern.md`](testing/_testing_design_pattern.md) — before writing a new test: state the goal, test behaviour, write assertion messages, spot-check.
+- **Read on demand:** [`~/.claude/_rules/05_lazy_load/testing/_testing_anti_patterns.md`](testing/_testing_anti_patterns.md) — before writing a new test: empty, over-mocked, fragile, slow and unclear tests to avoid.
+- **Read on demand:** [`~/.claude/_rules/05_lazy_load/testing/_test_metadata_audit.md`](testing/_test_metadata_audit.md) — when auditing tests: the quarterly audit, worked example and archival workflow.
 
 ## 📁 File Organization
 
