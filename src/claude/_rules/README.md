@@ -49,7 +49,7 @@ Not all rules have mechanical triggers. Understand the difference:
 
 Rule files are `@import`ed every session, so every line in them costs always-on context. To keep that cost down:
 
-- **Related links:** each file's parent, sibling and dependency links sit in its tier `README.md` under "🔗 Related rules", one `###` per file — never in a `## Related` section inside the rule (#121).
+- **Related links:** each file's parent, sibling and dependency links sit in its tier `README.md` under "🔗 Related rules", one `###` per file, for tiers 02–05 only (`01_essentials/` keeps no links, #310) — never in a `## Related` section inside the rule (#121).
   - **Why:** READMEs aren't `@import`ed, so the links cost nothing until someone opens the README.
   - **`_reference/`:** follows the same pattern, with its links in `_reference/README.md`.
 - **Contents sections:** add one only when the rule has 3 or more real `##` headings (#120).

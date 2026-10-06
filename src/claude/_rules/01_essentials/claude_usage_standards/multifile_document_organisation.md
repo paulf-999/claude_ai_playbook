@@ -1,6 +1,6 @@
-<!-- version: 1.1.1 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-06 -->
 # 📁 Multifile Document Organisation
 
 **Purpose:** One convention for when to split a document into a parent and child files, and how to lay them out — preventing flat-level sprawl across `_rules/`, style guides, skills, agents and any other structured documentation.
@@ -50,7 +50,7 @@ _rules/02_claude_standards/
 
 - **Import every child:** the parent `@import`s each `<topic>/_<aspect>.md` — a child only named in prose is never loaded.
 - **Contents only when earned:** add a Contents section only if the file has 3 or more real `##` headings.
-- **Related links:** parent and sibling link lists go in the tier `README.md` under "🔗 Related rules", never in the rule.
+- **Related links:** parent and sibling link lists go in the tier `README.md` under "🔗 Related rules" for tiers 02–05, never in the rule, and `01_essentials/` rules keep none (#310).
 - **README:** update `_rules/<tier>/README.md` to show the new parent + child structure.
 - **CLAUDE.md:** if the parent is imported from `CLAUDE.md`, update that import path to the parent's location.
 

@@ -1,6 +1,6 @@
-<!-- version: 1.1.3 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-09-28 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-06 -->
 # ✅ Rule Hard Gates Checklist
 
 **Purpose:** Final tick-box check before finishing a rule — verify placement, content, testing, wiring and docs, then run the before-merging review.
@@ -35,7 +35,7 @@
 ### 🔗 Wiring
 - [ ] Every child the parent describes has a real `@import` line, not just a mention in prose
 - [ ] Always-on rules are reachable from `CLAUDE.md`, and lazy-load rules are not imported
-- [ ] The rule has no `## Related` section — its parent, sibling and dependency links sit in the tier `README.md` under "🔗 Related rules"
+- [ ] The rule has no `## Related` section — its parent, sibling and dependency links sit in the tier `README.md` under "🔗 Related rules" (tiers 02–05 only, as `01_essentials/` keeps none)
 
 ### 📚 Docs
 - [ ] Quality scorecard created or updated at `_admin/_quality_scorecards/rules/<tier>/scorecard_<rule_name>.md`

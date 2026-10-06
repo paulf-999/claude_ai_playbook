@@ -124,5 +124,5 @@ Rules governing [domain/concern].
 - [ ] **No H1 duplicates:** Only one `#` header per file
 - [ ] **Clear scope:** One concept per file, related patterns grouped
 - [ ] **Contents only when earned:** Add a `## 📋 Contents` section only when the rule has 3 or more real `##` headings
-- [ ] **No Related section:** Put parent, sibling and dependency links in the tier's `README.md` under "🔗 Related rules", not in the rule
+- [ ] **No Related section:** Put parent, sibling and dependency links in the tier's `README.md` under "🔗 Related rules" (tiers 02–05 only, as `01_essentials/` keeps none), not in the rule
   - **Why:** rule files are `@import`ed every session, so every line costs always-on context; READMEs are not imported.
