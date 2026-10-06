@@ -18,7 +18,7 @@
 | **Should** | **style_guide_standards/dbt.md** | `lazy_load/style_guide_standards/` | 125 | 9 | 9 | 9 | 9 | 9 | 9 | **9.00** | ✅ Perfect | • dbt core principles lost<br>• Model layer architecture undefined<br>• Acceptance checklist missing |
 | **Should** | **style_guide_standards/terraform.md** | `lazy_load/style_guide_standards/` | 94 | 8 | 8 | 9 | 8 | 8 | 9 | **8.40** | ✅ Excellent | • Terraform module standards lost<br>• Provider pinning guidance missing<br>• Resource naming conventions undefined |
 | **Should** | **style_guide_standards/ansible.md** | `lazy_load/style_guide_standards/` | 79 | 8 | 8 | 9 | 8 | 8 | 9 | **8.40** | ✅ Excellent | • Ansible playbook standards lost<br>• Role structure guidance missing<br>• Best practices for automation undefined |
-| **Must** | **style_guide_standards/payroc_engineering_naming_standards.md** | `lazy_load/style_guide_standards/` | 25 | 9 | 9 | 9 | 9 | 9 | 9 | **9.00** | ✅ Perfect | • Index structure destroyed<br>• Naming standard links lost<br>• Child page organization missing |
+| **Must** | **style_guide_standards/org_naming_standards.md** | `lazy_load/style_guide_standards/` | 25 | 9 | 9 | 9 | 9 | 9 | 9 | **9.00** | ✅ Perfect | • Index structure destroyed<br>• Naming standard links lost<br>• Child page organization missing |
 | **Must** | **style_guide_standards/_naming_conventions.md** | `lazy_load/style_guide_standards/` | 117 | 9 | 8 | 9 | 9 | 9 | 9 | **8.90** | ✅ Excellent | • Core naming rules lost<br>• Segment definitions unavailable<br>• Environment/repo/department codes missing |
 | **Must** | **style_guide_standards/_naming_repositories.md** | `lazy_load/style_guide_standards/` | 37 | 9 | 8 | 9 | 8 | 9 | 9 | **8.70** | ✅ Excellent | • Repository naming pattern lost<br>• Department/type/descriptor guidance missing<br>• Naming examples unavailable |
 | **Must** | **style_guide_standards/_naming_infrastructure.md** | `lazy_load/style_guide_standards/` | 115 | 8 | 8 | 8 | 8 | 9 | 9 | **8.50** | ✅ Excellent | • VM naming convention lost<br>• PCI scope codes undefined<br>• Asset roles and sites missing |
@@ -36,7 +36,7 @@
   - ⚠️ **Good (7.5–7.9): 0 files** (0%)
 - **Line count compliance:**
   - ✅ **All files within 110-line guideline**
-  - ✅ **Payroc naming standards refactored** (was 177L → now 25L parent + 3 child files)
+  - ✅ **Organisation naming standards refactored** (was 177L → now 25L parent + 3 child files)
 - **Writing Style Compliance:** **11/11 files score 8–9/10** (perfect)
 - **Complexity Excellence:** **11/11 files score 8–9/10** (excellent)
 
@@ -63,7 +63,7 @@
 - style_guide_standards/sql.md (9.00) — complete SQL reference
 - style_guide_standards/airflow.md (9.00) — full DAG standards
 - style_guide_standards/dbt.md (9.00) — complete dbt guide
-- style_guide_standards/payroc_engineering_naming_standards.md (9.00) — elegant index
+- style_guide_standards/org_naming_standards.md (9.00) — elegant index
 
 ### ✅ Excellent (8.0–8.9)
 **6 files** achieve excellent status:
@@ -78,7 +78,7 @@
 
 ## ✅ Critical Issues (RESOLVED)
 
-### payroc_engineering_naming_standards.md Refactoring — COMPLETE ✅
+### org_naming_standards.md Refactoring — COMPLETE ✅
 
 **Status:** Successfully refactored (2026-08-19)
 
@@ -101,7 +101,7 @@
 | Files 8.0+ | 100% | 100% | 0% | ✅ Perfect |
 | Over 110L | 0% | 0% | 0% | ✅ Compliant |
 
-**Interpretation:** Lazy-load rules now match always-on quality (8.76 ≈ 8.88). Recent improvements to automation_controls.md, sql.md, airflow.md, dbt.md, and payroc naming refactoring elevated the set to 45.5% perfect score.
+**Interpretation:** Lazy-load rules now match always-on quality (8.76 ≈ 8.88). Recent improvements to automation_controls.md, sql.md, airflow.md, dbt.md, and organisation naming refactoring elevated the set to 45.5% perfect score.
 
 ---
 
@@ -112,7 +112,7 @@
 - ✅ Impact of Deletion column populated
 - ✅ Critical issues identified and resolved
 - ✅ Line count compliance verified (all ≤110L)
-- ✅ Refactoring completed (payroc naming standards)
+- ✅ Refactoring completed (organisation naming standards)
 - ✅ Quality improvements documented
 
 ---

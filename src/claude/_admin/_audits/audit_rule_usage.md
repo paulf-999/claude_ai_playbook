@@ -45,7 +45,7 @@
 | `05_lazy_load/style_guide_standards/infra/docker.md` | 05 | 146 | 0% (0) | 0% (0) | 0 | medium | — | — | not enough data |
 | `05_lazy_load/style_guide_standards/infra/terraform.md` | 05 | 411 | 0% (0) | 0% (0) | 0 | medium | — | — | not enough data |
 | `05_lazy_load/style_guide_standards/jira.md` | 05 | 393 | — | 0% (0) | — | low | — | — | no trigger |
-| `05_lazy_load/style_guide_standards/payroc_engineering_naming_standards.md` | 05 | 444 | — | 0% (0) | — | low | — | — | no trigger |
+| `05_lazy_load/style_guide_standards/org_naming_standards.md` | 05 | 444 | — | 0% (0) | — | low | — | — | no trigger |
 | `05_lazy_load/style_guide_standards/python.md` | 05 | 1,186 | 26% (30) | 1% (1) | 29 | low | 2026-10-01 | 2026-09-19 | — |
 | `05_lazy_load/style_guide_standards/sql.md` | 05 | 1,242 | 4% (5) | 3% (4) | 1 | medium | 2026-10-01 | 2026-10-01 | not enough data |
 | `05_lazy_load/style_guide_standards/utilities/datetime.md` | 05 | 566 | — | 0% (0) | — | medium | — | — | no trigger |
