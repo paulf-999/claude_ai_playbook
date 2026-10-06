@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-06
-# Version:           1.4.0
+# Version:           1.5.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -10,7 +10,7 @@
 
 """Validates the rule-only ``applies_to``, ``miss_cost`` and ``loading`` headers defined in _claude_config_metadata.md.
 
-Every always-on entry-point rule (the top-level files in tiers 01–04) declares which
+Every always-on entry-point rule (the top-level files in tiers 01–03) declares which
 sessions need it, as comma-separated globs or ``*`` alone, on the line after ``updated``.
 Every entry-point rule, always-on or lazy, declares what a miss costs. A lazy rule whose
 miss is ``high`` must load mechanically — through ``paths:`` or a hook — never on recall alone.
@@ -22,8 +22,8 @@ from pathlib import Path
 
 from _shared_paths import CLAUDE_DIR, HOOKS_DIR, LAZY_RULES_DIR, RULES_DIR
 
-ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference")
-PATH_SCOPED_DIR = RULES_DIR / "05_path_scoped"
+ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines")
+PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
 APPLIES_TO = re.compile(r"^<!-- applies_to: (.+) -->$", re.M)
 MISS_COST = re.compile(r"^<!-- miss_cost: (high|medium|low) — \S.* -->$")
 MISS_COST_PREFIX = "<!-- miss_cost:"
@@ -71,7 +71,7 @@ def has_header(content: str) -> bool:
 
 
 def always_on_entry_points() -> list[Path]:
-    """List the top-level rule files in tiers 01–04.
+    """List the top-level rule files in tiers 01–03.
 
     :return: Paths of the always-on entry-point rules.
     """
@@ -152,7 +152,7 @@ def test_always_on_tiers_have_entry_points():
     """The scan finds the always-on rules, so an empty result can't pass silently."""
     entry_points = always_on_entry_points()
     assert len(entry_points) >= 10, f"expected at least 10 always-on entry points, found {len(entry_points)}"
-    assert all(p.parent.name in ALWAYS_ON_TIERS for p in entry_points), "scan left tiers 01–04"
+    assert all(p.parent.name in ALWAYS_ON_TIERS for p in entry_points), "scan left tiers 01–03"
 
 
 def test_every_always_on_entry_point_declares_applies_to():
@@ -228,7 +228,7 @@ def lazy_entry_points() -> list[Path]:
     :return: Paths of the lazy entry-point rules.
     """
     # A child's parent may sit in another root, e.g. sql/formatting.md in _rules_lazy_load/
-    # belongs to sql.md in rules/05_path_scoped/, so look for the parent in every root.
+    # belongs to sql.md in rules/04_path_scoped/, so look for the parent in every root.
     roots = [PATH_SCOPED_DIR, LAZY_RULES_DIR] + [RULES_DIR / tier for tier in ALWAYS_ON_TIERS]
     found = [p for tier in ALWAYS_ON_TIERS for p in (RULES_DIR / tier).glob("*.md") if has_paths(p.read_text())]
     for root in (PATH_SCOPED_DIR, LAZY_RULES_DIR):

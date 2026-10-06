@@ -21,7 +21,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/rules/05_path_scoped/testing.md` — the rule being scored
+- `src/claude/rules/04_path_scoped/testing.md` — the rule being scored
 - `src/claude/_tests/rules/05_lazy_load/test_testing.py` — Test Coverage dimension
 
 ---

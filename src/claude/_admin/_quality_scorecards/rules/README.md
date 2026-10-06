@@ -76,10 +76,10 @@ This is the rule-specific version of the shared `_templates/scorecard.md.templat
 - 10 = documented recurring problem, real incident, or usage evidence
 - 1 = speculative, "might be useful someday," no observed need
 
-**Token Cost Justification** — Only meaningful for always-on tiers (`01_essentials/`–`04_claude_reference/`):
+**Token Cost Justification** — Only meaningful for always-on tiers (`01_essentials/`–`03_authoring_guidelines/`):
 - 10 = high session coverage, safety-critical, or foundational — cost clearly earns its keep
 - 1 = narrow applicability that should be lazy-loaded instead
-- N/A for lazy rules in `rules/05_path_scoped/` or `_rules_lazy_load/` (already scoped to on-demand)
+- N/A for lazy rules in `rules/04_path_scoped/` or `_rules_lazy_load/` (already scoped to on-demand)
 
 **Structural Compliance** — Does it follow this config's own conventions?
 - Emoji headers, Purpose statement, ~100-line limit (or split into parent+children), trailing newline, bold-keyword bullets

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-06
-# Version:           1.2.0
+# Version:           1.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -23,10 +23,10 @@ from pathlib import Path
 
 from _shared_paths import LAZY_RULES_DIR, RULES_DIR
 
-PATH_SCOPED_DIR = RULES_DIR / "05_path_scoped"
+PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
 STYLE_DIR = Path("style_guide_standards")
 
-# Rule path (relative to rules/05_path_scoped/ or _rules_lazy_load/) -> H2 headings it must keep, emoji stripped.
+# Rule path (relative to rules/04_path_scoped/ or _rules_lazy_load/) -> H2 headings it must keep, emoji stripped.
 RULES: dict[Path, list[str]] = {
     Path("org.md"): ["Child pages", "Organisation facts", "Internal references"],
     STYLE_DIR / "airflow.md": ["Child pages", "Core Principles", "DAG Acceptance Checklist"],
@@ -207,7 +207,7 @@ def _rule_texts() -> dict[Path, str]:
 
 
 def rule_path(rel: Path) -> Path:
-    """Return a tracked rule's absolute path, in rules/05_path_scoped/ or else _rules_lazy_load/."""
+    """Return a tracked rule's absolute path, in rules/04_path_scoped/ or else _rules_lazy_load/."""
     scoped = PATH_SCOPED_DIR / rel
     return scoped if scoped.is_file() else LAZY_RULES_DIR / rel
 
@@ -223,7 +223,7 @@ def test_rule_table_tracks_fourteen_distinct_rules():
 
 
 def test_every_tracked_rule_exists():
-    """Every rule in the table is still on disk under rules/05_path_scoped/ or _rules_lazy_load/."""
+    """Every rule in the table is still on disk under rules/04_path_scoped/ or _rules_lazy_load/."""
     missing = [str(rel) for rel in RULES if not rule_path(rel).is_file()]
     assert not missing, f"Tracked rules missing from both rule folders — fix the path in RULES or restore: {missing}"
 

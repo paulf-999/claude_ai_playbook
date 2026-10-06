@@ -30,7 +30,7 @@ The five lowest-scoring artefacts, each with the first recommended improvement f
 | # | Artefact | Score | Action | Scorecard |
 |---|---|---|---|---|
 | 1 | `makefile.md` | 6.8 | Fix or remove the broken `~/.claude/templates/makefile/` templates reference | [scorecard_makefile.md](rules/05_lazy_load/style_guide_standards/utilities/scorecard_makefile.md) |
-| 2 | `claude_operational_efficiency.md` | 7.1 | Add structural tests for the parent and its imported children | [scorecard_claude_operational_efficiency.md](rules/04_claude_reference/scorecard_claude_operational_efficiency.md) |
+| 2 | `claude_operational_efficiency.md` | 7.1 | Add structural tests for the parent and its imported children | [scorecard_claude_operational_efficiency.md](rules/02_claude_standards/scorecard_claude_operational_efficiency.md) |
 | 3 | `claude_kaizen` | 7.1 | Add a `reference/_implementation.md` covering the audit and promotion logic | [scorecard_claude_kaizen.md](skills/scorecard_claude_kaizen.md) |
 | 4 | `automation_controls.md` | 7.5 | Split the 162-line file into a parent and child files | [scorecard_automation_controls.md](rules/05_lazy_load/scorecard_automation_controls.md) |
 | 5 | `claude_plans.md` | 7.6 | Add a "Right" example alongside the existing "Wrong" one | [scorecard_claude_plans.md](rules/02_claude_standards/scorecard_claude_plans.md) |

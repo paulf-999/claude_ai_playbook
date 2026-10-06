@@ -2,13 +2,13 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
 # Date updated:      2026-10-06
-# Version:           2.0.0
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Drift tests for rules/05_path_scoped/claude_rule_loading_strategy.md.
+"""Drift tests for rules/04_path_scoped/claude_rule_loading_strategy.md.
 
 The rule's folder table describes the real ``rules/`` and ``_rules_lazy_load/`` layout. These tests
 fail when the table and the folders on disk stop matching, or when the table's
@@ -18,7 +18,7 @@ import re
 
 from _shared_paths import CLAUDE_MD, LAZY_RULES_DIR, RULES_DIR
 
-RULE = RULES_DIR / "05_path_scoped" / "claude_rule_loading_strategy.md"
+RULE = RULES_DIR / "04_path_scoped" / "claude_rule_loading_strategy.md"
 
 # A table row: | `01_essentials/` | ... | `example.md` | ... | Loading |
 ROW_PATTERN = re.compile(
@@ -28,7 +28,7 @@ ROW_PATTERN = re.compile(
 # Matches any config-dir name (~/.claude/, ~/claude/, ...) per portable_paths.md.
 IMPORT_PATTERN = re.compile(r"^@~/[^/]+/(_?rules\S*)$", re.MULTILINE)
 LAZY_FOLDER = "_rules_lazy_load"
-PATH_SCOPED_TIER = "05_path_scoped"
+PATH_SCOPED_TIER = "04_path_scoped"
 # paths: frontmatter (5 lines) + version, created, updated, miss_cost
 HEADER_LINES = 9
 LINE_LIMIT = 110
@@ -69,11 +69,11 @@ def test_rule_file_exists():
     assert RULE.is_file(), f"Rule missing: {RULE}"
 
 
-def test_table_has_six_rows():
-    """The heading promises six folders, so the table must have six rows."""
-    assert "## 📁 The six rule folders" in _content(), "'The six rule folders' heading removed"
-    assert len(_rows()) == 6, (
-        f"Expected 6 folder rows, parsed {len(_rows())} — check the table format"
+def test_table_has_five_rows():
+    """The heading promises five folders, so the table must have five rows."""
+    assert "## 📁 The five rule folders" in _content(), "'The five rule folders' heading removed"
+    assert len(_rows()) == 5, (
+        f"Expected 5 folder rows, parsed {len(_rows())} — check the table format"
     )
 
 
@@ -113,7 +113,7 @@ def test_example_files_exist():
 
 
 def test_loading_column_matches_tier():
-    """Tiers 01–04 say always-on, 05_path_scoped/ says path-scoped, and the lazy folder says never automatic."""
+    """Tiers 01–03 say always-on, 04_path_scoped/ says path-scoped, and the lazy folder says never automatic."""
     for tier, _example, loading in _rows():
         if tier == LAZY_FOLDER:
             assert "never loaded automatically" in loading, f"{tier} loading should say never loaded automatically"

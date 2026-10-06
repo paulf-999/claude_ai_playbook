@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-06
-# Version:           1.2.0
+# Version:           1.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -21,8 +21,8 @@ from pathlib import Path
 from _shared_paths import CLAUDE_DIR, CLAUDE_MD, HOOKS_DIR, LAZY_RULES_DIR, RULES_DIR, SKILLS_DIR
 
 LAZY_DIR = LAZY_RULES_DIR
-PATH_SCOPED_DIR = RULES_DIR / "05_path_scoped"
-ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference")
+PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
+ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines")
 # Folders under _rules_lazy_load/ that hold indexes or ledgers rather than rules
 NON_RULE_FOLDERS = {"_tier_readmes", "learned"}
 IMPORT = re.compile(r"^@~/[^/\s]+/(\S+\.md)\s*$", re.M)
@@ -122,7 +122,7 @@ def entry_points(lazy_dir: Path) -> list[Path]:
     :return: Entry-point rule paths.
     :rtype: list[Path]
     """
-    # A child's parent may sit under rules/, e.g. sql/formatting.md belongs to rules/05_path_scoped/.../sql.md
+    # A child's parent may sit under rules/, e.g. sql/formatting.md belongs to rules/04_path_scoped/.../sql.md
     roots = [lazy_dir, PATH_SCOPED_DIR] + [RULES_DIR / tier for tier in ALWAYS_ON_TIERS]
     found = []
     for path in sorted(lazy_dir.rglob("*.md")):
@@ -184,9 +184,9 @@ def test_imports_are_followed_through_every_level(tmp_path):
 
 def test_native_rules_without_paths_are_loaded(tmp_path):
     """Files under rules/ count as loaded at startup, except those with paths: frontmatter."""
-    (tmp_path / "rules" / "05_path_scoped").mkdir(parents=True)
+    (tmp_path / "rules" / "04_path_scoped").mkdir(parents=True)
     (tmp_path / "rules" / "a.md").write_text("always\n")
-    (tmp_path / "rules" / "05_path_scoped" / "b.md").write_text('---\npaths:\n  - "**/*.sql"\n---\n# B\n')
+    (tmp_path / "rules" / "04_path_scoped" / "b.md").write_text('---\npaths:\n  - "**/*.sql"\n---\n# B\n')
     assert set(native_texts(tmp_path / "rules")) == {"rules/a.md"}, sorted(native_texts(tmp_path / "rules"))
 
 
@@ -218,7 +218,7 @@ def test_every_lazy_rule_has_a_trigger():
         if not trigger_for(p.relative_to(LAZY_DIR).as_posix(), p.read_text(), loaded, hooks)
     ]
     assert not orphans, (
-        f"lazy rules nothing loads: {orphans} — add paths: frontmatter and move it to rules/05_path_scoped/, "
+        f"lazy rules nothing loads: {orphans} — add paths: frontmatter and move it to rules/04_path_scoped/, "
         "a 'Read on demand' pointer with the full _rules_lazy_load path in an always-on rule or skill, "
         "or move the file to _archive/"
     )

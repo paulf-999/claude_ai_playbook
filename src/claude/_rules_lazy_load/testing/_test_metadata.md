@@ -1,4 +1,4 @@
-<!-- version: 2.0.3 -->
+<!-- version: 2.0.4 -->
 <!-- created: 2026-09-17 -->
 <!-- updated: 2026-10-06 -->
 # 📊 Test Metadata Standard
@@ -39,7 +39,7 @@ Every test file in `~/.claude/_tests/` must open with this metadata header:
 
 **Every field is mandatory:** a new file sets `Date updated:` to the same day as `Date created:`, never `[placeholder]`.
 
-**Python style compliant:** `Yes` only if the file follows every rule in `~/.claude/rules/05_path_scoped/style_guide_standards/python.md` (f-strings only, reST docstrings, no bare `except`, `pathlib.Path` not `os.path`, etc.) — check before setting; don't assume.
+**Python style compliant:** `Yes` only if the file follows every rule in `~/.claude/rules/04_path_scoped/style_guide_standards/python.md` (f-strings only, reST docstrings, no bare `except`, `pathlib.Path` not `os.path`, etc.) — check before setting; don't assume.
 
 ---
 

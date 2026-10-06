@@ -10,8 +10,8 @@ The config is built on the principles in `guiding_principles.md` — read that f
 
 | Principle | How it shapes config |
 |---|---|
-| **Lazy-load by default** | Only tiers 01–04 load every session; domain-specific rules live in `_rules_lazy_load/` and are read on demand |
-| **Explicit over implicit** | The folder a rule sits in says how it loads — `rules/` tiers 01–04 every session, `paths:` rules with matching files, `_rules_lazy_load/` on demand; no silent automation |
+| **Lazy-load by default** | Only tiers 01–03 load every session; domain-specific rules live in `_rules_lazy_load/` and are read on demand |
+| **Explicit over implicit** | The folder a rule sits in says how it loads — `rules/` tiers 01–03 every session, `paths:` rules with matching files, `_rules_lazy_load/` on demand; no silent automation |
 | **Context efficiency** | Always-on size is measured, not estimated; broad imports are questioned in review; unused features are retired |
 | **Intentionality** | Features exist because they solve real, recurring problems — not "nice to have" |
 | **Reversible by design** | Rules are small, single-purpose; can be commented out or deleted without side effects |
@@ -62,7 +62,7 @@ This page describes the principle, not an inventory — the README in each direc
 | Path | What lives there | Current contents |
 |---|---|---|
 | `CLAUDE.md` | Entry point; imports memory and aliases | Read the file itself |
-| `rules/` | Rules Claude Code loads natively, in tiers `01_essentials/` to `04_claude_reference/` plus `05_path_scoped/` | `_rules_lazy_load/_tier_readmes/00_rules_overview.md` and each tier's README |
+| `rules/` | Rules Claude Code loads natively, in tiers `01_essentials/` to `03_authoring_guidelines/` plus `04_path_scoped/` | `_rules_lazy_load/_tier_readmes/00_rules_overview.md` and each tier's README |
 | `_rules_lazy_load/` | Rules read on demand, never loaded automatically, plus the tier READMEs | `_rules_lazy_load/README.md` |
 | `_reference/` | Background docs like this one — never imported | `_reference/README.md` |
 | `_tests/` | pytest suite for rules, hooks, skills and settings | `_tests/README.md` |
@@ -72,8 +72,8 @@ This page describes the principle, not an inventory — the README in each direc
 
 ## 🔄 What loads when
 
-- **Always-on:** Claude Code loads every `.md` under `rules/` without `paths:` frontmatter — tiers 01–04 and their children; the folders are the current list.
-- **With matching files:** rules with `paths:` (mostly `rules/05_path_scoped/`) load when Claude reads a file their globs match.
+- **Always-on:** Claude Code loads every `.md` under `rules/` without `paths:` frontmatter — tiers 01–03 and their children; the folders are the current list.
+- **With matching files:** rules with `paths:` (mostly `rules/04_path_scoped/`) load when Claude reads a file their globs match.
 - **On demand:** `_rules_lazy_load/` and `_reference/` are never imported; Claude reads them when a task needs them.
 - **Cost:** measure it rather than estimate it — `_rules_lazy_load/_tier_readmes/00_rules_overview.md` records measured tier sizes, and each always-on file adds its full size to every session.
 
@@ -113,7 +113,7 @@ Regular maintenance cycles ensure the config stays intentional and focused on cu
 Use this decision tree:
 
 1. **Does it apply to EVERY session** (regardless of project type)?
-   - **Yes** → Place in the matching always-on tier (`01_essentials/` to `04_claude_reference/`, per `_rules_lazy_load/_tier_readmes/00_rules_overview.md`) and `@import` it from that tier's entry file
+   - **Yes** → Place in the matching always-on tier (`01_essentials/` to `03_authoring_guidelines/`, per `_rules_lazy_load/_tier_readmes/00_rules_overview.md`) and `@import` it from that tier's entry file
    - **No** → Go to step 2
 
 2. **Is it domain-specific** (SQL, dbt, Terraform, etc.)?

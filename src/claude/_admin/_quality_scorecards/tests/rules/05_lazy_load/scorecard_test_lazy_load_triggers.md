@@ -19,5 +19,5 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/05_lazy_load/test_lazy_load_triggers.py` — the test being scored
-- `src/claude/rules/05_path_scoped/claude_rule_loading_strategy.md` — "Pointers aren't triggers" and the placement table
+- `src/claude/rules/04_path_scoped/claude_rule_loading_strategy.md` — "Pointers aren't triggers" and the placement table
 - `src/claude/_tests/rules/05_lazy_load/test_path_scoped_rules.py` — the companion checks on `rules/` symlinks and imports

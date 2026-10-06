@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-06
-# Version:           2.1.0
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -21,7 +21,7 @@ import re
 from _shared_paths import CLAUDE_MD
 
 IMPORT_PATTERN = re.compile(r"^@~/([^/\s]+)/(\S+)$", re.M)
-ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference")
+ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines")
 NON_RULE_IMPORTS = {"memory/MEMORY.md", "aliases.md"}
 MAX_IMPORTS = 20
 

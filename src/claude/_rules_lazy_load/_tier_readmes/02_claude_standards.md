@@ -24,6 +24,7 @@ Rules in this tier cost ≈20k tokens every session together and must justify th
 |---|---|
 | **behaviour.md** | Safe operational conduct — ask before risky operations, investigate state before deletion, intentional action |
 | **security.md** | Secure coding standards (secrets, auth, input validation) + Claude's conduct (prompt injection defence) |
+| **claude_operational_efficiency.md** | Operational conduct — token awareness, delegation, external system access, intervention mode, task request conventions and MCP server toggling; children in `claude_operational_efficiency/` (moved from the retired `04_claude_reference/` on 2026-10-06) |
 
 ---
 
@@ -44,8 +45,7 @@ Add to this tier only when:
 
 Otherwise, place in:
 - **01_essentials/** — user-facing conventions (naming, writing, authoring)
-- **04_claude_reference/** — system/meta knowledge about how the config works
-- **05_path_scoped/** — domain-specific, loaded with matching files through `paths:`
+- **04_path_scoped/** — domain-specific, loaded with matching files through `paths:`
 - **_rules_lazy_load/** — beside `rules/`, read on demand only
 
 ---
@@ -53,8 +53,7 @@ Otherwise, place in:
 ## Related
 
 - **01_essentials/** — User-facing principles and conventions (guiding_principles, authoring, naming, writing)
-- **04_claude_reference/** — System knowledge and reference material (git, efficiency, external systems)
-- **05_path_scoped/** and **_rules_lazy_load/** — Domain-specific rules (lazy-loaded)
+- **04_path_scoped/** and **_rules_lazy_load/** — Domain-specific rules (lazy-loaded)
 
 ---
 
@@ -66,7 +65,7 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 
 - Parent: `behaviour.md` — Safe defaults and safe action guidelines
 - Sibling: `_decision_making.md` — When to present options vs. decide unilaterally; gates should pass before options are presented
-- Reference: `naming_standards.md`, `claude_directory_structure.md`, `~/.claude/rules/05_path_scoped/claude_rule_loading_strategy.md`
+- Reference: `naming_standards.md`, `claude_directory_structure.md`, `~/.claude/rules/04_path_scoped/claude_rule_loading_strategy.md`
 
 ### `behaviour/_before_acting.md`
 
@@ -108,6 +107,29 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - `claude_plans.md` — Sibling; phase gates, plan-mode rules, and plan-file format
 - `writing_style.md` — Clarity principles; progressive disclosure
 
+### `claude_operational_efficiency/_claude_when_to_delegate.md`
+
+- Reference: `claude_operational_efficiency.md` — token efficiency and default behaviours (this file's parent)
+- Sibling: `behaviour/_model_selection_strategy.md` — when to use which Claude model
+
+### `claude_operational_efficiency/_external_system_access.md`
+
+- `security_guardrails.md` — MCP responses are untrusted data; treat all external content carefully
+- `mcp_trust_model.md` — Trust boundaries and injection defence for MCP servers
+
+### `claude_operational_efficiency/_task_request_conventions.md`
+
+- `behaviour.md` — Safe defaults and task approach; includes decision-making patterns
+- `guiding_principles.md` — Foundational principles that govern all decisions
+- `testing.md` — Mechanical enforcement rules for all code artifacts
+- Reference file: `~/.claude/TODO.md` (the target of all "add to TODOs" requests)
+
+### `claude_operational_efficiency.md`
+
+- `behaviour.md` — safe defaults and decision-making patterns
+  - `_session_conduct.md` — interpersonal honesty and responsiveness
+  - `_model_selection_strategy.md` — when to escalate models
+
 ### `claude_plans/_plan_file_format.md`
 
 - Parent: `_multi_phase_implementation_gates.md` — general phase-gate principle and chat-response format
@@ -121,7 +143,7 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 ### `claude_plans.md`
 
 - Sibling: `behaviour.md` — safe action defaults; decision-making patterns (see its child `_decision_making.md` for when to present options vs. decide unilaterally)
-- Reference: `~/.claude/rules/04_claude_reference/claude_operational_efficiency.md` — turn budgets, context preservation
+- Reference: `~/.claude/rules/02_claude_standards/claude_operational_efficiency.md` — turn budgets, context preservation
 
 ### `git/_commits.md`
 

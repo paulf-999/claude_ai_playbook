@@ -21,7 +21,7 @@ The root config, settings and aliases that every session starts from.
 
 See [`src/claude/_rules_lazy_load/_tier_readmes/00_rules_overview.md`](../src/claude/_rules_lazy_load/_tier_readmes/00_rules_overview.md)
 
-Rules in two folders: `rules/` tiers 01–04 load every session, `rules/05_path_scoped/` loads with matching files, and `_rules_lazy_load/` is read on demand.
+Rules in two folders: `rules/` tiers 01–03 load every session, `rules/04_path_scoped/` loads with matching files, and `_rules_lazy_load/` is read on demand.
 
 ---
 

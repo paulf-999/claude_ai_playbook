@@ -3,7 +3,7 @@ paths:
   - "**/.claude/**"
   - "**/claude/**"
 ---
-<!-- version: 1.1.1 -->
+<!-- version: 1.1.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-06 -->
 # 📋 File Structure Validation
@@ -50,7 +50,7 @@ python3 ~/.claude/_tests/test_file_structure_compliance.py
 1. **Read the violation message** — it indicates exactly what's wrong (naming, placement, prefix)
 2. **Fix the issue** — rename, move, or delete the file as indicated
 3. **Re-run the test** — verify the fix resolves the violation
-4. **If unsure,** refer to `~/.claude/rules/05_path_scoped/claude_directory_structure.md` for authoritative naming and placement rules
+4. **If unsure,** refer to `~/.claude/rules/04_path_scoped/claude_directory_structure.md` for authoritative naming and placement rules
 
 **Example violation and fix:**
 ```

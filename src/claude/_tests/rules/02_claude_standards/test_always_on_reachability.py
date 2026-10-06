@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
 # Date updated:      2026-10-06
-# Version:           3.0.0
+# Version:           3.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -10,7 +10,7 @@
 
 """Proves the real config's rules load the way their folders say, with no @import chain.
 
-Claude Code loads every ``.md`` under ``rules/`` on its own: tiers 01–04 in every session,
+Claude Code loads every ``.md`` under ``rules/`` on its own: tiers 01–03 in every session,
 and any file with ``paths:`` frontmatter only when a matching file is open. Read-on-demand
 rules live in ``_rules_lazy_load/``, outside ``rules/``. Each check below names the folder
 it guards, so a failure says which tier broke. ``test_rule_reachability.py`` proves the
@@ -24,7 +24,7 @@ from functools import cache
 from _rule_reachability import find_native_load_issues, has_paths_frontmatter
 from _shared_paths import CLAUDE_DIR, CLAUDE_MD, LAZY_RULES_DIR, RULES_DIR
 
-ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference")
+ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines")
 
 
 @cache
@@ -55,7 +55,7 @@ def test_no_imports_under_rules():
 
 
 def test_path_scoped_folder_holds_only_scoped_files():
-    """Every file in rules/05_path_scoped/ has paths:, or it would load every session."""
+    """Every file in rules/04_path_scoped/ has paths:, or it would load every session."""
     assert not issues()["unscoped"], f"add paths: frontmatter or move to _rules_lazy_load/: {issues()['unscoped']}"
 
 
@@ -121,7 +121,7 @@ def test_demoted_rules_stay_out_of_startup():
     files = startup_files()
     assert not [f for f in files if f.endswith("/authoring_agents.md")], "authoring_agents.md is back at startup"
     assert not [f for f in files if "claude_directory_structure" in f], "directory-structure rule is back at startup"
-    assert not [f for f in files if "05_path_scoped/" in f or "_rules_lazy_load/" in f], "a lazy rule is at startup"
+    assert not [f for f in files if "04_path_scoped/" in f or "_rules_lazy_load/" in f], "a lazy rule is at startup"
 
 
 DIRECTORY_RULES = [
@@ -135,14 +135,14 @@ DIRECTORY_RULES = [
 def test_directory_structure_loads_with_config_files():
     """The directory-structure rule and its 3 children load through paths: whenever a config file is read."""
     for target in DIRECTORY_RULES:
-        path = RULES_DIR / "05_path_scoped" / target
+        path = RULES_DIR / "04_path_scoped" / target
         assert path.read_text().startswith('---\npaths:\n  - "**/.claude/**"\n'), f"{target} lost its paths: trigger"
 
 
 def test_directory_structure_keeps_a_pointer_and_a_backstop():
     """New config files rely on an always-on pointer, with the naming hook catching what slips through."""
     usage = (RULES_DIR / "01_essentials" / "claude_usage_standards.md").read_text()
-    assert "05_path_scoped/claude_directory_structure.md" in usage, "claude_usage_standards.md lost its pointer"
+    assert "04_path_scoped/claude_directory_structure.md" in usage, "claude_usage_standards.md lost its pointer"
     assert (CLAUDE_DIR / "hooks" / "hook_enforcement_naming_convention.sh").is_file(), (
         "the naming-convention hook is the backstop that makes this rule safe to lazy-load — keep it"
     )

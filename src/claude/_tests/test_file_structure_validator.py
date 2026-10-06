@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-06
-# Version:           1.2.0
+# Version:           1.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -149,7 +149,7 @@ def test_rules_missing_tier_is_warning(tmp_path: Path):
     (tmp_path / "rules" / "01_essentials").mkdir(parents=True)
     violations = scan(tmp_path)
     missing = {v["rule"] for v in violations if v["severity"] == "warning"}
-    assert "Missing subdirectory: 05_path_scoped" in missing, f"missing tier should warn, got {missing}"
+    assert "Missing subdirectory: 04_path_scoped" in missing, f"missing tier should warn, got {missing}"
     assert "Missing subdirectory: 03_authoring_guidelines" in missing, f"tier 03 must be expected too, got {missing}"
     assert "Missing subdirectory: 01_essentials" not in missing, "a tier that exists must not be reported"
 

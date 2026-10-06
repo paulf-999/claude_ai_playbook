@@ -38,7 +38,7 @@ Per Boris Cherny's recommendation, perform a **full reset**:
 
 ### Step 1: Determine scope
 
-- **Core rule?** Used across multiple domains, or security-critical? → an always-on tier (`01_essentials/` to `04_claude_reference/`, per `_rules_lazy_load/_tier_readmes/00_rules_overview.md`)
+- **Core rule?** Used across multiple domains, or security-critical? → an always-on tier (`01_essentials/` to `03_authoring_guidelines/`, per `_rules_lazy_load/_tier_readmes/00_rules_overview.md`)
 - **Domain-specific?** Applies to one area (SQL, Airflow, dbt)? → `_rules_lazy_load/`
 - **Niche?** Referenced infrequently or only in specific projects? → `_rules_lazy_load/`
 
@@ -86,7 +86,7 @@ A rule should move from `_rules_lazy_load/` to an always-on tier when:
 ### Promotion process
 
 1. **Verify criteria** — audit transcripts; confirm usage patterns
-2. **Move file** — from `_rules_lazy_load/` into the matching tier under `rules/` (`01_essentials/` to `04_claude_reference/`), where it loads natively
+2. **Move file** — from `_rules_lazy_load/` into the matching tier under `rules/` (`01_essentials/` to `03_authoring_guidelines/`), where it loads natively
 3. **Point to it** — if it's a child, add a `**Loads on its own from:**` line to its parent, and note the size it adds
 4. **Run the suite** — `test_always_on_reachability.py` confirms nothing under `rules/` is a README, `_lazy_load/` folder or `@import`
 5. **Update docs** — remove from lazy-load index; add to top-level rule index
@@ -143,7 +143,7 @@ Every config makes tradeoffs. Understanding them helps future decisions:
 
 ### Medium-term (6–12 months)
 
-- Evaluate whether `03_authoring_guidelines/` and `04_claude_reference/` can be lazy-loaded — both are used in only some sessions
+- Evaluate whether `03_authoring_guidelines/` can be lazy-loaded — it is used in only some sessions
 - Consider a "seasonal" rule set (e.g., "quarterly planning rules" loaded only during planning season)
 - Review MCP trust model; consider whether additional MCP-specific rules are needed
 

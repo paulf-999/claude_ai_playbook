@@ -1,4 +1,4 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-09-28 -->
 <!-- updated: 2026-10-06 -->
 # ✅ Rule Hard Gates Checklist
@@ -11,7 +11,7 @@
 
 ### 📍 Placement
 - [ ] Name is snake_case and self-describing, per `naming_standards.md`
-- [ ] Folder chosen deliberately (`rules/01_essentials/`–`05_path_scoped/` or `_rules_lazy_load/`), with always-on token cost justified
+- [ ] Folder chosen deliberately (`rules/01_essentials/`–`04_path_scoped/` or `_rules_lazy_load/`), with always-on token cost justified
 - [ ] No existing rule already covers this concept (checked `claude_rule_loading_strategy.md` and searched `rules/` and `_rules_lazy_load/`)
 - [ ] Child files sit in a `<parent>/` subdirectory with an `_` prefix, and there are 2 or more of them
 

@@ -59,7 +59,7 @@ _templates/
 
 **`template_bash_script.sh`**
 - Starting point for a new bash script: shebang, safety flags, `shell_utils.sh` source, section headers, trap and logging
-- Used by: `rules/05_path_scoped/style_guide_standards/bash.md`
+- Used by: `rules/04_path_scoped/style_guide_standards/bash.md`
 
 ### Scorecards
 

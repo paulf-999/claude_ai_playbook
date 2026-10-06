@@ -30,7 +30,7 @@ Use targeted Grep and Glob rather than reading files broadly:
 | Find a rule | `Glob src/claude/{rules,_rules_lazy_load}/**/<rule_name>.md` |
 | Find rules referencing another | `Grep "<rule_name>" src/claude/rules/ src/claude/_rules_lazy_load/` |
 | Find skills in a group | `Glob src/claude/skills/_<group>_skills/**/SKILL.md` |
-| Find a style guide | `Glob src/claude/{rules/05_path_scoped,_rules_lazy_load}/style_guide_standards/**/<name>.md` |
+| Find a style guide | `Glob src/claude/{rules/04_path_scoped,_rules_lazy_load}/style_guide_standards/**/<name>.md` |
 
 ---
 
@@ -41,10 +41,10 @@ Whenever a new artefact is added to `src/claude/`, the documentation listed belo
 | Artefact | Required doc updates |
 |---|---|
 | **Skill** (`skills/`) | `src/claude/skills/README.md` |
-| **Rule** (`rules/<tier>/` or `_rules_lazy_load/`) | `src/claude/_rules_lazy_load/_tier_readmes/<tier>.md` for tiers 01–04, or `src/claude/_rules_lazy_load/README.md` for lazy and path-scoped rules — no `@import`, since Claude Code loads `rules/` natively |
+| **Rule** (`rules/<tier>/` or `_rules_lazy_load/`) | `src/claude/_rules_lazy_load/_tier_readmes/<tier>.md` for tiers 01–03, or `src/claude/_rules_lazy_load/README.md` for lazy and path-scoped rules — no `@import`, since Claude Code loads `rules/` natively |
 | **Agent** (`agents/<group>/<name>/AGENT.md`) | None — the `agents/` folder is the index |
 | **Hook** (`hooks/`) | `settings.json` lifecycle event registration |
-| **Style guide** (`rules/05_path_scoped/style_guide_standards/` or `_rules_lazy_load/style_guide_standards/`) | None — the folders are the index (path-scoped entry points load on a matching file; children are read on demand) |
+| **Style guide** (`rules/04_path_scoped/style_guide_standards/` or `_rules_lazy_load/style_guide_standards/`) | None — the folders are the index (path-scoped entry points load on a matching file; children are read on demand) |
 | **Skill behavioural test** (`src/claude/_tests/skills/`) | Set `tested: true` in the skill's `SKILL.md` frontmatter · update the group README (`_<group>_skills/README.md`) `Tested` column — no other doc updates required |
 
 `docs/whats_installed.md` only links to each folder's index with a one-line summary, so it needs a new section only when a new kind of artefact (a new top-level folder) is added.
@@ -72,10 +72,10 @@ Files most frequently cross-referenced across the playbook, derived from static 
 
 | File | Domain |
 |---|---|
-| `src/claude/rules/05_path_scoped/style_guide_standards/sql.md` | SQL / SQLFluff |
-| `src/claude/rules/05_path_scoped/style_guide_standards/airflow.md` | Airflow DAGs |
-| `src/claude/rules/05_path_scoped/style_guide_standards/dbt.md` | dbt models |
+| `src/claude/rules/04_path_scoped/style_guide_standards/sql.md` | SQL / SQLFluff |
+| `src/claude/rules/04_path_scoped/style_guide_standards/airflow.md` | Airflow DAGs |
+| `src/claude/rules/04_path_scoped/style_guide_standards/dbt.md` | dbt models |
 | `src/claude/_rules_lazy_load/style_guide_standards/jira.md` | Jira tickets |
-| `src/claude/rules/05_path_scoped/style_guide_standards/infra/terraform.md` | Terraform |
-| `src/claude/rules/05_path_scoped/style_guide_standards/infra/ansible.md` | Ansible |
+| `src/claude/rules/04_path_scoped/style_guide_standards/infra/terraform.md` | Terraform |
+| `src/claude/rules/04_path_scoped/style_guide_standards/infra/ansible.md` | Ansible |
 | `src/claude/_rules_lazy_load/org.md` | Organisation-specific standards (naming, secrets, estate) |

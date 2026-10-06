@@ -18,7 +18,7 @@ format and scoring rubric.
 
 **Utility (not a scored test):** `_resolved_rule.py` — reads a parent rule with every child it imports or points to on demand inlined.
 
-**Utility (not a scored test):** `_rule_reachability.py` — reports files under `rules/` that would load wrongly (READMEs, `_lazy_load/` folders, `@import` lines, unscoped `05_path_scoped/` files) and Read-on-demand pointers that lead nowhere.
+**Utility (not a scored test):** `_rule_reachability.py` — reports files under `rules/` that would load wrongly (READMEs, `_lazy_load/` folders, `@import` lines, unscoped `04_path_scoped/` files) and Read-on-demand pointers that lead nowhere.
 
 **Utility (not a scored test):** `_file_structure_validator.py` — the file-structure scanner, and the `--check` mode the naming hook calls for one new path.
 
@@ -74,14 +74,14 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_guiding_principles.py` | CLAUDE.md's imports follow guiding_principles.md — no lazy-load imports, a purpose comment on each, few, unique, always-on tiers in order | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
-| `test_rule_directory_organisation.py` | `01_essentials/` holds its expected files and folders, and tiers 01–04 follow the parent-and-children layout (`_` prefix, 2+ children, parent beside each folder) | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
+| `test_rule_directory_organisation.py` | `01_essentials/` holds its expected files and folders, and tiers 01–03 follow the parent-and-children layout (`_` prefix, 2+ children, parent beside each folder) | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_writing_style.py` | `writing_style.md` keeps its tables rule, one sentence per bullet, British spelling, underscore file-name dates and its multifile child | 9/10 | 2026-08-28 | 2026-10-06 | 2.0.0 |
 
 ### `rules/02_claude_standards/`
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_always_on_reachability.py` | Every file under `rules/` loads the way its folder says — no README, `_lazy_load/` folder, `@import` or unscoped `05_path_scoped/` file — and every 'Read on demand' pointer | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.0 |
+| `test_always_on_reachability.py` | Every file under `rules/` loads the way its folder says — no README, `_lazy_load/` folder, `@import` or unscoped `04_path_scoped/` file — and every 'Read on demand' pointer | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.0 |
 | `test_artefact_proposal_gates.py` | The three artefact proposal gates — naming, placement, duplication | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.1 |
 | `test_concurrent_sessions.py` | `git/_concurrent_sessions.md` keeps its incident record and shared-working-tree safety guidance | 9/10 | 2026-09-21 | 2026-10-01 | 1.2.1 |
 | `test_decision_making.py` | `_decision_making.md` keeps each clause of the intentionality gate, and the rules it defers to still exist and agree | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
@@ -105,7 +105,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_authoring_skills_maturity.py` | `authoring_skills.md`'s maturity table matches the checklist and complexity formula, plus scope anti-patterns and low-maintenance principles | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
 | `test_claude_config_metadata.py` | Every rule opens with the three-line version, created and updated metadata header | 9/10 | 2026-09-28 | 2026-10-01 | 2.2.1 |
 
-### `rules/04_claude_reference/`
+### `rules/02_claude_standards/`
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
@@ -115,12 +115,12 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_claude_rule_loading_strategy.py` | The six-folder table matches the real `rules/` and `_rules_lazy_load/` folders, its example files exist, and CLAUDE.md imports no rules, matching each tier's loading claim; placement uses measured usage, not 70% | 9/10 | 2026-09-30 | 2026-10-01 | 1.2.0 |
+| `test_claude_rule_loading_strategy.py` | The five-folder table matches the real `rules/` and `_rules_lazy_load/` folders, its example files exist, and CLAUDE.md imports no rules, matching each tier's loading claim; placement uses measured usage, not 70% | 9/10 | 2026-09-30 | 2026-10-01 | 1.2.0 |
 | `test_automation_controls.py` | Turn budgets and gates for `/loop`, `/batch`, `/goal` are documented and reasonable | 9/10 | 2026-09-16 | 2026-10-01 | 1.0.2 |
 | `test_latency_optimisation.py` | `latency_optimisation.md` keeps effort as the lever, never gives a temperature above 1, and keeps its measure-first steps | 9/10 | 2026-09-17 | 2026-10-01 | 2.0.0 |
 | `test_lazy_load_coverage.py` | Every `_rules_lazy_load/` file is reachable from at least one hook (direct or via a parent index file) | 3/10 | 2026-09-16 | 2026-10-01 | 1.5.1 |
 | `test_lazy_load_rule_structure.py` | The 15 lazy-load rules once lacking a dedicated test keep their metadata header, Purpose line, key sections, linked child pages, working links and accurate Contents | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.0 |
-| `test_path_scoped_rules.py` | Path-scoped rules in `rules/` carry no `@` imports, `rules/` holds real files not links, and every `05_path_scoped/` file has `paths:` | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
+| `test_path_scoped_rules.py` | Path-scoped rules in `rules/` carry no `@` imports, `rules/` holds real files not links, and every `04_path_scoped/` file has `paths:` | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
 
 ---
 

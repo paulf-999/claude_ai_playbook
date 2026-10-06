@@ -7,7 +7,7 @@ when a matching file is open if the file has ``paths:`` frontmatter. So the fold
 - **readme:** a ``README.md`` under ``rules/``, which would load every session.
 - **lazy_folder:** a ``_lazy_load/`` folder under ``rules/``, whose on-demand children would load anyway.
 - **import:** an ``@~/...`` import line under ``rules/``, which the native loader makes redundant.
-- **unscoped:** a file in ``rules/05_path_scoped/`` without ``paths:``, which would load every session.
+- **unscoped:** a file in ``rules/04_path_scoped/`` without ``paths:``, which would load every session.
 - **pointer:** a ``**Read on demand:**`` pointer under ``rules/`` naming a file that doesn't exist.
 
 Tests: ``rules/02_claude_standards/test_always_on_reachability.py`` runs it over the
@@ -18,7 +18,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-PATH_SCOPED_DIR = "05_path_scoped"
+PATH_SCOPED_DIR = "04_path_scoped"
 POINTER = re.compile(r"\*\*Read on demand:\*\*\s*\[?`~/[^/`]+/([^`]+\.md)`")
 
 

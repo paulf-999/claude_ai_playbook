@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-06
-# Version:           1.2.0
+# Version:           1.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -113,7 +113,7 @@ def test_org_content_and_audits_are_excluded():
     assert is_excluded("_rules_lazy_load/org/jira.md")
     assert is_excluded("_admin/_quality_scorecards/rules/05_lazy_load/org/scorecard_jira.md")
     assert is_excluded("_admin/_audits/rule_usage_history.csv")
-    assert not is_excluded("rules/05_path_scoped/style_guide_standards/sql.md"), "a shared rule must be scanned"
+    assert not is_excluded("rules/04_path_scoped/style_guide_standards/sql.md"), "a shared rule must be scanned"
 
 
 def test_leak_found_case_insensitively():

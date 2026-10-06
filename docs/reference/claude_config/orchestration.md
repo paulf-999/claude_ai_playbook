@@ -21,4 +21,4 @@ flowchart TD
 ## Related
 
 - [Sub-agents](sub_agents.md) — which sub-agent to use for a given task
-- [`claude_operational_efficiency.md`](../../../src/claude/rules/04_claude_reference/claude_operational_efficiency.md) — the underlying rules this diagram visualises
+- [`claude_operational_efficiency.md`](../../../src/claude/rules/02_claude_standards/claude_operational_efficiency.md) — the underlying rules this diagram visualises

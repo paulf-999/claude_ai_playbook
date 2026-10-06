@@ -37,8 +37,7 @@ Authoring guidelines follow a **progressive maturity model**:
 
 - **`01_essentials/`** — Foundational rules applied every session (guiding principles, behaviour, security, testing)
 - **`02_claude_standards/`** — Quality gates and operational standards (behaviour, git, testing, security guardrails)
-- **`04_claude_reference/`** — System knowledge and reference docs (design patterns, efficiency, MCP trust model)
-- **`05_path_scoped/`** — Domain-specific rules (SQL, Airflow, Terraform, etc.); loaded with matching files
+- **`04_path_scoped/`** — Domain-specific rules (SQL, Airflow, Terraform, etc.); loaded with matching files
 - **`_rules_lazy_load/`** — Beside `rules/`; read on demand only
 
 ---
@@ -77,7 +76,7 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 
 **Naming & placement:**
 - `naming_standards.md` — self-describing, unambiguous naming principles; see children for directory structure and object patterns
-- `~/.claude/rules/05_path_scoped/claude_rule_loading_strategy.md` — full rule list; duplication detection + always-on vs. lazy-load placement
+- `~/.claude/rules/04_path_scoped/claude_rule_loading_strategy.md` — full rule list; duplication detection + always-on vs. lazy-load placement
 
 **Authoring & testing:**
 - `~/.claude/_templates/rule.md.template` — two templates (principle-based vs. constraint-based)

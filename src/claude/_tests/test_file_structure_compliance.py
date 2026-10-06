@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-06
-# Version:           2.2.0
+# Version:           2.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -23,7 +23,7 @@ import pytest
 
 from _file_structure_validator import CLAUDE_HOME, FileStructureValidator
 
-HINT = "— see rules/05_path_scoped/claude_directory_structure.md"
+HINT = "— see rules/04_path_scoped/claude_directory_structure.md"
 
 
 @cache

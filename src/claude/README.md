@@ -11,7 +11,7 @@ Files installed into `~/.claude/` by `make install`. Everything here shapes how 
 | [`CLAUDE.md`](CLAUDE.md) | 🔗 Root config — imports memory and aliases; rules load natively from `rules/` |
 | [`settings.json`](settings.json) | ⚙️ Claude Code settings — team baseline configuration |
 | [`agents/`](agents) | 🤖 Sub-agent personas for core and team-specific roles |
-| [`rules/`](rules) | 📏 Rules Claude Code loads natively — tiers 01–04 every session, `05_path_scoped/` when a matching file is open |
+| [`rules/`](rules) | 📏 Rules Claude Code loads natively — tiers 01–03 every session, `04_path_scoped/` when a matching file is open |
 | [`_rules_lazy_load/`](_rules_lazy_load) | 💤 Rules read on demand only (incl. most style-guide detail) and the tier READMEs |
 | [`skills/`](skills/README.md) | 🛠️ Reusable multi-step workflows invoked via `/skill-name` |
 

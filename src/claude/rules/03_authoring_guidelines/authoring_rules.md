@@ -1,4 +1,4 @@
-<!-- version: 2.0.0 -->
+<!-- version: 3.0.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-06 -->
 <!-- applies_to: **/rules/**, **/_rules_lazy_load/** -->
@@ -19,8 +19,8 @@ Before writing any rule, answer these five essential questions:
    - Instructional (Claude reads and follows) → structural tests via test_rules_structure.py
 
 2. **Always-on or lazy-loaded?**
-   - Always-on: place in `rules/01_essentials/`–`04_claude_reference/`, which Claude Code loads every session (core safety rules, ~100–150 tokens/session cost)
-   - Path-scoped: `rules/05_path_scoped/` with `paths:` frontmatter, loaded only when a matching file is open
+   - Always-on: place in `rules/01_essentials/`–`03_authoring_guidelines/`, which Claude Code loads every session (core safety rules, ~100–150 tokens/session cost)
+   - Path-scoped: `rules/04_path_scoped/` with `paths:` frontmatter, loaded only when a matching file is open
    - Lazy-load: `_rules_lazy_load/` (domain-specific, read on demand only)
    - Justify token cost if always-on
 
@@ -29,18 +29,17 @@ Before writing any rule, answer these five essential questions:
    - If speculative: defer or rephrase as question/guidance instead (per `guiding_principles.md`)
 
 4. **Related/conflicting rules?**
-   - Check **full rule list** in `~/.claude/rules/05_path_scoped/claude_rule_loading_strategy.md`
+   - Check **full rule list** in `~/.claude/rules/04_path_scoped/claude_rule_loading_strategy.md`
    - Search codebase for similar guidance to prevent duplication
    - Clarify which rules this complements or overlaps with
 
 5. **Which directory & how to name?**
    - Directory choice (per below); naming via `naming_standards.md` → children files for directory structure and naming patterns
    - `01_essentials/` — user-facing conventions and foundational principles (guiding_principles, response/usage standards)
-   - `02_claude_standards/` — blocking standards and enforcement (behaviour, security, testing, git)
+   - `02_claude_standards/` — blocking standards, enforcement and operational conduct (behaviour, security, testing, git, efficiency)
    - `03_authoring_guidelines/` — meta-guidance for authoring rules, skills, and agents
      - **Agent authoring:** `~/.claude/rules/03_authoring_guidelines/authoring_agents.md`, whose children are read on demand when creating or reviewing an agent
-   - `04_claude_reference/` — system knowledge and platform guidance (efficiency, rule loading strategy)
-   - `05_path_scoped/` — domain-specific rules tied to a file type through `paths:` (style guides, testing)
+   - `04_path_scoped/` — domain-specific rules tied to a file type through `paths:` (style guides, testing)
    - `_rules_lazy_load/` — discretionary rules and bulky children, read on demand (tools, automation, style-guide detail)
 
 ## 🚀 Rule Creation (5 Steps)

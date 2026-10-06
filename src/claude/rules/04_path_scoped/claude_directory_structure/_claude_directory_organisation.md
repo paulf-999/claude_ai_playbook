@@ -3,7 +3,7 @@ paths:
   - "**/.claude/**"
   - "**/claude/**"
 ---
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-06 -->
 # 🏗️ Directory Organisation — `~/.claude/`
@@ -31,7 +31,7 @@ paths:
 - `CLAUDE.md`, `aliases.md`, `settings.json`, `keybindings.json` — entry points and user-facing configuration
 
 **Tier 2: Core rules (rules/, _rules_lazy_load/)**
-- `rules/`: tiers `01_essentials/` to `04_claude_reference/` load every session, and `05_path_scoped/` loads with matching files — Claude Code reads this folder natively, so it has no underscore
+- `rules/`: tiers `01_essentials/` to `03_authoring_guidelines/` load every session, and `04_path_scoped/` loads with matching files — Claude Code reads this folder natively, so it has no underscore
 - `_rules_lazy_load/`: rules read on demand, plus the tier READMEs — see `claude_rule_loading_strategy.md` for what belongs where
 
 **Tier 3: Infrastructure (_tests/, _templates/, _reference/, _docs/)**

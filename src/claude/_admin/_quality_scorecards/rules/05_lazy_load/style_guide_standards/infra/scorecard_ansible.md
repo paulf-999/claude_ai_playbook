@@ -18,4 +18,4 @@
 
 ## 🔗 Related files
 
-- `src/claude/rules/05_path_scoped/style_guide_standards/infra/ansible.md` — the rule being scored
+- `src/claude/rules/04_path_scoped/style_guide_standards/infra/ansible.md` — the rule being scored

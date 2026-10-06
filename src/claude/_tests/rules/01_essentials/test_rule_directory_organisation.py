@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-06
-# Version:           2.2.0
+# Version:           2.3.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -11,7 +11,7 @@
 """Tests the folder layout of the always-on rule tiers.
 
 - **01_essentials/:** holds exactly the expected top-level files and folders.
-- **Parent and children:** across tiers 01–04, per ``multifile_document_organisation.md``,
+- **Parent and children:** across tiers 01–03, per ``multifile_document_organisation.md``,
   children sit in a ``<topic>/`` folder beside their ``<topic>.md`` parent, use the ``_``
   prefix, come two or more to a folder, and never sit loose at a tier's root.
 
@@ -25,7 +25,7 @@ from _shared_paths import RULES_DIR
 
 ESSENTIALS_DIR = RULES_DIR / "01_essentials"
 USAGE_STANDARDS_DIR = ESSENTIALS_DIR / "claude_usage_standards"
-ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference")
+ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines")
 
 # Top-level files and folders expected in 01_essentials/
 EXPECTED_TOP_LEVEL = {"claude_response_standards.md", "claude_usage_standards.md", "guiding_principles.md"}
@@ -47,7 +47,7 @@ GROUPING_DIRS = {
 
 
 def child_folders() -> list[Path]:
-    """List the children folders in tiers 01–04, leaving out grouping folders.
+    """List the children folders in tiers 01–03, leaving out grouping folders.
 
     :return: Every folder under the always-on tiers that holds one parent's children.
     :rtype: list[Path]
@@ -102,7 +102,7 @@ def test_usage_standards_subdirectories():
 
 
 def test_child_files_have_underscore_prefix():
-    """Every child file in tiers 01–04 starts with an underscore."""
+    """Every child file in tiers 01–03 starts with an underscore."""
     files = [f for folder in child_folders() for f in children(folder)]
     assert files, "expected child files in the always-on tiers"
     bad = [str(f.relative_to(RULES_DIR)) for f in files if not f.name.startswith("_")]

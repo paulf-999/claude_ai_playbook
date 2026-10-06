@@ -47,7 +47,7 @@ STALE_AFTER_DAYS = 90
 
 EVERY_SESSION = "*"
 LAZY_FOLDER = "_rules_lazy_load"
-PATH_SCOPED_TIER = "05_path_scoped"
+PATH_SCOPED_TIER = "04_path_scoped"
 REPORT_NAME = "audit_rule_usage.md"
 HISTORY_NAME = "rule_usage_history.csv"
 LEDGER_NAME = "rule_usage_sessions.csv"
@@ -58,8 +58,7 @@ TIER_TITLES = {
     "01_essentials": "🧭 01 Essentials",
     "02_claude_standards": "🛡️ 02 Claude standards",
     "03_authoring_guidelines": "🛠️ 03 Authoring guidelines",
-    "04_claude_reference": "📚 04 Claude reference",
-    "05_path_scoped": "🪶 05 Path-scoped",
+    "04_path_scoped": "🪶 04 Path-scoped",
     LAZY_FOLDER: "💤 Lazy load",
 }
 HISTORY_FIELDS = [
@@ -80,7 +79,7 @@ APPLIES_TO = re.compile(r"^<!--\s*applies_to:\s*(.+?)\s*-->$")
 HEADER_LINES = 10
 
 # First-guess globs for lazy rules with no ``applies_to`` header and no ``paths:`` frontmatter,
-# keyed by path under 05_path_scoped/ or _rules_lazy_load/.
+# keyed by path under 04_path_scoped/ or _rules_lazy_load/.
 DEFAULT_APPLIES_TO = {
     "style_guide_standards/python.md": ["**/*.py"],
     "style_guide_standards/bash.md": ["**/*.sh"],
@@ -115,7 +114,7 @@ class Rule:
     def always_on(self) -> bool:
         """Whether the rule loads every session.
 
-        :return: True for rules/ files without ``paths:`` (tiers 01–04).
+        :return: True for rules/ files without ``paths:`` (tiers 01–03).
         :rtype: bool
         """
         return not self.path_scoped and self.tier not in (PATH_SCOPED_TIER, LAZY_FOLDER)
