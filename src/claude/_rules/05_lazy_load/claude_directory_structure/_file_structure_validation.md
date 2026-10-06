@@ -1,6 +1,11 @@
-<!-- version: 1.0.1 -->
+---
+paths:
+  - "**/.claude/**"
+  - "**/claude/**"
+---
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-06 -->
 # 📋 File Structure Validation
 
 **Purpose:** Instruct Claude to validate `~/.claude/` naming and structure compliance after creating or modifying files, ensuring consistency and preventing configuration drift.
@@ -45,7 +50,7 @@ python3 ~/.claude/_tests/test_file_structure_compliance.py
 1. **Read the violation message** — it indicates exactly what's wrong (naming, placement, prefix)
 2. **Fix the issue** — rename, move, or delete the file as indicated
 3. **Re-run the test** — verify the fix resolves the violation
-4. **If unsure,** refer to `~/.claude/_rules/01_essentials/claude_usage_standards/claude_directory_structure.md` for authoritative naming and placement rules
+4. **If unsure,** refer to `~/.claude/_rules/05_lazy_load/claude_directory_structure.md` for authoritative naming and placement rules
 
 **Example violation and fix:**
 ```

@@ -50,32 +50,6 @@ Parent, sibling and dependency links for each file in this tier — kept here, n
 - `guiding_principles.md` — Intentionality and efficiency principles
 - On demand: `05_lazy_load/response_standards_enforcement.md` — how this standard is enforced turn-to-turn
 
-### `claude_usage_standards/claude_directory_structure/_claude_directory_naming.md`
-
-- **Parent:** `claude_directory_structure.md` — directory organization and naming overview
-- **Sibling:** `_claude_directory_organisation.md` — the full directory tree and auto-generated vs. user-created distinction
-- **Related:** `naming_standards.md` → `_naming_principles.md` — foundational naming principles for all identifiers
-- **Related:** `naming_standards.md` → `_claude_naming_patterns.md` — detailed patterns for hooks, skills, and rules
-
-### `claude_usage_standards/claude_directory_structure/_claude_directory_organisation.md`
-
-- **Parent:** `claude_directory_structure.md` — entry point; organisation and naming overview
-- **Sibling:** `_claude_directory_naming.md` — naming patterns for files and directories
-- **Related:** `writing_style.md` → `multifile_document_organisation.md` — when to split documents into parent + child files
-- **Related:** `authoring_rules.md` — directory placement for new rules (01_essentials, 02_claude_standards, 03_authoring_guidelines, 04_claude_reference, 05_lazy_load)
-
-### `claude_usage_standards/claude_directory_structure/_file_structure_validation.md`
-
-- `claude_directory_structure.md` — Authoritative naming and placement rules
-- `naming_standards.md` — Foundational naming principles
-- `behaviour.md` → "Before acting" → "Plan approval" — validate structure before proceeding with complex changes
-
-### `claude_usage_standards/claude_directory_structure.md`
-
-- `naming_standards.md` — General naming principles for all identifiers; see child file `_naming_principles.md` for foundational concepts
-- `authoring_rules.md` — Directory placement rules for new rules (01_essentials, 02_claude_standards, 03_authoring_guidelines, 04_claude_reference, 05_lazy_load)
-- `writing_style.md` → `multifile_document_organisation.md` — When to create subdirectories for multi-file documents
-
 ### `claude_usage_standards/naming_standards/_claude_naming_patterns.md`
 
 **Parent & siblings:**

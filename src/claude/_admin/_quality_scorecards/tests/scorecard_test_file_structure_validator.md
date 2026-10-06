@@ -20,4 +20,4 @@
 
 - `src/claude/_tests/test_file_structure_validator.py` — the test being scored
 - `src/claude/_tests/_file_structure_validator.py` — the scanner under test
-- `src/claude/_rules/01_essentials/claude_usage_standards/claude_directory_structure.md` — what the scanner guards
+- `src/claude/_rules/05_lazy_load/claude_directory_structure.md` — what the scanner guards

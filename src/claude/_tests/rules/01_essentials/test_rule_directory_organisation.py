@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-01
-# Version:           2.0.0
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -31,14 +31,13 @@ ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guideli
 EXPECTED_TOP_LEVEL = {"README.md", "claude_response_standards.md", "claude_usage_standards.md", "guiding_principles.md"}
 EXPECTED_DIRECTORIES = {"claude_usage_standards"}
 
-# claude_usage_standards/ groups four rules, two of which keep a children folder
+# claude_usage_standards/ groups three rules, one of which keeps a children folder
 USAGE_STANDARDS_PARENTS = {
     "naming_standards.md",
     "writing_style.md",
-    "claude_directory_structure.md",
     "multifile_document_organisation.md",
 }
-USAGE_STANDARDS_SUBDIRS = {"naming_standards", "claude_directory_structure"}
+USAGE_STANDARDS_SUBDIRS = {"naming_standards"}
 
 # Folders that group parents or shared children rather than one parent's children
 GROUPING_DIRS = {

@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
-# Date updated:      2026-10-02
-# Version:           1.2.2
+# Date updated:      2026-10-06
+# Version:           1.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -179,3 +179,22 @@ def test_ends_with_single_newline():
     raw = RULE.read_bytes()
     assert raw.endswith(b"\n"), f"{RULE.name} does not end with a newline"
     assert not raw.endswith(b"\n\n"), f"{RULE.name} ends with multiple newlines"
+
+
+def test_paths_guidance_survives():
+    """The 'When paths: fits' guidance keeps its four conditions, so path-scoping decisions stay checkable."""
+    content = RULE.read_text()
+    assert "## 🎯 When `paths:` fits" in content, "the path-scoping section is missing"
+    assert "**Clear file type:**" in content, "the file-type condition is missing"
+    assert "**Read before write:**" in content, "the read-before-write condition is missing"
+    assert "**New-file gap:**" in content, "the new-file pointer advice is missing"
+    assert "**Backstop for high cost:**" in content, "the high-cost backstop condition is missing"
+
+
+def test_paths_trial_outcome_is_recorded():
+    """The path-scoping decision keeps its evidence and its exception, and the evidence file exists."""
+    content = RULE.read_text()
+    assert "**Proven:** `test_path_scoped_rules_live.py`" in content, "the live evidence for paths: is missing"
+    assert "**Stays pointer-based:**" in content, "the pointer-based exception is missing"
+    live = RULES_DIR.parent / "_tests" / "rules" / "05_lazy_load" / "test_path_scoped_rules_live.py"
+    assert live.is_file(), "the live test named as evidence no longer exists"

@@ -1,6 +1,11 @@
-<!-- version: 3.0.0 -->
+---
+paths:
+  - "**/.claude/**"
+  - "**/claude/**"
+---
+<!-- version: 3.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-06 -->
 # 🏷️ Naming — Directories and Files
 
 **Purpose:** Set the prefix conventions that tell user-created directories, auto-generated directories and child files apart in the Claude config.
