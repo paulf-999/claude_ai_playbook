@@ -1,6 +1,6 @@
-<!-- version: 1.0.1 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-06-07 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-06 -->
 # 🎨 Mermaid Advanced Techniques
 
 ## 📋 Contents
@@ -9,7 +9,6 @@
 - [✏️ Node content format](#-node-content-format)
 - [🎨 Styling](#-styling)
 - [🗂️ Subgraphs](#-subgraphs)
-- [📖 Reference example](#-reference-example)
 
 ---
 
@@ -72,15 +71,3 @@ subgraph INSTALL["Install"]
     A --> B --> C
 end
 ```
-
----
-
-## 📖 Reference example
-
-`roles/application/ddp/airbyte/README.md` in an Ansible repo — an illustrative example demonstrating:
-
-- Subgraphs and milestone nodes
-- Failure nodes and rescue branches
-- Async task patterns
-
-Treat as a reference, not a dependency.
