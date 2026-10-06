@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-02
-# Version:           1.1.0
+# Date updated:      2026-10-05
+# Version:           1.1.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -20,6 +20,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from _gate_fixtures import codes, gate, make_skill, walk_run
+from _shared_paths import CLAUDE_DIR
 
 HISTORY = "\n## 📜 Version history\n\n- 1.0.0: first tactical release\n"
 GAPS = "\n## 🕳️ Known gaps\n\n- None found yet, with a workaround noted here when one is.\n"
@@ -115,6 +116,7 @@ def test_version_mismatch_reported_once_as_c3(tmp_path: Path):
 
 
 def test_default_tests_dir_is_the_skill_tests_folder():
-    """By default the gate looks for skill tests in src/claude/_tests/skills/."""
-    assert gate.DEFAULT_TESTS_DIR.parts[-3:] == ("claude", "_tests", "skills"), f"got {gate.DEFAULT_TESTS_DIR}"
+    """By default the gate looks for skill tests in the config's _tests/skills/, wherever the config lives."""
+    expected = (CLAUDE_DIR / "_tests" / "skills").resolve()
+    assert gate.DEFAULT_TESTS_DIR.resolve() == expected, f"got {gate.DEFAULT_TESTS_DIR}, expected {expected}"
     assert gate.DEFAULT_TESTS_DIR.is_dir(), f"{gate.DEFAULT_TESTS_DIR} doesn't exist"

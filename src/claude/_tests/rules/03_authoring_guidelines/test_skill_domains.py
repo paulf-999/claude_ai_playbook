@@ -71,6 +71,10 @@ def misplaced_skills(domains, skills: list[Path]) -> list[str]:
             problems.append(f"{skill.name}: no domain in skill_domains.yaml has a matching prefix")
         elif skill.parent.name != matches[0]["directory"]:
             expected = matches[0]["directory"]
+            # The installer's flatten_skills() copies each grouped skill up to skills/<name>;
+            # a top-level copy whose original sits in the right group folder isn't misplaced.
+            if (skill.parent / expected / skill.name / "SKILL.md").is_file():
+                continue
             problems.append(f"{skill.name}: sits in {skill.parent.name}/, but its domain names {expected}/")
     return problems
 
@@ -164,6 +168,26 @@ def test_detector_flags_unregistered_prefix(tmp_path):
     domains = [{"id": "demo", "prefix": "demo_", "directory": "_demo_skills"}]
     problems = misplaced_skills(domains, installed_skills(tmp_path))
     assert problems == ["other_do_thing: no domain in skill_domains.yaml has a matching prefix"], problems
+
+
+def test_detector_passes_flattened_copy(tmp_path):
+    """Regression: a live install keeps each group folder and adds a flattened skills/<name> copy."""
+    for parent in (tmp_path / "_demo_skills", tmp_path):
+        skill = parent / "demo_do_thing"
+        skill.mkdir(parents=True)
+        (skill / "SKILL.md").write_text("# demo")
+    domains = [{"id": "demo", "prefix": "demo_", "directory": "_demo_skills"}]
+    assert misplaced_skills(domains, installed_skills(tmp_path)) == [], "A flattened copy of a grouped skill is fine"
+
+
+def test_detector_flags_top_level_skill_without_group_original(tmp_path):
+    """A top-level skill with no original in its group folder is still misplaced."""
+    skill = tmp_path / "demo_do_thing"
+    skill.mkdir(parents=True)
+    (skill / "SKILL.md").write_text("# demo")
+    domains = [{"id": "demo", "prefix": "demo_", "directory": "_demo_skills"}]
+    problems = misplaced_skills(domains, installed_skills(tmp_path))
+    assert len(problems) == 1, f"Expected one problem, got {problems}"
 
 
 def test_group_folder_detection(tmp_path):
