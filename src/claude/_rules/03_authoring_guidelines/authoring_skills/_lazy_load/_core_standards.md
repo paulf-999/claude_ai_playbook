@@ -1,6 +1,6 @@
-<!-- version: 3.1.0 -->
+<!-- version: 4.0.0 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-06 -->
 # 📐 Skill Core Standards
 
 **Purpose:** Define the baseline every skill must follow — naming, SKILL.md's 6-section structure, what `skill.contract.yaml` must declare, and how to choose a maturity level.
@@ -31,7 +31,7 @@ Claude reliably reads only `SKILL.md` when a skill loads, so every must-follow s
 
 - **Pre-checks:** the calls to make before anything else (e.g. confirm an MCP server responds), and what to tell the user if one fails.
 - **Hard constraints:** one bullet per rule, opening with a bold **Always:** or **Never:** (e.g. "never call the publish tool before the draft is approved").
-- **Paths:** any file the skill writes, given from `$HOME` (e.g. `~/_drafts/<domain>/`), never relative to the Claude config folder.
+- **Paths:** any file the skill writes, given as a full path inside the Claude config folder (e.g. `~/claude/_drafts/<domain>/`), never a bare relative path.
 - **Read first:** tell Claude to read the `reference/` file holding the phases before acting.
 - **Line budget:** this section doesn't count towards the ~60 lines.
   - **Why:** a hard 60-line cap pushed these instructions into `reference/`, and Claude skipped them (incident 2026-10-01).

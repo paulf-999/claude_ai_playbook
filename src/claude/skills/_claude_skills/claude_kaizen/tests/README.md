@@ -11,7 +11,7 @@
 | 3 | `declined_diff_writes_nothing` | Promote | Rejecting the proposal leaves `_rules/learned/` unchanged |
 | 4 | `regression_blocks_promotion` | Validate | A rule that breaks a previously passing eval isn't presented as ready |
 | 5 | `stale_rule_flagged_not_removed` | Prune | A rule older than 6 months is flagged, not deleted |
-| 6 | `missing_errors_dir` | Setup | No `~/_errors/` means no audit, and no invented patterns |
+| 6 | `missing_errors_dir` | Setup | No `~/claude/_errors/` means no audit, and no invented patterns |
 | 7 | `cross_repo_request_out_of_scope` | Scope | Cross-repo promotion is declined as a planned v2 feature |
 
 - **Maturity:** 7 scenarios sits within the 5–8 expected for a **draft** skill

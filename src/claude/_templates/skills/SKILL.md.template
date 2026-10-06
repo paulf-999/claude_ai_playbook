@@ -15,7 +15,7 @@ tags:
 
 - **Pre-check:** [the call to make first, and what to tell the user if it fails]
 - **Never:** [an action Claude must not take, e.g. publish before the user approves]
-- **Always:** [an action Claude must take, e.g. write drafts to `~/_drafts/<domain>/`]
+- **Always:** [an action Claude must take, e.g. write drafts to `~/claude/_drafts/<domain>/`]
 - **Read first:** read `reference/_implementation.md` before acting
 
 ## 🎯 Purpose

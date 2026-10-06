@@ -7,9 +7,9 @@ tags:
   tested: true
   disable_model_invocation: false
 ---
-<!-- version: 0.3.1 -->
+<!-- version: 0.4.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-02 -->
+<!-- updated: 2026-10-06 -->
 
 ## 🎯 Purpose
 
@@ -25,7 +25,7 @@ Self-improving development loop: capture recurring mistakes, promote only verifi
 **Scenario:** You fix the same bug (e.g., missing input validation) twice in one week.
 
 1. Run `/claude_kaizen` (manually or auto-triggered at session start)
-2. Skill audits `~/_errors/` and finds 2 occurrences of the same mistake
+2. Skill audits `~/claude/_errors/` and finds 2 occurrences of the same mistake
 3. Candidate is already in `_rules/learned/candidates.md` with count = 2
 4. Meets promotion threshold; skill drafts a rule + eval case
 5. Runs full test suite (before/after) to catch regressions

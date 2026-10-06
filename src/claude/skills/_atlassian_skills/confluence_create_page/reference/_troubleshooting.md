@@ -63,12 +63,12 @@ echo $EMAIL || echo "Not set in EMAIL env var"
 
 ## Phase 3: Draft Not Appearing in Expected Location
 
-**Symptom:** Skill says "Draft written to `~/_drafts/confluence/`" but file not there.
+**Symptom:** Skill says "Draft written to `~/claude/_drafts/confluence/`" but file not there.
 
 **Possible causes:**
 
 1. **Directory doesn't exist:** Skill auto-creates it; may fail if permissions denied
-2. **Hidden directory:** Use `ls -la ~/_drafts/confluence/` to show hidden files
+2. **Hidden directory:** Use `ls -la ~/claude/_drafts/confluence/` to show hidden files
 3. **Different shell:** File written to wrong home directory (multi-user systems)
 4. **Timeout before save:** If Confluence API call times out before draft is saved, draft may be lost
 
@@ -76,13 +76,13 @@ echo $EMAIL || echo "Not set in EMAIL env var"
 
 ```bash
 # Check if directory exists
-ls -la ~/_drafts/confluence/
+ls -la ~/claude/_drafts/confluence/
 
 # Create directory manually if needed
-mkdir -p ~/_drafts/confluence/
+mkdir -p ~/claude/_drafts/confluence/
 
 # Check permissions
-ls -ld ~/_drafts/
+ls -ld ~/claude/_drafts/
 stat ~/.claude/
 
 # Find drafts anywhere
@@ -106,7 +106,7 @@ find ~ -name "*confluence*" -type f 2>/dev/null | head -10
 
 | Action | Result |
 |---|---|
-| **[A] Abort** | Cancel publish, preserve draft in `~/_drafts/confluence/` for retry later |
+| **[A] Abort** | Cancel publish, preserve draft in `~/claude/_drafts/confluence/` for retry later |
 | **[R] Retry** | Cancel, start fresh publish attempt (may succeed if server recovered) |
 | **[C] Continue** | Wait 4 more minutes (max 6 min total); for very slow Confluence instances |
 

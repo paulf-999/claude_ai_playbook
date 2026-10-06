@@ -75,7 +75,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 |---|---|---|---|---|---|
 | `test_guiding_principles.py` | CLAUDE.md's imports follow guiding_principles.md — no lazy-load imports, a purpose comment on each, few, unique, always-on tiers in order | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_rule_directory_organisation.py` | `01_essentials/` holds its expected files and folders, and tiers 01–04 follow the parent-and-children layout (`_` prefix, 2+ children, parent beside each folder) | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
-| `test_writing_style.py` | `writing_style.md` keeps its tables rule, one sentence per bullet, British spelling, underscore file-name dates and its multifile child | 9/10 | 2026-08-28 | 2026-10-01 | 1.1.0 |
+| `test_writing_style.py` | `writing_style.md` keeps its tables rule, one sentence per bullet, British spelling, underscore file-name dates and its multifile child | 9/10 | 2026-08-28 | 2026-10-06 | 2.0.0 |
 
 ### `rules/02_claude_standards/`
 
@@ -163,8 +163,8 @@ alongside these tests and is imported directly via a relative import.
 |---|---|---|---|---|---|
 | `test_confluence_create_page_handler.py` | The handler's title, space, pattern and section validators, including their boundaries | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
 | `test_confluence_create_page_phases.py` | The handler's publish phases, each failure mode's error, and the end-to-end flow, with Confluence mocked | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
-| `test_confluence_create_page_timeout.py` | The timeout wrapper on a live call — the dialog, each answer, draft preservation, the 6-minute cap, errors and closed input | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
-| `test_confluence_create_page_timeout_options.py` | Timeout argument parsing, the dialog's wording, how each answer resolves, and that drafts go to `~/_drafts/confluence/YYYY_MM_DD_<slug>.md` | 9/10 | 2026-10-01 | 2026-10-01 | 1.2.0 |
+| `test_confluence_create_page_timeout.py` | The timeout wrapper on a live call — the dialog, each answer, draft preservation, the 6-minute cap, errors and closed input | 9/10 | 2026-08-28 | 2026-10-06 | 2.0.3 |
+| `test_confluence_create_page_timeout_options.py` | Timeout argument parsing, the dialog's wording, how each answer resolves, and that drafts go to `~/claude/_drafts/confluence/YYYY_MM_DD_<slug>.md` | 9/10 | 2026-10-01 | 2026-10-06 | 2.0.0 |
 
 ### `skills/jira_create/`
 

@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-02
-# Version:           1.1.1
+# Date updated:      2026-10-06
+# Version:           2.0.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -31,7 +31,7 @@ HEADING = re.compile(r"^## .*Instructions for Claude\s*$", re.MULTILINE)
 PURPOSE = re.compile(r"^## .*\bPurpose\b", re.MULTILINE | re.IGNORECASE)
 CONSTRAINT = re.compile(r"^\s*- \*\*(Always|Never):\*\*", re.MULTILINE)
 REFERENCE = re.compile(r"reference/_\w+\.md")
-CONFIG_DIR_DRAFTS = re.compile(r"\.?claude/_drafts")
+NON_CONFIG_DRAFTS = re.compile(r"~/(\.claude/)?_drafts")
 
 BASELINE = {
     "claude_capture_session_prompts",
@@ -53,7 +53,7 @@ description: Create, add or publish a demo page
 
 - **Pre-check:** call the status tool first
 - **Never:** publish before the user approves the draft
-- **Always:** write drafts to `~/_drafts/demo/`
+- **Always:** write drafts to `~/claude/_drafts/demo/`
 - **Read first:** read `reference/_phases.md` before acting
 
 ## 🎯 Purpose
@@ -97,8 +97,8 @@ def instruction_issues(skill_md: str) -> list[str]:
         issues.append("no '- **Always:**' or '- **Never:**' constraint bullet")
     if not REFERENCE.search(section):
         issues.append("doesn't name the reference/_*.md file to read first")
-    if CONFIG_DIR_DRAFTS.search(section):
-        issues.append("drafts path points inside the Claude config folder — use ~/_drafts/<domain>/")
+    if NON_CONFIG_DRAFTS.search(section):
+        issues.append("drafts path points outside the Claude config folder — use ~/claude/_drafts/<domain>/")
     return issues
 
 
@@ -147,11 +147,11 @@ def test_skill_has_instructions_for_claude(name):
     assert not issues, f"{name}/SKILL.md: {issues} — see authoring_skills/_lazy_load/_core_standards.md"
 
 
-def test_confluence_skill_drafts_to_home_folder():
-    """The Confluence skill names ~/_drafts/confluence/ for drafts (incident 2026-10-01)."""
+def test_confluence_skill_drafts_to_config_folder():
+    """The Confluence skill names ~/claude/_drafts/confluence/ for drafts (moved 2026-10-06)."""
     section = instructions_section(skill_md_for("confluence_create_page"))
     assert section, "confluence_create_page has no Instructions for Claude section"
-    assert "~/_drafts/confluence/" in section, "drafts path ~/_drafts/confluence/ is missing"
+    assert "~/claude/_drafts/confluence/" in section, "drafts path ~/claude/_drafts/confluence/ is missing"
     assert "getAccessibleAtlassianResources" in section, "the Atlassian MCP pre-check is missing"
 
 
@@ -204,18 +204,18 @@ def test_missing_reference_pointer_is_caught():
     assert instruction_issues(skill_md) == ["doesn't name the reference/_*.md file to read first"]
 
 
-@pytest.mark.parametrize("bad_path", ["~/.claude/_drafts/demo/", "~/claude/_drafts/demo/"])
-def test_config_dir_drafts_path_is_caught(bad_path):
-    """A drafts path inside the Claude config folder fails (incident 2026-10-01)."""
-    skill_md = VALID_SKILL_MD.replace("~/_drafts/demo/", bad_path)
+@pytest.mark.parametrize("bad_path", ["~/_drafts/demo/", "~/.claude/_drafts/demo/"])
+def test_non_config_drafts_path_is_caught(bad_path):
+    """A drafts path outside the Claude config folder fails (moved 2026-10-06)."""
+    skill_md = VALID_SKILL_MD.replace("~/claude/_drafts/demo/", bad_path)
     issues = instruction_issues(skill_md)
-    assert any("inside the Claude config folder" in issue for issue in issues), issues
+    assert any("outside the Claude config folder" in issue for issue in issues), issues
 
 
-def test_home_drafts_path_is_allowed():
-    """The correct $HOME drafts path doesn't trip the config-folder check."""
-    assert "~/_drafts/demo/" in instructions_section(VALID_SKILL_MD)
-    assert not CONFIG_DIR_DRAFTS.search(instructions_section(VALID_SKILL_MD))
+def test_config_drafts_path_is_allowed():
+    """The ~/claude/_drafts/ path doesn't trip the outside-config check."""
+    assert "~/claude/_drafts/demo/" in instructions_section(VALID_SKILL_MD)
+    assert not NON_CONFIG_DRAFTS.search(instructions_section(VALID_SKILL_MD))
 
 
 def test_section_stops_at_next_heading():

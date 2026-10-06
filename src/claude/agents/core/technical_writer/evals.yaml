@@ -19,7 +19,7 @@ evals:
       expected_output: >
           The agent reads .github/pull_request_template.md, keeps every section in order,
           fills only the placeholders, opens with a one-sentence summary and writes the
-          draft to ~/_drafts/general/YYYY_MM_DD_<topic>.md.
+          draft to ~/claude/_drafts/general/YYYY_MM_DD_<topic>.md.
       assertions:
           - Every template section appears in the draft, in the template's order
           - The draft opens with a one-sentence summary
@@ -61,9 +61,9 @@ evals:
           audience: data engineering team
       expected_output: >
           The agent uses technical terms without over-explaining, structures the page
-          with headings and bullets, and writes it to ~/_drafts/confluence/.
+          with headings and bullets, and writes it to ~/claude/_drafts/confluence/.
       assertions:
-          - The draft is written under ~/_drafts/confluence/ with a YYYY_MM_DD_ prefix
+          - The draft is written under ~/claude/_drafts/confluence/ with a YYYY_MM_DD_ prefix
           - The draft uses headings and bullets rather than runs of prose
 
     - name: confluence_mixed_audience
