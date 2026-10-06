@@ -137,4 +137,4 @@ print_section_header "${DEBUG}" "Claude CLI installation started."
 
 install_claude_cli
 
-print_section_header "${DEBUG}" "Claude CLI installation completed." && echo
+print_section_header "${DEBUG}" "Claude CLI installation completed."
