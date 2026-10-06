@@ -53,7 +53,6 @@ constraints are harder to bypass silently.
 
 <!-- Tier 3: 03_authoring_guidelines/ — meta-guidance for authoring rules, skills, agents -->
 <!-- Standards for creating new agents (naming, maturity, scope); children read on demand -->
-@~/.claude/_rules/03_authoring_guidelines/authoring_agents.md
 <!-- Standards for creating new rule files (placement, testing, scope) -->
 @~/.claude/_rules/03_authoring_guidelines/authoring_rules.md
 <!-- Standards for creating new skills (contract, triggers, maturity) -->

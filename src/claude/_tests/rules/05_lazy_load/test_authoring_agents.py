@@ -2,28 +2,31 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-28
 # Date updated:      2026-10-01
-# Version:           2.0.1
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Structural tests for _rules/03_authoring_guidelines/authoring_agents.md.
+"""Structural tests for _rules/05_lazy_load/authoring_agents.md.
 
 Verifies the agent authoring guide and its 5 child files are present and
 well-formed. Filed after a 2026-09-28 rule audit found authoring_agents.md
 had zero test coverage, unlike its two siblings in the same tier
 (authoring_rules.md, authoring_skills.md). Moved to 05_lazy_load/ on
 2026-09-29 to stay under Claude Code's 150k-char limit, then back to
-03_authoring_guidelines/ on 2026-09-30: the parent is always-on so agent
-work is detected, while its children sit in `authoring_agents/_lazy_load/`
-and are only read on demand.
+03_authoring_guidelines/ on 2026-09-30 so agent work is detected. Moved to
+05_lazy_load/ again on 2026-10-01, once ``paths:`` scoping proved it loads
+whenever an agent file is read; it was used in 2 of 115 sessions. Its children
+sit in `authoring_agents/_lazy_load/` and are only read on demand.
 """
 from pathlib import Path
 
 from _shared_paths import CLAUDE_DIR
 
-TIER_DIR = CLAUDE_DIR / "_rules" / "03_authoring_guidelines"
+TIER_DIR = CLAUDE_DIR / "_rules" / "05_lazy_load"
+AUTHORING_RULES = CLAUDE_DIR / "_rules" / "03_authoring_guidelines" / "authoring_rules.md"
+SCOPED_LINK = CLAUDE_DIR / "rules" / "authoring_agents.md"
 AUTHORING_AGENTS = TIER_DIR / "authoring_agents.md"
 CHILDREN_DIR = TIER_DIR / "authoring_agents" / "_lazy_load"
 TIER_README = TIER_DIR / "README.md"
@@ -191,23 +194,30 @@ def test_each_child_links_back_to_parent():
         )
 
 
-def test_parent_is_always_on():
-    """CLAUDE.md must @import the agent guide, so agent work is always detected."""
+def test_parent_loads_with_agent_files():
+    """The agent guide loads through paths: whenever an agents/ file is read, not at startup."""
+    text = AUTHORING_AGENTS.read_text()
+    frontmatter = text.split("\n---", 1)[0] if text.startswith("---\n") else ""
+    assert '"**/agents/**"' in frontmatter, "authoring_agents.md lost its paths: trigger for agents/**"
+    # make install builds rules/ from paths: frontmatter, so only an installed config has the link
+    if SCOPED_LINK.parent.is_dir():
+        assert SCOPED_LINK.is_symlink(), "rules/authoring_agents.md symlink is missing, so paths: never loads"
+        assert SCOPED_LINK.resolve() == AUTHORING_AGENTS.resolve(), "rules/authoring_agents.md points somewhere else"
     imports = [
         line.strip() for line in (CLAUDE_DIR / "CLAUDE.md").read_text().splitlines()
         if line.strip().startswith("@")
     ]
-    assert any(i.endswith("/_rules/03_authoring_guidelines/authoring_agents.md") for i in imports), (
-        "CLAUDE.md does not @import 03_authoring_guidelines/authoring_agents.md"
+    assert not any(i.endswith("/authoring_agents.md") for i in imports), (
+        "CLAUDE.md still @imports authoring_agents.md, so it loads every session"
     )
 
 
 def test_always_on_pointer_exists():
     """authoring_rules.md's tier list must point readers to the agent guide's current home."""
-    rules = (TIER_DIR / "authoring_rules.md").read_text()
-    assert "03_authoring_guidelines/authoring_agents.md" in rules, (
-        "authoring_rules.md lost its pointer to 03_authoring_guidelines/authoring_agents.md"
+    rules = AUTHORING_RULES.read_text()
+    assert "05_lazy_load/authoring_agents.md" in rules, (
+        "authoring_rules.md lost its pointer to 05_lazy_load/authoring_agents.md, needed for new agents"
     )
-    assert "05_lazy_load/authoring_agents.md" not in rules, (
-        "authoring_rules.md still points to the old 05_lazy_load/ location"
+    assert "03_authoring_guidelines/authoring_agents.md" not in rules, (
+        "authoring_rules.md still points to the old 03_authoring_guidelines/ location"
     )

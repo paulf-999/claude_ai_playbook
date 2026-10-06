@@ -12,9 +12,9 @@ tools: Read, Grep, Glob
 model: inherit
 isolation: none
 ---
-<!-- version: 0.2.0 -->
+<!-- version: 0.2.1 -->
 <!-- created: 2026-10-05 -->
-<!-- updated: 2026-10-05 -->
+<!-- updated: 2026-10-06 -->
 
 # 🔍 Agent — Code reviewer
 
@@ -57,4 +57,4 @@ You are a thorough, constructive code reviewer who grounds plain-English feedbac
 ## References
 
 - `evals.yaml` — test scenarios for this agent.
-- `~/.claude/_rules/03_authoring_guidelines/authoring_agents.md` — agent authoring standards.
+- `~/.claude/_rules/05_lazy_load/authoring_agents.md` — agent authoring standards.

@@ -98,6 +98,49 @@ A rule should be promoted from lazy-load to top-level (`_rules/`) if:
 
 Parent, sibling and dependency links for each file in this tier — kept here, not in the file, because READMEs aren't `@import`ed (#121).
 
+### `authoring_agents/_lazy_load/_common_mistakes.md`
+
+- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
+
+### `authoring_agents/_lazy_load/_core_standards.md`
+
+- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
+
+### `authoring_agents/_lazy_load/_decision_tree_and_process.md`
+
+- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
+
+### `authoring_agents/_lazy_load/_hard_gates_checklist.md`
+
+- Parent: `authoring_agents.md` — quick navigation and core standards
+
+### `authoring_agents/_lazy_load/_scope_and_maturity.md`
+
+- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
+
+### `authoring_agents.md`
+
+**Naming & placement:**
+- `naming_standards.md` — Self-describing naming principles
+- `claude_directory_structure.md` — Directory organization patterns
+
+**Authoring & testing:**
+- `~/.claude/_templates/AGENT.md.template` — Agent template with examples
+- `testing.md` — When tests are required; evals.yaml patterns
+
+**Principles & maintenance:**
+- `guiding_principles.md` — Intentionality principle; evidence-gathering methods
+- `behaviour.md` — Safe defaults and decision-making patterns
+- `claude_plans.md` — Review/approval gates during implementation
+
+**Related agent standards:**
+- `authoring_rules.md` — Rule creation standards (model for some agent patterns)
+- `authoring_skills.md` — Skill creation standards (model for maturity levels, testing)
+- `claude_plans.md` — Review gates after each implementation phase
+- `guiding_principles.md` — Intentionality; when to create new agents vs. enhance existing ones
+- `testing.md` — Testing requirements for all artifacts including agents
+- Loads through `paths:` (`**/agents/**`) and a pointer in `03_authoring_guidelines/authoring_rules.md`
+
 ### `delegating_to_subagent.md`
 
 - Pointer from: `04_claude_reference/claude_operational_efficiency/_claude_when_to_delegate.md` — delegating to user vs. sub-agent overview

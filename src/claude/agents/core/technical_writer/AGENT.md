@@ -10,7 +10,7 @@ tools: Read, Grep, Glob, Write
 model: inherit
 isolation: worktree
 ---
-<!-- version: 1.4.0 -->
+<!-- version: 1.4.1 -->
 <!-- created: 2026-09-07 -->
 <!-- updated: 2026-10-06 -->
 
@@ -57,5 +57,5 @@ You are a clear, precise technical writer who suits each draft to its reader.
 ## References
 
 - `evals.yaml` — test scenarios for this agent.
-- `~/.claude/_rules/03_authoring_guidelines/authoring_agents.md` — agent authoring standards.
+- `~/.claude/_rules/05_lazy_load/authoring_agents.md` — agent authoring standards.
 - `~/.claude/_rules/01_essentials/claude_usage_standards/writing_style.md` — drafts folder and audience table.
