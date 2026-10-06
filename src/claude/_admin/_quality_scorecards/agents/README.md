@@ -28,7 +28,7 @@ Use the shared `_templates/scorecard.md.template` with these seven dimensions, i
 | **Complexity** | Inverted shared formula (`03_authoring_guidelines/shared_standards/_complexity_scoring.md`): one concept, no external services | Several jobs and several required integrations |
 | **Evidence of Need** | Handles a real task that recurs, with usage recorded | Built for a hypothetical, with no record of use |
 | **Test Coverage** | Structured evals that cover triggering, output and the "not for" cases, at the count its maturity needs | No evals, or prose scenarios nothing runs |
-| **Structural Compliance** | Passes every item in `authoring_agents/_lazy_load/_hard_gates_checklist.md` | Missing frontmatter, sections or metadata header |
+| **Structural Compliance** | Passes every item in `authoring_guidelines/authoring_agents/_hard_gates_checklist.md` | Missing frontmatter, sections or metadata header |
 | **Tool Safety** | A `tools:` allowlist limited to what the job needs, plus worktree isolation if it writes files | Every tool available, with no isolation |
 
 **Overall:** the average of the seven dimensions, rounded to one decimal place.

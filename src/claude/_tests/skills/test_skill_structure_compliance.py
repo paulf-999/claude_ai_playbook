@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-02
-# Version:           2.0.2
+# Date updated:      2026-10-06
+# Version:           2.0.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -10,7 +10,7 @@
 
 """Every installed skill must pass the skill authoring gate's crawl criteria.
 
-The current skill standard (``authoring_skills/_lazy_load/_core_standards.md``)
+The current skill standard (``authoring_guidelines/authoring_skills/_core_standards.md``)
 is implemented once, in ``_scripts/_lint_scripts/lint_skill_authoring_gate.py``. The
 pre-commit hook only runs it when skill files are staged, so this suite runs
 the same checks on every pytest run, and proves each check really fires
