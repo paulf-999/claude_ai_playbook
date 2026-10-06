@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
-# Date updated:      2026-10-02
-# Version:           1.0.1
+# Date updated:      2026-10-06
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -38,22 +38,29 @@ runner = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(runner)
 
 
-def fake_claude(monkeypatch, stdout: str = "", returncode: int = 0, error: Exception | None = None):
+def fake_claude(
+    monkeypatch, stdout: str = "", returncode: int = 0, error: Exception | None = None, stderr: str = "boom"
+):
     """Replace ``subprocess.run`` with a fake ``claude -p`` and record each call.
+
+    The isolated config folder is deleted after the call, so its links are captured while the call runs.
 
     :param monkeypatch: pytest's monkeypatch fixture.
     :param stdout: The reply the fake returns.
     :param returncode: The fake's exit code.
     :param error: An exception to raise instead of replying.
-    :return: A list that collects ``(command, prompt, env, cwd)`` for every call.
+    :param stderr: The fake's error output.
+    :return: A list that collects ``(command, prompt, env, cwd, links)`` for every call.
     """
     calls = []
 
     def run(command, **kwargs):
-        calls.append((command, kwargs["input"], kwargs["env"], kwargs["cwd"]))
+        config = Path(kwargs["env"].get("CLAUDE_CONFIG_DIR", ""))
+        links = {e.name: e.resolve() for e in config.iterdir()} if config.is_dir() else {}
+        calls.append((command, kwargs["input"], kwargs["env"], kwargs["cwd"], links))
         if error:
             raise error
-        return subprocess.CompletedProcess(command, returncode, stdout=stdout, stderr="boom")
+        return subprocess.CompletedProcess(command, returncode, stdout=stdout, stderr=stderr)
 
     monkeypatch.setattr(runner.subprocess, "run", run)
     return calls
@@ -104,13 +111,16 @@ def test_case_fails_on_a_bad_reply(tmp_path, monkeypatch):
 
 def test_claude_gets_the_prompt_and_the_rules_under_test(tmp_path, monkeypatch):
     """The prompt goes to ``claude -p`` with no tools, from an empty folder, against the chosen rules."""
+    patched = tmp_path / "patched"
+    patched.mkdir()
+    (patched / "CLAUDE.md").write_text("rules")
     calls = fake_claude(monkeypatch, stdout="except KeyError:")
-    runner.EvalRunner(write_evals(tmp_path, CASE), config_dir=tmp_path / "patched").run()
-    command, prompt, env, cwd = calls[0]
+    runner.EvalRunner(write_evals(tmp_path, CASE), config_dir=patched).run()
+    command, prompt, env, cwd, links = calls[0]
     assert command == ["claude", "-p", "--tools", ""], "the prompt must not follow --tools, which would swallow it"
     assert prompt == "Write a try block"
     assert not Path(cwd).exists(), "Claude should run in a throwaway folder that's removed afterwards"
-    assert env["CLAUDE_CONFIG_DIR"] == str(tmp_path / "patched")
+    assert links["CLAUDE.md"] == (patched / "CLAUDE.md").resolve(), "the isolated config must link the rules under test"
 
 
 def test_case_without_patterns_fails_without_calling_claude(tmp_path, monkeypatch):
@@ -177,3 +187,84 @@ def test_seed_evals_use_valid_pass_patterns():
         assert "pass_indicator" not in case, f"{case['name']} still uses pass_indicator — use must_match/must_not_match"
         for pattern in patterns:
             runner.re.compile(pattern)
+
+
+# ── Isolated config and login (fixed 2026-10-06: a rules-only CLAUDE_CONFIG_DIR made Claude "Not logged in") ──
+
+
+def rules_and_home(tmp_path, monkeypatch, creds_in: str | None = "home"):
+    """Build a rules folder and a fake home, with credentials in one of them.
+
+    :param creds_in: ``"home"``, ``"rules"`` or None for no credentials anywhere.
+    :return: ``(rules folder, credentials path or None)``.
+    """
+    rules = tmp_path / "rules"
+    (rules / "_rules").mkdir(parents=True)
+    (rules / "CLAUDE.md").write_text("rules")
+    home = tmp_path / "home"
+    (home / ".claude").mkdir(parents=True)
+    monkeypatch.setattr(runner.Path, "home", lambda: home)
+    monkeypatch.delenv("CLAUDE_CONFIG_DIR", raising=False)
+    creds = {"home": home / ".claude" / ".credentials.json", "rules": rules / ".credentials.json"}.get(creds_in)
+    if creds:
+        creds.write_text("{}")
+    return rules, creds
+
+
+def test_isolated_config_links_rules_and_home_credentials(tmp_path, monkeypatch):
+    """The throwaway config links every rules entry plus the default login, so headless Claude is logged in."""
+    rules, creds = rules_and_home(tmp_path, monkeypatch)
+    isolated = runner.build_isolated_config(rules, tmp_path)
+    assert (isolated / "CLAUDE.md").resolve() == (rules / "CLAUDE.md").resolve(), "rules not linked"
+    assert (isolated / "_rules").resolve() == (rules / "_rules").resolve(), "rule folders not linked"
+    linked_login = (isolated / ".credentials.json").resolve()
+    assert linked_login == creds.resolve(), "login not linked — Claude reports Not logged in"
+
+
+def test_credentials_are_symlinked_never_copied(tmp_path, monkeypatch):
+    """The credentials file in the throwaway folder is a link, so no copy of the secret is ever written."""
+    rules, _ = rules_and_home(tmp_path, monkeypatch)
+    isolated = runner.build_isolated_config(rules, tmp_path)
+    assert (isolated / ".credentials.json").is_symlink(), "credentials were copied instead of linked"
+    assert oct(isolated.stat().st_mode & 0o777) == "0o700", "the isolated config must be private to the user"
+
+
+def test_credentials_in_the_rules_folder_win(tmp_path, monkeypatch):
+    """A rules folder that already holds a login, like a live config, uses its own."""
+    rules, creds = rules_and_home(tmp_path, monkeypatch, creds_in="rules")
+    assert runner.find_credentials(rules) == creds, "the rules folder's own login should be preferred"
+
+
+def test_no_credentials_links_rules_only(tmp_path, monkeypatch):
+    """With no credentials file (for example a keychain login), the rules are still linked and nothing fails."""
+    rules, _ = rules_and_home(tmp_path, monkeypatch, creds_in=None)
+    isolated = runner.build_isolated_config(rules, tmp_path)
+    assert runner.find_credentials(rules) is None, "found credentials that don't exist"
+    assert not (isolated / ".credentials.json").exists(), "linked a missing credentials file"
+    assert (isolated / "CLAUDE.md").exists(), "rules should still be linked"
+
+
+def test_missing_config_folder_fails_with_its_own_reason(tmp_path, monkeypatch):
+    """A config folder that doesn't exist is reported as such, not as a missing claude CLI."""
+    calls = fake_claude(monkeypatch)
+    results = runner.EvalRunner(write_evals(tmp_path, CASE), config_dir=tmp_path / "nowhere").run()
+    assert "doesn't exist" in results["results"][0]["details"], results["results"][0]["details"]
+    assert calls == [], "no Claude call should be made without a config folder"
+
+
+def test_error_shows_stdout_when_stderr_is_empty(tmp_path, monkeypatch):
+    """Claude prints "Not logged in" to stdout, so the failure reason must include it."""
+    fake_claude(monkeypatch, stdout="Not logged in · Please run /login", returncode=1, stderr="")
+    results = runner.EvalRunner(write_evals(tmp_path, CASE), config_dir=tmp_path).run()
+    assert results["results"][0]["details"] == "claude exited 1: Not logged in · Please run /login"
+
+
+def test_state_folders_are_not_linked(tmp_path, monkeypatch):
+    """Claude Code's state folders stay unlinked, so backups and caches land in the throwaway config."""
+    rules, _ = rules_and_home(tmp_path, monkeypatch)
+    for state in ("backups", "plugins", "projects"):
+        (rules / state).mkdir()
+    isolated = runner.build_isolated_config(rules, tmp_path)
+    linked = sorted(entry.name for entry in isolated.iterdir())
+    assert not {"backups", "plugins", "projects"} & set(linked), f"state folders were linked: {linked}"
+    assert "_rules" in linked and "CLAUDE.md" in linked, f"rules missing: {linked}"

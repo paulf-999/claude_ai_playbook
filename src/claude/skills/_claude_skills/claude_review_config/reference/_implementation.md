@@ -2,7 +2,7 @@
 
 ## Phase 1: Read & Score
 
-Reads key config artefacts from `~/.claude/` and scores across six quality dimensions:
+Reads key config artefacts from the config folder (`$CLAUDE_CONFIG_DIR`, or `~/.claude/` when it's unset) and scores across six quality dimensions:
 
 **Dimensions:**
 1. **Rule quality** — Clarity, specificity, actionability, DRY (no duplicate guidance)
@@ -42,7 +42,7 @@ Generates comprehensive audit report with:
 - **Gap analysis:** MoSCoW table of missing elements
 - **Recommendations:** Severity-rated improvements with rationale
 
-**Output:** Markdown file (`~/.claude_config_review.md`) with full scorecard, analysis, and recommendations
+**Output:** Markdown file (`~/claude/_drafts/general/YYYY_MM_DD_claude_config_review.md`) with full scorecard, analysis, and recommendations
 
 ---
 
@@ -52,8 +52,8 @@ For each Must/Should item in the gap analysis:
 
 1. Present the issue and proposed fix
 2. Ask for confirmation
-3. Apply fix to `~/.claude/` if confirmed
-4. Optionally sync to playbook repo (`src/claude/`)
-5. Generate git commit with summary
+3. Apply the fix to the config folder only if that fix was confirmed
+4. Optionally sync to the playbook repo (`src/claude/`)
+5. List the files changed, and leave committing to the user
 
-**Output:** Updated config files + git commit (if fixes applied)
+**Output:** Updated config files, never committed automatically
