@@ -14,7 +14,7 @@
 | 6 | `validate_readonly_directory` | Pre-flight | Fails gracefully if the target directory is read-only |
 | 7 | `install_graphifyy_package` | Install | `pip install graphifyy` succeeds |
 | 8 | `install_graphify_claude_skill` | Install | `graphify install --platform claude` succeeds |
-| 9 | `extract_knowledge_graph` | Extract | `graphify extract` generates `graph.json`, notes the cost |
+| 9 | `extract_knowledge_graph` | Extract | `graphify extract .` generates `graph.json` after the user confirms what leaves the machine |
 | 10 | `add_gitignore_entry` | Extract | `graphify-out/` gets appended to `.gitignore` |
 | 11 | `update_claude_md` | Extract | `CLAUDE.md` gets a Graphify section added |
 | 12 | `verify_graphify_skill_callable` | Verify | `/graphify` answers a structural question without reading files directly |

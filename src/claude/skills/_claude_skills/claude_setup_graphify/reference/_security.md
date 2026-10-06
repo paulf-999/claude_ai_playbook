@@ -1,5 +1,15 @@
 # Security Measures
 
+**Data leaving the machine** (from graphify's own docs and the `graphify --help` text for 0.8.36):
+- Code: parsed locally with tree-sitter, so no source code is sent anywhere.
+- Docs, PDFs and images: `graphify extract` runs a semantic LLM pass over them, through the backend whose API key is set (`--backend` gemini, kimi, claude, openai, deepseek or ollama).
+- Keeping it local: run with no LLM API key set, or with the `ollama` backend, so the semantic pass never calls an external API.
+- Before extracting a work repo: confirm with the user, since its docs may hold internal or customer information.
+
+**Supply chain:**
+- Pinned install: `pip install "graphifyy==0.8.36"`, never an unpinned `pip install graphifyy`.
+- Upgrades: bump the pin on purpose, after reading the release notes, and run `pip-audit` if it's available.
+
 **Input Validation:**
 - Path traversal: Reject ".." escapes, absolute paths, invalid characters
 - Shell injection: Quote all variables, validate character sets

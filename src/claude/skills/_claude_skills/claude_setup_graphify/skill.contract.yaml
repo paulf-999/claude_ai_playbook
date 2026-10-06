@@ -1,6 +1,6 @@
 ---
 name: claude_setup_graphify
-version: 1.0.0
+version: 1.2.1
 summary: Set up Graphify on a repo to generate a local AST-based knowledge graph, reducing token cost for codebase exploration.
 maturity: tactical
 test_coverage_level: comprehensive
@@ -36,4 +36,4 @@ dependencies:
         - Edit
     mcp_servers: []
     external:
-        - graphifyy (pip install graphifyy)
+        - graphifyy 0.8.36 (pip install "graphifyy==0.8.36")
