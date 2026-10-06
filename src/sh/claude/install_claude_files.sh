@@ -47,7 +47,7 @@ install_claude_files() {
     flatten_skills               # from claude_file_utils.sh
     prune_removed_files          # from claude_file_utils.sh — drops files the repo removed since the last install
     rewrite_config_paths         # from claude_file_utils.sh — @ imports can't read CLAUDE_CONFIG_DIR
-    build_path_scoped_rules      # from claude_file_utils.sh — after pruning, which drops the old links
+    migrate_old_rules_layout     # from claude_file_utils.sh — after pruning, so only your own files are left in _rules/
 }
 
 # Install the Claude CLI via npm (optional step — failure does not abort the install)

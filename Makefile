@@ -85,7 +85,7 @@ audit_components:
 audit_rule_usage:
 	@echo "${INFO}\nMeasuring rule usage from session transcripts${COLOUR_OFF}"
 	@python3 src/claude/_scripts/_audit_scripts/audit_rule_usage.py \
-		--rules src/claude/_rules \
+		--rules src/claude/rules \
 		--transcripts "$${CLAUDE_CONFIG_DIR:-$$HOME/.claude}/projects" \
 		--out src/claude/_admin/_audits
 

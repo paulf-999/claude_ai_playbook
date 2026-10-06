@@ -10,7 +10,7 @@
 #
 # RESERVED — deliberately NOT registered in settings.json. Do not delete it as unused.
 # It is the planned "walk" step if per-turn injection (hook_style_guide_response_standards_inject.sh)
-# stops keeping responses compliant — see _rules/05_lazy_load/response_standards_enforcement.md.
+# stops keeping responses compliant — see _rules_lazy_load/response_standards_enforcement.md.
 # test_hook_registry_utils.py fails if this file is removed, registered or loses this note
 # without its RESERVED_HOOKS entry being updated to match.
 #

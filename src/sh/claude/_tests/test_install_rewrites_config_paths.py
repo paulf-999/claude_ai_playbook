@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-02
-# Version:           1.0.1
+# Date updated:      2026-10-06
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -35,8 +35,8 @@ STEPS = (
     " && rewrite_config_paths"
 )
 IMPORT = re.compile(r"^@(\S+\.md)\s*$", re.M)
-SQL_GUIDE = Path("_rules/05_lazy_load/style_guide_standards/sql.md")
-PORTABLE = Path("_rules/02_claude_standards/portable_paths.md")
+SQL_GUIDE = Path("rules/05_path_scoped/style_guide_standards/sql.md")
+PORTABLE = Path("rules/02_claude_standards/portable_paths.md")
 BARE_PROSE = "`~/.claude/` exists (Claude Code's own state dir"
 
 
@@ -89,7 +89,7 @@ def test_no_default_prefix_imports_left(custom: dict[str, Path]):
 def test_every_import_resolves(custom: dict[str, Path]):
     """Each import in CLAUDE.md points at a real file in the installed folder."""
     found = imports(custom["target"] / "CLAUDE.md")
-    assert len(found) >= 10, f"expected the always-on imports, found {len(found)}"
+    assert len(found) >= 2, f"expected the memory and aliases imports, found {len(found)}"
     missing = [i for i in found if not (custom["home"] / i.removeprefix("~/")).is_file()]
     assert not missing, f"imports that don't resolve: {missing}"
 
@@ -105,9 +105,9 @@ def test_always_on_rules_reachable(custom: dict[str, Path]):
 def test_pointers_use_the_real_folder(custom: dict[str, Path]):
     """Read-on-demand pointers in rules point at the installed folder too."""
     text = (custom["target"] / SQL_GUIDE).read_text()
-    pointer = "`~/claude/_rules/05_lazy_load/style_guide_standards/sql/formatting.md`"
+    pointer = "`~/claude/_rules_lazy_load/style_guide_standards/sql/formatting.md`"
     assert pointer in text, "sql.md pointer not rewritten"
-    assert "`~/.claude/_rules/" not in text, "sql.md still points at ~/.claude/"
+    assert "`~/.claude/_rules_lazy_load/" not in text, "sql.md still points at ~/.claude/"
 
 
 # --- What the rewrite leaves alone ---

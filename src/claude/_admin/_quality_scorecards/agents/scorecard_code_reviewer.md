@@ -21,4 +21,4 @@
 - `src/claude/agents/core/code_reviewer/AGENT.md` — the agent being scored
 - `src/claude/agents/core/code_reviewer/evals.yaml` — Test Coverage dimension
 - `src/claude/skills/_git_skills/git_review_pr/SKILL.md` — Scope Boundaries dimension
-- `src/claude/_rules/05_lazy_load/authoring_agents/_lazy_load/_hard_gates_checklist.md` — Structural Compliance dimension
+- `src/claude/_rules_lazy_load/authoring_agents/_hard_gates_checklist.md` — Structural Compliance dimension

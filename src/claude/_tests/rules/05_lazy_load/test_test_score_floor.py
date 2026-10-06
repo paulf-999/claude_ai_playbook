@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-02
-# Version:           2.1.1
+# Date updated:      2026-10-06
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -20,12 +20,12 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from _shared_paths import RULES_DIR
+from _shared_paths import LAZY_RULES_DIR
 from test_test_metadata import HINT, VALID_HEADER, find_test_files, label
 
 QUALITY_FLOOR = 9
 COMPLEXITY_FLOOR = 7
-RULE_FILE = RULES_DIR / "05_lazy_load" / "testing" / "_test_metadata.md"
+RULE_FILE = LAZY_RULES_DIR / "testing" / "_test_metadata.md"
 SCORE_PATTERN = re.compile(
     r"^# Test quality score: (\d+)/10\n"
     r"# Test complexity score: (\d+)/10\n"

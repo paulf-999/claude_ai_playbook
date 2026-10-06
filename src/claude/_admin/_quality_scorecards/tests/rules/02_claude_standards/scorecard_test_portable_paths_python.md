@@ -19,5 +19,5 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/02_claude_standards/test_portable_paths_python.py` — the test being scored
-- `src/claude/_rules/02_claude_standards/portable_paths.md` — what the test guards
+- `src/claude/rules/02_claude_standards/portable_paths.md` — what the test guards
 - `src/claude/_tests/_shared_paths.py` — the one file allowed to resolve the config dir from the home directory

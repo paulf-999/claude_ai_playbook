@@ -64,6 +64,9 @@ restore_user_editable_files() {
     done
 }
 
+# Top-level items the repo no longer ships: _rules/ became rules/ and _rules_lazy_load/ on 2026-10-06
+RETIRED_ITEMS=("_rules")
+
 # Remove only repo-managed items from the Windows .claude directory.
 # Preserves unmanaged items (sessions/, plugins/, settings.json, etc.)
 # to avoid destroying Windows-specific app state.
@@ -75,6 +78,13 @@ remove_managed_files() {
         if [[ -e "${TARGET_DIR}/${ITEM_NAME}" ]]; then
             rm -rf "${TARGET_DIR:?}/${ITEM_NAME}"
             log_message "${INFO}" "Removed managed item: ${ITEM_NAME}"
+        fi
+    done
+    # Items the repo used to ship are removed too, so nothing stale is left behind
+    for ITEM_NAME in "${RETIRED_ITEMS[@]}"; do
+        if [[ -e "${TARGET_DIR}/${ITEM_NAME}" ]]; then
+            rm -rf "${TARGET_DIR:?}/${ITEM_NAME}"
+            log_message "${INFO}" "Removed retired managed item: ${ITEM_NAME}"
         fi
     done
 }
@@ -94,7 +104,7 @@ sync_windows_claude_files() {
     remove_managed_files
     copy_claude_files                 # from claude_file_utils.sh
     flatten_skills                    # from claude_file_utils.sh
-    build_path_scoped_rules           # from claude_file_utils.sh
+    migrate_old_rules_layout          # from claude_file_utils.sh
     restore_user_editable_files
 }
 

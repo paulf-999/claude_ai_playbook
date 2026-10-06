@@ -1,14 +1,14 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-02
-# Version:           2.0.1
+# Date updated:      2026-10-06
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Content tests for _rules/02_claude_standards/security/_security_guardrails.md.
+"""Content tests for rules/02_claude_standards/security/_security_guardrails.md.
 
 Each test guards one guardrail — prompt-injection defence, secret handling and
 safe permission recommendations — so a lost clause fails by name. The old checks

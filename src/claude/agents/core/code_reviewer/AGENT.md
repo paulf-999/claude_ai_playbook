@@ -57,4 +57,4 @@ You are a thorough, constructive code reviewer who grounds plain-English feedbac
 ## References
 
 - `evals.yaml` — test scenarios for this agent.
-- `~/.claude/_rules/05_lazy_load/authoring_agents.md` — agent authoring standards.
+- `~/.claude/rules/03_authoring_guidelines/authoring_agents.md` — agent authoring standards.

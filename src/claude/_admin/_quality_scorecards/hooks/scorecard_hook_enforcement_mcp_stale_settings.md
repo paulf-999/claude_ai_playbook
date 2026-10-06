@@ -20,5 +20,5 @@
 
 - `src/claude/hooks/hook_enforcement_mcp_stale_settings.sh` — the hook being scored
 - `src/claude/_tests/hooks/enforcement/test_enforcement_mcp_stale_settings.py` — Test Coverage dimension
-- `src/claude/_rules/04_claude_reference/claude_operational_efficiency/_mcp_server_toggling.md` — Evidence of Need dimension
+- `src/claude/rules/04_claude_reference/claude_operational_efficiency/_mcp_server_toggling.md` — Evidence of Need dimension
 - `src/claude/_admin/_docs/decisions/hooks.md` — Structural Compliance dimension

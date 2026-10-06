@@ -19,4 +19,4 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/skills/test_skill_instructions_section.py` — the test being scored
-- `src/claude/_rules/03_authoring_guidelines/authoring_skills/_lazy_load/_core_standards.md` — the rule the test enforces
+- `src/claude/_rules_lazy_load/authoring_skills/_core_standards.md` — the rule the test enforces

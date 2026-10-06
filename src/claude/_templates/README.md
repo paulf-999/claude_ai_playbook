@@ -44,7 +44,7 @@ _templates/
 **`AGENT.md.template`**
 - Starting point for a new agent at `agents/<group>/<name>/AGENT.md`: frontmatter, metadata header and the standard sections
 - Keeps its uppercase name because it mirrors the `AGENT.md` file it produces
-- Used by: `authoring_agents/_lazy_load/_core_standards.md`
+- Used by: `_rules_lazy_load/authoring_agents/_core_standards.md`
 
 **`rule.md.template`**
 - Two starting points for a new rule: Template A (one principle) and Template B (several related patterns)
@@ -59,7 +59,7 @@ _templates/
 
 **`template_bash_script.sh`**
 - Starting point for a new bash script: shebang, safety flags, `shell_utils.sh` source, section headers, trap and logging
-- Used by: `05_lazy_load/style_guide_standards/bash.md`
+- Used by: `rules/05_path_scoped/style_guide_standards/bash.md`
 
 ### Scorecards
 

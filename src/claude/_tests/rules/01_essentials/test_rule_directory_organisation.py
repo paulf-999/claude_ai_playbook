@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-01
-# Version:           2.1.0
+# Date updated:      2026-10-06
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -28,7 +28,7 @@ USAGE_STANDARDS_DIR = ESSENTIALS_DIR / "claude_usage_standards"
 ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference")
 
 # Top-level files and folders expected in 01_essentials/
-EXPECTED_TOP_LEVEL = {"README.md", "claude_response_standards.md", "claude_usage_standards.md", "guiding_principles.md"}
+EXPECTED_TOP_LEVEL = {"claude_response_standards.md", "claude_usage_standards.md", "guiding_principles.md"}
 EXPECTED_DIRECTORIES = {"claude_usage_standards"}
 
 # claude_usage_standards/ groups three rules, one of which keeps a children folder
@@ -132,12 +132,10 @@ def test_child_folders_sit_beside_their_parent():
     assert not orphans, f"children folders with no <topic>.md parent beside them: {orphans}"
 
 
-def test_lazy_load_folders_sit_inside_a_parent_folder():
-    """Every _lazy_load/ folder sits inside <topic>/ with <topic>.md beside that folder."""
-    lazy = [f for f in child_folders() if f.name == "_lazy_load"]
-    assert lazy, "expected per-parent _lazy_load/ folders in the always-on tiers"
-    bad = [str(f.relative_to(RULES_DIR)) for f in lazy if not (f.parent.parent / f"{f.parent.name}.md").is_file()]
-    assert not bad, f"_lazy_load/ folders without a parent rule: {bad}"
+def test_no_lazy_load_folders_in_always_on_tiers():
+    """On-demand children live in _rules_lazy_load/, since every file under rules/ auto-loads."""
+    lazy = [str(f.relative_to(RULES_DIR)) for f in child_folders() if f.name == "_lazy_load"]
+    assert not lazy, f"move these children to _rules_lazy_load/<topic>/: {lazy}"
 
 
 def test_grouping_dirs_still_exist():

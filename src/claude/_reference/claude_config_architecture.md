@@ -10,8 +10,8 @@ The config is built on the principles in `guiding_principles.md` — read that f
 
 | Principle | How it shapes config |
 |---|---|
-| **Lazy-load by default** | Only tiers 01–04 load every session; domain-specific rules live in `_rules/05_lazy_load/` and are read on demand |
-| **Explicit over implicit** | Every always-on file is reached through an explicit `@import` chain from `CLAUDE.md`; no silent automation |
+| **Lazy-load by default** | Only tiers 01–04 load every session; domain-specific rules live in `_rules_lazy_load/` and are read on demand |
+| **Explicit over implicit** | The folder a rule sits in says how it loads — `rules/` tiers 01–04 every session, `paths:` rules with matching files, `_rules_lazy_load/` on demand; no silent automation |
 | **Context efficiency** | Always-on size is measured, not estimated; broad imports are questioned in review; unused features are retired |
 | **Intentionality** | Features exist because they solve real, recurring problems — not "nice to have" |
 | **Reversible by design** | Rules are small, single-purpose; can be commented out or deleted without side effects |
@@ -61,8 +61,9 @@ This page describes the principle, not an inventory — the README in each direc
 
 | Path | What lives there | Current contents |
 |---|---|---|
-| `CLAUDE.md` | Entry point; `@import`s the always-on rules | Read the file itself |
-| `_rules/` | Rules, in five tiers (`01_essentials/` to `05_lazy_load/`) | `_rules/README.md` and each tier's README |
+| `CLAUDE.md` | Entry point; imports memory and aliases | Read the file itself |
+| `rules/` | Rules Claude Code loads natively, in tiers `01_essentials/` to `04_claude_reference/` plus `05_path_scoped/` | `_rules_lazy_load/_tier_readmes/00_rules_overview.md` and each tier's README |
+| `_rules_lazy_load/` | Rules read on demand, never loaded automatically, plus the tier READMEs | `_rules_lazy_load/README.md` |
 | `_reference/` | Background docs like this one — never imported | `_reference/README.md` |
 | `_tests/` | pytest suite for rules, hooks, skills and settings | `_tests/README.md` |
 | `hooks/`, `skills/`, `agents/`, `_templates/` | Hooks, skills, sub-agents, authoring templates | Each directory's README |
@@ -71,9 +72,10 @@ This page describes the principle, not an inventory — the README in each direc
 
 ## 🔄 What loads when
 
-- **Always-on:** `CLAUDE.md` imports the entry file of each rule in tiers 01–04, and those files import their children — read `CLAUDE.md` for the current list.
-- **On demand:** `_rules/05_lazy_load/` and `_reference/` are never imported; Claude reads them when a task needs them.
-- **Cost:** measure it rather than estimate it — `_rules/README.md` records measured tier sizes, and each `@import` adds the full size of the imported file to every session.
+- **Always-on:** Claude Code loads every `.md` under `rules/` without `paths:` frontmatter — tiers 01–04 and their children; the folders are the current list.
+- **With matching files:** rules with `paths:` (mostly `rules/05_path_scoped/`) load when Claude reads a file their globs match.
+- **On demand:** `_rules_lazy_load/` and `_reference/` are never imported; Claude reads them when a task needs them.
+- **Cost:** measure it rather than estimate it — `_rules_lazy_load/_tier_readmes/00_rules_overview.md` records measured tier sizes, and each always-on file adds its full size to every session.
 
 ---
 
@@ -85,7 +87,7 @@ Rules are organized by concern, creating clear separation that simplifies auditi
 |---|---|---|
 | **Security** | `behaviour.md` → `security/_security_guardrails.md` → `security.md` | Progressive gates from task approach to code standards |
 | **Quality** | `testing.md` + `hook_enforcement_naming_convention.sh` | Naming checked as Claude creates files; tests run in pre-commit and CI |
-| **Efficiency** | `_rules/05_lazy_load/` + `_reference/` | Domain rules and background docs read on demand, keeping the baseline small |
+| **Efficiency** | `_rules_lazy_load/` + `_reference/` | Domain rules and background docs read on demand, keeping the baseline small |
 
 For detailed security architecture, see **[claude_config_architecture/_security.md](claude_config_architecture/_security.md)**.
 
@@ -111,11 +113,11 @@ Regular maintenance cycles ensure the config stays intentional and focused on cu
 Use this decision tree:
 
 1. **Does it apply to EVERY session** (regardless of project type)?
-   - **Yes** → Place in the matching always-on tier (`01_essentials/` to `04_claude_reference/`, per `_rules/README.md`) and `@import` it from that tier's entry file
+   - **Yes** → Place in the matching always-on tier (`01_essentials/` to `04_claude_reference/`, per `_rules_lazy_load/_tier_readmes/00_rules_overview.md`) and `@import` it from that tier's entry file
    - **No** → Go to step 2
 
 2. **Is it domain-specific** (SQL, dbt, Terraform, etc.)?
-   - **Yes** → Place in `_rules/05_lazy_load/`; list it in that tier's README
+   - **Yes** → Place in `_rules_lazy_load/`; list it in that tier's README
    - **No** → Reconsider whether it's needed at all
 
 3. **Will you use this 5+ times/month**?

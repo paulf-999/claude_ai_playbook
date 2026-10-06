@@ -19,4 +19,4 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/02_claude_standards/test_git.py` — the test being scored
-- `src/claude/_rules/02_claude_standards/git.md` — what the test guards
+- `src/claude/rules/02_claude_standards/git.md` — what the test guards

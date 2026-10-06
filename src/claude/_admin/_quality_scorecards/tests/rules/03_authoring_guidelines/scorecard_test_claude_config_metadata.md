@@ -19,4 +19,4 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/03_authoring_guidelines/test_claude_config_metadata.py` — the test being scored
-- `src/claude/_rules/03_authoring_guidelines/shared_standards/_claude_config_metadata.md` — what the test guards
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_claude_config_metadata.md` — what the test guards

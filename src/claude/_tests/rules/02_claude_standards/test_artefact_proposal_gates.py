@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-02
-# Version:           2.0.2
+# Date updated:      2026-10-06
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -18,14 +18,17 @@ fails if the rule is deleted, trimmed, or left pointing at moved files.
 import re
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR, HOOKS_DIR, RULES_DIR, SKILLS_DIR
+from _shared_paths import CLAUDE_DIR, HOOKS_DIR, LAZY_RULES_DIR, RULES_DIR, SKILLS_DIR
 
 RULE_FILE = RULES_DIR / "02_claude_standards" / "behaviour" / "_artefact_proposal_gates.md"
 PARENT_FILE = RULES_DIR / "02_claude_standards" / "behaviour.md"
 SKILL_DOMAINS = RULES_DIR / "03_authoring_guidelines" / "authoring_skills" / "skill_domains.yaml"
 
 GATE_HEADINGS = ["### Gate 1️⃣: Naming", "### Gate 2️⃣: Placement", "### Gate 3️⃣: Duplication"]
-TIERS = ["01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference", "05_lazy_load"]
+RULE_TIERS = (
+    "01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference", "05_path_scoped",
+)
+TIERS = {tier: RULES_DIR / tier for tier in RULE_TIERS} | {"_rules_lazy_load": LAZY_RULES_DIR}
 
 
 def gate_section(content: str, number: int) -> str:
@@ -45,14 +48,14 @@ def gate_section(content: str, number: int) -> str:
 def referenced_rule_files(section: str) -> list[Path]:
     """Resolve every file a gate's **Reference:** line names to a real path.
 
-    The parent is written as ``~/<config_dir>/_rules/...md`` (any config
+    The parent is written as ``~/<config_dir>/rules/...md`` or ``~/<config_dir>/_rules_lazy_load/...md`` (any config
     directory name, per portable_paths.md); its children are bare
     ``_child.md`` names living in a folder named after the parent.
 
     :param section: One gate's text, from :func:`gate_section`.
     :return: Paths of the parent and each named child.
     """
-    match = re.search(r"\*\*Reference:\*\* `~/[^/`]+/(_rules/[^`]+)\.md`(.*)", section)
+    match = re.search(r"\*\*Reference:\*\* `~/[^/`]+/((?:rules|_rules_lazy_load)/[^`]+)\.md`(.*)", section)
     if not match:
         return []
     parent = CLAUDE_DIR / f"{match.group(1)}.md"
@@ -65,13 +68,12 @@ def test_rule_file_exists():
     assert RULE_FILE.is_file(), f"Missing {RULE_FILE} — restore it or update RULE_FILE and behaviour.md's import"
 
 
-def test_parent_imports_the_rule():
-    """behaviour.md imports the rule, so it is loaded every session."""
-    parent = PARENT_FILE.read_text()
-    import_line = r"^@~/[^/]+/_rules/02_claude_standards/behaviour/_artefact_proposal_gates\.md$"
-    assert re.search(import_line, parent, re.MULTILINE), (
-        "behaviour.md must @import _artefact_proposal_gates.md, or the gates are never loaded"
+def test_parent_points_to_the_rule():
+    """behaviour.md names where the rule loads from, and the rule sits in an always-on tier with no paths:."""
+    assert "`rules/02_claude_standards/behaviour/_artefact_proposal_gates.md`" in PARENT_FILE.read_text(), (
+        "behaviour.md lost its pointer to _artefact_proposal_gates.md"
     )
+    assert not RULE_FILE.read_text().startswith("---"), "the gates must load every session — remove the frontmatter"
 
 
 def test_three_gates_appear_in_order():
@@ -127,11 +129,11 @@ def test_naming_gate_example_domains_are_registered():
 
 
 def test_placement_gate_names_every_tier():
-    """Gate 2 lists all five rule tiers, and each one exists."""
+    """Gate 2 lists all six rule folders, and each one exists."""
     section = gate_section(RULE_FILE.read_text(), 2)
-    for tier in TIERS:
+    for tier, folder in TIERS.items():
         assert f"**{tier}/**" in section, f"Gate 2 no longer lists the {tier}/ tier"
-        assert (RULES_DIR / tier).is_dir(), f"Gate 2 lists {tier}/, but _rules/{tier}/ doesn't exist"
+        assert folder.is_dir(), f"Gate 2 lists {tier}/, but {folder} doesn't exist"
 
 
 def test_reference_files_exist():
@@ -139,7 +141,7 @@ def test_reference_files_exist():
     content = RULE_FILE.read_text()
     for number in (1, 2, 3):
         paths = referenced_rule_files(gate_section(content, number))
-        assert paths, f"Gate {number}'s Reference line no longer names a ~/<config>/_rules/ file"
+        assert paths, f"Gate {number}'s Reference line no longer names a ~/<config>/rules/ or _rules_lazy_load/ file"
         for path in paths:
             assert path.is_file(), f"Gate {number} points to {path}, which doesn't exist — update the Reference line"
 

@@ -11,7 +11,7 @@ One file per test, mirroring its path under `_tests/`: `_admin/_quality_scorecar
 - **Example:** `_tests/rules/02_claude_standards/test_git.py` → `_admin/_quality_scorecards/tests/rules/02_claude_standards/scorecard_test_git.md`
 - **Keep the `test_` prefix:** it stops a test scorecard being mistaken for the scorecard of the rule it covers.
 - **Never `@import` these files:** they're review records, not content Claude reads while working.
-- **Header scores still apply:** every test keeps the quality and complexity scores in its metadata header (see `_rules/05_lazy_load/testing/_test_metadata.md`) — the scorecard explains and extends them, it doesn't replace them.
+- **Header scores still apply:** every test keeps the quality and complexity scores in its metadata header (see `_rules_lazy_load/testing/_test_metadata.md`) — the scorecard explains and extends them, it doesn't replace them.
 
 ---
 

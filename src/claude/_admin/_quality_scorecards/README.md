@@ -10,7 +10,7 @@
 |---|---|---|
 | `agents/` | Agents in `agents/`, one flat folder | `agents/scorecard_<agent_name>.md` |
 | `hooks/` | Hooks in `hooks/`, one flat folder | `hooks/scorecard_<hook_name>.md` |
-| `rules/` | Rules in `_rules/`, mirroring the tier path | `rules/<tier>/scorecard_<rule_name>.md` |
+| `rules/` | Rules in `rules/` and `_rules_lazy_load/`, mirroring the tier path as it stood when scored (`05_lazy_load/` for lazy and path-scoped rules) | `rules/<tier>/scorecard_<rule_name>.md` |
 | `skills/` | Skills in `skills/`, one flat folder | `skills/scorecard_<skill_name>.md` |
 | `tests/` | Tests in `_tests/`, mirroring the `_tests/` path | `tests/<subpath>/scorecard_<test_file_stem>.md` |
 

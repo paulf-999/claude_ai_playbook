@@ -10,7 +10,7 @@
 
 CLAUDE_HOOKS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_ROOT_DIR="$(dirname "${CLAUDE_HOOKS_DIR}")"
-STYLE_RULE="_rules/01_essentials/claude_usage_standards/writing_style.md"
+STYLE_RULE="rules/01_essentials/claude_usage_standards/writing_style.md"
 
 #=======================================================================
 # Variables

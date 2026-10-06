@@ -19,4 +19,4 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/04_claude_reference/test_claude_operational_efficiency.py` — the test being scored
-- `src/claude/_rules/04_claude_reference/claude_operational_efficiency.md` — what the test guards
+- `src/claude/rules/04_claude_reference/claude_operational_efficiency.md` — what the test guards

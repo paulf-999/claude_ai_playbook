@@ -19,5 +19,5 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/test_rules_structure.py` — the test being scored
-- `src/claude/_rules/01_essentials/claude_usage_standards/writing_style.md` — the format rules it guards
+- `src/claude/rules/01_essentials/claude_usage_standards/writing_style.md` — the format rules it guards
 - `src/claude/_tests/rules/test_rules_structure_layout.py` — the layout and import half of the old test

@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-02
-# Version:           2.1.1
+# Date updated:      2026-10-06
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -25,7 +25,9 @@ from _shared_paths import ALIASES_FILE, CLAUDE_DIR
 COLUMNS = ["Input", "Theme", "Status", "Meaning"]
 VALID_STATUSES = {"Ready", "Testing"}
 INPUT_PATTERN = r"`/?[a-z][a-z0-9_-]*`"
-CONTROLS_DOC = "_rules/05_lazy_load/automation_controls.md"
+CONTROLS_DOC = "_rules_lazy_load/automation_controls.md"
+# A rule path an alias meaning names, under rules/ or _rules_lazy_load/
+RULE_PATH = r"\b_?rules(?:_lazy_load)?/[\w/]+\.md"
 
 
 def parse_aliases(content: str) -> list[dict[str, str]]:
@@ -105,9 +107,9 @@ def test_input_format():
 
 
 def test_referenced_rule_paths_exist():
-    """Every _rules/ path a meaning names exists, so links can't rot."""
-    paths = {path for alias in load_aliases() for path in re.findall(r"_rules/[\w/]+\.md", alias["meaning"])}
-    assert paths, "expected at least one meaning to name a _rules/ path"
+    """Every rule path a meaning names exists, so links can't rot."""
+    paths = {path for alias in load_aliases() for path in re.findall(RULE_PATH, alias["meaning"])}
+    assert paths, "expected at least one meaning to name a rules/ or _rules_lazy_load/ path"
     missing = sorted(path for path in paths if not (CLAUDE_DIR / path).is_file())
     assert not missing, f"aliases.md names rule files that don't exist: {missing}"
 
@@ -150,7 +152,7 @@ def test_every_testing_alias_names_its_exit_doc():
     """Every Testing alias points to the rule that says when it graduates."""
     for alias in load_aliases():
         if alias["status"] == "Testing":
-            assert re.search(r"_rules/[\w/]+\.md", alias["meaning"]), (
+            assert re.search(RULE_PATH, alias["meaning"]), (
                 f"{alias['input']} is Testing but names no rule with its exit criteria"
             )
 

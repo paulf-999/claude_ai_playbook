@@ -2,7 +2,7 @@
 
 This file documents the Claude Code settings configuration. Each setting is justified by a guiding principle or observed workflow need.
 
-See `~/.claude/_rules/guiding_principles.md` for the decision framework applied to all settings.
+See `~/.claude/rules/01_essentials/guiding_principles.md` for the decision framework applied to all settings.
 
 ---
 
@@ -12,7 +12,7 @@ See `~/.claude/_rules/guiding_principles.md` for the decision framework applied 
 
 **What it does:** Every Claude Code session starts in plan mode, requiring explicit user approval before any code execution.
 
-**Why:** Prevents accidental code changes on non-trivial tasks. Aligns with the principle "ask first" in `_rules/behaviour.md`.
+**Why:** Prevents accidental code changes on non-trivial tasks. Aligns with the principle "ask first" in `rules/02_claude_standards/behaviour.md`.
 
 **When set:** 2026-08-07 (fixed from top-level placement to correct `permissions` nesting)
 
@@ -67,7 +67,7 @@ See `~/.claude/_rules/guiding_principles.md` for the decision framework applied 
 
 ### `permissions.deny` (secrets + destructive-op firewall)
 
-**What it does:** Hard blocklist — Claude cannot read/run these patterns regardless of permission mode. Backs the advisory rules in `_rules/security.md` with a mechanical guard.
+**What it does:** Hard blocklist — Claude cannot read/run these patterns regardless of permission mode. Backs the advisory rules in `rules/02_claude_standards/security.md` with a mechanical guard.
 
 **When set:** 2026-08-07 (adopted from `_reference/settings_json_recommendations.md` item 1)
 
@@ -134,7 +134,7 @@ See `~/.claude/_rules/guiding_principles.md` for the decision framework applied 
 
 **Why:**
 - Haiku is fast and cheap for most tasks (summarizing, formatting, Q&A, simple code changes)
-- `_rules/claude_internal/claude_efficiency.md` flags when to escalate to Sonnet/Opus
+- `rules/02_claude_standards/behaviour/_model_selection_strategy.md` flags when to escalate to Sonnet/Opus
 - You can override per-session with `/model claude-sonnet-5`
 
 **Guiding principle:** Context efficiency — smaller models preserve reasoning capacity for harder tasks.
@@ -201,9 +201,9 @@ See `~/.claude/_rules/guiding_principles.md` for the decision framework applied 
 
 ## Related Files
 
-- **`~/.claude/_rules/guiding_principles.md`** — Decision framework (lazy-load, explicit, context-efficient, intentional, reversible)
-- **`~/.claude/_rules/behaviour.md`** — Operational rules (ask first, simplest approach, friction reduction)
-- **`~/.claude/_rules/claude_internal/claude_efficiency.md`** — Model selection, sub-agent constraints, token awareness
+- **`~/.claude/rules/01_essentials/guiding_principles.md`** — Decision framework (lazy-load, explicit, context-efficient, intentional, reversible)
+- **`~/.claude/rules/02_claude_standards/behaviour.md`** — Operational rules (ask first, simplest approach, friction reduction)
+- **`~/.claude/rules/04_claude_reference/claude_operational_efficiency.md`** — Model selection, sub-agent constraints, token awareness
 - **`~/.claude/_wip/disabled_plugins.md`** — Disabled plugins; conditions for re-enabling
 - **`~/.claude/_wip/hooks/`** — Disabled hook files; restorable if needed
 - **`~/.claude/memory/MEMORY.md`** — Cross-session memories

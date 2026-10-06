@@ -14,7 +14,7 @@
 
 ## 2️⃣ Track candidates
 
-- **Ledger:** each pattern has a row in `<config-dir>/_rules/learned/candidates.md` with its occurrence count.
+- **Ledger:** each pattern has a row in `<config-dir>/_rules_lazy_load/learned/candidates.md` with its occurrence count.
 - **Update:** add new patterns at count 1, and increase the count of ones seen again.
 - **Threshold:** a pattern is promoted only once its count reaches **2**.
 - **Below threshold:** record it, and tell the user it will be promoted if it recurs.
@@ -35,8 +35,8 @@
 ## 5️⃣ Propose
 
 - **Diff only:** show the new rule, its eval case and the before/after results as a diff.
-- **Approval:** write to `<config-dir>/_rules/learned/` only after an explicit yes.
-- **Declined:** leave `_rules/learned/` unchanged and confirm that nothing was applied.
+- **Approval:** write to `<config-dir>/_rules_lazy_load/learned/` only after an explicit yes.
+- **Declined:** leave `_rules_lazy_load/learned/` unchanged and confirm that nothing was applied.
 
 ## 6️⃣ Prune
 

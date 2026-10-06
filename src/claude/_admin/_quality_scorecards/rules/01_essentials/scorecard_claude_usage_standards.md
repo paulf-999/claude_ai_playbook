@@ -18,6 +18,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/01_essentials/claude_usage_standards.md` — the rule being scored
+- `src/claude/rules/01_essentials/claude_usage_standards.md` — the rule being scored
 - `src/claude/_tests/rules/01_essentials/test_rule_directory_organisation.py` — Test Coverage dimension
 - `src/claude/_tests/rules/01_essentials/test_writing_style.py` — Test Coverage dimension

@@ -40,12 +40,12 @@ def find_config_dir(start: Path) -> Path | None:
 
     :param start: Where to begin looking, normally this script's own folder.
     :type start: Path
-    :return: ``CLAUDE_CONFIG_DIR`` if set, else the nearest parent holding ``_rules/``, else None.
+    :return: ``CLAUDE_CONFIG_DIR`` if set, else the nearest parent holding ``rules/``, else None.
     :rtype: Path | None
     """
     if os.environ.get("CLAUDE_CONFIG_DIR"):
         return Path(os.environ["CLAUDE_CONFIG_DIR"])
-    return next((p for p in [start, *start.parents] if (p / "_rules").is_dir()), None)
+    return next((p for p in [start, *start.parents] if (p / "rules").is_dir()), None)
 
 
 def find_credentials(config_dir: Path) -> Path | None:

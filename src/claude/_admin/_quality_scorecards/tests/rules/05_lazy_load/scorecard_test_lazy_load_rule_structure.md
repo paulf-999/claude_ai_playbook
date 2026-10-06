@@ -19,5 +19,5 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/05_lazy_load/test_lazy_load_rule_structure.py` — the test being scored
-- `src/claude/_rules/05_lazy_load/` — the 15 rules the test guards, listed in its `RULES` table
+- `src/claude/_rules_lazy_load/` — the 15 rules the test guards, listed in its `RULES` table
 - `src/claude/_admin/_quality_scorecards/quality_scorecards_summary.md` — next action #1, which this test addresses

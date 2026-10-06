@@ -12,7 +12,7 @@ All rules live in `src/claude/_rules/` with three tiers:
 
 ### 1️⃣ Always-on (Imported in CLAUDE.md)
 
-**Directory:** `_rules/01_essentials/` and `_rules/02_claude_internal/`
+**Directory:** `rules/01_essentials/` and `_rules/02_claude_internal/`
 
 **Cost:** Every rule consumes 100-200 tokens per session, regardless of task type.
 

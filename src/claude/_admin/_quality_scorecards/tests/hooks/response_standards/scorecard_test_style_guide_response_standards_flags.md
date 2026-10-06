@@ -20,4 +20,4 @@
 
 - `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_flags.py` — the test being scored
 - `src/claude/hooks/hook_style_guide_response_standards.sh` — what the test guards
-- `src/claude/_rules/05_lazy_load/response_standards_enforcement.md` — why the hook is kept unregistered
+- `src/claude/_rules_lazy_load/response_standards_enforcement.md` — why the hook is kept unregistered

@@ -2,32 +2,33 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
 # Date updated:      2026-10-06
-# Version:           1.3.0
+# Version:           2.0.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Drift tests for _rules/05_lazy_load/claude_rule_loading_strategy.md.
+"""Drift tests for rules/05_path_scoped/claude_rule_loading_strategy.md.
 
-The rule's five-tier table describes the real ``_rules/`` layout. These tests
+The rule's folder table describes the real ``rules/`` and ``_rules_lazy_load/`` layout. These tests
 fail when the table and the folders on disk stop matching, or when the table's
 example files, loading claims or key guidance quietly go stale.
 """
 import re
 
-from _shared_paths import CLAUDE_MD, RULES_DIR
+from _shared_paths import CLAUDE_MD, LAZY_RULES_DIR, RULES_DIR
 
-RULE = RULES_DIR / "05_lazy_load" / "claude_rule_loading_strategy.md"
+RULE = RULES_DIR / "05_path_scoped" / "claude_rule_loading_strategy.md"
 
 # A table row: | `01_essentials/` | ... | `example.md` | ... | Loading |
 ROW_PATTERN = re.compile(
-    r"^\| `(\d{2}_[a-z_]+)/` \|[^|]+\| `([^`]+)` \|[^|]+\| ([^|]+) \|$",
+    r"^\| `(\d{2}_[a-z_]+|_rules_lazy_load)/` \|[^|]+\| `([^`]+)` \|[^|]+\| ([^|]+) \|$",
     re.MULTILINE,
 )
 # Matches any config-dir name (~/.claude/, ~/claude/, ...) per portable_paths.md.
-IMPORT_PATTERN = re.compile(r"^@~/[^/]+/_rules/(\d{2}_[a-z_]+)/", re.MULTILINE)
-LAZY_TIER = "05_lazy_load"
+IMPORT_PATTERN = re.compile(r"^@~/[^/]+/(_?rules\S*)$", re.MULTILINE)
+LAZY_FOLDER = "_rules_lazy_load"
+PATH_SCOPED_TIER = "05_path_scoped"
 # paths: frontmatter (5 lines) + version, created, updated, miss_cost
 HEADER_LINES = 9
 LINE_LIMIT = 110
@@ -53,7 +54,7 @@ def _rows():
 
 
 def _tiers_on_disk():
-    """Return the numbered tier folders under ``_rules/``.
+    """Return the numbered tier folders under ``rules/``.
 
     :return: sorted folder names such as ``01_essentials``
     """
@@ -68,69 +69,73 @@ def test_rule_file_exists():
     assert RULE.is_file(), f"Rule missing: {RULE}"
 
 
-def test_table_has_five_rows():
-    """The heading promises five tiers, so the table must have five rows."""
-    assert "## 📁 The five tiers" in _content(), "'The five tiers' heading removed"
-    assert len(_rows()) == 5, (
-        f"Expected 5 tier rows, parsed {len(_rows())} — check the table format"
+def test_table_has_six_rows():
+    """The heading promises six folders, so the table must have six rows."""
+    assert "## 📁 The six rule folders" in _content(), "'The six rule folders' heading removed"
+    assert len(_rows()) == 6, (
+        f"Expected 6 folder rows, parsed {len(_rows())} — check the table format"
     )
 
 
+def folder(tier: str):
+    """Return the folder a table row names: a rules/ tier, or the lazy folder beside rules/."""
+    return LAZY_RULES_DIR if tier == LAZY_FOLDER else RULES_DIR / tier
+
+
 def test_every_table_tier_exists_on_disk():
-    """Every tier named in the table must be a real ``_rules/`` folder."""
-    on_disk = set(_tiers_on_disk())
+    """Every folder named in the table must exist."""
     for tier, _example, _loading in _rows():
-        assert tier in on_disk, f"Table names tier '{tier}/' but no such folder exists"
+        assert folder(tier).is_dir(), f"Table names '{tier}/' but no such folder exists"
 
 
 def test_every_disk_tier_is_in_table():
-    """Every numbered ``_rules/`` folder must have a row in the table."""
+    """Every numbered ``rules/`` folder must have a row in the table."""
     in_table = {tier for tier, _example, _loading in _rows()}
     missing = set(_tiers_on_disk()) - in_table
     assert not missing, f"Tier folders missing from the table: {sorted(missing)}"
 
 
 def test_table_tiers_in_numeric_order():
-    """Table rows must list tiers in the same order as the folders."""
+    """Table rows must list the numbered tiers in folder order, with the lazy folder last."""
     tiers = [tier for tier, _example, _loading in _rows()]
+    assert tiers[-1] == LAZY_FOLDER, f"{LAZY_FOLDER}/ should be the last row: {tiers}"
+    tiers = tiers[:-1]
     assert tiers == sorted(tiers), f"Tier rows out of order: {tiers}"
 
 
 def test_example_files_exist():
     """Each row's example rule must exist inside that tier."""
     for tier, example, _loading in _rows():
-        target = RULES_DIR / tier / example
+        target = folder(tier) / example
         assert target.is_file(), (
             f"Example '{example}' for tier '{tier}/' no longer exists — update the table"
         )
 
 
 def test_loading_column_matches_tier():
-    """Tiers 01–04 must say always-on, and the lazy tier must say never imported."""
+    """Tiers 01–04 say always-on, 05_path_scoped/ says path-scoped, and the lazy folder says never automatic."""
     for tier, _example, loading in _rows():
-        if tier == LAZY_TIER:
-            assert "never imported" in loading, f"{tier} loading should say never imported"
+        if tier == LAZY_FOLDER:
+            assert "never loaded automatically" in loading, f"{tier} loading should say never loaded automatically"
+        elif tier == PATH_SCOPED_TIER:
+            assert loading.startswith("Path-scoped"), f"{tier} loading should start Path-scoped"
         else:
             assert loading.startswith("Always-on"), f"{tier} loading should start Always-on"
 
 
-def test_always_on_tiers_are_imported_by_claude_md():
-    """Every always-on tier must have at least one ``@import`` in CLAUDE.md."""
-    imported = set(IMPORT_PATTERN.findall(CLAUDE_MD.read_text()))
-    for tier, _example, _loading in _rows():
-        if tier != LAZY_TIER:
-            assert tier in imported, f"Always-on tier '{tier}' has no import in CLAUDE.md"
-    assert LAZY_TIER not in imported, f"CLAUDE.md imports from {LAZY_TIER}, which the table forbids"
+def test_claude_md_imports_no_rules():
+    """Rules load natively from rules/, so CLAUDE.md imports none, as the table says."""
+    imported = IMPORT_PATTERN.findall(CLAUDE_MD.read_text())
+    assert not imported, f"CLAUDE.md imports rules the native loader already loads: {imported}"
 
 
 def test_pointers_resolve():
-    """The README and per-parent ``_lazy_load/`` examples must point at real paths."""
+    """The overview README and on-demand children examples must point at real paths."""
     content = _content()
-    assert "`_rules/README.md`" in content, "Pointer to _rules/README.md removed"
-    assert (RULES_DIR / "README.md").is_file(), "_rules/README.md missing"
-    assert "authoring_skills/_lazy_load/" in content, "Per-parent _lazy_load/ example removed"
-    lazy_dir = RULES_DIR / "03_authoring_guidelines" / "authoring_skills" / "_lazy_load"
-    assert lazy_dir.is_dir(), f"Per-parent _lazy_load/ example missing: {lazy_dir}"
+    assert "`_rules_lazy_load/_tier_readmes/00_rules_overview.md`" in content, "Pointer to the rules overview removed"
+    assert (LAZY_RULES_DIR / "_tier_readmes" / "00_rules_overview.md").is_file(), "the rules overview is missing"
+    assert "`_rules_lazy_load/authoring_skills/`" in content, "On-demand children example removed"
+    assert (LAZY_RULES_DIR / "authoring_skills").is_dir(), "On-demand children example folder is missing"
 
 
 def test_key_guidance_survives():

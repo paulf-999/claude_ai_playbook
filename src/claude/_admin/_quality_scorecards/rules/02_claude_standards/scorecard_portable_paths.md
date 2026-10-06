@@ -18,6 +18,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/02_claude_standards/portable_paths.md` — the rule being scored
+- `src/claude/rules/02_claude_standards/portable_paths.md` — the rule being scored
 - `src/claude/_tests/rules/02_claude_standards/test_portable_paths_hooks.py` — Test Coverage dimension (hooks)
 - `src/claude/_tests/rules/02_claude_standards/test_portable_paths_python.py` — Test Coverage dimension (Python)

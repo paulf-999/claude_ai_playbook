@@ -1,14 +1,14 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-28
-# Date updated:      2026-10-01
-# Version:           2.1.0
+# Date updated:      2026-10-06
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Structural tests for _rules/05_lazy_load/authoring_agents.md.
+"""Structural tests for rules/03_authoring_guidelines/authoring_agents.md.
 
 Verifies the agent authoring guide and its 5 child files are present and
 well-formed. Filed after a 2026-09-28 rule audit found authoring_agents.md
@@ -17,19 +17,19 @@ had zero test coverage, unlike its two siblings in the same tier
 2026-09-29 to stay under Claude Code's 150k-char limit, then back to
 03_authoring_guidelines/ on 2026-09-30 so agent work is detected. Moved to
 05_lazy_load/ again on 2026-10-01, once ``paths:`` scoping proved it loads
-whenever an agent file is read; it was used in 2 of 115 sessions. Its children
-sit in `authoring_agents/_lazy_load/` and are only read on demand.
+whenever an agent file is read; it was used in 2 of 115 sessions. Moved back to
+rules/03_authoring_guidelines/ on 2026-10-06 with its ``paths:`` kept, to sit with the
+other authoring rules. Its children sit in `_rules_lazy_load/authoring_agents/` and are
+only read on demand.
 """
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR, LAZY_RULES_DIR, RULES_DIR
 
-TIER_DIR = CLAUDE_DIR / "_rules" / "05_lazy_load"
-AUTHORING_RULES = CLAUDE_DIR / "_rules" / "03_authoring_guidelines" / "authoring_rules.md"
-SCOPED_LINK = CLAUDE_DIR / "rules" / "authoring_agents.md"
-AUTHORING_AGENTS = TIER_DIR / "authoring_agents.md"
-CHILDREN_DIR = TIER_DIR / "authoring_agents" / "_lazy_load"
-TIER_README = TIER_DIR / "README.md"
+AUTHORING_RULES = RULES_DIR / "03_authoring_guidelines" / "authoring_rules.md"
+AUTHORING_AGENTS = RULES_DIR / "03_authoring_guidelines" / "authoring_agents.md"
+CHILDREN_DIR = LAZY_RULES_DIR / "authoring_agents"
+TIER_README = LAZY_RULES_DIR / "README.md"
 
 EXPECTED_SECTIONS = [
     "Quick Navigation",
@@ -126,7 +126,7 @@ def test_parent_points_to_every_child_on_demand():
         if line.startswith("- **Read on demand:**")
     ]
     for child in EXPECTED_CHILDREN:
-        assert any(f"authoring_agents/_lazy_load/{child}" in p for p in pointers), (
+        assert any(f"_rules_lazy_load/authoring_agents/{child}" in p for p in pointers), (
             f"authoring_agents.md has no read-on-demand pointer to: {child}"
         )
 
@@ -187,9 +187,9 @@ def test_each_child_ends_with_newline():
 def test_each_child_links_back_to_parent():
     """Every child's tier README Related entry must name authoring_agents.md as its parent."""
     for child in EXPECTED_CHILDREN:
-        entry = readme_related_entry(TIER_README, f"authoring_agents/_lazy_load/{child}")
+        entry = readme_related_entry(TIER_README, f"authoring_agents/{child}")
         assert "authoring_agents.md" in entry, (
-            f"{child}: 03_authoring_guidelines/README.md Related entry doesn't name "
+            f"{child}: _rules_lazy_load/README.md Related entry doesn't name "
             f"authoring_agents.md as its parent"
         )
 
@@ -199,10 +199,6 @@ def test_parent_loads_with_agent_files():
     text = AUTHORING_AGENTS.read_text()
     frontmatter = text.split("\n---", 1)[0] if text.startswith("---\n") else ""
     assert '"**/agents/**"' in frontmatter, "authoring_agents.md lost its paths: trigger for agents/**"
-    # make install builds rules/ from paths: frontmatter, so only an installed config has the link
-    if SCOPED_LINK.parent.is_dir():
-        assert SCOPED_LINK.is_symlink(), "rules/authoring_agents.md symlink is missing, so paths: never loads"
-        assert SCOPED_LINK.resolve() == AUTHORING_AGENTS.resolve(), "rules/authoring_agents.md points somewhere else"
     imports = [
         line.strip() for line in (CLAUDE_DIR / "CLAUDE.md").read_text().splitlines()
         if line.strip().startswith("@")
@@ -215,9 +211,9 @@ def test_parent_loads_with_agent_files():
 def test_always_on_pointer_exists():
     """authoring_rules.md's tier list must point readers to the agent guide's current home."""
     rules = AUTHORING_RULES.read_text()
-    assert "05_lazy_load/authoring_agents.md" in rules, (
-        "authoring_rules.md lost its pointer to 05_lazy_load/authoring_agents.md, needed for new agents"
+    assert "rules/03_authoring_guidelines/authoring_agents.md" in rules, (
+        "authoring_rules.md lost its pointer to 03_authoring_guidelines/authoring_agents.md, needed for new agents"
     )
-    assert "03_authoring_guidelines/authoring_agents.md" not in rules, (
-        "authoring_rules.md still points to the old 03_authoring_guidelines/ location"
+    assert "05_lazy_load/authoring_agents.md" not in rules, (
+        "authoring_rules.md still points to the old 05_lazy_load/ location"
     )

@@ -18,7 +18,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/05_lazy_load/style_guide_standards/airflow.md` — the rule being scored
+- `src/claude/rules/05_path_scoped/style_guide_standards/airflow.md` — the rule being scored
 
 ---
 

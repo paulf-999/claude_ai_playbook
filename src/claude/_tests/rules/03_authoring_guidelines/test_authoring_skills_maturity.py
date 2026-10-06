@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.0.0
+# Date updated:      2026-10-06
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -21,11 +21,11 @@ from __future__ import annotations
 import re
 
 from _resolved_rule import resolved_content
-from _shared_paths import RULES_DIR
+from _shared_paths import LAZY_RULES_DIR, RULES_DIR
 
 GUIDELINES = RULES_DIR / "03_authoring_guidelines"
 RULE_FILE = GUIDELINES / "authoring_skills.md"
-CHECKLIST = GUIDELINES / "authoring_skills" / "_lazy_load" / "_hard_gates_checklist.md"
+CHECKLIST = LAZY_RULES_DIR / "authoring_skills" / "_hard_gates_checklist.md"
 COMPLEXITY_FORMULA = GUIDELINES / "shared_standards" / "_complexity_scoring.md"
 LEVELS = ("Draft", "Tactical", "Strategic")
 

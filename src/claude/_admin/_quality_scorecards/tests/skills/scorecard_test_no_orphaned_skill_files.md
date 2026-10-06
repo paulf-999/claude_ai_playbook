@@ -20,4 +20,4 @@
 
 - `src/claude/_tests/skills/test_no_orphaned_skill_files.py` — the test being scored
 - `src/claude/_tests/_skill_orphans.py` — the pure detectors it proves and runs
-- `src/claude/_rules/03_authoring_guidelines/authoring_skills/_lazy_load/_no_orphaned_files.md` — the rule it enforces
+- `src/claude/_rules_lazy_load/authoring_skills/_no_orphaned_files.md` — the rule it enforces

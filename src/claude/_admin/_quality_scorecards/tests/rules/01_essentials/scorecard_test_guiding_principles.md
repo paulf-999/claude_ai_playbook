@@ -19,5 +19,5 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/01_essentials/test_guiding_principles.py` — the test being scored
-- `src/claude/_rules/01_essentials/guiding_principles.md` — what the test guards
+- `src/claude/rules/01_essentials/guiding_principles.md` — what the test guards
 - `src/claude/CLAUDE.md` — what the test guards

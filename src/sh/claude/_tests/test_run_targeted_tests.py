@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
-# Date updated:      2026-10-02
-# Version:           1.0.1
+# Date updated:      2026-10-06
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -90,13 +90,18 @@ def test_skill_change_runs_skill_tests(repo: Path):
 
 def test_rule_and_hook_changes_run_their_folders(repo: Path):
     """A rule and a hook together queue both their test folders."""
-    args = run_hook(repo, "src/claude/_rules/a.md", "src/claude/hooks/h.sh")[1]
+    args = run_hook(repo, "src/claude/rules/a.md", "src/claude/hooks/h.sh")[1]
     assert sorted(args) == ["src/claude/_tests/hooks/", "src/claude/_tests/rules/"], f"got {args}"
+
+
+def test_lazy_rule_change_runs_rule_tests(repo: Path):
+    """A rule in _rules_lazy_load/ queues the rule tests, like one under rules/."""
+    assert run_hook(repo, "src/claude/_rules_lazy_load/a.md")[1] == ["src/claude/_tests/rules/"]
 
 
 def test_whole_suite_replaces_its_own_subfolders(repo: Path):
     """Once the whole config suite is queued, its subfolders are dropped so pytest still runs everything."""
-    args = run_hook(repo, "src/claude/_rules/a.md", "src/claude/_tests/test_x.py")[1]
+    args = run_hook(repo, "src/claude/rules/a.md", "src/claude/_tests/test_x.py")[1]
     assert args == [WHOLE], f"subfolders alongside the whole suite make pytest skip tests, got {args}"
 
 

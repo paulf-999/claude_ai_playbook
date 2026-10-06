@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.1.3
+# Date updated:      2026-10-06
+# Version:           1.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -21,12 +21,12 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from _shared_paths import RULES_DIR
+from _shared_paths import LAZY_RULES_DIR, RULES_DIR
 
-LAZY_LOAD_DIR = RULES_DIR / "05_lazy_load"
+PATH_SCOPED_DIR = RULES_DIR / "05_path_scoped"
 STYLE_DIR = Path("style_guide_standards")
 
-# Rule path (relative to 05_lazy_load/) -> H2 headings it must keep, emoji stripped.
+# Rule path (relative to rules/05_path_scoped/ or _rules_lazy_load/) -> H2 headings it must keep, emoji stripped.
 RULES: dict[Path, list[str]] = {
     Path("org.md"): ["Child pages", "Organisation facts", "Internal references"],
     STYLE_DIR / "airflow.md": ["Child pages", "Core Principles", "DAG Acceptance Checklist"],
@@ -160,11 +160,15 @@ def unlinked_children(text: str, stem: str, child_names: list[str]) -> list[str]
     :type stem: str
     :param child_names: Filenames of the ``.md`` files in the child folder.
     :type child_names: list[str]
-    :return: Child filenames with no ``](<stem>/<child>)`` link.
+    :return: Child filenames with no link ending in ``<stem>/<child>``.
     :rtype: list[str]
     """
+    # A path-scoped parent links across to _rules_lazy_load/, so match the link's tail
     linked = set(relative_links(text))
-    return [name for name in child_names if f"{stem}/{name}" not in linked]
+    return [
+        name for name in child_names
+        if not any(link == f"{stem}/{name}" or link.endswith(f"/{stem}/{name}") for link in linked)
+    ]
 
 
 def contents_mismatches(text: str) -> list[str]:
@@ -189,6 +193,9 @@ def _child_names(rule: Path) -> list[str]:
     :rtype: list[str]
     """
     folder = rule.parent / rule.stem
+    if not folder.is_dir() and PATH_SCOPED_DIR in rule.parents:
+        # A path-scoped parent's children live in _rules_lazy_load/ so they don't auto-load
+        folder = LAZY_RULES_DIR / rule.relative_to(PATH_SCOPED_DIR).with_suffix("")
     if not folder.is_dir():
         return []
     return sorted(p.name for p in folder.glob("*.md") if p.name != "README.md")
@@ -196,7 +203,13 @@ def _child_names(rule: Path) -> list[str]:
 
 def _rule_texts() -> dict[Path, str]:
     """Return each tracked rule's absolute path mapped to its content."""
-    return {LAZY_LOAD_DIR / rel: (LAZY_LOAD_DIR / rel).read_text(encoding="utf-8") for rel in RULES}
+    return {rule_path(rel): rule_path(rel).read_text(encoding="utf-8") for rel in RULES}
+
+
+def rule_path(rel: Path) -> Path:
+    """Return a tracked rule's absolute path, in rules/05_path_scoped/ or else _rules_lazy_load/."""
+    scoped = PATH_SCOPED_DIR / rel
+    return scoped if scoped.is_file() else LAZY_RULES_DIR / rel
 
 
 # ── Real config ─────────────────────────────────────────────────────────
@@ -210,9 +223,9 @@ def test_rule_table_tracks_fourteen_distinct_rules():
 
 
 def test_every_tracked_rule_exists():
-    """Every rule in the table is still on disk under 05_lazy_load/."""
-    missing = [str(rel) for rel in RULES if not (LAZY_LOAD_DIR / rel).is_file()]
-    assert not missing, f"Tracked rules missing from {LAZY_LOAD_DIR} — fix the path in RULES or restore: {missing}"
+    """Every rule in the table is still on disk under rules/05_path_scoped/ or _rules_lazy_load/."""
+    missing = [str(rel) for rel in RULES if not rule_path(rel).is_file()]
+    assert not missing, f"Tracked rules missing from both rule folders — fix the path in RULES or restore: {missing}"
 
 
 def test_every_rule_has_metadata_header():
@@ -235,7 +248,7 @@ def test_key_sections_survive():
     """Each rule keeps the H2 headings that carry its core guidance."""
     missing = []
     for rel, sections in RULES.items():
-        headings = h2_headings((LAZY_LOAD_DIR / rel).read_text(encoding="utf-8"))
+        headings = h2_headings(rule_path(rel).read_text(encoding="utf-8"))
         missing += [f"{rel.name}: '{section}'" for section in sections if section not in headings]
     assert not missing, f"Key sections missing — restore them or update RULES if renamed on purpose: {missing}"
 

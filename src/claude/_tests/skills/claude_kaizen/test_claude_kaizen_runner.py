@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
 # Date updated:      2026-10-06
-# Version:           1.1.0
+# Version:           1.2.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -161,9 +161,9 @@ def test_config_dir_comes_from_the_environment_first(tmp_path, monkeypatch):
 
 
 def test_config_dir_falls_back_to_the_folder_holding_rules(tmp_path, monkeypatch):
-    """Without the variable, the nearest parent with a ``_rules/`` folder is used."""
+    """Without the variable, the nearest parent with a ``rules/`` folder is used."""
     monkeypatch.delenv("CLAUDE_CONFIG_DIR", raising=False)
-    (tmp_path / "_rules").mkdir()
+    (tmp_path / "rules").mkdir()
     nested = tmp_path / "skills" / "claude_kaizen" / "evals"
     nested.mkdir(parents=True)
     assert runner.find_config_dir(nested) == tmp_path
@@ -199,7 +199,7 @@ def rules_and_home(tmp_path, monkeypatch, creds_in: str | None = "home"):
     :return: ``(rules folder, credentials path or None)``.
     """
     rules = tmp_path / "rules"
-    (rules / "_rules").mkdir(parents=True)
+    (rules / "rules").mkdir(parents=True)
     (rules / "CLAUDE.md").write_text("rules")
     home = tmp_path / "home"
     (home / ".claude").mkdir(parents=True)
@@ -216,7 +216,7 @@ def test_isolated_config_links_rules_and_home_credentials(tmp_path, monkeypatch)
     rules, creds = rules_and_home(tmp_path, monkeypatch)
     isolated = runner.build_isolated_config(rules, tmp_path)
     assert (isolated / "CLAUDE.md").resolve() == (rules / "CLAUDE.md").resolve(), "rules not linked"
-    assert (isolated / "_rules").resolve() == (rules / "_rules").resolve(), "rule folders not linked"
+    assert (isolated / "rules").resolve() == (rules / "rules").resolve(), "rule folders not linked"
     linked_login = (isolated / ".credentials.json").resolve()
     assert linked_login == creds.resolve(), "login not linked — Claude reports Not logged in"
 
@@ -267,4 +267,4 @@ def test_state_folders_are_not_linked(tmp_path, monkeypatch):
     isolated = runner.build_isolated_config(rules, tmp_path)
     linked = sorted(entry.name for entry in isolated.iterdir())
     assert not {"backups", "plugins", "projects"} & set(linked), f"state folders were linked: {linked}"
-    assert "_rules" in linked and "CLAUDE.md" in linked, f"rules missing: {linked}"
+    assert "rules" in linked and "CLAUDE.md" in linked, f"rules missing: {linked}"

@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-02
-# Version:           2.0.4
+# Date updated:      2026-10-06
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -59,7 +59,7 @@ def assert_allowed(payload, case: str):
 
 def test_kebab_case_name_denied_with_fix():
     """A hyphenated name is denied, and the reason names the file and the rule."""
-    reason = deny_reason("_rules/01_essentials/new-rule.md")
+    reason = deny_reason("rules/01_essentials/new-rule.md")
     assert "new-rule.md" in reason, f"reason doesn't name the file: {reason}"
     assert "snake_case" in reason, f"reason doesn't say which rule broke: {reason}"
     assert "naming_standards.md" in reason, f"reason doesn't point to the standard: {reason}"
@@ -84,12 +84,12 @@ def test_bad_hook_script_name_denied():
 
 def test_snake_case_rule_allowed():
     """A well-named tier rule passes, despite the full scan's advisory "child file" note."""
-    assert_allowed(write_payload("_rules/01_essentials/new_rule.md"), "snake_case tier rule")
+    assert_allowed(write_payload("rules/01_essentials/new_rule.md"), "snake_case tier rule")
 
 
 def test_underscore_child_file_allowed():
     """A child file with the expected underscore prefix passes."""
-    assert_allowed(write_payload("_rules/02_claude_standards/behaviour/_new_aspect.md"), "underscore child file")
+    assert_allowed(write_payload("rules/02_claude_standards/behaviour/_new_aspect.md"), "underscore child file")
 
 
 def test_exact_name_files_allowed():

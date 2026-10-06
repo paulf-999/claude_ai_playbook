@@ -194,28 +194,40 @@ prune_removed_files() {
     echo "${CURRENT}" > "${MANIFEST}"
 }
 
-# Rebuild rules/ from the path-scoped rules in _rules/05_lazy_load/, as links named after each rule.
-# Claude Code only reads path-scoped rules from a folder named exactly rules/, so the repo keeps every
-# rule in _rules/ and the install links the ones with paths: frontmatter here.
-# Only links are replaced, so a real file the user put in rules/ is kept.
-build_path_scoped_rules() {
-    local RULES_LINK_DIR="${TARGET_DIR}/rules"
-    local RULE NAME COUNT=0
-    mkdir -p "${RULES_LINK_DIR}"
-    find "${RULES_LINK_DIR}" -maxdepth 1 -type l -name "*.md" -delete
-    while IFS= read -r RULE; do
-        # A path-scoped rule has paths: inside the frontmatter block that opens the file
-        awk 'NR == 1 { if ($0 != "---") exit; next } $0 == "---" { exit } /^paths:/ { found = 1; exit } END { exit !found }' "${RULE}" || continue
-        NAME=$(basename "${RULE}")
-        # Two path-scoped rules with one filename would collide, so keep the first and warn
-        if [[ -e "${RULES_LINK_DIR}/${NAME}" ]]; then
-            log_message "${WARNING}" "Skipped path-scoped rule with a duplicate name: ${RULE#"${TARGET_DIR}/"}"
+# Clear what the old _rules/ layout left behind (replaced 2026-10-06 by rules/ and _rules_lazy_load/):
+# the links earlier installs put in rules/, and files you added under _rules/, which move to the same
+# place in _rules_lazy_load/ (whose root was _rules/05_lazy_load/). Runs after pruning, which already
+# removed the files earlier installs shipped there, so whatever is left in _rules/ is yours.
+# Never overwrites: if the new path is taken, the old file stays in _rules/ and a warning names it.
+migrate_old_rules_layout() {
+    local OLD_DIR="${TARGET_DIR}/_rules"
+    local NEW_DIR="${TARGET_DIR}/_rules_lazy_load"
+    local LINK FROM REL TO
+    # Links into the old _rules/ would dangle, and Claude Code would still try to load them
+    if [[ -d "${TARGET_DIR}/rules" ]]; then
+        while IFS= read -r LINK; do
+            [[ "$(readlink "${LINK}")" == ../_rules/* ]] || continue
+            rm "${LINK}"
+            log_message "${INFO}" "Removed old rule link: rules/$(basename "${LINK}")"
+        done < <(find "${TARGET_DIR}/rules" -maxdepth 1 -type l -name "*.md")
+    fi
+    [[ -d "${OLD_DIR}" ]] || return 0
+    while IFS= read -r FROM; do
+        REL="${FROM#"${OLD_DIR}/"}"
+        TO="${NEW_DIR}/${REL#05_lazy_load/}"
+        if [[ -e "${TO}" ]]; then
+            log_message "${WARNING}" "Kept _rules/${REL}: ${TO#"${TARGET_DIR}/"} already exists — merge it by hand"
             continue
         fi
-        ln -s "../${RULE#"${TARGET_DIR}/"}" "${RULES_LINK_DIR}/${NAME}"
-        COUNT=$((COUNT + 1))
-    done < <(find "${TARGET_DIR}/_rules/05_lazy_load" -name "*.md" 2>/dev/null | LC_ALL=C sort)
-    log_message "${INFO}" "Linked ${COUNT} path-scoped rules into: ${RULES_LINK_DIR}"
+        mkdir -p "$(dirname "${TO}")"
+        mv "${FROM}" "${TO}"
+        log_message "${INFO}" "Moved your file: _rules/${REL} -> ${TO#"${TARGET_DIR}/"}"
+    done < <(find "${OLD_DIR}" -type f | LC_ALL=C sort)
+    find "${OLD_DIR}" -depth -type d -empty -delete
+    if [[ -d "${OLD_DIR}" ]]; then
+        log_message "${WARNING}" "_rules/ still holds files that clash with the new layout — review: ${OLD_DIR}"
+    fi
+    return 0
 }
 
 # Print summary of Claude file operation (install/update)

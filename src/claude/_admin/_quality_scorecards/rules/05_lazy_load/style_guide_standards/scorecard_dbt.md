@@ -21,8 +21,8 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/05_lazy_load/style_guide_standards/dbt.md` — the rule being scored
-- `src/claude/_rules/05_lazy_load/style_guide_standards/airflow.md` — Structural Compliance dimension (sibling using only the link-table pattern)
+- `src/claude/rules/05_path_scoped/style_guide_standards/dbt.md` — the rule being scored
+- `src/claude/rules/05_path_scoped/style_guide_standards/airflow.md` — Structural Compliance dimension (sibling using only the link-table pattern)
 
 ---
 

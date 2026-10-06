@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-06
-# Version:           1.6.0
+# Version:           2.0.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -10,7 +10,7 @@
 
 """Tests for lazy_load/ discoverability coverage.
 
-Verifies the design constraint that every file in _rules/05_lazy_load/ is
+Verifies the design constraint that every file in _rules_lazy_load/ is
 reachable through at least one documented discovery path, per README.md's
 own stated design ("Discoverable — included in this README and referenced
 from related rules"):
@@ -27,9 +27,11 @@ resolves to a real file on disk, so hooks cannot silently load nothing.
 import re
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR, HOOKS_DIR
+from _shared_paths import CLAUDE_DIR, HOOKS_DIR, LAZY_RULES_DIR, RULES_DIR
 
-LAZY_LOAD_DIR = CLAUDE_DIR / "_rules" / "05_lazy_load"
+LAZY_LOAD_DIR = LAZY_RULES_DIR
+# Folders under _rules_lazy_load/ that hold indexes or ledgers rather than rules
+NON_RULE_FOLDERS = {"_tier_readmes", "learned"}
 README_FILE = LAZY_LOAD_DIR / "README.md"
 
 
@@ -101,6 +103,8 @@ def test_no_orphaned_lazy_load_files():
     readme_files, readme_dirs = _readme_covered_files_and_dirs()
     covered |= readme_files
     for md_file in LAZY_LOAD_DIR.rglob("*.md"):
+        if md_file.relative_to(LAZY_LOAD_DIR).parts[0] in NON_RULE_FOLDERS:
+            continue
         if md_file.name == "README.md" or md_file in covered:
             continue
         assert _has_covered_ancestor(md_file, covered, readme_dirs), (
@@ -122,30 +126,19 @@ def test_no_orphaned_lazy_load_files():
 # .md file must be the actual target of a markdown link or `@./` import
 # from some other file in the tree — not just live under a covered folder.
 
+# Path-scoped entry points (sql.md, testing.md, ...) live in rules/05_path_scoped/ and load
+# through paths:, so only the on-demand entry points in _rules_lazy_load/ are listed here.
 ENTRY_POINT_RELATIVE_PATHS = {
-    "authoring_agents.md",
     "automation_controls.md",
-    "claude_rule_loading_strategy.md",
     "delegating_to_subagent.md",
     "hooks_decision_framework.md",
     "latency_optimisation.md",
     "mcp_trust_model.md",
     "response_standards_enforcement.md",
-    "testing.md",
     "turn_budgets.md",
-    "style_guide_standards/airflow.md",
-    "style_guide_standards/bash.md",
-    "style_guide_standards/dbt.md",
     "style_guide_standards/jira.md",
     "org.md",
-    "style_guide_standards/python.md",
-    "style_guide_standards/sql.md",
-    "style_guide_standards/infra/ansible.md",
-    "style_guide_standards/infra/docker.md",
-    "style_guide_standards/infra/terraform.md",
     "style_guide_standards/utilities/datetime.md",
-    "style_guide_standards/utilities/makefile.md",
-    "style_guide_standards/utilities/mermaid.md",
 }
 
 MARKDOWN_LINK_PATTERN = re.compile(r"\]\(([^)#]+\.md)\)")
@@ -156,8 +149,9 @@ MARKDOWN_LINK_PATTERN = re.compile(r"\]\(([^)#]+\.md)\)")
 # prose marker (e.g. "@brief:", no .md suffix) should match here.
 RELATIVE_IMPORT_PATTERN = re.compile(r"@(?!~)\.?/?([\w][\w/-]*\.md)")
 # "**Read on demand:**" pointers name a child by its full config path, e.g.
-# `~/.claude/_rules/05_lazy_load/x/_lazy_load/_child.md` — the convention for children kept in <parent>/_lazy_load/.
-READ_ON_DEMAND_PATTERN = re.compile(r"`~/[^/`\s]+/_rules/([^`\s]+\.md)`")
+# `~/.claude/_rules_lazy_load/x/_child.md` — the convention for on-demand children.
+READ_ON_DEMAND_PATTERN = re.compile(r"`~/[^/`\s]+/((?:rules|_rules_lazy_load)/[^`\s]+\.md)`")
+ROOT_NAMES = ("rules", "_rules_lazy_load")
 
 
 def _is_entry_point(md_file: Path, lazy_load_dir: Path) -> bool:
@@ -195,27 +189,30 @@ def _outgoing_references(md_file: Path) -> set[Path]:
         for match in pattern.finditer(text):
             candidate = (md_file.parent / match.group(1)).resolve()
             targets.add(candidate)
-    rules_dir = next((p for p in md_file.parents if p.name == "_rules"), None)
-    if rules_dir is not None:
+    root = next((p for p in md_file.parents if p.name in ROOT_NAMES), None)
+    if root is not None:
         for match in READ_ON_DEMAND_PATTERN.finditer(text):
-            targets.add((rules_dir / match.group(1)).resolve())
+            targets.add((root.parent / match.group(1)).resolve())
     return targets
 
 
-def find_unreferenced_content_files(lazy_load_dir: Path) -> list[Path]:
+def find_unreferenced_content_files(lazy_load_dir: Path, other_sources: tuple[Path, ...] = ()) -> list[Path]:
     """Return non-entry-point .md files never targeted by a link or import.
 
-    :param lazy_load_dir: The 05_lazy_load/ root to scan.
+    :param lazy_load_dir: The _rules_lazy_load/ root to scan.
     :type lazy_load_dir: Path
+    :param other_sources: More files whose links count, e.g. path-scoped parents in rules/.
+    :type other_sources: tuple[Path, ...]
     :return: Files that are neither an entry point nor referenced by anything.
     :rtype: list[Path]
     """
     all_files = [
         f for f in lazy_load_dir.rglob("*.md")
         if f.name != "README.md" and "templates" not in f.relative_to(lazy_load_dir).parts
+        and f.relative_to(lazy_load_dir).parts[0] not in NON_RULE_FOLDERS
     ]
     referenced: set[Path] = set()
-    for f in all_files:
+    for f in [*all_files, *other_sources]:
         referenced |= _outgoing_references(f)
 
     return [
@@ -231,7 +228,7 @@ def test_no_unreferenced_content_files_in_lazy_load():
     that are technically "under a covered directory" but that nothing
     actually links to (the exact shape of the 2026-09-28 finding).
     """
-    orphans = find_unreferenced_content_files(LAZY_LOAD_DIR)
+    orphans = find_unreferenced_content_files(LAZY_LOAD_DIR, tuple(RULES_DIR.rglob("*.md")))
     assert not orphans, (
         "Unreferenced lazy_load files — not an entry point, and no markdown "
         "link or @./ import anywhere targets them (check whether they're "
@@ -241,27 +238,27 @@ def test_no_unreferenced_content_files_in_lazy_load():
 
 
 def test_detector_flags_a_duplicate_named_like_its_parent(tmp_path):
-    """Regression: reproduces the exact airflow/airflow.md orphan pattern."""
+    """Regression: reproduces the exact jira/jira.md orphan pattern."""
     sgs = tmp_path / "style_guide_standards"
     sgs.mkdir()
-    (sgs / "airflow.md").write_text("# Airflow\n\n- [dag_design.md](airflow/dag_design.md)\n")
-    child_dir = sgs / "airflow"
+    (sgs / "jira.md").write_text("# Jira\n\n- [dag_design.md](jira/dag_design.md)\n")
+    child_dir = sgs / "jira"
     child_dir.mkdir()
     (child_dir / "dag_design.md").write_text("# DAG design\n")
-    (child_dir / "airflow.md").write_text("# Airflow (stale duplicate)\n")
+    (child_dir / "jira.md").write_text("# Jira (stale duplicate)\n")
 
     orphans = find_unreferenced_content_files(tmp_path)
 
-    assert [p.name for p in orphans] == ["airflow.md"]
-    assert orphans[0].parent.name == "airflow"
+    assert [p.name for p in orphans] == ["jira.md"]
+    assert orphans[0].parent.name == "jira"
 
 
 def test_detector_does_not_flag_a_referenced_child(tmp_path):
     """Regression: a child page linked from its parent is not flagged."""
     sgs = tmp_path / "style_guide_standards"
     sgs.mkdir()
-    (sgs / "sql.md").write_text("# SQL\n\n@./sql/formatting.md\n")
-    child_dir = sgs / "sql"
+    (sgs / "jira.md").write_text("# SQL\n\n@./jira/formatting.md\n")
+    child_dir = sgs / "jira"
     child_dir.mkdir()
     (child_dir / "formatting.md").write_text("# Formatting\n")
 
@@ -274,7 +271,7 @@ def test_detector_exempts_entry_point_files(tmp_path):
     """Regression: a known entry point needs no incoming reference at all."""
     sgs = tmp_path / "style_guide_standards"
     sgs.mkdir()
-    (sgs / "bash.md").write_text("# Bash\n\nNo inbound links to this file exist anywhere.\n")
+    (sgs / "jira.md").write_text("# Jira\n\nNo inbound links to this file exist anywhere.\n")
 
     orphans = find_unreferenced_content_files(tmp_path)
 
@@ -332,23 +329,24 @@ def test_detector_ignores_a_same_named_sibling_when_parent_is_exempt(tmp_path):
     """
     sgs = tmp_path / "style_guide_standards"
     sgs.mkdir()
-    (sgs / "dbt.md").write_text("# dbt\n\nSome other doc mentions `dbt.md` in prose.\n")
-    child_dir = sgs / "dbt"
+    (sgs / "jira.md").write_text("# jira\n\nSome other doc mentions `jira.md` in prose.\n")
+    child_dir = sgs / "jira"
     child_dir.mkdir()
-    (child_dir / "dbt.md").write_text("# dbt (stale duplicate)\n")
+    (child_dir / "jira.md").write_text("# jira (stale duplicate)\n")
 
     orphans = find_unreferenced_content_files(tmp_path)
 
-    assert [p.parent.name for p in orphans] == ["dbt"]
+    assert [p.parent.name for p in orphans] == ["jira"]
 
 
 def test_read_on_demand_pointer_counts_as_a_reference(tmp_path):
     """A child named by a parent's Read on demand pointer is referenced, even without a markdown link."""
-    lazy = tmp_path / "_rules" / "05_lazy_load"
-    (lazy / "guide" / "_lazy_load").mkdir(parents=True)
-    child = lazy / "guide" / "_lazy_load" / "_child.md"
+    lazy = tmp_path / "_rules_lazy_load"
+    (lazy / "guide").mkdir(parents=True)
+    child = lazy / "guide" / "_child.md"
     child.write_text("# Child\n")
-    parent = lazy / "guide.md"
-    parent.write_text("- **Read on demand:** `~/.claude/_rules/05_lazy_load/guide/_lazy_load/_child.md` — detail\n")
+    parent = tmp_path / "rules" / "01_essentials" / "guide.md"
+    parent.parent.mkdir(parents=True)
+    parent.write_text("- **Read on demand:** `~/.claude/_rules_lazy_load/guide/_child.md` — detail\n")
     assert child.resolve() in _outgoing_references(parent), "the pointer's target was not recognised"
     assert (lazy / "x.md").resolve() not in _outgoing_references(parent), "an unnamed file must not count"

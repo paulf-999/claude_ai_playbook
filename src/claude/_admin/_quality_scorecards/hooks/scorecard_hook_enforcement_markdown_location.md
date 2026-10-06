@@ -23,5 +23,5 @@
 
 - `src/claude/hooks/hook_enforcement_markdown_location.sh` — the hook being scored
 - `src/claude/_tests/hooks/enforcement/test_enforcement_markdown_location.py` — Test Coverage dimension
-- `src/claude/_rules/01_essentials/claude_usage_standards/writing_style.md` — the rule it points to
+- `src/claude/rules/01_essentials/claude_usage_standards/writing_style.md` — the rule it points to
 - `src/claude/_admin/_docs/decisions/hooks.md` — Evidence of Need and Structural Compliance dimensions

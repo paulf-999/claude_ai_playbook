@@ -1,0 +1,96 @@
+<!-- version: 1.0.5 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-10-06 -->
+<!-- miss_cost: low — a low-value hook gets proposed -->
+<!-- loading: lazy — only matters when a hook is being proposed, which is rare -->
+# 🪝 Hooks Decision Framework
+
+**Purpose:** Behavioral guardrail for hook proposals — prevents low-ROI hooks by providing clear ROI criteria before suggesting any automation.
+
+Claude reads this whenever considering: "Should I propose a hook?", "This would be better as automation", "Let me add this feature."
+
+**Read this before proposing any automation feature.**
+
+---
+
+## 🎯 Core principle
+
+**Default to "no hook" unless ROI is clear.** Hooks are expensive; their cost must be justified by frequency and measurable impact. This framework prevents repeating the 2026-08-07 incident, when 5 low-ROI hooks were proposed and later removed at user cost.
+
+---
+
+## 💰 True cost breakdown
+
+Don't count only "execution time." Hooks accumulate hidden costs:
+
+- **Baseline context:** settings.json grows with each registration — cost is paid even when hook doesn't fire
+- **Maintenance surface:** hook script + test file + registration entry + updates when Claude Code changes
+- **Failure risk:** hook fails silently or blocks a workflow; user must diagnose and remove
+- **Cognitive overhead:** user must know the hook exists, understand what it does, debug if broken
+- **Audit burden:** quarterly reviews to verify ROI still holds; eventual removal if not
+
+---
+
+## 🔍 Decision framework
+
+Before proposing a hook, answer these questions in order:
+
+| Question | Evaluation |
+|----------|-----------|
+| **1. Real or speculative?** | Is this a recurring, observed problem or a hypothetical "might be useful"? Reject speculation. |
+| **2. Frequency?** | How many times per month would this hook trigger? <5/month = likely not ROI-positive. |
+| **3. Manual cost?** | Without automation, how much user time per month? (in minutes or hours) |
+| **4. Setup + maintenance?** | Estimate hours: script + test + registration + 2 years maintenance. |
+| **5. ROI threshold?** | Does manual cost × frequency > setup + maintenance by 3x+? |
+
+**Decision tree:**
+- ❌ **Stop proposing if:** frequency <5/month, manual cost <30 min/month, setup >4 hours, or simpler alternative exists
+- ✅ **Proceed if:** frequency >8/month, manual cost >1 hour/month, setup <3 hours, AND no simpler alternative
+- 🚩 **Red-flag phrases** (stop immediately, regardless of numbers): "might be useful someday", "could save time if...", "just saw this pattern once"
+
+---
+
+## 📊 ROI formula
+
+```
+Manual effort per month (hours) = (manual_time_per_trigger_min ÷ 60) × frequency_per_month
+
+Setup + maintenance cost (hours) = initial_setup_hours + (maintenance_per_month_hours × 24_months)
+
+ROI threshold: Manual effort > (Setup + maintenance) × 3
+```
+
+**Example — ROI-positive:**
+- Manual: 5 min/trigger × 15/month = 1.25 hrs/month
+- Setup: 2 hrs, maintenance: 0.25 hrs/month = 8 hrs over 2 years
+- ROI: 1.25 × 24 = 30 > 8 × 3 = 24 ✅ **Proceed**
+
+**Example — ROI-negative:**
+- Manual: 2 min/trigger × 3/month = 0.1 hrs/month
+- Setup: 3 hrs, maintenance: 0.1 hrs/month = 5.4 hrs over 2 years
+- ROI: 0.1 × 24 = 2.4 < 5.4 × 3 = 16.2 ❌ **Don't propose**
+
+---
+
+## 📅 Precedent & Examples
+
+@./hooks_decision_framework/_precedent_and_examples.md
+
+## 🧪 Testing & registration requirements
+
+Before proposing, confirm:
+
+- **Test exists:** Every hook needs a test — see `rules/01_essentials/testing.md`
+- **Naming:** Use `hook_<type>_<domain>.sh` format — see `rules/01_essentials/claude_usage_standards/naming_standards.md`
+- **Registration:** Hook declared in settings.json with explicit event matcher
+- **No wildcards:** Register specific events, not broad matchers
+
+---
+
+## 📋 Audit cadence
+
+After a hook is created:
+
+- **Monthly:** Does this hook still solve the problem it was designed for?
+- **Quarterly:** Deep review — is ROI still positive? Are users benefiting?
+- **Remove if:** Frequency has dropped, ROI no longer holds, or maintenance cost has grown

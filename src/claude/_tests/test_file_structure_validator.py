@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.1.3
+# Date updated:      2026-10-06
+# Version:           1.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -85,7 +85,7 @@ def test_snake_case_file_gives_no_violations(tmp_path: Path):
 
 def test_child_prefix_passes_snake_case(tmp_path: Path):
     """A leading-underscore child file is valid snake_case and needs no rename."""
-    make_files(tmp_path, "_rules/01_essentials/topic/_child_aspect.md")
+    make_files(tmp_path, "rules/01_essentials/topic/_child_aspect.md")
     violations = [v for v in scan(tmp_path) if Path(v["path"]).name == "_child_aspect.md"]
     assert violations == [], f"_child_aspect.md should be clean {HINT}, got {violations}"
 
@@ -145,11 +145,11 @@ def test_unprefixed_nested_markdown_is_info(tmp_path: Path):
 
 
 def test_rules_missing_tier_is_warning(tmp_path: Path):
-    """A _rules/ directory missing a tier subdirectory gives a warning."""
-    (tmp_path / "_rules" / "01_essentials").mkdir(parents=True)
+    """A rules/ directory missing a tier subdirectory gives a warning."""
+    (tmp_path / "rules" / "01_essentials").mkdir(parents=True)
     violations = scan(tmp_path)
     missing = {v["rule"] for v in violations if v["severity"] == "warning"}
-    assert "Missing subdirectory: 05_lazy_load" in missing, f"missing tier should warn, got {missing}"
+    assert "Missing subdirectory: 05_path_scoped" in missing, f"missing tier should warn, got {missing}"
     assert "Missing subdirectory: 03_authoring_guidelines" in missing, f"tier 03 must be expected too, got {missing}"
     assert "Missing subdirectory: 01_essentials" not in missing, "a tier that exists must not be reported"
 
@@ -165,7 +165,7 @@ def test_missing_config_dir_is_an_error(tmp_path: Path):
 def test_every_violation_has_required_keys(tmp_path: Path):
     """Every violation dict carries path, rule, severity and message."""
     make_files(tmp_path, "bad-name.md", "_reference/topic/guide.md")
-    (tmp_path / "_rules").mkdir()
+    (tmp_path / "rules").mkdir()
     violations = scan(tmp_path)
     assert len(violations) >= 3, f"fixture should produce error, info and warning cases, got {violations}"
     for violation in violations:

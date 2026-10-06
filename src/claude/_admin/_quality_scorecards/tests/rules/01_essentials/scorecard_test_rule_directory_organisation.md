@@ -19,5 +19,5 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/01_essentials/test_rule_directory_organisation.py` — the test being scored
-- `src/claude/_rules/01_essentials/claude_usage_standards/multifile_document_organisation.md` — the layout rule it enforces
+- `src/claude/rules/01_essentials/claude_usage_standards/multifile_document_organisation.md` — the layout rule it enforces
 - `src/claude/_tests/rules/02_claude_standards/test_always_on_reachability.py` — now covers the CLAUDE.md import checks this test dropped

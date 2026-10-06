@@ -23,6 +23,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/02_claude_standards/claude_plans.md` — the rule being scored
+- `src/claude/rules/02_claude_standards/claude_plans.md` — the rule being scored
 - `src/claude/_tests/rules/02_claude_standards/test_plan_mode_phase_gates.py` — Test Coverage dimension
-- `src/claude/_rules/02_claude_standards/claude_plans/_plan_file_format.md` — Test Coverage dimension (untested child)
+- `src/claude/rules/02_claude_standards/claude_plans/_plan_file_format.md` — Test Coverage dimension (untested child)

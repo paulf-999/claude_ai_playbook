@@ -163,6 +163,6 @@ Overall = (
 
 ## Related Guidance
 
-- Writing style: `~/.claude/_rules/writing_style.md`
-- Naming standards: `~/.claude/_rules/naming_standards.md`
-- Lazy-load strategy: `~/.claude/_rules/lazy_load/README.md`
+- Writing style: `~/.claude/rules/01_essentials/claude_usage_standards/writing_style.md`
+- Naming standards: `~/.claude/rules/01_essentials/claude_usage_standards/naming_standards.md`
+- Lazy-load strategy: `~/.claude/_rules_lazy_load/README.md`

@@ -22,6 +22,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/01_essentials/claude_response_standards.md` — the rule being scored
+- `src/claude/rules/01_essentials/claude_response_standards.md` — the rule being scored
 - `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_inject.py` — Test Coverage dimension
 - `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards.py` — Test Coverage dimension

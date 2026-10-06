@@ -8,10 +8,11 @@ Files installed into `~/.claude/` by `make install`. Everything here shapes how 
 
 | File / Directory | Purpose |
 |------------------|---------|
-| [`CLAUDE.md`](CLAUDE.md) | 🔗 Root config — imports rules via `@` directives |
+| [`CLAUDE.md`](CLAUDE.md) | 🔗 Root config — imports memory and aliases; rules load natively from `rules/` |
 | [`settings.json`](settings.json) | ⚙️ Claude Code settings — team baseline configuration |
 | [`agents/`](agents) | 🤖 Sub-agent personas for core and team-specific roles |
-| [`_rules/`](_rules) | 📏 Hard rules Claude must follow — always-on essentials and lazy-load domain rules (incl. style guides) |
+| [`rules/`](rules) | 📏 Rules Claude Code loads natively — tiers 01–04 every session, `05_path_scoped/` when a matching file is open |
+| [`_rules_lazy_load/`](_rules_lazy_load) | 💤 Rules read on demand only (incl. most style-guide detail) and the tier READMEs |
 | [`skills/`](skills/README.md) | 🛠️ Reusable multi-step workflows invoked via `/skill-name` |
 
 > **Slash commands are legacy** as of Claude Code v2.1.101 (April 2026). Create new invokable workflows as skills in `skills/` instead. See [docs](https://code.claude.com/docs/en/agent-sdk/slash-commands).
