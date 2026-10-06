@@ -1,0 +1,117 @@
+---
+_metadata:
+    date_created: '2026-10-05'
+    date_updated: '2026-10-05'
+    status: active
+
+agent_name: code_reviewer
+maturity: draft  # 8 scenarios, within the draft range of 5-8
+
+evals:
+  # Triggering
+    - name: natural_phrase_selects_agent
+      description: A plain request to score a PR routes to this agent
+      input:
+          prompt: Can you score this PR against our standards before I merge it?
+      setup:
+          open_pr: true
+      expected_output: >
+          Claude delegates the analysis to code_reviewer, which returns a verdict and a
+          six-theme scorecard.
+      assertions:
+          - The Agent call uses subagent_type code_reviewer
+          - The output scores all six themes
+
+    - name: bug_hunt_goes_to_builtin_skill
+      description: A bug hunt at an effort level goes to /code-review, not this agent
+      input:
+          prompt: Do a high-effort bug hunt on my current diff
+      setup:
+          local_diff: true
+      expected_output: >
+          Claude uses the built-in /code-review skill, and code_reviewer is not invoked.
+      assertions:
+          - code_reviewer is not invoked
+
+  # Verdicts
+    - name: clean_change_approved
+      description: Approves a small, correct change without inventing issues
+      input:
+          prompt: Review this diff that renames a variable consistently across one file
+      setup:
+          diff_lines: 12
+          defects: none
+      expected_output: >
+          The agent returns an Approve verdict, notes why the change is safe and lists
+          no Must or Should items.
+      assertions:
+          - The verdict is Approve
+          - No Must or Should items are listed
+
+    - name: committed_secret_blocks_merge
+      description: Treats a committed credential as a blocking Must item
+      input:
+          prompt: Review this PR
+      setup:
+          diff_contains: a hard-coded API key in a config file
+      expected_output: >
+          The agent returns Request changes, flags the secret as a Must item, names the file
+          and line, and does not repeat the secret's value.
+      assertions:
+          - The verdict is Request changes
+          - The secret is a Must item
+          - The secret's value does not appear in the output
+
+  # Output format
+    - name: follows_caller_template
+      description: Returns only the template a calling skill passes in
+      input:
+          prompt: Review PR 42 and fill in the supplied comment template
+      setup:
+          caller: git_review_pr
+          template: comment_format.md
+      expected_output: >
+          The agent fills every placeholder in the template, keeps its headings and order,
+          and adds no preamble or closing remarks.
+      assertions:
+          - The output starts with the template's first line
+          - Every scorecard theme has a score
+
+    - name: findings_have_fixes
+      description: Pairs each finding with a specific fix
+      input:
+          prompt: Review this diff
+      setup:
+          defects: an off-by-one loop bound
+      expected_output: >
+          The agent quotes the faulty line, explains the bug in plain English and shows the
+          corrected line.
+      assertions:
+          - The faulty line is quoted
+          - A corrected version is shown
+
+  # Boundaries
+    - name: skips_linter_style
+      description: Leaves formatting that linters enforce to the linters
+      input:
+          prompt: Review this Terraform diff
+      setup:
+          diff_contains: misaligned attribute equals signs
+      expected_output: >
+          The agent does not raise the alignment as a finding, because terraform fmt
+          enforces it.
+      assertions:
+          - No finding mentions alignment or whitespace
+
+    - name: declines_to_edit_or_post
+      description: Suggests fixes but refuses to edit files or post comments
+      input:
+          prompt: Review this PR and fix the issues, then post the review to GitHub
+      setup:
+          tools_available: [Read, Grep, Glob]
+      expected_output: >
+          The agent returns the review with suggested fixes and says that editing and posting
+          are out of scope, pointing to git_review_pr for posting.
+      assertions:
+          - No file is modified
+          - The output says posting is handled by git_review_pr

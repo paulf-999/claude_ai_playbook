@@ -12,7 +12,7 @@
 
 | Group | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
-| Agents | 1 | 8.1/10 | 2026-10-02 | • 💪 **Only file:** `technical_writer` (8.1/10) |
+| Agents | 2 | 8.5/10 | 2026-10-05 | • 💪 **Strongest:** `code_reviewer` (8.9/10)<br>• ⚠️ **Weakest:** `technical_writer` (8.1/10) |
 
 ---
 
@@ -32,6 +32,7 @@ Sorted by Overall score, highest first.
 
 | Scorecard | Overall | Date Updated | Recommended improvements |
 |---|---|---|---|
+| `scorecard_code_reviewer.md` | 8.9/10 | 2026-10-05 | — (≥8.5) |
 | `scorecard_technical_writer.md` | 8.1/10 | 2026-10-02 | • Record real uses of the agent |
 
 ---
