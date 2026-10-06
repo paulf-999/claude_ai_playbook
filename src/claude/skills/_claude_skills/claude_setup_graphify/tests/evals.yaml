@@ -43,10 +43,10 @@ evals:
 
   # Happy path: Installation (after validation passes)
     - name: install_graphifyy_package
-      description: pip install graphifyy succeeds
+      description: pip install graphifyy==0.8.36 succeeds, pinned
       input: /claude_setup_graphify
       setup: all validations pass, internet
-      expected_output: [installed, success]
+      expected_output: [pinned version installed, import graphify succeeds]
 
     - name: install_graphify_claude_skill
       description: graphify install --platform claude succeeds
@@ -56,10 +56,10 @@ evals:
 
   # Happy path: Extraction to verification
     - name: extract_knowledge_graph
-      description: graphify extract generates graph.json
-      input: graphify extract
-      setup: graphifyy installed, repo with code
-      expected_output: [graph created, cost noted]
+      description: graphify extract . generates graph.json after the user confirms what leaves the machine
+      input: graphify extract .
+      setup: graphifyy installed, repo with code and docs, an LLM API key set
+      expected_output: [data-leaving warning shown, user confirmation before extraction, graph created]
 
     - name: add_gitignore_entry
       description: append graphify-out/ to .gitignore
