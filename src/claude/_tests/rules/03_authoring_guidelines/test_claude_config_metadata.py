@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-28
-# Date updated:      2026-10-01
-# Version:           2.2.1
+# Date updated:      2026-10-06
+# Version:           2.3.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -17,7 +17,7 @@ Lines 1–3 must be ``<!-- version: X.Y.Z -->``, ``<!-- created: YYYY-MM-DD -->`
 from _metadata_header import FRONTMATTER_RE, metadata_header_errors
 from _shared_paths import RULES_DIR
 
-# Non-rule content under _rules/: a skill-managed tally
+# Non-rule content under the rule folders: a skill-managed tally
 EXCLUDED_DIRS = {"learned"}
 
 HINT = "— see 03_authoring_guidelines/shared_standards/_claude_config_metadata.md"

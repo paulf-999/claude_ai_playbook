@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-02
-# Version:           1.3.1
+# Date updated:      2026-10-06
+# Version:           1.4.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -20,10 +20,10 @@ Every entry point also says how it loads and why, and the mode must match its fo
 import re
 from pathlib import Path
 
-from _shared_paths import HOOKS_DIR, RULES_DIR
+from _shared_paths import CLAUDE_DIR, HOOKS_DIR, LAZY_RULES_DIR, RULES_DIR
 
 ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference")
-LAZY_TIER = "05_lazy_load"
+PATH_SCOPED_DIR = RULES_DIR / "05_path_scoped"
 APPLIES_TO = re.compile(r"^<!-- applies_to: (.+) -->$", re.M)
 MISS_COST = re.compile(r"^<!-- miss_cost: (high|medium|low) — \S.* -->$")
 MISS_COST_PREFIX = "<!-- miss_cost:"
@@ -75,7 +75,20 @@ def always_on_entry_points() -> list[Path]:
 
     :return: Paths of the always-on entry-point rules.
     """
-    return sorted(p for tier in ALWAYS_ON_TIERS for p in (RULES_DIR / tier).glob("*.md") if p.name != "README.md")
+    return sorted(
+        p for tier in ALWAYS_ON_TIERS for p in (RULES_DIR / tier).glob("*.md")
+        if p.name != "README.md" and not has_paths(p.read_text())
+    )
+
+
+def has_paths(content: str) -> bool:
+    """Tell whether a rule opens with ``paths:`` frontmatter, so it loads only with matching files.
+
+    :param content: Rule file text.
+    :return: True when the opening frontmatter block has a ``paths:`` key.
+    """
+    frontmatter = content.split("\n---", 1)[0] if content.startswith("---\n") else ""
+    return "paths:" in frontmatter
 
 
 # --- Parser: accepted ---
@@ -87,7 +100,7 @@ def test_single_glob_accepted():
 
 def test_several_globs_accepted():
     """Comma-separated globs are valid, with or without spaces after the commas."""
-    assert applies_to_errors(f"{VALID}<!-- applies_to: **/_rules/**, **/CLAUDE.md -->\n") == []
+    assert applies_to_errors(f"{VALID}<!-- applies_to: **/rules/**, **/CLAUDE.md -->\n") == []
     assert applies_to_errors(f"{VALID}<!-- applies_to: **/*.py,**/*.sh -->\n") == []
 
 
@@ -200,7 +213,7 @@ def miss_cost_of(content: str) -> str:
 def has_mechanical_trigger(rel: str, content: str, hook_texts: list[str]) -> bool:
     """Tell whether a lazy rule loads without Claude having to remember it.
 
-    :param rel: Rule path relative to ``_rules``.
+    :param rel: Rule path relative to the config folder.
     :param content: Rule file text.
     :param hook_texts: Text of every hook script.
     :return: True with ``paths:`` frontmatter or a hook that names the rule.
@@ -214,14 +227,18 @@ def lazy_entry_points() -> list[Path]:
 
     :return: Paths of the lazy entry-point rules.
     """
-    tier = RULES_DIR / LAZY_TIER
-    found = []
-    for path in sorted(tier.rglob("*.md")):
-        if path.name == "README.md" or path.name.startswith("_") or "_lazy_load" in path.parts:
-            continue
-        parents = [p for p in path.parents if p != tier and tier in p.parents]
-        if not any(p.with_suffix(".md").is_file() for p in parents):
-            found.append(path)
+    # A child's parent may sit in another root, e.g. sql/formatting.md in _rules_lazy_load/
+    # belongs to sql.md in rules/05_path_scoped/, so look for the parent in every root.
+    roots = [PATH_SCOPED_DIR, LAZY_RULES_DIR] + [RULES_DIR / tier for tier in ALWAYS_ON_TIERS]
+    found = [p for tier in ALWAYS_ON_TIERS for p in (RULES_DIR / tier).glob("*.md") if has_paths(p.read_text())]
+    for root in (PATH_SCOPED_DIR, LAZY_RULES_DIR):
+        for path in sorted(root.rglob("*.md")):
+            rel = path.relative_to(root)
+            if path.name == "README.md" or path.name.startswith("_") or rel.parts[0] in ("_tier_readmes", "learned"):
+                continue
+            folders = [rel.parents[i] for i in range(len(rel.parts) - 1)]
+            if not any((r / f).with_suffix(".md").is_file() for f in folders for r in roots):
+                found.append(path)
     return found
 
 
@@ -249,9 +266,9 @@ def test_miss_cost_problems_rejected():
 
 def test_trigger_detection():
     """paths: frontmatter or a hook naming the rule counts as a trigger, and a pointer alone doesn't."""
-    rel = "05_lazy_load/x.md"
+    rel = "_rules_lazy_load/x.md"
     assert has_mechanical_trigger(rel, '---\npaths:\n  - "**/*.sql"\n---\n# X\n', [])
-    assert has_mechanical_trigger(rel, "# X\n", [f'cat "$ROOT/_rules/{rel}"'])
+    assert has_mechanical_trigger(rel, "# X\n", [f'cat "$ROOT/{rel}"'])
     assert not has_mechanical_trigger(rel, "# X\n", ["echo unrelated"]), "a rule nothing loads has no trigger"
 
 
@@ -265,7 +282,7 @@ def test_lazy_tier_has_entry_points():
 def test_every_entry_point_declares_miss_cost():
     """Each always-on and lazy entry point carries a valid miss_cost header."""
     problems = {
-        p.relative_to(RULES_DIR).as_posix(): miss_cost_errors(p.read_text())
+        p.relative_to(CLAUDE_DIR).as_posix(): miss_cost_errors(p.read_text())
         for p in always_on_entry_points() + lazy_entry_points()
     }
     problems = {path: errors for path, errors in problems.items() if errors}
@@ -276,9 +293,9 @@ def test_high_cost_lazy_rules_load_mechanically():
     """A lazy rule that is costly to miss must have paths: or a hook, not rely on Claude remembering it."""
     hook_texts = [h.read_text() for h in HOOKS_DIR.glob("*.sh")]
     untriggered = [
-        p.relative_to(RULES_DIR).as_posix() for p in lazy_entry_points()
+        p.relative_to(CLAUDE_DIR).as_posix() for p in lazy_entry_points()
         if miss_cost_of(p.read_text()) == "high"
-        and not has_mechanical_trigger(p.relative_to(RULES_DIR).as_posix(), p.read_text(), hook_texts)
+        and not has_mechanical_trigger(p.relative_to(CLAUDE_DIR).as_posix(), p.read_text(), hook_texts)
     ]
     assert not untriggered, (
         f"high miss_cost lazy rules with no trigger: {untriggered} — add paths: frontmatter, "
@@ -319,10 +336,9 @@ def expected_loading(path, content: str) -> str:
     :param content: Rule file text.
     :return: ``always-on``, ``path-scoped`` or ``lazy``.
     """
-    if path.relative_to(RULES_DIR).parts[0] in ALWAYS_ON_TIERS:
-        return "always-on"
-    frontmatter = content.split("\n---", 1)[0] if content.startswith("---\n") else ""
-    return "path-scoped" if "paths:" in frontmatter else "lazy"
+    if has_paths(content):
+        return "path-scoped"
+    return "always-on" if RULES_DIR in path.parents else "lazy"
 
 
 LOADING_LINE = "<!-- miss_cost: low — a -->\n<!-- loading: {} — a reason -->\n"
@@ -350,17 +366,18 @@ def test_loading_problems_rejected():
 
 
 def test_expected_loading_follows_folder_and_frontmatter():
-    """Tiers 01–04 are always-on, and lazy rules are path-scoped only with paths: frontmatter."""
-    lazy = RULES_DIR / LAZY_TIER / "x.md"
+    """paths: frontmatter means path-scoped anywhere; otherwise rules/ is always-on and _rules_lazy_load/ is lazy."""
+    scoped = '---\npaths:\n  - "**/*.sql"\n---\n# X\n'
     assert expected_loading(RULES_DIR / "02_claude_standards" / "x.md", "# X\n") == "always-on"
-    assert expected_loading(lazy, '---\npaths:\n  - "**/*.sql"\n---\n# X\n') == "path-scoped"
-    assert expected_loading(lazy, "# X\n") == "lazy"
+    assert expected_loading(RULES_DIR / "03_authoring_guidelines" / "x.md", scoped) == "path-scoped"
+    assert expected_loading(PATH_SCOPED_DIR / "x.md", scoped) == "path-scoped"
+    assert expected_loading(LAZY_RULES_DIR / "x.md", "# X\n") == "lazy"
 
 
 def test_every_entry_point_declares_loading():
     """Each always-on and lazy entry point says how it loads and why, matching its folder and frontmatter."""
     problems = {
-        p.relative_to(RULES_DIR).as_posix(): loading_errors(p.read_text(), expected_loading(p, p.read_text()))
+        p.relative_to(CLAUDE_DIR).as_posix(): loading_errors(p.read_text(), expected_loading(p, p.read_text()))
         for p in always_on_entry_points() + lazy_entry_points()
     }
     problems = {path: errors for path, errors in problems.items() if errors}

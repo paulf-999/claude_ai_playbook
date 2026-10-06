@@ -2,7 +2,7 @@
 
 ``FileStructureValidator`` scans the whole config directory (``CLAUDE_CONFIG_DIR``) and
 collects violations: names that aren't snake_case, nested markdown without the ``_``
-child prefix, and missing ``_rules/`` tiers.
+child prefix, and missing ``rules/`` tiers.
 
 ``check_new_path`` applies the same file checks to one path that doesn't exist yet. The
 naming hook (``hooks/hook_enforcement_naming_convention.sh``) calls it through the
@@ -76,7 +76,7 @@ AUTO_GENERATED_FILES = {
 
 # User-created directories that should exist (with underscore prefix)
 USER_CREATED_DIRS = {
-    "_rules",
+    "_rules_lazy_load",
     "_tests",
     "_templates",
     "_reference",
@@ -90,18 +90,19 @@ USER_CREATED_DIRS = {
 
 # Directory-specific validation rules
 DIR_RULES = {
-    "_rules": {
+    # Claude Code's own name for natively loaded rules, so no underscore prefix
+    "rules": {
         "subdirs": [
             "01_essentials",
             "02_claude_standards",
             "03_authoring_guidelines",
             "04_claude_reference",
-            "05_lazy_load",
+            "05_path_scoped",
         ],
         "rule": (
             "Rules organized by tier (01_essentials=blocking, 02_claude_standards=how Claude works, "
             "03_authoring_guidelines=authoring standards, 04_claude_reference=reference material, "
-            "05_lazy_load=domain-specific)"
+            "05_path_scoped=domain-specific, loaded with matching files)"
         ),
     },
     "hooks": {

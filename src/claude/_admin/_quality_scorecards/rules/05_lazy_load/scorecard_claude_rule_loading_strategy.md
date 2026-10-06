@@ -18,12 +18,12 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/05_lazy_load/claude_rule_loading_strategy.md` — the rule being scored
+- `src/claude/rules/05_path_scoped/claude_rule_loading_strategy.md` — the rule being scored
 - `src/claude/_tests/rules/02_claude_standards/test_always_on_reachability.py` — Test Coverage dimension
 - `src/claude/_tests/rules/05_lazy_load/test_lazy_load_coverage.py` — Test Coverage dimension
 - `src/claude/_tests/rules/05_lazy_load/test_claude_rule_loading_strategy.py` — Test Coverage dimension (dedicated test)
 - `src/claude/_tests/rules/test_rules_structure.py` — Structural Compliance dimension (H2 emoji check)
-- `src/claude/_rules/01_essentials/claude_usage_standards/writing_style.md` — Structural Compliance dimension (the emoji-heading rule being violated)
+- `src/claude/rules/01_essentials/claude_usage_standards/writing_style.md` — Structural Compliance dimension (the emoji-heading rule being violated)
 
 ---
 

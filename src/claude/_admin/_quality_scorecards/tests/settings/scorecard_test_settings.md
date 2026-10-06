@@ -20,4 +20,4 @@
 
 - `src/claude/_tests/settings/test_settings.py` — the test being scored
 - `src/claude/settings.json` — what the test guards
-- `src/claude/_rules/02_claude_standards/security/_security_guardrails.md` — the permission guidance it enforces
+- `src/claude/rules/02_claude_standards/security/_security_guardrails.md` — the permission guidance it enforces

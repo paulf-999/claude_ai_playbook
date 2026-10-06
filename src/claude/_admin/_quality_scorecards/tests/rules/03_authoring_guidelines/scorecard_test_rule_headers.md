@@ -19,5 +19,5 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/03_authoring_guidelines/test_rule_headers.py` — the test being scored
-- `src/claude/_rules/03_authoring_guidelines/shared_standards/_claude_config_metadata.md` — the standard it enforces
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_claude_config_metadata.md` — the standard it enforces
 - `src/claude/_scripts/_audit_scripts/audit_rule_usage.py` — the script that reads the headers

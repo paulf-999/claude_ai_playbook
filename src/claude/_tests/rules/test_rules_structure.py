@@ -1,19 +1,19 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-02
-# Version:           2.0.1
+# Date updated:      2026-10-06
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Tests that every _rules/ file meets the per-file format standards.
+"""Tests that every rules/ file meets the per-file format standards.
 
 - **Size:** at most 110 lines (the 3-line metadata header doesn't count) and one trailing newline.
 - **Headings:** an H1 and every ``##`` heading carry an emoji, per writing_style.md.
 - **Context budget:** no Related section, and a Contents section only with 3+ real headings,
-  in ``_rules/`` and ``_reference/`` (#120, #121).
+  in ``rules/``, ``_rules_lazy_load/`` and ``_reference/`` (#120, #121).
 
 ``test_rules_structure_layout.py`` covers where files live and how they import each other.
 """
@@ -22,7 +22,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR, RULES_DIR
+from _shared_paths import CLAUDE_DIR, LAZY_RULES_DIR, RULES_DIR
 
 REFERENCE_DIR = CLAUDE_DIR / "_reference"
 RELATED_HEADING = re.compile(r"^## .*Related", re.MULTILINE)
@@ -33,17 +33,17 @@ LINE_LIMIT = 110
 
 
 def rule_files() -> list[Path]:
-    """Return all .md files in _rules/ eligible for quality checks.
+    """Return all .md files in rules/ eligible for quality checks.
 
     Excludes README.md (documentation, not a rule file) and anything
-    under 05_lazy_load/ (different standards apply there).
+    under 05_path_scoped/ (lazy style guides; different standards apply there).
 
     :return: List of rule markdown files to validate.
     :rtype: list[Path]
     """
     return [
         rule_file for rule_file in RULES_DIR.rglob("*.md")
-        if rule_file.name != "README.md" and "05_lazy_load" not in rule_file.parts
+        if rule_file.name != "README.md" and "05_path_scoped" not in rule_file.parts
     ]
 
 
@@ -94,7 +94,7 @@ def has_internal_link_section(text: str) -> bool:
 
 
 def imported_content_files() -> list[Path]:
-    """Return every .md file under _rules/ and _reference/ that can be @import-ed.
+    """Return every .md file under rules/, _rules_lazy_load/ and _reference/ that can load.
 
     Wider than rule_files(): includes 05_lazy_load/ and _reference/, since a
     lazy-loaded rule costs the same context once it is read. Excludes READMEs
@@ -105,22 +105,22 @@ def imported_content_files() -> list[Path]:
     """
     return [
         md_file
-        for base in (RULES_DIR, REFERENCE_DIR)
+        for base in (RULES_DIR, LAZY_RULES_DIR, REFERENCE_DIR)
         for md_file in base.rglob("*.md")
-        if md_file.name != "README.md"
+        if md_file.name != "README.md" and "_tier_readmes" not in md_file.parts
     ]
 
 
 def test_rule_files_found():
-    """The scan finds rule files and skips READMEs and 05_lazy_load/."""
+    """The scan finds rule files and skips READMEs and 05_path_scoped/."""
     files = rule_files()
     assert files, f"no rule files found under {RULES_DIR}"
-    leaked = [f for f in files if f.name == "README.md" or "05_lazy_load" in f.parts]
+    leaked = [f for f in files if f.name == "README.md" or "05_path_scoped" in f.parts]
     assert not leaked, f"READMEs or lazy-load files leaked into the scan: {leaked}"
 
 
 def test_line_limits():
-    """No _rules/ file (excluding README and 05_lazy_load) exceeds 110 lines, header aside."""
+    """No rules/ file (excluding README and 05_path_scoped) exceeds 110 lines, header aside."""
     counts = {f.name: len(body_lines(f.read_text())) for f in rule_files()}
     over = [f"{name}: {count}" for name, count in counts.items() if count > LINE_LIMIT]
     assert not over, f"files over {LINE_LIMIT} lines — split into a parent and children: {over}"
@@ -133,7 +133,7 @@ def test_metadata_header_is_not_counted():
 
 
 def test_files_end_with_single_newline():
-    """Every _rules/ file ends with exactly one newline."""
+    """Every rules/ file ends with exactly one newline."""
     for rule_file in rule_files():
         raw = rule_file.read_bytes()
         assert raw.endswith(b"\n"), f"{rule_file.name}: does not end with a newline"
@@ -141,13 +141,13 @@ def test_files_end_with_single_newline():
 
 
 def test_h1_heading_present():
-    """Every _rules/ file has an H1 heading."""
+    """Every rules/ file has an H1 heading."""
     missing = [f.name for f in rule_files() if not re.search(r"^# .+", f.read_text(), re.MULTILINE)]
     assert not missing, f"files with no H1 heading: {missing}"
 
 
 def test_h1_heading_has_emoji():
-    """Every _rules/ file's H1 heading includes an emoji."""
+    """Every rules/ file's H1 heading includes an emoji."""
     bare = []
     for rule_file in rule_files():
         h1 = re.search(r"^# (.+)", rule_file.read_text(), re.MULTILINE)
@@ -157,7 +157,7 @@ def test_h1_heading_has_emoji():
 
 
 def test_h2_headings_have_emoji():
-    """Every ``##`` heading in a _rules/ file includes an emoji, per writing_style.md."""
+    """Every ``##`` heading in a rules/ file includes an emoji, per writing_style.md."""
     bad = [
         f"{rule_file.relative_to(RULES_DIR)}: '{heading}'"
         for rule_file in rule_files()

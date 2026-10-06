@@ -22,11 +22,11 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/02_claude_standards/behaviour.md` — the rule being scored
+- `src/claude/rules/02_claude_standards/behaviour.md` — the rule being scored
 - `src/claude/_tests/rules/02_claude_standards/test_decision_making.py` — Test Coverage dimension
 - `src/claude/_tests/rules/02_claude_standards/test_artefact_proposal_gates.py` — Test Coverage dimension
-- `src/claude/_rules/02_claude_standards/behaviour/_how_to_approach.md` — Test Coverage dimension (untested child)
-- `src/claude/_rules/02_claude_standards/behaviour/_before_acting.md` — Test Coverage dimension (untested child)
-- `src/claude/_rules/02_claude_standards/behaviour/_pre_existing_issue_disclosure.md` — Test Coverage dimension (untested child)
-- `src/claude/_rules/02_claude_standards/behaviour/_model_selection_strategy.md` — Test Coverage dimension (untested child)
-- `src/claude/_rules/02_claude_standards/behaviour/_session_conduct.md` — Test Coverage dimension (untested child)
+- `src/claude/rules/02_claude_standards/behaviour/_how_to_approach.md` — Test Coverage dimension (untested child)
+- `src/claude/rules/02_claude_standards/behaviour/_before_acting.md` — Test Coverage dimension (untested child)
+- `src/claude/rules/02_claude_standards/behaviour/_pre_existing_issue_disclosure.md` — Test Coverage dimension (untested child)
+- `src/claude/rules/02_claude_standards/behaviour/_model_selection_strategy.md` — Test Coverage dimension (untested child)
+- `src/claude/rules/02_claude_standards/behaviour/_session_conduct.md` — Test Coverage dimension (untested child)

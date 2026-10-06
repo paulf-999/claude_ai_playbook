@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-02
-# Version:           1.4.2
+# Date updated:      2026-10-06
+# Version:           1.5.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -27,7 +27,8 @@ from _shared_paths import CLAUDE_DIR
 
 SCRIPT = CLAUDE_DIR / "_scripts" / "_audit_scripts" / "audit_rule_usage.py"
 TODAY = date(2026, 10, 1)
-GUIDES = "05_lazy_load/style_guide_standards"
+LAZY_GUIDES = "_rules_lazy_load/style_guide_standards"
+SCOPED_GUIDES = "rules/05_path_scoped/style_guide_standards"
 
 
 def load_audit():
@@ -47,22 +48,22 @@ AUDIT = load_audit()
 
 
 def make_rules(tmp_path):
-    """Build a rules folder with one always-on parent, one child and four lazy rules.
+    """Build rules/ with one always-on parent and child, one path-scoped rule, and two lazy rules beside it.
 
-    :param tmp_path: Pytest tmp_path fixture.
-    :return: The ``_rules`` folder.
+    :param tmp_path: Pytest tmp_path fixture, standing in for the config folder.
+    :return: The ``rules`` folder.
     """
-    rules = tmp_path / "_rules"
+    rules = tmp_path / "rules"
     (rules / "01_essentials" / "parent").mkdir(parents=True)
-    child_import = "@~/.claude/_rules/01_essentials/parent/_child.md"
-    (rules / "01_essentials" / "parent.md").write_text(f"# Parent\n\n## Big\n{'x' * 400}\n{child_import}\n")
+    (rules / "01_essentials" / "parent.md").write_text(f"# Parent\n\n## Big\n{'x' * 400}\n")
     (rules / "01_essentials" / "parent" / "_child.md").write_text("# Child\n\n## Small\n" + "y" * 40 + "\n")
-    (rules / "01_essentials" / "README.md").write_text("# Tier\n")
-    guides = rules / "05_lazy_load" / "style_guide_standards"
-    guides.mkdir(parents=True)
-    (guides / "python.md").write_text("<!-- miss_cost: high — breaks style -->\n# Python\n")
-    (guides / "sql.md").write_text('---\npaths:\n  - "**/*.sql"\n---\n# SQL\n')
-    (rules / "05_lazy_load" / "loose.md").write_text("<!-- miss_cost: low — style -->\n# Loose\n")
+    (tmp_path / SCOPED_GUIDES).mkdir(parents=True)
+    (tmp_path / SCOPED_GUIDES / "sql.md").write_text('---\npaths:\n  - "**/*.sql"\n---\n# SQL\n')
+    (tmp_path / LAZY_GUIDES).mkdir(parents=True)
+    (tmp_path / LAZY_GUIDES / "python.md").write_text("<!-- miss_cost: high — breaks style -->\n# Python\n")
+    (tmp_path / "_rules_lazy_load" / "loose.md").write_text("<!-- miss_cost: low — style -->\n# Loose\n")
+    (tmp_path / "_rules_lazy_load" / "_tier_readmes").mkdir()
+    (tmp_path / "_rules_lazy_load" / "_tier_readmes" / "01_essentials.md").write_text("# Tier\n")
     return rules
 
 
@@ -102,12 +103,12 @@ def make_transcripts(tmp_path):
     """
     project = tmp_path / "projects" / "-repo"
     startup = {"type": "attachment", "attachment": {"type": "instructions", "files": [
-        {"path": "/home/u/.claude/_rules/01_essentials/parent.md"}]}}
+        {"path": "/home/u/.claude/rules/01_essentials/parent.md"}]}}
     write_session(project, "s1", "2026-09-10", [
-        startup, tool("Edit", "/repo/app.py"), tool("Read", f"/repo/src/claude/_rules/{GUIDES}/python.md")])
+        startup, tool("Edit", "/repo/app.py"), tool("Read", f"/repo/src/claude/{LAZY_GUIDES}/python.md")])
     write_session(project, "s2", "2026-09-20", [
         startup, tool("Write", "/repo/x.py"), tool("Edit", "/repo/q.sql"),
-        {"type": "attachment", "attachment": {"type": "nested_memory", "path": f"/u/claude/_rules/{GUIDES}/sql.md"}}])
+        {"type": "attachment", "attachment": {"type": "nested_memory", "path": f"/u/claude/{SCOPED_GUIDES}/sql.md"}}])
     write_session(project, "s3", "2026-09-25", [{"type": "user", "message": {"content": "hi"}}])
     write_session(project / "s1" / "subagents", "agent", "2026-09-30", [tool("Edit", "/repo/sub.py")])
     return tmp_path / "projects"
@@ -130,10 +131,10 @@ def test_children_and_readmes_are_not_entry_points(tmp_path):
     assert names == ["loose.md", "parent.md", "python.md", "sql.md"], f"unexpected entry points {names}"
 
 
-def test_always_on_tokens_include_imported_children(tmp_path):
-    """An always-on rule's tokens cover its @imports, and its globs cover every session."""
+def test_always_on_tokens_include_native_children(tmp_path):
+    """An always-on rule's tokens cover the children that load beside it, and its globs cover every session."""
     parent = next(r for r in AUDIT.discover_rules(make_rules(tmp_path)) if r.rel.endswith("parent.md"))
-    assert parent.files == ["01_essentials/parent.md", "01_essentials/parent/_child.md"], parent.files
+    assert parent.files == ["rules/01_essentials/parent.md", "rules/01_essentials/parent/_child.md"], parent.files
     assert parent.tokens > 100, f"tokens should include the 400-char section, got {parent.tokens}"
     assert parent.globs == ["*"], "always-on rules apply to every session"
 
@@ -150,11 +151,11 @@ def test_applies_to_header_wins_over_fallbacks(tmp_path):
     """An applies_to header replaces * on an always-on rule and paths: on a lazy rule."""
     rules_dir = make_rules(tmp_path)
     parent = rules_dir / "01_essentials" / "parent.md"
-    parent.write_text("<!-- version: 1.0.0 -->\n<!-- applies_to: **/_rules/**, **/CLAUDE.md -->\n" + parent.read_text())
-    sql = rules_dir / GUIDES / "sql.md"
+    parent.write_text("<!-- version: 1.0.0 -->\n<!-- applies_to: **/rules/**, **/CLAUDE.md -->\n" + parent.read_text())
+    sql = tmp_path / SCOPED_GUIDES / "sql.md"
     sql.write_text(sql.read_text().replace("---\n# SQL", "---\n<!-- applies_to: **/models/**/*.sql -->\n# SQL"))
     rules = {r.rel.rsplit("/", 1)[1]: r for r in AUDIT.discover_rules(rules_dir)}
-    assert rules["parent.md"].globs == ["**/_rules/**", "**/CLAUDE.md"], rules["parent.md"].globs
+    assert rules["parent.md"].globs == ["**/rules/**", "**/CLAUDE.md"], rules["parent.md"].globs
     assert rules["sql.md"].globs == ["**/models/**/*.sql"], rules["sql.md"].globs
 
 
@@ -219,13 +220,20 @@ def test_last_applied_and_last_loaded_dates(tmp_path):
     assert usage["python.md"].last_loaded == date(2026, 9, 10), usage["python.md"].last_loaded
 
 
-def test_symlinked_rule_path_maps_to_its_rule(tmp_path):
-    """A rules/ symlink read by Claude Code maps back to the real rule."""
+def test_rule_paths_map_from_either_layout(tmp_path):
+    """New paths map as they are, and the pre-2026-10-06 _rules/ layout older transcripts use maps to its new home."""
     rules_dir = make_rules(tmp_path)
-    (tmp_path / "rules").mkdir()
-    (tmp_path / "rules" / "sql.md").symlink_to(rules_dir / "05_lazy_load" / "style_guide_standards" / "sql.md")
-    rel = AUDIT.rule_rel(str(tmp_path / "rules" / "sql.md"), rules_dir)
-    assert rel == "05_lazy_load/style_guide_standards/sql.md", rel
+    old = "/u/.claude/_rules"
+    expected = {
+        "/u/claude/rules/01_essentials/parent.md": "rules/01_essentials/parent.md",
+        f"/repo/src/claude/{LAZY_GUIDES}/python.md": f"{LAZY_GUIDES}/python.md",
+        f"{old}/01_essentials/parent.md": "rules/01_essentials/parent.md",
+        f"{old}/05_lazy_load/style_guide_standards/sql.md": f"{SCOPED_GUIDES}/sql.md",
+        f"{old}/05_lazy_load/style_guide_standards/python.md": f"{LAZY_GUIDES}/python.md",
+        "/u/.claude/rules/sql.md": f"{SCOPED_GUIDES}/sql.md",
+    }
+    for raw, rel in expected.items():
+        assert AUDIT.rule_rel(raw, rules_dir) == rel, f"{raw} mapped to {AUDIT.rule_rel(raw, rules_dir)}"
     assert AUDIT.rule_rel("/repo/app.py", rules_dir) is None, "a non-rule path maps to nothing"
 
 
@@ -241,7 +249,7 @@ def usage(always_on, applied, misses, miss_cost):
 
     :return: The row.
     """
-    tier = "01_essentials" if always_on else "05_lazy_load"
+    tier = "01_essentials" if always_on else "_rules_lazy_load"
     rule = AUDIT.Rule(rel="x.md", tier=tier, tokens=1, globs=["*"], miss_cost=miss_cost)
     return AUDIT.Usage(rule, 100, applied, 0, misses, None, None)
 
@@ -353,7 +361,8 @@ def test_ledger_replaces_rows_for_a_session_seen_again(tmp_path):
     write_session(transcripts / "-repo", "s3", "2026-09-25", [tool("Edit", "/repo/late.py")])
     AUDIT.run(rules_dir, transcripts, out, TODAY)
     s3 = [r for r in ledger_rows(out) if r["session"] == "s3"]
-    assert [(r["rule"].rsplit("/", 1)[1], r["applied"]) for r in s3] == [("parent.md", "1"), ("python.md", "1")], s3
+    found = sorted((r["rule"].rsplit("/", 1)[1], r["applied"]) for r in s3)
+    assert found == [("parent.md", "1"), ("python.md", "1")], s3
 
 
 def test_summary_shows_all_time_totals(tmp_path):
@@ -361,7 +370,7 @@ def test_summary_shows_all_time_totals(tmp_path):
     rules_dir, transcripts, out = make_rules(tmp_path), make_transcripts(tmp_path), tmp_path / "out"
     AUDIT.run(rules_dir, transcripts, out, TODAY)
     AUDIT.run(rules_dir, transcripts, out, TODAY + timedelta(days=1))
-    expected = "| `05_lazy_load/style_guide_standards/python.md` | 2 | 1 | 1 | 50% | 2 | 2026-09-10 | 2026-09-20 |"
+    expected = f"| `{LAZY_GUIDES}/python.md` | 2 | 1 | 1 | 50% | 2 | 2026-09-10 | 2026-09-20 |"
     assert python_row(out) == expected, python_row(out)
     assert "**Sessions recorded:** 3 (2026-09-10 to 2026-09-25) · **Runs:** 2" in (out / AUDIT.SUMMARY_NAME).read_text()
 
@@ -370,7 +379,7 @@ def test_summary_marks_removed_rules(tmp_path):
     """A deleted rule keeps its rows from sessions whose logs are gone, and is marked removed."""
     rules_dir, transcripts, out = make_rules(tmp_path), make_transcripts(tmp_path), tmp_path / "out"
     AUDIT.run(rules_dir, transcripts, out, TODAY)
-    (rules_dir / GUIDES / "python.md").unlink()
+    (tmp_path / LAZY_GUIDES / "python.md").unlink()
     (transcripts / "-repo" / "s1.jsonl").unlink()
     AUDIT.run(rules_dir, transcripts, out, TODAY)
     assert "(removed)" in python_row(out), python_row(out)
@@ -382,9 +391,9 @@ def test_summary_has_one_table_per_tier(tmp_path):
     rules_dir, transcripts, out = make_rules(tmp_path), make_transcripts(tmp_path), tmp_path / "out"
     AUDIT.run(rules_dir, transcripts, out, TODAY)
     text = (out / AUDIT.SUMMARY_NAME).read_text()
-    essentials, lazy = text.index("### 🧭 01 Essentials"), text.index("### 💤 05 Lazy load")
+    essentials, lazy = text.index("### 🧭 01 Essentials"), text.index("### 💤 Lazy load")
     assert essentials < text.index("parent.md` |") < lazy, "parent.md should sit in the 01 Essentials table"
-    assert lazy < text.index("python.md` |"), "python.md should sit in the 05 Lazy load table"
+    assert lazy < text.index("python.md` |"), "python.md should sit in the Lazy load table"
 
 
 def totals(applied, loaded, misses):

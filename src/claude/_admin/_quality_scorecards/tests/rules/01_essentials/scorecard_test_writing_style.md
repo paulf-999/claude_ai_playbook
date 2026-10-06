@@ -19,4 +19,4 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/01_essentials/test_writing_style.py` — the test being scored
-- `src/claude/_rules/01_essentials/claude_usage_standards/writing_style.md` — what the test guards
+- `src/claude/rules/01_essentials/claude_usage_standards/writing_style.md` — what the test guards

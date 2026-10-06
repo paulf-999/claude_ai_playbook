@@ -19,5 +19,5 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/03_authoring_guidelines/test_authoring_skills_maturity.py` — the test being scored
-- `src/claude/_rules/03_authoring_guidelines/authoring_skills.md` — the rule it guards, with its on-demand children
-- `src/claude/_rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md` — the formula its complexity caps must match
+- `src/claude/rules/03_authoring_guidelines/authoring_skills.md` — the rule it guards, with its on-demand children
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md` — the formula its complexity caps must match

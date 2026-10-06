@@ -1,14 +1,14 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-01
-# Version:           2.0.0
+# Date updated:      2026-10-06
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Content tests for _rules/02_claude_standards/git.md.
+"""Content tests for rules/02_claude_standards/git.md.
 
 Each test guards one rule the file sets — protected main, branch naming, PR
 standards, complex-operation care and its three imported children — so a
@@ -45,18 +45,18 @@ def branch_pattern() -> re.Pattern[str]:
     return re.compile(match.group(1))
 
 
-def test_imports_every_child():
-    """git.md imports each child file, so none is silently unloaded."""
+def test_points_to_every_child():
+    """git.md names each child it loads beside, so a reader can find them all."""
     for child in CHILDREN:
-        assert re.search(rf"^@~/[^/]+/_rules/02_claude_standards/git/{child}$", content(), re.M), (
-            f"git.md must @import git/{child}"
+        assert f"**Loads on its own from:** `rules/02_claude_standards/git/{child}`" in content(), (
+            f"git.md must point to git/{child}"
         )
 
 
 def test_children_exist():
-    """Each imported child is on disk."""
+    """Each child git.md points to is on disk."""
     missing = [c for c in CHILDREN if not (GIT_RULES.parent / "git" / c).is_file()]
-    assert not missing, f"git.md imports children that don't exist: {missing}"
+    assert not missing, f"git.md points to children that don't exist: {missing}"
 
 
 def test_main_is_protected():

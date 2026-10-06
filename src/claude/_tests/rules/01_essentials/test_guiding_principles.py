@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-01
-# Version:           2.0.0
+# Date updated:      2026-10-06
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -52,8 +52,8 @@ def test_claude_md_has_imports():
 
 
 def test_no_lazy_load_tier_imports():
-    """Nothing in _rules/05_lazy_load/ is imported — that tier is read on demand."""
-    bad = [p for p in import_paths() if p.startswith("_rules/05_lazy_load/")]
+    """Nothing in _rules_lazy_load/ is imported — that folder is read on demand."""
+    bad = [p for p in import_paths() if p.startswith("_rules_lazy_load/")]
     assert not bad, f"CLAUDE.md imports lazy-load rules {bad} — read them on demand instead"
 
 
@@ -100,19 +100,10 @@ def test_imports_share_one_config_dir():
     assert len(dirs) == 1, f"imports mix config-dir prefixes {sorted(dirs)} — use one"
 
 
-def test_rule_imports_come_from_always_on_tiers():
-    """Every rule import sits in tiers 01–04."""
+def test_claude_md_imports_only_memory_and_aliases():
+    """CLAUDE.md imports no rules, since Claude Code loads rules/ natively."""
     rules = [p for p in import_paths() if p not in NON_RULE_IMPORTS]
-    assert rules, "expected rule imports besides memory and aliases"
-    bad = [p for p in rules if p.split("/")[1:2] and p.split("/")[1] not in ALWAYS_ON_TIERS]
-    assert not bad, f"rule imports outside the always-on tiers {ALWAYS_ON_TIERS}: {bad}"
-
-
-def test_rule_imports_are_in_tier_order():
-    """Rule imports run 01 → 04, so the file reads tier by tier."""
-    tiers = [p.split("/")[1] for p in import_paths() if p.startswith("_rules/")]
-    order = [ALWAYS_ON_TIERS.index(t) for t in tiers if t in ALWAYS_ON_TIERS]
-    assert order == sorted(order), f"rule imports are out of tier order: {tiers}"
+    assert not rules, f"CLAUDE.md imports rules, which would load twice or bypass their folder: {rules}"
 
 
 def test_imports_are_markdown():
@@ -123,8 +114,8 @@ def test_imports_are_markdown():
 
 def test_import_parser_reads_any_config_dir():
     """The parser handles .claude, claude and other config-dir names, and skips inline mentions."""
-    text = "@~/.claude/a.md\n@~/claude/_rules/b.md\nsee @~/claude/c.md inline\n"
-    assert imports(text) == [(".claude", "a.md"), ("claude", "_rules/b.md")], f"got {imports(text)}"
+    text = "@~/.claude/a.md\n@~/claude/rules/b.md\nsee @~/claude/c.md inline\n"
+    assert imports(text) == [(".claude", "a.md"), ("claude", "rules/b.md")], f"got {imports(text)}"
 
 
 def test_imports_sit_under_imports_heading():

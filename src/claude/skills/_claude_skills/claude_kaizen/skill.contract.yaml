@@ -43,7 +43,7 @@ requires:
 
     external:
         - ~/claude/_errors/ directory with error logs
-        - _rules/ directory structure
+        - rules/ and _rules_lazy_load/ directory structure
         - Python 3.6+ (for test execution)
 
 dependencies:

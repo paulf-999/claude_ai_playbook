@@ -22,6 +22,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/02_claude_standards/security.md` — the rule being scored
+- `src/claude/rules/02_claude_standards/security.md` — the rule being scored
 - `src/claude/_tests/rules/02_claude_standards/test_security_guardrails.py` — Test Coverage dimension
-- `src/claude/_rules/02_claude_standards/security/_code_security.md` — Test Coverage dimension (untested child)
+- `src/claude/rules/02_claude_standards/security/_code_security.md` — Test Coverage dimension (untested child)

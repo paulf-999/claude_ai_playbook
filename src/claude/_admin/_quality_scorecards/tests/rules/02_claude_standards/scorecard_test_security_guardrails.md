@@ -19,4 +19,4 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/02_claude_standards/test_security_guardrails.py` — the test being scored
-- `src/claude/_rules/02_claude_standards/security/_security_guardrails.md` — what the test guards
+- `src/claude/rules/02_claude_standards/security/_security_guardrails.md` — what the test guards

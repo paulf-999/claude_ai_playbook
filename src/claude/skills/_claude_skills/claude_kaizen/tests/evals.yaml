@@ -18,11 +18,11 @@ evals:
           candidate_count: 2
       expected_output: >
           Claude audits ~/claude/_errors/, finds the candidate in
-          _rules/learned/candidates.md at the promotion threshold, drafts a rule
+          _rules_lazy_load/learned/candidates.md at the promotion threshold, drafts a rule
           and an eval case, runs the evals before and after, and presents a diff
           proposal with the results for review.
       assertions:
-          - The output is a diff proposal, not a file written to _rules/learned/
+          - The output is a diff proposal, not a file written to _rules_lazy_load/learned/
           - The proposal includes the new rule, its eval case and the before/after results
           - Claude waits for the user's approval before writing anything
 
@@ -36,7 +36,7 @@ evals:
           candidate_count: 1
       expected_output: >
           Claude records or updates the candidate's count in
-          _rules/learned/candidates.md but does not draft a rule, because it
+          _rules_lazy_load/learned/candidates.md but does not draft a rule, because it
           hasn't recurred yet.
       assertions:
           - Claude does not propose a new rule for a pattern seen once
@@ -52,9 +52,9 @@ evals:
           candidate: missing input validation
           candidate_count: 2
       expected_output: >
-          Claude discards the proposal and leaves _rules/learned/ unchanged.
+          Claude discards the proposal and leaves _rules_lazy_load/learned/ unchanged.
       assertions:
-          - No file under _rules/learned/ is created or modified
+          - No file under _rules_lazy_load/learned/ is created or modified
           - Claude confirms that nothing was applied
 
   # Validation

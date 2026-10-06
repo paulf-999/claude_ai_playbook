@@ -20,4 +20,4 @@
 
 - `src/claude/_tests/skills/test_skill_metadata_header.py` — the test being scored
 - `src/claude/skills/` — what the test guards
-- `src/claude/_rules/03_authoring_guidelines/shared_standards/_claude_config_metadata.md` — what the test guards
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_claude_config_metadata.md` — what the test guards

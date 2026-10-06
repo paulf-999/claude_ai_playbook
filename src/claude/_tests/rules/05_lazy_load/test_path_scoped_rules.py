@@ -1,14 +1,14 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-03
-# Version:           2.0.0
+# Date updated:      2026-10-06
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Tests for the path-scoped rules in _rules/05_lazy_load/.
+"""Tests for the path-scoped rules under rules/ (mostly rules/05_path_scoped/).
 
 Claude Code only loads a rule with ``paths:`` frontmatter when a matching
 file is read, but any ``@`` import inside that rule still loads at session
@@ -16,18 +16,15 @@ start. That is how sql.md's four ``@./sql/*.md`` children loaded in every
 session and pushed the always-on total over the 150k-char limit (fixed in
 PR #184). This test fails if a path-scoped rule regains an ``@`` import.
 
-Claude Code reads path-scoped rules only from a folder named ``rules/``, which
-``make install`` builds by linking each rule here by filename, so filenames must
-be unique. Where a ``rules/`` folder exists (an installed config), it must hold
-only those links, never original files.
+Claude Code reads path-scoped rules only from a folder named ``rules/``, so they
+ship there as real files, keeping their subfolders — no install-time links.
 """
 import re
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR, RULES_DIR
+from _shared_paths import RULES_DIR
 
-PATH_SCOPED_DIR = CLAUDE_DIR / "rules"
-LAZY_LOAD_DIR = RULES_DIR / "05_lazy_load"
+PATH_SCOPED_DIR = RULES_DIR / "05_path_scoped"
 IMPORT_LINE_PATTERN = re.compile(r"^@\S")
 FENCE_PATTERN = re.compile(r"^\s*(```|~~~)")
 
@@ -95,51 +92,36 @@ def find_violations(rules_dir: Path) -> list[str]:
 
 
 def _scoped_rules() -> list[Path]:
-    """Return every rule in _rules/05_lazy_load/ with ``paths:`` frontmatter."""
-    return sorted(p for p in LAZY_LOAD_DIR.rglob("*.md") if frontmatter_paths(p.read_text(encoding="utf-8")))
-
-
-def _installed_links() -> list[Path]:
-    """Return the entries of an installed rules/ folder, or nothing in the repo, which doesn't ship one."""
-    return sorted(PATH_SCOPED_DIR.iterdir()) if PATH_SCOPED_DIR.is_dir() else []
+    """Return every rule under rules/ with ``paths:`` frontmatter."""
+    return sorted(p for p in RULES_DIR.rglob("*.md") if frontmatter_paths(p.read_text(encoding="utf-8")))
 
 
 # ── Real config ─────────────────────────────────────────────────────────
 
 
-def test_lazy_load_has_path_scoped_rules():
-    """_rules/05_lazy_load/ holds path-scoped rules, so the checks below run."""
+def test_rules_has_path_scoped_rules():
+    """rules/ holds path-scoped rules, so the checks below run."""
     assert len(_scoped_rules()) >= 10, f"expected at least 10 path-scoped rules, found {len(_scoped_rules())}"
 
 
-def test_path_scoped_filenames_are_unique():
-    """make install links each path-scoped rule into rules/ by filename, so two with one name would collide."""
-    names = [rule.name for rule in _scoped_rules()]
-    duplicates = sorted({name for name in names if names.count(name) > 1})
-    assert not duplicates, f"path-scoped rules share a filename, so only one would load: {duplicates}"
+def test_rules_holds_real_files_not_links():
+    """rules/ ships real files; the old install-time links to _rules/05_lazy_load/ must not come back."""
+    links = [p.relative_to(RULES_DIR).as_posix() for p in RULES_DIR.rglob("*") if p.is_symlink()]
+    assert not links, f"symlinks under rules/ — move the real file in instead: {links}"
 
 
-def test_installed_entries_are_markdown_links():
-    """An installed rules/ holds only .md links that make install built, never original files."""
-    for entry in _installed_links():
-        assert entry.suffix == ".md", f"Non-markdown entry in rules/: {entry.name}"
-        assert entry.is_symlink(), (
-            f"rules/{entry.name} is a real file — keep rules in _rules/05_lazy_load/ and let make install link them"
-        )
-
-
-def test_installed_links_resolve_to_path_scoped_rules():
-    """Each installed link points at an existing path-scoped rule under _rules/05_lazy_load/."""
-    for link in _installed_links():
-        target = link.resolve()
-        assert target.is_file(), f"rules/{link.name} is a broken link — re-run make install"
-        assert target.is_relative_to(LAZY_LOAD_DIR.resolve()), f"rules/{link.name} points outside 05_lazy_load"
-        assert frontmatter_paths(target.read_text(encoding="utf-8")), f"rules/{link.name} has no paths: frontmatter"
+def test_path_scoped_folder_holds_only_scoped_rules():
+    """Every .md in rules/05_path_scoped/ has paths:, or it would load in every session."""
+    unscoped = [
+        p.relative_to(RULES_DIR).as_posix() for p in PATH_SCOPED_DIR.rglob("*.md")
+        if not frontmatter_paths(p.read_text(encoding="utf-8"))
+    ]
+    assert not unscoped, f"add paths: frontmatter or move to _rules_lazy_load/: {unscoped}"
 
 
 def test_no_imports_in_path_scoped_rules():
     """No path-scoped rule contains an ``@`` import, which would load at startup."""
-    violations = find_violations(LAZY_LOAD_DIR)
+    violations = find_violations(RULES_DIR)
     assert not violations, (
         "`@` imports in path-scoped rules load in every session regardless of "
         "`paths:` — replace them with `**Read on demand:**` pointers:\n  "
@@ -199,7 +181,7 @@ def test_detector_passes_read_on_demand_pointers(tmp_path):
     """The post-#184 shape, with read-on-demand pointers, passes."""
     (tmp_path / "sql.md").write_text(
         '---\npaths:\n  - "**/*.sql"\n---\n# SQL\n\n'
-        "- **Read on demand:** `~/claude/_rules/.../sql/formatting.md` — formatting.\n"
+        "- **Read on demand:** `~/claude/_rules_lazy_load/.../sql/formatting.md` — formatting.\n"
     )
     assert find_violations(tmp_path) == []
 

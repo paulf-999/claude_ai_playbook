@@ -93,7 +93,7 @@ All audits use a consistent 7-dimension framework (1–10 scale per dimension):
 
 - **Scoring guide (reference):** `SCORING_GUIDE.md` (in `~/.claude/_reference/`)
 - **Reference files:** `~/.claude/_reference/` — the first domain audited
-- **Writing style:** `~/.claude/_rules/writing_style.md` — governing all written content
+- **Writing style:** `~/.claude/rules/01_essentials/claude_usage_standards/writing_style.md` — governing all written content
 
 ---
 

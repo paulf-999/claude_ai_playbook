@@ -23,7 +23,7 @@ Configuration requires periodic review to stay intentional:
 
 - Test coverage review — are new features tested?
 - Lazy-load candidates — any top-level rules used in <50% of sessions? Consider moving to lazy-load.
-- Always-on size — is the baseline creeping up? Re-measure it; `_rules/README.md` records the last measured tier sizes.
+- Always-on size — is the baseline creeping up? Re-measure it; `_rules_lazy_load/_tier_readmes/00_rules_overview.md` records the last measured tier sizes.
 
 ### Every ~6 months
 
@@ -38,9 +38,9 @@ Per Boris Cherny's recommendation, perform a **full reset**:
 
 ### Step 1: Determine scope
 
-- **Core rule?** Used across multiple domains, or security-critical? → an always-on tier (`01_essentials/` to `04_claude_reference/`, per `_rules/README.md`)
-- **Domain-specific?** Applies to one area (SQL, Airflow, dbt)? → `_rules/05_lazy_load/`
-- **Niche?** Referenced infrequently or only in specific projects? → `_rules/05_lazy_load/`
+- **Core rule?** Used across multiple domains, or security-critical? → an always-on tier (`01_essentials/` to `04_claude_reference/`, per `_rules_lazy_load/_tier_readmes/00_rules_overview.md`)
+- **Domain-specific?** Applies to one area (SQL, Airflow, dbt)? → `_rules_lazy_load/`
+- **Niche?** Referenced infrequently or only in specific projects? → `_rules_lazy_load/`
 
 ### Step 2: Write the rule
 
@@ -57,7 +57,7 @@ Per Boris Cherny's recommendation, perform a **full reset**:
 
 ### Step 4: Update documentation
 
-Work through the **Docs** and **Wiring** sections of `authoring_rules/_lazy_load/_hard_gates_checklist.md` — that checklist is the current source of truth, so it isn't copied here.
+Work through the **Docs** and **Wiring** sections of `_rules_lazy_load/authoring_rules/_hard_gates_checklist.md` — that checklist is the current source of truth, so it isn't copied here.
 
 ### Step 5: Commit
 
@@ -71,7 +71,7 @@ Rare, but necessary when a rule becomes foundational.
 
 ### Promotion criteria
 
-A rule should move from `_rules/05_lazy_load/` to an always-on tier when:
+A rule should move from `_rules_lazy_load/` to an always-on tier when:
 
 1. **Used in most sessions** — audit transcripts show >70% of sessions reference it
 2. **Security-critical** — blocks risky actions or prevents vulnerabilities
@@ -79,16 +79,16 @@ A rule should move from `_rules/05_lazy_load/` to an always-on tier when:
 
 ### Promotion example
 
-**MCP trust model** shows where the line sits: it stays lazy-loaded at `_rules/05_lazy_load/mcp_trust_model.md`.
+**MCP trust model** shows where the line sits: it stays lazy-loaded at `_rules_lazy_load/mcp_trust_model.md`.
 - It's security-critical (prevents prompt injection), so it meets criterion 2.
 - But it's only needed in sessions that use MCP tools, so it doesn't meet criterion 1 — reading it on demand covers it.
 
 ### Promotion process
 
 1. **Verify criteria** — audit transcripts; confirm usage patterns
-2. **Move file** — from `_rules/05_lazy_load/` into the matching tier (`01_essentials/` to `04_claude_reference/`)
-3. **Import it** — add an `@import` from that tier's entry file, or from `CLAUDE.md` if it's a new entry file, and note the size it adds
-4. **Run the suite** — `test_always_on_reachability.py` confirms the new import chain reaches it
+2. **Move file** — from `_rules_lazy_load/` into the matching tier under `rules/` (`01_essentials/` to `04_claude_reference/`), where it loads natively
+3. **Point to it** — if it's a child, add a `**Loads on its own from:**` line to its parent, and note the size it adds
+4. **Run the suite** — `test_always_on_reachability.py` confirms nothing under `rules/` is a README, `_lazy_load/` folder or `@import`
 5. **Update docs** — remove from lazy-load index; add to top-level rule index
 6. **Commit** — `refactor(rules): promote <rule_name> from lazy to top-level`
 
@@ -120,7 +120,7 @@ Every config makes tradeoffs. Understanding them helps future decisions:
 ### Automation vs. explicitness
 
 - **Automation:** Hooks silently enforce rules (reduces friction, but behavior is hidden)
-- **Explicitness:** Every always-on rule reachable from an `@import` in CLAUDE.md (easier to audit, but more to read)
+- **Explicitness:** Every always-on rule sits in a `rules/` tier folder, so the folder listing is the always-on list (easy to audit)
 - **Current choice:** Balance — enforcement hooks for safety-critical rules, explicit lists for others
 - **If changed:** More automation risks silent rule changes; less automation increases maintenance friction
 
@@ -150,5 +150,5 @@ Every config makes tradeoffs. Understanding them helps future decisions:
 ### Long-term (>12 months)
 
 - Full reset per Boris Cherny's ~6-month cycle (archive to `~/.claude_releases/YYYY_MM_DD/`, start fresh)
-- Evaluate whether new top-level imports are still justified
-- Consider whether lazy-load structure has natural groupings (e.g., `05_lazy_load/mcp/`, `05_lazy_load/infrastructure/`)
+- Evaluate whether new always-on rules in `rules/` are still justified
+- Consider whether lazy-load structure has natural groupings (e.g., `_rules_lazy_load/mcp/`, `_rules_lazy_load/infrastructure/`)

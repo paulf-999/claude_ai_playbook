@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
-# Date updated:      2026-10-02
-# Version:           1.0.0
+# Date updated:      2026-10-06
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -21,7 +21,7 @@ from pathlib import Path
 from _shared_paths import CLAUDE_DIR
 
 SCRIPTS_DIR = CLAUDE_DIR / "_scripts"
-NAMING_STANDARDS_DIR = CLAUDE_DIR / "_rules" / "01_essentials" / "claude_usage_standards" / "naming_standards"
+NAMING_STANDARDS_DIR = CLAUDE_DIR / "rules" / "01_essentials" / "claude_usage_standards" / "naming_standards"
 NAMING_RULE = NAMING_STANDARDS_DIR / "_claude_naming_patterns.md"
 
 # A group folder is _<verb>_scripts/, where the verb is one snake_case word

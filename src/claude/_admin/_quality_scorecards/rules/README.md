@@ -1,6 +1,6 @@
 # 📊 Rule Quality Scorecards
 
-**Purpose:** Apply the same quality-scorecard discipline skills already have (`scorecard_<skill_name>.md`) to `_rules/` files — centralized here rather than colocated, since rule audits happen *across* rules on a cadence, not per-rule at creation time.
+**Purpose:** Apply the same quality-scorecard discipline skills already have (`scorecard_<skill_name>.md`) to rule files in `rules/` and `_rules_lazy_load/` — centralized here rather than colocated, since rule audits happen *across* rules on a cadence, not per-rule at creation time.
 
 ---
 
@@ -8,7 +8,7 @@
 
 One file per scored rule, mirroring the tier path: `_admin/_quality_scorecards/rules/<tier>/scorecard_<rule_name>.md`.
 
-**Example:** `_rules/01_essentials/guiding_principles.md` → `_admin/_quality_scorecards/rules/01_essentials/scorecard_guiding_principles.md`
+**Example:** `rules/01_essentials/guiding_principles.md` → `_admin/_quality_scorecards/rules/01_essentials/scorecard_guiding_principles.md`
 
 **Never `@import` these files.** They're authoring/review artifacts, not content Claude reads while operating — the whole point is keeping always-on rule files free of scorecard token cost, the same reasoning that already keeps skills' `scorecard_<skill_name>.md` un-imported.
 
@@ -79,7 +79,7 @@ This is the rule-specific version of the shared `_templates/scorecard.md.templat
 **Token Cost Justification** — Only meaningful for always-on tiers (`01_essentials/`–`04_claude_reference/`):
 - 10 = high session coverage, safety-critical, or foundational — cost clearly earns its keep
 - 1 = narrow applicability that should be lazy-loaded instead
-- N/A for `05_lazy_load/` rules (already scoped to on-demand)
+- N/A for lazy rules in `rules/05_path_scoped/` or `_rules_lazy_load/` (already scoped to on-demand)
 
 **Structural Compliance** — Does it follow this config's own conventions?
 - Emoji headers, Purpose statement, ~100-line limit (or split into parent+children), trailing newline, bold-keyword bullets

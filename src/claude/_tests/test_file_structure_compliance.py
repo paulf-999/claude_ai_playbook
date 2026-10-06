@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-03
-# Version:           2.1.0
+# Date updated:      2026-10-06
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -11,7 +11,7 @@
 """Proves every file in the real Claude config passes the file-structure scan.
 
 The scan comes from ``_file_structure_validator.py``: snake_case names and the
-``_rules/`` tiers. Each main area of the config gets its own test, so a failure
+``rules/`` tiers. Each main area of the config gets its own test, so a failure
 names the area at fault, and each test first checks its area exists, so a moved or
 missing folder can't pass by being skipped.
 
@@ -23,7 +23,7 @@ import pytest
 
 from _file_structure_validator import CLAUDE_HOME, FileStructureValidator
 
-HINT = "— see _rules/05_lazy_load/claude_directory_structure.md"
+HINT = "— see rules/05_path_scoped/claude_directory_structure.md"
 
 
 @cache
@@ -39,7 +39,7 @@ def scan_errors() -> tuple[dict, ...]:
 def errors_under(area: str) -> list[str]:
     """List the scan errors for files under one top-level folder.
 
-    :param area: Top-level folder name, e.g. ``_rules``.
+    :param area: Top-level folder name, e.g. ``rules``.
     :type area: str
     :return: One ``path: message`` line per error under that folder.
     :rtype: list[str]
@@ -84,10 +84,17 @@ def test_root_files_are_compliant():
 
 
 def test_rules_are_compliant():
-    """Every file under _rules/ passes the scan."""
-    assert (CLAUDE_HOME / "_rules").is_dir(), missing_area("_rules")
-    errors = errors_under("_rules")
-    assert not errors, error_report("_rules", errors)
+    """Every file under rules/ passes the scan."""
+    assert (CLAUDE_HOME / "rules").is_dir(), missing_area("rules")
+    errors = errors_under("rules")
+    assert not errors, error_report("rules", errors)
+
+
+def test_lazy_rules_are_compliant():
+    """Every file under _rules_lazy_load/ passes the scan."""
+    assert (CLAUDE_HOME / "_rules_lazy_load").is_dir(), missing_area("_rules_lazy_load")
+    errors = errors_under("_rules_lazy_load")
+    assert not errors, error_report("_rules_lazy_load", errors)
 
 
 def test_tests_are_compliant():

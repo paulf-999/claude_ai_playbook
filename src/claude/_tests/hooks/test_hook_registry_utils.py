@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-02
-# Version:           2.2.2
+# Date updated:      2026-10-06
+# Version:           2.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -26,7 +26,7 @@ from _shared_paths import CLAUDE_DIR, HOOKS_DIR, SETTINGS_FILE
 
 # Hooks kept on purpose but not registered, mapped to the rule that explains why
 RESERVED_HOOKS = {
-    "hook_style_guide_response_standards.sh": "_rules/05_lazy_load/response_standards_enforcement.md",
+    "hook_style_guide_response_standards.sh": "_rules_lazy_load/response_standards_enforcement.md",
 }
 RESERVED_MARKER = "RESERVED"
 

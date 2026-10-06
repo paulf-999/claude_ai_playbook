@@ -1,10 +1,10 @@
 # Global Claude configuration
 
-> 🚫 **Managed file** — do not edit directly. All changes belong in imported rule files, not here.
-> - **Rule:** add behaviour by editing imported files only — never inline
-> - **Lazy load by default:** domain-specific rules go in `_rules/05_lazy_load/` — never imported, read on demand. The only other never-imported folders are per-parent `<parent>/_lazy_load/` folders, whose children the always-on parent names in `**Read on demand:**` pointers. **Why:** every imported rule consumes ~100-200 tokens per session regardless of task type. Load domain-specific rules only when actually needed to preserve context for the current task.
+> 🚫 **Managed file** — do not edit directly. All changes belong in rule files, not here.
+> - **Rule:** add behaviour by editing files in `rules/` or `_rules_lazy_load/` only — never inline
+> - **Lazy load by default:** Claude Code loads every `.md` under `rules/` by itself, so domain-specific rules go in `_rules_lazy_load/` and are read on demand — or in `rules/05_path_scoped/` with `paths:` frontmatter, loading only with matching files. **Why:** every always-on rule consumes ~100-200 tokens per session regardless of task type. Load domain-specific rules only when actually needed to preserve context for the current task.
 > - **Reset cadence:** Boris Cherny recommends resetting `~/.claude/` every ~6 months to prevent config bloat. Archive to `~/.claude_releases/` before resetting.
-> - **Remember:** every import grows context — favour deliberate addition
+> - **Remember:** every file in `rules/` grows context — favour deliberate addition
 
 ## Core Principles
 
@@ -31,37 +31,8 @@ constraints are harder to bypass silently.
 <!-- Quick-reference command/skill shortcuts table -->
 @~/.claude/aliases.md
 
-<!-- Tier 1: 01_essentials/ — foundational principles and user-facing conventions -->
-<!-- Response format, delivery cadence, and timing footer — user-facing output contract -->
-@~/.claude/_rules/01_essentials/claude_response_standards.md
-<!-- Entry point for naming, writing style, and directory structure conventions -->
-@~/.claude/_rules/01_essentials/claude_usage_standards.md
-<!-- Foundational decision-making principles: lazy-load, intentionality, context efficiency -->
-@~/.claude/_rules/01_essentials/guiding_principles.md
-
-<!-- Tier 2: 02_claude_standards/ — blocking standards and enforcement -->
-<!-- Safety-critical: ask-first gates, decision-making, risky-action handling -->
-@~/.claude/_rules/02_claude_standards/behaviour.md
-<!-- Phase-gate rules for multi-phase plans and plan-mode execution -->
-@~/.claude/_rules/02_claude_standards/claude_plans.md
-<!-- Git workflow: commits, branch naming, PR standards, safe patterns -->
-@~/.claude/_rules/02_claude_standards/git.md
-<!-- Blocks hardcoded filesystem paths in hooks/tests that silently break on other configs -->
-@~/.claude/_rules/02_claude_standards/portable_paths.md
-<!-- Secure coding practices and Claude's own prompt-injection/secret-handling guardrails -->
-@~/.claude/_rules/02_claude_standards/security.md
-
-<!-- Tier 3: 03_authoring_guidelines/ — meta-guidance for authoring rules, skills, agents -->
-<!-- Standards for creating new agents (naming, maturity, scope); children read on demand -->
-<!-- Standards for creating new rule files (placement, testing, scope) -->
-@~/.claude/_rules/03_authoring_guidelines/authoring_rules.md
-<!-- Standards for creating new skills (contract, triggers, maturity) -->
-@~/.claude/_rules/03_authoring_guidelines/authoring_skills.md
-
-<!-- Tier 4: 04_claude_reference/ — system knowledge and platform guidance -->
-<!-- Token/turn discipline: when to delegate, parallelize, or spawn sub-agents -->
-@~/.claude/_rules/04_claude_reference/claude_operational_efficiency.md
-<!-- Rule placement (claude_rule_loading_strategy.md) is lazy: rules/ loads it when a _rules/ file or CLAUDE.md is read -->
+<!-- Rules: every .md under rules/ loads natively — tiers 01–04 every session, 05_path_scoped/ when a matching file is read -->
+<!-- Read-on-demand rules live in _rules_lazy_load/ and are never imported -->
 
 ---
 

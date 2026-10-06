@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-02
-# Version:           2.0.2
+# Date updated:      2026-10-06
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -120,7 +120,7 @@ def test_stray_root_markdown_is_flagged():
 
 def test_other_config_folders_are_ignored():
     """Folders with their own conventions are left to their own checks."""
-    for relative in ("_rules/05_lazy_load/Odd-Name.md", "skills/_git_skills/git_create_pr/SKILL.md", "_plans/x.md"):
+    for relative in ("_rules_lazy_load/Odd-Name.md", "skills/_git_skills/git_create_pr/SKILL.md", "_plans/x.md"):
         result = run_hook(config_path(relative))
         assert result.returncode == 0, f"{relative} should be ignored, got {result.returncode}"
 

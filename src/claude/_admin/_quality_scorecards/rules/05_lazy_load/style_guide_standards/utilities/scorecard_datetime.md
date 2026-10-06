@@ -18,4 +18,4 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/05_lazy_load/style_guide_standards/utilities/datetime.md` — the rule being scored
+- `src/claude/_rules_lazy_load/style_guide_standards/utilities/datetime.md` — the rule being scored

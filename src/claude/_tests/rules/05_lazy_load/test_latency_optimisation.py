@@ -1,14 +1,14 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-17
-# Date updated:      2026-10-01
-# Version:           2.0.1
+# Date updated:      2026-10-06
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Content tests for _rules/05_lazy_load/latency_optimisation.md.
+"""Content tests for _rules_lazy_load/latency_optimisation.md.
 
 Guards the file's name and opening, and the guidance it sets: tune latency only
 when it's blocking, use effort as the lever, measure first, and revert if quality
@@ -19,9 +19,9 @@ from __future__ import annotations
 
 import re
 
-from _shared_paths import RULES_DIR
+from _shared_paths import LAZY_RULES_DIR
 
-RULE_FILE = RULES_DIR / "05_lazy_load" / "latency_optimisation.md"
+RULE_FILE = LAZY_RULES_DIR / "latency_optimisation.md"
 
 
 def content() -> str:

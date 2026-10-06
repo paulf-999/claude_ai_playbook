@@ -5,7 +5,7 @@ Last updated: 3rd October 2026
 This page gives a one-line overview of each part of `src/claude/`, and links to where the detail lives.
 
 - **Install:** `make install` copies `src/claude/` into `CLAUDE_CONFIG_DIR`, or Claude Code's default `~/.claude` when it isn't set.
-- **Loading:** Claude Code reads `CLAUDE.md` at startup, which `@import`s the always-on rules.
+- **Loading:** Claude Code reads `CLAUDE.md` and every rule in `rules/` at startup, and rules with `paths:` when a matching file is opened.
 
 ---
 
@@ -19,15 +19,15 @@ The root config, settings and aliases that every session starts from.
 
 ## 📏 Rules
 
-See [`src/claude/_rules/README.md`](../src/claude/_rules/README.md)
+See [`src/claude/_rules_lazy_load/_tier_readmes/00_rules_overview.md`](../src/claude/_rules_lazy_load/_tier_readmes/00_rules_overview.md)
 
-Five numbered tiers of rules: tiers 01–04 load every session, and `05_lazy_load/` is read on demand.
+Rules in two folders: `rules/` tiers 01–04 load every session, `rules/05_path_scoped/` loads with matching files, and `_rules_lazy_load/` is read on demand.
 
 ---
 
 ## 🎨 Style guides
 
-See [`src/claude/_rules/05_lazy_load/style_guide_standards/`](../src/claude/_rules/05_lazy_load/style_guide_standards/)
+See [`src/claude/_rules_lazy_load/style_guide_standards/`](../src/claude/_rules_lazy_load/style_guide_standards/)
 
 Coding standards for the technologies the team uses, read on demand unless a path-scoped rule loads them.
 

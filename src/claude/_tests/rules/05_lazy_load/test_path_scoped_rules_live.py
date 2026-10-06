@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.0.0
+# Date updated:      2026-10-06
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -31,7 +31,7 @@ import pytest
 from _shared_paths import CLAUDE_DIR
 
 MODEL = "claude-haiku-4-5-20251001"
-RULE_SUFFIX = "/_rules/05_lazy_load/style_guide_standards/sql.md"
+RULE_SUFFIX = "/rules/05_path_scoped/style_guide_standards/sql.md"
 TIMEOUT_SECONDS = 180
 LIVE = os.environ.get("CLAUDE_LIVE_CANARY") == "1" and shutil.which("claude") is not None
 
@@ -142,17 +142,17 @@ def test_project_dir_encodes_the_working_directory():
 def test_nested_memory_paths_are_read(tmp_path):
     """Rules loaded mid-session are read from nested_memory attachments, in order."""
     transcript = write_transcript(tmp_path / "s.jsonl", [
-        {"type": "attachment", "attachment": {"type": "nested_memory", "path": "/c/_rules/a.md"}},
+        {"type": "attachment", "attachment": {"type": "nested_memory", "path": "/c/rules/a.md"}},
         {"type": "attachment", "attachment": {"type": "environment"}},
-        {"type": "attachment", "attachment": {"type": "nested_memory", "path": "/c/_rules/b.md"}},
+        {"type": "attachment", "attachment": {"type": "nested_memory", "path": "/c/rules/b.md"}},
     ])
-    assert loaded_rule_paths(transcript) == ["/c/_rules/a.md", "/c/_rules/b.md"]
+    assert loaded_rule_paths(transcript) == ["/c/rules/a.md", "/c/rules/b.md"]
 
 
 def test_startup_instructions_are_not_mid_session_loads(tmp_path):
     """The startup file list isn't a paths: load, so it's ignored."""
     transcript = write_transcript(tmp_path / "s.jsonl", [
-        {"type": "attachment", "attachment": {"type": "instructions", "files": [{"path": "/c/_rules/x.md"}]}},
+        {"type": "attachment", "attachment": {"type": "instructions", "files": [{"path": "/c/rules/x.md"}]}},
     ])
     assert loaded_rule_paths(transcript) == []
 
@@ -194,11 +194,10 @@ def test_cleanup_keeps_unexpected_files(tmp_path):
 
 
 def test_the_sql_rule_is_installed_with_paths():
-    """The live tests rely on sql.md being a paths: rule, linked into rules/ when installed."""
-    rule = CLAUDE_DIR / "_rules" / "05_lazy_load" / "style_guide_standards" / "sql.md"
+    """The live tests rely on sql.md being a paths: rule that ships under rules/."""
+    rule = CLAUDE_DIR / "rules" / "05_path_scoped" / "style_guide_standards" / "sql.md"
     assert rule.read_text().startswith('---\npaths:\n  - "**/*.sql"'), "sql.md lost its paths: trigger"
-    if (CLAUDE_DIR / "rules").is_dir():
-        assert (CLAUDE_DIR / "rules" / "sql.md").is_symlink(), "rules/sql.md symlink is missing"
+    assert not rule.is_symlink(), "rules/ ships real files — sql.md must not be a link"
 
 
 # ── live: a real session ─────────────────────────────────────────────────────

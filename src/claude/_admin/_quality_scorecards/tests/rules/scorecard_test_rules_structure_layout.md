@@ -19,5 +19,5 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/test_rules_structure_layout.py` — the test being scored
-- `src/claude/_rules/05_lazy_load/claude_rule_loading_strategy.md` — the tier layout it guards
+- `src/claude/rules/05_path_scoped/claude_rule_loading_strategy.md` — the tier layout it guards
 - `src/claude/_tests/rules/test_rules_structure.py` — the per-file format half of the old test

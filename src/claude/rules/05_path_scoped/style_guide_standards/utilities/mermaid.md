@@ -1,0 +1,21 @@
+---
+paths:
+  - "**/*.mmd"
+---
+<!-- version: 1.1.2 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-10-06 -->
+<!-- miss_cost: low — diagram style drift -->
+<!-- loading: path-scoped — only applies to Mermaid diagrams, so it loads when a .mmd file is open -->
+# 🔀 Mermaid Diagram Standards
+
+**Purpose:** Keep Mermaid diagrams consistent and readable across skills and READMEs.
+
+[Mermaid](https://mermaid.js.org) is a Markdown-native diagramming language for flowcharts, sequence diagrams, and more.
+
+These standards apply to the flowcharts used in skill `flow.md` files and role READMEs.
+
+## 📋 Structure
+
+- [**Fundamentals**](../../../../_rules_lazy_load/style_guide_standards/utilities/mermaid/fundamentals.md) — When to use diagrams, placement, diagram level, direction
+- [**Advanced Techniques**](../../../../_rules_lazy_load/style_guide_standards/utilities/mermaid/advanced.md) — Node shapes, content format, styling, subgraphs, reference example

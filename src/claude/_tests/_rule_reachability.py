@@ -1,64 +1,70 @@
-"""Finds rule files that CLAUDE.md never reaches through its ``@import`` chain.
+"""Finds files under ``rules/`` that would load wrongly, and on-demand pointers that lead nowhere.
 
-``find_reachability_issues`` walks every ``@~/<config-dir>/...`` import from the entry
-files and reports imports that point nowhere and rule files nothing imports. It skips
-``05_lazy_load/`` and per-parent ``_lazy_load/`` folders, which are read on demand.
+Claude Code loads every ``.md`` under ``rules/`` on its own — in every session, or only
+when a matching file is open if the file has ``paths:`` frontmatter. So the folder, not an
+``@import`` chain, decides what loads. ``find_native_load_issues`` reports what breaks that:
+
+- **readme:** a ``README.md`` under ``rules/``, which would load every session.
+- **lazy_folder:** a ``_lazy_load/`` folder under ``rules/``, whose on-demand children would load anyway.
+- **import:** an ``@~/...`` import line under ``rules/``, which the native loader makes redundant.
+- **unscoped:** a file in ``rules/05_path_scoped/`` without ``paths:``, which would load every session.
+- **pointer:** a ``**Read on demand:**`` pointer under ``rules/`` naming a file that doesn't exist.
 
 Tests: ``rules/02_claude_standards/test_always_on_reachability.py`` runs it over the
 real config, and ``test_rule_reachability.py`` proves it on small fake rule trees.
 """
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
+PATH_SCOPED_DIR = "05_path_scoped"
+POINTER = re.compile(r"\*\*Read on demand:\*\*\s*\[?`~/[^/`]+/([^`]+\.md)`")
 
-def find_reachability_issues(rules_root: Path, entry_files: list[Path]) -> tuple[list[str], list[str]]:
-    """Walk `@import` chains from the given entry files and report gaps.
 
-    :param rules_root: The root directory whose .md tree is being audited.
-    :type rules_root: Path
-    :param entry_files: Files to start the import walk from (e.g. CLAUDE.md).
-    :type entry_files: list[Path]
-    :return: A tuple of (broken import targets, orphaned files never reached).
-    :rtype: tuple[list[str], list[str]]
+def has_paths_frontmatter(text: str) -> bool:
+    """Say whether a file opens with a frontmatter block containing ``paths:``.
+
+    :param text: The file's full text.
+    :type text: str
+    :return: True when the opening ``---`` block has a ``paths:`` key.
+    :rtype: bool
     """
-    all_md = {
-        p.resolve() for p in rules_root.rglob("*.md")
-        if p.name != "README.md"
-        # Match "template" only below rules_root: a checkout path such as
-        # ~/git/repo_template/ must not hide every rule file from the scan.
-        and "template" not in str(p.relative_to(rules_root)).lower()
-        and "05_lazy_load" not in p.parts
-        # A parent may keep on-demand children beside it in a `_lazy_load/`
-        # folder — never imported by design, so never an orphan.
-        and "_lazy_load" not in p.relative_to(rules_root).parts
-    }
-    visited: set[Path] = set()
-    broken: list[str] = []
-    queue = list(entry_files)
+    lines = text.split("\n")
+    if not lines or lines[0] != "---":
+        return False
+    for line in lines[1:]:
+        if line == "---":
+            return False
+        if line.startswith("paths:"):
+            return True
+    return False
 
-    while queue:
-        current = queue.pop()
-        if not current.exists():
-            broken.append(str(current))
-            continue
-        resolved = current.resolve()
-        if resolved in visited:
-            continue
-        visited.add(resolved)
-        for line in current.read_text(errors="ignore").splitlines():
-            stripped = line.strip()
-            if not stripped.startswith("@~/") or "/" not in stripped[len("@~/"):]:
-                continue
-            # "@~/<config-dir-name>/rest" — the config-dir-name varies (.claude,
-            # claude, a repo checkout); strip both segments, resolve against
-            # rules_root.parent. Never assume which convention is in play.
-            rest = stripped[len("@~/"):].split("/", 1)[1]
-            target = rules_root.parent / rest
-            if target.exists():
-                queue.append(target)
-            else:
-                broken.append(f"{current} -> {target}")
 
-    orphaned = sorted(str(p.relative_to(rules_root.parent)) for p in all_md if p not in visited)
-    return broken, orphaned
+def find_native_load_issues(rules_root: Path) -> dict[str, list[str]]:
+    """Scan a ``rules/`` folder for files that would load wrongly and pointers that lead nowhere.
+
+    :param rules_root: The ``rules/`` folder; its parent is the config directory pointers resolve against.
+    :type rules_root: Path
+    :return: Problem paths by kind: readme, lazy_folder, import, unscoped, pointer.
+    :rtype: dict[str, list[str]]
+    """
+    issues: dict[str, list[str]] = {k: [] for k in ("readme", "lazy_folder", "import", "unscoped", "pointer")}
+    config_dir = rules_root.parent
+    for path in sorted(rules_root.rglob("*")):
+        rel = path.relative_to(config_dir).as_posix()
+        if path.is_dir():
+            if path.name == "_lazy_load":
+                issues["lazy_folder"].append(rel)
+            continue
+        if path.suffix != ".md":
+            continue
+        if path.name == "README.md":
+            issues["readme"].append(rel)
+        text = path.read_text(errors="ignore")
+        if re.search(r"^@~/\S+", text, re.M):
+            issues["import"].append(rel)
+        if PATH_SCOPED_DIR in path.relative_to(rules_root).parts and not has_paths_frontmatter(text):
+            issues["unscoped"].append(rel)
+        issues["pointer"] += [f"{rel} -> {t}" for t in POINTER.findall(text) if not (config_dir / t).is_file()]
+    return issues

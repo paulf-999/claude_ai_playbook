@@ -1,201 +1,124 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
-# Date updated:      2026-10-02
-# Version:           2.0.1
+# Date updated:      2026-10-06
+# Version:           3.0.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Proves the rule-reachability detector on small fake rule trees.
+"""Proves the native-load detector on small fake rule trees.
 
-``_rule_reachability.py`` reports rule files CLAUDE.md never imports — a real,
-recurring bug (found and fixed in ``naming_standards.md``, 2026-09-17). These tests
-build fake trees in a temp directory so each case, including the exemptions, is
-proven to work rather than just passing on today's config.
+Claude Code loads every ``.md`` under ``rules/`` on its own, so ``_rule_reachability.py``
+reports files there that would load wrongly (READMEs, ``_lazy_load/`` folders, leftover
+``@import`` lines, path-scoped files without ``paths:``) and on-demand pointers that lead
+nowhere. These tests build fake trees in a temp directory so each case is proven to work
+rather than just passing on today's config.
 ``rules/02_claude_standards/test_always_on_reachability.py`` runs it on the real config.
 """
 import pytest
 
-from _rule_reachability import find_reachability_issues
+from _rule_reachability import find_native_load_issues, has_paths_frontmatter
 
 
-def test_detector_catches_the_naming_standards_bug_pattern(tmp_path):
-    """Regression: a parent listing a child in prose without @import must be flagged."""
-    rules = tmp_path / "_rules" / "01_essentials"
-    rules.mkdir(parents=True)
-    (tmp_path / "CLAUDE.md").write_text("@~/.claude/_rules/01_essentials/parent.md\n")
-    (rules / "parent.md").write_text("See `_child.md` for detail.\n")
-    (rules / "_child.md").write_text("# Child content, never imported\n")
-
-    broken, orphaned = find_reachability_issues(rules.parent, [tmp_path / "CLAUDE.md"])
-
-    assert not broken, "This fixture has no broken imports — only an orphan"
-    assert any("_child.md" in o for o in orphaned), (
-        "Detector failed to catch a child mentioned in prose but never @imported"
-    )
+def make_rules(tmp_path):
+    """Create an empty ``rules/01_essentials/`` tree and return the ``rules/`` folder."""
+    (tmp_path / "rules" / "01_essentials").mkdir(parents=True)
+    return tmp_path / "rules"
 
 
-def test_detector_passes_when_child_is_properly_imported(tmp_path):
-    """Same fixture, but wired correctly — must not be flagged as orphaned."""
-    rules = tmp_path / "_rules" / "01_essentials"
-    rules.mkdir(parents=True)
-    (tmp_path / "CLAUDE.md").write_text("@~/.claude/_rules/01_essentials/parent.md\n")
-    (rules / "parent.md").write_text("@~/.claude/_rules/01_essentials/_child.md\n")
-    (rules / "_child.md").write_text("# Child content, properly imported\n")
+def test_clean_tree_reports_nothing(tmp_path):
+    """A plain rule, a scoped rule and a resolving pointer produce no issues."""
+    rules = make_rules(tmp_path)
+    (tmp_path / "_rules_lazy_load").mkdir()
+    (tmp_path / "_rules_lazy_load" / "extra.md").write_text("# Extra\n")
+    pointer = "- **Read on demand:** `~/.claude/_rules_lazy_load/extra.md` — detail.\n"
+    (rules / "01_essentials" / "a.md").write_text(pointer)
+    (rules / "05_path_scoped").mkdir()
+    (rules / "05_path_scoped" / "sql.md").write_text('---\npaths:\n  - "**/*.sql"\n---\n# SQL\n')
 
-    broken, orphaned = find_reachability_issues(rules.parent, [tmp_path / "CLAUDE.md"])
+    issues = find_native_load_issues(rules)
 
-    assert not broken
-    assert not orphaned, f"Properly-imported child was incorrectly flagged: {orphaned}"
-
-
-def test_detector_resolves_multi_level_nesting(tmp_path):
-    """A grandchild reachable only through a child's own @import must resolve."""
-    rules = tmp_path / "_rules" / "01_essentials"
-    rules.mkdir(parents=True)
-    (tmp_path / "CLAUDE.md").write_text("@~/.claude/_rules/01_essentials/parent.md\n")
-    (rules / "parent.md").write_text("@~/.claude/_rules/01_essentials/child.md\n")
-    (rules / "child.md").write_text("@~/.claude/_rules/01_essentials/_grandchild.md\n")
-    (rules / "_grandchild.md").write_text("# Grandchild content\n")
-
-    broken, orphaned = find_reachability_issues(rules.parent, [tmp_path / "CLAUDE.md"])
-
-    assert not broken
-    assert not orphaned, f"Grandchild reachable via a two-hop import was flagged: {orphaned}"
+    assert not any(issues.values()), f"a clean tree must report nothing, got {issues}"
 
 
-def test_detector_flags_broken_import_separately_from_orphan(tmp_path):
-    """A dangling @import to a nonexistent file is a broken import, not an orphan."""
-    rules = tmp_path / "_rules" / "01_essentials"
-    rules.mkdir(parents=True)
-    (tmp_path / "CLAUDE.md").write_text("@~/.claude/_rules/01_essentials/parent.md\n")
-    (rules / "parent.md").write_text("@~/.claude/_rules/01_essentials/_missing.md\n")
+def test_readme_under_rules_is_flagged(tmp_path):
+    """A README.md under rules/ would load every session, so it must be reported."""
+    rules = make_rules(tmp_path)
+    (rules / "01_essentials" / "README.md").write_text("# Tier index\n")
 
-    broken, orphaned = find_reachability_issues(rules.parent, [tmp_path / "CLAUDE.md"])
-
-    assert any("_missing.md" in b for b in broken), "Dangling import should be reported as broken"
-    assert not orphaned, "A file that was never created can't also be an orphan"
+    assert find_native_load_issues(rules)["readme"] == ["rules/01_essentials/README.md"]
 
 
-def test_readme_files_excluded_from_scan(tmp_path):
-    """README.md is documentation, not a rule file — must never be flagged as orphaned."""
-    rules = tmp_path / "_rules" / "01_essentials"
-    rules.mkdir(parents=True)
-    (tmp_path / "CLAUDE.md").write_text("@~/.claude/_rules/01_essentials/parent.md\n")
-    (rules / "parent.md").write_text("# Parent, self-contained\n")
-    (rules / "README.md").write_text("# Directory index, not a rule\n")
+def test_lazy_load_folder_under_rules_is_flagged(tmp_path):
+    """A _lazy_load/ folder under rules/ would auto-load its on-demand children."""
+    rules = make_rules(tmp_path)
+    (rules / "01_essentials" / "parent" / "_lazy_load").mkdir(parents=True)
 
-    _, orphaned = find_reachability_issues(rules.parent, [tmp_path / "CLAUDE.md"])
-
-    assert not any("README.md" in o for o in orphaned), (
-        "README.md must be excluded from the orphan scan"
-    )
+    assert find_native_load_issues(rules)["lazy_folder"] == ["rules/01_essentials/parent/_lazy_load"]
 
 
-def test_orphan_report_names_the_specific_file(tmp_path):
-    """The orphan report must identify which file is unreachable, not just that one exists."""
-    rules = tmp_path / "_rules" / "01_essentials"
-    rules.mkdir(parents=True)
-    (tmp_path / "CLAUDE.md").write_text("@~/.claude/_rules/01_essentials/parent.md\n")
-    (rules / "parent.md").write_text("# Parent, self-contained\n")
-    (rules / "_forgotten.md").write_text("# Never referenced anywhere\n")
+def test_lazy_load_check_matches_whole_folder_name_only(tmp_path):
+    """Only a folder named exactly `_lazy_load` is flagged — a name merely containing it is not."""
+    rules = make_rules(tmp_path)
+    (rules / "01_essentials" / "_lazy_load_notes").mkdir()
 
-    _, orphaned = find_reachability_issues(rules.parent, [tmp_path / "CLAUDE.md"])
-
-    assert len(orphaned) == 1
-    assert "_forgotten.md" in orphaned[0]
+    assert not find_native_load_issues(rules)["lazy_folder"], "a folder merely containing '_lazy_load' was flagged"
 
 
 @pytest.mark.parametrize("config_dir_name", [".claude", "claude"])
-def test_detector_works_with_either_config_dir_convention(tmp_path, config_dir_name):
-    """The import parser must not assume a specific config-dir name (~/.claude vs ~/claude)."""
-    rules = tmp_path / "_rules" / "01_essentials"
-    rules.mkdir(parents=True)
-    (tmp_path / "CLAUDE.md").write_text(f"@~/{config_dir_name}/_rules/01_essentials/parent.md\n")
-    (rules / "parent.md").write_text("# Parent, self-contained\n")
+def test_leftover_import_is_flagged_for_either_config_dir(tmp_path, config_dir_name):
+    """An @import line under rules/ is redundant now, whichever config-dir name it uses."""
+    rules = make_rules(tmp_path)
+    (rules / "01_essentials" / "parent.md").write_text(f"@~/{config_dir_name}/rules/01_essentials/_child.md\n")
 
-    broken, orphaned = find_reachability_issues(rules.parent, [tmp_path / "CLAUDE.md"])
-
-    assert not broken, f"Import using '~/{config_dir_name}/' convention wasn't resolved: {broken}"
-    assert not orphaned
+    assert find_native_load_issues(rules)["import"] == ["rules/01_essentials/parent.md"]
 
 
-def test_entry_file_itself_never_counts_as_orphaned(tmp_path):
-    """CLAUDE.md is the walk's starting point — it must never appear in its own orphan report."""
-    rules = tmp_path / "_rules" / "01_essentials"
-    rules.mkdir(parents=True)
-    claude_md = tmp_path / "CLAUDE.md"
-    claude_md.write_text("@~/.claude/_rules/01_essentials/parent.md\n")
-    (rules / "parent.md").write_text("# Parent, self-contained\n")
+def test_unscoped_file_in_path_scoped_folder_is_flagged(tmp_path):
+    """A 05_path_scoped/ file without paths: would load every session despite its folder."""
+    rules = make_rules(tmp_path)
+    (rules / "05_path_scoped" / "style").mkdir(parents=True)
+    (rules / "05_path_scoped" / "style" / "_child.md").write_text("# Child, no frontmatter\n")
 
-    _, orphaned = find_reachability_issues(rules.parent, [claude_md])
-
-    assert not orphaned
+    assert find_native_load_issues(rules)["unscoped"] == ["rules/05_path_scoped/style/_child.md"]
 
 
-def test_detector_ignores_template_in_path_above_rules_root(tmp_path):
-    """Regression: a checkout folder named with 'template' must not hide orphans."""
-    root = tmp_path / "repo_skill_template"
-    rules = root / "_rules" / "01_essentials"
-    rules.mkdir(parents=True)
-    (root / "CLAUDE.md").write_text("@~/.claude/_rules/01_essentials/parent.md\n")
-    (rules / "parent.md").write_text("See `_child.md` for detail.\n")
-    (rules / "_child.md").write_text("# Child content, never imported\n")
+def test_scoped_file_in_tier_folder_is_allowed(tmp_path):
+    """A tier folder may hold a path-scoped rule (e.g. authoring_agents.md), so it is not flagged."""
+    rules = make_rules(tmp_path)
+    (rules / "01_essentials" / "agents.md").write_text('---\npaths:\n  - "**/agents/**"\n---\n# Agents\n')
 
-    _, orphaned = find_reachability_issues(rules.parent, [root / "CLAUDE.md"])
-
-    assert any("_child.md" in o for o in orphaned), (
-        "A 'template' folder above _rules/ hid the orphaned child — the scan checked nothing"
-    )
+    assert not any(find_native_load_issues(rules).values()), "a path-scoped rule in a tier folder was flagged"
 
 
-def test_template_files_below_rules_root_still_excluded(tmp_path):
-    """Template files inside _rules/ are still skipped, so they never count as orphans."""
-    rules = tmp_path / "_rules" / "01_essentials"
-    rules.mkdir(parents=True)
-    (tmp_path / "CLAUDE.md").write_text("@~/.claude/_rules/01_essentials/parent.md\n")
-    (rules / "parent.md").write_text("# Parent, self-contained\n")
-    (rules / "rule_template.md").write_text("# Template, never imported by design\n")
+@pytest.mark.parametrize("pointer", [
+    "- **Read on demand:** `~/.claude/_rules_lazy_load/gone.md` — detail.",
+    "- **Read on demand:** [`~/claude/_rules_lazy_load/gone.md`](gone.md) — detail.",
+])
+def test_broken_pointer_is_flagged_in_both_forms(tmp_path, pointer):
+    """A Read-on-demand pointer to a missing file is reported, plain or wrapped in a link."""
+    rules = make_rules(tmp_path)
+    (rules / "01_essentials" / "a.md").write_text(pointer + "\n")
 
-    _, orphaned = find_reachability_issues(rules.parent, [tmp_path / "CLAUDE.md"])
-
-    assert not orphaned, f"A template file inside _rules/ was reported as orphaned: {orphaned}"
-
-
-def test_lazy_load_folder_beside_parent_is_exempt(tmp_path):
-    """A child in a parent's `_lazy_load/` folder is read on demand — never an orphan."""
-    rules = tmp_path / "_rules" / "03_authoring_guidelines"
-    lazy = rules / "parent" / "_lazy_load"
-    lazy.mkdir(parents=True)
-    (tmp_path / "CLAUDE.md").write_text("@~/.claude/_rules/03_authoring_guidelines/parent.md\n")
-    (rules / "parent.md").write_text("**Read on demand:** `parent/_lazy_load/_child.md`\n")
-    (lazy / "_child.md").write_text("# Child content, read on demand\n")
-    (rules / "parent" / "_sibling.md").write_text("# Sibling outside _lazy_load, never imported\n")
-
-    broken, orphaned = find_reachability_issues(rules.parent, [tmp_path / "CLAUDE.md"])
-
-    assert not broken
-    assert not any("_lazy_load" in o for o in orphaned), (
-        f"A `_lazy_load/` child was flagged as orphaned: {orphaned}"
-    )
-    assert any("_sibling.md" in o for o in orphaned), (
-        "The exemption leaked: an un-imported file outside `_lazy_load/` was not flagged"
-    )
+    assert find_native_load_issues(rules)["pointer"] == ["rules/01_essentials/a.md -> _rules_lazy_load/gone.md"]
 
 
-def test_lazy_load_exemption_matches_whole_segment_only(tmp_path):
-    """Only a folder named exactly `_lazy_load` is exempt — a name merely containing it is not."""
-    rules = tmp_path / "_rules" / "01_essentials"
-    lookalike = rules / "parent" / "_lazy_loader"
-    lookalike.mkdir(parents=True)
-    (tmp_path / "CLAUDE.md").write_text("@~/.claude/_rules/01_essentials/parent.md\n")
-    (rules / "parent.md").write_text("# Parent, self-contained\n")
-    (lookalike / "_child.md").write_text("# Never imported\n")
+def test_template_files_are_ignored(tmp_path):
+    """Non-markdown files such as templates or YAML never load, so they are never flagged."""
+    rules = make_rules(tmp_path)
+    (rules / "05_path_scoped").mkdir()
+    (rules / "05_path_scoped" / "domains.yaml").write_text("x: 1\n")
 
-    _, orphaned = find_reachability_issues(rules.parent, [tmp_path / "CLAUDE.md"])
+    assert not any(find_native_load_issues(rules).values()), "a non-markdown file was flagged"
 
-    assert any("_lazy_loader" in o for o in orphaned), (
-        "A folder merely containing '_lazy_load' in its name was wrongly exempted"
-    )
+
+@pytest.mark.parametrize(("text", "expected"), [
+    ('---\npaths:\n  - "**/*.py"\n---\n# X\n', True),
+    ("---\ntitle: x\n---\npaths: not frontmatter\n", False),
+    ("# No frontmatter\npaths: x\n", False),
+])
+def test_paths_frontmatter_is_read_only_from_the_opening_block(text, expected):
+    """paths: counts only inside the frontmatter block that opens the file."""
+    assert has_paths_frontmatter(text) is expected, f"wrong answer for {text!r}"

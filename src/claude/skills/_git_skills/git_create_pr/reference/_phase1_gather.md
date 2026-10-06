@@ -38,12 +38,12 @@ If working tree is clean (nothing to commit), stop.
 - **Checkboxes:** Tick only applicable one
 - **Jira links:** Format as `[ABC-123](https://<your-site>.atlassian.net/browse/ABC-123)` if ticket known
 - **Team links:** Format as `[team-name](https://github.com/orgs/<your-org>/teams/team-name)`
-- **Read on demand:** `~/.claude/_rules/05_lazy_load/org.md` — for the real Jira site and GitHub org, if your organisation has one.
+- **Read on demand:** `~/.claude/_rules_lazy_load/org.md` — for the real Jira site and GitHub org, if your organisation has one.
 
 **Labels:** Map using file paths, branch name, commit message:
 - `src/claude/skills/` → `claude-skill`
-- `src/claude/_rules/05_lazy_load/style_guide_standards/` → `style-guide-and-standards`
-- `src/claude/_rules/` (anything else) → `claude-rule`
+- `src/claude/_rules_lazy_load/style_guide_standards/` or `src/claude/rules/05_path_scoped/style_guide_standards/` → `style-guide-and-standards`
+- `src/claude/rules/` or `src/claude/_rules_lazy_load/` (anything else) → `claude-rule`
 - `src/claude/agents/` → `claude-agent`
 - `src/claude/hooks/` → `claude-hook`
 - `src/claude/_tests/` → `tests`

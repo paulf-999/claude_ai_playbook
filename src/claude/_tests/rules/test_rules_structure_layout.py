@@ -1,22 +1,22 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-02
-# Version:           1.0.2
+# Date updated:      2026-10-06
+# Version:           2.0.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Tests where _rules/ files live and how CLAUDE.md imports them.
+"""Tests where rules/ files live and what CLAUDE.md still imports.
 
-- **Layout:** only README.md at the ``_rules/`` root, the expected ``04_claude_reference/``
-  files, ``aliases.md`` at the config root, and no paths dissolved in the 2026-08 restructure.
-- **Import graph:** every import in CLAUDE.md or ``_rules/`` resolves, imports run in tier
-  order, and no import chain from CLAUDE.md reaches ``_reference/``.
+- **Layout:** no files at the ``rules/`` root, the expected ``04_claude_reference/`` files,
+  ``aliases.md`` at the config root, and no paths dissolved in the 2026-08 restructure.
+- **Import graph:** every import in CLAUDE.md or ``rules/`` resolves, and no import chain
+  from CLAUDE.md reaches ``_reference/``.
 
-Imports are only checked in CLAUDE.md and ``_rules/``: Claude Code follows ``@`` imports
-only from CLAUDE.md's chain, so a stray import anywhere else never loads.
+Rules load natively from ``rules/``, so CLAUDE.md imports only memory and aliases; a stray
+``@`` import elsewhere never loads.
 ``test_rules_structure.py`` covers the per-file format checks.
 """
 from __future__ import annotations
@@ -29,13 +29,12 @@ from _shared_paths import CLAUDE_DIR, CLAUDE_MD, RULES_DIR
 REFERENCE_DIR = CLAUDE_DIR / "_reference"
 IMPORT_LINE = re.compile(r"^@~/[^/\s]+/(\S+)$", re.M)
 
-# Human-readable theme files permitted at _rules/ root — no others allowed
-EXPECTED_ROOT_FILES = {"README.md"}
+# rules/ root holds only tier folders — any file there would load every session
+EXPECTED_ROOT_FILES: set[str] = set()
 
 # Files expected at the top of 04_claude_reference/ — no others allowed
 EXPECTED_CLAUDE_REFERENCE_FILES = {
     "claude_operational_efficiency.md",
-    "README.md",
 }
 
 # Paths removed during the 2026-08 restructure that must never reappear
@@ -54,8 +53,7 @@ DISSOLVED_PATHS = [
     RULES_DIR / "claude_internal.md",
 ]
 
-# CLAUDE.md's _rules/ imports must appear in ascending tier order (01 before 02 before 03 before 04).
-TIER_ORDER = ["01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_claude_reference"]
+
 
 
 def import_targets(text: str) -> list[str]:
@@ -82,31 +80,20 @@ def extract_import_paths(md_file: Path) -> list[Path]:
     return [CLAUDE_DIR / target for target in import_targets(md_file.read_text())]
 
 
-def tier_sequence(text: str) -> list[str]:
-    """List the tiers of a CLAUDE.md's _rules/ imports, in file order.
-
-    :param text: CLAUDE.md content.
-    :type text: str
-    :return: Tier folder names, one per _rules/ import.
-    :rtype: list[str]
-    """
-    return [t.split("/")[1] for t in import_targets(text) if t.startswith("_rules/") and t.split("/")[1] in TIER_ORDER]
-
-
 def importing_files() -> list[Path]:
-    """Return CLAUDE.md and every _rules/ file outside 05_lazy_load/.
+    """Return CLAUDE.md and every rules/ file.
 
     :return: The files whose imports Claude Code can follow.
     :rtype: list[Path]
     """
-    return [CLAUDE_MD] + [p for p in RULES_DIR.rglob("*.md") if "05_lazy_load" not in p.parts]
+    return [CLAUDE_MD] + list(RULES_DIR.rglob("*.md"))
 
 
 def test_rules_root_contains_only_expected_files():
-    """_rules/ root must contain nothing but README.md — all rules live in tier subdirectories."""
+    """rules/ root must contain no files — all rules live in tier subdirectories."""
     actual = {rule_file.name for rule_file in RULES_DIR.iterdir() if rule_file.is_file()}
     assert actual == EXPECTED_ROOT_FILES, (
-        f"_rules/ root mismatch — expected: {EXPECTED_ROOT_FILES}, got: {actual}"
+        f"rules/ root mismatch — expected: {EXPECTED_ROOT_FILES}, got: {actual}"
     )
 
 
@@ -127,14 +114,14 @@ def test_claude_reference_contains_expected_files():
 
 
 def test_aliases_at_claude_root():
-    """aliases.md must exist at the Claude directory root, not inside _rules/."""
+    """aliases.md must exist at the Claude directory root, not inside rules/."""
     assert (CLAUDE_DIR / "aliases.md").exists(), f"aliases.md missing from {CLAUDE_DIR} root"
-    assert not (RULES_DIR / "aliases.md").exists(), "aliases.md must not be inside _rules/"
+    assert not (RULES_DIR / "aliases.md").exists(), "aliases.md must not be inside rules/"
 
 
 def test_behaviour_subdir_dissolved():
-    """_rules/behaviour/ subdir was dissolved and must not exist."""
-    assert not (RULES_DIR / "behaviour").is_dir(), "_rules/behaviour/ should not exist"
+    """rules/behaviour/ subdir was dissolved and must not exist."""
+    assert not (RULES_DIR / "behaviour").is_dir(), "rules/behaviour/ should not exist"
 
 
 def test_dissolved_paths_absent():
@@ -144,13 +131,12 @@ def test_dissolved_paths_absent():
 
 
 def test_import_files_found():
-    """CLAUDE.md and _rules/ both carry imports, so the checks below can't pass on nothing."""
+    """CLAUDE.md still carries its memory and aliases imports, so the checks below can't pass on nothing."""
     assert import_targets(CLAUDE_MD.read_text()), "CLAUDE.md has no @~/ import lines"
-    assert any(import_targets(p.read_text()) for p in importing_files()[1:]), "no _rules/ file has an import"
 
 
 def test_all_imports_resolve():
-    """Every @import in CLAUDE.md or _rules/ points to a real file."""
+    """Every @import in CLAUDE.md or rules/ points to a real file."""
     broken = [
         f"{f.relative_to(CLAUDE_DIR)} -> {p.relative_to(CLAUDE_DIR)}"
         for f in importing_files() for p in extract_import_paths(f) if not p.exists()
@@ -160,8 +146,8 @@ def test_all_imports_resolve():
 
 def test_import_parser_reads_any_config_dir():
     """The parser handles .claude and claude prefixes, and skips inline mentions."""
-    text = "@~/.claude/_rules/a.md\n@~/claude/_rules/b.md\nsee @~/claude/c.md\n"
-    assert import_targets(text) == ["_rules/a.md", "_rules/b.md"], f"got {import_targets(text)}"
+    text = "@~/.claude/rules/a.md\n@~/claude/rules/b.md\nsee @~/claude/c.md\n"
+    assert import_targets(text) == ["rules/a.md", "rules/b.md"], f"got {import_targets(text)}"
 
 
 def always_on_import_graph() -> dict[Path, Path | None]:
@@ -197,19 +183,3 @@ def test_always_on_files_do_not_import_reference():
         f"{len(offenders)} @import(s) pull _reference/ into every session — replace each with a "
         f"'Read on demand' pointer: {offenders}"
     )
-
-
-def test_claude_md_import_order():
-    """CLAUDE.md's _rules/ imports appear in ascending tier order (01 → 02 → 03 → 04)."""
-    tiers = tier_sequence(CLAUDE_MD.read_text())
-    assert tiers, "CLAUDE.md has no _rules/ imports to order"
-    positions = [TIER_ORDER.index(t) for t in tiers]
-    assert positions == sorted(positions), f"CLAUDE.md _rules/ imports out of tier order: {tiers}"
-
-
-def test_tier_order_check_flags_reversed_tiers():
-    """The tier-order check sees a 02 import before a 01 import as out of order."""
-    text = "@~/.claude/_rules/02_claude_standards/x.md\n@~/.claude/_rules/01_essentials/y.md\n"
-    tiers = tier_sequence(text)
-    assert tiers == ["02_claude_standards", "01_essentials"], f"got {tiers}"
-    assert [TIER_ORDER.index(t) for t in tiers] != sorted(TIER_ORDER.index(t) for t in tiers), "should be out of order"

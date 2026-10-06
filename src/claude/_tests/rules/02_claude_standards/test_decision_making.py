@@ -1,14 +1,14 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-01
-# Version:           2.0.0
+# Date updated:      2026-10-06
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Content tests for _rules/02_claude_standards/behaviour/_decision_making.md.
+"""Content tests for rules/02_claude_standards/behaviour/_decision_making.md.
 
 Each test guards one clause of the intentionality gate — present 2–3 options with
 one recommended, wait for the choice, and skip options when the path is clear —

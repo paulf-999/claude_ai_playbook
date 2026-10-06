@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
-# Date updated:      2026-10-01
-# Version:           1.0.2
+# Date updated:      2026-10-06
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -20,7 +20,7 @@ import re
 
 from _shared_paths import ALIASES_FILE, CLAUDE_DIR
 
-AUTOMATION_CONTROLS_FILE = CLAUDE_DIR / "_rules" / "05_lazy_load" / "automation_controls.md"
+AUTOMATION_CONTROLS_FILE = CLAUDE_DIR / "_rules_lazy_load" / "automation_controls.md"
 
 
 def _read_automation_controls():

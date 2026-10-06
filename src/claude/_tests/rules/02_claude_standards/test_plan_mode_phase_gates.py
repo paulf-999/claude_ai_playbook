@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
-# Date updated:      2026-10-01
-# Version:           3.0.1
+# Date updated:      2026-10-06
+# Version:           3.1.0
 # Test quality score: 9/10
 # Test complexity score: 10/10
 # Python style compliant: Yes
@@ -21,8 +21,8 @@ import re
 
 from _shared_paths import CLAUDE_DIR
 
-RULE_FILE = CLAUDE_DIR / "_rules" / "02_claude_standards" / "claude_plans" / "_plan_mode_phase_gates.md"
-PARENT_FILE = CLAUDE_DIR / "_rules" / "02_claude_standards" / "claude_plans.md"
+RULE_FILE = CLAUDE_DIR / "rules" / "02_claude_standards" / "claude_plans" / "_plan_mode_phase_gates.md"
+PARENT_FILE = CLAUDE_DIR / "rules" / "02_claude_standards" / "claude_plans.md"
 
 PRESSURE_WORDS = ["MANDATORY", "CRITICAL", "BLOCKING", "non-negotiable", "absolute requirement"]
 

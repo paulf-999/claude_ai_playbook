@@ -167,6 +167,6 @@ Overall = (
 
 ## Related Guidance
 
-- Agent design: `~/.claude/_rules/agent_design.md` (if exists)
+- Agent design: `~/.claude/rules/03_authoring_guidelines/authoring_agents.md`
 - Integration: `~/.claude/agents/README.md`
-- Efficiency: `~/.claude/_rules/claude_efficiency.md`
+- Efficiency: `~/.claude/rules/04_claude_reference/claude_operational_efficiency.md`

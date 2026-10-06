@@ -25,4 +25,4 @@
 - `src/claude/agents/core/technical_writer/evals.yaml` — Test Coverage dimension
 - `src/claude/skills/_git_skills/git_create_pr/SKILL.md` — Scope Boundaries dimension
 - `src/claude/skills/_atlassian_skills/confluence_create_page/SKILL.md` — Scope Boundaries dimension
-- `src/claude/_rules/05_lazy_load/authoring_agents/_lazy_load/_hard_gates_checklist.md` — Structural Compliance dimension
+- `src/claude/_rules_lazy_load/authoring_agents/_hard_gates_checklist.md` — Structural Compliance dimension

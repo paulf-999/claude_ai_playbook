@@ -82,7 +82,7 @@ while IFS= read -r file; do
             add_test "src/claude/_tests/skills/" ;;
         src/claude/hooks/*)
             add_test "src/claude/_tests/hooks/" ;;
-        src/claude/_rules/*)
+        src/claude/rules/* | src/claude/_rules_lazy_load/*)
             add_test "src/claude/_tests/rules/" ;;
         src/claude/_tests/*)
             add_test "src/claude/_tests/" ;;

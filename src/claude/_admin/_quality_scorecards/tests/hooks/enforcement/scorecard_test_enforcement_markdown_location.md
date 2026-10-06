@@ -20,4 +20,4 @@
 
 - `src/claude/_tests/hooks/enforcement/test_enforcement_markdown_location.py` — the test being scored
 - `src/claude/hooks/hook_enforcement_markdown_location.sh` — what the test guards
-- `src/claude/_rules/01_essentials/claude_usage_standards/writing_style.md` — the conventions the hook enforces
+- `src/claude/rules/01_essentials/claude_usage_standards/writing_style.md` — the conventions the hook enforces

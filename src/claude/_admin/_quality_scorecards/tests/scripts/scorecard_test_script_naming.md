@@ -19,4 +19,4 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/scripts/test_script_naming.py` — the test being scored
-- `src/claude/_rules/01_essentials/claude_usage_standards/naming_standards/_claude_naming_patterns.md` — the pattern it enforces
+- `src/claude/rules/01_essentials/claude_usage_standards/naming_standards/_claude_naming_patterns.md` — the pattern it enforces

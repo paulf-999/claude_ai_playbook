@@ -7,7 +7,7 @@ evals:
     - name: phase1_read_config
       description: Phase 1 reads config files without errors
       input: /claude_review_config
-      setup: Global config exists (~/.claude/CLAUDE.md + _rules/)
+      setup: Global config exists (~/.claude/CLAUDE.md + rules/)
       expected_output:
           - Config files read successfully
           - No parsing errors
@@ -16,7 +16,7 @@ evals:
     - name: phase1_score_dimensions
       description: Phase 1 scores all 6 dimensions on 1-10 scale
       input: /claude_review_config
-      setup: Config files present in _rules/ directory
+      setup: Config files present in rules/ directory
       expected_output:
           - All 6 dimensions scored (1-10)
           - Overall grade calculated (A-F)
@@ -99,10 +99,10 @@ evals:
           - Manual fix suggestion
 
     - name: error_missing_rules_directory
-      description: Handles missing ~/.claude/_rules/ directory
+      description: Handles missing ~/.claude/rules/ directory
       input: /claude_review_config
-      setup: ~/.claude/_rules/ directory missing
+      setup: ~/.claude/rules/ directory missing
       expected_output:
-          - Error message (_rules/ not found)
+          - Error message (rules/ not found)
           - Graceful exit
           - Config structure verification suggestion

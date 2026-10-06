@@ -19,4 +19,4 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/05_lazy_load/test_testing.py` — the test being scored
-- `src/claude/_rules/05_lazy_load/testing.md` — what the test guards
+- `src/claude/rules/05_path_scoped/testing.md` — what the test guards

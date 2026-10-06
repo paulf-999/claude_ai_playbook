@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Measure how often each rule applies to a session, and how often it was loaded.
 
-Reads Claude Code session transcripts and the rules folder, then writes a markdown
+Reads Claude Code session transcripts and the rule folders (``rules/`` and the
+``_rules_lazy_load/`` beside it), then writes a markdown
 report and appends one row per rule to a CSV history, so dates survive after old
 transcripts are deleted.
 
 - **Applied:** the session touched a file matching the rule's globs (``*`` = every session).
-- **Loaded:** the rule reached Claude's context — an always-on import, a ``paths:``
-  rule loaded automatically, or a ``Read`` of the rule file.
+- **Loaded:** the rule reached Claude's context — a ``rules/`` file loaded natively,
+  a ``paths:`` rule loaded with a matching file, or a ``Read`` of the rule file.
 - **Miss:** the rule applied but was never loaded.
 
 Standard library only, no LLM calls. Every location is a required argument, because the
@@ -15,7 +16,7 @@ script is installed into the live config too and must never guess the repo.
 
 Usage:
     python3 src/claude/_scripts/_audit_scripts/audit_rule_usage.py \\
-        --rules src/claude/_rules --transcripts ~/.claude/projects --out src/claude/_admin/_audits
+        --rules src/claude/rules --transcripts ~/.claude/projects --out src/claude/_admin/_audits
     make audit_rule_usage
 """
 
@@ -45,7 +46,8 @@ STALE_AFTER_DAYS = 90
 # ── constants ─────────────────────────────────────────────────────────────────
 
 EVERY_SESSION = "*"
-LAZY_TIER = "05_lazy_load"
+LAZY_FOLDER = "_rules_lazy_load"
+PATH_SCOPED_TIER = "05_path_scoped"
 REPORT_NAME = "audit_rule_usage.md"
 HISTORY_NAME = "rule_usage_history.csv"
 LEDGER_NAME = "rule_usage_sessions.csv"
@@ -57,7 +59,8 @@ TIER_TITLES = {
     "02_claude_standards": "🛡️ 02 Claude standards",
     "03_authoring_guidelines": "🛠️ 03 Authoring guidelines",
     "04_claude_reference": "📚 04 Claude reference",
-    "05_lazy_load": "💤 05 Lazy load",
+    "05_path_scoped": "🪶 05 Path-scoped",
+    LAZY_FOLDER: "💤 Lazy load",
 }
 HISTORY_FIELDS = [
     "run_date", "rule", "tier", "tokens", "sessions", "applied", "loaded", "misses", "last_applied", "last_loaded",
@@ -65,7 +68,10 @@ HISTORY_FIELDS = [
 TOP_SECTIONS = 15
 CHARS_PER_TOKEN = 4
 TIER_DIR = re.compile(r"^\d\d_")
-IMPORT_LINE = re.compile(r"^@~/[^/]+/_rules/(\S+\.md)\s*$", re.M)
+# A rule path in a transcript: the new folders, or the old _rules/ layout older sessions used
+RULE_PATH = re.compile(r"(?:^|/)(rules|_rules_lazy_load|_rules)/(\S+\.md)$")
+# A parent's pointer to a child that loads on its own from rules/
+NATIVE_POINTER = re.compile(r"^- \*\*Loads on its own from:\*\* `(rules/\S+\.md)`", re.M)
 MISS_COST = re.compile(r"<!--\s*miss_cost:\s*(high|medium|low)\b", re.I)
 FILE_TOOLS = {"Read", "Edit", "Write", "MultiEdit", "NotebookEdit"}
 
@@ -74,7 +80,7 @@ APPLIES_TO = re.compile(r"^<!--\s*applies_to:\s*(.+?)\s*-->$")
 HEADER_LINES = 10
 
 # First-guess globs for lazy rules with no ``applies_to`` header and no ``paths:`` frontmatter,
-# keyed by path under 05_lazy_load/.
+# keyed by path under 05_path_scoped/ or _rules_lazy_load/.
 DEFAULT_APPLIES_TO = {
     "style_guide_standards/python.md": ["**/*.py"],
     "style_guide_standards/bash.md": ["**/*.sh"],
@@ -103,15 +109,16 @@ class Rule:
     globs: list[str]
     miss_cost: str = "—"
     files: list[str] = field(default_factory=list)
+    path_scoped: bool = False
 
     @property
     def always_on(self) -> bool:
         """Whether the rule loads every session.
 
-        :return: True for tiers 01–04.
+        :return: True for rules/ files without ``paths:`` (tiers 01–04).
         :rtype: bool
         """
-        return self.tier != LAZY_TIER
+        return not self.path_scoped and self.tier not in (PATH_SCOPED_TIER, LAZY_FOLDER)
 
 
 @dataclass
@@ -142,14 +149,16 @@ class Usage:
 # ── rules ─────────────────────────────────────────────────────────────────────
 
 
-def is_child(path: Path, tier_dir: Path) -> bool:
+def is_child(path: Path, tier_dir: Path, roots: tuple[Path, ...] = ()) -> bool:
     """Tell whether a rule file belongs to a parent topic rather than standing alone.
 
     :param path: Rule file path.
     :type path: Path
     :param tier_dir: The tier folder the file sits in.
     :type tier_dir: Path
-    :return: True when the name starts with ``_`` or a folder above it has a sibling parent ``.md``.
+    :param roots: Other folders a parent may sit in, since a lazy child's parent can live under rules/.
+    :type roots: tuple[Path, ...]
+    :return: True when the name starts with ``_`` or a folder above it has a parent ``.md`` in any root.
     :rtype: bool
     """
     if path.name.startswith("_"):
@@ -157,31 +166,30 @@ def is_child(path: Path, tier_dir: Path) -> bool:
     for folder in path.parents:
         if folder == tier_dir:
             return False
-        if folder.with_suffix(".md").is_file():
+        rel = folder.relative_to(tier_dir).with_suffix(".md")
+        if folder.with_suffix(".md").is_file() or any((root / rel).is_file() for root in roots):
             return True
     return False
 
 
-def imported_files(rules_dir: Path, rel: str, seen: set[str] | None = None) -> list[str]:
-    """Follow ``@`` imports from a rule, returning it and every file it pulls in.
+def native_files(path: Path, rules_dir: Path) -> list[Path]:
+    """Return a rules/ entry point and the children that load beside it, i.e. those without ``paths:``.
 
-    :param rules_dir: The ``_rules`` folder.
+    :param path: An entry-point rule under rules/.
+    :type path: Path
+    :param rules_dir: The ``rules`` folder its pointers are relative to.
     :type rules_dir: Path
-    :param rel: Rule path relative to ``rules_dir``.
-    :type rel: str
-    :param seen: Files already visited, to stop import cycles.
-    :type seen: set[str] | None
-    :return: Relative paths, the rule first.
-    :rtype: list[str]
+    :return: The rule first, then each child in its ``<topic>/`` folder or named in a ``Loads on its own from`` line.
+    :rtype: list[Path]
     """
-    seen = set() if seen is None else seen
-    path = rules_dir / rel
-    if rel in seen or not path.is_file():
-        return []
-    seen.add(rel)
-    found = [rel]
-    for child in IMPORT_LINE.findall(path.read_text(encoding="utf-8")):
-        found += imported_files(rules_dir, child, seen)
+    folder = path.with_suffix("")
+    children = sorted(folder.rglob("*.md")) if folder.is_dir() else []
+    # Shared children, e.g. shared_standards/_complexity_scoring.md, sit outside the topic folder
+    children += [rules_dir.parent / rel for rel in NATIVE_POINTER.findall(path.read_text(encoding="utf-8"))]
+    found = [path]
+    for child in children:
+        if child.is_file() and child not in found and not frontmatter_paths(child.read_text(encoding="utf-8")):
+            found.append(child)
     return found
 
 
@@ -216,50 +224,57 @@ def header_globs(text: str) -> list[str]:
     return []
 
 
-def token_count(rules_dir: Path, rels: list[str]) -> int:
+def token_count(config_dir: Path, rels: list[str]) -> int:
     """Estimate tokens as characters divided by four.
 
-    :param rules_dir: The ``_rules`` folder.
-    :type rules_dir: Path
+    :param config_dir: The config folder the paths are relative to.
+    :type config_dir: Path
     :param rels: Rule files to count.
     :type rels: list[str]
     :return: Estimated tokens.
     :rtype: int
     """
-    return sum(len((rules_dir / rel).read_text(encoding="utf-8")) for rel in rels) // CHARS_PER_TOKEN
+    return sum(len((config_dir / rel).read_text(encoding="utf-8")) for rel in rels) // CHARS_PER_TOKEN
 
 
 def discover_rules(rules_dir: Path) -> list[Rule]:
-    """Find every entry-point rule in the numbered tiers.
+    """Find every entry-point rule in the rules/ tiers and in _rules_lazy_load/ beside it.
 
-    :param rules_dir: The ``_rules`` folder.
+    :param rules_dir: The ``rules`` folder.
     :type rules_dir: Path
-    :return: Rules sorted by tier then path.
+    :return: Rules sorted by tier then path, each keyed by its path from the config folder.
     :rtype: list[Rule]
     """
+    config_dir, lazy_dir = rules_dir.parent, rules_dir.parent / LAZY_FOLDER
+    tier_dirs = sorted(d for d in rules_dir.iterdir() if d.is_dir() and TIER_DIR.match(d.name))
+    roots = tuple(tier_dirs) + ((lazy_dir,) if lazy_dir.is_dir() else ())
     rules = []
-    for tier_dir in sorted(d for d in rules_dir.iterdir() if d.is_dir() and TIER_DIR.match(d.name)):
+    for tier_dir in roots:
         for path in sorted(tier_dir.rglob("*.md")):
-            if path.name == "README.md" or "_lazy_load" in path.parts or is_child(path, tier_dir):
+            in_tier = path.relative_to(tier_dir)
+            if path.name == "README.md" or in_tier.parts[0] in ("_tier_readmes", "learned"):
                 continue
-            rel = path.relative_to(rules_dir).as_posix()
+            if is_child(path, tier_dir, tuple(r for r in roots if r != tier_dir)):
+                continue
+            rel = path.relative_to(config_dir).as_posix()
             text = path.read_text(encoding="utf-8")
-            if tier_dir.name == LAZY_TIER:
+            scoped = bool(frontmatter_paths(text))
+            if scoped or tier_dir == lazy_dir:
                 files = [rel]
-                in_tier = path.relative_to(tier_dir).as_posix()
-                fallback = frontmatter_paths(text) or DEFAULT_APPLIES_TO.get(in_tier, [])
+                fallback = frontmatter_paths(text) or DEFAULT_APPLIES_TO.get(in_tier.as_posix(), [])
             else:
-                files = imported_files(rules_dir, rel)
+                files = [f.relative_to(config_dir).as_posix() for f in native_files(path, rules_dir)]
                 fallback = [EVERY_SESSION]
             globs = header_globs(text) or fallback
             cost = MISS_COST.search(text)
             rules.append(Rule(
                 rel=rel,
                 tier=tier_dir.name,
-                tokens=token_count(rules_dir, files),
+                tokens=token_count(config_dir, files),
                 globs=globs,
                 miss_cost=cost.group(1).lower() if cost else "—",
                 files=files,
+                path_scoped=scoped,
             ))
     return rules
 
@@ -267,7 +282,7 @@ def discover_rules(rules_dir: Path) -> list[Rule]:
 def section_sizes(rules_dir: Path, rules: list[Rule]) -> list[tuple[str, str, int]]:
     """Size every ``##`` section in the always-on files, largest first.
 
-    :param rules_dir: The ``_rules`` folder.
+    :param rules_dir: The ``rules`` folder.
     :type rules_dir: Path
     :param rules: Discovered rules.
     :type rules: list[Rule]
@@ -277,7 +292,7 @@ def section_sizes(rules_dir: Path, rules: list[Rule]) -> list[tuple[str, str, in
     sizes = []
     files = {rel for rule in rules if rule.always_on for rel in rule.files}
     for rel in sorted(files):
-        for chunk in re.split(r"^(?=## )", (rules_dir / rel).read_text(encoding="utf-8"), flags=re.M)[1:]:
+        for chunk in re.split(r"^(?=## )", (rules_dir.parent / rel).read_text(encoding="utf-8"), flags=re.M)[1:]:
             sizes.append((rel, chunk.splitlines()[0][3:].strip(), len(chunk) // CHARS_PER_TOKEN))
     return sorted(sizes, key=lambda s: -s[2])
 
@@ -286,28 +301,35 @@ def section_sizes(rules_dir: Path, rules: list[Rule]) -> list[tuple[str, str, in
 
 
 def rule_rel(raw: str, rules_dir: Path) -> str | None:
-    """Map a path seen in a transcript to a rule path relative to ``rules_dir``.
+    """Map a path seen in a transcript to a rule path relative to the config folder.
 
-    Handles the repo copy, the live copy, and the ``rules/`` symlinks Claude Code reads.
+    Handles the repo copy, the live copy, and the layout older sessions used before 2026-10-06:
+    ``_rules/0X_tier/...``, ``_rules/05_lazy_load/...`` and the flat ``rules/<name>.md`` links.
 
     :param raw: A file path from the transcript.
     :type raw: str
-    :param rules_dir: The ``_rules`` folder.
+    :param rules_dir: The ``rules`` folder.
     :type rules_dir: Path
-    :return: The relative rule path, or None when it isn't a rule.
+    :return: The rule path, e.g. ``rules/01_essentials/x.md``, or None when it isn't a rule.
     :rtype: str | None
     """
-    if "_rules/" in raw:
-        return raw.rsplit("_rules/", 1)[1]
-    match = re.search(r"(?:^|/)rules/([^/]+\.md)$", raw)
-    if match:
-        link = rules_dir.parent / "rules" / match.group(1)
-        if link.is_symlink():
-            try:
-                return link.resolve().relative_to(rules_dir.resolve()).as_posix()
-            except ValueError:
-                return None
-    return None
+    match = RULE_PATH.search(raw)
+    if not match:
+        return None
+    folder, rest = match.groups()
+    if folder == LAZY_FOLDER:
+        return f"{LAZY_FOLDER}/{rest}"
+    if folder == "_rules":
+        if not rest.startswith("05_lazy_load/"):
+            return f"rules/{rest}"
+        rest = rest.removeprefix("05_lazy_load/")
+        scoped = (rules_dir / PATH_SCOPED_TIER / rest).is_file()
+        return f"rules/{PATH_SCOPED_TIER}/{rest}" if scoped else f"{LAZY_FOLDER}/{rest}"
+    if "/" in rest:
+        return f"rules/{rest}"
+    # A flat rules/<name>.md was an old install link to a path-scoped rule
+    found = sorted(rules_dir.rglob(rest))
+    return f"rules/{found[0].relative_to(rules_dir).as_posix()}" if len(found) == 1 else None
 
 
 def record_date(record: dict[str, Any]) -> date | None:
@@ -370,7 +392,7 @@ def parse_session(path: Path, rules_dir: Path) -> Session:
 
     :param path: A ``.jsonl`` transcript.
     :type path: Path
-    :param rules_dir: The ``_rules`` folder.
+    :param rules_dir: The ``rules`` folder.
     :type rules_dir: Path
     :return: The session's touched files, loaded rules and last date.
     :rtype: Session
@@ -405,7 +427,7 @@ def discover_sessions(transcripts_dir: Path, rules_dir: Path) -> list[Session]:
 
     :param transcripts_dir: Claude Code's ``projects`` folder.
     :type transcripts_dir: Path
-    :param rules_dir: The ``_rules`` folder.
+    :param rules_dir: The ``rules`` folder.
     :type rules_dir: Path
     :return: Parsed sessions.
     :rtype: list[Session]
@@ -619,7 +641,7 @@ def render_report(
     ]
     for u in usages:
         lines.append(
-            f"| `{u.rule.rel}` | {u.rule.tier[:2]} | {u.rule.tokens:,} | {percent(u.applied, u.sessions)} | "
+            f"| `{u.rule.rel}` | {tier_code(u.rule.tier)} | {u.rule.tokens:,} | {percent(u.applied, u.sessions)} | "
             f"{percent(u.loaded, u.sessions)} | {'—' if u.misses is None else u.misses} | {u.rule.miss_cost} | "
             f"{u.last_applied or '—'} | {u.last_loaded or '—'} | {u.flag or '—'} |"
         )
@@ -795,6 +817,29 @@ def insight_lines(totals: dict[str, dict], every_session: set[str]) -> list[str]
     return lines + [""]
 
 
+def tier_code(tier: str) -> str:
+    """Return a tier's short label for report tables: its number, or ``lazy`` for the lazy folder.
+
+    :param tier: e.g. ``01_essentials`` or ``_rules_lazy_load``.
+    :type tier: str
+    :return: e.g. ``01`` or ``lazy``.
+    :rtype: str
+    """
+    return tier[:2] if tier[0].isdigit() else "lazy"
+
+
+def tier_of(rel: str) -> str:
+    """Return the tier a rule path belongs to: its rules/ tier folder, or the lazy folder.
+
+    :param rel: Rule path from the config folder, e.g. ``rules/01_essentials/x.md``.
+    :type rel: str
+    :return: e.g. ``01_essentials`` or ``_rules_lazy_load``.
+    :rtype: str
+    """
+    parts = rel.split("/")
+    return parts[1] if parts[0] == "rules" and len(parts) > 2 else parts[0]
+
+
 def tier_tables(totals: dict[str, dict], runs: dict[str, set[str]], current: set[str]) -> list[str]:
     """Build one table per tier.
 
@@ -808,14 +853,14 @@ def tier_tables(totals: dict[str, dict], runs: dict[str, set[str]], current: set
     :rtype: list[str]
     """
     lines = ["## 📋 Rules by tier", ""]
-    for tier in sorted({rel.split("/", 1)[0] for rel in totals}):
+    for tier in sorted({tier_of(rel) for rel in totals}):
         lines += [
             f"### {TIER_TITLES.get(tier, f'📁 {tier}')}",
             "",
             "| Rule | Applied | Loaded | Misses | Miss rate | Runs | First seen | Last used |",
             "|---|---|---|---|---|---|---|---|",
         ]
-        for rel in sorted(r for r in totals if r.split("/", 1)[0] == tier):
+        for rel in sorted(r for r in totals if tier_of(r) == tier):
             t = totals[rel]
             rate = f"{round(100 * t['rate'])}%" if t["rate"] is not None else "—"
             name = f"`{rel}`" if rel in current else f"`{rel}` (removed)"
@@ -893,7 +938,7 @@ def render_history(
 def run(rules_dir: Path, transcripts_dir: Path, out_dir: Path, today: date) -> list[Usage]:
     """Measure usage, flag it, append history, update the session ledger and write both reports.
 
-    :param rules_dir: The ``_rules`` folder.
+    :param rules_dir: The ``rules`` folder.
     :type rules_dir: Path
     :param transcripts_dir: Claude Code's ``projects`` folder.
     :type transcripts_dir: Path
@@ -945,7 +990,7 @@ def main(argv: list[str] | None = None) -> int:
     :rtype: int
     """
     parser = argparse.ArgumentParser(description="Measure how often each rule applies and loads.")
-    parser.add_argument("--rules", required=True, type=Path, help="the _rules folder, e.g. src/claude/_rules")
+    parser.add_argument("--rules", required=True, type=Path, help="the rules folder, e.g. src/claude/rules")
     parser.add_argument("--transcripts", required=True, type=Path, help="session logs, e.g. ~/.claude/projects")
     parser.add_argument("--out", required=True, type=Path, help="output folder, e.g. src/claude/_admin/_audits")
     args = parser.parse_args(argv)

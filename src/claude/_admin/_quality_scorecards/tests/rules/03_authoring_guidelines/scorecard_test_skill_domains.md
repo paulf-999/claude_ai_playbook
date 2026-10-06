@@ -19,5 +19,5 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/03_authoring_guidelines/test_skill_domains.py` — the test being scored
-- `src/claude/_rules/03_authoring_guidelines/authoring_skills/skill_domains.yaml` — what the test guards
+- `src/claude/rules/03_authoring_guidelines/authoring_skills/skill_domains.yaml` — what the test guards
 - `src/claude/skills/` — what the test guards

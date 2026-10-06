@@ -20,4 +20,5 @@ ALIASES_FILE = CLAUDE_DIR / "aliases.md"
 SETTINGS_FILE = CLAUDE_DIR / "settings.json"
 SKILLS_DIR = CLAUDE_DIR / "skills"
 HOOKS_DIR = CLAUDE_DIR / "hooks"
-RULES_DIR = CLAUDE_DIR / "_rules"
+RULES_DIR = CLAUDE_DIR / "rules"  # loaded natively by Claude Code
+LAZY_RULES_DIR = CLAUDE_DIR / "_rules_lazy_load"  # read on demand only

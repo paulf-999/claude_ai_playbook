@@ -18,7 +18,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/02_claude_standards/git.md` — the rule being scored
+- `src/claude/rules/02_claude_standards/git.md` — the rule being scored
 - `src/claude/_tests/rules/02_claude_standards/test_git.py` — Test Coverage dimension (the disclosed stale docstring)
 
 ---
@@ -26,5 +26,5 @@
 ## 🚩 Pre-existing issue disclosed, not fixed
 
 - 🐛 **Stale reference:** `test_git.py`'s module docstring (line 9) reads "Structural tests for `_rules/claude_internal/git.md`" — `claude_internal/` is a pre-reorg directory name that no longer exists.
-- ✅ **Functionally fine:** the actual path constant on line 18 correctly uses `_rules/02_claude_standards/git.md` — only the docstring drifted, not the test logic.
+- ✅ **Functionally fine:** the actual path constant on line 18 correctly uses `rules/02_claude_standards/git.md` — only the docstring drifted, not the test logic.
 - 📋 **Disposition:** out of scope for this scorecard — flagged here per this config's pre-existing-issue disclosure rule, not silently fixed.

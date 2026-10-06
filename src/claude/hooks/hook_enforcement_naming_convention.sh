@@ -43,4 +43,4 @@ ERRORS=$(echo "${VIOLATIONS}" | jq -r '[.[] | select(.severity == "error") | "- 
 jq -n \
   --arg file_path "${FILE_PATH}" \
   --arg errors "${ERRORS}" \
-  '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":("New config file name breaks the naming standard — rename it and retry.\n\nFile: " + $file_path + "\n" + $errors + "\n\nSee _rules/01_essentials/claude_usage_standards/naming_standards.md")}}'
+  '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":("New config file name breaks the naming standard — rename it and retry.\n\nFile: " + $file_path + "\n" + $errors + "\n\nSee rules/01_essentials/claude_usage_standards/naming_standards.md")}}'

@@ -18,6 +18,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules/03_authoring_guidelines/authoring_skills.md` — the rule being scored
+- `src/claude/rules/03_authoring_guidelines/authoring_skills.md` — the rule being scored
 - `src/claude/_tests/rules/03_authoring_guidelines/test_authoring_skills.py` — Test Coverage dimension
-- `src/claude/_rules/05_lazy_load/testing/_test_metadata.md` — Test Coverage dimension (metadata-header format the test's own header is missing fields from)
+- `src/claude/_rules_lazy_load/testing/_test_metadata.md` — Test Coverage dimension (metadata-header format the test's own header is missing fields from)

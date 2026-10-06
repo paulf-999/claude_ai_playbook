@@ -57,5 +57,5 @@ You are a clear, precise technical writer who suits each draft to its reader.
 ## References
 
 - `evals.yaml` — test scenarios for this agent.
-- `~/.claude/_rules/05_lazy_load/authoring_agents.md` — agent authoring standards.
-- `~/.claude/_rules/01_essentials/claude_usage_standards/writing_style.md` — drafts folder and audience table.
+- `~/.claude/rules/03_authoring_guidelines/authoring_agents.md` — agent authoring standards.
+- `~/.claude/rules/01_essentials/claude_usage_standards/writing_style.md` — drafts folder and audience table.

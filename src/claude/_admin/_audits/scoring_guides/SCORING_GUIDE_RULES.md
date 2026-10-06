@@ -155,7 +155,7 @@ Overall = (
 
 ## Related Guidance
 
-- Behavior rules: `~/.claude/_rules/behaviour.md`
-- Security rules: `~/.claude/_rules/security.md`
-- Writing style: `~/.claude/_rules/writing_style.md`
-- Guiding principles: `~/.claude/_rules/guiding_principles.md`
+- Behavior rules: `~/.claude/rules/02_claude_standards/behaviour.md`
+- Security rules: `~/.claude/rules/02_claude_standards/security.md`
+- Writing style: `~/.claude/rules/01_essentials/claude_usage_standards/writing_style.md`
+- Guiding principles: `~/.claude/rules/01_essentials/guiding_principles.md`

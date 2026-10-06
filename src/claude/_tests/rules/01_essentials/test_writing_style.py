@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-06
-# Version:           2.0.0
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -27,7 +27,7 @@ Quarterly behavioral audit (manual):
 
 from _shared_paths import CLAUDE_DIR
 
-RULE_FILE = CLAUDE_DIR / "_rules" / "01_essentials" / "claude_usage_standards" / "writing_style.md"
+RULE_FILE = CLAUDE_DIR / "rules" / "01_essentials" / "claude_usage_standards" / "writing_style.md"
 
 
 def test_writing_style_tables_rule_exists():

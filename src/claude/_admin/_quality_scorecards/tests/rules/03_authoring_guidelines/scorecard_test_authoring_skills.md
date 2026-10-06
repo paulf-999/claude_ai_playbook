@@ -19,5 +19,5 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/03_authoring_guidelines/test_authoring_skills.py` — the test being scored
-- `src/claude/_rules/03_authoring_guidelines/authoring_skills.md` — the rule it guards, with its on-demand children
+- `src/claude/rules/03_authoring_guidelines/authoring_skills.md` — the rule it guards, with its on-demand children
 - `src/claude/_tests/_resolved_rule.py` — inlines the rule's children before checking

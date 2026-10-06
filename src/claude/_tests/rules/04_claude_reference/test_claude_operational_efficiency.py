@@ -1,14 +1,14 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
-# Date updated:      2026-10-01
-# Version:           1.0.1
+# Date updated:      2026-10-06
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Content-regression tests for _rules/04_claude_reference/claude_operational_efficiency.md.
+"""Content-regression tests for rules/04_claude_reference/claude_operational_efficiency.md.
 
 Tier 04 is instructional, so these tests don't prove compliance. They catch
 a section, child import or key phrase that gets silently dropped in an edit,
@@ -16,7 +16,7 @@ since the rule's four children moved into a subfolder on 2026-09-30.
 """
 import re
 
-from _shared_paths import RULES_DIR
+from _shared_paths import LAZY_RULES_DIR, RULES_DIR
 
 TIER_DIR = RULES_DIR / "04_claude_reference"
 RULE = TIER_DIR / "claude_operational_efficiency.md"
@@ -41,7 +41,7 @@ EXPECTED_CHILDREN = {
 }
 
 # Matches any config-dir name (~/.claude/, ~/claude/, ...) per portable_paths.md.
-IMPORT_PATTERN = re.compile(r"^@~/[^/]+/_rules/(\S+)$", re.MULTILINE)
+IMPORT_PATTERN = re.compile(r"^- \*\*Loads on its own from:\*\* `rules/(\S+)`$", re.MULTILINE)
 HEADER_LINES = 3
 LINE_LIMIT = 110
 
@@ -55,7 +55,7 @@ def _content():
 
 
 def _imports():
-    """Return every ``@``-import in the rule, relative to ``_rules/``.
+    """Return every child the rule says loads on its own, relative to ``rules/``.
 
     :return: import paths such as ``04_claude_reference/.../_x.md``
     """
@@ -133,10 +133,10 @@ def test_turn_budgets_pointer_resolves():
     """The turn budgets section must point at an existing lazy-load file."""
     content = _content()
     assert "**Read on demand:**" in content, "Turn budgets read-on-demand pointer removed"
-    assert "05_lazy_load/turn_budgets.md" in content, (
-        "Turn budgets pointer no longer names 05_lazy_load/turn_budgets.md"
+    assert "_rules_lazy_load/turn_budgets.md" in content, (
+        "Turn budgets pointer no longer names _rules_lazy_load/turn_budgets.md"
     )
-    target = RULES_DIR / "05_lazy_load" / "turn_budgets.md"
+    target = LAZY_RULES_DIR / "turn_budgets.md"
     assert target.is_file(), f"Turn budgets pointer target missing: {target}"
 
 

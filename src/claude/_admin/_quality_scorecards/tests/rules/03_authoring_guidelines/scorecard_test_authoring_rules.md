@@ -19,4 +19,4 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/03_authoring_guidelines/test_authoring_rules.py` — the test being scored
-- `src/claude/_rules/03_authoring_guidelines/authoring_rules.md` — what the test guards
+- `src/claude/rules/03_authoring_guidelines/authoring_rules.md` — what the test guards

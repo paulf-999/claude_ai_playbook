@@ -1,14 +1,14 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.1.2
+# Date updated:      2026-10-06
+# Version:           1.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Organisation-specific terms stay inside 05_lazy_load/org/ and never leak into shared files.
+"""Organisation-specific terms stay inside _rules_lazy_load/org/ and never leak into shared files.
 
 ``org.md`` and ``org/`` hold one organisation's names, links and IDs. Every other config
 file is shared, so a term from ``org/_shared_file_terms.txt`` appearing there is a leak.
@@ -19,16 +19,17 @@ from pathlib import Path
 
 import pytest
 
-from _shared_paths import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR, LAZY_RULES_DIR
 
-TERMS_FILE = CLAUDE_DIR / "_rules" / "05_lazy_load" / "org" / "_shared_file_terms.txt"
+TERMS_FILE = LAZY_RULES_DIR / "org" / "_shared_file_terms.txt"
 SHARED_DIRS = (
-    "_rules", "_templates", "_reference", "_tests", "_scripts", "_admin", "agents", "hooks", "skills", "rules",
+    "_rules_lazy_load", "_templates", "_reference", "_tests", "_scripts", "_admin",
+    "agents", "hooks", "skills", "rules",
 )
 SHARED_TOP_FILES = ("CLAUDE.md", "aliases.md", "README.md", "settings.json", "settings_json_readme.md", "TODO.md")
-EXCLUDED_PREFIXES = ("_rules/05_lazy_load/org/", "_admin/_audits/")
-EXCLUDED_FILES = {"_rules/05_lazy_load/org.md"}
-ORG_PATH_MARKER = "05_lazy_load/org/"
+EXCLUDED_PREFIXES = ("_rules_lazy_load/org/", "_admin/_audits/")
+EXCLUDED_FILES = {"_rules_lazy_load/org.md"}
+ORG_PATH_MARKER = "lazy_load/org/"  # matches _rules_lazy_load/org/ and scorecard paths under 05_lazy_load/org/
 # Shared files known to hold organisation terms, awaiting a decision. Shrink-only.
 KNOWN_EXCEPTIONS = {"TODO.md"}
 
@@ -108,11 +109,11 @@ def test_missing_terms_file_gives_no_terms(tmp_path):
 
 def test_org_content_and_audits_are_excluded():
     """org.md, org/, org scorecards and generated audits are never scanned."""
-    assert is_excluded("_rules/05_lazy_load/org.md")
-    assert is_excluded("_rules/05_lazy_load/org/jira.md")
+    assert is_excluded("_rules_lazy_load/org.md")
+    assert is_excluded("_rules_lazy_load/org/jira.md")
     assert is_excluded("_admin/_quality_scorecards/rules/05_lazy_load/org/scorecard_jira.md")
     assert is_excluded("_admin/_audits/rule_usage_history.csv")
-    assert not is_excluded("_rules/05_lazy_load/style_guide_standards/sql.md"), "a shared rule must be scanned"
+    assert not is_excluded("rules/05_path_scoped/style_guide_standards/sql.md"), "a shared rule must be scanned"
 
 
 def test_leak_found_case_insensitively():
@@ -122,7 +123,7 @@ def test_leak_found_case_insensitively():
 
 def test_line_referencing_org_path_is_allowed():
     """A line that only points at an org/ file may name it, for example a scorecard summary row."""
-    text = "| `05_lazy_load/org/scorecard_acme_naming.md` | 9/10 |\nother text\n"
+    text = "| `_rules_lazy_load/org/scorecard_acme_naming.md` | 9/10 |\nother text\n"
     assert leaked_terms(text, ["acme"]) == []
 
 
@@ -133,17 +134,17 @@ def test_clean_text_has_no_leaks():
 
 def test_scan_skips_symlinks_caches_and_runtime_folders(tmp_path):
     """Only real files in shared config folders are scanned, never runtime data like projects/."""
-    (tmp_path / "_rules" / "05_lazy_load" / "org").mkdir(parents=True)
-    (tmp_path / "_rules" / "shared.md").write_text("x")
-    (tmp_path / "_rules" / "05_lazy_load" / "org" / "secret.md").write_text("x")
+    (tmp_path / "_rules_lazy_load" / "org").mkdir(parents=True)
+    (tmp_path / "_rules_lazy_load" / "shared.md").write_text("x")
+    (tmp_path / "_rules_lazy_load" / "org" / "secret.md").write_text("x")
     (tmp_path / "_tests" / "__pycache__").mkdir(parents=True)
     (tmp_path / "_tests" / "__pycache__" / "x.pyc").write_text("x")
     (tmp_path / "projects").mkdir()
     (tmp_path / "projects" / "log.json").write_text("x")
     (tmp_path / "rules").mkdir()
-    (tmp_path / "rules" / "link.md").symlink_to(tmp_path / "_rules" / "shared.md")
+    (tmp_path / "rules" / "link.md").symlink_to(tmp_path / "_rules_lazy_load" / "shared.md")
     (tmp_path / "CLAUDE.md").write_text("x")
-    assert shared_files(tmp_path) == ["CLAUDE.md", "_rules/shared.md"]
+    assert shared_files(tmp_path) == ["CLAUDE.md", "_rules_lazy_load/shared.md"]
 
 
 # ── the real config ──────────────────────────────────────────────────────────
@@ -169,7 +170,7 @@ def test_no_organisation_terms_in_shared_files():
         if found:
             leaks[rel] = found
     assert not leaks, (
-        "organisation terms in shared files — move the content into 05_lazy_load/org/ or use a placeholder:\n  "
+        "organisation terms in shared files — move the content into _rules_lazy_load/org/ or use a placeholder:\n  "
         + "\n  ".join(f"{rel}: {found}" for rel, found in sorted(leaks.items()))
     )
 
@@ -189,11 +190,11 @@ def test_known_exceptions_still_need_their_place():
 
 # ── org.md stays a complete index ────────────────────────────────────────────
 
-ORG_INDEX = CLAUDE_DIR / "_rules" / "05_lazy_load" / "org.md"
+ORG_INDEX = CLAUDE_DIR / "_rules_lazy_load" / "org.md"
 ORG_DIR = ORG_INDEX.with_suffix("")
-ORG_POINTER = "05_lazy_load/org.md"
+ORG_POINTER = "_rules_lazy_load/org.md"
 POINTING_FILES = (
-    ("_rules", "01_essentials/claude_usage_standards/naming_standards.md"),
+    ("rules", "01_essentials/claude_usage_standards/naming_standards.md"),
     ("skills", "jira_create/SKILL.md"),
     ("skills", "git_create_pr/reference/_phase1_gather.md"),
 )

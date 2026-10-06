@@ -150,6 +150,6 @@ Overall = (
 
 ## Related Guidance
 
-- Skill authoring: `~/.claude/_rules/skill_authoring.md`
-- Testing: `~/.claude/_rules/testing.md`
-- Security: `~/.claude/_rules/security.md`
+- Skill authoring: `~/.claude/rules/03_authoring_guidelines/authoring_skills.md`
+- Testing: `~/.claude/rules/05_path_scoped/testing.md`
+- Security: `~/.claude/rules/02_claude_standards/security.md`
