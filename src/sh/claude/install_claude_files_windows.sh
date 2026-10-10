@@ -106,6 +106,7 @@ sync_windows_claude_files() {
     copy_claude_files                 # from claude_file_utils.sh
     flatten_skills                    # from claude_file_utils.sh
     relocate_lazy_rules               # from claude_file_utils.sh
+    split_style_guides                # from claude_file_utils.sh
     migrate_old_rules_layout          # from claude_file_utils.sh
     restore_user_editable_files
 }

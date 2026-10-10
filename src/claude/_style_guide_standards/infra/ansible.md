@@ -3,7 +3,7 @@ paths:
   - "**/playbooks/**/*.yml"
   - "**/roles/**/*.yml"
 ---
-<!-- version: 1.2.4 -->
+<!-- version: 1.2.5 -->
 <!-- created: 2026-04-08 -->
 <!-- updated: 2026-10-10 -->
 <!-- miss_cost: medium — playbooks that fail review or idempotency checks -->
@@ -16,9 +16,9 @@ paths:
 
 | File | Purpose |
 |------|---------|
-| [`ansible/playbooks.md`](../../../_rules_lazy_load/style_guide_standards/infra/ansible/playbooks.md) | Playbook naming, folder structure, symlinks, CODEOWNERS, and tags |
-| [`ansible/roles_and_tasks.md`](../../../_rules_lazy_load/style_guide_standards/infra/ansible/roles_and_tasks.md) | Role layout, task conventions, variable naming, and versioning |
-| [`ansible/variables.md`](../../../_rules_lazy_load/style_guide_standards/infra/ansible/variables.md) | `l1`–`l6` group_vars hierarchy, precedence, and variable naming |
+| [`ansible/playbooks.md`](ansible/playbooks.md) | Playbook naming, folder structure, symlinks, CODEOWNERS, and tags |
+| [`ansible/roles_and_tasks.md`](ansible/roles_and_tasks.md) | Role layout, task conventions, variable naming, and versioning |
+| [`ansible/variables.md`](ansible/variables.md) | `l1`–`l6` group_vars hierarchy, precedence, and variable naming |
 
 - **Read on demand:** `~/.claude/_rules_lazy_load/org.md` — before deploying, for any organisation-specific estate constraints such as air-gapped hosts.
 

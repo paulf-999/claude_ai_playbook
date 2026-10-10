@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-06
-# Version:           1.3.1
+# Date updated:      2026-10-10
+# Version:           1.6.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -18,10 +18,21 @@ README doesn't count, because no README is ever loaded.
 import re
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR, CLAUDE_MD, HOOKS_DIR, LAZY_RULES_DIR, RULES_DIR, SKILLS_DIR
+from _shared_paths import (
+    CLAUDE_DIR,
+    CLAUDE_MD,
+    HOOKS_DIR,
+    LAZY_RULES_DIR,
+    ON_DEMAND_ROOTS,
+    RULES_DIR,
+    SKILLS_DIR,
+    installed_rule_files,
+    native_rule_files,
+    on_demand_rule_files,
+)
 
+STYLE_GUIDES = "style_guide_standards"
 LAZY_DIR = LAZY_RULES_DIR
-PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
 ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines")
 # Folders under _rules_lazy_load/ that hold indexes or ledgers rather than rules
 NON_RULE_FOLDERS = {"_tier_readmes", "_learned"}
@@ -71,7 +82,7 @@ def native_texts(rules_dir: Path) -> dict[str, str]:
     """
     return {
         p.relative_to(rules_dir.parent).as_posix(): p.read_text()
-        for p in sorted(rules_dir.rglob("*.md")) if not has_paths(p.read_text())
+        for p in native_rule_files(rules_dir) if not has_paths(p.read_text())
     }
 
 
@@ -91,11 +102,11 @@ def has_paths(text: str) -> bool:
     return text.startswith("---\n") and "\npaths:" in text.split("\n---", 1)[0]
 
 
-def trigger_for(inner: str, text: str, loaded: dict[str, str], hooks: list[str]) -> str:
+def trigger_for(installed: str, text: str, loaded: dict[str, str], hooks: list[str]) -> str:
     """Name the trigger that loads a lazy rule, or return an empty string.
 
-    :param inner: Rule path relative to ``_rules_lazy_load``, e.g. ``style_guide_standards/jira.md``.
-    :type inner: str
+    :param installed: Rule path relative to the installed config, e.g. ``_style_guide_standards/jira.md``.
+    :type installed: str
     :param text: Rule file text.
     :type text: str
     :param loaded: Texts Claude already has, from startup imports and skills.
@@ -107,31 +118,33 @@ def trigger_for(inner: str, text: str, loaded: dict[str, str], hooks: list[str])
     """
     if has_paths(text):
         return "paths"
-    if any(f"_rules_lazy_load/{inner}" in hook for hook in hooks):
+    if any(installed in hook for hook in hooks):
         return "hook"
-    if any(f"_rules_lazy_load/{inner}" in body for body in loaded.values()):
+    if any(installed in body for body in loaded.values()):
         return "pointer"
     return ""
 
 
-def entry_points(lazy_dir: Path) -> list[Path]:
+def entry_points(config_dir: Path) -> dict[str, Path]:
     """List lazy rules that stand alone rather than belonging to a parent topic.
 
-    :param lazy_dir: The ``_rules_lazy_load`` folder.
-    :type lazy_dir: Path
-    :return: Entry-point rule paths.
-    :rtype: list[Path]
+    :param config_dir: The Claude config directory, installed or the repo's ``src/claude``.
+    :type config_dir: Path
+    :return: Each entry point's installed path, relative to the config, mapped to where it sits on disk.
+    :rtype: dict[str, Path]
     """
+    files = installed_rule_files(config_dir)
     # A child's parent may sit under rules/, e.g. sql/formatting.md belongs to rules/04_path_scoped/.../sql.md
-    roots = [lazy_dir, PATH_SCOPED_DIR] + [RULES_DIR / tier for tier in ALWAYS_ON_TIERS]
-    found = []
-    for path in sorted(lazy_dir.rglob("*.md")):
-        rel = path.relative_to(lazy_dir)
+    parents = [*ON_DEMAND_ROOTS, "rules/04_path_scoped", f"rules/04_path_scoped/{STYLE_GUIDES}"]
+    parents += [f"rules/{tier}" for tier in ALWAYS_ON_TIERS]
+    found = {}
+    for installed, path in on_demand_rule_files(config_dir).items():
+        rel = Path(installed.split("/", 1)[1])
         if path.name == "README.md" or path.name.startswith("_") or rel.parts[0] in NON_RULE_FOLDERS:
             continue
         folders = [rel.parents[i] for i in range(len(rel.parts) - 1)]
-        if not any((root / f).with_suffix(".md").is_file() for f in folders for root in roots):
-            found.append(path)
+        if not any(f"{root}/{f.as_posix()}.md" in files for f in folders for root in parents):
+            found[installed] = path
     return found
 
 
@@ -139,28 +152,28 @@ def entry_points(lazy_dir: Path) -> list[Path]:
 
 def test_paths_frontmatter_is_a_trigger():
     """A rule with paths: frontmatter loads when Claude reads a matching file."""
-    assert trigger_for("x.md", '---\npaths:\n  - "**/*.py"\n---\n# X\n', {}, []) == "paths"
+    assert trigger_for("_rules_lazy_load/x.md", '---\npaths:\n  - "**/*.py"\n---\n# X\n', {}, []) == "paths"
 
 
 def test_hook_naming_the_rule_is_a_trigger():
     """A hook that names the rule's path loads it mechanically."""
-    assert trigger_for("x.md", "# X\n", {}, ['cat "$ROOT/_rules_lazy_load/x.md"']) == "hook"
+    assert trigger_for("_rules_lazy_load/x.md", "# X\n", {}, ['cat "$ROOT/_rules_lazy_load/x.md"']) == "hook"
 
 
 def test_pointer_in_a_loaded_file_is_a_trigger():
     """A pointer in a file Claude already has counts, whatever the config-dir prefix."""
-    loaded = {"rules/a.md": "- **Read on demand:** `~/.claude/_rules_lazy_load/style_guide_standards/x.md`"}
-    assert trigger_for("style_guide_standards/x.md", "# X\n", loaded, []) == "pointer"
+    loaded = {"rules/a.md": "- **Read on demand:** `~/.claude/_style_guide_standards/x.md`"}
+    assert trigger_for("_style_guide_standards/x.md", "# X\n", loaded, []) == "pointer"
 
 
 def test_nothing_loads_an_orphan():
     """With no paths:, hook or pointer, there is no trigger."""
-    assert trigger_for("x.md", "# X\n", {"rules/a.md": "unrelated"}, ["echo hi"]) == ""
+    assert trigger_for("_rules_lazy_load/x.md", "# X\n", {"rules/a.md": "unrelated"}, ["echo hi"]) == ""
 
 
 def test_bare_file_name_is_not_a_pointer():
-    """Naming only the file, without its _rules_lazy_load path, is too vague to follow."""
-    assert trigger_for("style_guide_standards/x.md", "# X\n", {"a.md": "see x.md"}, []) == ""
+    """Naming only the file, without its installed path, is too vague to follow."""
+    assert trigger_for("_style_guide_standards/x.md", "# X\n", {"a.md": "see x.md"}, []) == ""
 
 
 def test_paths_must_be_frontmatter():
@@ -180,6 +193,14 @@ def test_imports_are_followed_through_every_level(tmp_path):
     (tmp_path / "_rules" / "c.md").write_text("never imported\n")
     texts = imported_texts(tmp_path, tmp_path / "CLAUDE.md")
     assert set(texts) == {"CLAUDE.md", "_rules/a.md", "_rules/b.md"}, sorted(texts)
+
+
+def test_repo_lazy_folder_is_not_loaded(tmp_path):
+    """The repo's rules/_rules_lazy_load/ is read on demand once installed, so it doesn't count as loaded."""
+    (tmp_path / "rules" / "_rules_lazy_load").mkdir(parents=True)
+    (tmp_path / "rules" / "a.md").write_text("always\n")
+    (tmp_path / "rules" / "_rules_lazy_load" / "lazy.md").write_text("pointer\n")
+    assert set(native_texts(tmp_path / "rules")) == {"rules/a.md"}, sorted(native_texts(tmp_path / "rules"))
 
 
 def test_native_rules_without_paths_are_loaded(tmp_path):
@@ -204,7 +225,7 @@ def test_skill_readmes_are_not_loaded(tmp_path):
 
 def test_lazy_tier_has_entry_points():
     """The scan finds lazy rules and skips children of a parent topic."""
-    names = [p.name for p in entry_points(LAZY_DIR)]
+    names = [p.name for p in entry_points(CLAUDE_DIR).values()]
     assert len(names) >= 8, f"expected at least 8 lazy entry points, found {len(names)}"
     assert "formatting.md" not in names, "sql/formatting.md is a child of sql.md, not an entry point"
 
@@ -214,8 +235,8 @@ def test_every_lazy_rule_has_a_trigger():
     loaded = loaded_texts()
     hooks = [h.read_text() for h in HOOKS_DIR.glob("*.sh")]
     orphans = [
-        p.relative_to(LAZY_DIR).as_posix() for p in entry_points(LAZY_DIR)
-        if not trigger_for(p.relative_to(LAZY_DIR).as_posix(), p.read_text(), loaded, hooks)
+        installed for installed, p in entry_points(CLAUDE_DIR).items()
+        if not trigger_for(installed, p.read_text(), loaded, hooks)
     ]
     assert not orphans, (
         f"lazy rules nothing loads: {orphans} — add paths: frontmatter and move it to rules/04_path_scoped/, "
@@ -229,13 +250,13 @@ def test_triggers_added_on_2026_10_01_stay():
     loaded = loaded_texts()
     hooks = [h.read_text() for h in HOOKS_DIR.glob("*.sh")]
     expected = {
-        "style_guide_standards/python.md": "paths",
-        "style_guide_standards/bash.md": "paths",
-        "style_guide_standards/jira.md": "pointer",
-        "latency_optimisation.md": "pointer",
+        f"rules/04_path_scoped/{STYLE_GUIDES}/python.md": "paths",
+        f"rules/04_path_scoped/{STYLE_GUIDES}/bash.md": "paths",
+        "_style_guide_standards/jira.md": "pointer",
+        "_rules_lazy_load/latency_optimisation.md": "pointer",
     }
-    for inner, kind in expected.items():
-        path = PATH_SCOPED_DIR / inner if (PATH_SCOPED_DIR / inner).is_file() else LAZY_DIR / inner
-        found = trigger_for(inner, path.read_text(), loaded, hooks)
-        assert found == kind, f"{inner} should load through {kind}, found {found or 'nothing'}"
+    files = installed_rule_files(CLAUDE_DIR)
+    for installed, kind in expected.items():
+        found = trigger_for(installed, files[installed].read_text(), loaded, hooks)
+        assert found == kind, f"{installed} should load through {kind}, found {found or 'nothing'}"
     assert not (LAZY_DIR / "environment_setup").exists(), "ohmyzsh_setup.md was archived to _archive/ — keep it out"

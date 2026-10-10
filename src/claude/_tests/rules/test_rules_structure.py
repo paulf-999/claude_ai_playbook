@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-10
-# Version:           2.3.0
+# Version:           2.3.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -22,9 +22,10 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR, LAZY_RULES_DIR, RULES_DIR, native_rule_files
+from _shared_paths import CLAUDE_DIR, LAZY_RULES_DIR, RULES_DIR, STYLE_GUIDES_NAME, native_rule_files
 
 REFERENCE_DIR = CLAUDE_DIR / "_reference"
+STYLE_GUIDES_DIR = CLAUDE_DIR / STYLE_GUIDES_NAME  # repo only: the install splits it into rules/ and the lazy folder
 RELATED_HEADING = re.compile(r"^## .*Related", re.MULTILINE)
 REFERENCES_SECTION = re.compile(r"^## .*References.*\n(?:(?!## ).*\n?)*", re.MULTILINE)
 H2_HEADING = re.compile(r"^## (.+)$", re.MULTILINE)
@@ -94,7 +95,7 @@ def has_internal_link_section(text: str) -> bool:
 
 
 def imported_content_files() -> list[Path]:
-    """Return every .md file under rules/, _rules_lazy_load/ and _reference/ that can load.
+    """Return every .md file under rules/, _rules_lazy_load/, the repo's style guides and _reference/ that can load.
 
     Wider than rule_files(): includes 05_lazy_load/ and _reference/, since a
     lazy-loaded rule costs the same context once it is read. Excludes READMEs
@@ -105,7 +106,8 @@ def imported_content_files() -> list[Path]:
     """
     return [
         md_file
-        for md_file in [*native_rule_files(RULES_DIR), *LAZY_RULES_DIR.rglob("*.md"), *REFERENCE_DIR.rglob("*.md")]
+        for md_file in [*native_rule_files(RULES_DIR), *LAZY_RULES_DIR.rglob("*.md"), *STYLE_GUIDES_DIR.rglob("*.md"),
+                        *REFERENCE_DIR.rglob("*.md")]
         if md_file.name != "README.md" and "_tier_readmes" not in md_file.parts
     ]
 

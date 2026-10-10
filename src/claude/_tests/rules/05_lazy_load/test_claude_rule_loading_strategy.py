@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
-# Date updated:      2026-10-06
-# Version:           2.1.1
+# Date updated:      2026-10-10
+# Version:           2.1.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -16,7 +16,7 @@ example files, loading claims or key guidance quietly go stale.
 """
 import re
 
-from _shared_paths import CLAUDE_MD, LAZY_RULES_DIR, RULES_DIR
+from _shared_paths import CLAUDE_DIR, CLAUDE_MD, LAZY_RULES_DIR, RULES_DIR, resolve_config_path
 
 RULE = RULES_DIR / "04_path_scoped" / "claude_rule_loading_strategy.md"
 
@@ -106,7 +106,8 @@ def test_table_tiers_in_numeric_order():
 def test_example_files_exist():
     """Each row's example rule must exist inside that tier."""
     for tier, example, _loading in _rows():
-        target = folder(tier) / example
+        # Map the installed path, since the repo keeps style guides in their own folder
+        target = resolve_config_path(CLAUDE_DIR, f"{tier if tier == LAZY_FOLDER else f'rules/{tier}'}/{example}")
         assert target.is_file(), (
             f"Example '{example}' for tier '{tier}/' no longer exists — update the table"
         )

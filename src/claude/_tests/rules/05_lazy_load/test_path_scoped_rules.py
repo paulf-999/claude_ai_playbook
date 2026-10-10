@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-06
-# Version:           2.2.0
+# Date updated:      2026-10-10
+# Version:           2.3.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -22,7 +22,7 @@ ship there as real files, keeping their subfolders — no install-time links.
 import re
 from pathlib import Path
 
-from _shared_paths import RULES_DIR
+from _shared_paths import CLAUDE_DIR, RULES_DIR, STYLE_GUIDES_NAME, path_scoped_rule_files
 
 PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
 IMPORT_LINE_PATTERN = re.compile(r"^@\S")
@@ -92,15 +92,15 @@ def find_violations(rules_dir: Path) -> list[str]:
 
 
 def _scoped_rules() -> list[Path]:
-    """Return every rule under rules/ with ``paths:`` frontmatter."""
-    return sorted(p for p in RULES_DIR.rglob("*.md") if frontmatter_paths(p.read_text(encoding="utf-8")))
+    """Return every rule with ``paths:`` frontmatter, including the repo's style-guide entry files."""
+    return path_scoped_rule_files(CLAUDE_DIR)
 
 
 # ── Real config ─────────────────────────────────────────────────────────
 
 
 def test_rules_has_path_scoped_rules():
-    """rules/ holds path-scoped rules, so the checks below run."""
+    """The config holds path-scoped rules, so the checks below run."""
     assert len(_scoped_rules()) >= 10, f"expected at least 10 path-scoped rules, found {len(_scoped_rules())}"
 
 
@@ -121,7 +121,7 @@ def test_path_scoped_folder_holds_only_scoped_rules():
 
 def test_no_imports_in_path_scoped_rules():
     """No path-scoped rule contains an ``@`` import, which would load at startup."""
-    violations = find_violations(RULES_DIR)
+    violations = find_violations(RULES_DIR) + find_violations(CLAUDE_DIR / STYLE_GUIDES_NAME)
     assert not violations, (
         "`@` imports in path-scoped rules load in every session regardless of "
         "`paths:` — replace them with `**Read on demand:**` pointers:\n  "

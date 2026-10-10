@@ -2,7 +2,8 @@
 """Measure how often each rule applies to a session, and how often it was loaded.
 
 Reads Claude Code session transcripts and the rule folders (``rules/`` and
-``_rules_lazy_load/``, which sits beside it once installed and inside it in the repo), then writes a markdown
+``_rules_lazy_load/``, which sits beside it once installed and inside it in the repo, plus
+``_style_guide_standards/``, whose entry files the install moves under ``rules/``), then writes a markdown
 report and appends one row per rule to a CSV history, so dates survive after old
 transcripts are deleted.
 
@@ -48,6 +49,10 @@ STALE_AFTER_DAYS = 90
 EVERY_SESSION = "*"
 LAZY_FOLDER = "_rules_lazy_load"
 PATH_SCOPED_TIER = "04_path_scoped"
+STYLE_GUIDES_FOLDER = "_style_guide_standards"  # read on demand; the install moves entry files to 04
+STYLE_GUIDES = "style_guide_standards"
+# Where on-demand style guides were keyed before 2026-10-10, so older history rows still match
+OLD_LAZY_GUIDES = f"{LAZY_FOLDER}/{STYLE_GUIDES}/"
 REPORT_NAME = "audit_rule_usage.md"
 HISTORY_NAME = "rule_usage_history.csv"
 LEDGER_NAME = "rule_usage_sessions.csv"
@@ -68,7 +73,7 @@ TOP_SECTIONS = 15
 CHARS_PER_TOKEN = 4
 TIER_DIR = re.compile(r"^\d\d_")
 # A rule path in a transcript: the new folders, or the old _rules/ layout older sessions used
-RULE_PATH = re.compile(r"(?:^|/)(rules|_rules_lazy_load|_rules)/(\S+\.md)$")
+RULE_PATH = re.compile(r"(?:^|/)(rules|_rules_lazy_load|_rules|_style_guide_standards)/(\S+\.md)$")
 # A parent's pointer to a child that loads on its own from rules/
 NATIVE_POINTER = re.compile(r"^- \*\*Loads on its own from:\*\* `(rules/\S+\.md)`", re.M)
 MISS_COST = re.compile(r"<!--\s*miss_cost:\s*(high|medium|low)\b", re.I)
@@ -245,8 +250,42 @@ def config_path(config_dir: Path, rel: str) -> Path:
     :return: The file on disk.
     :rtype: Path
     """
+    installed = f"rules/{PATH_SCOPED_TIER}/{STYLE_GUIDES}/"
+    repo_copy = config_dir / STYLE_GUIDES_FOLDER / rel.removeprefix(installed)
+    if rel.startswith(installed) and repo_copy.is_file():
+        return repo_copy
     head, _, rest = rel.partition("/")
     return lazy_dir_for(config_dir) / rest if head == LAZY_FOLDER else config_dir / rel
+
+
+def current_rel(rel: str) -> str:
+    """Map a rule key from before 2026-10-10, when on-demand style guides sat in the lazy folder, to today's key.
+
+    :param rel: A rule key, e.g. ``_rules_lazy_load/style_guide_standards/jira.md``.
+    :type rel: str
+    :return: The key as it is now, e.g. ``_style_guide_standards/jira.md``.
+    :rtype: str
+    """
+    return f"{STYLE_GUIDES_FOLDER}/{rel.removeprefix(OLD_LAZY_GUIDES)}" if rel.startswith(OLD_LAZY_GUIDES) else rel
+
+
+def style_guide_rel(config_dir: Path, rest: str) -> str:
+    """Key a style guide by where the install puts it: under rules/ when it has ``paths:``, else in its own folder.
+
+    :param config_dir: The config folder.
+    :type config_dir: Path
+    :param rest: Its path inside the style-guide folder, e.g. ``sql/formatting.md``.
+    :type rest: str
+    :return: e.g. ``_style_guide_standards/sql/formatting.md``.
+    :rtype: str
+    """
+    scoped_rel = f"rules/{PATH_SCOPED_TIER}/{STYLE_GUIDES}/{rest}"
+    repo_copy = config_dir / STYLE_GUIDES_FOLDER / rest
+    if (config_dir / scoped_rel).is_file() or (
+        repo_copy.is_file() and frontmatter_paths(repo_copy.read_text(encoding="utf-8"))
+    ):
+        return scoped_rel
+    return f"{STYLE_GUIDES_FOLDER}/{rest}"
 
 
 def token_count(config_dir: Path, rels: list[str]) -> int:
@@ -262,50 +301,76 @@ def token_count(config_dir: Path, rels: list[str]) -> int:
     return sum(len(config_path(config_dir, rel).read_text(encoding="utf-8")) for rel in rels) // CHARS_PER_TOKEN
 
 
+def make_rule(config_dir: Path, path: Path, rel: str, tier: str, in_tier: str) -> Rule:
+    """Build one entry-point rule, with the files it loads and the globs that make it apply.
+
+    :param config_dir: The config folder.
+    :type config_dir: Path
+    :param path: The rule file.
+    :type path: Path
+    :param rel: Its key, the path relative to the installed config folder.
+    :type rel: str
+    :param tier: The tier it belongs to.
+    :type tier: str
+    :param in_tier: Its path inside the tier, which keys ``DEFAULT_APPLIES_TO``.
+    :type in_tier: str
+    :return: The rule.
+    :rtype: Rule
+    """
+    text = path.read_text(encoding="utf-8")
+    scoped = bool(frontmatter_paths(text))
+    if scoped or tier == LAZY_FOLDER:
+        files = [rel]
+        fallback = frontmatter_paths(text) or DEFAULT_APPLIES_TO.get(in_tier, [])
+    else:
+        files = [f.relative_to(config_dir).as_posix() for f in native_files(path, config_dir / "rules")]
+        fallback = [EVERY_SESSION]
+    cost = MISS_COST.search(text)
+    return Rule(
+        rel=rel,
+        tier=tier,
+        tokens=token_count(config_dir, files),
+        globs=header_globs(text) or fallback,
+        miss_cost=cost.group(1).lower() if cost else "—",
+        files=files,
+        path_scoped=scoped,
+    )
+
+
 def discover_rules(rules_dir: Path) -> list[Rule]:
-    """Find every entry-point rule in the rules/ tiers and in _rules_lazy_load/.
+    """Find every entry-point rule in the rules/ tiers, in _rules_lazy_load/ and in the repo's style guides.
 
     :param rules_dir: The ``rules`` folder.
     :type rules_dir: Path
-    :return: Rules sorted by tier then path, each keyed by its path from the config folder.
+    :return: Rules sorted by tier then path, each keyed by its path from the installed config folder.
     :rtype: list[Rule]
     """
     config_dir, lazy_dir = rules_dir.parent, lazy_dir_for(rules_dir.parent)
+    guides_dir = config_dir / STYLE_GUIDES_FOLDER
     tier_dirs = sorted(d for d in rules_dir.iterdir() if d.is_dir() and TIER_DIR.match(d.name))
-    roots = tuple(tier_dirs) + ((lazy_dir,) if lazy_dir.is_dir() else ())
+    roots = tuple(tier_dirs) + tuple(d for d in (lazy_dir, guides_dir) if d.is_dir())
+    # Installed, a style guide's children sit in _style_guide_standards/ and its entry file under rules/
+    parent_roots = roots + (rules_dir / PATH_SCOPED_TIER / STYLE_GUIDES,)
     rules = []
     for tier_dir in roots:
         for path in sorted(tier_dir.rglob("*.md")):
             in_tier = path.relative_to(tier_dir)
             if path.name == "README.md" or in_tier.parts[0] in ("_tier_readmes", "_learned"):
                 continue
-            if is_child(path, tier_dir, tuple(r for r in roots if r != tier_dir)):
+            if is_child(path, tier_dir, tuple(r for r in parent_roots if r != tier_dir)):
                 continue
-            # Lazy rules are keyed by their installed path, so transcripts match in either layout
-            if tier_dir == lazy_dir:
-                rel = f"{LAZY_FOLDER}/{in_tier.as_posix()}"
+            # Lazy rules and style guides are keyed by their installed path, so transcripts match in either layout
+            if tier_dir == guides_dir:
+                rel = style_guide_rel(config_dir, in_tier.as_posix())
+                tier = PATH_SCOPED_TIER if rel.startswith("rules/") else LAZY_FOLDER
+                in_tier = Path(STYLE_GUIDES) / in_tier
+            elif tier_dir == lazy_dir:
+                rel, tier = f"{LAZY_FOLDER}/{in_tier.as_posix()}", LAZY_FOLDER
             else:
-                rel = path.relative_to(config_dir).as_posix()
-            text = path.read_text(encoding="utf-8")
-            scoped = bool(frontmatter_paths(text))
-            if scoped or tier_dir == lazy_dir:
-                files = [rel]
-                fallback = frontmatter_paths(text) or DEFAULT_APPLIES_TO.get(in_tier.as_posix(), [])
-            else:
-                files = [f.relative_to(config_dir).as_posix() for f in native_files(path, rules_dir)]
-                fallback = [EVERY_SESSION]
-            globs = header_globs(text) or fallback
-            cost = MISS_COST.search(text)
-            rules.append(Rule(
-                rel=rel,
-                tier=tier_dir.name,
-                tokens=token_count(config_dir, files),
-                globs=globs,
-                miss_cost=cost.group(1).lower() if cost else "—",
-                files=files,
-                path_scoped=scoped,
-            ))
-    return rules
+                rel, tier = path.relative_to(config_dir).as_posix(), tier_dir.name
+            rules.append(make_rule(config_dir, path, rel, tier, in_tier.as_posix()))
+    order = list(TIER_TITLES)
+    return sorted(rules, key=lambda rule: (order.index(rule.tier) if rule.tier in order else len(order), rule.rel))
 
 
 def section_sizes(rules_dir: Path, rules: list[Rule]) -> list[tuple[str, str, int]]:
@@ -347,13 +412,15 @@ def rule_rel(raw: str, rules_dir: Path) -> str | None:
         return None
     folder, rest = match.groups()
     if folder == LAZY_FOLDER:
-        return f"{LAZY_FOLDER}/{rest}"
+        return current_rel(f"{LAZY_FOLDER}/{rest}")
+    if folder == STYLE_GUIDES_FOLDER:
+        return style_guide_rel(rules_dir.parent, rest)
     if folder == "_rules":
         if not rest.startswith("05_lazy_load/"):
             return f"rules/{rest}"
         rest = rest.removeprefix("05_lazy_load/")
         scoped = (rules_dir / PATH_SCOPED_TIER / rest).is_file()
-        return f"rules/{PATH_SCOPED_TIER}/{rest}" if scoped else f"{LAZY_FOLDER}/{rest}"
+        return f"rules/{PATH_SCOPED_TIER}/{rest}" if scoped else current_rel(f"{LAZY_FOLDER}/{rest}")
     if "/" in rest:
         return f"rules/{rest}"
     # A flat rules/<name>.md was an old install link to a path-scoped rule
@@ -576,7 +643,8 @@ def read_history(path: Path) -> tuple[dict[str, date], date | None]:
             for key in ("last_applied", "last_loaded"):
                 if row.get(key):
                     day = date.fromisoformat(row[key])
-                    last_used[row["rule"]] = max(day, last_used.get(row["rule"], day))
+                    rule = current_rel(row["rule"])
+                    last_used[rule] = max(day, last_used.get(rule, day))
     return last_used, first_run
 
 
@@ -775,7 +843,7 @@ def run_dates(path: Path) -> dict[str, set[str]]:
     if path.is_file():
         with path.open(newline="", encoding="utf-8") as handle:
             for row in csv.DictReader(handle):
-                dates.setdefault(row["rule"], set()).add(row["run_date"])
+                dates.setdefault(current_rel(row["rule"]), set()).add(row["run_date"])
     return dates
 
 

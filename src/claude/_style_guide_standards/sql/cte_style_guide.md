@@ -1,6 +1,6 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 # 🔁 CTE Style Guide
 
 **Purpose:** Establish CTE patterns and grouping conventions for dbt models and SQL queries to improve readability and maintainability.
@@ -20,7 +20,7 @@ Use four logical grouping layers for all CTEs:
 3. **Final CTE:** join together all logical CTEs
 4. **Simple SELECT:** final SELECT statement from the final CTE
 
-See working example: `~/.claude/_rules_lazy_load/style_guide_standards/sql/templates/template_cte.sql`
+See working example: `~/.claude/_style_guide_standards/sql/templates/template_cte.sql`
 
 ## 📋 Contents
 

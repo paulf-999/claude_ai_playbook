@@ -3,7 +3,7 @@ paths:
   - "**/Dockerfile*"
   - "**/docker-compose*.yml"
 ---
-<!-- version: 1.1.3 -->
+<!-- version: 1.1.4 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-10 -->
 <!-- miss_cost: medium — images that fail review or bloat -->
@@ -14,5 +14,5 @@ paths:
 
 ## 📋 Structure
 
-- [**Fundamentals**](../../../_rules_lazy_load/style_guide_standards/infra/docker/fundamentals.md) — Base images, Dockerfile structure, naming conventions
-- [**Advanced Techniques**](../../../_rules_lazy_load/style_guide_standards/infra/docker/advanced.md) — Layer optimisation, security, .dockerignore, multi-stage builds
+- [**Fundamentals**](docker/fundamentals.md) — Base images, Dockerfile structure, naming conventions
+- [**Advanced Techniques**](docker/advanced.md) — Layer optimisation, security, .dockerignore, multi-stage builds
