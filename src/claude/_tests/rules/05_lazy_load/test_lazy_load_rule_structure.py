@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-10
-# Version:           1.5.0
+# Version:           1.5.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -34,6 +34,7 @@ from _shared_paths import (
 
 PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
 STYLE_DIR = Path("style_guide_standards")
+CONFIG_DIR = Path("claude_config")
 
 # Rule path (relative to rules/04_path_scoped/ or _rules_lazy_load/, or style_guide_standards/ for any style guide)
 # -> H2 headings it must keep, emoji stripped.
@@ -44,7 +45,7 @@ RULES: dict[Path, list[str]] = {
     STYLE_DIR / "infra" / "ansible.md": ["Child pages", "Repo structure", "Naming conventions", "Linting"],
     STYLE_DIR / "infra" / "terraform.md": ["Child pages", "Core principles"],
     STYLE_DIR / "python.md": ["Naming conventions", "Error handling", "Docstrings", "Child files"],
-    Path("mcp_trust_model.md"): ["Core principle", "Injection attack patterns", "Secure MCP practices"],
+    CONFIG_DIR / "mcp_trust_model.md": ["Core principle", "Injection attack patterns", "Secure MCP practices"],
     STYLE_DIR / "dbt.md": ["Child pages", "Core Principles", "Model Acceptance Checklist"],
     STYLE_DIR / "utilities" / "mermaid.md": ["Structure"],
     STYLE_DIR / "infra" / "docker.md": ["Structure"],

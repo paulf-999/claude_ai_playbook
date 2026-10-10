@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2025-11-15 -->
 <!-- updated: 2026-10-10 -->
 # 🔄 Rule Lifecycle
@@ -26,7 +26,7 @@ Use the two numbers in `_admin/_audits/audit_rule_usage.md`, read against the ta
 
 ### 📌 Promotion example
 
-**MCP trust model** shows where the line sits: it stays lazy at `_rules_lazy_load/mcp_trust_model.md`.
+**MCP trust model** shows where the line sits: it stays lazy at `_rules_lazy_load/claude_config/mcp_trust_model.md`.
 
 - **High cost:** it prevents prompt injection, so a miss matters.
 - **Low applied %:** it's only needed in sessions that use MCP tools, so it isn't applied in half of sessions.

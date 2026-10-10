@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-10
-# Version:           1.7.0
+# Version:           1.7.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -254,7 +254,7 @@ def test_triggers_added_on_2026_10_01_stay():
         f"rules/04_path_scoped/{STYLE_GUIDES}/python.md": "paths",
         f"rules/04_path_scoped/{STYLE_GUIDES}/bash.md": "paths",
         "_style_guide_standards/jira.md": "pointer",
-        "_rules_lazy_load/efficiency_lazy_load/latency_optimisation.md": "pointer",
+        "_rules_lazy_load/claude_config/claude_cost/latency_optimisation.md": "pointer",
     }
     files = installed_rule_files(CLAUDE_DIR)
     for installed, kind in expected.items():

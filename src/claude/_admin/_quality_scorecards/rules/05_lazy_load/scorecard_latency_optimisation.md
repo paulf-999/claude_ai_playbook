@@ -18,5 +18,5 @@
 
 ## 🔗 Related files
 
-- `src/claude/rules/_rules_lazy_load/efficiency_lazy_load/latency_optimisation.md` — the rule being scored
+- `src/claude/rules/_rules_lazy_load/claude_config/claude_cost/latency_optimisation.md` — the rule being scored
 - `src/claude/_tests/rules/05_lazy_load/test_latency_optimisation.py` — Test Coverage dimension

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-10
-# Version:           2.5.0
+# Version:           2.5.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -138,13 +138,13 @@ def test_no_orphaned_lazy_load_files():
 # Path-scoped entry points (sql.md, testing.md, ...) live in rules/04_path_scoped/ and load through paths:,
 # so only the on-demand entry points are listed here, by installed path.
 ENTRY_POINT_RELATIVE_PATHS = {
-    "_rules_lazy_load/automation_lazy_load/automation_controls.md",
-    "_rules_lazy_load/efficiency_lazy_load/delegating_to_subagent.md",
-    "_rules_lazy_load/automation_lazy_load/hooks_decision_framework.md",
-    "_rules_lazy_load/efficiency_lazy_load/latency_optimisation.md",
-    "_rules_lazy_load/mcp_trust_model.md",
-    "_rules_lazy_load/efficiency_lazy_load/response_standards_enforcement.md",
-    "_rules_lazy_load/automation_lazy_load/turn_budgets.md",
+    "_rules_lazy_load/claude_config/automation_controls.md",
+    "_rules_lazy_load/claude_config/delegating_to_subagent.md",
+    "_rules_lazy_load/claude_config/hooks_decision_framework.md",
+    "_rules_lazy_load/claude_config/claude_cost/latency_optimisation.md",
+    "_rules_lazy_load/claude_config/mcp_trust_model.md",
+    "_rules_lazy_load/claude_config/response_standards_enforcement.md",
+    "_rules_lazy_load/claude_config/claude_cost/turn_budgets.md",
     "_rules_lazy_load/org.md",
     "_style_guide_standards/jira.md",
     "_style_guide_standards/utilities/datetime.md",

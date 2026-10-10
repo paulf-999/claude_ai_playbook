@@ -1,4 +1,4 @@
-<!-- version: 2.0.2 -->
+<!-- version: 2.0.3 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-10 -->
 # 🤝 Claude When to Delegate
@@ -20,4 +20,4 @@
 
 ## 🤖 Delegating to a sub-agent
 
-- **Read on demand:** `~/.claude/_rules_lazy_load/efficiency_lazy_load/delegating_to_subagent.md` — before spawning a sub-agent, for the decision table, constraints and token-cost breakeven.
+- **Read on demand:** `~/.claude/_rules_lazy_load/claude_config/delegating_to_subagent.md` — before spawning a sub-agent, for the decision table, constraints and token-cost breakeven.
