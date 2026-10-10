@@ -90,7 +90,6 @@
 ## Reference
 
 - **Format guide:** This file (`_templates/TODO.md.template`)
-- **Rotation process:** `~/.claude/_reference/TODO_rotation_process.md`
 - **Active TODO:** `~/.claude/TODO.md`
 - **Archive index:** `~/.claude/_archives/TODO_archive.md`
 

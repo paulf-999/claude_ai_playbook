@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-10
-# Version:           2.2.0
+# Version:           3.0.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -12,8 +12,7 @@
 
 - **Layout:** no files at the ``rules/`` root, no retired ``04_claude_reference/`` tier,
   ``aliases.md`` at the config root, and no paths dissolved in the 2026-08 restructure.
-- **Import graph:** every import in CLAUDE.md or ``rules/`` resolves, and no import chain
-  from CLAUDE.md reaches ``_reference/``.
+- **Import graph:** every import in CLAUDE.md or ``rules/`` resolves.
 
 Rules load natively from ``rules/``, so CLAUDE.md imports only memory and aliases; a stray
 ``@`` import elsewhere never loads.
@@ -26,7 +25,6 @@ from pathlib import Path
 
 from _shared_paths import CLAUDE_DIR, CLAUDE_MD, LAZY_RULES_NAME, RULES_DIR, native_rule_files
 
-REFERENCE_DIR = CLAUDE_DIR / "_reference"
 IMPORT_LINE = re.compile(r"^@~/[^/\s]+/(\S+)$", re.M)
 
 # rules/ root holds only tier folders — any file there would load every session
@@ -116,6 +114,13 @@ def test_behaviour_subdir_dissolved():
     assert not (RULES_DIR / "behaviour").is_dir(), "rules/behaviour/ should not exist"
 
 
+def test_reference_dir_retired():
+    """_reference/ was retired on 2026-10-10 (#344), and its docs now live in docs/, which isn't installed."""
+    assert not (CLAUDE_DIR / "_reference").exists(), (
+        "_reference/ should not exist — background docs belong in docs/; delete any old folder on a live install"
+    )
+
+
 def test_dissolved_paths_absent():
     """Paths removed during restructure must not reappear."""
     for path in DISSOLVED_PATHS:
@@ -140,38 +145,3 @@ def test_import_parser_reads_any_config_dir():
     """The parser handles .claude and claude prefixes, and skips inline mentions."""
     text = "@~/.claude/rules/a.md\n@~/claude/rules/b.md\nsee @~/claude/c.md\n"
     assert import_targets(text) == ["rules/a.md", "rules/b.md"], f"got {import_targets(text)}"
-
-
-def always_on_import_graph() -> dict[Path, Path | None]:
-    """Walk every @import chain from CLAUDE.md and return each reached file with its importer.
-
-    :return: Map of each reachable file to the file that imported it (None for CLAUDE.md).
-    :rtype: dict[Path, Path | None]
-    """
-    reached: dict[Path, Path | None] = {CLAUDE_MD: None}
-    queue = [CLAUDE_MD]
-    while queue:
-        current = queue.pop()
-        for target in extract_import_paths(current):
-            if target not in reached and target.exists():
-                reached[target] = current
-                queue.append(target)
-    return reached
-
-
-def test_always_on_files_do_not_import_reference():
-    """_reference/ is read on demand — no @import chain from CLAUDE.md may reach it.
-
-    Its architecture docs are background reading, and every import adds the full
-    file to every session's context.
-    """
-    reached = always_on_import_graph()
-    offenders = sorted(
-        f"{reached[path].relative_to(CLAUDE_DIR)} -> {path.relative_to(CLAUDE_DIR)}"
-        for path in reached
-        if REFERENCE_DIR in path.parents
-    )
-    assert not offenders, (
-        f"{len(offenders)} @import(s) pull _reference/ into every session — replace each with a "
-        f"'Read on demand' pointer: {offenders}"
-    )

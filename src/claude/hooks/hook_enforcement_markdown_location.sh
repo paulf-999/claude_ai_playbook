@@ -1,10 +1,9 @@
 #!/bin/bash
-# version: 2.0.1
+# version: 3.0.0
 # created: 2026-08-28
-# updated: 2026-10-02
+# updated: 2026-10-10
 # PostToolUse hook — checks where markdown files written inside the Claude config dir live.
 # Root: only the known top-level files may sit at the config root (see claude_directory_structure.md).
-# Reference: _reference/ files are snake_case topics with no date, or _<aspect>.md children of one topic.
 # Every other folder has its own conventions, and files outside the config dir are ignored.
 # The edit has already happened, so exit 2 feeds the fix back to Claude rather than blocking.
 
@@ -38,12 +37,7 @@ if [[ "${RELATIVE_PATH}" != */* ]]; then
   for allowed in "${ROOT_FILES[@]}"; do
     [[ "${RELATIVE_PATH}" == "${allowed}" ]] && exit 0
   done
-  PROBLEM="Markdown files don't belong at the config root — move it to _reference/, _docs/ or another folder."
-elif [[ "${RELATIVE_PATH}" == _reference/* ]]; then
-  [[ "${RELATIVE_PATH}" == */README.md ]] && exit 0
-  [[ "${RELATIVE_PATH}" =~ ^_reference/[a-z][a-z0-9_]*\.md$ ]] && exit 0
-  [[ "${RELATIVE_PATH}" =~ ^_reference/[a-z][a-z0-9_]*/_[a-z0-9_]+\.md$ ]] && exit 0
-  PROBLEM="Reference files are _reference/<topic>.md (snake_case, no date) or _reference/<topic>/_<aspect>.md."
+  PROBLEM="Markdown files don't belong at the config root — move it to _docs/ or another folder."
 else
   exit 0
 fi

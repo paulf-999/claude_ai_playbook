@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-06
-# Version:           2.1.0
+# Date updated:      2026-10-10
+# Version:           3.0.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -11,8 +11,7 @@
 """Test: hook_enforcement_markdown_location.sh.
 
 The hook checks where markdown files written inside the Claude config dir live:
-only known top-level files may sit at the config root, and ``_reference/`` files
-must be snake_case topics with no date. Everything else is left alone. Each test
+only known top-level files may sit at the config root. Everything else is left alone. Each test
 sends the same JSON payload Claude Code sends on stdin, because the old hook
 read a path argument Claude Code never passes and so never fired.
 """
@@ -63,46 +62,6 @@ def config_path(relative: str) -> str:
     return str(CLAUDE_DIR / relative)
 
 
-def test_valid_reference_file_passes():
-    """A snake_case topic in _reference/ is allowed silently."""
-    result = run_hook(config_path("_reference/claude_code_automation.md"))
-    assert result.returncode == 0, f"valid reference file should pass, got {result.returncode}: {result.stderr}"
-    assert result.stderr == "", f"valid reference file should give no message, got {result.stderr}"
-
-
-def test_reference_child_file_passes():
-    """A _<aspect>.md child under a reference topic folder is allowed."""
-    result = run_hook(config_path("_reference/claude_config_architecture/_security.md"))
-    assert result.returncode == 0, f"reference child file should pass, got {result.returncode}: {result.stderr}"
-
-
-def test_reference_readme_passes():
-    """README.md in _reference/ is allowed."""
-    result = run_hook(config_path("_reference/README.md"))
-    assert result.returncode == 0, f"_reference/README.md should pass, got {result.returncode}: {result.stderr}"
-
-
-def test_dated_reference_file_is_flagged():
-    """Reference files carry no date, so a date prefix is flagged back to Claude."""
-    result = run_hook(config_path("_reference/2026_10_01_topic.md"))
-    assert result.returncode == 2, f"dated reference file should exit 2, got {result.returncode}"
-    assert "no date" in result.stderr, f"message should explain the no-date rule, got {result.stderr}"
-    assert STYLE_RULE in result.stderr, f"message should point to {STYLE_RULE}, got {result.stderr}"
-
-
-def test_badly_named_reference_file_is_flagged():
-    """Hyphens or capitals in a reference file name are flagged."""
-    for name in ("claude-code-automation.md", "ClaudeCode.md"):
-        result = run_hook(config_path(f"_reference/{name}"))
-        assert result.returncode == 2, f"_reference/{name} should exit 2, got {result.returncode}"
-
-
-def test_reference_child_without_prefix_is_flagged():
-    """A file inside a reference topic folder needs the _ child prefix."""
-    result = run_hook(config_path("_reference/claude_config_architecture/security.md"))
-    assert result.returncode == 2, f"unprefixed reference child should exit 2, got {result.returncode}"
-
-
 def test_known_root_files_pass():
     """The top-level markdown files the config defines are allowed at the root."""
     for name in ("CLAUDE.md", "README.md", "TODO.md", "aliases.md", "settings_json_readme.md"):
@@ -116,6 +75,7 @@ def test_stray_root_markdown_is_flagged():
     assert result.returncode == 2, f"stray root markdown should exit 2, got {result.returncode}"
     assert "config root" in result.stderr, f"message should say the root is the problem, got {result.stderr}"
     assert "random_note.md" in result.stderr, f"message should name the file, got {result.stderr}"
+    assert STYLE_RULE in result.stderr, f"message should point to {STYLE_RULE}, got {result.stderr}"
 
 
 def test_other_config_folders_are_ignored():

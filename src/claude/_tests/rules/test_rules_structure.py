@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-10
-# Version:           2.5.1
+# Version:           2.5.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -14,7 +14,7 @@
   or the metadata comment lines.
 - **Headings:** an H1 and every ``##`` heading carry an emoji, per writing_style.md.
 - **Context budget:** no Related section, and a Contents section only with 3+ real headings,
-  in ``rules/``, ``_rules_lazy_load/`` and ``_reference/`` (#120, #121).
+  in ``rules/``, ``_rules_lazy_load/`` and the style guides (#120, #121).
 
 ``test_rules_structure_layout.py`` covers where files live and how they import each other.
 """
@@ -25,7 +25,6 @@ from pathlib import Path
 
 from _shared_paths import CLAUDE_DIR, LAZY_RULES_DIR, RULES_DIR, STYLE_GUIDES_NAME, native_rule_files
 
-REFERENCE_DIR = CLAUDE_DIR / "_reference"
 STYLE_GUIDES_DIR = CLAUDE_DIR / STYLE_GUIDES_NAME  # repo only: the install splits it into rules/ and the lazy folder
 RELATED_HEADING = re.compile(r"^## .*Related", re.MULTILINE)
 REFERENCES_SECTION = re.compile(r"^## .*References.*\n(?:(?!## ).*\n?)*", re.MULTILINE)
@@ -103,9 +102,9 @@ def has_internal_link_section(text: str) -> bool:
 
 
 def imported_content_files() -> list[Path]:
-    """Return every .md file under rules/, _rules_lazy_load/, the repo's style guides and _reference/ that can load.
+    """Return every .md file under rules/, _rules_lazy_load/ and the repo's style guides that can load.
 
-    Wider than rule_files(): includes 05_lazy_load/ and _reference/, since a
+    Wider than rule_files(): includes _rules_lazy_load/, since a
     lazy-loaded rule costs the same context once it is read. Excludes READMEs
     (never imported — they are where Related links now live).
 
@@ -114,8 +113,7 @@ def imported_content_files() -> list[Path]:
     """
     return [
         md_file
-        for md_file in [*native_rule_files(RULES_DIR), *LAZY_RULES_DIR.rglob("*.md"), *STYLE_GUIDES_DIR.rglob("*.md"),
-                        *REFERENCE_DIR.rglob("*.md")]
+        for md_file in [*native_rule_files(RULES_DIR), *LAZY_RULES_DIR.rglob("*.md"), *STYLE_GUIDES_DIR.rglob("*.md")]
         if md_file.name != "README.md"
     ]
 

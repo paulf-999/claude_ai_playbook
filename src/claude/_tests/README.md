@@ -48,7 +48,7 @@ Tests for Claude Code hook scripts in `~/.claude/hooks/`.
 |---|---|---|---|---|---|
 | `test_enforcement_mcp_stale_settings.py` | `hook_enforcement_mcp_stale_settings.sh` — warns once when the disabled MCP servers change mid-session | 9/10 | 2026-09-18 | 2026-10-01 | 2.0.3 |
 | `test_enforcement_naming_convention.py` | `hook_enforcement_naming_convention.sh` — denies new config files whose names break the compliance checks, and lets everything else through | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.3 |
-| `test_enforcement_markdown_location.py` | `hook_enforcement_markdown_location.sh` — flags stray markdown at the config root and badly named `_reference/` files, using the real stdin payload | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
+| `test_enforcement_markdown_location.py` | `hook_enforcement_markdown_location.sh` — flags stray markdown at the config root, using the real stdin payload | 9/10 | 2026-08-28 | 2026-10-10 | 3.0.0 |
 
 ### `hooks/response_standards/`
 
@@ -67,7 +67,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_rules_structure.py` | Per-file format across all `rules/` files — line limits, H1 and H2 heading emoji, trailing newlines, and no Related or unearned Contents sections | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
-| `test_rules_structure_layout.py` | Where `rules/` files live, every import in `CLAUDE.md` and `rules/` resolves, and no import chain reaches `_reference/` | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
+| `test_rules_structure_layout.py` | Where `rules/` files live, every import in `CLAUDE.md` and `rules/` resolves | 9/10 | 2026-10-01 | 2026-10-10 | 3.0.0 |
 
 ### `rules/01_essentials/`
 
