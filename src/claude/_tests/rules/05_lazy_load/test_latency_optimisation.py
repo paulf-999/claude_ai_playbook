@@ -2,13 +2,13 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-17
 # Date updated:      2026-10-10
-# Version:           2.1.1
+# Version:           2.1.2
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Content tests for _rules_lazy_load/efficiency_lazy_load/latency_optimisation.md.
+"""Content tests for _rules_lazy_load/claude_config/claude_cost/latency_optimisation.md.
 
 Guards the file's name and opening, and the guidance it sets: tune latency only
 when it's blocking, use effort as the lever, measure first, and revert if quality
@@ -21,7 +21,7 @@ import re
 
 from _shared_paths import LAZY_RULES_DIR
 
-RULE_FILE = LAZY_RULES_DIR / "efficiency_lazy_load" / "latency_optimisation.md"
+RULE_FILE = LAZY_RULES_DIR / "claude_config" / "claude_cost" / "latency_optimisation.md"
 
 
 def content() -> str:

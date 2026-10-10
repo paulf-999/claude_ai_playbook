@@ -1,4 +1,4 @@
-<!-- version: 2.5.0 -->
+<!-- version: 2.5.1 -->
 <!-- created: 2026-09-28 -->
 <!-- updated: 2026-10-10 -->
 # 🗂️ Claude Config Metadata
@@ -46,7 +46,7 @@ Each field sits on its own line, in the order version → created → updated, w
 - **Single source of version:** skills and agents drop `version:` from frontmatter; a skill's `skill.contract.yaml` version must match its header.
 - **Line limit:** `paths:` frontmatter and every metadata comment line (these 3 plus the usage fields below) don't count toward the 110-line rule limit.
 - **Token cost — zero:** Claude Code strips HTML comments from `@`-imported files too, verified 2026-09-28 (300 header lines imported → no change in input tokens, and a hidden marker was invisible to the model).
-- **Tests:** tests keep their own header — see `testing/_test_metadata.md`.
+- **Tests:** tests keep their own header — see `testing_lazy_load/_test_metadata.md`.
 
 ---
 

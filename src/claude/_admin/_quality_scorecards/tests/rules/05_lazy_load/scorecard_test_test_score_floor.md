@@ -20,4 +20,4 @@
 
 - `src/claude/_tests/rules/05_lazy_load/test_test_score_floor.py` — the test being scored
 - `src/claude/_tests/rules/05_lazy_load/test_test_metadata.py` — the header helpers it reuses
-- `src/claude/rules/_rules_lazy_load/testing/_test_metadata.md` — the standard the test enforces
+- `src/claude/rules/_rules_lazy_load/testing_lazy_load/_test_metadata.md` — the standard the test enforces

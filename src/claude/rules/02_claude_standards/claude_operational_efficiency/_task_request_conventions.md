@@ -1,4 +1,4 @@
-<!-- version: 1.2.3 -->
+<!-- version: 1.2.4 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-10 -->
 # 🎯 Task Request Conventions
@@ -68,6 +68,6 @@ Convention for "add to TODOs" requests — when a user says "add to TODOs" or "a
 
 ## 🪝 Hooks decision framework
 
-**Read on demand:** `~/.claude/_rules_lazy_load/automation_lazy_load/hooks_decision_framework.md` — before proposing any hook or automation.
+**Read on demand:** `~/.claude/_rules_lazy_load/claude_config/hooks_decision_framework.md` — before proposing any hook or automation.
 
 ROI criteria and guardrails before proposing automation. When considering hook proposals, evaluate using the framework to prevent low-ROI automation.

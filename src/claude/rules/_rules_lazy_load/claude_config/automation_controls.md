@@ -1,6 +1,6 @@
-<!-- version: 1.1.2 -->
+<!-- version: 1.1.3 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-02 -->
+<!-- updated: 2026-10-10 -->
 <!-- miss_cost: medium — uncapped /loop, /batch or /goal runs; high once it has a trigger -->
 <!-- loading: lazy — only matters when setting up /loop, /batch or /goal, which few sessions do -->
 # ⚙️ Automation Controls
@@ -9,7 +9,7 @@
 
 Automation features are powerful but risky — these rules protect against costly mistakes.
 
-- **Turn caps for other non-interactive runs:** see [turn_budgets.md](turn_budgets.md).
+- **Turn caps for other non-interactive runs:** see [turn_budgets.md](claude_cost/turn_budgets.md).
 
 ## 📋 Contents
 

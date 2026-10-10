@@ -1,4 +1,4 @@
-<!-- version: 1.3.3 -->
+<!-- version: 1.3.4 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-10 -->
 <!-- applies_to: * -->
@@ -25,7 +25,7 @@
 
 - **Don't parallelise for its own sake:** prefer targeted, scoped operations over broad sweeps where the output would be equivalent.
   - **Note:** parallelise only where it reduces real wait time or produces meaningfully better results.
-- **Read on demand:** `~/.claude/_rules_lazy_load/efficiency_lazy_load/latency_optimisation.md` — when slow or costly API calls are blocking the task.
+- **Read on demand:** `~/.claude/_rules_lazy_load/claude_config/claude_cost/latency_optimisation.md` — when slow or costly API calls are blocking the task.
 
 ---
 
@@ -47,7 +47,7 @@
 
 ## 🔄 Turn budgets
 
-- **Read on demand:** `~/.claude/_rules_lazy_load/automation_lazy_load/turn_budgets.md` — before any non-interactive run (skills, automation, CI) that needs a `--max-turns` cap.
+- **Read on demand:** `~/.claude/_rules_lazy_load/claude_config/claude_cost/turn_budgets.md` — before any non-interactive run (skills, automation, CI) that needs a `--max-turns` cap.
 
 ---
 

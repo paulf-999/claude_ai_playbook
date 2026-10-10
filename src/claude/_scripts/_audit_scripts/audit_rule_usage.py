@@ -95,8 +95,8 @@ DEFAULT_APPLIES_TO = {
     "style_guide_standards/infra/docker.md": ["**/Dockerfile*", "**/docker-compose*.yml"],
     "style_guide_standards/utilities/makefile.md": ["**/Makefile", "**/*.mk"],
     "style_guide_standards/utilities/mermaid.md": ["**/*.mmd"],
-    "efficiency_lazy_load/response_standards_enforcement.md": ["**/hook_style_guide_response_standards*.sh"],
-    "automation_lazy_load/hooks_decision_framework.md": ["**/hooks/hook_*.sh"],
+    "claude_config/response_standards_enforcement.md": ["**/hook_style_guide_response_standards*.sh"],
+    "claude_config/hooks_decision_framework.md": ["**/hooks/hook_*.sh"],
 }
 
 

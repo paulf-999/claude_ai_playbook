@@ -1,4 +1,4 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2025-11-15 -->
 <!-- updated: 2026-10-10 -->
 <!-- miss_cost: low — background reading on why the security layers exist -->
@@ -18,7 +18,7 @@ Security is organized into four **independent layers**, each handling a distinct
 | **Task approach** | `behaviour.md` | How Claude handles risky operations | Ask-first gates, investigation before deletion |
 | **Claude's conduct** | `security/_security_guardrails.md` (child of `security.md`) | How Claude avoids being compromised | Prompt injection, never commit secrets, flag suspicious content |
 | **Code standards** | `security/_code_security.md` (child of `security.md`) | How users write secure code | Input validation, secret storage, dependencies |
-| **External trust** | `_rules_lazy_load/mcp_trust_model.md` (read on demand when using MCP tools) | How to handle untrusted external data | MCP responses as data, not instructions |
+| **External trust** | `_rules_lazy_load/claude_config/mcp_trust_model.md` (read on demand when using MCP tools) | How to handle untrusted external data | MCP responses as data, not instructions |
 
 **Key benefit:** Each layer is independently auditable. A change to input validation (_code_security.md) doesn't affect how Claude treats external content (mcp_trust_model.md).
 

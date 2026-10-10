@@ -1,4 +1,4 @@
-<!-- version: 2.1.2 -->
+<!-- version: 2.1.3 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-10 -->
 <!-- applies_to: * -->
@@ -65,7 +65,7 @@ Flag any of the following before writing code — surface cost, maintenance impa
 
 - 💰 **LLM API calls** — ongoing token cost per trigger; must justify value vs. cost.
 - 🪝 **New hooks** — hooks bind to the Claude Code API and accumulate a test and registration surface; any API change requires updates across all registered hooks.
-  - **Read on demand:** `~/.claude/_rules_lazy_load/automation_lazy_load/hooks_decision_framework.md` — ROI criteria to apply before proposing one.
+  - **Read on demand:** `~/.claude/_rules_lazy_load/claude_config/hooks_decision_framework.md` — ROI criteria to apply before proposing one.
 - ⚙️ **New automation pipelines** — multiple components with their own failure modes and maintenance surface.
 - 📦 **New dependencies or frameworks** — security patches, version pinning, and upgrade overhead.
 - 🗂️ **Multi-file additions for a single concern** — a sign the solution is over-scoped.
