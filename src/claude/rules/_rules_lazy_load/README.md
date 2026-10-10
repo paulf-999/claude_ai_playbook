@@ -1,6 +1,6 @@
 # _rules_lazy_load
 
-**Purpose:** Rules read on demand, kept outside `rules/` so Claude Code never loads them by itself. These reduce baseline context cost while remaining discoverable and accessible when needed.
+**Purpose:** Rules read on demand, kept under `rules/` in the repo and moved beside it on install, so Claude Code never loads them by itself. These reduce baseline context cost while remaining discoverable and accessible when needed.
 
 **Path-scoped rules:** rules with `paths:` frontmatter live in `rules/04_path_scoped/` instead, because Claude Code reads `paths:` only there; their bulky children stay here, at the same sub-path.
 
@@ -29,7 +29,7 @@
 
 Files in this directory follow the **lazy-load by default** principle (from `guiding_principles.md`):
 
-- ✅ **Never loaded automatically** — outside `rules/`, so not loaded at session start, preserving token budget
+- ✅ **Never loaded automatically** — the install moves this folder out of `rules/`, so it isn't loaded at session start, preserving token budget
 - ✅ **On-demand** — read explicitly when working in that domain
 - ✅ **Discoverable** — included in this README and referenced from related rules
 - ✅ **Context-efficient** — each file costs ~50-200 tokens at load time; loading only what's needed preserves reasoning capacity

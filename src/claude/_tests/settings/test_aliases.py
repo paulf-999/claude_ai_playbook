@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-06
-# Version:           2.2.0
+# Date updated:      2026-10-10
+# Version:           2.2.1
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -20,7 +20,7 @@ import re
 
 import pytest
 
-from _shared_paths import ALIASES_FILE, CLAUDE_DIR
+from _shared_paths import ALIASES_FILE, CLAUDE_DIR, resolve_config_path
 
 COLUMNS = ["Input", "Theme", "Status", "Meaning"]
 VALID_STATUSES = {"Ready", "Testing"}
@@ -110,7 +110,7 @@ def test_referenced_rule_paths_exist():
     """Every rule path a meaning names exists, so links can't rot."""
     paths = {path for alias in load_aliases() for path in re.findall(RULE_PATH, alias["meaning"])}
     assert paths, "expected at least one meaning to name a rules/ or _rules_lazy_load/ path"
-    missing = sorted(path for path in paths if not (CLAUDE_DIR / path).is_file())
+    missing = sorted(path for path in paths if not resolve_config_path(CLAUDE_DIR, path).is_file())
     assert not missing, f"aliases.md names rule files that don't exist: {missing}"
 
 

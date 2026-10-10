@@ -10,7 +10,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR, resolve_config_path
 
 POINTER = re.compile(r"\*\*Read on demand:\*\* `~/[^/]+/([^`]+)`")
 
@@ -29,7 +29,7 @@ def child_paths(rule_file: Path) -> list[Path]:
         if stripped.startswith("@~/") and "/" in stripped[len("@~/"):]:
             paths.append(CLAUDE_DIR / stripped[len("@~/"):].split("/", 1)[1])
         elif pointer := POINTER.search(stripped):
-            paths.append(CLAUDE_DIR / pointer.group(1))
+            paths.append(resolve_config_path(CLAUDE_DIR, pointer.group(1)))
     return paths
 
 
@@ -48,6 +48,6 @@ def resolved_content(rule_file: Path) -> str:
         if stripped.startswith("@~/") and "/" in stripped[len("@~/"):]:
             target = CLAUDE_DIR / stripped[len("@~/"):].split("/", 1)[1]
         elif pointer := POINTER.search(stripped):
-            target = CLAUDE_DIR / pointer.group(1)
+            target = resolve_config_path(CLAUDE_DIR, pointer.group(1))
         parts.append(target.read_text(encoding="utf-8") if target and target.exists() else line)
     return "\n".join(parts)

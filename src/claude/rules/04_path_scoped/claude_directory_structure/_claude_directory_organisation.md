@@ -3,9 +3,9 @@ paths:
   - "**/.claude/**"
   - "**/claude/**"
 ---
-<!-- version: 2.0.1 -->
+<!-- version: 2.0.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 # 🏗️ Directory Organisation — `~/.claude/`
 
 **Purpose:** Define what directories exist in the Claude config, their purpose, and the distinction between user-created and auto-generated directories.
@@ -32,7 +32,7 @@ paths:
 
 **Tier 2: Core rules (rules/, _rules_lazy_load/)**
 - `rules/`: tiers `01_essentials/` to `03_authoring_guidelines/` load every session, and `04_path_scoped/` loads with matching files — Claude Code reads this folder natively, so it has no underscore
-- `_rules_lazy_load/`: rules read on demand, plus the tier READMEs — see `claude_rule_loading_strategy.md` for what belongs where
+- `_rules_lazy_load/`: rules read on demand, plus the tier READMEs — kept under `rules/` in the repo and moved beside it on install; see `claude_rule_loading_strategy.md` for what belongs where
 
 **Tier 3: Infrastructure (_tests/, _templates/, _reference/, _docs/)**
 - Tests, templates, evergreen reference docs, and additional documentation

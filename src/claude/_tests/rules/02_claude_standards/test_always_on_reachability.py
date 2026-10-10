@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
-# Date updated:      2026-10-06
-# Version:           3.1.0
+# Date updated:      2026-10-10
+# Version:           3.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -12,7 +12,8 @@
 
 Claude Code loads every ``.md`` under ``rules/`` on its own: tiers 01–03 in every session,
 and any file with ``paths:`` frontmatter only when a matching file is open. Read-on-demand
-rules live in ``_rules_lazy_load/``, outside ``rules/``. Each check below names the folder
+rules live in ``_rules_lazy_load/``: under ``rules/`` in the repo, moved beside it on install,
+so scans of ``rules/`` skip it. Each check below names the folder
 it guards, so a failure says which tier broke. ``test_rule_reachability.py`` proves the
 detector itself on fake rule trees.
 """
@@ -22,7 +23,7 @@ import re
 from functools import cache
 
 from _rule_reachability import find_native_load_issues, has_paths_frontmatter
-from _shared_paths import CLAUDE_DIR, CLAUDE_MD, LAZY_RULES_DIR, RULES_DIR
+from _shared_paths import CLAUDE_DIR, CLAUDE_MD, LAZY_RULES_DIR, RULES_DIR, native_rule_files
 
 ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines")
 
@@ -76,7 +77,7 @@ def test_claude_md_imports_aliases():
 
 
 def test_lazy_rules_live_outside_rules():
-    """The read-on-demand folder exists beside rules/ and holds rule files."""
+    """The read-on-demand folder exists and holds rule files."""
     assert any(LAZY_RULES_DIR.rglob("*.md")), f"no rule files under {LAZY_RULES_DIR}"
 
 
@@ -101,7 +102,7 @@ def startup_files() -> list[str]:
         pending += STARTUP_IMPORT.findall(path.read_text())
     native = sorted(
         p.relative_to(CLAUDE_DIR).as_posix()
-        for p in RULES_DIR.rglob("*.md") if not has_paths_frontmatter(p.read_text())
+        for p in native_rule_files(RULES_DIR) if not has_paths_frontmatter(p.read_text())
     )
     return seen + [n for n in native if n not in seen]
 

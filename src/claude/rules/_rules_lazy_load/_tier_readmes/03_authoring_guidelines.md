@@ -38,7 +38,7 @@ Authoring guidelines follow a **progressive maturity model**:
 - **`01_essentials/`** — Foundational rules applied every session (guiding principles, behaviour, security, testing)
 - **`02_claude_standards/`** — Quality gates and operational standards (behaviour, git, testing, security guardrails)
 - **`04_path_scoped/`** — Domain-specific rules (SQL, Airflow, Terraform, etc.); loaded with matching files
-- **`_rules_lazy_load/`** — Beside `rules/`; read on demand only
+- **`_rules_lazy_load/`** — Under `rules/` in the repo and beside it once installed; read on demand only
 
 ---
 

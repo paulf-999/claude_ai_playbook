@@ -45,6 +45,7 @@ install_claude_files() {
     backup_target_dir "copy"     # from claude_file_utils.sh — never move: the target holds runtime data
     copy_claude_files            # from claude_file_utils.sh
     flatten_skills               # from claude_file_utils.sh
+    relocate_lazy_rules          # from claude_file_utils.sh — on-demand rules sit beside rules/, not in it
     prune_removed_files          # from claude_file_utils.sh — drops files the repo removed since the last install
     rewrite_config_paths         # from claude_file_utils.sh — @ imports can't read CLAUDE_CONFIG_DIR
     migrate_old_rules_layout     # from claude_file_utils.sh — after pruning, so only your own files are left in _rules/

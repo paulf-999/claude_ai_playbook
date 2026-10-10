@@ -22,7 +22,7 @@
 - `src/claude/_tests/rules/01_essentials/test_guiding_principles.py` — Test Coverage dimension
 - `src/claude/rules/03_authoring_guidelines/authoring_rules.md` — Evidence of Need dimension
 - `src/claude/rules/02_claude_standards/git/_concurrent_sessions.md` — Evidence of Need dimension
-- `src/claude/_rules_lazy_load/hooks_decision_framework.md` — Evidence of Need dimension
+- `src/claude/rules/_rules_lazy_load/hooks_decision_framework.md` — Evidence of Need dimension
 - `src/claude/rules/01_essentials/claude_usage_standards/writing_style.md` — Structural Compliance dimension
 - `src/claude/rules/02_claude_standards/portable_paths.md` — Test Coverage dimension (the disclosed violation)
 

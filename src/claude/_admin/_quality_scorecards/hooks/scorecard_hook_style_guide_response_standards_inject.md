@@ -19,6 +19,6 @@
 ## 🔗 Related files
 
 - `src/claude/hooks/hook_style_guide_response_standards_inject.sh` — the hook being scored
-- `src/claude/_rules_lazy_load/response_standards_enforcement.md` — Evidence of Need dimension
+- `src/claude/rules/_rules_lazy_load/response_standards_enforcement.md` — Evidence of Need dimension
 - `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_inject.py` — Test Coverage dimension
 - `src/claude/rules/01_essentials/claude_response_standards.md` — the full rules the directive points to

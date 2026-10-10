@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Measure how often each rule applies to a session, and how often it was loaded.
 
-Reads Claude Code session transcripts and the rule folders (``rules/`` and the
-``_rules_lazy_load/`` beside it), then writes a markdown
+Reads Claude Code session transcripts and the rule folders (``rules/`` and
+``_rules_lazy_load/``, which sits beside it once installed and inside it in the repo), then writes a markdown
 report and appends one row per rule to a CSV history, so dates survive after old
 transcripts are deleted.
 
@@ -223,6 +223,32 @@ def header_globs(text: str) -> list[str]:
     return []
 
 
+def lazy_dir_for(config_dir: Path) -> Path:
+    """Find the on-demand rules folder: beside ``rules/`` once installed, inside it in the repo.
+
+    :param config_dir: The config folder.
+    :type config_dir: Path
+    :return: The ``_rules_lazy_load`` folder.
+    :rtype: Path
+    """
+    installed = config_dir / LAZY_FOLDER
+    return installed if installed.is_dir() else config_dir / "rules" / LAZY_FOLDER
+
+
+def config_path(config_dir: Path, rel: str) -> Path:
+    """Turn a rule key such as ``_rules_lazy_load/org.md`` into its file, in either layout.
+
+    :param config_dir: The config folder.
+    :type config_dir: Path
+    :param rel: Path relative to the installed config folder.
+    :type rel: str
+    :return: The file on disk.
+    :rtype: Path
+    """
+    head, _, rest = rel.partition("/")
+    return lazy_dir_for(config_dir) / rest if head == LAZY_FOLDER else config_dir / rel
+
+
 def token_count(config_dir: Path, rels: list[str]) -> int:
     """Estimate tokens as characters divided by four.
 
@@ -233,18 +259,18 @@ def token_count(config_dir: Path, rels: list[str]) -> int:
     :return: Estimated tokens.
     :rtype: int
     """
-    return sum(len((config_dir / rel).read_text(encoding="utf-8")) for rel in rels) // CHARS_PER_TOKEN
+    return sum(len(config_path(config_dir, rel).read_text(encoding="utf-8")) for rel in rels) // CHARS_PER_TOKEN
 
 
 def discover_rules(rules_dir: Path) -> list[Rule]:
-    """Find every entry-point rule in the rules/ tiers and in _rules_lazy_load/ beside it.
+    """Find every entry-point rule in the rules/ tiers and in _rules_lazy_load/.
 
     :param rules_dir: The ``rules`` folder.
     :type rules_dir: Path
     :return: Rules sorted by tier then path, each keyed by its path from the config folder.
     :rtype: list[Rule]
     """
-    config_dir, lazy_dir = rules_dir.parent, rules_dir.parent / LAZY_FOLDER
+    config_dir, lazy_dir = rules_dir.parent, lazy_dir_for(rules_dir.parent)
     tier_dirs = sorted(d for d in rules_dir.iterdir() if d.is_dir() and TIER_DIR.match(d.name))
     roots = tuple(tier_dirs) + ((lazy_dir,) if lazy_dir.is_dir() else ())
     rules = []
@@ -255,7 +281,11 @@ def discover_rules(rules_dir: Path) -> list[Rule]:
                 continue
             if is_child(path, tier_dir, tuple(r for r in roots if r != tier_dir)):
                 continue
-            rel = path.relative_to(config_dir).as_posix()
+            # Lazy rules are keyed by their installed path, so transcripts match in either layout
+            if tier_dir == lazy_dir:
+                rel = f"{LAZY_FOLDER}/{in_tier.as_posix()}"
+            else:
+                rel = path.relative_to(config_dir).as_posix()
             text = path.read_text(encoding="utf-8")
             scoped = bool(frontmatter_paths(text))
             if scoped or tier_dir == lazy_dir:

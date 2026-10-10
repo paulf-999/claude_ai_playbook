@@ -21,4 +21,4 @@
 - `src/claude/aliases.md` — the rule being scored
 - `src/claude/_tests/settings/test_aliases.py` — Test Coverage dimension
 - `src/claude/_tests/rules/test_aliases_behavior.py` — Test Coverage dimension
-- `src/claude/_rules_lazy_load/automation_controls.md` — Currency dimension
+- `src/claude/rules/_rules_lazy_load/automation_controls.md` — Currency dimension

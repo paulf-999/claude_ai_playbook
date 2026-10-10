@@ -21,7 +21,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules_lazy_load/automation_controls.md` — the rule being scored
+- `src/claude/rules/_rules_lazy_load/automation_controls.md` — the rule being scored
 - `src/claude/_tests/rules/05_lazy_load/test_automation_controls.py` — Test Coverage dimension
 - `src/claude/rules/02_claude_standards/claude_operational_efficiency.md` — Currency dimension (the real file the stale reference should point to)
 

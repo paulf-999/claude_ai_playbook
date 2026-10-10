@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-21
-# Date updated:      2026-10-06
-# Version:           1.3.0
+# Date updated:      2026-10-10
+# Version:           1.3.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -22,11 +22,11 @@ across every major section, per _test_metadata_complexity_scoring.md's
 """
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR, LAZY_RULES_DIR
 
 RULE_FILE = CLAUDE_DIR / "rules" / "02_claude_standards" / "git" / "_concurrent_sessions.md"
 GIT_MD = CLAUDE_DIR / "rules" / "02_claude_standards" / "git.md"
-TIER_README = CLAUDE_DIR / "_rules_lazy_load" / "_tier_readmes" / "02_claude_standards.md"
+TIER_README = LAZY_RULES_DIR / "_tier_readmes" / "02_claude_standards.md"
 
 
 def readme_related_entry(readme: Path, rel_path: str) -> str:

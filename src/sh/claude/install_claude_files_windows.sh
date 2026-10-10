@@ -80,8 +80,9 @@ remove_managed_files() {
             log_message "${INFO}" "Removed managed item: ${ITEM_NAME}"
         fi
     done
-    # Items the repo used to ship are removed too, so nothing stale is left behind
-    for ITEM_NAME in "${RETIRED_ITEMS[@]}"; do
+    # Items the repo used to ship, and the on-demand rules the install moves out of rules/, are removed too,
+    # so nothing stale is left behind
+    for ITEM_NAME in "${RETIRED_ITEMS[@]}" "${LAZY_RULES_NAME}"; do
         if [[ -e "${TARGET_DIR}/${ITEM_NAME}" ]]; then
             rm -rf "${TARGET_DIR:?}/${ITEM_NAME}"
             log_message "${INFO}" "Removed retired managed item: ${ITEM_NAME}"
@@ -104,6 +105,7 @@ sync_windows_claude_files() {
     remove_managed_files
     copy_claude_files                 # from claude_file_utils.sh
     flatten_skills                    # from claude_file_utils.sh
+    relocate_lazy_rules               # from claude_file_utils.sh
     migrate_old_rules_layout          # from claude_file_utils.sh
     restore_user_editable_files
 }

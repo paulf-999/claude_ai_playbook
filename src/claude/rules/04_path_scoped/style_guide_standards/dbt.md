@@ -3,9 +3,9 @@ paths:
   - "**/models/**/*.sql"
   - "**/dbt_project.yml"
 ---
-<!-- version: 1.1.3 -->
+<!-- version: 1.1.4 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 <!-- miss_cost: medium — models that break naming or layering and fail review -->
 <!-- loading: path-scoped — only applies to dbt models, so it loads when a model or dbt_project.yml is open -->
 # 🔵 dbt Style Guide & Standards
@@ -18,11 +18,11 @@ paths:
 
 | File | Purpose | When to load |
 |------|---------|-------------|
-| [`dbt/model_organisation.md`](../../../_rules_lazy_load/style_guide_standards/dbt/model_organisation.md) | Model layers (staging → base → intermediate → mart), folder structure, minimum requirements | Creating a new model or directory |
-| [`dbt/naming_conventions.md`](../../../_rules_lazy_load/style_guide_standards/dbt/naming_conventions.md) | Naming for models (prefixes), keys, marts, audit fields, null handling | Choosing names for models/columns |
-| [`dbt/yaml_resource_properties.md`](../../../_rules_lazy_load/style_guide_standards/dbt/yaml_resource_properties.md) | YAML structure, property names, style conventions | Writing `.yml` files |
-| [`dbt/snapshots.md`](../../../_rules_lazy_load/style_guide_standards/dbt/snapshots.md) | Snapshot use cases, configuration, best practices, examples | Working with slowly-changing dimensions |
-| [`dbt/macros.md`](../../../_rules_lazy_load/style_guide_standards/dbt/macros.md) | Custom macros directory, dbt packages, conventions | Building shared/reusable logic |
+| [`dbt/model_organisation.md`](../../_rules_lazy_load/style_guide_standards/dbt/model_organisation.md) | Model layers (staging → base → intermediate → mart), folder structure, minimum requirements | Creating a new model or directory |
+| [`dbt/naming_conventions.md`](../../_rules_lazy_load/style_guide_standards/dbt/naming_conventions.md) | Naming for models (prefixes), keys, marts, audit fields, null handling | Choosing names for models/columns |
+| [`dbt/yaml_resource_properties.md`](../../_rules_lazy_load/style_guide_standards/dbt/yaml_resource_properties.md) | YAML structure, property names, style conventions | Writing `.yml` files |
+| [`dbt/snapshots.md`](../../_rules_lazy_load/style_guide_standards/dbt/snapshots.md) | Snapshot use cases, configuration, best practices, examples | Working with slowly-changing dimensions |
+| [`dbt/macros.md`](../../_rules_lazy_load/style_guide_standards/dbt/macros.md) | Custom macros directory, dbt packages, conventions | Building shared/reusable logic |
 
 For SQL formatting rules within dbt models, see [`sql.md`](sql.md).
 

@@ -19,15 +19,15 @@ The root config, settings and aliases that every session starts from.
 
 ## 📏 Rules
 
-See [`src/claude/_rules_lazy_load/_tier_readmes/00_rules_overview.md`](../src/claude/_rules_lazy_load/_tier_readmes/00_rules_overview.md)
+See [`src/claude/rules/_rules_lazy_load/_tier_readmes/00_rules_overview.md`](../src/claude/rules/_rules_lazy_load/_tier_readmes/00_rules_overview.md)
 
-Rules in two folders: `rules/` tiers 01–03 load every session, `rules/04_path_scoped/` loads with matching files, and `_rules_lazy_load/` is read on demand.
+Rules in two folders: `rules/` tiers 01–03 load every session, `rules/04_path_scoped/` loads with matching files, and `_rules_lazy_load/` is read on demand — kept under `rules/` in the repo, the install moves it beside `rules/` so it never loads by itself.
 
 ---
 
 ## 🎨 Style guides
 
-See [`src/claude/_rules_lazy_load/style_guide_standards/`](../src/claude/_rules_lazy_load/style_guide_standards/)
+See [`src/claude/rules/_rules_lazy_load/style_guide_standards/`](../src/claude/rules/_rules_lazy_load/style_guide_standards/)
 
 Coding standards for the technologies the team uses, read on demand unless a path-scoped rule loads them.
 

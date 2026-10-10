@@ -19,6 +19,10 @@ USER_OWNED_ENTRIES=("memory" "TODO.md" "_plans" "settings.local.json")
 # Lists every file the last install put in the target, so the next one can remove what the repo dropped
 MANIFEST_NAME=".install_manifest"
 
+# On-demand rules sit under rules/ in the repo but beside it once installed,
+# since Claude Code loads every .md under rules/ by itself
+LAZY_RULES_NAME="_rules_lazy_load"
+
 #=======================================================================
 # Shared functions
 #=======================================================================
@@ -110,7 +114,7 @@ rewrite_config_paths() {
         PREFIX="${TARGET_DIR}/"
     fi
     NAMES=$(find "${TARGET_DIR}" -mindepth 1 -maxdepth 1 -exec basename {} \; | perl -ne 'chomp; push @n, quotemeta; END { print join("|", @n) }')
-    for ENTRY in "${SOURCE_DIR}"/*; do
+    for ENTRY in "${SOURCE_DIR}"/* "${LAZY_RULES_NAME}"; do
         NAME=$(basename "${ENTRY}")
         is_user_owned "${NAME}" && continue
         [[ -e "${TARGET_DIR}/${NAME}" ]] || continue
@@ -150,13 +154,27 @@ flatten_skills() {
     done
 }
 
-# Print the files an install puts in the target, relative to it and sorted, laid out as flatten_skills leaves them.
+# Move rules/_rules_lazy_load/ up to the target's top level, beside rules/, so Claude Code doesn't load it every session.
+# Copies the contents (dir/.) so an existing folder is merged into, not nested, on GNU and BSD cp.
+relocate_lazy_rules() {
+    local FROM="${TARGET_DIR}/rules/${LAZY_RULES_NAME}"
+    [[ -d "${FROM}" ]] || return 0
+    mkdir -p "${TARGET_DIR}/${LAZY_RULES_NAME}"
+    cp -R "${FROM}/." "${TARGET_DIR}/${LAZY_RULES_NAME}/"
+    rm -rf "${FROM}"
+    log_message "${INFO}" "Moved rules/${LAZY_RULES_NAME}/ beside rules/"
+}
+
+# Print the files an install puts in the target, relative to it and sorted, laid out as
+# flatten_skills and relocate_lazy_rules leave them.
 # User-owned entries are left out, so pruning can never remove them.
 list_installed_files() {
     local REL
     (cd "${SOURCE_DIR}" && find . -type f) | sed 's#^\./##' | while IFS= read -r REL; do
         is_user_owned "${REL%%/*}" && continue
-        if [[ "${REL}" =~ ^skills/_[^/]+/([^/]+/.+)$ ]]; then
+        if [[ "${REL}" == "rules/${LAZY_RULES_NAME}/"* ]]; then
+            echo "${REL#rules/}"
+        elif [[ "${REL}" =~ ^skills/_[^/]+/([^/]+/.+)$ ]]; then
             echo "skills/${BASH_REMATCH[1]}"
         elif [[ ! "${REL}" =~ ^skills/_[^/]+/[^/]+$ ]]; then  # a group's own files go with its folder
             echo "${REL}"

@@ -22,6 +22,6 @@
 ## 🔗 Related files
 
 - `src/claude/hooks/hook_style_guide_response_standards.sh` — the hook being scored
-- `src/claude/_rules_lazy_load/response_standards_enforcement.md` — Evidence of Need dimension
+- `src/claude/rules/_rules_lazy_load/response_standards_enforcement.md` — Evidence of Need dimension
 - `src/claude/_tests/hooks/test_hook_registry_utils.py` — Structural Compliance dimension
 - `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_flags.py` — Test Coverage dimension

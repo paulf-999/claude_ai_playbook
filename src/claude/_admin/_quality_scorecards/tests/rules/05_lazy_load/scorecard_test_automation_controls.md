@@ -19,4 +19,4 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/05_lazy_load/test_automation_controls.py` — the test being scored
-- `src/claude/_rules_lazy_load/automation_controls.md` — what the test guards
+- `src/claude/rules/_rules_lazy_load/automation_controls.md` — what the test guards

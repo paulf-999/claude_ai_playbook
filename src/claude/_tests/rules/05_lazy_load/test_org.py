@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-06
-# Version:           1.3.0
+# Date updated:      2026-10-10
+# Version:           1.3.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -56,6 +56,7 @@ def is_excluded(rel: str) -> bool:
     :return: True for org files, their scorecards and audit output.
     :rtype: bool
     """
+    rel = rel.removeprefix("rules/") if rel.startswith("rules/_rules_lazy_load/") else rel  # repo layout
     if rel in EXCLUDED_FILES or rel.startswith(EXCLUDED_PREFIXES):
         return True
     return rel.startswith("_admin/_quality_scorecards/") and "/org/" in rel
@@ -190,7 +191,7 @@ def test_known_exceptions_still_need_their_place():
 
 # ── org.md stays a complete index ────────────────────────────────────────────
 
-ORG_INDEX = CLAUDE_DIR / "_rules_lazy_load" / "org.md"
+ORG_INDEX = LAZY_RULES_DIR / "org.md"
 ORG_DIR = ORG_INDEX.with_suffix("")
 ORG_POINTER = "_rules_lazy_load/org.md"
 POINTING_FILES = (

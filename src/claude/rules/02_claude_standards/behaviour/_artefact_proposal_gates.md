@@ -1,6 +1,6 @@
-<!-- version: 3.0.0 -->
+<!-- version: 3.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 # 🚪 Artefact Proposal Gates
 
 **Purpose:** Validate naming, placement, and duplication *before* proposing any new artefact (rule, skill, hook, agent, process), ensuring proposals already comply with established standards.
@@ -45,7 +45,7 @@ Before proposing any new artefact, run these gates in order:
 - **02_claude_standards/** — quality gates and operational conduct Claude applies to all work (e.g. behaviour, security, git, operational efficiency)
 - **03_authoring_guidelines/** — meta-guidance for authoring rules, skills, agents
 - **04_path_scoped/** — domain-specific rules with `paths:`; load only when a matching file is open
-- **_rules_lazy_load/** — beside `rules/`; read on demand only, never loaded automatically
+- **_rules_lazy_load/** — under `rules/` in the repo and beside it once installed; read on demand only, never loaded automatically
 - **skills/** — reusable skills, in the folder their domain names in `skill_domains.yaml` (e.g. `_atlassian_skills/`, `_git_skills/`)
 - **hooks/** — enforcement and style-guide hooks
 - **agents/** — custom sub-agents (domain-grouped subdirectories, e.g. `agents/core/`)
