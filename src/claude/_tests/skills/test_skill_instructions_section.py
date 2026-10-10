@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-10
-# Version:           2.2.2
+# Version:           2.2.3
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -120,7 +120,9 @@ def skill_md_for(name: str) -> str:
     :return: The SKILL.md text.
     :rtype: str
     """
-    matches = [p for p in SKILLS_DIR.rglob(f"{name}/SKILL.md") if "template" not in str(p).lower()]
+    matches = [
+        p for p in SKILLS_DIR.rglob(f"{name}/SKILL.md") if "template" not in str(p.relative_to(SKILLS_DIR)).lower()
+    ]
     return matches[0].read_text(encoding="utf-8")
 
 
