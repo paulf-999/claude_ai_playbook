@@ -16,7 +16,7 @@ One file per hook, named after the script: `_admin/_quality_scorecards/hooks/sco
 
 ## 📋 Template
 
-Use the shared `_templates/scorecard.md.template` with these seven dimensions, in this order.
+Use the shared `_templates/scorecard/scorecard.md.template` with these seven dimensions, in this order.
 
 ---
 

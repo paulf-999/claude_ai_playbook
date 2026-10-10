@@ -48,4 +48,4 @@ Sorted by Overall score, highest first.
 - **Recompute:** re-average the Overall scores and re-check the strongest and weakest files.
 - **Bump dates:** set a group's `Date Updated` to the re-scored scorecard's `Date Updated`.
 - **Prune actions:** remove an action once its scorecard no longer lists it.
-- **Template:** this file follows `_templates/scorecard_summary.md.template`.
+- **Template:** this file follows `_templates/scorecard/scorecard_summary.md.template`.

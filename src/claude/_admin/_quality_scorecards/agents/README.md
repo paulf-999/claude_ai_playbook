@@ -15,7 +15,7 @@ One file per agent, named after it: `_admin/_quality_scorecards/agents/scorecard
 
 ## 📋 Template
 
-Use the shared `_templates/scorecard.md.template` with these seven dimensions, in this order.
+Use the shared `_templates/scorecard/scorecard.md.template` with these seven dimensions, in this order.
 
 ---
 

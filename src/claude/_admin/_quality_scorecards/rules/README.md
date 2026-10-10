@@ -22,7 +22,7 @@ One file per scored rule, mirroring the tier path: `_admin/_quality_scorecards/r
 
 ## 📋 Template
 
-This is the rule-specific version of the shared `_templates/scorecard.md.template`, with the rule dimensions filled in.
+This is the rule-specific version of the shared `_templates/scorecard/scorecard.md.template`, with the rule dimensions filled in.
 
 ```markdown
 # Quality Scorecard — <rule_name>.md

@@ -53,4 +53,4 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 - **Recompute:** re-average the Overall scores and re-check the strongest and weakest files whenever a scorecard is re-scored.
 - **Bump dates:** set a type's `Date Updated` to the re-scored scorecard's `Date Updated`.
 - **Prune actions:** remove an action once its source summary no longer lists it.
-- **Template:** this file follows `_templates/scorecard_summary.md.template`.
+- **Template:** this file follows `_templates/scorecard/scorecard_summary.md.template`.

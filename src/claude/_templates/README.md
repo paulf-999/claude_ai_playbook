@@ -13,11 +13,12 @@ _templates/
 ├── AGENT.md.template        # Starting point for a new agent
 ├── rule.md.template         # Starting point for a new rule
 ├── TODO.md.template         # Starting point for a project TODO list
-├── scorecard.md.template  # Layout for every individual scorecard
-├── scorecard_summary.md.template  # Layout for every scorecard summary
-├── template_bash_script.sh  # Starting point for a new bash script
+├── scorecard/               # Scorecard layouts
+│   ├── scorecard.md.template          # Layout for every individual scorecard
+│   └── scorecard_summary.md.template  # Layout for every scorecard summary
 ├── utils/
-│   └── shell_utils.sh       # Shared shell helpers: log colours and common variables
+│   ├── shell_utils.sh           # Shared shell helpers: log colours and common variables
+│   └── template_bash_script.sh  # Starting point for a new bash script
 └── README.md                # This file
 ```
 
@@ -57,17 +58,17 @@ _templates/
 
 ### Scripts
 
-**`template_bash_script.sh`**
+**`utils/template_bash_script.sh`**
 - Starting point for a new bash script: shebang, safety flags, `shell_utils.sh` source, section headers, trap and logging
 - Used by: `_style_guide_standards/bash.md`
 
 ### Scorecards
 
-**`scorecard.md.template`**
+**`scorecard/scorecard.md.template`**
 - Shared layout for every individual scorecard: header dates, Overall score, Recommended improvements, dimension table and Related files
 - Each type's dimensions and criteria live in its own template or README, which this file points to
 
-**`scorecard_summary.md.template`**
+**`scorecard/scorecard_summary.md.template`**
 - Shared layout for all six scorecard summaries in `_admin/_quality_scorecards/`: the top-level `quality_scorecards_summary.md` and each `<type>_scorecards_summary.md`
 - Sections: Scores by group, Recommended next actions, All scorecards (All summaries in the top-level file) and Keeping this current
 
