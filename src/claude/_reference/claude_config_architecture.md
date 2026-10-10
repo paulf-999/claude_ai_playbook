@@ -113,11 +113,11 @@ Regular maintenance cycles ensure the config stays intentional and focused on cu
 Use this decision tree:
 
 1. **Does it apply to EVERY session** (regardless of project type)?
-   - **Yes** → Place in the matching always-on tier (`01_essentials/` to `03_authoring_guidelines/`, per `04_path_scoped/claude_rule_loading_strategy.md`) and `@import` it from that tier's entry file
+   - **Yes** → Place in the matching always-on tier (`01_essentials/` to `03_authoring_guidelines/`, per `04_path_scoped/claude_rule_loading_strategy.md`) — Claude Code loads it natively, so it needs no `@import`
    - **No** → Go to step 2
 
 2. **Is it domain-specific** (SQL, dbt, Terraform, etc.)?
-   - **Yes** → Place in `_rules_lazy_load/`; list it in that tier's README
+   - **Yes** → Place in `rules/04_path_scoped/` with `paths:` if it's tied to one file type, otherwise in `_rules_lazy_load/`; list it in `_rules_lazy_load/README.md`
    - **No** → Reconsider whether it's needed at all
 
 3. **Will you use this 5+ times/month**?
