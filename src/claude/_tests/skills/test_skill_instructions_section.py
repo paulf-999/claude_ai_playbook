@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-06
-# Version:           2.2.1
+# Date updated:      2026-10-10
+# Version:           2.2.2
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -138,7 +138,8 @@ def test_skill_has_instructions_for_claude(name):
     if name in BASELINE:
         pytest.skip(f"{name} is on BASELINE — written before the section was required")
     issues = instruction_issues(skill_md_for(name))
-    assert not issues, f"{name}/SKILL.md: {issues} — see authoring_guidelines/authoring_skills/_core_standards.md"
+    standard = "authoring_guidelines_lazy_load/authoring_skills/_core_standards.md"
+    assert not issues, f"{name}/SKILL.md: {issues} — see {standard}"
 
 
 def test_confluence_skill_drafts_to_config_folder():

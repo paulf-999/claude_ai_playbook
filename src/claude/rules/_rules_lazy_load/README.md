@@ -100,29 +100,29 @@ A rule should be promoted from lazy-load to an always-on tier in `rules/` if:
 
 Parent, sibling and dependency links for each lazy and path-scoped file — kept here, not in the file, because this README never loads by itself (#121).
 
-### `authoring_guidelines/authoring_rules/_rule_lifecycle.md`
+### `authoring_guidelines_lazy_load/authoring_rules/_rule_lifecycle.md`
 
 - Parent: `03_authoring_guidelines/authoring_rules.md` — read on demand before promoting or removing a rule
 - `claude_rule_loading_strategy.md` — the applied % and miss-cost table that promotion follows
 - `guiding_principles.md` — the review cadence and 6-month reset
 
-### `authoring_guidelines/authoring_agents/_common_mistakes.md`
+### `authoring_guidelines_lazy_load/authoring_agents/_common_mistakes.md`
 
 - Parent: `authoring_agents.md` — quick navigation and hard gates checklist
 
-### `authoring_guidelines/authoring_agents/_core_standards.md`
+### `authoring_guidelines_lazy_load/authoring_agents/_core_standards.md`
 
 - Parent: `authoring_agents.md` — quick navigation and hard gates checklist
 
-### `authoring_guidelines/authoring_agents/_decision_tree_and_process.md`
+### `authoring_guidelines_lazy_load/authoring_agents/_decision_tree_and_process.md`
 
 - Parent: `authoring_agents.md` — quick navigation and hard gates checklist
 
-### `authoring_guidelines/authoring_agents/_hard_gates_checklist.md`
+### `authoring_guidelines_lazy_load/authoring_agents/_hard_gates_checklist.md`
 
 - Parent: `authoring_agents.md` — quick navigation and core standards
 
-### `authoring_guidelines/authoring_agents/_scope_and_maturity.md`
+### `authoring_guidelines_lazy_load/authoring_agents/_scope_and_maturity.md`
 
 - Parent: `authoring_agents.md` — quick navigation and hard gates checklist
 

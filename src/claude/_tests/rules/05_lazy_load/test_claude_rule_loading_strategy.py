@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
 # Date updated:      2026-10-10
-# Version:           2.1.2
+# Version:           2.1.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -135,8 +135,9 @@ def test_pointers_resolve():
     content = _content()
     assert "`_rules_lazy_load/_tier_readmes/00_rules_overview.md`" in content, "Pointer to the rules overview removed"
     assert (LAZY_RULES_DIR / "_tier_readmes" / "00_rules_overview.md").is_file(), "the rules overview is missing"
-    assert "`_rules_lazy_load/authoring_guidelines/authoring_skills/`" in content, "On-demand children example removed"
-    children_example = LAZY_RULES_DIR / "authoring_guidelines" / "authoring_skills"
+    children_pointer = "`_rules_lazy_load/authoring_guidelines_lazy_load/authoring_skills/`"
+    assert children_pointer in content, "On-demand children example removed"
+    children_example = LAZY_RULES_DIR / "authoring_guidelines_lazy_load" / "authoring_skills"
     assert children_example.is_dir(), "On-demand children example folder is missing"
 
 
