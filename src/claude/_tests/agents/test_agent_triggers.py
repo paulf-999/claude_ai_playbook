@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.0.0
+# Date updated:      2026-10-10
+# Version:           1.0.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -58,7 +58,8 @@ def agent_files():
 
 def skill_files():
     """List every skill definition in the config, skipping templates."""
-    return sorted(p for p in (CLAUDE_DIR / "skills").rglob("SKILL.md") if "template" not in str(p).lower())
+    skills_dir = CLAUDE_DIR / "skills"
+    return sorted(p for p in skills_dir.rglob("SKILL.md") if "template" not in str(p.relative_to(skills_dir)).lower())
 
 
 # ── the checks ───────────────────────────────────────────────────────────────
