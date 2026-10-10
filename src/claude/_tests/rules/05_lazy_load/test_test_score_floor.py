@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-06
-# Version:           2.2.0
+# Date updated:      2026-10-10
+# Version:           2.2.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -25,7 +25,7 @@ from test_test_metadata import HINT, VALID_HEADER, find_test_files, label
 
 QUALITY_FLOOR = 9
 COMPLEXITY_FLOOR = 7
-RULE_FILE = LAZY_RULES_DIR / "testing" / "_test_metadata.md"
+RULE_FILE = LAZY_RULES_DIR / "testing_lazy_load" / "_test_metadata.md"
 SCORE_PATTERN = re.compile(
     r"^# Test quality score: (\d+)/10\n"
     r"# Test complexity score: (\d+)/10\n"

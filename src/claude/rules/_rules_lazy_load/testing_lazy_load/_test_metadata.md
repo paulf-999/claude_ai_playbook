@@ -1,6 +1,6 @@
-<!-- version: 2.0.4 -->
+<!-- version: 2.0.5 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 # 📊 Test Metadata Standard
 
 **Purpose:** Track test quality, creation date, and maintenance status via structured metadata headers. Enable quick assessment of test staleness and coverage before running or updating.
@@ -71,7 +71,7 @@ Every test file in `~/.claude/_tests/` must open with this metadata header:
 
 ## 🧮 Complexity Scoring
 
-- **Read on demand:** [`~/.claude/_rules_lazy_load/testing/_test_metadata_complexity_scoring.md`](_test_metadata_complexity_scoring.md) — when scoring a test's complexity.
+- **Read on demand:** [`~/.claude/_rules_lazy_load/testing_lazy_load/_test_metadata_complexity_scoring.md`](_test_metadata_complexity_scoring.md) — when scoring a test's complexity.
 
 ---
 
@@ -81,4 +81,4 @@ Every test file in `~/.claude/_tests/` must open with this metadata header:
 - **Test refactored:** re-score quality and complexity if coverage changed.
 - **Feature deprecated:** mark quality 1–2 and note the reason in a comment.
 - **Never:** change `Date created:`, copy another test's header, or leave `Date updated: [placeholder]` on a modified file.
-- **Read on demand:** [`~/.claude/_rules_lazy_load/testing/_test_metadata_audit.md`](_test_metadata_audit.md) — quarterly audit, archival workflow and a worked example.
+- **Read on demand:** [`~/.claude/_rules_lazy_load/testing_lazy_load/_test_metadata_audit.md`](_test_metadata_audit.md) — quarterly audit, archival workflow and a worked example.

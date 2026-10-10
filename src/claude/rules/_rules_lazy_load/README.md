@@ -19,7 +19,7 @@
 | `claude_config/` | **response_standards_enforcement.md** | How the per-turn injection hook enforces the response format, and the reserved validator path | Changing the response-standards hook or its tests |
 | `claude_config/claude_cost/` | **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
 | `claude_config/claude_cost/` | **turn_budgets.md** | `--max-turns` caps for non-interactive runs | Running skills, automation or CI non-interactively |
-| — | **testing.md** (in `rules/04_path_scoped/`) | When tests are required, test goals, test layers and running the suite; lazy children in `testing/` cover design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit | Loads through `paths:` on Python, shell, SQL and `_tests/` files |
+| — | **testing.md** (in `rules/04_path_scoped/`) | When tests are required, test goals, test layers and running the suite; lazy children in `testing_lazy_load/` cover design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit | Loads through `paths:` on Python, shell, SQL and `_tests/` files |
 | — | **claude_rule_loading_strategy.md** (in `rules/04_path_scoped/`) | The rule folders and when a rule should be always-on or lazy, from measured usage and miss cost | Loads through `paths:` on rule files and `CLAUDE.md` |
 | — | **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | Moved to their own `_style_guide_standards/` folder beside this one, read on demand; entry files install to `rules/04_path_scoped/style_guide_standards/` and load through `paths:` |
 
@@ -333,25 +333,25 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 
 ### `testing.md`
 
-- Children: `testing/_testing_design_pattern.md`, `testing/_testing_anti_patterns.md`, `testing/_testing_file_organization.md`, `testing/_test_metadata.md` and `testing/_test_metadata_audit.md`, read on demand
+- Children: `testing_lazy_load/_testing_design_pattern.md`, `testing_lazy_load/_testing_anti_patterns.md`, `testing_lazy_load/_testing_file_organization.md`, `testing_lazy_load/_test_metadata.md` and `testing_lazy_load/_test_metadata_audit.md`, read on demand
 - `_tests/rules/05_lazy_load/test_test_score_floor.py` — enforces the test score minimum
 
-### `testing/_test_metadata.md`
+### `testing_lazy_load/_test_metadata.md`
 
 - Parent: `testing.md`
 - Child: `_test_metadata_complexity_scoring.md` — applies the shared formula in `03_authoring_guidelines/shared_standards/_complexity_scoring.md`
 
-### `testing/_test_metadata_audit.md`
+### `testing_lazy_load/_test_metadata_audit.md`
 
 - Parent: `testing.md`
 - Sibling: `_test_metadata.md` — header format and per-edit update rules
 
-### `testing/_testing_anti_patterns.md`
+### `testing_lazy_load/_testing_anti_patterns.md`
 
 - Parent: `testing.md`
 - Sibling: `_testing_design_pattern.md` — the pattern these anti-patterns violate
 
-### `testing/_testing_design_pattern.md`
+### `testing_lazy_load/_testing_design_pattern.md`
 
 - Parent: `testing.md`
 - Sibling: `_testing_anti_patterns.md` — mistakes to avoid

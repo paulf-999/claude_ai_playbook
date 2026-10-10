@@ -19,4 +19,4 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/05_lazy_load/test_test_metadata.py` — the test being scored
-- `src/claude/rules/_rules_lazy_load/testing/_test_metadata.md` — the standard the test guards
+- `src/claude/rules/_rules_lazy_load/testing_lazy_load/_test_metadata.md` — the standard the test guards

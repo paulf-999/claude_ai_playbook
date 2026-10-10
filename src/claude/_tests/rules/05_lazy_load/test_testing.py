@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-10
-# Version:           1.4.1
+# Version:           1.4.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -26,7 +26,7 @@ from _shared_paths import CLAUDE_DIR, HOOKS_DIR, LAZY_RULES_DIR, RULES_DIR, reso
 TESTS_HOOKS_DIR = CLAUDE_DIR / "_tests/hooks"
 TESTS_RULES_DIR = CLAUDE_DIR / "_tests/rules"
 TESTING_MD = RULES_DIR / "04_path_scoped" / "testing.md"
-TEST_METADATA_MD = LAZY_RULES_DIR / "testing" / "_test_metadata.md"
+TEST_METADATA_MD = LAZY_RULES_DIR / "testing_lazy_load" / "_test_metadata.md"
 
 
 def _get_hook_files() -> set[str]:
