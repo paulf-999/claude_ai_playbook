@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
 # Date updated:      2026-10-10
-# Version:           2.1.4
+# Version:           2.1.5
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -131,10 +131,9 @@ def test_claude_md_imports_no_rules():
 
 
 def test_pointers_resolve():
-    """The overview README and on-demand children examples must point at real paths."""
+    """The tier-size pointer and on-demand children example must point at real sources."""
     content = _content()
-    assert "`_rules_lazy_load/rules_overview.md`" in content, "Pointer to the rules overview removed"
-    assert (LAZY_RULES_DIR / "rules_overview.md").is_file(), "the rules overview is missing"
+    assert "`make audit_rule_usage` reports measured tier sizes" in content, "Tier-size pointer removed"
     children_pointer = "`_rules_lazy_load/authoring_guidelines_lazy_load/authoring_skills/`"
     assert children_pointer in content, "On-demand children example removed"
     children_example = LAZY_RULES_DIR / "authoring_guidelines_lazy_load" / "authoring_skills"

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-21
 # Date updated:      2026-10-10
-# Version:           1.3.2
+# Version:           2.0.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -20,38 +20,10 @@ structurally simple (complexity score 7) while covering 15+ assertions
 across every major section, per _test_metadata_complexity_scoring.md's
 "thoroughness and simplicity aren't opposed" principle.
 """
-from pathlib import Path
-
-from _shared_paths import CLAUDE_DIR, LAZY_RULES_DIR
+from _shared_paths import CLAUDE_DIR
 
 RULE_FILE = CLAUDE_DIR / "rules" / "02_claude_standards" / "git" / "_concurrent_sessions.md"
 GIT_MD = CLAUDE_DIR / "rules" / "02_claude_standards" / "git.md"
-TIER_README = LAZY_RULES_DIR / "rules_overview" / "_02_claude_standards.md"
-
-
-def readme_related_entry(readme: Path, rel_path: str) -> str:
-    """Return one file's block from a tier README's "🔗 Related rules" section.
-
-    Related links moved out of rule files into tier READMEs (#121), so each
-    file's parent/sibling links now live under a ``### `<rel_path>` `` heading.
-
-    :param readme: The tier README holding the Related rules section.
-    :type readme: Path
-    :param rel_path: The rule's path relative to the README's directory.
-    :type rel_path: str
-    :return: The block's text, or an empty string if the heading is absent.
-    :rtype: str
-    """
-    lines = readme.read_text().splitlines()
-    heading = f"### `{rel_path}`"
-    if heading not in lines:
-        return ""
-    start = lines.index(heading) + 1
-    end = next(
-        (idx for idx in range(start, len(lines)) if lines[idx].startswith(("### ", "## "))),
-        len(lines),
-    )
-    return "\n".join(lines[start:end])
 
 
 def test_concurrent_sessions_file_exists():
@@ -126,14 +98,6 @@ def test_concurrent_sessions_covers_worktree_preference():
     content = RULE_FILE.read_text()
     assert "git worktree" in content, "git worktree guidance missing"
     assert "isolation" in content.lower(), "Sub-agent isolation guidance missing"
-
-
-def test_concurrent_sessions_related_section_links_siblings():
-    """The tier README's Related entry must still link to git.md and its siblings."""
-    entry = readme_related_entry(TIER_README, "git/_concurrent_sessions.md")
-    assert entry, "02_claude_standards/README.md has no Related entry for git/_concurrent_sessions.md"
-    for target in ["git.md", "_safe_patterns.md", "_commits.md", "behaviour.md"]:
-        assert target in entry, f"README Related entry missing link to {target}"
 
 
 def test_concurrent_sessions_line_limit():

@@ -1,4 +1,4 @@
-<!-- version: 1.0.2 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2025-11-15 -->
 <!-- updated: 2026-10-10 -->
 # 🔄 Rule Lifecycle
@@ -39,7 +39,7 @@ Use the two numbers in `_admin/_audits/audit_rule_usage.md`, read against the ta
 3. **Update headers:** change its `loading:` header to `always-on` and add `applies_to` if it lacks one.
 4. **Point to it:** if it's a child, add a `**Loads on its own from:**` line to its parent, and note the size it adds.
 5. **Run the suite:** `test_always_on_reachability.py` confirms nothing under `rules/` is a README, `_lazy_load/` folder or `@import`.
-6. **Update docs:** move its entry from `_rules_lazy_load/README.md` to its tier page in `_rules_lazy_load/rules_overview/`.
+6. **Update docs:** remove its entry from `_rules_lazy_load/README.md`, since always-on rules keep no index entry.
 7. **Commit:** `refactor(rules): promote <rule_name> from lazy to always-on`.
 
 ---
@@ -49,7 +49,7 @@ Use the two numbers in `_admin/_audits/audit_rule_usage.md`, read against the ta
 1. **Audit usage:** confirm it's unused through the **Stale** flag in `audit_rule_usage.md` (no use for 90 days).
 2. **Delete the file:** remove the rule file and its test.
 3. **Delete its pointers:** remove every `**Loads on its own from:**` and `**Read on demand:**` line that names it.
-4. **Update docs:** remove it from its tier README or `_rules_lazy_load/README.md`.
+4. **Update docs:** if it was lazy or path-scoped, remove it from `_rules_lazy_load/README.md`.
 5. **Commit:** `chore(rules): remove <rule_name>`.
 
 ---

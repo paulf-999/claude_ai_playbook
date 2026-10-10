@@ -1,4 +1,4 @@
-<!-- version: 2.0.2 -->
+<!-- version: 3.0.0 -->
 <!-- created: 2026-09-28 -->
 <!-- updated: 2026-10-10 -->
 # ✅ Rule Hard Gates Checklist
@@ -35,11 +35,11 @@
 ### 🔗 Wiring
 - [ ] Every child sits in the folder that matches how it should load, and the parent names it in a `**Loads on its own from:**` or `**Read on demand:**` line
 - [ ] Nothing under `rules/` is `@import`ed, and no README sits under `rules/`
-- [ ] The rule has no `## Related` section — its parent, sibling and dependency links sit in the tier page in `_rules_lazy_load/rules_overview/` under "🔗 Related rules" (tiers 02–05 only, as `01_essentials/` keeps none)
+- [ ] The rule has no `## Related` section — a lazy or path-scoped rule's parent, sibling and dependency links sit in `_rules_lazy_load/README.md` under "🔗 Related rules", and an always-on rule (tiers 01–03) keeps none
 
 ### 📚 Docs
 - [ ] Quality scorecard created or updated at `_admin/_quality_scorecards/rules/<tier>/scorecard_<rule_name>.md`
-- [ ] Tier README (`_rules_lazy_load/rules_overview/_<tier>.md`) and `_rules_lazy_load/rules_overview.md` list the new file
+- [ ] A lazy or path-scoped rule is listed in `_rules_lazy_load/README.md`
 - [ ] `docs/whats_installed.md` rules description updated
 
 ---
