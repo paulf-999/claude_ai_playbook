@@ -1,6 +1,6 @@
 ---
 created: 2025-09-01
-last_modified: 2026-09-29
+last_modified: 2026-10-10
 ---
 
 # 📚 Reference Files Index
@@ -16,10 +16,7 @@ Background documentation on how the Claude config is designed, plus settings and
 | File | Read it when |
 |---|---|
 | [`claude_prompting_best_practices.md`](claude_prompting_best_practices.md) | Writing a prompt, rule or skill — high-impact prompting techniques |
-| [`claude_config_architecture.md`](claude_config_architecture.md) | Learning how the config is laid out and why |
-| ↳ [`claude_config_architecture/_security.md`](claude_config_architecture/_security.md) | Working out which rule owns a security concern |
-| ↳ [`claude_config_architecture/_testing.md`](claude_config_architecture/_testing.md) | Deciding where a new test belongs, or running the suite |
-| ↳ [`claude_config_architecture/_evolution.md`](claude_config_architecture/_evolution.md) | Adding, promoting or removing a rule; planning a reset |
+| [`claude_config_architecture.md`](claude_config_architecture.md) | Learning how the config is laid out and why — its security and testing deep-dives now live with their rules, in `_rules_lazy_load/security_design.md` and `rules/04_path_scoped/testing.md` |
 | [`settings_json_recommendations.md`](settings_json_recommendations.md) | Changing `settings.json` — Tier 1 essentials |
 | ↳ [`settings_json_recommendations/_tier2_3.md`](settings_json_recommendations/_tier2_3.md) | Considering Tier 2–3 settings |
 | ↳ [`settings_json_recommendations/_enterprise.md`](settings_json_recommendations/_enterprise.md) | Considering enterprise-managed settings |
@@ -43,28 +40,6 @@ Background documentation on how the Claude config is designed, plus settings and
 ## 🔗 Related rules
 
 Parent, sibling and dependency links for each file in this tier — kept here, not in the file, because READMEs aren't `@import`ed (#121).
-
-### `claude_config_architecture/_evolution.md`
-
-- **Guiding principles:** `~/.claude/rules/01_essentials/guiding_principles.md`
-- **Lazy-load guide:** `~/.claude/_rules_lazy_load/README.md`
-- **Testing rules:** `~/.claude/rules/04_path_scoped/testing.md`
-- **Naming standards:** `~/.claude/rules/01_essentials/claude_usage_standards/naming_standards.md`
-- **Parent doc:** `claude_config_architecture.md`
-
-### `claude_config_architecture/_security.md`
-
-- **How Claude behaves:** `~/.claude/rules/02_claude_standards/behaviour.md`
-- **Prompt injection defence:** `~/.claude/rules/02_claude_standards/security/_security_guardrails.md`
-- **Code standards:** `~/.claude/rules/02_claude_standards/security.md`
-- **MCP trust:** `~/.claude/_rules_lazy_load/mcp_trust_model.md`
-- **Parent doc:** `claude_config_architecture.md`
-
-### `claude_config_architecture/_testing.md`
-
-- **Test documentation:** `~/.claude/_tests/README.md`
-- **Testing rules:** `~/.claude/rules/04_path_scoped/testing.md`
-- **Parent doc:** `claude_config_architecture.md`
 
 ### `claude_config_architecture.md`
 

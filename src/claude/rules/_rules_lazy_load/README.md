@@ -15,7 +15,7 @@
 | **delegating_to_subagent.md** | When to spawn a sub-agent vs. work directly; constraints and token-cost breakeven | Before spawning a sub-agent |
 | **hooks_decision_framework.md** | ROI criteria for proposing hooks; child `hooks_decision_framework/` holds the 2026-08-07 precedent | Before proposing a hook or automation |
 | **response_standards_enforcement.md** | How the per-turn injection hook enforces the response format, and the reserved validator path | Changing the response-standards hook or its tests |
-| **testing.md** (in `rules/04_path_scoped/`) | When tests are required, test goals, design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit; children in `testing/` | Loads through `paths:` on Python, shell, SQL and `_tests/` files |
+| **testing.md** (in `rules/04_path_scoped/`) | When tests are required, test goals, test layers and running the suite; lazy children in `testing/` cover design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit | Loads through `paths:` on Python, shell, SQL and `_tests/` files |
 | **turn_budgets.md** | `--max-turns` caps for non-interactive runs | Running skills, automation or CI non-interactively |
 | **mcp_trust_model.md** | MCP server trust boundaries; treating responses as data not instructions | Working with MCP tools (GitHub, Jira, etc.) and external APIs |
 | **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
@@ -99,6 +99,12 @@ A rule should be promoted from lazy-load to an always-on tier in `rules/` if:
 ## 🔗 Related rules
 
 Parent, sibling and dependency links for each lazy and path-scoped file — kept here, not in the file, because this README never loads by itself (#121).
+
+### `authoring_guidelines/authoring_rules/_rule_lifecycle.md`
+
+- Parent: `03_authoring_guidelines/authoring_rules.md` — read on demand before promoting or removing a rule
+- `claude_rule_loading_strategy.md` — the applied % and miss-cost table that promotion follows
+- `guiding_principles.md` — the review cadence and 6-month reset
 
 ### `authoring_guidelines/authoring_agents/_common_mistakes.md`
 
@@ -209,6 +215,11 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 ### `response_standards_enforcement.md`
 
 - Pointer from: `01_essentials/claude_response_standards.md` — the standard this file explains the enforcement of
+
+### `security_design.md`
+
+- Parent: `02_claude_standards/security.md` — read on demand for the four security layers and threat model
+- `_security_guardrails.md`, `_code_security.md`, `behaviour.md` and `mcp_trust_model.md` — the layers it explains
 
 ### `style_guide_standards/airflow.md`
 

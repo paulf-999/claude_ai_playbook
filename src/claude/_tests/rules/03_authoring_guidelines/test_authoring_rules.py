@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-10
-# Version:           2.2.1
+# Version:           2.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -88,7 +88,7 @@ def test_scorecard_template_exists():
 def test_read_on_demand_children_exist():
     """Every on-demand child the guide names exists."""
     paths = re.findall(r"\*\*Read on demand:\*\* `~/[^/]+/([^`]+)`", content())
-    assert len(paths) == 2, f"expected the common-mistakes and hard-gates pointers, found {paths}"
+    assert len(paths) == 3, f"expected the common-mistakes, hard-gates and rule-lifecycle pointers, found {paths}"
     missing = [p for p in paths if not resolve_config_path(CLAUDE_DIR, p).is_file()]
     assert not missing, f"Read-on-demand pointers to missing files: {missing}"
 

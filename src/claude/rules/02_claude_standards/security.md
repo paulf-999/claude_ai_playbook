@@ -1,6 +1,6 @@
-<!-- version: 1.2.1 -->
+<!-- version: 1.2.3 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 <!-- applies_to: * -->
 <!-- miss_cost: high — secrets leak or injected instructions get followed -->
 <!-- loading: always-on — secrets and prompt injection can turn up in any session -->
@@ -31,4 +31,4 @@ Standards for secure code generation. Covers secrets management, authentication,
 
 ## 📖 Reference (Claude's design patterns)
 
-- **Read on demand:** `~/.claude/_reference/claude_config_architecture/_security.md` — the four security layers, threat model and design rationale
+- **Read on demand:** `~/.claude/_rules_lazy_load/security_design.md` — the four security layers, threat model and design rationale

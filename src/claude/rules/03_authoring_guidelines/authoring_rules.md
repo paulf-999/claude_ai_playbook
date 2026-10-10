@@ -1,6 +1,6 @@
-<!-- version: 3.0.1 -->
+<!-- version: 3.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 <!-- applies_to: **/rules/**, **/_rules_lazy_load/** -->
 <!-- miss_cost: medium — rules ship without tests or in the wrong tier -->
 <!-- loading: always-on — a new rule can start before any rule file is open, and it points to the shared complexity formula -->
@@ -74,3 +74,4 @@ Before writing any rule, answer these five essential questions:
 
 - **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_rules/_common_mistakes.md` — before writing or reviewing a rule, for the mistakes this config has already shipped.
 - **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_rules/_hard_gates_checklist.md` — before finishing or merging a rule, for the final tick-box check.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_rules/_rule_lifecycle.md` — before promoting a lazy rule to always-on or removing an unused rule.
