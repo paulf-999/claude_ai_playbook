@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-05
-# Version:           2.0.0
+# Date updated:      2026-10-10
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -154,3 +154,21 @@ def test_empty_group_folder_is_removed(skills: Path):
     result = flatten(skills.parent)
     assert result.returncode == 0, f"flatten_skills failed on an empty group: {result.stdout}"
     assert not (skills / "_empty_skills").exists(), "Empty group folder should be removed"
+
+
+def test_output_is_one_summary_line(skills: Path):
+    """The step prints one line counting skills and groups, not a line per skill or group."""
+    make_skill(skills / "_alpha_skills", "alpha_one")
+    make_skill(skills / "_alpha_skills", "alpha_two")
+    make_skill(skills / "_beta_skills", "beta_one")
+    output = flatten(skills.parent).stdout
+    assert "Flattened 3 skills from 2 groups" in output, output
+    assert "Flattened skill:" not in output and "Removed skill group dir" not in output, f"per-item lines: {output}"
+
+
+def test_nothing_to_flatten_prints_nothing(skills: Path):
+    """With no group folders, the step is silent and still succeeds."""
+    make_skill(skills, "solo_skill")
+    result = flatten(skills.parent)
+    assert result.returncode == 0, f"flatten_skills failed with nothing to do: {result.stdout}"
+    assert "Flattened" not in result.stdout, f"the step claimed work with nothing to flatten: {result.stdout}"

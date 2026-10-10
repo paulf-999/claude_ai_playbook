@@ -142,6 +142,7 @@ set_plans_directory() {
 # then the group dir is removed.
 flatten_skills() {
     local SKILLS_DIR="${TARGET_DIR}/skills"
+    local SKILL_COUNT=0 GROUP_COUNT=0
 
     for GROUP_DIR in "${SKILLS_DIR}"/_*/; do
         [[ -d "${GROUP_DIR}" ]] || continue
@@ -152,11 +153,14 @@ flatten_skills() {
             # Copy the contents (dir/.) so an existing skill folder is merged into, not nested, on GNU and BSD cp
             mkdir -p "${SKILLS_DIR}/${SKILL_NAME}"
             cp -R "${SKILL_DIR}." "${SKILLS_DIR}/${SKILL_NAME}/"
-            log_message "${INFO}" "Flattened skill: ${SKILL_NAME}"
+            SKILL_COUNT=$((SKILL_COUNT + 1))
         done
         rm -rf "${GROUP_DIR}"
-        log_message "${INFO}" "Removed skill group dir: $(basename "${GROUP_DIR}")"
+        GROUP_COUNT=$((GROUP_COUNT + 1))
     done
+    # One summary line rather than one per skill and group, to keep the install output short
+    [[ "${GROUP_COUNT}" -gt 0 ]] && log_message "${INFO}" "Flattened ${SKILL_COUNT} skills from ${GROUP_COUNT} groups"
+    return 0
 }
 
 # Move rules/_rules_lazy_load/ up to the target's top level, beside rules/, so Claude Code doesn't load it every session.
