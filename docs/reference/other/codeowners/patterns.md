@@ -1,8 +1,3 @@
----
-created: 2025-09-01
-last_modified: 2026-08-19
----
-
 # 🔐 CODEOWNERS Ownership Patterns
 
 ---

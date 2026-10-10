@@ -181,7 +181,7 @@ these tests and is imported directly via a relative import.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_file_structure_compliance.py` | Every file in the real Claude config passes the file-structure scan, checked area by area | 9/10 | 2026-08-28 | 2026-10-01 | 2.0.0 |
+| `test_file_structure_compliance.py` | Every file in the real Claude config passes the file-structure scan, checked area by area | 9/10 | 2026-08-28 | 2026-10-10 | 3.0.0 |
 | `test_file_structure_validator.py` | The file-structure scanner flags bad names and skips auto-generated, hidden and exempt files | 9/10 | 2026-10-01 | 2026-10-01 | 1.1.3 |
 | `test_rule_reachability.py` | The native-load detector flags READMEs, `_lazy_load/` folders, imports, unscoped path-scoped files and broken pointers under `rules/`, on fake rule trees | 9/10 | 2026-09-18 | 2026-10-06 | 3.0.0 |
 

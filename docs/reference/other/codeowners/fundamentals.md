@@ -1,8 +1,3 @@
----
-created: 2025-09-01
-last_modified: 2026-08-19
----
-
 # 🔐 CODEOWNERS Fundamentals
 
 Five core concepts for designing CODEOWNERS files that reflect actual code ownership.

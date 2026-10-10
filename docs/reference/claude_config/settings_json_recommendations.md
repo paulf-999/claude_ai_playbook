@@ -1,8 +1,3 @@
----
-created: 2025-10-01
-last_modified: 2026-08-19
----
-
 # ⚙️ Claude Code — `settings.json` industry recommendations
 
 Reference for essential `settings.json` configuration, ranked by impact and filtered through intentionality principles (context-efficiency · evidence-gated). Covers Tier 1 (essential) settings with recommendations.

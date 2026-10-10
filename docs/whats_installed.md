@@ -57,8 +57,8 @@ Shell scripts that run at Claude Code lifecycle events once registered in `setti
 
 ---
 
-## 🧰 Templates and reference
+## 🧰 Templates
 
-See [`src/claude/_templates/README.md`](../src/claude/_templates/README.md) · [`src/claude/_reference/README.md`](../src/claude/_reference/README.md)
+See [`src/claude/_templates/README.md`](../src/claude/_templates/README.md)
 
-Starting templates for new artefacts, and architecture docs that are read on demand.
+Starting templates for new artefacts. Background reading on the config's architecture lives in [`docs/reference/claude_config/`](reference/claude_config/), which isn't installed.
