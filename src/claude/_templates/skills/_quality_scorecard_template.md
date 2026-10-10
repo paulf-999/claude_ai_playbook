@@ -3,7 +3,7 @@
 <!-- updated: 2026-10-01 -->
 # Quality Scorecard — Template
 
-Every skill has a scorecard at `_admin/_quality_scorecards/skills/scorecard_<skill_name>.md` following the shared `_templates/scorecard.md.template`, with the skill dimensions below (no justification or rationale sections).
+Every skill has a scorecard at `_admin/_quality_scorecards/skills/scorecard_<skill_name>.md` following the shared `_templates/scorecard/scorecard.md.template`, with the skill dimensions below (no justification or rationale sections).
 
 ---
 
