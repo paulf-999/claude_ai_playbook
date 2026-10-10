@@ -1,4 +1,4 @@
-<!-- version: 3.1.0 -->
+<!-- version: 3.1.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-10 -->
 <!-- applies_to: **/rules/**, **/_rules_lazy_load/** -->
@@ -72,6 +72,6 @@ Before writing any rule, answer these five essential questions:
 
 ## 🚫 Common Mistakes & ✅ Hard Gates Checklist
 
-- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_rules/_common_mistakes.md` — before writing or reviewing a rule, for the mistakes this config has already shipped.
-- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_rules/_hard_gates_checklist.md` — before finishing or merging a rule, for the final tick-box check.
-- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_rules/_rule_lifecycle.md` — before promoting a lazy rule to always-on or removing an unused rule.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_rules/_common_mistakes.md` — before writing or reviewing a rule, for the mistakes this config has already shipped.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_rules/_hard_gates_checklist.md` — before finishing or merging a rule, for the final tick-box check.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_rules/_rule_lifecycle.md` — before promoting a lazy rule to always-on or removing an unused rule.

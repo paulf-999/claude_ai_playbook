@@ -2,9 +2,9 @@
 paths:
   - "**/agents/**"
 ---
-<!-- version: 1.3.2 -->
+<!-- version: 1.3.3 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 <!-- miss_cost: low — agents drift from the house structure -->
 <!-- loading: path-scoped — loads with agent files through paths:, and through a pointer in authoring_rules.md for a new agent -->
 # 🛠️ Agent Authoring
@@ -37,8 +37,8 @@ paths:
 
 Before creating or reviewing an agent, read the children below in order.
 
-- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_agents/_core_standards.md` — Core Standards: naming pattern, structure, maturity levels and testing requirements.
-- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_agents/_decision_tree_and_process.md` — Decision Tree & Creation Process: agent vs. rule vs. skill, then the 5-step workflow.
-- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_agents/_scope_and_maturity.md` — Scope Boundaries & Maturity Justification: what the agent does not do, and why its maturity fits.
-- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_agents/_hard_gates_checklist.md` — Hard Gates Checklist: the final validation before finishing an agent.
-- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines/authoring_agents/_common_mistakes.md` — Common Mistakes & Anti-Patterns: what to catch when writing or reviewing.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_agents/_core_standards.md` — Core Standards: naming pattern, structure, maturity levels and testing requirements.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_agents/_decision_tree_and_process.md` — Decision Tree & Creation Process: agent vs. rule vs. skill, then the 5-step workflow.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_agents/_scope_and_maturity.md` — Scope Boundaries & Maturity Justification: what the agent does not do, and why its maturity fits.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_agents/_hard_gates_checklist.md` — Hard Gates Checklist: the final validation before finishing an agent.
+- **Read on demand:** `~/.claude/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_agents/_common_mistakes.md` — Common Mistakes & Anti-Patterns: what to catch when writing or reviewing.
