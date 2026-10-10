@@ -2,9 +2,9 @@
 paths:
   - "**/*.tf"
 ---
-<!-- version: 1.1.2 -->
+<!-- version: 1.1.3 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 <!-- miss_cost: medium — modules that fail review or plan checks -->
 <!-- loading: path-scoped — only applies to Terraform, so it loads when a .tf file is open -->
 # 🏗️ Terraform Style Guide & Standards
@@ -15,10 +15,10 @@ paths:
 
 | File | Purpose |
 |------|---------|
-| [`terraform/structure.md`](../../../../_rules_lazy_load/style_guide_standards/infra/terraform/structure.md) | Directory layout, standard files, provider configuration, and version pinning |
-| [`terraform/conventions.md`](../../../../_rules_lazy_load/style_guide_standards/infra/terraform/conventions.md) | Snowflake object naming, resource names, variable declarations, and outputs |
-| [`terraform/modules.md`](../../../../_rules_lazy_load/style_guide_standards/infra/terraform/modules.md) | Module composition, layered resource pattern, iteration, and lifecycle |
-| [`terraform/ci_and_tooling.md`](../../../../_rules_lazy_load/style_guide_standards/infra/terraform/ci_and_tooling.md) | Pre-commit hooks, Azure Pipelines, and sequential environment deployment |
+| [`terraform/structure.md`](../../../_rules_lazy_load/style_guide_standards/infra/terraform/structure.md) | Directory layout, standard files, provider configuration, and version pinning |
+| [`terraform/conventions.md`](../../../_rules_lazy_load/style_guide_standards/infra/terraform/conventions.md) | Snowflake object naming, resource names, variable declarations, and outputs |
+| [`terraform/modules.md`](../../../_rules_lazy_load/style_guide_standards/infra/terraform/modules.md) | Module composition, layered resource pattern, iteration, and lifecycle |
+| [`terraform/ci_and_tooling.md`](../../../_rules_lazy_load/style_guide_standards/infra/terraform/ci_and_tooling.md) | Pre-commit hooks, Azure Pipelines, and sequential environment deployment |
 
 ## 🏗️ Core principles
 

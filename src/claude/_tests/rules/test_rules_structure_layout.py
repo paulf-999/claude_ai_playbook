@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-06
-# Version:           2.1.0
+# Date updated:      2026-10-10
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -24,7 +24,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR, CLAUDE_MD, RULES_DIR
+from _shared_paths import CLAUDE_DIR, CLAUDE_MD, LAZY_RULES_NAME, RULES_DIR, native_rule_files
 
 REFERENCE_DIR = CLAUDE_DIR / "_reference"
 IMPORT_LINE = re.compile(r"^@~/[^/\s]+/(\S+)$", re.M)
@@ -83,7 +83,7 @@ def importing_files() -> list[Path]:
     :return: The files whose imports Claude Code can follow.
     :rtype: list[Path]
     """
-    return [CLAUDE_MD] + list(RULES_DIR.rglob("*.md"))
+    return [CLAUDE_MD] + native_rule_files(RULES_DIR)
 
 
 def test_rules_root_contains_only_expected_files():
@@ -96,8 +96,11 @@ def test_rules_root_contains_only_expected_files():
 
 
 def test_rules_holds_exactly_the_four_tiers():
-    """rules/ holds tiers 01–03 and 04_path_scoped/ only — tier 04 was retired on 2026-10-06 (#330)."""
-    tiers = {d.name for d in RULES_DIR.iterdir() if d.is_dir()}
+    """rules/ holds tiers 01–03 and 04_path_scoped/ only — tier 04 was retired on 2026-10-06 (#330).
+
+    The repo also keeps the on-demand rules there, which the install moves beside rules/.
+    """
+    tiers = {d.name for d in RULES_DIR.iterdir() if d.is_dir() and d.name != LAZY_RULES_NAME}
     expected = {"01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_path_scoped"}
     assert tiers == expected, f"rules/ tier folders drifted — missing {expected - tiers}, extra {tiers - expected}"
 

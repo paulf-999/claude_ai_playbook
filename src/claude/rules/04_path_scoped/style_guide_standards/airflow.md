@@ -2,9 +2,9 @@
 paths:
   - "**/dags/**/*.py"
 ---
-<!-- version: 1.2.2 -->
+<!-- version: 1.2.3 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 <!-- miss_cost: medium — DAGs that fail review or misbehave on schedule -->
 <!-- loading: path-scoped — only applies to Airflow DAGs, so it loads when a DAG file is open -->
 # 🌬️ Airflow Style Guide & Standards
@@ -17,10 +17,10 @@ paths:
 
 | File | Purpose | When to load |
 |------|---------|-------------|
-| [`airflow/dag_design.md`](../../../_rules_lazy_load/style_guide_standards/airflow/dag_design.md) | DAG file structure, naming conventions, mandatory attributes | Creating a new DAG |
-| [`airflow/dag_configuration.md`](../../../_rules_lazy_load/style_guide_standards/airflow/dag_configuration.md) | config.yaml fields, default args, scheduling, tags, documentation | Configuring DAG behavior |
-| [`airflow/tasks_and_operators.md`](../../../_rules_lazy_load/style_guide_standards/airflow/tasks_and_operators.md) | Task design, operator selection, dependencies, TaskGroups, XComs | Writing DAG logic |
-| [`airflow/best_practices.md`](../../../_rules_lazy_load/style_guide_standards/airflow/best_practices.md) | Idempotency, catchup, retries, error handling, testing | Debugging DAG failures |
+| [`airflow/dag_design.md`](../../_rules_lazy_load/style_guide_standards/airflow/dag_design.md) | DAG file structure, naming conventions, mandatory attributes | Creating a new DAG |
+| [`airflow/dag_configuration.md`](../../_rules_lazy_load/style_guide_standards/airflow/dag_configuration.md) | config.yaml fields, default args, scheduling, tags, documentation | Configuring DAG behavior |
+| [`airflow/tasks_and_operators.md`](../../_rules_lazy_load/style_guide_standards/airflow/tasks_and_operators.md) | Task design, operator selection, dependencies, TaskGroups, XComs | Writing DAG logic |
+| [`airflow/best_practices.md`](../../_rules_lazy_load/style_guide_standards/airflow/best_practices.md) | Idempotency, catchup, retries, error handling, testing | Debugging DAG failures |
 
 - **Read on demand:** `~/.claude/_rules_lazy_load/org.md` — before adding a connection or variable, for any organisation-specific secrets conventions.
 

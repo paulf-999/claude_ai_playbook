@@ -2,9 +2,9 @@
 paths:
   - "**/*.sql"
 ---
-<!-- version: 1.2.4 -->
+<!-- version: 1.2.5 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 <!-- miss_cost: medium — SQL that fails SQLFluff or costs more to run -->
 <!-- loading: path-scoped — only applies to SQL, so it loads when a .sql file is open -->
 # 🗄️ SQL Style Guide & Standards
@@ -17,10 +17,10 @@ paths:
 
 | File | Purpose | When to load |
 |------|---------|-------------|
-| [`sql/formatting.md`](../../../_rules_lazy_load/style_guide_standards/sql/formatting.md) | Keywords, structure, joins, aliases, indentation rules | Writing SQL queries |
-| [`sql/cte_style_guide.md`](../../../_rules_lazy_load/style_guide_standards/sql/cte_style_guide.md) | CTE grouping pattern (Import → Logical → Final → SELECT) | Structuring complex queries |
-| [`sql/snowflake_data_type_standards.md`](../../../_rules_lazy_load/style_guide_standards/sql/snowflake_data_type_standards.md) | Preferred Snowflake data types and why (cost, correctness) | Choosing data types in model definitions |
-| [`sql/sqlfluff.md`](../../../_rules_lazy_load/style_guide_standards/sql/sqlfluff.md) | SQLFluff dialect/templater settings, excluded rules, troubleshooting | Debugging SQLFluff violations |
+| [`sql/formatting.md`](../../_rules_lazy_load/style_guide_standards/sql/formatting.md) | Keywords, structure, joins, aliases, indentation rules | Writing SQL queries |
+| [`sql/cte_style_guide.md`](../../_rules_lazy_load/style_guide_standards/sql/cte_style_guide.md) | CTE grouping pattern (Import → Logical → Final → SELECT) | Structuring complex queries |
+| [`sql/snowflake_data_type_standards.md`](../../_rules_lazy_load/style_guide_standards/sql/snowflake_data_type_standards.md) | Preferred Snowflake data types and why (cost, correctness) | Choosing data types in model definitions |
+| [`sql/sqlfluff.md`](../../_rules_lazy_load/style_guide_standards/sql/sqlfluff.md) | SQLFluff dialect/templater settings, excluded rules, troubleshooting | Debugging SQLFluff violations |
 
 ---
 
@@ -38,7 +38,7 @@ paths:
 SQL style is enforced by **SQLFluff** in dialect mode `snowflake`:
 - Pre-commit hook validates all `.sql` files and dbt models
 - Violations block commits; fix before retry
-- See [`sql/sqlfluff.md`](../../../_rules_lazy_load/style_guide_standards/sql/sqlfluff.md) for dialect settings, rule exclusions, and troubleshooting
+- See [`sql/sqlfluff.md`](../../_rules_lazy_load/style_guide_standards/sql/sqlfluff.md) for dialect settings, rule exclusions, and troubleshooting
 
 **Common violations & fixes:**
 

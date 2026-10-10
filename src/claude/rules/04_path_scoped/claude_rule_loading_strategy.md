@@ -4,9 +4,9 @@ paths:
   - "**/_rules_lazy_load/**"
   - "**/CLAUDE.md"
 ---
-<!-- version: 4.0.1 -->
+<!-- version: 4.0.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 <!-- miss_cost: low — a rule lands in the wrong tier, which is easy to move -->
 <!-- loading: path-scoped — only needed when placing or moving a rule, so it loads when rule files or CLAUDE.md are open -->
 # 📋 Rules Loading Strategy
@@ -27,7 +27,7 @@ Claude Code loads every `.md` under `rules/` on its own, so every always-on file
 | `02_claude_standards/` | Blocking quality gates and safe operational conduct (testing, security, git, portable paths, efficiency, delegation, external system access) that gate new features, rules and abstractions | `behaviour.md` | Quality decay, security vulnerabilities, scope creep, safety regression | Always-on |
 | `03_authoring_guidelines/` | Standards for authoring the config's own rules, skills and agents — used whenever an artefact is being created | `authoring_rules.md` | Inconsistent artefact structure, scope creep, missing tests | Always-on |
 | `04_path_scoped/` | Domain-specific rules tied to one file type (SQL, Airflow, dbt, Terraform, testing) through `paths:` frontmatter | `style_guide_standards/sql.md` | Nothing outside that domain — that's why it loads only with matching files | Path-scoped; loads when a matching file is open |
-| `_rules_lazy_load/` | Niche tools, discretionary rules and bulky children, beside `rules/` rather than inside it | `turn_budgets.md` | Nothing until Claude follows a pointer to it | On demand; never loaded automatically |
+| `_rules_lazy_load/` | Niche tools, discretionary rules and bulky children, under `rules/` in the repo and moved beside it on install | `turn_budgets.md` | Nothing until Claude follows a pointer to it | On demand; never loaded automatically |
 
 - **Source of truth:** each folder is the current list of its rules — the examples above are illustrative only.
 - **Folder sets the mode:** tiers 01–03 load every session, unless a rule there has `paths:` (e.g. `authoring_agents.md`), and nothing under `rules/` is `@import`ed.

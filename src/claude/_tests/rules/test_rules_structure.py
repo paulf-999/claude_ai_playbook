@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-06
-# Version:           2.2.0
+# Date updated:      2026-10-10
+# Version:           2.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -22,7 +22,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR, LAZY_RULES_DIR, RULES_DIR
+from _shared_paths import CLAUDE_DIR, LAZY_RULES_DIR, RULES_DIR, native_rule_files
 
 REFERENCE_DIR = CLAUDE_DIR / "_reference"
 RELATED_HEADING = re.compile(r"^## .*Related", re.MULTILINE)
@@ -42,7 +42,7 @@ def rule_files() -> list[Path]:
     :rtype: list[Path]
     """
     return [
-        rule_file for rule_file in RULES_DIR.rglob("*.md")
+        rule_file for rule_file in native_rule_files(RULES_DIR)
         if rule_file.name != "README.md" and "04_path_scoped" not in rule_file.parts
     ]
 
@@ -105,8 +105,7 @@ def imported_content_files() -> list[Path]:
     """
     return [
         md_file
-        for base in (RULES_DIR, LAZY_RULES_DIR, REFERENCE_DIR)
-        for md_file in base.rglob("*.md")
+        for md_file in [*native_rule_files(RULES_DIR), *LAZY_RULES_DIR.rglob("*.md"), *REFERENCE_DIR.rglob("*.md")]
         if md_file.name != "README.md" and "_tier_readmes" not in md_file.parts
     ]
 

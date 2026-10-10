@@ -10,7 +10,7 @@ Claude Code loads every `.md` under `rules/` by itself, so the folder decides ho
 - **`02_claude_standards/`** — Foundational quality gates and operational conduct that **Claude must apply** to all work (security, testing, efficiency) — NOT user-facing
 - **`03_authoring_guidelines/`** — Meta-guidance for authoring **rules, skills, agents** (how to create and maintain config artifacts)
 - **`04_path_scoped/`** — Domain-specific rules with `paths:` frontmatter, loaded only when a matching file is open (SQL, Airflow, dbt, Terraform, etc.)
-- **`_rules_lazy_load/`** — Beside `rules/`: rules and bulky children read on demand, never loaded automatically, plus these tier READMEs
+- **`_rules_lazy_load/`** — Under `rules/` in the repo and beside it once installed: rules and bulky children read on demand, never loaded automatically, plus these tier READMEs
 
 ## 🎯 Design principle: Audience-based organization
 

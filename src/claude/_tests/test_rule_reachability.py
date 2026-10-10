@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
-# Date updated:      2026-10-06
-# Version:           3.1.0
+# Date updated:      2026-10-10
+# Version:           3.2.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -41,6 +41,28 @@ def test_clean_tree_reports_nothing(tmp_path):
     issues = find_native_load_issues(rules)
 
     assert not any(issues.values()), f"a clean tree must report nothing, got {issues}"
+
+
+def test_repo_layout_lazy_folder_is_skipped(tmp_path):
+    """In the repo, rules/_rules_lazy_load/ holds on-demand rules: its README isn't flagged and pointers reach it."""
+    rules = make_rules(tmp_path)
+    (rules / "_rules_lazy_load").mkdir()
+    (rules / "_rules_lazy_load" / "README.md").write_text("# Lazy index\n")
+    (rules / "_rules_lazy_load" / "extra.md").write_text("- **Read on demand:** `~/.claude/_rules_lazy_load/x.md`\n")
+    (rules / "01_essentials" / "a.md").write_text("- **Read on demand:** `~/.claude/_rules_lazy_load/extra.md`\n")
+
+    issues = find_native_load_issues(rules)
+
+    assert not any(issues.values()), f"the repo's lazy folder must be skipped, got {issues}"
+
+
+def test_lazy_folder_left_under_rules_after_install_is_flagged(tmp_path):
+    """An installed config with the lazy folder both beside and under rules/ would load it every session."""
+    rules = make_rules(tmp_path)
+    (tmp_path / "_rules_lazy_load").mkdir()
+    (rules / "_rules_lazy_load").mkdir()
+
+    assert find_native_load_issues(rules)["lazy_folder"] == ["rules/_rules_lazy_load"]
 
 
 def test_readme_under_rules_is_flagged(tmp_path):

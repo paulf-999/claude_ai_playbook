@@ -21,4 +21,4 @@
 - `src/claude/_tests/hooks/test_hook_registry_utils.py` — the test being scored
 - `src/claude/settings.json` — what the test guards
 - `src/claude/rules/02_claude_standards/portable_paths.md` — why the parser never calls `.expanduser()`
-- `src/claude/_rules_lazy_load/response_standards_enforcement.md` — why `hook_style_guide_response_standards.sh` is reserved
+- `src/claude/rules/_rules_lazy_load/response_standards_enforcement.md` — why `hook_style_guide_response_standards.sh` is reserved

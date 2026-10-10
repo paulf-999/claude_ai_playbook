@@ -22,7 +22,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/_rules_lazy_load/mcp_trust_model.md` — the rule being scored
+- `src/claude/rules/_rules_lazy_load/mcp_trust_model.md` — the rule being scored
 - `src/claude/rules/02_claude_standards/security/_security_guardrails.md` — Currency dimension (the real path the stale reference should point to)
 - `docs/reference/claude_config/mcp/mcp_setup.md` — Currency dimension (closest real doc to the broken `/docs/mcp_servers.md` claim)
 

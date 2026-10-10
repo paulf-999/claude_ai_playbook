@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-06
-# Version:           1.5.1
+# Date updated:      2026-10-10
+# Version:           1.6.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -338,6 +338,8 @@ def expected_loading(path, content: str) -> str:
     """
     if has_paths(content):
         return "path-scoped"
+    if LAZY_RULES_DIR in path.parents:  # under rules/ in the repo, beside it once installed
+        return "lazy"
     return "always-on" if RULES_DIR in path.parents else "lazy"
 
 

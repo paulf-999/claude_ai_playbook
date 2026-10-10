@@ -46,7 +46,7 @@ Add to this tier only when:
 Otherwise, place in:
 - **01_essentials/** — user-facing conventions (naming, writing, authoring)
 - **04_path_scoped/** — domain-specific, loaded with matching files through `paths:`
-- **_rules_lazy_load/** — beside `rules/`, read on demand only
+- **_rules_lazy_load/** — under `rules/` in the repo and beside it once installed, read on demand only
 
 ---
 

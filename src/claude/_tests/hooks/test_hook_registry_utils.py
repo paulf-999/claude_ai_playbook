@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-06
-# Version:           2.3.0
+# Date updated:      2026-10-10
+# Version:           2.3.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -22,7 +22,7 @@ lingering unnoticed.
 import json
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR, HOOKS_DIR, SETTINGS_FILE
+from _shared_paths import CLAUDE_DIR, HOOKS_DIR, SETTINGS_FILE, resolve_config_path
 
 # Hooks kept on purpose but not registered, mapped to the rule that explains why
 RESERVED_HOOKS = {
@@ -221,4 +221,4 @@ def test_reserved_hooks_say_why_they_are_kept():
         header = (HOOKS_DIR / name).read_text()
         assert RESERVED_MARKER in header, f"{name} must say {RESERVED_MARKER} in its header so no one deletes it"
         assert rule in header, f"{name} must point to {rule}, the rule that explains why it's kept"
-        assert name in (CLAUDE_DIR / rule).read_text(), f"{rule} must name {name} as a reserved hook"
+        assert name in resolve_config_path(CLAUDE_DIR, rule).read_text(), f"{rule} must name {name} as a reserved hook"

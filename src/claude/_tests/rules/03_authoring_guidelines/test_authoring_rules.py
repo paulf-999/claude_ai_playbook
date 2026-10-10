@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-06
-# Version:           2.2.0
+# Date updated:      2026-10-10
+# Version:           2.2.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -20,7 +20,7 @@ from __future__ import annotations
 
 import re
 
-from _shared_paths import CLAUDE_DIR, RULES_DIR
+from _shared_paths import CLAUDE_DIR, RULES_DIR, resolve_config_path
 
 AUTHORING_RULES = RULES_DIR / "03_authoring_guidelines" / "authoring_rules.md"
 TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_path_scoped")
@@ -89,7 +89,7 @@ def test_read_on_demand_children_exist():
     """Every on-demand child the guide names exists."""
     paths = re.findall(r"\*\*Read on demand:\*\* `~/[^/]+/([^`]+)`", content())
     assert len(paths) == 2, f"expected the common-mistakes and hard-gates pointers, found {paths}"
-    missing = [p for p in paths if not (CLAUDE_DIR / p).is_file()]
+    missing = [p for p in paths if not resolve_config_path(CLAUDE_DIR, p).is_file()]
     assert not missing, f"Read-on-demand pointers to missing files: {missing}"
 
 

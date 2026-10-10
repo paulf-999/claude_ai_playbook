@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
-# Date updated:      2026-10-06
-# Version:           1.1.0
+# Date updated:      2026-10-10
+# Version:           1.1.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -95,8 +95,8 @@ def test_rule_and_hook_changes_run_their_folders(repo: Path):
 
 
 def test_lazy_rule_change_runs_rule_tests(repo: Path):
-    """A rule in _rules_lazy_load/ queues the rule tests, like one under rules/."""
-    assert run_hook(repo, "src/claude/_rules_lazy_load/a.md")[1] == ["src/claude/_tests/rules/"]
+    """An on-demand rule, kept in rules/_rules_lazy_load/ in the repo, queues the rule tests."""
+    assert run_hook(repo, "src/claude/rules/_rules_lazy_load/a.md")[1] == ["src/claude/_tests/rules/"]
 
 
 def test_whole_suite_replaces_its_own_subfolders(repo: Path):

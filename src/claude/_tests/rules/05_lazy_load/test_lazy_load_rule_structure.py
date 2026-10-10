@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-06
-# Version:           1.3.0
+# Date updated:      2026-10-10
+# Version:           1.4.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -21,7 +21,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from _shared_paths import LAZY_RULES_DIR, RULES_DIR
+from _shared_paths import LAZY_RULES_DIR, RULES_DIR, resolve_link
 
 PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
 STYLE_DIR = Path("style_guide_standards")
@@ -275,7 +275,8 @@ def test_every_relative_link_resolves():
     """Every link to a local file points at a file that exists."""
     broken = []
     for rule, text in _rule_texts().items():
-        broken += [f"{rule.name} -> {target}" for target in relative_links(text) if not (rule.parent / target).exists()]
+        missing = [target for target in relative_links(text) if not resolve_link(rule, target).exists()]
+        broken += [f"{rule.name} -> {target}" for target in missing]
     assert not broken, f"Broken relative links — fix the path or restore the file: {broken}"
 
 

@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
-# Date updated:      2026-10-06
-# Version:           2.1.1
+# Date updated:      2026-10-10
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -27,7 +27,15 @@ resolves to a real file on disk, so hooks cannot silently load nothing.
 import re
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR, HOOKS_DIR, LAZY_RULES_DIR, RULES_DIR
+from _shared_paths import (
+    CLAUDE_DIR,
+    HOOKS_DIR,
+    LAZY_RULES_DIR,
+    RULES_DIR,
+    native_rule_files,
+    resolve_config_path,
+    resolve_link,
+)
 
 LAZY_LOAD_DIR = LAZY_RULES_DIR
 # Folders under _rules_lazy_load/ that hold indexes or ledgers rather than rules
@@ -187,12 +195,13 @@ def _outgoing_references(md_file: Path) -> set[Path]:
     targets = set()
     for pattern in (MARKDOWN_LINK_PATTERN, RELATIVE_IMPORT_PATTERN):
         for match in pattern.finditer(text):
-            candidate = (md_file.parent / match.group(1)).resolve()
-            targets.add(candidate)
-    root = next((p for p in md_file.parents if p.name in ROOT_NAMES), None)
-    if root is not None:
+            targets.add(resolve_link(md_file, match.group(1)))
+    # The config folder: above rules/, or above a _rules_lazy_load/ that sits beside it
+    roots = [p for p in md_file.parents if p.name in ROOT_NAMES]
+    if roots:
+        config_dir = roots[-1].parent
         for match in READ_ON_DEMAND_PATTERN.finditer(text):
-            targets.add((root.parent / match.group(1)).resolve())
+            targets.add(resolve_config_path(config_dir, match.group(1)).resolve())
     return targets
 
 
@@ -228,7 +237,7 @@ def test_no_unreferenced_content_files_in_lazy_load():
     that are technically "under a covered directory" but that nothing
     actually links to (the exact shape of the 2026-09-28 finding).
     """
-    orphans = find_unreferenced_content_files(LAZY_LOAD_DIR, tuple(RULES_DIR.rglob("*.md")))
+    orphans = find_unreferenced_content_files(LAZY_LOAD_DIR, tuple(native_rule_files(RULES_DIR)))
     assert not orphans, (
         "Unreferenced lazy_load files — not an entry point, and no markdown "
         "link or @./ import anywhere targets them (check whether they're "

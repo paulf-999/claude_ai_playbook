@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-06
-# Version:           2.3.0
+# Date updated:      2026-10-10
+# Version:           2.4.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -22,6 +22,7 @@ from functools import cache
 import pytest
 
 from _file_structure_validator import CLAUDE_HOME, FileStructureValidator
+from _shared_paths import LAZY_RULES_DIR
 
 HINT = "— see rules/04_path_scoped/claude_directory_structure.md"
 
@@ -91,10 +92,11 @@ def test_rules_are_compliant():
 
 
 def test_lazy_rules_are_compliant():
-    """Every file under _rules_lazy_load/ passes the scan."""
-    assert (CLAUDE_HOME / "_rules_lazy_load").is_dir(), missing_area("_rules_lazy_load")
-    errors = errors_under("_rules_lazy_load")
-    assert not errors, error_report("_rules_lazy_load", errors)
+    """Every file under _rules_lazy_load/ passes the scan, whether it sits beside rules/ or, in the repo, inside it."""
+    area = LAZY_RULES_DIR.relative_to(CLAUDE_HOME).as_posix()
+    assert LAZY_RULES_DIR.is_dir(), missing_area(area)
+    errors = [f"{v['path']}: {v['message']}" for v in scan_errors() if v["path"].startswith(f"{area}/")]
+    assert not errors, error_report(area, errors)
 
 
 def test_tests_are_compliant():

@@ -22,4 +22,4 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/05_lazy_load/test_lazy_load_coverage.py` — the test being scored
-- `src/claude/_rules_lazy_load/README.md` — what the test guards
+- `src/claude/rules/_rules_lazy_load/README.md` — what the test guards

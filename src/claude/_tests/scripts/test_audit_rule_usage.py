@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-06
-# Version:           1.6.0
+# Date updated:      2026-10-10
+# Version:           1.7.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -129,6 +129,17 @@ def test_children_and_readmes_are_not_entry_points(tmp_path):
     """Only parent.md, python.md, sql.md and loose.md count as rules."""
     names = sorted(r.rel.rsplit("/", 1)[1] for r in AUDIT.discover_rules(make_rules(tmp_path)))
     assert names == ["loose.md", "parent.md", "python.md", "sql.md"], f"unexpected entry points {names}"
+
+
+def test_repo_layout_lazy_rules_keep_installed_keys(tmp_path):
+    """With _rules_lazy_load/ inside rules/, as in the repo, lazy rules are found once and keyed by installed path."""
+    rules_dir = make_rules(tmp_path)
+    (tmp_path / "_rules_lazy_load").rename(rules_dir / "_rules_lazy_load")
+    found = {r.rel: r for r in AUDIT.discover_rules(rules_dir)}
+    assert "_rules_lazy_load/loose.md" in found, f"lazy rule missing or keyed by repo path: {sorted(found)}"
+    assert found["_rules_lazy_load/loose.md"].tier == "_rules_lazy_load", "a lazy rule was counted as a tier"
+    assert found["_rules_lazy_load/loose.md"].tokens > 0, "tokens should be read from the repo-layout file"
+    assert len(found) == 4, f"lazy rules must not be counted twice: {sorted(found)}"
 
 
 def test_always_on_tokens_include_native_children(tmp_path):

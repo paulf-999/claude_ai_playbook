@@ -23,6 +23,6 @@
 ## 🔗 Related files
 
 - `src/claude/rules/03_authoring_guidelines/authoring_rules.md` — the rule being scored
-- `src/claude/_rules_lazy_load/authoring_guidelines/authoring_rules/_common_mistakes.md` — child, scored as part of this rule
-- `src/claude/_rules_lazy_load/authoring_guidelines/authoring_rules/_hard_gates_checklist.md` — child, scored as part of this rule
+- `src/claude/rules/_rules_lazy_load/authoring_guidelines/authoring_rules/_common_mistakes.md` — child, scored as part of this rule
+- `src/claude/rules/_rules_lazy_load/authoring_guidelines/authoring_rules/_hard_gates_checklist.md` — child, scored as part of this rule
 - `src/claude/_tests/rules/03_authoring_guidelines/test_authoring_rules.py` — Test Coverage dimension

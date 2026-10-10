@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-06
-# Version:           1.4.0
+# Date updated:      2026-10-10
+# Version:           1.4.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -21,7 +21,7 @@ from __future__ import annotations
 
 import re
 
-from _shared_paths import CLAUDE_DIR, HOOKS_DIR, LAZY_RULES_DIR, RULES_DIR
+from _shared_paths import CLAUDE_DIR, HOOKS_DIR, LAZY_RULES_DIR, RULES_DIR, resolve_config_path
 
 TESTS_HOOKS_DIR = CLAUDE_DIR / "_tests/hooks"
 TESTS_RULES_DIR = CLAUDE_DIR / "_tests/rules"
@@ -203,7 +203,7 @@ def test_testing_md_children_exist():
     """Every child testing.md points to exists, so none is silently unreachable."""
     children = re.findall(r"\*\*Read on demand:\*\* \[?`~/[^/]+/(\S+?)`", TESTING_MD.read_text())
     assert children, "testing.md should point to its children with 'Read on demand' pointers"
-    missing = [c for c in children if not (CLAUDE_DIR / c).is_file()]
+    missing = [c for c in children if not resolve_config_path(CLAUDE_DIR, c).is_file()]
     assert not missing, f"testing.md points to files that don't exist: {missing}"
 
 
