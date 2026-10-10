@@ -2,9 +2,10 @@
 paths:
   - "**/rules/**"
   - "**/_rules_lazy_load/**"
+  - "**/_style_guide_standards/**"
   - "**/CLAUDE.md"
 ---
-<!-- version: 4.0.2 -->
+<!-- version: 4.1.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-10 -->
 <!-- miss_cost: low — a rule lands in the wrong tier, which is easy to move -->
@@ -50,6 +51,7 @@ Decide from two numbers per rule, both in `_admin/_audits/audit_rule_usage.md`:
 | **Low** | Always-on only if small | Lazy |
 
 - **Domain style guides:** SQL, Airflow, dbt and similar guides are lazy, triggered by `paths:` on their file type.
+  - **Repo layout:** the repo keeps every guide in `_style_guide_standards/`, and the install moves files with `paths:` to `rules/04_path_scoped/` and the rest to `_rules_lazy_load/`.
 - **Pointers aren't triggers:** a `**Read on demand:**` pointer works only if Claude remembers it, so it never counts for a high-cost rule.
 
 ---

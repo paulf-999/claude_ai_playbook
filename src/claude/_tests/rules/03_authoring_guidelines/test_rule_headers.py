@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-10
-# Version:           1.6.0
+# Version:           1.7.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -20,7 +20,7 @@ Every entry point also says how it loads and why, and the mode must match its fo
 import re
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR, HOOKS_DIR, LAZY_RULES_DIR, RULES_DIR
+from _shared_paths import CLAUDE_DIR, HOOKS_DIR, LAZY_RULES_DIR, LAZY_RULES_NAME, RULES_DIR, installed_rule_files
 
 ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines")
 PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
@@ -229,16 +229,19 @@ def lazy_entry_points() -> list[Path]:
     """
     # A child's parent may sit in another root, e.g. sql/formatting.md in _rules_lazy_load/
     # belongs to sql.md in rules/04_path_scoped/, so look for the parent in every root.
-    roots = [PATH_SCOPED_DIR, LAZY_RULES_DIR] + [RULES_DIR / tier for tier in ALWAYS_ON_TIERS]
+    files = installed_rule_files(CLAUDE_DIR)
+    roots = ["rules/04_path_scoped", LAZY_RULES_NAME] + [f"rules/{tier}" for tier in ALWAYS_ON_TIERS]
     found = [p for tier in ALWAYS_ON_TIERS for p in (RULES_DIR / tier).glob("*.md") if has_paths(p.read_text())]
-    for root in (PATH_SCOPED_DIR, LAZY_RULES_DIR):
-        for path in sorted(root.rglob("*.md")):
-            rel = path.relative_to(root)
-            if path.name == "README.md" or path.name.startswith("_") or rel.parts[0] in ("_tier_readmes", "_learned"):
-                continue
-            folders = [rel.parents[i] for i in range(len(rel.parts) - 1)]
-            if not any((r / f).with_suffix(".md").is_file() for f in folders for r in roots):
-                found.append(path)
+    for installed, path in files.items():
+        root = next((r for r in roots[:2] if installed.startswith(f"{r}/")), None)
+        if root is None:
+            continue
+        rel = Path(installed[len(root) + 1:])
+        if path.name == "README.md" or path.name.startswith("_") or rel.parts[0] in ("_tier_readmes", "_learned"):
+            continue
+        folders = [rel.parents[i] for i in range(len(rel.parts) - 1)]
+        if not any(f"{r}/{f.as_posix()}.md" in files for f in folders for r in roots):
+            found.append(path)
     return found
 
 
@@ -292,10 +295,11 @@ def test_every_entry_point_declares_miss_cost():
 def test_high_cost_lazy_rules_load_mechanically():
     """A lazy rule that is costly to miss must have paths: or a hook, not rely on Claude remembering it."""
     hook_texts = [h.read_text() for h in HOOKS_DIR.glob("*.sh")]
+    installed = {path: rel for rel, path in installed_rule_files(CLAUDE_DIR).items()}  # hooks name installed paths
     untriggered = [
-        p.relative_to(CLAUDE_DIR).as_posix() for p in lazy_entry_points()
+        installed[p] for p in lazy_entry_points()
         if miss_cost_of(p.read_text()) == "high"
-        and not has_mechanical_trigger(p.relative_to(CLAUDE_DIR).as_posix(), p.read_text(), hook_texts)
+        and not has_mechanical_trigger(installed[p], p.read_text(), hook_texts)
     ]
     assert not untriggered, (
         f"high miss_cost lazy rules with no trigger: {untriggered} — add paths: frontmatter, "

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-10
-# Version:           2.2.0
+# Version:           2.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -24,6 +24,8 @@ from related rules"):
 Also verifies the inverse: every lazy_load/ path referenced by a hook
 resolves to a real file on disk, so hooks cannot silently load nothing.
 """
+from __future__ import annotations
+
 import re
 from pathlib import Path
 
@@ -31,8 +33,12 @@ from _shared_paths import (
     CLAUDE_DIR,
     HOOKS_DIR,
     LAZY_RULES_DIR,
+    LAZY_RULES_NAME,
     RULES_DIR,
+    STYLE_GUIDES_NAME,
+    installed_rule_files,
     native_rule_files,
+    path_scoped_rule_files,
     resolve_config_path,
     resolve_link,
 )
@@ -43,65 +49,61 @@ NON_RULE_FOLDERS = {"_tier_readmes", "_learned"}
 README_FILE = LAZY_LOAD_DIR / "README.md"
 
 
-def _hook_lazy_load_refs() -> set[Path]:
-    """Return the set of lazy_load .md paths referenced across all hook scripts.
+def lazy_files() -> dict[str, Path]:
+    """Return each on-demand file's path inside the installed _rules_lazy_load/, mapped to where it is on disk."""
+    prefix = f"{LAZY_RULES_NAME}/"
+    return {rel[len(prefix):]: p for rel, p in installed_rule_files(CLAUDE_DIR).items() if rel.startswith(prefix)}
 
-    :return: Absolute paths to lazy_load .md files mentioned in any hook.
-    :rtype: set[Path]
+
+def _hook_lazy_load_refs() -> set[str]:
+    """Return the lazy_load .md paths referenced across all hook scripts.
+
+    :return: Paths inside _rules_lazy_load/ mentioned in any hook.
+    :rtype: set[str]
     """
     refs = set()
     for hook in HOOKS_DIR.glob("*.sh"):
-        for match in re.finditer(r"lazy_load/([\w/.-]+\.md)", hook.read_text()):
-            refs.add(LAZY_LOAD_DIR / match.group(1))
+        refs |= set(re.findall(r"lazy_load/([\w/.-]+\.md)", hook.read_text()))
     return refs
 
 
-def _readme_covered_files_and_dirs() -> tuple[set[Path], set[Path]]:
+def _readme_covered_files_and_dirs() -> tuple[set[str], set[str]]:
     """Return lazy_load files and directories named in README.md's index table.
 
-    :return: (covered file paths, covered directory paths) mentioned by name.
-    :rtype: tuple[set[Path], set[Path]]
+    :return: (covered file paths, covered directory paths) inside _rules_lazy_load/, mentioned by name.
+    :rtype: tuple[set[str], set[str]]
     """
     if not README_FILE.exists():
         return set(), set()
     content = README_FILE.read_text()
-    files = {LAZY_LOAD_DIR / m for m in re.findall(r"\b([\w-]+\.md)\b", content)}
-    dirs = {LAZY_LOAD_DIR / m for m in re.findall(r"\b([\w-]+)/", content)}
-    return files, dirs
+    return set(re.findall(r"\b([\w-]+\.md)\b", content)), set(re.findall(r"\b([\w-]+)/", content))
 
 
-def _has_covered_ancestor(file_path: Path, covered: set[Path], covered_dirs: set[Path]) -> bool:
+def _has_covered_ancestor(rel: str, covered: set[str], covered_dirs: set[str]) -> bool:
     """Return True if any ancestor directory is covered by a hook index or README entry.
 
     A directory foo/bar/ is covered when foo/bar.md is hook-referenced (index
     convention), or when "bar/" itself is named in README.md's table.
 
-    :param file_path: The lazy_load .md file to check.
-    :type file_path: Path
-    :param covered: Set of lazy_load files directly referenced by hooks.
-    :type covered: set[Path]
-    :param covered_dirs: Set of lazy_load directories named in README.md.
-    :type covered_dirs: set[Path]
+    :param rel: The file's path inside _rules_lazy_load/.
+    :type rel: str
+    :param covered: Lazy_load files directly referenced by hooks or README.md.
+    :type covered: set[str]
+    :param covered_dirs: Lazy_load directories named in README.md.
+    :type covered_dirs: set[str]
     :return: Whether the file is transitively reachable via a covered ancestor.
     :rtype: bool
     """
-    current = file_path.parent
-    while current != LAZY_LOAD_DIR.parent:
-        if current in covered_dirs:
-            return True
-        # The index for directory foo/bar/ is foo/bar.md
-        candidate = current.parent / f"{current.name}.md"
-        if candidate in covered:
-            return True
-        current = current.parent
-    return False
+    # The index for directory foo/bar/ is foo/bar.md
+    return any(folder.as_posix() in covered_dirs or f"{folder.as_posix()}.md" in covered
+               for folder in list(Path(rel).parents)[:-1])
 
 
 def test_hook_references_resolve():
     """Every lazy_load/ path referenced by a hook must exist on disk."""
-    for path in _hook_lazy_load_refs():
-        assert path.exists(), (
-            f"Hook references non-existent file: {path.relative_to(CLAUDE_DIR)}"
+    for rel in _hook_lazy_load_refs():
+        assert resolve_config_path(CLAUDE_DIR, f"{LAZY_RULES_NAME}/{rel}").exists(), (
+            f"Hook references non-existent file: {LAZY_RULES_NAME}/{rel}"
         )
 
 
@@ -110,14 +112,11 @@ def test_no_orphaned_lazy_load_files():
     covered = _hook_lazy_load_refs()
     readme_files, readme_dirs = _readme_covered_files_and_dirs()
     covered |= readme_files
-    for md_file in LAZY_LOAD_DIR.rglob("*.md"):
-        if md_file.relative_to(LAZY_LOAD_DIR).parts[0] in NON_RULE_FOLDERS:
+    for rel in lazy_files():
+        if Path(rel).parts[0] in NON_RULE_FOLDERS or Path(rel).name == "README.md" or rel in covered:
             continue
-        if md_file.name == "README.md" or md_file in covered:
-            continue
-        assert _has_covered_ancestor(md_file, covered, readme_dirs), (
-            f"Orphaned lazy_load file — no hook, no README.md entry, and no "
-            f"covered ancestor: {md_file.relative_to(CLAUDE_DIR)}"
+        assert _has_covered_ancestor(rel, covered, readme_dirs), (
+            f"Orphaned lazy_load file — no hook, no README.md entry, and no covered ancestor: {rel}"
         )
 
 
@@ -159,28 +158,7 @@ RELATIVE_IMPORT_PATTERN = re.compile(r"@(?!~)\.?/?([\w][\w/-]*\.md)")
 # "**Read on demand:**" pointers name a child by its full config path, e.g.
 # `~/.claude/_rules_lazy_load/x/_child.md` — the convention for on-demand children.
 READ_ON_DEMAND_PATTERN = re.compile(r"`~/[^/`\s]+/((?:rules|_rules_lazy_load)/[^`\s]+\.md)`")
-ROOT_NAMES = ("rules", "_rules_lazy_load")
-
-
-def _is_entry_point(md_file: Path, lazy_load_dir: Path) -> bool:
-    """Return True if md_file is a top-level, on-demand entry point.
-
-    Entry points are loaded by name (like a skill's SKILL.md) rather than
-    linked from elsewhere, so they're exempt from needing an incoming
-    reference.
-
-    :param md_file: The candidate file.
-    :type md_file: Path
-    :param lazy_load_dir: The 05_lazy_load/ root.
-    :type lazy_load_dir: Path
-    :return: Whether md_file is a known entry point.
-    :rtype: bool
-    """
-    try:
-        rel = md_file.relative_to(lazy_load_dir).as_posix()
-    except ValueError:
-        return False
-    return rel in ENTRY_POINT_RELATIVE_PATHS
+ROOT_NAMES = ("rules", LAZY_RULES_NAME, STYLE_GUIDES_NAME)
 
 
 def _outgoing_references(md_file: Path) -> set[Path]:
@@ -205,28 +183,33 @@ def _outgoing_references(md_file: Path) -> set[Path]:
     return targets
 
 
-def find_unreferenced_content_files(lazy_load_dir: Path, other_sources: tuple[Path, ...] = ()) -> list[Path]:
+def find_unreferenced_content_files(
+    lazy_load_dir: Path, other_sources: tuple[Path, ...] = (), files: dict[str, Path] | None = None
+) -> list[Path]:
     """Return non-entry-point .md files never targeted by a link or import.
 
     :param lazy_load_dir: The _rules_lazy_load/ root to scan.
     :type lazy_load_dir: Path
     :param other_sources: More files whose links count, e.g. path-scoped parents in rules/.
     :type other_sources: tuple[Path, ...]
+    :param files: The lazy files keyed by path inside _rules_lazy_load/, when they don't all sit under it.
+    :type files: dict[str, Path] | None
     :return: Files that are neither an entry point nor referenced by anything.
     :rtype: list[Path]
     """
-    all_files = [
-        f for f in lazy_load_dir.rglob("*.md")
-        if f.name != "README.md" and "templates" not in f.relative_to(lazy_load_dir).parts
-        and f.relative_to(lazy_load_dir).parts[0] not in NON_RULE_FOLDERS
-    ]
+    if files is None:
+        files = {f.relative_to(lazy_load_dir).as_posix(): f for f in lazy_load_dir.rglob("*.md")}
+    candidates = {
+        rel: f for rel, f in files.items()
+        if f.name != "README.md" and "templates" not in Path(rel).parts and Path(rel).parts[0] not in NON_RULE_FOLDERS
+    }
     referenced: set[Path] = set()
-    for f in [*all_files, *other_sources]:
+    for f in [*candidates.values(), *other_sources]:
         referenced |= _outgoing_references(f)
 
     return [
-        f for f in all_files
-        if f.resolve() not in referenced and not _is_entry_point(f, lazy_load_dir)
+        f for rel, f in candidates.items()
+        if f.resolve() not in referenced and rel not in ENTRY_POINT_RELATIVE_PATHS
     ]
 
 
@@ -237,7 +220,8 @@ def test_no_unreferenced_content_files_in_lazy_load():
     that are technically "under a covered directory" but that nothing
     actually links to (the exact shape of the 2026-09-28 finding).
     """
-    orphans = find_unreferenced_content_files(LAZY_LOAD_DIR, tuple(native_rule_files(RULES_DIR)))
+    sources = tuple(native_rule_files(RULES_DIR)) + tuple(path_scoped_rule_files(CLAUDE_DIR))
+    orphans = find_unreferenced_content_files(LAZY_LOAD_DIR, sources, lazy_files())
     assert not orphans, (
         "Unreferenced lazy_load files — not an entry point, and no markdown "
         "link or @./ import anywhere targets them (check whether they're "

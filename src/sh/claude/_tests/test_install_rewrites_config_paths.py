@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-10
-# Version:           1.2.1
+# Version:           1.2.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -32,7 +32,7 @@ REACHABILITY_TEST = TESTS_DIR / "rules" / "02_claude_standards" / "test_always_o
 # missing folder behaves differently on macOS and Linux
 STEPS = (
     "create_target_dir_if_missing && backup_target_dir copy && copy_claude_files && flatten_skills"
-    " && relocate_lazy_rules && rewrite_config_paths"
+    " && relocate_lazy_rules && split_style_guides && rewrite_config_paths"
 )
 IMPORT = re.compile(r"^@(\S+\.md)\s*$", re.M)
 SQL_GUIDE = Path("rules/04_path_scoped/style_guide_standards/sql.md")

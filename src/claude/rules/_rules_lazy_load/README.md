@@ -21,7 +21,7 @@
 | **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
 | **claude_rule_loading_strategy.md** (in `rules/04_path_scoped/`) | The rule folders and when a rule should be always-on or lazy, from measured usage and miss cost | Loads through `paths:` on rule files and `CLAUDE.md` |
 | **automation_controls.md** | Guardrails for `/loop`, `/batch`, `/goal` automation commands | Setting up recurring automation |
-| **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | File-type guides sit in `rules/04_path_scoped/style_guide_standards/` and load through `paths:`; their children, jira, organisation standards and datetime stay here, read through pointers |
+| **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | File-type guides install to `rules/04_path_scoped/style_guide_standards/` and load through `paths:`; their children, jira and datetime install here, read through pointers. In the repo, every guide sits in `src/claude/_style_guide_standards/` |
 
 ---
 
@@ -308,11 +308,11 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 
 ### `style_guide_standards/python.md`
 
-- [`python/python_environment.md`](style_guide_standards/python/python_environment.md) — Virtual environment setup, dependency management, and tooling
-- [`python/testing.md`](style_guide_standards/python/testing.md) — Pytest conventions: test naming, structure, fixtures, mocking, assertions
-- [`python/logging.md`](style_guide_standards/python/logging.md) — Logging standards for debugging, monitoring, and auditing
-- [`python/code_complexity.md`](style_guide_standards/python/code_complexity.md) — Metrics to identify and prevent overly complex code
-- [`python/module_organisation.md`](style_guide_standards/python/module_organisation.md) — Module docstrings, metadata, and public/private organisation
+- [`python/python_environment.md`](../../_style_guide_standards/python/python_environment.md) — Virtual environment setup, dependency management, and tooling
+- [`python/testing.md`](../../_style_guide_standards/python/testing.md) — Pytest conventions: test naming, structure, fixtures, mocking, assertions
+- [`python/logging.md`](../../_style_guide_standards/python/logging.md) — Logging standards for debugging, monitoring, and auditing
+- [`python/code_complexity.md`](../../_style_guide_standards/python/code_complexity.md) — Metrics to identify and prevent overly complex code
+- [`python/module_organisation.md`](../../_style_guide_standards/python/module_organisation.md) — Module docstrings, metadata, and public/private organisation
 
 ### `style_guide_standards/sql.md`
 

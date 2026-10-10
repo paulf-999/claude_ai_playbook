@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-10
-# Version:           1.4.0
+# Version:           1.4.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -21,7 +21,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from _shared_paths import LAZY_RULES_DIR, RULES_DIR, resolve_link
+from _shared_paths import CLAUDE_DIR, LAZY_RULES_DIR, RULES_DIR, resolve_config_path, resolve_link
 
 PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
 STYLE_DIR = Path("style_guide_standards")
@@ -194,7 +194,7 @@ def _child_names(rule: Path) -> list[str]:
     """
     folder = rule.parent / rule.stem
     if not folder.is_dir() and PATH_SCOPED_DIR in rule.parents:
-        # A path-scoped parent's children live in _rules_lazy_load/ so they don't auto-load
+        # Installed, a path-scoped parent's children live in _rules_lazy_load/ so they don't auto-load
         folder = LAZY_RULES_DIR / rule.relative_to(PATH_SCOPED_DIR).with_suffix("")
     if not folder.is_dir():
         return []
@@ -207,9 +207,9 @@ def _rule_texts() -> dict[Path, str]:
 
 
 def rule_path(rel: Path) -> Path:
-    """Return a tracked rule's absolute path, in rules/04_path_scoped/ or else _rules_lazy_load/."""
-    scoped = PATH_SCOPED_DIR / rel
-    return scoped if scoped.is_file() else LAZY_RULES_DIR / rel
+    """Return a tracked rule's absolute path, in rules/04_path_scoped/ or else _rules_lazy_load/ (either layout)."""
+    scoped = resolve_config_path(CLAUDE_DIR, f"rules/04_path_scoped/{rel.as_posix()}")
+    return scoped if scoped.is_file() else resolve_config_path(CLAUDE_DIR, f"_rules_lazy_load/{rel.as_posix()}")
 
 
 # ── Real config ─────────────────────────────────────────────────────────

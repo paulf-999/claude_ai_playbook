@@ -2,7 +2,7 @@
 paths:
   - "**/*.mmd"
 ---
-<!-- version: 1.1.3 -->
+<!-- version: 1.1.4 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-10 -->
 <!-- miss_cost: low — diagram style drift -->
@@ -17,5 +17,5 @@ These standards apply to the flowcharts used in skill `flow.md` files and role R
 
 ## 📋 Structure
 
-- [**Fundamentals**](../../../_rules_lazy_load/style_guide_standards/utilities/mermaid/fundamentals.md) — When to use diagrams, placement, diagram level, direction
-- [**Advanced Techniques**](../../../_rules_lazy_load/style_guide_standards/utilities/mermaid/advanced.md) — Node shapes, content format, styling, subgraphs, reference example
+- [**Fundamentals**](mermaid/fundamentals.md) — When to use diagrams, placement, diagram level, direction
+- [**Advanced Techniques**](mermaid/advanced.md) — Node shapes, content format, styling, subgraphs, reference example

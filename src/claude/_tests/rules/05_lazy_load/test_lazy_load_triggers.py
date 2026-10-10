@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-06
-# Version:           1.3.1
+# Date updated:      2026-10-10
+# Version:           1.5.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -18,10 +18,19 @@ README doesn't count, because no README is ever loaded.
 import re
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR, CLAUDE_MD, HOOKS_DIR, LAZY_RULES_DIR, RULES_DIR, SKILLS_DIR
+from _shared_paths import (
+    CLAUDE_DIR,
+    CLAUDE_MD,
+    HOOKS_DIR,
+    LAZY_RULES_DIR,
+    LAZY_RULES_NAME,
+    RULES_DIR,
+    SKILLS_DIR,
+    installed_rule_files,
+    native_rule_files,
+)
 
 LAZY_DIR = LAZY_RULES_DIR
-PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
 ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines")
 # Folders under _rules_lazy_load/ that hold indexes or ledgers rather than rules
 NON_RULE_FOLDERS = {"_tier_readmes", "_learned"}
@@ -71,7 +80,7 @@ def native_texts(rules_dir: Path) -> dict[str, str]:
     """
     return {
         p.relative_to(rules_dir.parent).as_posix(): p.read_text()
-        for p in sorted(rules_dir.rglob("*.md")) if not has_paths(p.read_text())
+        for p in native_rule_files(rules_dir) if not has_paths(p.read_text())
     }
 
 
@@ -114,24 +123,27 @@ def trigger_for(inner: str, text: str, loaded: dict[str, str], hooks: list[str])
     return ""
 
 
-def entry_points(lazy_dir: Path) -> list[Path]:
+def entry_points(config_dir: Path) -> dict[str, Path]:
     """List lazy rules that stand alone rather than belonging to a parent topic.
 
-    :param lazy_dir: The ``_rules_lazy_load`` folder.
-    :type lazy_dir: Path
-    :return: Entry-point rule paths.
-    :rtype: list[Path]
+    :param config_dir: The Claude config directory, installed or the repo's ``src/claude``.
+    :type config_dir: Path
+    :return: Each entry point's path inside ``_rules_lazy_load``, mapped to where it sits on disk.
+    :rtype: dict[str, Path]
     """
+    files = installed_rule_files(config_dir)
     # A child's parent may sit under rules/, e.g. sql/formatting.md belongs to rules/04_path_scoped/.../sql.md
-    roots = [lazy_dir, PATH_SCOPED_DIR] + [RULES_DIR / tier for tier in ALWAYS_ON_TIERS]
-    found = []
-    for path in sorted(lazy_dir.rglob("*.md")):
-        rel = path.relative_to(lazy_dir)
+    roots = [LAZY_RULES_NAME, "rules/04_path_scoped"] + [f"rules/{tier}" for tier in ALWAYS_ON_TIERS]
+    found = {}
+    for installed, path in files.items():
+        if not installed.startswith(f"{LAZY_RULES_NAME}/"):
+            continue
+        rel = Path(installed[len(LAZY_RULES_NAME) + 1:])
         if path.name == "README.md" or path.name.startswith("_") or rel.parts[0] in NON_RULE_FOLDERS:
             continue
         folders = [rel.parents[i] for i in range(len(rel.parts) - 1)]
-        if not any((root / f).with_suffix(".md").is_file() for f in folders for root in roots):
-            found.append(path)
+        if not any(f"{root}/{f.as_posix()}.md" in files for f in folders for root in roots):
+            found[rel.as_posix()] = path
     return found
 
 
@@ -182,6 +194,14 @@ def test_imports_are_followed_through_every_level(tmp_path):
     assert set(texts) == {"CLAUDE.md", "_rules/a.md", "_rules/b.md"}, sorted(texts)
 
 
+def test_repo_lazy_folder_is_not_loaded(tmp_path):
+    """The repo's rules/_rules_lazy_load/ is read on demand once installed, so it doesn't count as loaded."""
+    (tmp_path / "rules" / "_rules_lazy_load").mkdir(parents=True)
+    (tmp_path / "rules" / "a.md").write_text("always\n")
+    (tmp_path / "rules" / "_rules_lazy_load" / "lazy.md").write_text("pointer\n")
+    assert set(native_texts(tmp_path / "rules")) == {"rules/a.md"}, sorted(native_texts(tmp_path / "rules"))
+
+
 def test_native_rules_without_paths_are_loaded(tmp_path):
     """Files under rules/ count as loaded at startup, except those with paths: frontmatter."""
     (tmp_path / "rules" / "04_path_scoped").mkdir(parents=True)
@@ -204,7 +224,7 @@ def test_skill_readmes_are_not_loaded(tmp_path):
 
 def test_lazy_tier_has_entry_points():
     """The scan finds lazy rules and skips children of a parent topic."""
-    names = [p.name for p in entry_points(LAZY_DIR)]
+    names = [p.name for p in entry_points(CLAUDE_DIR).values()]
     assert len(names) >= 8, f"expected at least 8 lazy entry points, found {len(names)}"
     assert "formatting.md" not in names, "sql/formatting.md is a child of sql.md, not an entry point"
 
@@ -214,8 +234,8 @@ def test_every_lazy_rule_has_a_trigger():
     loaded = loaded_texts()
     hooks = [h.read_text() for h in HOOKS_DIR.glob("*.sh")]
     orphans = [
-        p.relative_to(LAZY_DIR).as_posix() for p in entry_points(LAZY_DIR)
-        if not trigger_for(p.relative_to(LAZY_DIR).as_posix(), p.read_text(), loaded, hooks)
+        inner for inner, p in entry_points(CLAUDE_DIR).items()
+        if not trigger_for(inner, p.read_text(), loaded, hooks)
     ]
     assert not orphans, (
         f"lazy rules nothing loads: {orphans} — add paths: frontmatter and move it to rules/04_path_scoped/, "
@@ -235,7 +255,8 @@ def test_triggers_added_on_2026_10_01_stay():
         "latency_optimisation.md": "pointer",
     }
     for inner, kind in expected.items():
-        path = PATH_SCOPED_DIR / inner if (PATH_SCOPED_DIR / inner).is_file() else LAZY_DIR / inner
+        files = installed_rule_files(CLAUDE_DIR)
+        path = files.get(f"rules/04_path_scoped/{inner}") or files[f"{LAZY_RULES_NAME}/{inner}"]
         found = trigger_for(inner, path.read_text(), loaded, hooks)
         assert found == kind, f"{inner} should load through {kind}, found {found or 'nothing'}"
     assert not (LAZY_DIR / "environment_setup").exists(), "ohmyzsh_setup.md was archived to _archive/ — keep it out"

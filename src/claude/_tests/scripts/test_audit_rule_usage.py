@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-10
-# Version:           1.7.0
+# Version:           1.8.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -140,6 +140,41 @@ def test_repo_layout_lazy_rules_keep_installed_keys(tmp_path):
     assert found["_rules_lazy_load/loose.md"].tier == "_rules_lazy_load", "a lazy rule was counted as a tier"
     assert found["_rules_lazy_load/loose.md"].tokens > 0, "tokens should be read from the repo-layout file"
     assert len(found) == 4, f"lazy rules must not be counted twice: {sorted(found)}"
+
+
+def to_repo_style_guides(tmp_path):
+    """Move the fake style guides into one _style_guide_standards/ folder, as the repo keeps them.
+
+    :param tmp_path: The config folder ``make_rules`` built.
+    :return: The ``rules`` folder.
+    """
+    guides = tmp_path / "_style_guide_standards"
+    (tmp_path / SCOPED_GUIDES).rename(guides)
+    (tmp_path / LAZY_GUIDES / "python.md").rename(guides / "python.md")
+    (guides / "sql").mkdir()
+    (guides / "sql" / "formatting.md").write_text("# Formatting\n")
+    return tmp_path / "rules"
+
+
+def test_repo_layout_style_guides_keep_installed_keys(tmp_path):
+    """Style guides in one repo folder are keyed where the install puts them, and their children are skipped."""
+    make_rules(tmp_path)
+    found = {r.rel: r for r in AUDIT.discover_rules(to_repo_style_guides(tmp_path))}
+    assert f"{SCOPED_GUIDES}/sql.md" in found, f"entry file missing or keyed by repo path: {sorted(found)}"
+    assert found[f"{SCOPED_GUIDES}/sql.md"].tier == "04_path_scoped", "an entry file left the path-scoped tier"
+    assert found[f"{LAZY_GUIDES}/python.md"].tier == "_rules_lazy_load", "a detail file left the lazy tier"
+    assert found[f"{LAZY_GUIDES}/python.md"].globs == ["**/*.py"], "the default globs no longer match by key"
+    assert found[f"{LAZY_GUIDES}/python.md"].tokens > 0, "tokens should be read from the repo copy"
+    assert len(found) == 4, f"sql/formatting.md is a child of sql.md, not an entry point: {sorted(found)}"
+
+
+def test_repo_layout_style_guide_reads_map_to_installed_keys(tmp_path):
+    """A transcript read of a repo style guide counts against its installed key."""
+    make_rules(tmp_path)
+    rules_dir = to_repo_style_guides(tmp_path)
+    assert AUDIT.rule_rel("/repo/src/claude/_style_guide_standards/sql.md", rules_dir) == f"{SCOPED_GUIDES}/sql.md"
+    raw = "/repo/src/claude/_style_guide_standards/sql/formatting.md"
+    assert AUDIT.rule_rel(raw, rules_dir) == f"{LAZY_GUIDES}/sql/formatting.md"
 
 
 def test_always_on_tokens_include_native_children(tmp_path):

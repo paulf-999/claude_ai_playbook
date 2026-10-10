@@ -23,6 +23,12 @@ MANIFEST_NAME=".install_manifest"
 # since Claude Code loads every .md under rules/ by itself
 LAZY_RULES_NAME="_rules_lazy_load"
 
+# Style guides sit in one folder in the repo but split once installed: entry files (with paths:
+# frontmatter) go where Claude Code loads them on matching files, and the rest go with the on-demand rules
+STYLE_GUIDES_NAME="_style_guide_standards"
+STYLE_GUIDES_PATH_SCOPED="rules/04_path_scoped/style_guide_standards"
+STYLE_GUIDES_LAZY="${LAZY_RULES_NAME}/style_guide_standards"
+
 #=======================================================================
 # Shared functions
 #=======================================================================
@@ -165,14 +171,48 @@ relocate_lazy_rules() {
     log_message "${INFO}" "Moved rules/${LAZY_RULES_NAME}/ beside rules/"
 }
 
+# Return 0 when a file's opening frontmatter has a paths: key, meaning Claude Code loads it on matching files
+is_path_scoped() {
+    local FILE="$1"  # file to check
+    awk 'NR == 1 { if ($0 != "---") exit; next } $0 == "---" { exit } /^paths:/ { found = 1; exit } END { exit !found }' "${FILE}"
+}
+
+# Print where a style-guide file installs, relative to the target: path-scoped or on-demand
+style_guide_install_path() {
+    local FILE="$1"  # the file itself, to read its frontmatter
+    local REL="$2"   # its path inside _style_guide_standards/
+    if is_path_scoped "${FILE}"; then
+        echo "${STYLE_GUIDES_PATH_SCOPED}/${REL}"
+    else
+        echo "${STYLE_GUIDES_LAZY}/${REL}"
+    fi
+}
+
+# Split _style_guide_standards/ back to where Claude Code needs each file, then remove the folder.
+# Left at the top level, entry files would never load, so every file is moved, overwriting the last install's copy.
+split_style_guides() {
+    local FROM_DIR="${TARGET_DIR}/${STYLE_GUIDES_NAME}"
+    local FROM TO
+    [[ -d "${FROM_DIR}" ]] || return 0
+    while IFS= read -r FROM; do
+        TO="${TARGET_DIR}/$(style_guide_install_path "${FROM}" "${FROM#"${FROM_DIR}/"}")"
+        mkdir -p "$(dirname "${TO}")"
+        mv -f "${FROM}" "${TO}"
+    done < <(find "${FROM_DIR}" -type f)
+    rm -rf "${FROM_DIR}"
+    log_message "${INFO}" "Split ${STYLE_GUIDES_NAME}/ into path-scoped and on-demand rules"
+}
+
 # Print the files an install puts in the target, relative to it and sorted, laid out as
-# flatten_skills and relocate_lazy_rules leave them.
+# flatten_skills, relocate_lazy_rules and split_style_guides leave them.
 # User-owned entries are left out, so pruning can never remove them.
 list_installed_files() {
     local REL
     (cd "${SOURCE_DIR}" && find . -type f) | sed 's#^\./##' | while IFS= read -r REL; do
         is_user_owned "${REL%%/*}" && continue
-        if [[ "${REL}" == "rules/${LAZY_RULES_NAME}/"* ]]; then
+        if [[ "${REL}" == "${STYLE_GUIDES_NAME}/"* ]]; then
+            style_guide_install_path "${SOURCE_DIR}/${REL}" "${REL#"${STYLE_GUIDES_NAME}/"}"
+        elif [[ "${REL}" == "rules/${LAZY_RULES_NAME}/"* ]]; then
             echo "${REL#rules/}"
         elif [[ "${REL}" =~ ^skills/_[^/]+/([^/]+/.+)$ ]]; then
             echo "skills/${BASH_REMATCH[1]}"
