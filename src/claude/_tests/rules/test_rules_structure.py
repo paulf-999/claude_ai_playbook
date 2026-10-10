@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-10
-# Version:           2.3.1
+# Version:           2.4.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -10,7 +10,8 @@
 
 """Tests that every rules/ file meets the per-file format standards.
 
-- **Size:** at most 110 lines (the 3-line metadata header doesn't count) and one trailing newline.
+- **Size:** at most 110 lines and one trailing newline, not counting ``paths:`` frontmatter
+  or the metadata comment lines.
 - **Headings:** an H1 and every ``##`` heading carry an emoji, per writing_style.md.
 - **Context budget:** no Related section, and a Contents section only with 3+ real headings,
   in ``rules/``, ``_rules_lazy_load/`` and ``_reference/`` (#120, #121).
@@ -31,6 +32,7 @@ REFERENCES_SECTION = re.compile(r"^## .*References.*\n(?:(?!## ).*\n?)*", re.MUL
 H2_HEADING = re.compile(r"^## (.+)$", re.MULTILINE)
 CONTENTS_MIN_HEADINGS = 3
 LINE_LIMIT = 110
+METADATA_LINE = re.compile(r"^<!-- [a-z_]+: .* -->$")
 
 
 def rule_files() -> list[Path]:
@@ -49,7 +51,7 @@ def rule_files() -> list[Path]:
 
 
 def body_lines(text: str) -> list[str]:
-    """Return a rule's lines without its 3-line metadata header.
+    """Return a rule's lines without its frontmatter and metadata comment lines.
 
     :param text: Full file content.
     :type text: str
@@ -57,7 +59,13 @@ def body_lines(text: str) -> list[str]:
     :rtype: list[str]
     """
     lines = text.splitlines()
-    return lines[3:] if lines and lines[0].startswith("<!-- version:") else lines
+    # Skip YAML frontmatter, e.g. a path-scoped rule's paths: block
+    if lines and lines[0] == "---" and "---" in lines[1:]:
+        lines = lines[lines.index("---", 1) + 1:]
+    # Skip the version/created/updated header and any applies_to, miss_cost or loading lines
+    while lines and METADATA_LINE.match(lines[0]):
+        lines = lines[1:]
+    return lines
 
 
 def h2_headings_without_emoji(text: str) -> list[str]:
@@ -130,6 +138,15 @@ def test_line_limits():
 def test_metadata_header_is_not_counted():
     """The 3-line metadata header is left out of the line count."""
     text = "<!-- version: 1.0.0 -->\n<!-- created: x -->\n<!-- updated: x -->\n# 🧪 Title\nbody\n"
+    assert body_lines(text) == ["# 🧪 Title", "body"], f"got {body_lines(text)}"
+
+
+def test_frontmatter_and_usage_fields_are_not_counted():
+    """paths: frontmatter and the applies_to, miss_cost and loading lines are left out of the line count."""
+    text = (
+        '---\npaths:\n  - "**/*.py"\n---\n<!-- version: 1.0.0 -->\n<!-- created: x -->\n<!-- updated: x -->\n'
+        "<!-- miss_cost: low — x -->\n<!-- loading: path-scoped — x -->\n# 🧪 Title\nbody\n"
+    )
     assert body_lines(text) == ["# 🧪 Title", "body"], f"got {body_lines(text)}"
 
 
