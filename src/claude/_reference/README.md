@@ -16,7 +16,7 @@ Background documentation on how the Claude config is designed, plus settings and
 | File | Read it when |
 |---|---|
 | [`claude_prompting_best_practices.md`](claude_prompting_best_practices.md) | Writing a prompt, rule or skill — high-impact prompting techniques |
-| [`claude_config_architecture.md`](claude_config_architecture.md) | Learning how the config is laid out and why — its security and testing deep-dives now live with their rules, in `_rules_lazy_load/security_design.md` and `rules/04_path_scoped/testing/` |
+| [`claude_config_architecture.md`](claude_config_architecture.md) | Learning how the config is laid out and why — its security and testing deep-dives now live with their rules, in `_rules_lazy_load/security_design.md` and `rules/04_path_scoped/testing.md` |
 | [`settings_json_recommendations.md`](settings_json_recommendations.md) | Changing `settings.json` — Tier 1 essentials |
 | ↳ [`settings_json_recommendations/_tier2_3.md`](settings_json_recommendations/_tier2_3.md) | Considering Tier 2–3 settings |
 | ↳ [`settings_json_recommendations/_enterprise.md`](settings_json_recommendations/_enterprise.md) | Considering enterprise-managed settings |

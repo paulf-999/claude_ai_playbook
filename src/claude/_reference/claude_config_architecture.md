@@ -91,7 +91,7 @@ Rules are organized by concern, creating clear separation that simplifies auditi
 
 For detailed security architecture, see `~/.claude/_rules_lazy_load/security_design.md`.
 
-For testing strategy and coverage, see `~/.claude/rules/04_path_scoped/testing/_testing.md`.
+For testing strategy and coverage, see the Test Layers section of `~/.claude/rules/04_path_scoped/testing.md`.
 
 ---
 

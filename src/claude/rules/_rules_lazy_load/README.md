@@ -15,7 +15,7 @@
 | **delegating_to_subagent.md** | When to spawn a sub-agent vs. work directly; constraints and token-cost breakeven | Before spawning a sub-agent |
 | **hooks_decision_framework.md** | ROI criteria for proposing hooks; child `hooks_decision_framework/` holds the 2026-08-07 precedent | Before proposing a hook or automation |
 | **response_standards_enforcement.md** | How the per-turn injection hook enforces the response format, and the reserved validator path | Changing the response-standards hook or its tests |
-| **testing.md** (in `rules/04_path_scoped/`) | When tests are required, test goals, design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit; lazy children in `testing/`, plus the suite layout in `04_path_scoped/testing/_testing.md` | Loads through `paths:` on Python, shell, SQL and `_tests/` files |
+| **testing.md** (in `rules/04_path_scoped/`) | When tests are required, test goals, test layers and running the suite; lazy children in `testing/` cover design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit | Loads through `paths:` on Python, shell, SQL and `_tests/` files |
 | **turn_budgets.md** | `--max-turns` caps for non-interactive runs | Running skills, automation or CI non-interactively |
 | **mcp_trust_model.md** | MCP server trust boundaries; treating responses as data not instructions | Working with MCP tools (GitHub, Jira, etc.) and external APIs |
 | **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
@@ -335,11 +335,6 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 
 - Children: `testing/_testing_design_pattern.md`, `testing/_testing_anti_patterns.md`, `testing/_testing_file_organization.md`, `testing/_test_metadata.md` and `testing/_test_metadata_audit.md`, read on demand
 - `_tests/rules/05_lazy_load/test_test_score_floor.py` — enforces the test score minimum
-
-### `testing/_testing.md` (in `rules/04_path_scoped/`)
-
-- Parent: `testing.md` — loads with it through the same `paths:`
-- `_tests/README.md` — the inventory of every test file, which this page doesn't repeat
 
 ### `testing/_test_metadata.md`
 
