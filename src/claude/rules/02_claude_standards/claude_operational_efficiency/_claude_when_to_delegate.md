@@ -1,6 +1,6 @@
-<!-- version: 2.0.1 -->
+<!-- version: 2.0.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 # 🤝 Claude When to Delegate
 
 **Purpose:** Decide whether to run a command yourself, hand it to the user, or spawn a sub-agent — saving turns and context.
@@ -20,4 +20,4 @@
 
 ## 🤖 Delegating to a sub-agent
 
-- **Read on demand:** `~/.claude/_rules_lazy_load/delegating_to_subagent.md` — before spawning a sub-agent, for the decision table, constraints and token-cost breakeven.
+- **Read on demand:** `~/.claude/_rules_lazy_load/efficiency_lazy_load/delegating_to_subagent.md` — before spawning a sub-agent, for the decision table, constraints and token-cost breakeven.

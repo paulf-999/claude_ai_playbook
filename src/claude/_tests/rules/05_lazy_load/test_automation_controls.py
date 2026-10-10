@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-10
-# Version:           1.1.1
+# Version:           1.1.2
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -20,7 +20,7 @@ import re
 
 from _shared_paths import ALIASES_FILE, LAZY_RULES_DIR
 
-AUTOMATION_CONTROLS_FILE = LAZY_RULES_DIR / "automation_controls.md"
+AUTOMATION_CONTROLS_FILE = LAZY_RULES_DIR / "automation_lazy_load" / "automation_controls.md"
 
 
 def _read_automation_controls():
