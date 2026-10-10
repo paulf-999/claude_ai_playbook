@@ -1,4 +1,4 @@
-<!-- version: 3.1.2 -->
+<!-- version: 4.0.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-10 -->
 <!-- applies_to: **/rules/**, **/_rules_lazy_load/** -->
@@ -59,7 +59,7 @@ Before writing any rule, answer these five essential questions:
 - **~100-line limit** — split into parent + child files if needed (see writing_style.md)
 - **Trailing newline** — exactly one `\n` at EOF
 - **Contents only with 3+ headings** — add a Contents section only when the rule has 3 or more real `##` headings
-- **No Related section in the rule** — parent, sibling and dependency links go in the tier page in `_rules_lazy_load/rules_overview/` under "🔗 Related rules", which never loads by itself — tiers 02–05 only, as `01_essentials/` keeps no links (#310)
+- **No Related section in the rule** — a lazy or path-scoped rule's parent, sibling and dependency links go in `_rules_lazy_load/README.md` under "🔗 Related rules", which never loads by itself, and always-on rules (tiers 01–03) keep none
 - **Place every child by how it should load** — Claude Code loads every `.md` under `rules/` on its own, so a child there needs no `@import`; the parent names it in a `**Loads on its own from:**` line.
   - **On-demand children:** put them in `_rules_lazy_load/<topic>/` and name each in a `**Read on demand:**` pointer — `test_always_on_reachability.py` fails the build on a README, `_lazy_load/` folder or `@import` under `rules/`.
 - **Test validation** — enforcement rules pass custom tests; all rules pass test_rules_structure.py

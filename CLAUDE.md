@@ -41,7 +41,7 @@ Whenever a new artefact is added to `src/claude/`, the documentation listed belo
 | Artefact | Required doc updates |
 |---|---|
 | **Skill** (`skills/`) | `src/claude/skills/README.md` |
-| **Rule** (`rules/<tier>/` or `rules/_rules_lazy_load/`) | `src/claude/rules/_rules_lazy_load/rules_overview/_<tier>.md` for tiers 01–03, or `src/claude/rules/_rules_lazy_load/README.md` for lazy and path-scoped rules — no `@import`, since Claude Code loads `rules/` natively |
+| **Rule** (`rules/<tier>/` or `rules/_rules_lazy_load/`) | `src/claude/rules/_rules_lazy_load/README.md` for lazy and path-scoped rules; none for tiers 01–03, where the folder is the index — no `@import`, since Claude Code loads `rules/` natively |
 | **Agent** (`agents/<group>/<name>/AGENT.md`) | None — the `agents/` folder is the index |
 | **Hook** (`hooks/`) | `settings.json` lifecycle event registration |
 | **Style guide** (`_style_guide_standards/`) | None — the folder is the index (the install puts entry files with `paths:` in `rules/04_path_scoped/`, where they load on a matching file, and the rest stays in `_style_guide_standards/`, read on demand) |

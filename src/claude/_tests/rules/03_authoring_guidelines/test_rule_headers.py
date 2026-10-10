@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-10
-# Version:           1.9.0
+# Version:           1.9.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -238,7 +238,7 @@ def lazy_entry_points() -> list[Path]:
         if root is None:
             continue
         rel = Path(installed[len(root) + 1:])
-        non_rule = rel.parts[0] in ("rules_overview", "rules_overview.md", "_learned")
+        non_rule = rel.parts[0] == "_learned"
         if path.name == "README.md" or path.name.startswith("_") or non_rule:
             continue
         folders = [rel.parents[i] for i in range(len(rel.parts) - 1)]

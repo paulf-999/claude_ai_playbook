@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
 # Date updated:      2026-10-10
-# Version:           3.2.1
+# Version:           3.2.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -41,8 +41,8 @@ def test_every_tier_has_rule_files():
 
 
 def test_no_readme_under_rules():
-    """A README.md under rules/ would load every session — tier pages live in _rules_lazy_load/rules_overview/."""
-    assert not issues()["readme"], f"move these to _rules_lazy_load/rules_overview/: {issues()['readme']}"
+    """A README.md under rules/ would load every session — indexes live in _rules_lazy_load/."""
+    assert not issues()["readme"], f"move these to _rules_lazy_load/: {issues()['readme']}"
 
 
 def test_no_lazy_load_folder_under_rules():

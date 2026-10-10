@@ -3,7 +3,7 @@ paths:
   - "**/.claude/**"
   - "**/claude/**"
 ---
-<!-- version: 2.1.1 -->
+<!-- version: 2.1.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-10 -->
 # 🏗️ Directory Organisation — `~/.claude/`
@@ -32,7 +32,7 @@ paths:
 
 **Tier 2: Core rules (rules/, _rules_lazy_load/)**
 - `rules/`: tiers `01_essentials/` to `03_authoring_guidelines/` load every session, and `04_path_scoped/` loads with matching files — Claude Code reads this folder natively, so it has no underscore
-- `_rules_lazy_load/`: rules read on demand, plus the tier READMEs — kept under `rules/` in the repo and moved beside it on install; see `claude_rule_loading_strategy.md` for what belongs where
+- `_rules_lazy_load/`: rules read on demand — kept under `rules/` in the repo and moved beside it on install; see `claude_rule_loading_strategy.md` for what belongs where
 - `_style_guide_standards/`: every style guide in one folder, read on demand — the install moves entry files with `paths:` to `rules/04_path_scoped/style_guide_standards/` so they load on matching files
 
 **Tier 3: Infrastructure (_tests/, _templates/, _reference/, _docs/)**
@@ -44,7 +44,7 @@ paths:
 **Tier 5: Auto-generated (backups/, memory/, projects/, sessions/)**
 - Claude Code-managed; excluded from version control; never manually edited
 
-**Authoritative source:** For the current, always-up-to-date directory listing, consult the README.md in each tier (e.g., `_rules_lazy_load/rules_overview.md`, `agents/README.md`, `hooks/README.md`). These are maintained by humans and tools; this document describes the organisational *principle*, not a comprehensive inventory.
+**Authoritative source:** For the current, always-up-to-date directory listing, consult the README.md in each tier (e.g., `_rules_lazy_load/README.md`, `agents/README.md`, `hooks/README.md`). These are maintained by humans and tools; this document describes the organisational *principle*, not a comprehensive inventory.
 
 ---
 

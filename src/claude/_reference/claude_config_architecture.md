@@ -62,8 +62,8 @@ This page describes the principle, not an inventory — the README in each direc
 | Path | What lives there | Current contents |
 |---|---|---|
 | `CLAUDE.md` | Entry point; imports memory and aliases | Read the file itself |
-| `rules/` | Rules Claude Code loads natively, in tiers `01_essentials/` to `03_authoring_guidelines/` plus `04_path_scoped/` | `_rules_lazy_load/rules_overview.md` and each tier's README |
-| `_rules_lazy_load/` | Rules read on demand, never loaded automatically, plus the tier READMEs | `_rules_lazy_load/README.md` |
+| `rules/` | Rules Claude Code loads natively, in tiers `01_essentials/` to `03_authoring_guidelines/` plus `04_path_scoped/` | `04_path_scoped/claude_rule_loading_strategy.md` and the tier folders themselves |
+| `_rules_lazy_load/` | Rules read on demand, never loaded automatically | `_rules_lazy_load/README.md` |
 | `_reference/` | Background docs like this one — never imported | `_reference/README.md` |
 | `_tests/` | pytest suite for rules, hooks, skills and settings | `_tests/README.md` |
 | `hooks/`, `skills/`, `agents/`, `_templates/` | Hooks, skills, sub-agents, authoring templates | Each directory's README |
@@ -75,7 +75,7 @@ This page describes the principle, not an inventory — the README in each direc
 - **Always-on:** Claude Code loads every `.md` under `rules/` without `paths:` frontmatter — tiers 01–03 and their children; the folders are the current list.
 - **With matching files:** rules with `paths:` (mostly `rules/04_path_scoped/`) load when Claude reads a file their globs match.
 - **On demand:** `_rules_lazy_load/` and `_reference/` are never imported; Claude reads them when a task needs them.
-- **Cost:** measure it rather than estimate it — `_rules_lazy_load/rules_overview.md` records measured tier sizes, and each always-on file adds its full size to every session.
+- **Cost:** measure it rather than estimate it — `make audit_rule_usage` reports measured tier sizes, and each always-on file adds its full size to every session.
 
 ---
 
@@ -113,7 +113,7 @@ Regular maintenance cycles ensure the config stays intentional and focused on cu
 Use this decision tree:
 
 1. **Does it apply to EVERY session** (regardless of project type)?
-   - **Yes** → Place in the matching always-on tier (`01_essentials/` to `03_authoring_guidelines/`, per `_rules_lazy_load/rules_overview.md`) and `@import` it from that tier's entry file
+   - **Yes** → Place in the matching always-on tier (`01_essentials/` to `03_authoring_guidelines/`, per `04_path_scoped/claude_rule_loading_strategy.md`) and `@import` it from that tier's entry file
    - **No** → Go to step 2
 
 2. **Is it domain-specific** (SQL, dbt, Terraform, etc.)?
