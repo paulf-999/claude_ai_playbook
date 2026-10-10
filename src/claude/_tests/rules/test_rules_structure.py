@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-10
-# Version:           2.4.0
+# Version:           2.5.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -116,7 +116,7 @@ def imported_content_files() -> list[Path]:
         md_file
         for md_file in [*native_rule_files(RULES_DIR), *LAZY_RULES_DIR.rglob("*.md"), *STYLE_GUIDES_DIR.rglob("*.md"),
                         *REFERENCE_DIR.rglob("*.md")]
-        if md_file.name != "README.md" and "_tier_readmes" not in md_file.parts
+        if md_file.name != "README.md" and not {"rules_overview", "rules_overview.md"} & set(md_file.parts)
     ]
 
 

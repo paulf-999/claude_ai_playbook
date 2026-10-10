@@ -1,6 +1,6 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 # 📁 Multifile Document Organisation
 
 **Purpose:** One convention for when to split a document into a parent and child files, and how to lay them out — preventing flat-level sprawl across `_rules/`, style guides, skills, agents and any other structured documentation.
@@ -51,8 +51,8 @@ rules/02_claude_standards/
 - **Children load on their own:** every `.md` under `rules/` loads natively, so the parent names each `<topic>/_<aspect>.md` in a `**Loads on its own from:**` line instead of an `@import`.
 - **On-demand children:** keep children read only when needed in `_rules_lazy_load/<topic>/`, named in a `**Read on demand:**` pointer.
 - **Contents only when earned:** add a Contents section only if the file has 3 or more real `##` headings.
-- **Related links:** parent and sibling link lists go in the tier README in `_rules_lazy_load/_tier_readmes/` (or `_rules_lazy_load/README.md` for lazy and path-scoped rules) under "🔗 Related rules", never in the rule, and `01_essentials/` rules keep none (#310).
-- **README:** update the tier's README in `_rules_lazy_load/_tier_readmes/` to show the new parent + child structure.
+- **Related links:** parent and sibling link lists go in the tier page in `_rules_lazy_load/rules_overview/` (or `_rules_lazy_load/README.md` for lazy and path-scoped rules) under "🔗 Related rules", never in the rule, and `01_essentials/` rules keep none (#310).
+- **README:** update the tier's page in `_rules_lazy_load/rules_overview/` to show the new parent + child structure.
 - **No READMEs in `rules/`:** any `.md` there loads every session, so indexes live in `_rules_lazy_load/`.
 
 ---

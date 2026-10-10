@@ -3,7 +3,7 @@ paths:
   - "**/.claude/**"
   - "**/claude/**"
 ---
-<!-- version: 2.1.0 -->
+<!-- version: 2.1.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-10 -->
 # 🏗️ Directory Organisation — `~/.claude/`
@@ -44,7 +44,7 @@ paths:
 **Tier 5: Auto-generated (backups/, memory/, projects/, sessions/)**
 - Claude Code-managed; excluded from version control; never manually edited
 
-**Authoritative source:** For the current, always-up-to-date directory listing, consult the README.md in each tier (e.g., `_rules_lazy_load/_tier_readmes/00_rules_overview.md`, `agents/README.md`, `hooks/README.md`). These are maintained by humans and tools; this document describes the organisational *principle*, not a comprehensive inventory.
+**Authoritative source:** For the current, always-up-to-date directory listing, consult the README.md in each tier (e.g., `_rules_lazy_load/rules_overview.md`, `agents/README.md`, `hooks/README.md`). These are maintained by humans and tools; this document describes the organisational *principle*, not a comprehensive inventory.
 
 ---
 

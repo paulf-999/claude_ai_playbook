@@ -1,4 +1,4 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2025-11-15 -->
 <!-- updated: 2026-10-10 -->
 # 🔄 Rule Lifecycle
@@ -39,7 +39,7 @@ Use the two numbers in `_admin/_audits/audit_rule_usage.md`, read against the ta
 3. **Update headers:** change its `loading:` header to `always-on` and add `applies_to` if it lacks one.
 4. **Point to it:** if it's a child, add a `**Loads on its own from:**` line to its parent, and note the size it adds.
 5. **Run the suite:** `test_always_on_reachability.py` confirms nothing under `rules/` is a README, `_lazy_load/` folder or `@import`.
-6. **Update docs:** move its entry from `_rules_lazy_load/README.md` to its tier README in `_rules_lazy_load/_tier_readmes/`.
+6. **Update docs:** move its entry from `_rules_lazy_load/README.md` to its tier page in `_rules_lazy_load/rules_overview/`.
 7. **Commit:** `refactor(rules): promote <rule_name> from lazy to always-on`.
 
 ---

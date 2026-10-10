@@ -1,6 +1,6 @@
-<!-- version: 2.0.1 -->
+<!-- version: 2.0.2 -->
 <!-- created: 2026-09-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 # ✅ Rule Hard Gates Checklist
 
 **Purpose:** Final tick-box check before finishing a rule — verify placement, content, testing, wiring and docs, then run the before-merging review.
@@ -35,11 +35,11 @@
 ### 🔗 Wiring
 - [ ] Every child sits in the folder that matches how it should load, and the parent names it in a `**Loads on its own from:**` or `**Read on demand:**` line
 - [ ] Nothing under `rules/` is `@import`ed, and no README sits under `rules/`
-- [ ] The rule has no `## Related` section — its parent, sibling and dependency links sit in the tier README in `_rules_lazy_load/_tier_readmes/` under "🔗 Related rules" (tiers 02–05 only, as `01_essentials/` keeps none)
+- [ ] The rule has no `## Related` section — its parent, sibling and dependency links sit in the tier page in `_rules_lazy_load/rules_overview/` under "🔗 Related rules" (tiers 02–05 only, as `01_essentials/` keeps none)
 
 ### 📚 Docs
 - [ ] Quality scorecard created or updated at `_admin/_quality_scorecards/rules/<tier>/scorecard_<rule_name>.md`
-- [ ] Tier README (`_rules_lazy_load/_tier_readmes/<tier>.md`) and `_rules_lazy_load/_tier_readmes/00_rules_overview.md` list the new file
+- [ ] Tier README (`_rules_lazy_load/rules_overview/_<tier>.md`) and `_rules_lazy_load/rules_overview.md` list the new file
 - [ ] `docs/whats_installed.md` rules description updated
 
 ---
