@@ -1,8 +1,13 @@
 ---
-created: 2025-11-15
-last_modified: 2026-09-29
+paths:
+  - "**/*.py"
+  - "**/*.sh"
+  - "**/*.sql"
+  - "**/_tests/**"
 ---
-
+<!-- version: 1.0.0 -->
+<!-- created: 2025-11-15 -->
+<!-- updated: 2026-10-10 -->
 # 🧪 Testing Strategy
 
 How the Claude config's pytest suite is organised, and where a new test belongs.

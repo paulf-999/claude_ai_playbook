@@ -89,9 +89,9 @@ Rules are organized by concern, creating clear separation that simplifies auditi
 | **Quality** | `testing.md` + `hook_enforcement_naming_convention.sh` | Naming checked as Claude creates files; tests run in pre-commit and CI |
 | **Efficiency** | `_rules_lazy_load/` + `_reference/` | Domain rules and background docs read on demand, keeping the baseline small |
 
-For detailed security architecture, see **[claude_config_architecture/_security.md](claude_config_architecture/_security.md)**.
+For detailed security architecture, see `~/.claude/_rules_lazy_load/security_design.md`.
 
-For testing strategy and coverage, see **[claude_config_architecture/_testing.md](claude_config_architecture/_testing.md)**.
+For testing strategy and coverage, see `~/.claude/rules/04_path_scoped/testing/_testing.md`.
 
 ---
 

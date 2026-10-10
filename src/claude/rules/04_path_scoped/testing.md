@@ -5,7 +5,7 @@ paths:
   - "**/*.sql"
   - "**/_tests/**"
 ---
-<!-- version: 1.4.2 -->
+<!-- version: 1.4.3 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-10 -->
 <!-- miss_cost: medium — untested code the user catches in review -->
@@ -94,4 +94,4 @@ Define the goal before writing the test. Tests validate *intended behavior*, not
 
 ## 📖 Reference (Claude's design patterns)
 
-- **Read on demand:** `~/.claude/_reference/claude_config_architecture/_testing.md` — test layers, where each kind of test lives, and how to run the suite
+- **Loads on its own from:** `rules/04_path_scoped/testing/_testing.md` — test layers, where each kind of test lives, and how to run the suite
