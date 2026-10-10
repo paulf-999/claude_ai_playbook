@@ -80,7 +80,7 @@ Files under `rules/` tiers 01–03 load every session, so every line in them cos
 - **Scope:** Rules specific to a single language, tool, or domain
 - **Examples:** `04_path_scoped/style_guide_standards/sql.md` and `airflow.md` (with `paths:`), `_rules_lazy_load/latency_optimisation.md` and `turn_budgets.md` (pointers)
 - **Loaded:** `04_path_scoped/` with matching files; `_rules_lazy_load/` only when Claude follows a pointer
-- **Repo layout:** style guides sit together in `src/claude/_style_guide_standards/`, and the install splits them between these two folders
+- **Style guides:** they live in their own `_style_guide_standards/` folder, read on demand, and the install moves only their entry files into `04_path_scoped/`
 - **Note:** if a rule applies in most sessions regardless of task type, it belongs in tier 01/02/03 — not here.
 - **Hook required:** every lazy file should have a corresponding enforcement hook or be a pure reference document (consulted explicitly, not auto-triggered)
 

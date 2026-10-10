@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-10
-# Version:           1.8.0
+# Version:           1.9.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -27,7 +27,7 @@ from _shared_paths import CLAUDE_DIR
 
 SCRIPT = CLAUDE_DIR / "_scripts" / "_audit_scripts" / "audit_rule_usage.py"
 TODAY = date(2026, 10, 1)
-LAZY_GUIDES = "_rules_lazy_load/style_guide_standards"
+LAZY_GUIDES = "_style_guide_standards"  # on-demand style guides, in their own folder once installed too
 SCOPED_GUIDES = "rules/04_path_scoped/style_guide_standards"
 
 
@@ -61,6 +61,7 @@ def make_rules(tmp_path):
     (tmp_path / SCOPED_GUIDES / "sql.md").write_text('---\npaths:\n  - "**/*.sql"\n---\n# SQL\n')
     (tmp_path / LAZY_GUIDES).mkdir(parents=True)
     (tmp_path / LAZY_GUIDES / "python.md").write_text("<!-- miss_cost: high — breaks style -->\n# Python\n")
+    (tmp_path / "_rules_lazy_load").mkdir()
     (tmp_path / "_rules_lazy_load" / "loose.md").write_text("<!-- miss_cost: low — style -->\n# Loose\n")
     (tmp_path / "_rules_lazy_load" / "_tier_readmes").mkdir()
     (tmp_path / "_rules_lazy_load" / "_tier_readmes" / "01_essentials.md").write_text("# Tier\n")
@@ -143,14 +144,14 @@ def test_repo_layout_lazy_rules_keep_installed_keys(tmp_path):
 
 
 def to_repo_style_guides(tmp_path):
-    """Move the fake style guides into one _style_guide_standards/ folder, as the repo keeps them.
+    """Move the fake entry file back into _style_guide_standards/, as the repo keeps it.
 
     :param tmp_path: The config folder ``make_rules`` built.
     :return: The ``rules`` folder.
     """
-    guides = tmp_path / "_style_guide_standards"
-    (tmp_path / SCOPED_GUIDES).rename(guides)
-    (tmp_path / LAZY_GUIDES / "python.md").rename(guides / "python.md")
+    guides = tmp_path / LAZY_GUIDES
+    (tmp_path / SCOPED_GUIDES / "sql.md").rename(guides / "sql.md")
+    (tmp_path / SCOPED_GUIDES).rmdir()
     (guides / "sql").mkdir()
     (guides / "sql" / "formatting.md").write_text("# Formatting\n")
     return tmp_path / "rules"
@@ -175,6 +176,29 @@ def test_repo_layout_style_guide_reads_map_to_installed_keys(tmp_path):
     assert AUDIT.rule_rel("/repo/src/claude/_style_guide_standards/sql.md", rules_dir) == f"{SCOPED_GUIDES}/sql.md"
     raw = "/repo/src/claude/_style_guide_standards/sql/formatting.md"
     assert AUDIT.rule_rel(raw, rules_dir) == f"{LAZY_GUIDES}/sql/formatting.md"
+
+
+def test_installed_style_guide_children_are_not_entry_points(tmp_path):
+    """Installed, a style guide's children sit apart from its entry file under rules/, and still count as children."""
+    rules_dir = make_rules(tmp_path)
+    (tmp_path / LAZY_GUIDES / "sql").mkdir()
+    (tmp_path / LAZY_GUIDES / "sql" / "formatting.md").write_text("# Formatting\n")
+    names = sorted(r.rel for r in AUDIT.discover_rules(rules_dir))
+    assert f"{LAZY_GUIDES}/sql/formatting.md" not in names, f"a child of sql.md was counted as a rule: {names}"
+
+
+def test_old_lazy_style_guide_keys_map_to_today(tmp_path):
+    """History rows and transcripts from before 2026-10-10 still match the style guide they were about."""
+    assert AUDIT.current_rel("_rules_lazy_load/style_guide_standards/jira.md") == f"{LAZY_GUIDES}/jira.md"
+    assert AUDIT.current_rel("_rules_lazy_load/org.md") == "_rules_lazy_load/org.md", "other lazy rules changed key"
+    history = tmp_path / "history.csv"
+    history.write_text("run_date,rule,last_applied,last_loaded\n"
+                       "2026-10-01,_rules_lazy_load/style_guide_standards/jira.md,2026-09-30,\n")
+    last_used, _first = AUDIT.read_history(history)
+    assert last_used == {f"{LAZY_GUIDES}/jira.md": date(2026, 9, 30)}, last_used
+    assert AUDIT.rule_rel("/u/claude/_rules_lazy_load/style_guide_standards/jira.md", make_rules(tmp_path)) == (
+        f"{LAZY_GUIDES}/jira.md"
+    )
 
 
 def test_always_on_tokens_include_native_children(tmp_path):

@@ -12,15 +12,15 @@
 
 ## 📦 Where they install
 
-`make install` splits this folder, because Claude Code only loads `paths:` rules from `rules/`:
+`make install` keeps this folder as it is, except for entry files, because Claude Code only loads `paths:` rules from `rules/`:
 
 | File | Installs to |
 |---|---|
 | **Has `paths:` frontmatter** | `rules/04_path_scoped/style_guide_standards/` |
-| **Everything else** | `_rules_lazy_load/style_guide_standards/` |
+| **Everything else** | `_style_guide_standards/`, unchanged |
 
-- **Why:** a detail file under `rules/` would load in every session, so only entry files go there.
-- **Pointers:** `**Read on demand:**` pointers name the installed path, e.g. `~/.claude/_rules_lazy_load/style_guide_standards/sql/formatting.md`.
+- **Why:** a detail file under `rules/` would load in every session, so only entry files move there.
+- **Pointers:** `**Read on demand:**` pointers name the installed path, e.g. `~/.claude/_style_guide_standards/sql/formatting.md`.
 
 ## ➕ Adding a guide
 

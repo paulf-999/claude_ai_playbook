@@ -2,17 +2,17 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-10
 # Date updated:      2026-10-10
-# Version:           1.0.0
+# Version:           2.0.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
-"""Validates that ``make install`` splits ``_style_guide_standards/`` back to where Claude Code needs it.
+"""Validates that ``make install`` moves the style guides' entry files under ``rules/`` and leaves the rest.
 
-The repo keeps every style guide in one folder. Once installed, entry files (those with ``paths:``
-frontmatter) must sit under ``rules/04_path_scoped/`` so Claude Code loads them on matching files,
-and every other file joins the on-demand rules in ``_rules_lazy_load/``. Each test runs the real copy,
-flatten, relocate, split and prune steps from ``claude_file_utils.sh`` against a fake source and a temp target.
+The repo keeps every style guide in ``_style_guide_standards/``, and so does the install, except that
+entry files (those with ``paths:`` frontmatter) must sit under ``rules/04_path_scoped/`` so Claude Code
+loads them on matching files. Each test runs the real copy, flatten, relocate, split and prune steps
+from ``claude_file_utils.sh`` against a fake source and a temp target.
 """
 
 import os
@@ -25,7 +25,7 @@ INSTALL_SCRIPT = REPO_ROOT / "src" / "sh" / "claude" / "install_claude_files.sh"
 WINDOWS_SCRIPT = REPO_ROOT / "src" / "sh" / "claude" / "install_claude_files_windows.sh"
 GUIDES = "_style_guide_standards"
 PATH_SCOPED = "rules/04_path_scoped/style_guide_standards"
-LAZY = "_rules_lazy_load/style_guide_standards"
+ON_DEMAND = GUIDES  # every file without paths: stays where the repo keeps it
 
 ENTRY = '---\npaths:\n  - "**/*.sql"\n---\n# SQL\n'
 SOURCE_FILES = {
@@ -86,11 +86,11 @@ def test_entry_files_land_in_path_scoped_rules(tmp_path: Path):
     assert (target / PATH_SCOPED / "infra/terraform.md").is_file(), "nested entry file missing"
 
 
-def test_other_files_land_with_on_demand_rules(tmp_path: Path):
-    """Detail files, templates and the README join the on-demand rules, keeping their relative paths."""
+def test_other_files_stay_in_the_style_guide_folder(tmp_path: Path):
+    """Detail files, templates and the README stay in _style_guide_standards/, keeping their relative paths."""
     target = setup(tmp_path)
     for rel in ("sql/formatting.md", "sql/templates/template_cte.sql", "README.md"):
-        assert (target / LAZY / rel).is_file(), f"{rel} missing from the on-demand folder"
+        assert (target / ON_DEMAND / rel).is_file(), f"{rel} missing from the on-demand folder"
         assert not (target / PATH_SCOPED / rel).exists(), f"{rel} also landed in the path-scoped folder"
 
 
@@ -98,34 +98,36 @@ def test_only_opening_frontmatter_counts(tmp_path: Path):
     """A paths: line outside the opening frontmatter, or frontmatter without one, doesn't make a file path-scoped."""
     target = setup(tmp_path)
     for rel in ("later_paths.md", "other_key.md"):
-        assert (target / LAZY / rel).is_file(), f"{rel} wasn't treated as on-demand"
+        assert (target / ON_DEMAND / rel).is_file(), f"{rel} wasn't treated as on-demand"
 
 
-def test_repo_folder_is_gone_after_install(tmp_path: Path):
-    """No top-level copy is left, since entry files there would never load."""
-    assert not (setup(tmp_path) / GUIDES).exists(), f"{GUIDES}/ was left in the target"
+def test_no_entry_file_is_left_behind(tmp_path: Path):
+    """No paths: file stays in the top-level folder, where it would never load, and no empty folder is left."""
+    target = setup(tmp_path)
+    assert not (target / GUIDES / "sql.md").exists(), "an entry file was left where it can't load"
+    assert not (target / GUIDES / "infra").exists(), "the empty folder of a moved entry file was left behind"
 
 
-def test_split_is_logged_and_no_op_without_guides(tmp_path: Path):
-    """The install says it split the folder, and with no style guides it creates nothing."""
+def test_move_is_logged_and_no_op_without_guides(tmp_path: Path):
+    """The install says how many entry files it moved, and with no style guides it creates nothing."""
     make_tree(tmp_path / "src", SOURCE_FILES)
     (tmp_path / "home").mkdir()
     (tmp_path / "target").mkdir()
-    assert f"Split {GUIDES}/" in install(tmp_path)
+    assert f"Moved 2 style-guide entry files into {PATH_SCOPED}/" in install(tmp_path)
     bare = tmp_path / "bare"
     make_tree(bare / "src", {"rules/01_essentials/core.md": "core\n"})
     (bare / "home").mkdir()
     (bare / "target").mkdir()
-    assert f"Split {GUIDES}/" not in install(bare), "the step claimed a split with nothing to split"
-    assert not (bare / "target" / LAZY).exists(), "an empty style-guide folder was created"
+    assert "style-guide entry files" not in install(bare), "the step claimed a move with nothing to move"
+    assert not (bare / "target" / PATH_SCOPED).exists(), "an empty style-guide folder was created"
 
 
 def test_manifest_lists_installed_paths(tmp_path: Path):
     """The manifest names style guides where the install leaves them, not where the repo keeps them."""
     lines = (setup(tmp_path) / ".install_manifest").read_text().splitlines()
     assert f"{PATH_SCOPED}/sql.md" in lines, f"installed entry path missing: {lines}"
-    assert f"{LAZY}/sql/formatting.md" in lines, f"installed detail path missing: {lines}"
-    assert not any(line.startswith(f"{GUIDES}/") for line in lines), "repo-layout paths listed"
+    assert f"{ON_DEMAND}/sql/formatting.md" in lines, f"installed detail path missing: {lines}"
+    assert f"{GUIDES}/sql.md" not in lines, "an entry file is listed where the repo keeps it"
 
 
 def test_reinstall_prunes_nothing_and_updates_content(tmp_path: Path):
@@ -134,7 +136,7 @@ def test_reinstall_prunes_nothing_and_updates_content(tmp_path: Path):
     (tmp_path / f"src/{GUIDES}/sql/formatting.md").write_text("# Formatting v2\n")
     output = install(tmp_path)
     assert "Removed (no longer in the repo)" not in output, output
-    assert (target / LAZY / "sql/formatting.md").read_text() == "# Formatting v2\n", "content wasn't updated"
+    assert (target / ON_DEMAND / "sql/formatting.md").read_text() == "# Formatting v2\n", "content wasn't updated"
     assert (target / PATH_SCOPED / "sql.md").is_file(), "a re-install removed an entry file"
 
 
@@ -145,7 +147,7 @@ def test_guide_removed_from_repo_is_pruned(tmp_path: Path):
     (tmp_path / f"src/{GUIDES}/sql/formatting.md").unlink()
     install(tmp_path)
     assert not (target / PATH_SCOPED / "sql.md").exists(), "a deleted entry file is still installed"
-    assert not (target / LAZY / "sql/formatting.md").exists(), "a deleted detail file is still installed"
+    assert not (target / ON_DEMAND / "sql/formatting.md").exists(), "a deleted detail file is still installed"
 
 
 def test_installs_split_after_relocating_and_before_pruning():

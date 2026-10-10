@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-10
-# Version:           2.3.0
+# Version:           2.4.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -38,6 +38,7 @@ from _shared_paths import (
     STYLE_GUIDES_NAME,
     installed_rule_files,
     native_rule_files,
+    on_demand_rule_files,
     path_scoped_rule_files,
     resolve_config_path,
     resolve_link,
@@ -133,19 +134,19 @@ def test_no_orphaned_lazy_load_files():
 # .md file must be the actual target of a markdown link or `@./` import
 # from some other file in the tree — not just live under a covered folder.
 
-# Path-scoped entry points (sql.md, testing.md, ...) live in rules/04_path_scoped/ and load
-# through paths:, so only the on-demand entry points in _rules_lazy_load/ are listed here.
+# Path-scoped entry points (sql.md, testing.md, ...) live in rules/04_path_scoped/ and load through paths:,
+# so only the on-demand entry points are listed here, by installed path.
 ENTRY_POINT_RELATIVE_PATHS = {
-    "automation_controls.md",
-    "delegating_to_subagent.md",
-    "hooks_decision_framework.md",
-    "latency_optimisation.md",
-    "mcp_trust_model.md",
-    "response_standards_enforcement.md",
-    "turn_budgets.md",
-    "style_guide_standards/jira.md",
-    "org.md",
-    "style_guide_standards/utilities/datetime.md",
+    "_rules_lazy_load/automation_controls.md",
+    "_rules_lazy_load/delegating_to_subagent.md",
+    "_rules_lazy_load/hooks_decision_framework.md",
+    "_rules_lazy_load/latency_optimisation.md",
+    "_rules_lazy_load/mcp_trust_model.md",
+    "_rules_lazy_load/response_standards_enforcement.md",
+    "_rules_lazy_load/turn_budgets.md",
+    "_rules_lazy_load/org.md",
+    "_style_guide_standards/jira.md",
+    "_style_guide_standards/utilities/datetime.md",
 }
 
 MARKDOWN_LINK_PATTERN = re.compile(r"\]\(([^)#]+\.md)\)")
@@ -192,7 +193,7 @@ def find_unreferenced_content_files(
     :type lazy_load_dir: Path
     :param other_sources: More files whose links count, e.g. path-scoped parents in rules/.
     :type other_sources: tuple[Path, ...]
-    :param files: The lazy files keyed by path inside _rules_lazy_load/, when they don't all sit under it.
+    :param files: The on-demand files keyed by installed path, when they don't all sit under one folder.
     :type files: dict[str, Path] | None
     :return: Files that are neither an entry point nor referenced by anything.
     :rtype: list[Path]
@@ -201,7 +202,7 @@ def find_unreferenced_content_files(
         files = {f.relative_to(lazy_load_dir).as_posix(): f for f in lazy_load_dir.rglob("*.md")}
     candidates = {
         rel: f for rel, f in files.items()
-        if f.name != "README.md" and "templates" not in Path(rel).parts and Path(rel).parts[0] not in NON_RULE_FOLDERS
+        if f.name != "README.md" and "templates" not in Path(rel).parts and not NON_RULE_FOLDERS & set(Path(rel).parts)
     }
     referenced: set[Path] = set()
     for f in [*candidates.values(), *other_sources]:
@@ -221,7 +222,7 @@ def test_no_unreferenced_content_files_in_lazy_load():
     actually links to (the exact shape of the 2026-09-28 finding).
     """
     sources = tuple(native_rule_files(RULES_DIR)) + tuple(path_scoped_rule_files(CLAUDE_DIR))
-    orphans = find_unreferenced_content_files(LAZY_LOAD_DIR, sources, lazy_files())
+    orphans = find_unreferenced_content_files(LAZY_LOAD_DIR, sources, on_demand_rule_files(CLAUDE_DIR))
     assert not orphans, (
         "Unreferenced lazy_load files — not an entry point, and no markdown "
         "link or @./ import anywhere targets them (check whether they're "
@@ -232,7 +233,7 @@ def test_no_unreferenced_content_files_in_lazy_load():
 
 def test_detector_flags_a_duplicate_named_like_its_parent(tmp_path):
     """Regression: reproduces the exact jira/jira.md orphan pattern."""
-    sgs = tmp_path / "style_guide_standards"
+    sgs = tmp_path / "_style_guide_standards"
     sgs.mkdir()
     (sgs / "jira.md").write_text("# Jira\n\n- [dag_design.md](jira/dag_design.md)\n")
     child_dir = sgs / "jira"
@@ -248,7 +249,7 @@ def test_detector_flags_a_duplicate_named_like_its_parent(tmp_path):
 
 def test_detector_does_not_flag_a_referenced_child(tmp_path):
     """Regression: a child page linked from its parent is not flagged."""
-    sgs = tmp_path / "style_guide_standards"
+    sgs = tmp_path / "_style_guide_standards"
     sgs.mkdir()
     (sgs / "jira.md").write_text("# SQL\n\n@./jira/formatting.md\n")
     child_dir = sgs / "jira"
@@ -262,7 +263,7 @@ def test_detector_does_not_flag_a_referenced_child(tmp_path):
 
 def test_detector_exempts_entry_point_files(tmp_path):
     """Regression: a known entry point needs no incoming reference at all."""
-    sgs = tmp_path / "style_guide_standards"
+    sgs = tmp_path / "_style_guide_standards"
     sgs.mkdir()
     (sgs / "jira.md").write_text("# Jira\n\nNo inbound links to this file exist anywhere.\n")
 
@@ -273,7 +274,7 @@ def test_detector_exempts_entry_point_files(tmp_path):
 
 def test_detector_exempts_files_under_templates_dir(tmp_path):
     """Regression: templates are copied via prose instruction, not linked — exempt."""
-    sgs = tmp_path / "style_guide_standards" / "airflow"
+    sgs = tmp_path / "_style_guide_standards" / "airflow"
     sgs.mkdir(parents=True)
     templates = sgs / "templates"
     templates.mkdir()
@@ -286,7 +287,7 @@ def test_detector_exempts_files_under_templates_dir(tmp_path):
 
 def test_detector_resolves_relative_import_syntax(tmp_path):
     """Regression: `@./child.md` import syntax is correctly resolved and counted."""
-    sgs = tmp_path / "style_guide_standards"
+    sgs = tmp_path / "_style_guide_standards"
     sgs.mkdir()
     (sgs / "sql.md").write_text("@./sql/cte_style_guide.md\n")
     child_dir = sgs / "sql"
@@ -300,7 +301,7 @@ def test_detector_resolves_relative_import_syntax(tmp_path):
 
 def test_detector_resolves_markdown_link_syntax(tmp_path):
     """Regression: `[text](child.md)` markdown-link syntax is correctly resolved."""
-    sgs = tmp_path / "style_guide_standards"
+    sgs = tmp_path / "_style_guide_standards"
     sgs.mkdir()
     (sgs / "jira.md").write_text("- [`jira/ticket_conventions.md`](jira/ticket_conventions.md)\n")
     child_dir = sgs / "jira"
@@ -320,7 +321,7 @@ def test_detector_ignores_a_same_named_sibling_when_parent_is_exempt(tmp_path):
     wrongly clear the orphan just because its own name matches something
     real elsewhere. Path-based resolution must not make this mistake.
     """
-    sgs = tmp_path / "style_guide_standards"
+    sgs = tmp_path / "_style_guide_standards"
     sgs.mkdir()
     (sgs / "jira.md").write_text("# jira\n\nSome other doc mentions `jira.md` in prose.\n")
     child_dir = sgs / "jira"

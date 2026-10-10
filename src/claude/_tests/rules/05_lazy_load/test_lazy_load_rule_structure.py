@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-10
-# Version:           1.4.1
+# Version:           1.5.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -19,14 +19,24 @@ resolves, and that each Contents entry matches a real heading.
 from __future__ import annotations
 
 import re
+from functools import lru_cache
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR, LAZY_RULES_DIR, RULES_DIR, resolve_config_path, resolve_link
+from _shared_paths import (
+    CLAUDE_DIR,
+    LAZY_RULES_NAME,
+    RULES_DIR,
+    STYLE_GUIDES_NAME,
+    installed_rule_files,
+    resolve_config_path,
+    resolve_link,
+)
 
 PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
 STYLE_DIR = Path("style_guide_standards")
 
-# Rule path (relative to rules/04_path_scoped/ or _rules_lazy_load/) -> H2 headings it must keep, emoji stripped.
+# Rule path (relative to rules/04_path_scoped/ or _rules_lazy_load/, or style_guide_standards/ for any style guide)
+# -> H2 headings it must keep, emoji stripped.
 RULES: dict[Path, list[str]] = {
     Path("org.md"): ["Child pages", "Organisation facts", "Internal references"],
     STYLE_DIR / "airflow.md": ["Child pages", "Core Principles", "DAG Acceptance Checklist"],
@@ -163,7 +173,7 @@ def unlinked_children(text: str, stem: str, child_names: list[str]) -> list[str]
     :return: Child filenames with no link ending in ``<stem>/<child>``.
     :rtype: list[str]
     """
-    # A path-scoped parent links across to _rules_lazy_load/, so match the link's tail
+    # A parent may link across folders, so match the link's tail
     linked = set(relative_links(text))
     return [
         name for name in child_names
@@ -193,9 +203,9 @@ def _child_names(rule: Path) -> list[str]:
     :rtype: list[str]
     """
     folder = rule.parent / rule.stem
-    if not folder.is_dir() and PATH_SCOPED_DIR in rule.parents:
-        # Installed, a path-scoped parent's children live in _rules_lazy_load/ so they don't auto-load
-        folder = LAZY_RULES_DIR / rule.relative_to(PATH_SCOPED_DIR).with_suffix("")
+    if not folder.is_dir() and PATH_SCOPED_DIR / STYLE_DIR in rule.parents:
+        # Installed, an entry file's children stay in _style_guide_standards/ so they don't auto-load
+        folder = CLAUDE_DIR / STYLE_GUIDES_NAME / rule.relative_to(PATH_SCOPED_DIR / STYLE_DIR).with_suffix("")
     if not folder.is_dir():
         return []
     return sorted(p.name for p in folder.glob("*.md") if p.name != "README.md")
@@ -206,10 +216,20 @@ def _rule_texts() -> dict[Path, str]:
     return {rule_path(rel): rule_path(rel).read_text(encoding="utf-8") for rel in RULES}
 
 
+@lru_cache(maxsize=1)
+def _installed_files() -> dict[str, Path]:
+    """Return every rule file keyed by installed path, read once per run."""
+    return installed_rule_files(CLAUDE_DIR)
+
+
 def rule_path(rel: Path) -> Path:
-    """Return a tracked rule's absolute path, in rules/04_path_scoped/ or else _rules_lazy_load/ (either layout)."""
-    scoped = resolve_config_path(CLAUDE_DIR, f"rules/04_path_scoped/{rel.as_posix()}")
-    return scoped if scoped.is_file() else resolve_config_path(CLAUDE_DIR, f"_rules_lazy_load/{rel.as_posix()}")
+    """Return a tracked rule's absolute path wherever it installs, in either layout."""
+    key = rel.as_posix()
+    candidates = [f"rules/04_path_scoped/{key}", f"{LAZY_RULES_NAME}/{key}"]
+    if rel.parts[0] == STYLE_DIR.name:
+        candidates.append(f"{STYLE_GUIDES_NAME}/{rel.relative_to(STYLE_DIR).as_posix()}")
+    files = _installed_files()
+    return next((files[c] for c in candidates if c in files), resolve_config_path(CLAUDE_DIR, candidates[-1]))
 
 
 # ── Real config ─────────────────────────────────────────────────────────
@@ -223,7 +243,7 @@ def test_rule_table_tracks_fourteen_distinct_rules():
 
 
 def test_every_tracked_rule_exists():
-    """Every rule in the table is still on disk under rules/04_path_scoped/ or _rules_lazy_load/."""
+    """Every rule in the table is still on disk under rules/04_path_scoped/, _rules_lazy_load/ or the style guides."""
     missing = [str(rel) for rel in RULES if not rule_path(rel).is_file()]
     assert not missing, f"Tracked rules missing from both rule folders — fix the path in RULES or restore: {missing}"
 

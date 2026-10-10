@@ -51,7 +51,7 @@ Decide from two numbers per rule, both in `_admin/_audits/audit_rule_usage.md`:
 | **Low** | Always-on only if small | Lazy |
 
 - **Domain style guides:** SQL, Airflow, dbt and similar guides are lazy, triggered by `paths:` on their file type.
-  - **Repo layout:** the repo keeps every guide in `_style_guide_standards/`, and the install moves files with `paths:` to `rules/04_path_scoped/` and the rest to `_rules_lazy_load/`.
+  - **Their own folder:** every guide lives in `_style_guide_standards/`, read on demand, and the install moves the entry files with `paths:` to `rules/04_path_scoped/style_guide_standards/`.
 - **Pointers aren't triggers:** a `**Read on demand:**` pointer works only if Claude remembers it, so it never counts for a high-cost rule.
 
 ---

@@ -33,7 +33,7 @@ paths:
 **Tier 2: Core rules (rules/, _rules_lazy_load/)**
 - `rules/`: tiers `01_essentials/` to `03_authoring_guidelines/` load every session, and `04_path_scoped/` loads with matching files — Claude Code reads this folder natively, so it has no underscore
 - `_rules_lazy_load/`: rules read on demand, plus the tier READMEs — kept under `rules/` in the repo and moved beside it on install; see `claude_rule_loading_strategy.md` for what belongs where
-- `_style_guide_standards/`: in the repo only, every style guide in one folder — the install moves files with `paths:` to `rules/04_path_scoped/` and the rest to `_rules_lazy_load/`
+- `_style_guide_standards/`: every style guide in one folder, read on demand — the install moves entry files with `paths:` to `rules/04_path_scoped/style_guide_standards/` so they load on matching files
 
 **Tier 3: Infrastructure (_tests/, _templates/, _reference/, _docs/)**
 - Tests, templates, evergreen reference docs, and additional documentation

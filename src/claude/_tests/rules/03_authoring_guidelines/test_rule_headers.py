@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-10
-# Version:           1.7.0
+# Version:           1.8.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -20,7 +20,7 @@ Every entry point also says how it loads and why, and the mode must match its fo
 import re
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR, HOOKS_DIR, LAZY_RULES_DIR, LAZY_RULES_NAME, RULES_DIR, installed_rule_files
+from _shared_paths import CLAUDE_DIR, HOOKS_DIR, LAZY_RULES_DIR, ON_DEMAND_ROOTS, RULES_DIR, installed_rule_files
 
 ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines")
 PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
@@ -230,10 +230,11 @@ def lazy_entry_points() -> list[Path]:
     # A child's parent may sit in another root, e.g. sql/formatting.md in _rules_lazy_load/
     # belongs to sql.md in rules/04_path_scoped/, so look for the parent in every root.
     files = installed_rule_files(CLAUDE_DIR)
-    roots = ["rules/04_path_scoped", LAZY_RULES_NAME] + [f"rules/{tier}" for tier in ALWAYS_ON_TIERS]
+    scanned = ("rules/04_path_scoped", *ON_DEMAND_ROOTS)
+    roots = [*scanned, "rules/04_path_scoped/style_guide_standards"] + [f"rules/{tier}" for tier in ALWAYS_ON_TIERS]
     found = [p for tier in ALWAYS_ON_TIERS for p in (RULES_DIR / tier).glob("*.md") if has_paths(p.read_text())]
     for installed, path in files.items():
-        root = next((r for r in roots[:2] if installed.startswith(f"{r}/")), None)
+        root = next((r for r in scanned if installed.startswith(f"{r}/")), None)
         if root is None:
             continue
         rel = Path(installed[len(root) + 1:])

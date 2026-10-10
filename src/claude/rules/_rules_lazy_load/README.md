@@ -21,7 +21,7 @@
 | **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
 | **claude_rule_loading_strategy.md** (in `rules/04_path_scoped/`) | The rule folders and when a rule should be always-on or lazy, from measured usage and miss cost | Loads through `paths:` on rule files and `CLAUDE.md` |
 | **automation_controls.md** | Guardrails for `/loop`, `/batch`, `/goal` automation commands | Setting up recurring automation |
-| **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | File-type guides install to `rules/04_path_scoped/style_guide_standards/` and load through `paths:`; their children, jira and datetime install here, read through pointers. In the repo, every guide sits in `src/claude/_style_guide_standards/` |
+| **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | Moved to their own `_style_guide_standards/` folder beside this one, read on demand; entry files install to `rules/04_path_scoped/style_guide_standards/` and load through `paths:` |
 
 ---
 
@@ -39,8 +39,8 @@ Files in this directory follow the **lazy-load by default** principle (from `gui
 ## 🔍 How to find and load a lazy-load rule
 
 ### If you know the domain:
-1. Look in the `style_guide_standards/` directory for domain-specific rules (e.g., `sql.md`, `airflow.md`)
-2. Read the file with: `Read ~/.claude/_rules_lazy_load/style_guide_standards/jira.md`
+1. Look in the `_style_guide_standards/` directory for domain-specific rules (e.g., `sql.md`, `airflow.md`)
+2. Read the file with: `Read ~/.claude/_style_guide_standards/jira.md`
 
 ### If you're setting up config:
 1. Read `claude_config_naming.md` for naming standards specific to the config structure

@@ -23,11 +23,10 @@ MANIFEST_NAME=".install_manifest"
 # since Claude Code loads every .md under rules/ by itself
 LAZY_RULES_NAME="_rules_lazy_load"
 
-# Style guides sit in one folder in the repo but split once installed: entry files (with paths:
-# frontmatter) go where Claude Code loads them on matching files, and the rest go with the on-demand rules
+# Style guides sit in one folder, in the repo and once installed, except their entry files (with paths:
+# frontmatter), which the install moves under rules/ so Claude Code loads them on matching files
 STYLE_GUIDES_NAME="_style_guide_standards"
 STYLE_GUIDES_PATH_SCOPED="rules/04_path_scoped/style_guide_standards"
-STYLE_GUIDES_LAZY="${LAZY_RULES_NAME}/style_guide_standards"
 
 #=======================================================================
 # Shared functions
@@ -177,30 +176,33 @@ is_path_scoped() {
     awk 'NR == 1 { if ($0 != "---") exit; next } $0 == "---" { exit } /^paths:/ { found = 1; exit } END { exit !found }' "${FILE}"
 }
 
-# Print where a style-guide file installs, relative to the target: path-scoped or on-demand
+# Print where a style-guide file installs, relative to the target: under rules/ when path-scoped, else in place
 style_guide_install_path() {
     local FILE="$1"  # the file itself, to read its frontmatter
     local REL="$2"   # its path inside _style_guide_standards/
     if is_path_scoped "${FILE}"; then
         echo "${STYLE_GUIDES_PATH_SCOPED}/${REL}"
     else
-        echo "${STYLE_GUIDES_LAZY}/${REL}"
+        echo "${STYLE_GUIDES_NAME}/${REL}"
     fi
 }
 
-# Split _style_guide_standards/ back to where Claude Code needs each file, then remove the folder.
-# Left at the top level, entry files would never load, so every file is moved, overwriting the last install's copy.
+# Move the style guides' entry files from _style_guide_standards/ into rules/, where Claude Code loads them
+# on matching files, overwriting the last install's copy. Every other file stays put and is read on demand.
 split_style_guides() {
     local FROM_DIR="${TARGET_DIR}/${STYLE_GUIDES_NAME}"
-    local FROM TO
+    local FROM TO COUNT=0
     [[ -d "${FROM_DIR}" ]] || return 0
     while IFS= read -r FROM; do
-        TO="${TARGET_DIR}/$(style_guide_install_path "${FROM}" "${FROM#"${FROM_DIR}/"}")"
+        is_path_scoped "${FROM}" || continue
+        TO="${TARGET_DIR}/${STYLE_GUIDES_PATH_SCOPED}/${FROM#"${FROM_DIR}/"}"
         mkdir -p "$(dirname "${TO}")"
         mv -f "${FROM}" "${TO}"
+        COUNT=$((COUNT + 1))
     done < <(find "${FROM_DIR}" -type f)
-    rm -rf "${FROM_DIR}"
-    log_message "${INFO}" "Split ${STYLE_GUIDES_NAME}/ into path-scoped and on-demand rules"
+    find "${FROM_DIR}" -depth -type d -empty -delete
+    [[ "${COUNT}" -gt 0 ]] && log_message "${INFO}" "Moved ${COUNT} style-guide entry files into ${STYLE_GUIDES_PATH_SCOPED}/"
+    return 0
 }
 
 # Print the files an install puts in the target, relative to it and sorted, laid out as

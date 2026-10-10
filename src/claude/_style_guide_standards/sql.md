@@ -2,7 +2,7 @@
 paths:
   - "**/*.sql"
 ---
-<!-- version: 1.2.6 -->
+<!-- version: 1.2.7 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-10 -->
 <!-- miss_cost: medium — SQL that fails SQLFluff or costs more to run -->
@@ -104,7 +104,7 @@ Before committing SQL changes:
 
 ## 📚 Read on demand
 
-- **Read on demand:** `~/.claude/_rules_lazy_load/style_guide_standards/sql/formatting.md` — keywords, naming, structure, joins, indentation and commenting.
-- **Read on demand:** `~/.claude/_rules_lazy_load/style_guide_standards/sql/cte_style_guide.md` — CTE grouping pattern for dbt models and queries.
-- **Read on demand:** `~/.claude/_rules_lazy_load/style_guide_standards/sql/snowflake_data_type_standards.md` — which Snowflake data type to use.
-- **Read on demand:** `~/.claude/_rules_lazy_load/style_guide_standards/sql/sqlfluff.md` — SQLFluff dialect, templater and excluded rules.
+- **Read on demand:** `~/.claude/_style_guide_standards/sql/formatting.md` — keywords, naming, structure, joins, indentation and commenting.
+- **Read on demand:** `~/.claude/_style_guide_standards/sql/cte_style_guide.md` — CTE grouping pattern for dbt models and queries.
+- **Read on demand:** `~/.claude/_style_guide_standards/sql/snowflake_data_type_standards.md` — which Snowflake data type to use.
+- **Read on demand:** `~/.claude/_style_guide_standards/sql/sqlfluff.md` — SQLFluff dialect, templater and excluded rules.

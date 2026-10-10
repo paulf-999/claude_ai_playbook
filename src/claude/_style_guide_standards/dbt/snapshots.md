@@ -1,6 +1,6 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 # 📸 dbt Snapshots
 
 Covers naming conventions, configuration standards, best practices, and guidance on building downstream models on top of snapshots.
@@ -23,7 +23,7 @@ Snapshots follow the `dim_<entity>_history.sql` naming pattern. Examples from th
 ## ⚙️ Configuration
 
 The team uses the **check strategy** — dbt compares a defined list of columns on each run and creates a new snapshot record when any of them change. See the working example:
-`~/.claude/_rules_lazy_load/style_guide_standards/dbt/templates/template_snapshot.sql`
+`~/.claude/_style_guide_standards/dbt/templates/template_snapshot.sql`
 
 | Setting | Value |
 |---------|-------|
