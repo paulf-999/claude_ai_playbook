@@ -69,7 +69,7 @@ See `~/.claude/rules/01_essentials/guiding_principles.md` for the decision frame
 
 **What it does:** Hard blocklist — Claude cannot read/run these patterns regardless of permission mode. Backs the advisory rules in `rules/02_claude_standards/security.md` with a mechanical guard.
 
-**When set:** 2026-08-07 (adopted from `_reference/settings_json_recommendations.md` item 1)
+**When set:** 2026-08-07 (adopted from `docs/reference/claude_config/settings_json_recommendations.md` item 1)
 
 **Why:** `security.md` says "never read/commit secrets" and "no destructive ops" — but until now that was guidance only. This gives it teeth at zero per-session context cost, fully reversible.
 
@@ -145,7 +145,7 @@ See `~/.claude/rules/01_essentials/guiding_principles.md` for the decision frame
 
 **What it does:** Sets session-transcript retention to 90 days. Transcripts older than this are cleaned up automatically.
 
-**When set:** 2026-08-07 at 30 days (adopted from `_reference/settings_json_recommendations.md` item 2), raised to 90 days on 2026-10-01
+**When set:** 2026-08-07 at 30 days (adopted from `docs/reference/claude_config/settings_json_recommendations.md` item 2), raised to 90 days on 2026-10-01
 
 **Why:** the rule-usage audit (`make audit_rule_usage`) measures which rules each session needed, and the 30-day default left too few sessions to judge rarely used rules.
 
@@ -188,8 +188,8 @@ See `~/.claude/rules/01_essentials/guiding_principles.md` for the decision frame
 | 2026-10-01 | `hooks.PreToolUse` | Re-registered `hook_enforcement_naming_convention.sh` on `Write`; removed `hook_enforcement_dir_structure.sh` | The rewritten hook prints nothing unless a new config file's name has an error, so it costs no tokens on normal writes — unlike the 2026-08-07 version, which injected the naming rules on every new file |
 | 2026-10-01 | `hooks.UserPromptSubmit` | Registered `hook_enforcement_mcp_stale_settings.sh` | Disabling an MCP server mid-session was tested and didn't apply until restart, so the hook warns once when `deniedMcpServers` changes; it prints nothing otherwise |
 | 2026-08-07 | `permissions.allow` | Added `git show *`, `grep *` | Transcript analysis: 4 and 48 uses/session respectively; both read-only, safe |
-| 2026-08-07 | `permissions.deny` | Added 7-pattern secrets + destructive-op firewall | Backs advisory `security.md` rules with a mechanical guard; zero context cost. Adopted from `_reference/settings_json_recommendations.md` |
-| 2026-08-07 | `cleanupPeriodDays` | Set to `30` (explicit form of documented default) | Makes transcript retention an auditable choice. Adopted from `_reference/settings_json_recommendations.md` |
+| 2026-08-07 | `permissions.deny` | Added 7-pattern secrets + destructive-op firewall | Backs advisory `security.md` rules with a mechanical guard; zero context cost. Adopted from `docs/reference/claude_config/settings_json_recommendations.md` |
+| 2026-08-07 | `cleanupPeriodDays` | Set to `30` (explicit form of documented default) | Makes transcript retention an auditable choice. Adopted from `docs/reference/claude_config/settings_json_recommendations.md` |
 | 2026-10-01 | `hooks` | Commands read `CLAUDE_CONFIG_DIR`, falling back to `~/.claude` | The repo hardcoded `~/.claude/hooks/`, so installing at `~/claude` would have broken all 4 hooks |
 | 2026-10-01 | `syncClaudeAiSkills` | Added as `false` (was live-only) | Brings the repo in line with live, so `make install` no longer drops it |
 | 2026-10-01 | `plansDirectory` | `/Users/<you>/claude/_plans` → `~/.claude/_plans` | A personal absolute path broke other installs; `make install` now sets it to the target's own `_plans/` |

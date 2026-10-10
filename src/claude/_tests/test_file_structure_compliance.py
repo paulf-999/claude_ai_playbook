@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-10
-# Version:           2.4.0
+# Version:           3.0.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -111,13 +111,6 @@ def test_templates_are_compliant():
     assert (CLAUDE_HOME / "_templates").is_dir(), missing_area("_templates")
     errors = errors_under("_templates")
     assert not errors, error_report("_templates", errors)
-
-
-def test_reference_is_compliant():
-    """Every file under _reference/ passes the scan."""
-    assert (CLAUDE_HOME / "_reference").is_dir(), missing_area("_reference")
-    errors = errors_under("_reference")
-    assert not errors, error_report("_reference", errors)
 
 
 def test_hooks_are_compliant():
