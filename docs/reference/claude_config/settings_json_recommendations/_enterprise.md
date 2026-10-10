@@ -1,8 +1,3 @@
----
-created: 2025-10-01
-last_modified: 2026-08-19
----
-
 # ⚙️ Tier 4 Settings — Enterprise & Managed (Out of Scope)
 
 Reference for Tier 4 (rare/enterprise) `settings.json` options. These are included for completeness but are **out of scope** for single-user, local development setups.

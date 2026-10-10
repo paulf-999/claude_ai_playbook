@@ -1,8 +1,3 @@
----
-created: 2025-08-01
-last_modified: 2026-08-19
----
-
 # 🔢 Versioning Standards (Semver)
 
 Applies to all Claude components — skills, process docs, rules, and CLAUDE.md files.

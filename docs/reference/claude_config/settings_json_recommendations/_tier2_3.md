@@ -1,8 +1,3 @@
----
-created: 2025-10-01
-last_modified: 2026-08-19
----
-
 # ⚙️ Tier 2–3 Settings — Common & Niche Options
 
 Detailed reference for Tier 2 (common) and Tier 3 (niche) `settings.json` configuration options. See the parent doc for Tier 1 essentials.

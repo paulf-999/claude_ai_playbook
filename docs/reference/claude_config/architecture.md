@@ -64,7 +64,6 @@ This page describes the principle, not an inventory — the README in each direc
 | `CLAUDE.md` | Entry point; imports memory and aliases | Read the file itself |
 | `rules/` | Rules Claude Code loads natively, in tiers `01_essentials/` to `03_authoring_guidelines/` plus `04_path_scoped/` | `04_path_scoped/claude_rule_loading_strategy.md` and the tier folders themselves |
 | `_rules_lazy_load/` | Rules read on demand, never loaded automatically | `_rules_lazy_load/README.md` |
-| `_reference/` | Background docs like this one — never imported | `_reference/README.md` |
 | `_tests/` | pytest suite for rules, hooks, skills and settings | `_tests/README.md` |
 | `hooks/`, `skills/`, `agents/`, `_templates/` | Hooks, skills, sub-agents, authoring templates | Each directory's README |
 
@@ -74,7 +73,7 @@ This page describes the principle, not an inventory — the README in each direc
 
 - **Always-on:** Claude Code loads every `.md` under `rules/` without `paths:` frontmatter — tiers 01–03 and their children; the folders are the current list.
 - **With matching files:** rules with `paths:` (mostly `rules/04_path_scoped/`) load when Claude reads a file their globs match.
-- **On demand:** `_rules_lazy_load/` and `_reference/` are never imported; Claude reads them when a task needs them.
+- **On demand:** `_rules_lazy_load/` is never imported; Claude reads it when a task needs it.
 - **Cost:** measure it rather than estimate it — `make audit_rule_usage` reports measured tier sizes, and each always-on file adds its full size to every session.
 
 ---
@@ -87,7 +86,7 @@ Rules are organized by concern, creating clear separation that simplifies auditi
 |---|---|---|
 | **Security** | `behaviour.md` → `security/_security_guardrails.md` → `security.md` | Progressive gates from task approach to code standards |
 | **Quality** | `testing.md` + `hook_enforcement_naming_convention.sh` | Naming checked as Claude creates files; tests run in pre-commit and CI |
-| **Efficiency** | `_rules_lazy_load/` + `_reference/` | Domain rules and background docs read on demand, keeping the baseline small |
+| **Efficiency** | `_rules_lazy_load/` | Domain rules read on demand, keeping the baseline small |
 
 For detailed security architecture, see `~/.claude/_rules_lazy_load/security_design.md`.
 
