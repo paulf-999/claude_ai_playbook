@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
-# Date updated:      2026-10-06
-# Version:           1.2.0
+# Date updated:      2026-10-10
+# Version:           1.2.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -133,10 +133,10 @@ def test_turn_budgets_pointer_resolves():
     """The turn budgets section must point at an existing lazy-load file."""
     content = _content()
     assert "**Read on demand:**" in content, "Turn budgets read-on-demand pointer removed"
-    assert "_rules_lazy_load/turn_budgets.md" in content, (
-        "Turn budgets pointer no longer names _rules_lazy_load/turn_budgets.md"
+    assert "_rules_lazy_load/automation_lazy_load/turn_budgets.md" in content, (
+        "Turn budgets pointer no longer names _rules_lazy_load/automation_lazy_load/turn_budgets.md"
     )
-    target = LAZY_RULES_DIR / "turn_budgets.md"
+    target = LAZY_RULES_DIR / "automation_lazy_load" / "turn_budgets.md"
     assert target.is_file(), f"Turn budgets pointer target missing: {target}"
 
 

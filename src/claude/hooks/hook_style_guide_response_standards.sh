@@ -1,7 +1,7 @@
 #!/bin/bash
-# version: 1.0.1
+# version: 1.0.2
 # created: 2026-09-07
-# updated: 2026-10-01
+# updated: 2026-10-10
 # hook_style_guide_response_standards.sh
 #
 # Enforce Response Standards hook: validates response format compliance
@@ -10,7 +10,7 @@
 #
 # RESERVED — deliberately NOT registered in settings.json. Do not delete it as unused.
 # It is the planned "walk" step if per-turn injection (hook_style_guide_response_standards_inject.sh)
-# stops keeping responses compliant — see _rules_lazy_load/response_standards_enforcement.md.
+# stops keeping responses compliant — see _rules_lazy_load/efficiency_lazy_load/response_standards_enforcement.md.
 # test_hook_registry_utils.py fails if this file is removed, registered or loses this note
 # without its RESERVED_HOOKS entry being updated to match.
 #

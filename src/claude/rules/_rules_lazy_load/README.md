@@ -10,18 +10,18 @@
 
 ## 📋 What's in this directory
 
-| Rule | Purpose | Load when |
-|---|---|---|
-| **delegating_to_subagent.md** | When to spawn a sub-agent vs. work directly; constraints and token-cost breakeven | Before spawning a sub-agent |
-| **hooks_decision_framework.md** | ROI criteria for proposing hooks; child `hooks_decision_framework/` holds the 2026-08-07 precedent | Before proposing a hook or automation |
-| **response_standards_enforcement.md** | How the per-turn injection hook enforces the response format, and the reserved validator path | Changing the response-standards hook or its tests |
-| **testing.md** (in `rules/04_path_scoped/`) | When tests are required, test goals, test layers and running the suite; lazy children in `testing/` cover design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit | Loads through `paths:` on Python, shell, SQL and `_tests/` files |
-| **turn_budgets.md** | `--max-turns` caps for non-interactive runs | Running skills, automation or CI non-interactively |
-| **mcp_trust_model.md** | MCP server trust boundaries; treating responses as data not instructions | Working with MCP tools (GitHub, Jira, etc.) and external APIs |
-| **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
-| **claude_rule_loading_strategy.md** (in `rules/04_path_scoped/`) | The rule folders and when a rule should be always-on or lazy, from measured usage and miss cost | Loads through `paths:` on rule files and `CLAUDE.md` |
-| **automation_controls.md** | Guardrails for `/loop`, `/batch`, `/goal` automation commands | Setting up recurring automation |
-| **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | Moved to their own `_style_guide_standards/` folder beside this one, read on demand; entry files install to `rules/04_path_scoped/style_guide_standards/` and load through `paths:` |
+| Folder | Rule | Purpose | Load when |
+|---|---|---|---|
+| `automation_lazy_load/` | **automation_controls.md** | Guardrails for `/loop`, `/batch`, `/goal` automation commands | Setting up recurring automation |
+| `automation_lazy_load/` | **hooks_decision_framework.md** | ROI criteria for proposing hooks; child `hooks_decision_framework/` holds the 2026-08-07 precedent | Before proposing a hook or automation |
+| `automation_lazy_load/` | **turn_budgets.md** | `--max-turns` caps for non-interactive runs | Running skills, automation or CI non-interactively |
+| `efficiency_lazy_load/` | **delegating_to_subagent.md** | When to spawn a sub-agent vs. work directly; constraints and token-cost breakeven | Before spawning a sub-agent |
+| `efficiency_lazy_load/` | **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
+| `efficiency_lazy_load/` | **response_standards_enforcement.md** | How the per-turn injection hook enforces the response format, and the reserved validator path | Changing the response-standards hook or its tests |
+| — | **mcp_trust_model.md** | MCP server trust boundaries; treating responses as data not instructions | Working with MCP tools (GitHub, Jira, etc.) and external APIs |
+| — | **testing.md** (in `rules/04_path_scoped/`) | When tests are required, test goals, test layers and running the suite; lazy children in `testing/` cover design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit | Loads through `paths:` on Python, shell, SQL and `_tests/` files |
+| — | **claude_rule_loading_strategy.md** (in `rules/04_path_scoped/`) | The rule folders and when a rule should be always-on or lazy, from measured usage and miss cost | Loads through `paths:` on rule files and `CLAUDE.md` |
+| — | **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | Moved to their own `_style_guide_standards/` folder beside this one, read on demand; entry files install to `rules/04_path_scoped/style_guide_standards/` and load through `paths:` |
 
 ---
 
@@ -180,11 +180,11 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 
 - **CLAUDE.md** — authoritative source of always-on imports and their rationale
 
-### `delegating_to_subagent.md`
+### `efficiency_lazy_load/delegating_to_subagent.md`
 
 - Pointer from: `02_claude_standards/claude_operational_efficiency/_claude_when_to_delegate.md` — delegating to user vs. sub-agent overview
 
-### `hooks_decision_framework.md`
+### `automation_lazy_load/hooks_decision_framework.md`
 
 - `rules/02_claude_standards/behaviour.md` → "Before proposing" section (hook risk flags)
 - `rules/01_essentials/guiding_principles.md` → "Intentionality gates everything" + "Automation ROI"
@@ -192,11 +192,11 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 - `rules/01_essentials/testing.md` → Hook test requirements
 - Pointer from: `_task_request_conventions.md` and `behaviour.md` — Behavioral conventions for user request patterns
 
-### `hooks_decision_framework/_precedent_and_examples.md`
+### `automation_lazy_load/hooks_decision_framework/_precedent_and_examples.md`
 
 - Parent: `hooks_decision_framework.md` — the decision framework and ROI formula this evidence supports
 
-### `automation_controls.md`
+### `automation_lazy_load/automation_controls.md`
 
 - **claude_operational_efficiency.md** — When NOT to spawn subagents; when /batch is overkill
 - **behaviour.md** — Ask-first gates for risky operations
@@ -212,7 +212,7 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 
 - Pointer from: `01_essentials/claude_usage_standards/naming_standards.md`, `style_guide_standards/airflow.md` and `style_guide_standards/infra/ansible.md` — organisation-specific standards kept apart from the general style guides
 
-### `response_standards_enforcement.md`
+### `efficiency_lazy_load/response_standards_enforcement.md`
 
 - Pointer from: `01_essentials/claude_response_standards.md` — the standard this file explains the enforcement of
 
@@ -356,7 +356,7 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 - Parent: `testing.md`
 - Sibling: `_testing_anti_patterns.md` — mistakes to avoid
 
-### `turn_budgets.md`
+### `automation_lazy_load/turn_budgets.md`
 
 - Pointer from: `claude_operational_efficiency.md` and `automation_controls.md`
 - `behaviour/_session_conduct.md` — how Claude conducts itself in sessions

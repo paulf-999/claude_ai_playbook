@@ -1,6 +1,6 @@
-<!-- version: 3.1.1 -->
+<!-- version: 3.1.2 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 <!-- applies_to: * -->
 <!-- miss_cost: medium — replies in the wrong shape, which the user asks to redo -->
 <!-- loading: always-on — shapes every substantive reply -->
@@ -103,4 +103,4 @@
 
 ## 🔒 Enforcement & Implementation
 
-- **Read on demand:** `~/.claude/_rules_lazy_load/response_standards_enforcement.md` — when changing how this standard is enforced (the per-turn injection hook and its tests).
+- **Read on demand:** `~/.claude/_rules_lazy_load/efficiency_lazy_load/response_standards_enforcement.md` — when changing how this standard is enforced (the per-turn injection hook and its tests).
