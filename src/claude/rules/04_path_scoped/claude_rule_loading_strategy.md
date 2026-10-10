@@ -5,7 +5,7 @@ paths:
   - "**/_style_guide_standards/**"
   - "**/CLAUDE.md"
 ---
-<!-- version: 4.1.2 -->
+<!-- version: 4.1.3 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-10 -->
 <!-- miss_cost: low — a rule lands in the wrong tier, which is easy to move -->
@@ -16,7 +16,7 @@ paths:
 
 **Principle:** Lazy-load by default. Always-on rules must block or apply everywhere.
 
-Claude Code loads every `.md` under `rules/` on its own, so every always-on file adds its full size to every session — measured tier sizes are in `_rules_lazy_load/_tier_readmes/00_rules_overview.md`. Only rules that justify this cost stay always-on.
+Claude Code loads every `.md` under `rules/` on its own, so every always-on file adds its full size to every session — measured tier sizes are in `_rules_lazy_load/rules_overview.md`. Only rules that justify this cost stay always-on.
 
 ---
 

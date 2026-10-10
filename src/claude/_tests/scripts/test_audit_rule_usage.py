@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-10
-# Version:           1.9.0
+# Version:           1.10.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -63,8 +63,9 @@ def make_rules(tmp_path):
     (tmp_path / LAZY_GUIDES / "python.md").write_text("<!-- miss_cost: high — breaks style -->\n# Python\n")
     (tmp_path / "_rules_lazy_load").mkdir()
     (tmp_path / "_rules_lazy_load" / "loose.md").write_text("<!-- miss_cost: low — style -->\n# Loose\n")
-    (tmp_path / "_rules_lazy_load" / "_tier_readmes").mkdir()
-    (tmp_path / "_rules_lazy_load" / "_tier_readmes" / "01_essentials.md").write_text("# Tier\n")
+    (tmp_path / "_rules_lazy_load" / "rules_overview").mkdir()
+    (tmp_path / "_rules_lazy_load" / "rules_overview" / "_01_essentials.md").write_text("# Tier\n")
+    (tmp_path / "_rules_lazy_load" / "rules_overview.md").write_text("# Overview\n")
     return rules
 
 

@@ -10,7 +10,15 @@ Claude Code loads every `.md` under `rules/` by itself, so the folder decides ho
 - **`02_claude_standards/`** — Foundational quality gates and operational conduct that **Claude must apply** to all work (security, testing, efficiency) — NOT user-facing
 - **`03_authoring_guidelines/`** — Meta-guidance for authoring **rules, skills, agents** (how to create and maintain config artifacts)
 - **`04_path_scoped/`** — Domain-specific rules with `paths:` frontmatter, loaded only when a matching file is open (SQL, Airflow, dbt, Terraform, etc.)
-- **`_rules_lazy_load/`** — Under `rules/` in the repo and beside it once installed: rules and bulky children read on demand, never loaded automatically, plus these tier READMEs
+- **`_rules_lazy_load/`** — Under `rules/` in the repo and beside it once installed: rules and bulky children read on demand, never loaded automatically, plus this overview and its tier pages
+
+## 📄 Tier pages
+
+Each always-on tier has a page listing its rules and their related links:
+
+- [`_01_essentials.md`](rules_overview/_01_essentials.md)
+- [`_02_claude_standards.md`](rules_overview/_02_claude_standards.md)
+- [`_03_authoring_guidelines.md`](rules_overview/_03_authoring_guidelines.md)
 
 ## 🎯 Design principle: Audience-based organization
 
@@ -48,7 +56,7 @@ Not all rules have mechanical triggers. Understand the difference:
 
 Files under `rules/` tiers 01–03 load every session, so every line in them costs always-on context. To keep that cost down:
 
-- **Related links:** each file's parent, sibling and dependency links sit in its tier README in `_rules_lazy_load/_tier_readmes/` under "🔗 Related rules", one `###` per file, for tiers 02–05 only (`01_essentials/` keeps no links, #310) — never in a `## Related` section inside the rule (#121).
+- **Related links:** each file's parent, sibling and dependency links sit in its tier page in `_rules_lazy_load/rules_overview/` under "🔗 Related rules", one `###` per file, for tiers 02–05 only (`01_essentials/` keeps no links, #310) — never in a `## Related` section inside the rule (#121).
   - **Why:** READMEs live outside `rules/` and never load by themselves, so the links cost nothing until someone opens the README.
   - **`_reference/`:** follows the same pattern, with its links in `_reference/README.md`.
 - **Contents sections:** add one only when the rule has 3 or more real `##` headings (#120).
