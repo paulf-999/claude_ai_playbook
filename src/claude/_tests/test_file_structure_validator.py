@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-06
-# Version:           1.3.0
+# Date updated:      2026-10-10
+# Version:           1.3.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -137,7 +137,7 @@ def test_hidden_dir_is_skipped(tmp_path: Path):
 
 def test_unprefixed_nested_markdown_is_info(tmp_path: Path):
     """An un-prefixed nested .md file gets an info nudge, not an error."""
-    make_files(tmp_path, "_reference/topic/guide.md")
+    make_files(tmp_path, "_docs/topic/guide.md")
     violations = scan(tmp_path)
     assert len(violations) == 1, f"expected one child-prefix nudge, got {violations}"
     assert violations[0]["severity"] == "info", f"child-prefix nudge must be info, not {violations[0]['severity']}"
@@ -164,7 +164,7 @@ def test_missing_config_dir_is_an_error(tmp_path: Path):
 
 def test_every_violation_has_required_keys(tmp_path: Path):
     """Every violation dict carries path, rule, severity and message."""
-    make_files(tmp_path, "bad-name.md", "_reference/topic/guide.md")
+    make_files(tmp_path, "bad-name.md", "_docs/topic/guide.md")
     (tmp_path / "rules").mkdir()
     violations = scan(tmp_path)
     assert len(violations) >= 3, f"fixture should produce error, info and warning cases, got {violations}"

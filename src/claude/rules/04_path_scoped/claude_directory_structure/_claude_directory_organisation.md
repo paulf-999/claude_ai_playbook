@@ -3,7 +3,7 @@ paths:
   - "**/.claude/**"
   - "**/claude/**"
 ---
-<!-- version: 2.1.2 -->
+<!-- version: 3.0.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-10 -->
 # 🏗️ Directory Organisation — `~/.claude/`
@@ -14,7 +14,7 @@ paths:
 
 ## 📁 Directory types
 
-- **User-created dirs:** underscore prefix — e.g. `_docs/`, `_rules_lazy_load/`, `_templates/`, `_reference/`, `_tests/`
+- **User-created dirs:** underscore prefix — e.g. `_docs/`, `_rules_lazy_load/`, `_templates/`, `_tests/`
   - **Pattern:** `_<name>/` — user explicitly creates these to organise content
   - **Note:** These directories are tracked in version control and intentionally maintained
 - **Claude Code auto-generated dirs:** no prefix — e.g. `backups/`, `memory/`, `sessions/`, `projects/`
@@ -35,8 +35,8 @@ paths:
 - `_rules_lazy_load/`: rules read on demand — kept under `rules/` in the repo and moved beside it on install; see `claude_rule_loading_strategy.md` for what belongs where
 - `_style_guide_standards/`: every style guide in one folder, read on demand — the install moves entry files with `paths:` to `rules/04_path_scoped/style_guide_standards/` so they load on matching files
 
-**Tier 3: Infrastructure (_tests/, _templates/, _reference/, _docs/)**
-- Tests, templates, evergreen reference docs, and additional documentation
+**Tier 3: Infrastructure (_tests/, _templates/, _docs/)**
+- Tests, templates and additional documentation
 
 **Tier 4: Domain-specific (agents/, hooks/, skills/, wip/)**
 - Custom sub-agents, enforcement/style-guide hooks, reusable skills, work-in-progress features
@@ -62,7 +62,7 @@ Create a subdirectory when **two or more related files** share the same theme an
 
 ## ✅ Rules
 
-- **User-created directories always have underscore prefix** — `_rules_lazy_load/`, `_tests/`, `_templates/`, `_reference/`, `_docs/`
+- **User-created directories always have underscore prefix** — `_rules_lazy_load/`, `_tests/`, `_templates/`, `_docs/`
 - **Auto-generated directories have no prefix** — `backups/`, `memory/`, `sessions/`, `projects/`
 - **When unsure if a directory is auto-generated:** Check `~/.claude/.gitignore` — auto-generated dirs are typically excluded
-- **Never create files directly in `~/.claude/` root** — they belong in `_docs/`, `_reference/`, or a domain-specific subdirectory
+- **Never create files directly in `~/.claude/` root** — they belong in `_docs/` or a domain-specific subdirectory

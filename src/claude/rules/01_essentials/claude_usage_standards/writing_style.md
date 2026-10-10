@@ -1,6 +1,6 @@
-<!-- version: 2.0.1 -->
+<!-- version: 3.0.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-10 -->
 # ✏️ Writing style
 
 **Purpose:** Establish consistent, scannable, and user-friendly writing conventions for all content Claude produces — ensuring clarity, respect for reader time, and professional presentation.
@@ -87,8 +87,7 @@ When writing SKILL.md files, apply these conventions specific to skill documenta
 
 - **Drafts:** write proposed content to `~/claude/_drafts/<domain>/YYYY_MM_DD_<topic>.md`
 - **Errors:** write error details to `~/claude/_errors/<domain>/YYYY_MM_DD_<topic>.md`
-- **Reference:** write evergreen how-to guides and usage references to `~/.claude/_reference/<topic>.md` — no date prefix; topic-named in snake_case
-- **File naming:** date-first for drafts/errors, snake_case topic-only for reference — e.g. `2026_08_04_onboarding_plan.md` or `claude_code_automation_commands.md`
+- **File naming:** date-first, then a snake_case topic — e.g. `2026_08_04_onboarding_plan.md`
   - **Why underscores, not hyphens:** the date prefix is part of the filename, so it must satisfy `naming_standards.md`'s snake_case rule (no hyphens) like every other filename — `YYYY-MM-DD` is correct as a data *value* (e.g. in frontmatter), but not as a filename segment.
 
 | Domain | Use for |

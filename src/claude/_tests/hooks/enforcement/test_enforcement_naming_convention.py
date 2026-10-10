@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-06
-# Version:           2.1.0
+# Date updated:      2026-10-10
+# Version:           2.1.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -67,12 +67,12 @@ def test_kebab_case_name_denied_with_fix():
 
 def test_uppercase_name_denied():
     """Capital letters break snake_case."""
-    assert "NewRule.md" in deny_reason("_reference/NewRule.md"), "uppercase name was not reported"
+    assert "NewRule.md" in deny_reason("_docs/NewRule.md"), "uppercase name was not reported"
 
 
 def test_name_with_space_denied():
     """Spaces break snake_case."""
-    assert "new rule.md" in deny_reason("_reference/new rule.md"), "name with a space was not reported"
+    assert "new rule.md" in deny_reason("_docs/new rule.md"), "name with a space was not reported"
 
 
 def test_bad_hook_script_name_denied():
@@ -125,7 +125,7 @@ def test_outside_config_dir_skipped():
 
 def test_other_tools_skipped():
     """Only Write creates files, so Edit and Bash pass untouched."""
-    edit = {"tool_name": "Edit", "tool_input": {"file_path": str(CLAUDE_DIR / "_reference" / "Bad-Name.md")}}
+    edit = {"tool_name": "Edit", "tool_input": {"file_path": str(CLAUDE_DIR / "_docs" / "Bad-Name.md")}}
     assert_allowed(edit, "Edit call")
     bash = {"tool_name": "Bash", "tool_input": {"command": "touch Bad-Name.md"}}
     assert_allowed(bash, "Bash call")

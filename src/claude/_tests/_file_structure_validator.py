@@ -79,7 +79,6 @@ USER_CREATED_DIRS = {
     "_rules_lazy_load",
     "_tests",
     "_templates",
-    "_reference",
     "_docs",
     "_lib",
     "_drafts",
