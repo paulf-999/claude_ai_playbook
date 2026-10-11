@@ -3,21 +3,18 @@
 **Date Created:** 2026-09-30
 **Date Updated:** 2026-10-11
 
-**Overall score:** 8.4/10
-
-**Recommended improvements:**
-- Add a synthetic bad-input test that proves the check fails when it should
+**Overall score:** 8.6/10
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
 | **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
 | **Complexity** | 7/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 7/10 (raw complexity 3) |
 | **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact |
-| **Coverage** | 9/10 | 2026-10-11 | • 📊 **Counts:** 17 test functions and 36 assertions<br>• 🧩 **New:** measured placement inputs, audit flags, the adding-a-rule steps and the pointer rule |
+| **Coverage** | 9/10 | 2026-10-11 | • 📊 **Counts:** 10 test functions and 16 assertions<br>• 🧩 **Checks:** the folder table against the disk, examples, loading claims, pointers, line limit and newline<br>• ✂️ **Trimmed:** 7 wording pins deleted 2026-10-11, and 2 structural anchors tagged `# wording-check:` |
 | **Structural Compliance** | 9/10 | 2026-09-30 | • ✅ **Header:** full metadata header, marked Python style compliant |
-| **Currency** | 9/10 | 2026-09-30 | • 🔍 **References:** passes against the current config, header last updated 2026-09-30 |
+| **Currency** | 10/10 | 2026-10-11 | • 🔍 **References:** passes against the current config, header version 4.0.0 updated 2026-10-11 |
 | **Regression Value** | 7/10 | 2026-09-30 | • 🛡️ **Failure cases:** checks real files, but no function proves the check fails on a bad case |
-| **Overall** | **8.4/10** | 2026-09-30 | • 💪 **Strongest:** Clarity (9/10)<br>• ⚠️ **Weakest:** Complexity (7/10) |
+| **Overall** | **8.6/10** | 2026-10-11 | • 💪 **Strongest:** Currency (10/10)<br>• ⚠️ **Weakest:** Complexity and Regression Value (7/10) |
 
 ## 🔗 Related files
 

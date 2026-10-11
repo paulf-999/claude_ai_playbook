@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-11
-# Version:           2.2.6
+# Version:           2.2.7
 # Test quality score: 10/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -163,7 +163,9 @@ def test_plan_alias_enters_plan_mode():
     """The plan alias says it enters plan mode."""
     plan = next((a for a in load_aliases() if a["input"] == "`plan`"), None)
     assert plan, "the plan alias is missing"
-    assert "plan mode" in plan["meaning"].lower(), f"plan alias meaning should mention plan mode: {plan['meaning']}"
+    assert "plan mode" in plan["meaning"].lower(), (  # wording-check: alias config data
+        f"plan alias meaning should mention plan mode: {plan['meaning']}"
+    )
 
 
 def test_parser_rejects_missing_table():

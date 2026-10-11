@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-11
-# Version:           2.3.2
+# Version:           2.4.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -14,6 +14,8 @@
 - **Parent and children:** across tiers 01–03, per ``multifile_document_organisation.md``,
   children sit in a ``<topic>/`` folder beside their ``<topic>.md`` parent, use the ``_``
   prefix, come two or more to a folder, and never sit loose at a tier's root.
+- **Style guides:** installed path-scoped guides (``sql.md``, ``infra/terraform.md``) are standalone
+  entry files grouped by domain, so their folders are exempt from the parent-and-children checks.
 
 Whether CLAUDE.md imports these files is checked by ``test_always_on_reachability.py``.
 """
@@ -46,6 +48,9 @@ GROUPING_DIRS = {
     "02_claude_standards/path_scoped_rules",
     "03_authoring_guidelines/shared_standards",
 }
+# Installed path-scoped style guides: standalone entry files grouped by domain, at any depth.
+# Only the live install has this folder (the repo keeps guides in _reference/), so it isn't stale-checked.
+STYLE_GUIDES_DIR = "02_claude_standards/path_scoped_rules/style_guide_standards"
 
 
 def child_folders() -> list[Path]:
@@ -56,8 +61,17 @@ def child_folders() -> list[Path]:
     """
     return sorted(
         folder for tier in ALWAYS_ON_TIERS for folder in (RULES_DIR / tier).rglob("*")
-        if folder.is_dir() and str(folder.relative_to(RULES_DIR)) not in GROUPING_DIRS
+        if folder.is_dir() and not is_grouping(str(folder.relative_to(RULES_DIR)))
     )
+
+
+def is_grouping(rel: str) -> bool:
+    """Say whether a folder groups parents rather than holding one parent's children.
+
+    :param rel: The folder's path relative to ``rules/``.
+    :return: True for a listed grouping folder or anything in the style-guide tree.
+    """
+    return rel in GROUPING_DIRS or rel == STYLE_GUIDES_DIR or rel.startswith(f"{STYLE_GUIDES_DIR}/")
 
 
 def children(folder: Path) -> list[Path]:
@@ -146,3 +160,11 @@ def test_grouping_dirs_still_exist():
     assert not stale, f"grouping exemptions for folders that no longer exist — remove them: {stale}"
     shared = [f.name for f in (RULES_DIR / "03_authoring_guidelines" / "shared_standards").glob("*.md")]
     assert len(shared) >= 2, f"shared_standards/ should group 2+ shared children, found {shared}"
+
+
+def test_style_guide_entry_files_are_grouped_not_children():
+    """Style guides like sql.md sit unprefixed in the style-guide tree, which counts as grouping, not children."""
+    assert is_grouping(STYLE_GUIDES_DIR), "the style-guide root should count as a grouping folder"
+    assert is_grouping(f"{STYLE_GUIDES_DIR}/infra"), "style-guide subfolders should count as grouping folders"
+    assert not is_grouping("02_claude_standards/behaviour"), "a parent's children folder is not a grouping folder"
+    assert not is_grouping(f"{STYLE_GUIDES_DIR}_extra"), "a sibling with a matching prefix is not exempt"

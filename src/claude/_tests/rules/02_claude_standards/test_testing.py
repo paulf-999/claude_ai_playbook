@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-11
-# Version:           1.4.4
+# Version:           2.1.0
 # Test quality score: 10/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -12,18 +12,16 @@
 
 - Every enforcement hook in hooks/ has a corresponding test file.
 - No hook test is left without its hook.
-- testing.md's children exist, and the score floor's enforcer is named and present.
+- testing.md's children exist.
 """
 from __future__ import annotations
 
 import re
 
-from _shared_paths import CLAUDE_DIR, HOOKS_DIR, LAZY_RULES_DIR, RULES_DIR, resolve_config_path
+from _shared_paths import CLAUDE_DIR, HOOKS_DIR, RULES_DIR, resolve_config_path
 
 TESTS_HOOKS_DIR = CLAUDE_DIR / "_tests/hooks"
-TESTS_RULES_DIR = CLAUDE_DIR / "_tests/rules"
 TESTING_MD = RULES_DIR / "02_claude_standards" / "path_scoped_rules" / "testing.md"
-TEST_METADATA_MD = LAZY_RULES_DIR / "testing_lazy_load" / "_test_metadata.md"
 
 
 def _get_hook_files() -> set[str]:
@@ -124,8 +122,8 @@ def test_no_orphaned_test_files():
     orphaned = []
     for test in tests:
         base = test.replace("test_", "").replace(".py", "")
-        # Skip utility files like test_hook_utils
-        if base.endswith("_utils"):
+        # Skip utility files like test_hook_utils, and test_hook_* files that cover every hook at once
+        if base.endswith("_utils") or base.startswith("hook_"):
             continue
         if _owning_hook(test, hook_names) is None:
             orphaned.append(test)
@@ -169,16 +167,6 @@ def test_testing_md_children_exist():
     assert children, "testing.md should point to its children with 'Read on demand' pointers"
     missing = [c for c in children if not resolve_config_path(CLAUDE_DIR, c).is_file()]
     assert not missing, f"testing.md points to files that don't exist: {missing}"
-
-
-def test_score_minimum_names_its_enforcer():
-    """_test_metadata.md names the test that enforces the score minimum, and that test exists."""
-    assert "`test_test_score_floor.py` fails any test file below quality 7" in TEST_METADATA_MD.read_text(), (
-        "_test_metadata.md should say test_test_score_floor.py enforces the minimum"
-    )
-    assert (TESTS_RULES_DIR / "rules_lazy_load" / "test_test_score_floor.py").is_file(), (
-        "test_test_score_floor.py is missing, so the score minimum is no longer enforced"
-    )
 
 
 def test_hook_tests_exist_to_check():

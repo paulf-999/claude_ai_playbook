@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           1.1.2
+# Version:           1.1.3
 # Test quality score: 8/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -156,7 +156,7 @@ def test_improvements_appear_only_below_the_threshold():
         for name in names:
             text = (CARDS / folder / f"scorecard_{name}.md").read_text()
             _, table, _ = card_scores(text)
-            listed = "**Recommended improvements:**" in text
+            listed = "**Recommended improvements:**" in text  # wording-check: template marker
             assert listed == (table < FIX_THRESHOLD), f"{name}: Overall {table} but improvements listed={listed}"
 
 

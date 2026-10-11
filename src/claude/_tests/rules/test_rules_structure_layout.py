@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           3.0.4
+# Version:           5.0.0
 # Test quality score: 7/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -10,8 +10,7 @@
 
 """Tests where rules/ files live and what CLAUDE.md still imports.
 
-- **Layout:** no files at the ``rules/`` root, no retired ``04_claude_reference/`` tier,
-  ``aliases.md`` at the config root, and no paths dissolved in the 2026-08 restructure.
+- **Layout:** no files at the ``rules/`` root, and ``aliases.md`` at the config root.
 - **Import graph:** every import in CLAUDE.md or ``rules/`` resolves.
 
 Rules load natively from ``rules/``, so CLAUDE.md imports only memory and aliases; a stray
@@ -29,26 +28,6 @@ IMPORT_LINE = re.compile(r"^@~/[^/\s]+/(\S+)$", re.M)
 
 # rules/ root holds only tier folders — any file there would load every session
 EXPECTED_ROOT_FILES: set[str] = set()
-
-# Paths removed during the 2026-08 restructure that must never reappear
-DISSOLVED_PATHS = [
-    RULES_DIR / "behaviour" / "general.md",
-    RULES_DIR / "behaviour" / "risky_actions.md",
-    RULES_DIR / "behaviour" / "memory.md",
-    RULES_DIR / "behaviour" / "git.md",
-    RULES_DIR / "security_guardrails.md",
-    RULES_DIR / "git.md",
-    RULES_DIR / "optimisation.md",
-    RULES_DIR / "aliases.md",
-    RULES_DIR / "lazy_load" / "security.md",
-    RULES_DIR / "lazy_load" / "speculative_features.md",
-    RULES_DIR / "speculative_features.md",
-    RULES_DIR / "claude_internal.md",
-    # Tier 04 was retired on 2026-10-06 (#330); its one rule moved to 02_claude_standards/
-    RULES_DIR / "04_claude_reference",
-]
-
-
 
 
 def import_targets(text: str) -> list[str]:
@@ -105,14 +84,8 @@ def test_rules_holds_exactly_the_three_tiers():
 
 
 def test_aliases_at_claude_root():
-    """aliases.md must exist at the Claude directory root, not inside rules/."""
+    """aliases.md must exist at the Claude directory root; the rules/ root check keeps it out of rules/."""
     assert (CLAUDE_DIR / "aliases.md").exists(), f"aliases.md missing from {CLAUDE_DIR} root"
-    assert not (RULES_DIR / "aliases.md").exists(), "aliases.md must not be inside rules/"
-
-
-def test_behaviour_subdir_dissolved():
-    """rules/behaviour/ subdir was dissolved and must not exist."""
-    assert not (RULES_DIR / "behaviour").is_dir(), "rules/behaviour/ should not exist"
 
 
 def test_reference_holds_only_scorecards_and_style_guides():
@@ -122,12 +95,6 @@ def test_reference_holds_only_scorecards_and_style_guides():
     entries = {p.name for p in reference.iterdir()} if reference.is_dir() else set()
     extra = sorted(entries - allowed)
     assert not extra, f"_reference/ holds more than the scorecards and style guides: {extra}"
-
-
-def test_dissolved_paths_absent():
-    """Paths removed during restructure must not reappear."""
-    for path in DISSOLVED_PATHS:
-        assert not path.exists(), f"Dissolved path has reappeared: {path}"
 
 
 def test_import_files_found():

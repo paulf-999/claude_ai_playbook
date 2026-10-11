@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           2.2.2
+# Version:           4.0.0
 # Test quality score: 8/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -105,12 +105,6 @@ def test_minimums_match_the_rule():
     assert f"quality ≥{QUALITY_FLOOR}/10 and complexity score ≥{COMPLEXITY_FLOOR}/10" in rule, (
         f"_test_metadata.md should require quality ≥{QUALITY_FLOOR} and complexity ≥{COMPLEXITY_FLOOR}"
     )
-    assert "`test_test_score_floor.py` fails any test file below quality" in rule, "the rule should name this test"
-
-
-def test_rule_has_no_exemption_list():
-    """The rule no longer describes a BASELINE list of exempt tests."""
-    assert "BASELINE" not in RULE_FILE.read_text(), "_test_metadata.md still describes the retired BASELINE list"
 
 
 def test_scores_reads_header():

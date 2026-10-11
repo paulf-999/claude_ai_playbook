@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-11
-# Version:           3.0.2
+# Version:           3.0.3
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -93,6 +93,8 @@ def test_import_parser_reads_any_config_dir():
 def test_imports_sit_under_imports_heading():
     """Every import is under the '## Imports' heading, so they're reviewed in one place."""
     text = CLAUDE_MD.read_text()
-    assert "\n## Imports\n" in text, "CLAUDE.md needs an '## Imports' heading"
+    assert "\n## Imports\n" in text, (  # wording-check: anchor the test splits on
+        "CLAUDE.md needs an '## Imports' heading"
+    )
     before = text.split("\n## Imports\n", 1)[0]
     assert not imports(before), f"imports above the '## Imports' heading: {imports(before)}"

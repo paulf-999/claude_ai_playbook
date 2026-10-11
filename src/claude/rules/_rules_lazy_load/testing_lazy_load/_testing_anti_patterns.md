@@ -1,6 +1,6 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-11 -->
 # 🚫 Testing Anti-Patterns
 
 **Purpose:** Identify common testing mistakes and understand why they undermine confidence.
@@ -92,3 +92,16 @@ def test_config():
 **Why it fails:** In a year, you'll have forgotten what this test meant. Failing test is a mystery.
 
 **Fix:** Use descriptive goal statement (see `_testing_design_pattern.md`).
+
+---
+
+### 🟥 **Wording-Pinning Test**
+
+**What:** A test that asserts an instructional rule still contains a phrase, e.g. `assert "Detect early" in RULE.read_text()`.
+
+**Why it fails:** It breaks on every legitimate rewording and never catches a real bug; 37 were deleted on 2026-10-11.
+
+**Fix:** Check structure instead (pointers resolve, tables match the disk, two copies agree).
+- **Exception:** an incident record may be pinned, tagged `# wording-check: incident record` on the assert line.
+- **Enforced by:** `test_no_wording_pinning.py` fails any untagged multi-word literal checked against a real file.
+- **Same for migrations:** `assert not <path>.exists()` on the real config guards a move already done, so the guard flags it unless tagged `# absence-check: <reason>`.

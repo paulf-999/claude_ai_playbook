@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-02
-# Version:           1.2.1
+# Date updated:      2026-10-11
+# Version:           1.2.2
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -134,7 +134,7 @@ def test_allow_list_intentional():
     # Verify each intentional wildcard is present
     allow_set = set(allow_list)
     for expected in intentional_wildcards:
-        assert expected in allow_set, (
+        assert expected in allow_set, (  # wording-check: settings.json values
             f"Expected intentional permission '{expected}' not found in allow list. "
             f"If removed, update this test to reflect the change."
         )

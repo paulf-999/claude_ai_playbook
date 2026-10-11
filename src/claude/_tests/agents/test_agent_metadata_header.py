@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-29
 # Date updated:      2026-10-11
-# Version:           1.0.3
-# Test quality score: 10/10
+# Version:           2.0.0
+# Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
@@ -13,6 +13,7 @@
 Every AGENT.md carries the three-line header straight after its YAML
 frontmatter, holds no ``version:`` in that frontmatter, and its major
 version matches its maturity (0.x draft, 1.x tactical, 2+.x strategic).
+Format cases for the shared validator live in ``_tests/test_metadata_header_format.py``.
 """
 from pathlib import Path
 
@@ -28,10 +29,6 @@ from _shared_paths import CLAUDE_DIR
 AGENTS_DIR = CLAUDE_DIR / "agents"
 AGENT_TEMPLATE = CLAUDE_DIR / "_templates" / "AGENT.md.template"
 HINT = "— see 03_authoring_guidelines/shared_standards/_claude_config_metadata.md"
-VALID_HEADER = "<!-- version: 1.0.0 -->\n<!-- created: 2026-09-07 -->\n<!-- updated: 2026-09-29 -->\n"
-AGENT_FRONTMATTER = (
-    "name: demo_agent\nmaturity: tactical\ntriggers:\n  - /demo_agent\nmodel: inherit\nisolation: worktree"
-)
 
 
 def maturity_version_errors(maturity: str, version: str) -> list[str]:
@@ -51,19 +48,6 @@ def maturity_version_errors(maturity: str, version: str) -> list[str]:
     return []
 
 
-def build_agent(frontmatter: str = AGENT_FRONTMATTER, header: str = VALID_HEADER) -> str:
-    """Build a minimal AGENT.md from a frontmatter body and header.
-
-    :param frontmatter: YAML lines between the ``---`` fences.
-    :type frontmatter: str
-    :param header: Lines placed straight after the frontmatter.
-    :type header: str
-    :return: AGENT.md content.
-    :rtype: str
-    """
-    return f"---\n{frontmatter}\n---\n{header}\n# 🎯 Demo agent\n"
-
-
 def agent_files() -> list[Path]:
     """Return every AGENT.md under the agents directory.
 
@@ -73,33 +57,7 @@ def agent_files() -> list[Path]:
     return sorted(AGENTS_DIR.rglob("AGENT.md"))
 
 
-# --- Validator ---
-
-def test_agent_shaped_frontmatter_with_header_accepted():
-    """Lists and extra keys (triggers, model, isolation) don't disturb header detection."""
-    content = build_agent()
-    assert frontmatter_header_errors(content) == [], "valid agent layout was rejected"
-    assert header_version_after_frontmatter(content) == "1.0.0", "header version was not read"
-
-
-def test_version_left_in_agent_frontmatter_rejected():
-    """version must move out of the frontmatter into the header."""
-    errors = frontmatter_header_errors(build_agent(frontmatter=f"{AGENT_FRONTMATTER}\nversion: 1.0.0"))
-    assert errors, "frontmatter version was accepted"
-    assert "not the frontmatter" in errors[0], f"unexpected error text: {errors}"
-
-
-def test_header_before_frontmatter_rejected():
-    """The frontmatter must stay on line 1 for Claude Code to parse it."""
-    errors = frontmatter_header_errors(f"{VALID_HEADER}---\n{AGENT_FRONTMATTER}\n---\n")
-    assert errors and "open with YAML frontmatter" in errors[0], f"header-first layout not caught: {errors}"
-
-
-def test_gap_between_frontmatter_and_header_rejected():
-    """A blank line between the frontmatter and the header is rejected."""
-    errors = frontmatter_header_errors(build_agent(header=f"\n{VALID_HEADER}"))
-    assert errors and "line after the frontmatter" in errors[0], f"gap not caught: {errors}"
-
+# --- Maturity ---
 
 def test_maturity_version_alignment():
     """Major version follows maturity: 0.x draft, 1.x tactical, 2+.x strategic."""

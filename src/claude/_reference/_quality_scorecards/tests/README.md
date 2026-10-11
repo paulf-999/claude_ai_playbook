@@ -61,7 +61,7 @@ This is the test-specific version of the shared `_templates/scorecard/scorecard.
 | **Clarity** | Module docstring states the goal in one sentence, function names say what they check, assertion messages say how to fix a failure | No goal statement, vague names, bare `assert` with no message |
 | **Complexity** | Inverted shared formula (`03_authoring_guidelines/shared_standards/_complexity_scoring.md`): one concept, one file, no dependencies or fixtures | Whole-repo scan, 6+ concepts, several dependencies and complex fixtures |
 | **Evidence of Need** | Guards a real rule, hook or skill, or a documented incident | Checks something nothing depends on, or a hypothetical |
-| **Coverage** | 10+ test functions and 15+ assertions, including edge cases (the `_test_metadata.md` quality table) | Fewer than 4 functions or 5 assertions |
+| **Coverage** | Every behaviour of its target is checked, including edge cases; counts are recorded in Notes but never scored, since padding to a count adds nothing (`_test_metadata.md`) | The target's main behaviour goes unchecked, or the test only checks that it exists |
 | **Structural Compliance** | Full metadata header, `Python style compliant: Yes` and true, correct location and name per `_testing_file_organization.md` | Missing or wrong header, style violations, misplaced file |
 | **Currency** | Every path and name it checks still exists, header dates and version match the last change | Checks renamed or removed things, stale header |
 | **Regression Value** | Would fail if the guarded behaviour broke, and proves its detector works on a synthetic bad case | Would still pass if the guarded thing were deleted or broken |

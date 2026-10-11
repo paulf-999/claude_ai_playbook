@@ -2,23 +2,17 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-21
 # Date updated:      2026-10-11
-# Version:           2.0.1
-# Test quality score: 10/10
-# Test complexity score: 7/10
+# Version:           3.0.0
+# Test quality score: 9/10
+# Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Content-regression tests for git/_concurrent_sessions.md.
+"""Tests for git/_concurrent_sessions.md: it stays reachable and keeps its incident record.
 
-Goal: not to prove Claude follows this rule (not mechanically testable
-without a live-session eval harness), but to catch silent loss of its
-key guidance in a future edit or merge — the exact failure mode this
-rule itself documents (2026-09-21 concurrent-session incident).
-
-Single file, no external dependencies, no fixtures: deliberately kept
-structurally simple (complexity score 7) while covering 15+ assertions
-across every major section, per _test_metadata_complexity_scoring.md's
-"thoroughness and simplicity aren't opposed" principle.
+The rule's guidance is instructional and free to change, so its wording isn't pinned.
+The 2026-09-21 concurrent-session incident is the exception: ``testing.md`` allows a
+content-regression check for an incident record, tagged ``# wording-check:``.
 """
 from _shared_paths import CLAUDE_DIR
 
@@ -43,53 +37,7 @@ def test_concurrent_sessions_has_purpose_statement():
 def test_concurrent_sessions_documents_real_incident():
     """The real 2026-09-21 incident must stay documented, not just the abstract rule."""
     content = RULE_FILE.read_text()
-    assert "2026-09-21" in content, "Incident date missing"
-    assert "confluence_create_page_handler.py" in content, (
+    assert "2026-09-21" in content, "Incident date missing"  # wording-check: incident record
+    assert "confluence_create_page_handler.py" in content, (  # wording-check: incident record
         "Specific incident detail (contaminated commit) missing"
     )
-
-
-def test_concurrent_sessions_covers_detect_early():
-    """'Detect early, don't assume' guidance must survive edits."""
-    content = RULE_FILE.read_text()
-    assert "Detect early" in content, "Detect-early section missing"
-    assert "don't assume" in content.lower(), "Core 'don't assume' framing missing"
-
-
-def test_concurrent_sessions_covers_never_blind_stage():
-    """Stage-by-name guidance (the single control that prevented catastrophe) must survive."""
-    content = RULE_FILE.read_text()
-    assert "blind-stage" in content.lower(), "Blind-stage anti-pattern section missing"
-    assert "git add -A" in content, "Explicit git add -A warning missing"
-
-
-def test_concurrent_sessions_covers_index_reset():
-    """Reset-before-each-commit guidance must survive."""
-    content = RULE_FILE.read_text()
-    assert "git reset" in content, "git reset guidance missing"
-    assert "unstages only" in content.lower() or "never touches file content" in content.lower(), (
-        "Safety clarification for git reset missing"
-    )
-
-
-def test_concurrent_sessions_covers_stash_operations():
-    """Stash-conflict guidance must survive."""
-    content = RULE_FILE.read_text()
-    assert "git stash pop" in content, "git stash pop guidance missing"
-    assert "git stash list" in content, "Never-drop-another-session's-stash guidance missing"
-
-
-def test_concurrent_sessions_covers_precommit_isolation():
-    """Pre-commit isolation caveat and its diagnostic command must survive."""
-    content = RULE_FILE.read_text()
-    assert "pre-commit" in content.lower(), "Pre-commit isolation section missing"
-    assert "git stash push --keep-index --include-untracked" in content, (
-        "Manual isolation-replication command missing"
-    )
-
-
-def test_concurrent_sessions_covers_worktree_preference():
-    """git worktree recommendation, for both sessions and sub-agents, must survive."""
-    content = RULE_FILE.read_text()
-    assert "git worktree" in content, "git worktree guidance missing"
-    assert "isolation" in content.lower(), "Sub-agent isolation guidance missing"

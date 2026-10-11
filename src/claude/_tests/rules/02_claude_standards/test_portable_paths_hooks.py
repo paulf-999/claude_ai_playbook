@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
 # Date updated:      2026-10-11
-# Version:           2.0.2
+# Version:           2.0.3
 # Test quality score: 10/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -70,7 +70,9 @@ def test_hooks_resolve_root_from_own_location():
     for hook in users:
         text = hook.read_text()
         if "${CLAUDE_ROOT_DIR}" in text:
-            assert OWN_LOCATION in text, f"{hook.name} uses CLAUDE_ROOT_DIR without deriving it from {OWN_LOCATION}"
+            assert OWN_LOCATION in text, (  # wording-check: shell idiom in hook code
+                f"{hook.name} uses CLAUDE_ROOT_DIR without deriving it from {OWN_LOCATION}"
+            )
 
 
 def test_source_pattern_flags_source():
