@@ -9,7 +9,7 @@ import subprocess
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
-INSTALL_SCRIPT = REPO_ROOT / "src" / "sh" / "claude" / "install_claude_files.sh"
+INSTALL_SCRIPT = REPO_ROOT / "src" / "claude" / "_install" / "install_claude_files.sh"
 MARKER_TEXT = "keep me"
 
 

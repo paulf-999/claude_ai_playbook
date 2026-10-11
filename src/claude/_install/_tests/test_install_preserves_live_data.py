@@ -23,8 +23,8 @@ from pathlib import Path
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
-UTILS = REPO_ROOT / "src" / "sh" / "claude" / "helpers" / "claude_file_utils.sh"
-INSTALL_SCRIPT = REPO_ROOT / "src" / "sh" / "claude" / "install_claude_files.sh"
+UTILS = REPO_ROOT / "src" / "claude" / "_install" / "helpers" / "claude_file_utils.sh"
+INSTALL_SCRIPT = REPO_ROOT / "src" / "claude" / "_install" / "install_claude_files.sh"
 SOURCE_DIR = REPO_ROOT / "src" / "claude"
 INSTALL_STEPS = "backup_target_dir copy && copy_claude_files && flatten_skills"
 

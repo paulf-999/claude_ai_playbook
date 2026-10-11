@@ -16,6 +16,9 @@ BACKUP_DIR="${HOME}/.claude_backup_${TIMESTAMP}"  # timestamped backup location
 # Top-level entries the user owns once installed: copied on first install only, never overwritten
 USER_OWNED_ENTRIES=("memory" "TODO.md" "_plans" "settings.local.json")
 
+# Top-level entries that only make sense in the repo and are never installed: the installer itself
+REPO_ONLY_ENTRIES=("_install")
+
 # Lists every file the last install put in the target, so the next one can remove what the repo dropped
 MANIFEST_NAME=".install_manifest"
 
@@ -76,6 +79,16 @@ create_target_dir_if_missing() {
 }
 
 # Return 0 when a top-level entry name is in USER_OWNED_ENTRIES
+# Tell whether a top-level entry stays in the repo and is never copied to the target
+is_repo_only() {
+    local NAME="$1"  # top-level entry name, e.g. "_install"
+    local ENTRY
+    for ENTRY in "${REPO_ONLY_ENTRIES[@]}"; do
+        [[ "${ENTRY}" == "${NAME}" ]] && return 0
+    done
+    return 1
+}
+
 is_user_owned() {
     local NAME="$1"  # top-level entry name, e.g. "memory"
     local ENTRY
@@ -93,6 +106,7 @@ copy_claude_files() {
     for ENTRY in "${SOURCE_DIR}"/* "${SOURCE_DIR}"/.[!.]*; do
         [[ -e "${ENTRY}" ]] || continue
         NAME=$(basename "${ENTRY}")
+        is_repo_only "${NAME}" && continue
         if is_user_owned "${NAME}" && [[ -e "${TARGET_DIR}/${NAME}" ]]; then
             log_message "${INFO}" "Kept user-owned: ${NAME}"
             continue
@@ -217,6 +231,7 @@ list_installed_files() {
     local REL
     (cd "${SOURCE_DIR}" && find . -type f) | sed 's#^\./##' | while IFS= read -r REL; do
         is_user_owned "${REL%%/*}" && continue
+        is_repo_only "${REL%%/*}" && continue
         if [[ "${REL}" == "${STYLE_GUIDES_NAME}/"* ]]; then
             style_guide_install_path "${SOURCE_DIR}/${REL}" "${REL#"${STYLE_GUIDES_NAME}/"}"
         elif [[ "${REL}" == "rules/${LAZY_RULES_NAME}/"* ]]; then

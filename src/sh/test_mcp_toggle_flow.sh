@@ -55,7 +55,7 @@ test_blocking_message() {
 }
 EOF
 
-    output=$(python3 src/sh/claude/helpers/mcp_toggle.py enable atlassian 2>&1 || true)
+    output=$(python3 src/claude/_install/helpers/mcp_toggle.py enable atlassian 2>&1 || true)
 
     # Check message contents
     local checks=0
@@ -116,7 +116,7 @@ test_settings_preservation() {
     export CLAUDE_CONFIG_DIR="$HOME/.claude"  # never touch your real config
     cp "$TEST_SETTINGS" "$HOME/.claude/settings.json"
 
-    python3 src/sh/claude/helpers/mcp_toggle.py enable atlassian > /dev/null 2>&1 || true
+    python3 src/claude/_install/helpers/mcp_toggle.py enable atlassian > /dev/null 2>&1 || true
 
     # Verify other fields intact
     local settings_content
@@ -177,7 +177,7 @@ test_no_change_exit_code_zero() {
 EOF
 
     # Enable when already enabled
-    if python3 src/sh/claude/helpers/mcp_toggle.py enable atlassian > /tmp/test_enable_output.txt 2>&1; then
+    if python3 src/claude/_install/helpers/mcp_toggle.py enable atlassian > /tmp/test_enable_output.txt 2>&1; then
         exit_code=0
     else
         exit_code=$?

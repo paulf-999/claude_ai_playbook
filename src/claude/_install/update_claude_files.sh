@@ -2,7 +2,7 @@
 set -euo pipefail  # -u: Treat unset variables as an error and exit immediately.
                    # -o pipefail: Return the exit status of the last command in the pipeline that failed.
 # Load reusable shell script vars & functions
-source src/sh/claude/helpers/claude_file_utils.sh
+source src/claude/_install/helpers/claude_file_utils.sh
 
 #=======================================================================
 # Functions

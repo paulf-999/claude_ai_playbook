@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
-# Date updated:      2026-10-02
-# Version:           1.0.1
+# Date updated:      2026-10-11
+# Version:           1.0.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -55,12 +55,12 @@ def test_install_usage_is_not_disabled():
 
 def test_install_runs_the_install_script():
     """``make install`` runs ``install_claude_files.sh``, which holds the typed-confirmation gate."""
-    assert "bash src/sh/claude/install_claude_files.sh" in recipe("install"), "install must run the gated script"
+    assert "bash src/claude/_install/install_claude_files.sh" in recipe("install"), "install must run the gated script"
 
 
 def test_install_windows_runs_its_script():
     """``make install_windows`` runs the Windows sync script."""
-    assert "bash src/sh/claude/install_claude_files_windows.sh" in recipe("install_windows")
+    assert "bash src/claude/_install/install_claude_files_windows.sh" in recipe("install_windows")
 
 
 def test_update_windows_is_an_alias():

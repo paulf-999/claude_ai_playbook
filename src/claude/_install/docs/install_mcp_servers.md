@@ -37,11 +37,11 @@ flowchart TD
 
 ```bash
 # Install all core servers
-bash src/sh/claude/install_mcp_servers.sh core
+bash src/claude/_install/install_mcp_servers.sh core
 
 # Install a single server
-bash src/sh/claude/install_mcp_servers.sh github
-bash src/sh/claude/install_mcp_servers.sh atlassian
+bash src/claude/_install/install_mcp_servers.sh github
+bash src/claude/_install/install_mcp_servers.sh atlassian
 
 # Via make targets
 make install_core_mcp_servers

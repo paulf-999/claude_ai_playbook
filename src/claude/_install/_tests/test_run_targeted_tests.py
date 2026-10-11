@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
-# Date updated:      2026-10-10
-# Version:           1.2.0
+# Date updated:      2026-10-11
+# Version:           1.2.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -24,7 +24,7 @@ import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
 HOOK = REPO_ROOT / "src" / "sh" / "pre_commit_hooks" / "run_targeted_tests.sh"
-WHOLE, SH = "src/claude/_tests/", "src/sh/claude/_tests/"
+WHOLE, SH = "src/claude/_tests/", "src/claude/_install/_tests/"
 
 # git commit sets GIT_INDEX_FILE and friends for its hooks; drop them so the throwaway repo is used
 CLEAN_ENV = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
@@ -78,7 +78,7 @@ def test_untested_file_runs_nothing(repo: Path):
 
 def test_installer_change_runs_sh_tests(repo: Path):
     """Changing an installer helper runs the shell tooling tests."""
-    code, args = run_hook(repo, "src/sh/claude/helpers/claude_file_utils.sh")
+    code, args = run_hook(repo, "src/claude/_install/helpers/claude_file_utils.sh")
     assert code == 0, "the hook should pass when pytest passes"
     assert args == [SH], f"expected only the shell tooling tests, got {args}"
 
@@ -112,7 +112,7 @@ def test_whole_suite_replaces_its_own_subfolders(repo: Path):
 
 def test_whole_suite_keeps_the_sh_tests(repo: Path):
     """The whole config suite never swallows the shell tooling tests, which live outside it."""
-    args = run_hook(repo, "src/sh/claude/helpers/mcp_toggle.py", "src/claude/_tests/test_x.py")[1]
+    args = run_hook(repo, "src/claude/_install/helpers/mcp_toggle.py", "src/claude/_tests/test_x.py")[1]
     assert sorted(args) == sorted([SH, WHOLE]), f"the shell tooling tests were dropped, got {args}"
 
 
@@ -132,7 +132,7 @@ def test_pytest_config_change_runs_both_suites(repo: Path):
 
 def test_duplicate_paths_are_passed_once(repo: Path):
     """Several staged files in one area queue its tests only once."""
-    args = run_hook(repo, "src/sh/a.sh", "src/sh/b.sh", "src/sh/claude/c.py")[1]
+    args = run_hook(repo, "src/sh/a.sh", "src/sh/b.sh", "src/claude/_install/c.py")[1]
     assert args == [SH], f"got {args}"
 
 

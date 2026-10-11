@@ -2,7 +2,7 @@
 
 Claude Code plugins extend the CLI with additional skills, agents, and hooks. Unlike MCP servers (which connect Claude to external tools and APIs), plugins modify how Claude Code itself behaves — adding workflows, pre-tool hooks, and specialised agents.
 
-Plugins are installed automatically by `make install`. See [`src/sh/claude/install_plugins.sh`](../../../src/sh/claude/install_plugins.sh) for the install script.
+Plugins are installed automatically by `make install`. See [`src/claude/_install/install_plugins.sh`](../../../src/claude/_install/install_plugins.sh) for the install script.
 
 ---
 

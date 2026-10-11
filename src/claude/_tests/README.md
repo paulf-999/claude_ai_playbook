@@ -152,9 +152,9 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_lazy_load_triggers.py` | Validates that every lazy rule has something that makes Claude load it | 9/10 | 2026-10-01 | 2026-10-10 | 1.7.2 |
 | `test_org.py` | Organisation-specific terms stay inside _rules_lazy_load/org/ and never leak into shared files | 9/10 | 2026-10-01 | 2026-10-10 | 1.3.2 |
 | `test_path_scoped_rules_live.py` | Proves in a live session that a `paths:` rule loads when, and only when, a matching file is read | 9/10 | 2026-10-01 | 2026-10-10 | 1.2.1 |
-| `test_test_metadata.py` | Every test's metadata header, in `_tests/` and the repo's `src/sh/claude/_tests/`, is complete, in order and well formed (banners, dates, semver, scores) | 9/10 | 2026-10-01 | 2026-10-10 | 1.3.1 |
+| `test_test_metadata.py` | Every test's metadata header, in `_tests/` and the repo's `src/claude/_install/_tests/`, is complete, in order and well formed (banners, dates, semver, scores) | 9/10 | 2026-10-01 | 2026-10-11 | 1.3.1 |
 | `test_test_quality_score.py` | Every test header's quality score matches the band its own test-function and assertion counts support | 9/10 | 2026-10-02 | 2026-10-02 | 1.0.0 |
-| `test_test_score_floor.py` | Every test, in `_tests/` and the repo's `src/sh/claude/_tests/`, meets quality 9, complexity 7 and style Yes, with no exemptions, and the minimums match `_test_metadata.md` | 9/10 | 2026-10-01 | 2026-10-10 | 2.2.1 |
+| `test_test_score_floor.py` | Every test, in `_tests/` and the repo's `src/claude/_install/_tests/`, meets quality 9, complexity 7 and style Yes, with no exemptions, and the minimums match `_test_metadata.md` | 9/10 | 2026-10-01 | 2026-10-10 | 2.2.1 |
 | `test_testing.py` | Every enforcement hook has a test (aspect splits allowed), no orphaned hook tests, and testing.md's pointers exist | 9/10 | 2026-08-28 | 2026-10-10 | 1.4.2 |
 
 ---

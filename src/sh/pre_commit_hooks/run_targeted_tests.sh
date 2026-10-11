@@ -31,7 +31,7 @@ TESTS_TO_RUN=()
 WHOLE_SUITE="src/claude/_tests/"
 
 # Tests for the installer and other shell tooling — separate from the config suite, so never superseded by it
-SH_SUITE="src/sh/claude/_tests/"
+SH_SUITE="src/claude/_install/_tests/"
 
 #=======================================================================
 # Functions
@@ -86,7 +86,7 @@ while IFS= read -r file; do
             add_test "src/claude/_tests/rules/" ;;
         src/claude/_tests/*)
             add_test "src/claude/_tests/" ;;
-        src/sh/*)
+        src/claude/_install/* | src/sh/*)  # the installer, and the shell helpers it sources
             add_test "$SH_SUITE" ;;
         requirements.txt | pytest.ini)
             add_test "$WHOLE_SUITE"

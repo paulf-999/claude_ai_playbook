@@ -3,7 +3,7 @@ set -e  # Exit immediately if a command exits with a non-zero status (fail fast)
 
 # Load reusable shell script vars & functions
 source src/sh/shell_utils.sh
-source src/sh/claude/helpers/claude_file_utils.sh  # sets SOURCE_DIR, TARGET_DIR, BACKUP_DIR
+source src/claude/_install/helpers/claude_file_utils.sh  # sets SOURCE_DIR, TARGET_DIR, BACKUP_DIR
 
 #=======================================================================
 # Functions

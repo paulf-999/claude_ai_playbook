@@ -42,15 +42,15 @@ deps:
 
 install:
 	@echo "${INFO}\nInstalling Claude config files into $${CLAUDE_CONFIG_DIR:-$$HOME/.claude}${COLOUR_OFF}"
-	@bash src/sh/claude/install_claude_files.sh
+	@bash src/claude/_install/install_claude_files.sh
 
 # update:
 # 	@echo "${INFO}\nUpdating Claude config files in ~/.claude/${COLOUR_OFF}"
-# 	@bash src/sh/claude/update_claude_files.sh
+# 	@bash src/claude/_install/update_claude_files.sh
 
 install_windows:
 	@echo "${INFO}\nSyncing Claude config files to Windows .claude (requires WSL2)${COLOUR_OFF}"
-	@bash src/sh/claude/install_claude_files_windows.sh
+	@bash src/claude/_install/install_claude_files_windows.sh
 
 update_windows: install_windows
 
@@ -58,7 +58,7 @@ update_windows: install_windows
 
 install_plugins:
 	@echo "${INFO}\nInstalling Claude Code plugins${COLOUR_OFF}"
-	@bash src/sh/claude/install_plugins.sh
+	@bash src/claude/_install/install_plugins.sh
 
 patch_plugins:
 	@echo "${INFO}\nApplying team patches to installed plugins${COLOUR_OFF}"

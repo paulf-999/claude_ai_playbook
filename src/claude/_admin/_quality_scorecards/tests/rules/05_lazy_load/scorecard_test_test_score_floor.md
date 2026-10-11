@@ -8,7 +8,7 @@
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
 | **Clarity** | 9/10 | 2026-10-01 | • 🔍 **Goal:** module docstring states the minimum and that no exemptions remain<br>• 🔍 **Messages:** every failure names the file and the score that fell short |
-| **Complexity** | 7/10 | 2026-10-02 | • 🧮 **Raw complexity 3:** Concepts 1 (the minimum and its match with the rule) + Scope 2 (`src/claude/_tests/` and `src/sh/claude/_tests/`, plus the one rule file it checks) + Dependencies 0 + Prerequisites 0 |
+| **Complexity** | 7/10 | 2026-10-02 | • 🧮 **Raw complexity 3:** Concepts 1 (the minimum and its match with the rule) + Scope 2 (`src/claude/_tests/` and `src/claude/_install/_tests/`, plus the one rule file it checks) + Dependencies 0 + Prerequisites 0 |
 | **Evidence of Need** | 9/10 | 2026-10-01 | • 🔗 **Gap closed:** `_test_metadata.md` set the minimum, but 26 of 45 tests missed it with nothing failing |
 | **Coverage** | 9/10 | 2026-10-01 | • 📊 **Counts:** 11 test functions and 15 assertions<br>• 🧩 **Checks:** each missed minimum, missing scores, the scan's reach, and the rule's own numbers |
 | **Structural Compliance** | 10/10 | 2026-10-01 | • ✅ **Header:** full metadata header, marked Python style compliant and checked with `ruff` |

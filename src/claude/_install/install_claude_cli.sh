@@ -75,7 +75,7 @@ install_claude_cli_via_curl() {
     if ! command -v curl &>/dev/null; then
         log_message "${WARNING}" "curl is not available — cannot use fallback installer."
         log_message "${WARNING}" "Install curl with: sudo apt install curl"
-        log_message "${WARNING}" "Then re-run: bash src/sh/claude/install_claude_cli.sh"
+        log_message "${WARNING}" "Then re-run: bash src/claude/_install/install_claude_cli.sh"
         return 1
     fi
 
