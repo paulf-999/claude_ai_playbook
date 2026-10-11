@@ -1,11 +1,14 @@
 # 🧪 Tests
 
 Tests verify that enforcement hooks and rule files behave as intended.
-Run from within each subdirectory using `pytest`.
+Run the whole suite at once — the tests check whichever config `CLAUDE_CONFIG_DIR` points at.
 
 ```bash
-cd ~/.claude/_tests/hooks && pytest -v
-cd ~/.claude/_tests/rules && pytest -v
+# Playbook repo: from the repo root, where pytest.ini adds coverage and the install tests
+CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest src/claude/_tests
+
+# Live config: from the config folder
+cd ~/.claude && python3 -m pytest _tests
 ```
 
 Each table's **Quality**, **Created**, **Updated**, and **Version** columns are read directly from
