@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
-# Date updated:      2026-10-02
-# Version:           1.0.1
+# Date updated:      2026-10-11
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -188,3 +188,16 @@ def test_install_prunes_after_flattening_and_before_rewriting_paths():
                                ("flatten_skills", "prune_removed_files", "rewrite_config_paths"))
     assert flatten < prune < rewrite, "prune_removed_files must run between flatten_skills and rewrite_config_paths"
     assert "Remove files an earlier install added" in script, "the install preview should say it removes files"
+
+
+def test_python_caches_are_not_installed_or_listed(tmp_path: Path):
+    """Caches from local test runs stay out of the target and the manifest, and old listed ones are pruned."""
+    make_tree(tmp_path / "src", {**SOURCE_FILES, "_tests/old/__pycache__/test_old.cpython-310.pyc": "cache\n"})
+    (tmp_path / "home").mkdir()
+    target = tmp_path / "target"
+    make_tree(target, {"_tests/old/__pycache__/stale.cpython-310.pyc": "old cache\n"})
+    (target / ".install_manifest").write_text("_tests/old/__pycache__/stale.cpython-310.pyc\n")
+    install(tmp_path)
+    assert not list(target.rglob("__pycache__")), "a Python cache folder reached the target"
+    assert not [line for line in manifest(target) if "__pycache__" in line], "a cache file was put on the manifest"
+    assert (target / "_tests" / "old" / "test_old.py").is_file(), "the real file beside the cache was lost"

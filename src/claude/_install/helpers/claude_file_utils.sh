@@ -112,6 +112,8 @@ copy_claude_files() {
             continue
         fi
         cp -R "${ENTRY}" "${TARGET_DIR}/"
+        # Python caches from local test runs are never shipped: drop any the copy brought over
+        [[ -d "${ENTRY}" ]] && find "${TARGET_DIR}/${NAME}" -type d -name "__pycache__" -prune -exec rm -rf {} +
     done
     find "${TARGET_DIR}" -name "*.sh" -exec chmod +x {} \;
     log_message "${INFO}" "Copied Claude files to: ${TARGET_DIR}"
@@ -229,7 +231,7 @@ split_style_guides() {
 # User-owned entries are left out, so pruning can never remove them.
 list_installed_files() {
     local REL
-    (cd "${SOURCE_DIR}" && find . -type f) | sed 's#^\./##' | while IFS= read -r REL; do
+    (cd "${SOURCE_DIR}" && find . -type d -name "__pycache__" -prune -o -type f -print) | sed 's#^\./##' | while IFS= read -r REL; do
         is_user_owned "${REL%%/*}" && continue
         is_repo_only "${REL%%/*}" && continue
         if [[ "${REL}" == "${STYLE_GUIDES_NAME}/"* ]]; then
