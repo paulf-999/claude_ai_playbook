@@ -24,8 +24,8 @@ from pathlib import Path
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
-UTILS = REPO_ROOT / "src" / "sh" / "claude" / "helpers" / "claude_file_utils.sh"
-SCRIPTS = REPO_ROOT / "src" / "sh" / "claude"
+UTILS = REPO_ROOT / "src" / "claude" / "_install" / "helpers" / "claude_file_utils.sh"
+SCRIPTS = REPO_ROOT / "src" / "claude" / "_install"
 TESTS_DIR = REPO_ROOT / "src" / "claude" / "_tests"
 REACHABILITY_TEST = TESTS_DIR / "rules" / "02_claude_standards" / "test_always_on_reachability.py"
 # The same order install_claude_files runs; creating the target first matters, since cp -R into a

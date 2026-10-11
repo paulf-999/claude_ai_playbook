@@ -44,7 +44,7 @@ flowchart TD
 Steps 8 to 10 are non-fatal — a failure prints a warning and the install continues. To re-run them individually:
 
 ```bash
-bash src/sh/claude/install_claude_cli.sh
+bash src/claude/_install/install_claude_cli.sh
 make install_core_mcp_servers
 make install_plugins
 ```
@@ -53,8 +53,8 @@ make install_plugins
 
 | Server | Prerequisite | Install command |
 |---|---|---|
-| GitHub | PAT with `repo` scope | `bash src/sh/claude/install_mcp_servers.sh github` |
-| Atlassian | SSO (opens browser) | `bash src/sh/claude/install_mcp_servers.sh atlassian` |
+| GitHub | PAT with `repo` scope | `bash src/claude/_install/install_mcp_servers.sh github` |
+| Atlassian | SSO (opens browser) | `bash src/claude/_install/install_mcp_servers.sh atlassian` |
 | Microsoft 365 | Claude web UI only | Cannot be configured via CLI |
 
 ## 🚀 Usage
@@ -64,5 +64,5 @@ Run from your own terminal, at the repo root:
 ```bash
 export CLAUDE_CONFIG_DIR="$HOME/claude"
 make install                                      # standard setup and re-sync
-bash src/sh/claude/install_claude_files.sh        # direct invocation
+bash src/claude/_install/install_claude_files.sh        # direct invocation
 ```

@@ -22,8 +22,8 @@ import subprocess
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
-UTILS = REPO_ROOT / "src" / "sh" / "claude" / "helpers" / "claude_file_utils.sh"
-INSTALL_SCRIPT = REPO_ROOT / "src" / "sh" / "claude" / "install_claude_files.sh"
+UTILS = REPO_ROOT / "src" / "claude" / "_install" / "helpers" / "claude_file_utils.sh"
+INSTALL_SCRIPT = REPO_ROOT / "src" / "claude" / "_install" / "install_claude_files.sh"
 
 SOURCE_FILES = {
     "_rules/a/keep.md": "keep\n",

@@ -20,9 +20,9 @@ import subprocess
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
-UTILS = REPO_ROOT / "src" / "sh" / "claude" / "helpers" / "claude_file_utils.sh"
-INSTALL_SCRIPT = REPO_ROOT / "src" / "sh" / "claude" / "install_claude_files.sh"
-WINDOWS_SCRIPT = REPO_ROOT / "src" / "sh" / "claude" / "install_claude_files_windows.sh"
+UTILS = REPO_ROOT / "src" / "claude" / "_install" / "helpers" / "claude_file_utils.sh"
+INSTALL_SCRIPT = REPO_ROOT / "src" / "claude" / "_install" / "install_claude_files.sh"
+WINDOWS_SCRIPT = REPO_ROOT / "src" / "claude" / "_install" / "install_claude_files_windows.sh"
 GUIDES = "_style_guide_standards"
 PATH_SCOPED = "rules/04_path_scoped/style_guide_standards"
 ON_DEMAND = GUIDES  # every file without paths: stays where the repo keeps it

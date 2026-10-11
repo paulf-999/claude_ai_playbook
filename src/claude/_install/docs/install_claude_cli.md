@@ -42,5 +42,5 @@ flowchart TD
 ## 🚀 Usage
 
 ```bash
-bash src/sh/claude/install_claude_cli.sh          # standard usage (from repo root)
+bash src/claude/_install/install_claude_cli.sh          # standard usage (from repo root)
 ```

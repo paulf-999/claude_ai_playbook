@@ -1,7 +1,7 @@
 """Builds fake skills for the skill authoring gate's walk and run tests.
 
-The gate linter lives beside the config in the playbook repo (``src/sh/claude/``), so it
-is loaded from this file's location. A live config install has no ``src/sh/``, so tests
+The gate linter ships in the config's ``_scripts/_lint_scripts/``, so it is loaded from
+there. A config without it, such as a partial install, has no linter, so tests
 that import this module skip there rather than fail.
 """
 from __future__ import annotations

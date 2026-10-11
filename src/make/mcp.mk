@@ -18,25 +18,25 @@
 
 install_core_mcp_servers:
 	@echo "${INFO}\nInstalling core MCP servers${COLOUR_OFF}"
-	@bash src/sh/claude/install_mcp_servers.sh core
+	@bash src/claude/_install/install_mcp_servers.sh core
 
 install_mcp_server_github:
 	@echo "${INFO}\nInstalling GitHub MCP server${COLOUR_OFF}"
-	@bash src/sh/claude/install_mcp_servers.sh github
+	@bash src/claude/_install/install_mcp_servers.sh github
 
 install_mcp_server_omni:
 	@echo "${INFO}\nInstalling Omni Analytics MCP server${COLOUR_OFF}"
-	@bash src/sh/claude/install_mcp_servers.sh omni
+	@bash src/claude/_install/install_mcp_servers.sh omni
 
 install_mcp_server_atlassian:
 	@echo "${INFO}\nInstalling Atlassian MCP server${COLOUR_OFF}"
-	@bash src/sh/claude/install_mcp_servers.sh atlassian
+	@bash src/claude/_install/install_mcp_servers.sh atlassian
 
 install_mcp_server_o365:
-	@bash src/sh/claude/install_mcp_servers.sh o365
+	@bash src/claude/_install/install_mcp_servers.sh o365
 
 enable_mcp:
 	@echo "${INFO}\nEnabling MCP server: $(server)${COLOUR_OFF}"
-	@bash src/sh/claude/mcp_toggle.sh enable $(server)
+	@bash src/claude/_install/mcp_toggle.sh enable $(server)
 
 .PHONY: install_core_mcp_servers install_mcp_server_github install_mcp_server_omni install_mcp_server_atlassian install_mcp_server_o365 enable_mcp

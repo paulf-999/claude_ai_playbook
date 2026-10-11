@@ -2,12 +2,12 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           2.2.0
+# Version:           2.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
-"""Tests for ``flatten_skills`` and ``file_plans`` in ``claude_file_utils.sh``.
+"""Tests for ``flatten_skills``, ``file_plans`` and the repo-only skip in ``claude_file_utils.sh``.
 
 Goal: after install or update, every grouped skill sits flat at
 ``skills/<name>`` with its latest content, and no ``_<group>_skills/`` folder
@@ -26,7 +26,7 @@ from pathlib import Path
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
-UTILS_SCRIPT = "src/sh/claude/helpers/claude_file_utils.sh"
+UTILS_SCRIPT = "src/claude/_install/helpers/claude_file_utils.sh"
 
 
 def flatten(target: Path) -> subprocess.CompletedProcess:
@@ -179,7 +179,7 @@ def test_nothing_to_flatten_prints_nothing(skills: Path):
 
 # --- file_plans ---
 
-INSTALL_SCRIPTS = [REPO_ROOT / "src" / "sh" / "claude" / name
+INSTALL_SCRIPTS = [REPO_ROOT / "src" / "claude" / "_install" / name
                    for name in ("install_claude_files.sh", "install_claude_files_windows.sh")]
 
 
@@ -217,3 +217,32 @@ def test_both_installers_file_plans_last(script: Path):
     assert "    file_plans" in text, f"{script.name} doesn't file plans"
     order = text.index("migrate_old_rules_layout "), text.index("    file_plans")
     assert order[0] < order[1], f"{script.name}: filing runs too early"
+
+
+# --- repo-only entries ---
+
+
+def run_step(target: Path, step: str) -> subprocess.CompletedProcess:
+    """Source the real helper script and run one install step against ``target``."""
+    env = {**os.environ, "CLAUDE_CONFIG_DIR": str(target)}
+    return subprocess.run(
+        ["bash", "-c", f"source {UTILS_SCRIPT} && {step}"],
+        cwd=REPO_ROOT, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+        text=True, timeout=60,
+    )
+
+
+def test_installer_folder_is_never_copied(tmp_path: Path):
+    """The installer lives in src/claude/_install/ but needs the repo, so install never copies it."""
+    done = run_step(tmp_path, "copy_claude_files")
+    assert done.returncode == 0, done.stdout
+    assert (tmp_path / "rules").is_dir(), "the copy didn't run, so the check below would prove nothing"
+    assert not (tmp_path / "_install").exists(), "_install/ reached the installed config"
+
+
+def test_installer_folder_is_left_off_the_manifest(tmp_path: Path):
+    """The install manifest never lists _install/ files, so pruning never touches a path it doesn't own."""
+    done = run_step(tmp_path, "list_installed_files")
+    listed = done.stdout.splitlines()
+    assert any(line.startswith("rules/") for line in listed), "the manifest listing came back empty"
+    assert not [line for line in listed if line.startswith("_install/")], "the manifest lists _install/ files"

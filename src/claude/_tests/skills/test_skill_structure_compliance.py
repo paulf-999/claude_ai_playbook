@@ -26,9 +26,8 @@ import pytest
 
 from _shared_paths import CLAUDE_DIR, SKILLS_DIR
 
-# The linter lives beside the config in the playbook repo (src/sh/claude/), so
-# resolve it from this file's location. A live config install has no src/sh/,
-# so the whole module skips there rather than failing.
+# The linter ships in the config's _scripts/_lint_scripts/. A config without it
+# skips the whole module rather than failing.
 LINTER_PATH = CLAUDE_DIR / "_scripts" / "_lint_scripts" / "lint_skill_authoring_gate.py"
 if not LINTER_PATH.exists():
     pytest.skip(f"skill authoring gate linter not found at {LINTER_PATH}", allow_module_level=True)

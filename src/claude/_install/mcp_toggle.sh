@@ -14,4 +14,4 @@ if [[ -z "${ACTION}" ]]; then
 fi
 
 log_message "${DEBUG}" "MCP toggle: ${ACTION} $*"
-python3 src/sh/claude/helpers/mcp_toggle.py "${ACTION}" "$@"
+python3 src/claude/_install/helpers/mcp_toggle.py "${ACTION}" "$@"

@@ -1,7 +1,7 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-10
+# Date updated:      2026-10-11
 # Version:           1.3.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
@@ -10,7 +10,7 @@
 
 """Validates every test's metadata header against _test_metadata.md.
 
-Each test file, in the config's ``_tests/`` and the repo's ``src/sh/claude/_tests/``,
+Each test file, in the config's ``_tests/`` and the repo's ``src/claude/_install/_tests/``,
 must open with the full header: banners, fields in order and well-formed values.
 Whether the quality score matches the test's own counts is checked by
 ``test_test_quality_score.py``.
@@ -24,8 +24,8 @@ from pathlib import Path
 from _shared_paths import CLAUDE_DIR
 
 TESTS_DIR = CLAUDE_DIR / "_tests"
-# The repo's shell tooling tests sit beside the config in src/sh/; a live install has none, so this is skipped there
-SH_TESTS_DIR = CLAUDE_DIR.parent / "sh" / "claude" / "_tests"
+# The installer's own tests live in _install/, which install never copies, so a live config skips them
+SH_TESTS_DIR = CLAUDE_DIR / "_install" / "_tests"
 HINT = "— see _rules_lazy_load/testing_lazy_load/_test_metadata.md"
 TITLE = "# Test Metadata"
 FIELDS = [

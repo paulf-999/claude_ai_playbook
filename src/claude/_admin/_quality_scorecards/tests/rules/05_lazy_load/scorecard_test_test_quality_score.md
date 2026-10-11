@@ -8,7 +8,7 @@
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
 | **Clarity** | 9/10 | 2026-10-02 | • 🔍 **Goal:** module docstring says what drift the test stops and where the header checks live<br>• 🔍 **Messages:** every failure names the file, its score and the band its counts support |
-| **Complexity** | 8/10 | 2026-10-02 | • 🧮 **Complexity:** header complexity score 8/10 (raw complexity 2) — Concepts 0 (the quality band) + Scope 2 (`src/claude/_tests/` and `src/sh/claude/_tests/`) |
+| **Complexity** | 8/10 | 2026-10-02 | • 🧮 **Complexity:** header complexity score 8/10 (raw complexity 2) — Concepts 0 (the quality band) + Scope 2 (`src/claude/_tests/` and `src/claude/_install/_tests/`) |
 | **Evidence of Need** | 9/10 | 2026-10-02 | • 🔗 **Incident:** the 2026-10-01 baseline found 19 drifting headers; split out of `test_test_metadata.py` on 2026-10-02 so both stay under the complexity minimum |
 | **Coverage** | 9/10 | 2026-10-02 | • 📊 **Counts:** 11 test functions and 17 assertions<br>• 🧩 **Edge cases:** band table and lower-count rule, inflated, deflated and one-past-the-allowance scores, async and class-method tests, malformed and missing score lines |
 | **Structural Compliance** | 10/10 | 2026-10-02 | • ✅ **Header:** full metadata header, marked Python style compliant and checked with `ruff` |

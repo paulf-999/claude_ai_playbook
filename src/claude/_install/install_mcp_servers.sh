@@ -3,8 +3,8 @@ set -e
 
 # Load reusable shell script vars & functions
 source src/sh/shell_utils.sh
-source src/sh/claude/helpers/mcp_helpers.sh
-source src/sh/claude/helpers/mcp_server_installers.sh
+source src/claude/_install/helpers/mcp_helpers.sh
+source src/claude/_install/helpers/mcp_server_installers.sh
 
 #=======================================================================
 # Functions
