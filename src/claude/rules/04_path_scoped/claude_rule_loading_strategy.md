@@ -5,7 +5,7 @@ paths:
   - "**/_style_guide_standards/**"
   - "**/CLAUDE.md"
 ---
-<!-- version: 4.3.0 -->
+<!-- version: 4.3.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-11 -->
 <!-- miss_cost: low — a rule lands in the wrong tier, which is easy to move -->
@@ -39,7 +39,7 @@ Claude Code loads every `.md` under `rules/` on its own, so every always-on file
 
 ## ⚖️ Always-on or lazy-load?
 
-Decide from two numbers per rule, both in `_admin/_audits/audit_rule_usage.md`:
+Decide from two numbers per rule, both in the playbook repo's `docs/audits/audit_rule_usage.md`:
 
 - **Applied %:** the share of sessions matching the rule's `applies_to` globs, measured by `make audit_rule_usage`.
 - **Miss cost:** what breaks when the rule applies but isn't loaded, from its `miss_cost` header.

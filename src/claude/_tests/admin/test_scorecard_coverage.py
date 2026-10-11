@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-06
-# Version:           1.1.0
+# Date updated:      2026-10-11
+# Version:           1.1.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -18,7 +18,7 @@ import re
 
 from _shared_paths import CLAUDE_DIR
 
-CARDS = CLAUDE_DIR / "_admin" / "_quality_scorecards"
+CARDS = CLAUDE_DIR / "_reference" / "_quality_scorecards"
 HOOK_NAMES = sorted(p.stem for p in (CLAUDE_DIR / "hooks").glob("hook_*.sh"))
 AGENT_NAMES = sorted(p.parent.name for p in (CLAUDE_DIR / "agents").rglob("AGENT.md"))
 SKILL_NAMES = sorted(

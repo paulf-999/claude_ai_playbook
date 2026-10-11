@@ -20,4 +20,4 @@
 
 - `src/claude/_tests/scripts/test_audit_rule_usage.py` — the test being scored
 - `src/claude/scripts/_audit_scripts/audit_rule_usage.py` — what the test guards
-- `src/claude/_admin/_audits/audit_rule_usage.md` — the report it produces
+- `docs/audits/audit_rule_usage.md` — the report it produces

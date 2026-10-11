@@ -19,7 +19,7 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/admin/test_scorecard_dates.py` — the test being scored
-- `src/claude/_admin/_quality_scorecards/` — what the test guards
-- `src/claude/_admin/_quality_scorecards/rules/README.md` — defines the row `Date Updated` rule
-- `src/claude/_admin/_quality_scorecards/tests/README.md` — defines the row `Date Updated` rule
+- `src/claude/_reference/_quality_scorecards/` — what the test guards
+- `src/claude/_reference/_quality_scorecards/rules/README.md` — defines the row `Date Updated` rule
+- `src/claude/_reference/_quality_scorecards/tests/README.md` — defines the row `Date Updated` rule
 - `src/claude/_templates/skills/_quality_scorecard_template.md` — defines the row `Date Updated` rule

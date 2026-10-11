@@ -56,7 +56,7 @@ One-off pages using the general_page pattern in the space you confirm (`<SPACE_K
 - `reference/_error_recovery.md` — what to do when Confluence access, drafts, or publishing fail
 - `reference/_troubleshooting.md` — common issues, including publish timeouts
 - `reference/_confluence_page_formatting.md` — page header structure and formatting rules
-- `_admin/_quality_scorecards/skills/scorecard_confluence_create_page.md` — 7-dimension quality assessment
+- `_reference/_quality_scorecards/skills/scorecard_confluence_create_page.md` — 7-dimension quality assessment
 
 ## 📌 Prerequisites
 

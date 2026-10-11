@@ -37,7 +37,7 @@ _templates/
 - Used by: `/skill_creator` tool during initial setup
 
 **`skills/_quality_scorecard_template.md`**
-- Table-only layout for each skill's scorecard at `_admin/_quality_scorecards/skills/scorecard_<skill_name>.md`: 7 dimensions plus Overall
+- Table-only layout for each skill's scorecard at `_reference/_quality_scorecards/skills/scorecard_<skill_name>.md`: 7 dimensions plus Overall
 - Includes the scoring scale and per-dimension criteria
 
 ### Agents, rules and TODOs
@@ -69,7 +69,7 @@ _templates/
 - Each type's dimensions and criteria live in its own template or README, which this file points to
 
 **`scorecard/scorecard_summary.md.template`**
-- Shared layout for all six scorecard summaries in `_admin/_quality_scorecards/`: the top-level `quality_scorecards_summary.md` and each `<type>_scorecards_summary.md`
+- Shared layout for all six scorecard summaries in `_reference/_quality_scorecards/`: the top-level `quality_scorecards_summary.md` and each `<type>_scorecards_summary.md`
 - Sections: Scores by group, Recommended next actions, All scorecards (All summaries in the top-level file) and Keeping this current
 
 ## Usage

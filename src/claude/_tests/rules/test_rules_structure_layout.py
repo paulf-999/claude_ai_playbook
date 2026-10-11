@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-10
-# Version:           3.0.0
+# Date updated:      2026-10-11
+# Version:           3.0.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -114,11 +114,11 @@ def test_behaviour_subdir_dissolved():
     assert not (RULES_DIR / "behaviour").is_dir(), "rules/behaviour/ should not exist"
 
 
-def test_reference_dir_retired():
-    """_reference/ was retired on 2026-10-10 (#344), and its docs now live in docs/, which isn't installed."""
-    assert not (CLAUDE_DIR / "_reference").exists(), (
-        "_reference/ should not exist — background docs belong in docs/; delete any old folder on a live install"
-    )
+def test_reference_holds_only_scorecards_and_style_guides():
+    """_reference/ returned on 2026-10-11 to hold only the quality scorecards and style guides; docs stay in docs/."""
+    allowed = {"_quality_scorecards", "_style_guide_standards"}
+    entries = {p.name for p in (CLAUDE_DIR / "_reference").iterdir()} if (CLAUDE_DIR / "_reference").is_dir() else set()
+    assert entries <= allowed, f"_reference/ holds more than the scorecards and style guides: {sorted(entries - allowed)}"
 
 
 def test_dissolved_paths_absent():

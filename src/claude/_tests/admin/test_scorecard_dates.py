@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-02
-# Version:           1.0.1
+# Date updated:      2026-10-11
+# Version:           1.0.2
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -22,12 +22,12 @@ from typing import Optional
 
 from _shared_paths import CLAUDE_DIR
 
-SCORECARDS_DIR = CLAUDE_DIR / "_admin" / "_quality_scorecards"
+SCORECARDS_DIR = CLAUDE_DIR / "_reference" / "_quality_scorecards"
 TABLE_HEADER = "| Dimension | Score | Date Updated | Notes |"
 SEPARATOR = "|---|---|---|---|"
 ROW = re.compile(r"^\| \*\*(?P<dim>[^|]+)\*\* \| (?P<score>[^|]+?) \| (?P<date>[^|]+?) \| ")
 HEADER_DATE = re.compile(r"^\*\*Date Updated:\*\* (\S+)", re.M)
-HINT = "— see _admin/_quality_scorecards/rules/README.md (Row `Date Updated`)"
+HINT = "— see _reference/_quality_scorecards/rules/README.md (Row `Date Updated`)"
 
 VALID = """# Quality Scorecard — demo.md
 

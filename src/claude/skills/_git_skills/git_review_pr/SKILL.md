@@ -7,9 +7,9 @@ tags:
   status: active
   tested: false
 ---
-<!-- version: 0.5.0 -->
+<!-- version: 0.5.1 -->
 <!-- created: 2026-06-05 -->
-<!-- updated: 2026-10-05 -->
+<!-- updated: 2026-10-11 -->
 
 ## 🤖 Instructions for Claude
 
@@ -61,4 +61,4 @@ Reviewing a single GitHub PR before merge, when the team wants the same scored f
 - `reference/_implementation.md` — the five phases, error handling, troubleshooting and FAQ
 - `reference/_formats.md` — comment template, scoring guides and linking rules
 - `tests/evals.yaml` — 8 test scenarios covering the `gh` login check, format, large diffs, prompt injection, the secret check, dry runs, updates and a failed post
-- `_admin/_quality_scorecards/skills/scorecard_git_review_pr.md` — 7-dimension quality scorecard
+- `_reference/_quality_scorecards/skills/scorecard_git_review_pr.md` — 7-dimension quality scorecard

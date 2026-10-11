@@ -8,9 +8,9 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 1.4.0 -->
+<!-- version: 1.4.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-11 -->
 
 ## 🤖 Instructions for Claude
 
@@ -56,4 +56,4 @@ Routine feature and hotfix PRs, faster than the manual git workflow and with Con
 - `reference/_phase1_gather.md` — gather-info logic, branch/commit/PR-title/PR-body derivation, label mapping and the label-exists check
 - `reference/_phase2_execute.md` — title and plan confirmation, execution rules and error recovery
 - `tests/evals.yaml` — 12 test scenarios covering every phase, both confirmation steps, a rejected push and the 20-file limit
-- `_admin/_quality_scorecards/skills/scorecard_git_create_pr.md` — 7-dimension quality scorecard
+- `_reference/_quality_scorecards/skills/scorecard_git_create_pr.md` — 7-dimension quality scorecard

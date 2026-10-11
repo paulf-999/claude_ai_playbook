@@ -31,8 +31,6 @@ AUTO_GENERATED_DIRS = {
     "__pycache__",
     # third-party tool's own generated cache/output, not Claude-authored
     "graphify-out",
-    # personal audit/decision-log scratch area with its own ALL-CAPS convention
-    "_admin",
     # Claude Code's own version-history store — UUID/hash@vN filenames
     "file-history",
     # Claude Code's own sync-cleanup holding area (see syncClaudeAiSkills)

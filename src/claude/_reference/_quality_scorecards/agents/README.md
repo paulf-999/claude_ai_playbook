@@ -6,7 +6,7 @@
 
 ## 📁 Location convention
 
-One file per agent, named after it: `_admin/_quality_scorecards/agents/scorecard_<agent_name>.md`.
+One file per agent, named after it: `_reference/_quality_scorecards/agents/scorecard_<agent_name>.md`.
 
 - **Example:** `agents/core/technical_writer/AGENT.md` → `scorecard_technical_writer.md`
 - **Never `@import` these files:** they're review records, not content Claude reads while working.

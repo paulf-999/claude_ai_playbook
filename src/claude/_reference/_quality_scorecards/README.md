@@ -19,7 +19,7 @@
   - **Template:** all six summaries follow `_templates/scorecard/scorecard_summary.md.template`.
 - **Templates:** rules use the template in `rules/README.md`, and skills use `_templates/skills/_quality_scorecard_template.md`.
 - **Never `@import`:** these files are for review and audit only, so they cost no session tokens.
-- **Audits:** cross-cutting audits of whole areas live in `_admin/_audits/`, not here.
+- **Audits:** cross-cutting audits of whole areas live in the playbook repo under `docs/audits/`, not here.
 
 ---
 

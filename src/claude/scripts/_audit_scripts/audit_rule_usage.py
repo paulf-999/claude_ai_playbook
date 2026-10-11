@@ -17,7 +17,7 @@ script is installed into the live config too and must never guess the repo.
 
 Usage:
     python3 src/claude/scripts/_audit_scripts/audit_rule_usage.py \\
-        --rules src/claude/rules --transcripts ~/.claude/projects --out src/claude/_admin/_audits
+        --rules src/claude/rules --transcripts ~/.claude/projects --out docs/audits
     make audit_rule_usage
 """
 
@@ -1089,7 +1089,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Measure how often each rule applies and loads.")
     parser.add_argument("--rules", required=True, type=Path, help="the rules folder, e.g. src/claude/rules")
     parser.add_argument("--transcripts", required=True, type=Path, help="session logs, e.g. ~/.claude/projects")
-    parser.add_argument("--out", required=True, type=Path, help="output folder, e.g. src/claude/_admin/_audits")
+    parser.add_argument("--out", required=True, type=Path, help="output folder, e.g. docs/audits")
     args = parser.parse_args(argv)
     for name in ("rules", "transcripts"):
         if not getattr(args, name).is_dir():

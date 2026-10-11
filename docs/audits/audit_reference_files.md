@@ -107,7 +107,7 @@
 
 ## 🔗 Related Documents
 
-- **Scoring guide:** `~/.claude/_admin/_audits/scoring_guides/SCORING_GUIDE_REFERENCE_FILES.md`
+- **Scoring guide:** `docs/audits/scoring_guides/SCORING_GUIDE_REFERENCE_FILES.md`
 - **Config architecture:** `~/.claude/_reference/claude_config_architecture.md`
 - **Reference index:** `~/.claude/_reference/README.md`
 

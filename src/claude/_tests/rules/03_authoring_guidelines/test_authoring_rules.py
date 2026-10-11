@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-10
-# Version:           2.3.0
+# Date updated:      2026-10-11
+# Version:           2.3.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -81,7 +81,7 @@ def test_every_tier_named_exists():
 
 def test_scorecard_template_exists():
     """The scorecard README the guide points to exists."""
-    readme = CLAUDE_DIR / "_admin" / "_quality_scorecards" / "rules" / "README.md"
+    readme = CLAUDE_DIR / "_reference" / "_quality_scorecards" / "rules" / "README.md"
     assert readme.is_file(), f"the guide points to a scorecard template that's gone: {readme}"
 
 

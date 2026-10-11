@@ -1,4 +1,4 @@
-<!-- version: 2.1.0 -->
+<!-- version: 2.1.1 -->
 <!-- created: 2025-11-15 -->
 <!-- updated: 2026-10-11 -->
 # 🔄 Rule Lifecycle
@@ -16,7 +16,7 @@ Promote a rule when a miss would go unnoticed and only a pointer loads it, or wh
 
 ### 🎯 Promotion criteria
 
-Use the two numbers in `_admin/_audits/audit_rule_usage.md`, read against the table in `claude_rule_loading_strategy.md`:
+Use the two numbers in the playbook repo's `docs/audits/audit_rule_usage.md`, read against the table in `claude_rule_loading_strategy.md`:
 
 - **Applied %:** the share of sessions matching the rule's `applies_to` globs, from `make audit_rule_usage`.
 - **Miss cost:** what breaks when the rule applies but isn't loaded, from its `miss_cost` header.

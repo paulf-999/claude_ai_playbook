@@ -6,7 +6,7 @@
 **Overall score:** 8.4/10
 
 **Recommended improvements:**
-- Record the hook's first real hit in `_admin/_docs/decisions/hooks.md`, or retire it if none appears within 90 days
+- Record the hook's first real hit in `docs/decisions/claude_config/hooks.md`, or retire it if none appears within 90 days
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
@@ -24,4 +24,4 @@
 - `src/claude/hooks/hook_enforcement_markdown_location.sh` — the hook being scored
 - `src/claude/_tests/hooks/enforcement/test_enforcement_markdown_location.py` — Test Coverage dimension
 - `src/claude/rules/01_essentials/claude_usage_standards/writing_style.md` — the rule it points to
-- `src/claude/_admin/_docs/decisions/hooks.md` — Evidence of Need and Structural Compliance dimensions
+- `docs/decisions/claude_config/hooks.md` — Evidence of Need and Structural Compliance dimensions

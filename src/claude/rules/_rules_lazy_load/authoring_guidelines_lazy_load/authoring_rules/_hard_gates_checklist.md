@@ -1,6 +1,6 @@
-<!-- version: 3.0.0 -->
+<!-- version: 3.0.1 -->
 <!-- created: 2026-09-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 # ✅ Rule Hard Gates Checklist
 
 **Purpose:** Final tick-box check before finishing a rule — verify placement, content, testing, wiring and docs, then run the before-merging review.
@@ -38,7 +38,7 @@
 - [ ] The rule has no `## Related` section — a lazy or path-scoped rule's parent, sibling and dependency links sit in `_rules_lazy_load/README.md` under "🔗 Related rules", and an always-on rule (tiers 01–03) keeps none
 
 ### 📚 Docs
-- [ ] Quality scorecard created or updated at `_admin/_quality_scorecards/rules/<tier>/scorecard_<rule_name>.md`
+- [ ] Quality scorecard created or updated at `_reference/_quality_scorecards/rules/<tier>/scorecard_<rule_name>.md`
 - [ ] A lazy or path-scoped rule is listed in `_rules_lazy_load/README.md`
 - [ ] `docs/whats_installed.md` rules description updated
 

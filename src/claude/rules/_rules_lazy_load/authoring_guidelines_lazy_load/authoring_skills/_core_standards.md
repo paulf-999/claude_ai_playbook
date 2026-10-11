@@ -1,6 +1,6 @@
-<!-- version: 4.0.0 -->
+<!-- version: 4.0.1 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-11 -->
 # 📐 Skill Core Standards
 
 **Purpose:** Define the baseline every skill must follow — naming, SKILL.md's 6-section structure, what `skill.contract.yaml` must declare, and how to choose a maturity level.
@@ -96,6 +96,6 @@ Choose the maturity level from evidence, not aspiration:
 | **Scope** | Still exploring | Well-defined boundaries | Stable, frozen scope |
 
 - **Where to justify it:** one sentence in SKILL.md's **Best For** line, naming the stage and what it doesn't yet cover.
-- **Not in the scorecard:** `_admin/_quality_scorecards/skills/scorecard_<skill_name>.md` is table-only (see `~/.claude/_templates/skills/_quality_scorecard_template.md`).
+- **Not in the scorecard:** `_reference/_quality_scorecards/skills/scorecard_<skill_name>.md` is table-only (see `~/.claude/_templates/skills/_quality_scorecard_template.md`).
 - **Example:** "Currently at the **tactical** stage — main path plus light error handling, not full edge-case coverage yet."
 - **Complexity formula:** see `_complexity_scoring.md` (in `03_authoring_guidelines/shared_standards/`).

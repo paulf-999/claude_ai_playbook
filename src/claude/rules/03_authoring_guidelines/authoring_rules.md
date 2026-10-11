@@ -1,6 +1,6 @@
-<!-- version: 4.0.0 -->
+<!-- version: 4.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 <!-- applies_to: **/rules/**, **/_rules_lazy_load/** -->
 <!-- miss_cost: medium — rules ship without tests or in the wrong tier -->
 <!-- loading: always-on — a new rule can start before any rule file is open, and it points to the shared complexity formula -->
@@ -49,7 +49,7 @@ Before writing any rule, answer these five essential questions:
    - Template A (single principle, ~60 lines) vs. Template B (multiple patterns, ~100 lines)
 3. **Write the rule** — follow template structure, emoji headers, one sentence per bullet
 4. **Write tests:** Enforcement rules require tests in `_tests/rules/`. Instructional rules use structural checks.
-5. **Create a quality scorecard:** `_admin/_quality_scorecards/rules/<tier>/scorecard_<rule_name>.md`, per the template in that folder's `README.md` — centralized, never `@import`ed.
+5. **Create a quality scorecard:** `_reference/_quality_scorecards/rules/<tier>/scorecard_<rule_name>.md`, per the template in that folder's `README.md` — centralized, never `@import`ed.
 
 ## 📏 Quality Gates
 

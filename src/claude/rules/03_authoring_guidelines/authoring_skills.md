@@ -1,6 +1,6 @@
-<!-- version: 4.1.3 -->
+<!-- version: 4.1.4 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 <!-- applies_to: **/skills/** -->
 <!-- miss_cost: medium — skills ship without contracts or evals -->
 <!-- loading: always-on — a new skill can start before any skills/ file is open, so a path trigger would miss it -->
@@ -38,7 +38,7 @@ skill_name/
     └── README.md           # Plain-language: what evals.yaml is, how many scenarios, why
 ```
 
-**Scorecards live outside the skill, at `_admin/_quality_scorecards/skills/scorecard_<skill_name>.md`** — they're review records (scored when the skill is created or audited), not something Claude reads while running the skill. Everything in `reference/` is runtime behavioural documentation.
+**Scorecards live outside the skill, at `_reference/_quality_scorecards/skills/scorecard_<skill_name>.md`** — they're review records (scored when the skill is created or audited), not something Claude reads while running the skill. Everything in `reference/` is runtime behavioural documentation.
 
 **`evals.yaml` always lives in `tests/`, never at skill root** — "evals" is jargon; a `tests/` folder reads as familiar to a non-technical browser of the skill directory. `tests/README.md` is mandatory alongside it, in plain language, so anyone who does open the folder isn't left guessing what the file is.
 

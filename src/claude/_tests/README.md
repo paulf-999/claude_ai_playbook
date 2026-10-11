@@ -35,7 +35,7 @@ to their own test file.
 
 ## 📁 `admin/`
 
-Tests for the quality scorecards in `_admin/_quality_scorecards/`.
+Tests for the quality scorecards in `_reference/_quality_scorecards/`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
