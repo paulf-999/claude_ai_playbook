@@ -44,7 +44,7 @@ Whenever a new artefact is added to `src/claude/`, the documentation listed belo
 | **Rule** (`rules/<tier>/` or `rules/_rules_lazy_load/`) | `src/claude/rules/_rules_lazy_load/README.md` for lazy and path-scoped rules; none for tiers 01–03, where the folder is the index — no `@import`, since Claude Code loads `rules/` natively |
 | **Agent** (`agents/<group>/<name>/AGENT.md`) | None — the `agents/` folder is the index |
 | **Hook** (`hooks/`) | `settings.json` lifecycle event registration |
-| **Style guide** (`_reference/_style_guide_standards/`) | None — the folder is the index (the install puts entry files with `paths:` in `rules/04_path_scoped/`, where they load on a matching file, and the rest stays in `_reference/_style_guide_standards/`, read on demand) |
+| **Style guide** (`_reference/_style_guide_standards/`) | None — the folder is the index (the install puts entry files with `paths:` in `rules/02_claude_standards/path_scoped_rules/`, where they load on a matching file, and the rest stays in `_reference/_style_guide_standards/`, read on demand) |
 | **Skill behavioural test** (`src/claude/_tests/skills/`) | Set `tested: true` in the skill's `SKILL.md` frontmatter · update the group README (`_<group>_skills/README.md`) `Tested` column — no other doc updates required |
 
 `docs/whats_installed.md` only links to each folder's index with a one-line summary, so it needs a new section only when a new kind of artefact (a new top-level folder) is added.

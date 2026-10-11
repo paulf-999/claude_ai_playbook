@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-10
-# Version:           3.0.0
+# Date updated:      2026-10-11
+# Version:           3.0.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -24,7 +24,7 @@ import pytest
 from _file_structure_validator import CLAUDE_HOME, FileStructureValidator
 from _shared_paths import LAZY_RULES_DIR
 
-HINT = "— see rules/04_path_scoped/claude_directory_structure.md"
+HINT = "— see rules/02_claude_standards/path_scoped_rules/claude_directory_structure.md"
 
 
 @cache

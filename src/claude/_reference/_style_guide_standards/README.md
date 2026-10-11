@@ -16,7 +16,7 @@
 
 | File | Installs to |
 |---|---|
-| **Has `paths:` frontmatter** | `rules/04_path_scoped/style_guide_standards/` |
+| **Has `paths:` frontmatter** | `rules/02_claude_standards/path_scoped_rules/style_guide_standards/` |
 | **Everything else** | `_reference/_style_guide_standards/`, unchanged |
 
 - **Why:** a detail file under `rules/` would load in every session, so only entry files move there.

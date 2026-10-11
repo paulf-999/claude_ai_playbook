@@ -3,9 +3,9 @@ paths:
   - "**/.claude/**"
   - "**/claude/**"
 ---
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 <!-- miss_cost: low — a badly named or misplaced config file, which the naming-convention hook also blocks -->
 <!-- loading: path-scoped — loads with config-directory files through paths:, and through a pointer in claude_usage_standards.md for a new file -->
 # 🗂️ Directory Structure — `~/.claude/`
@@ -24,12 +24,12 @@ Applies to all file and directory creation in `~/.claude/` and the playbook repo
 
 ## 🏗️ Directory organization
 
-- **Read on demand:** `~/.claude/rules/04_path_scoped/claude_directory_structure/_claude_directory_organisation.md` — loads with the same files through paths:
+- **Read on demand:** `~/.claude/rules/02_claude_standards/path_scoped_rules/claude_directory_structure/_claude_directory_organisation.md` — loads with the same files through paths:
 
 ## 🏷️ Naming conventions
 
-- **Read on demand:** `~/.claude/rules/04_path_scoped/claude_directory_structure/_claude_directory_naming.md` — loads with the same files through paths:
+- **Read on demand:** `~/.claude/rules/02_claude_standards/path_scoped_rules/claude_directory_structure/_claude_directory_naming.md` — loads with the same files through paths:
 
 ## ✅ Validation
 
-- **Read on demand:** `~/.claude/rules/04_path_scoped/claude_directory_structure/_file_structure_validation.md` — loads with the same files through paths:
+- **Read on demand:** `~/.claude/rules/02_claude_standards/path_scoped_rules/claude_directory_structure/_file_structure_validation.md` — loads with the same files through paths:

@@ -5,7 +5,7 @@ paths:
   - "**/_style_guide_standards/**"
   - "**/CLAUDE.md"
 ---
-<!-- version: 4.3.2 -->
+<!-- version: 4.3.3 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-11 -->
 <!-- miss_cost: low — a rule lands in the wrong tier, which is easy to move -->
@@ -26,8 +26,8 @@ Claude Code loads every `.md` under `rules/` on its own, so every always-on file
 |---|---|---|---|---|
 | `01_essentials/` | Foundational decision-making principles and user-facing conventions (naming, writing style, response standards) that apply to every task | `guiding_principles.md` | Confused user experience, quality decay, violated conventions | Always-on |
 | `02_claude_standards/` | Blocking quality gates and safe operational conduct (testing, security, git, portable paths, efficiency, delegation, external system access) that gate new features, rules and abstractions | `behaviour.md` | Quality decay, security vulnerabilities, scope creep, safety regression | Always-on |
+| `02_claude_standards/path_scoped_rules/` | Domain-specific rules tied to one file type (SQL, Airflow, dbt, Terraform, testing) through `paths:` frontmatter | `style_guide_standards/sql.md` | Nothing outside that domain — that's why it loads only with matching files | Path-scoped; loads when a matching file is open |
 | `03_authoring_guidelines/` | Standards for authoring the config's own rules, skills and agents — used whenever an artefact is being created | `authoring_rules.md` | Inconsistent artefact structure, scope creep, missing tests | Always-on |
-| `04_path_scoped/` | Domain-specific rules tied to one file type (SQL, Airflow, dbt, Terraform, testing) through `paths:` frontmatter | `style_guide_standards/sql.md` | Nothing outside that domain — that's why it loads only with matching files | Path-scoped; loads when a matching file is open |
 | `_rules_lazy_load/` | Niche tools, discretionary rules and bulky children, under `rules/` in the repo and moved beside it on install | `claude_config/claude_cost/latency_optimisation.md` | Nothing until Claude follows a pointer to it | On demand; never loaded automatically |
 
 - **Source of truth:** each folder is the current list of its rules — the examples above are illustrative only.
@@ -51,7 +51,7 @@ Decide from two numbers per rule, both in the playbook repo's `docs/audits/audit
 | **Low** | Always-on only if small | Lazy |
 
 - **Domain style guides:** SQL, Airflow, dbt and similar guides are lazy, triggered by `paths:` on their file type.
-  - **Their own folder:** every guide lives in `_reference/_style_guide_standards/`, read on demand, and the install moves the entry files with `paths:` to `rules/04_path_scoped/style_guide_standards/`.
+  - **Their own folder:** every guide lives in `_reference/_style_guide_standards/`, read on demand, and the install moves the entry files with `paths:` to `rules/02_claude_standards/path_scoped_rules/style_guide_standards/`.
 - **Pointers aren't triggers:** a `**Read on demand:**` pointer works only if Claude remembers it, so it never counts for a high-cost rule.
   - **Enforced by:** `test_high_cost_lazy_rules_load_mechanically` in `test_rule_headers.py`, across `_rules_lazy_load/` and `_reference/_style_guide_standards/`.
   - **Medium is different:** a medium miss is rework you'd catch, so a pointer is enough when few sessions need the rule.
@@ -75,7 +75,7 @@ A rule under `rules/` with `paths:` frontmatter loads whenever Claude reads a ma
 ## 🚩 Audit flags
 
 - **Promote:** a lazy rule with `miss_cost: high` that the report shows missed — add a trigger or move it to tiers 01–03.
-- **Demote:** an always-on rule with `miss_cost: low` applied in under half of sessions — move it to `04_path_scoped/` with `paths:`, or to `_rules_lazy_load/`.
+- **Demote:** an always-on rule with `miss_cost: low` applied in under half of sessions — move it to `02_claude_standards/path_scoped_rules/` with `paths:`, or to `_rules_lazy_load/`.
 - **Stale:** a rule with no use for 90 days, per `rule_usage_history.csv` — archive it or refresh its evidence.
 - **Not enough data:** fewer than 10 applied sessions — no decision yet.
 - **Cut-offs:** 10 sessions, half and 90 days are first guesses in `audit_rule_usage.py`, reviewed after 3 reports.

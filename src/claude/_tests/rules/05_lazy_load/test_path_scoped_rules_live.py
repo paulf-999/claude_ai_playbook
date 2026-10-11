@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-10
-# Version:           1.2.1
+# Date updated:      2026-10-11
+# Version:           1.2.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -31,7 +31,7 @@ import pytest
 from _shared_paths import CLAUDE_DIR, resolve_config_path
 
 MODEL = "claude-haiku-4-5-20251001"
-RULE_SUFFIX = "/rules/04_path_scoped/style_guide_standards/sql.md"
+RULE_SUFFIX = "/rules/02_claude_standards/path_scoped_rules/style_guide_standards/sql.md"
 TIMEOUT_SECONDS = 180
 LIVE = os.environ.get("CLAUDE_LIVE_CANARY") == "1" and shutil.which("claude") is not None
 
@@ -195,7 +195,7 @@ def test_cleanup_keeps_unexpected_files(tmp_path):
 
 def test_the_sql_rule_is_installed_with_paths():
     """The live tests rely on sql.md being a paths: rule that installs under rules/."""
-    rule = resolve_config_path(CLAUDE_DIR, "rules/04_path_scoped/style_guide_standards/sql.md")
+    rule = resolve_config_path(CLAUDE_DIR, "rules/02_claude_standards/path_scoped_rules/style_guide_standards/sql.md")
     assert rule.read_text().startswith('---\npaths:\n  - "**/*.sql"'), "sql.md lost its paths: trigger"
     assert not rule.is_symlink(), "rules/ ships real files — sql.md must not be a link"
 

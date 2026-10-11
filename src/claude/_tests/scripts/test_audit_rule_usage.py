@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           1.10.2
+# Version:           1.10.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -28,7 +28,7 @@ from _shared_paths import CLAUDE_DIR
 SCRIPT = CLAUDE_DIR / "scripts" / "_audit_scripts" / "audit_rule_usage.py"
 TODAY = date(2026, 10, 1)
 LAZY_GUIDES = "_reference/_style_guide_standards"  # on-demand style guides, in their own folder once installed too
-SCOPED_GUIDES = "rules/04_path_scoped/style_guide_standards"
+SCOPED_GUIDES = "rules/02_claude_standards/path_scoped_rules/style_guide_standards"
 
 
 def load_audit():

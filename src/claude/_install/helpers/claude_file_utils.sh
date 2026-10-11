@@ -32,7 +32,7 @@ LAZY_RULES_NAME="_rules_lazy_load"
 # Style guides sit in one folder, in the repo and once installed, except their entry files (with paths:
 # frontmatter), which the install moves under rules/ so Claude Code loads them on matching files
 STYLE_GUIDES_NAME="_reference/_style_guide_standards"
-STYLE_GUIDES_PATH_SCOPED="rules/04_path_scoped/style_guide_standards"
+STYLE_GUIDES_PATH_SCOPED="rules/02_claude_standards/path_scoped_rules/style_guide_standards"
 
 #=======================================================================
 # Shared functions

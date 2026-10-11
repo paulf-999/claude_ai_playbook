@@ -1,4 +1,4 @@
-<!-- version: 4.0.1 -->
+<!-- version: 4.0.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-11 -->
 <!-- applies_to: **/rules/**, **/_rules_lazy_load/** -->
@@ -20,7 +20,7 @@ Before writing any rule, answer these five essential questions:
 
 2. **Always-on or lazy-loaded?**
    - Always-on: place in `rules/01_essentials/`–`03_authoring_guidelines/`, which Claude Code loads every session (core safety rules, ~100–150 tokens/session cost)
-   - Path-scoped: `rules/04_path_scoped/` with `paths:` frontmatter, loaded only when a matching file is open
+   - Path-scoped: `rules/02_claude_standards/path_scoped_rules/` with `paths:` frontmatter, loaded only when a matching file is open
    - Lazy-load: `_rules_lazy_load/` (domain-specific, read on demand only)
    - Justify token cost if always-on
 
@@ -29,7 +29,7 @@ Before writing any rule, answer these five essential questions:
    - If speculative: defer or rephrase as question/guidance instead (per `guiding_principles.md`)
 
 4. **Related/conflicting rules?**
-   - Check **full rule list** in `~/.claude/rules/04_path_scoped/claude_rule_loading_strategy.md`
+   - Check **full rule list** in `~/.claude/rules/02_claude_standards/path_scoped_rules/claude_rule_loading_strategy.md`
    - Search codebase for similar guidance to prevent duplication
    - Clarify which rules this complements or overlaps with
 
@@ -39,7 +39,7 @@ Before writing any rule, answer these five essential questions:
    - `02_claude_standards/` — blocking standards, enforcement and operational conduct (behaviour, security, testing, git, efficiency)
    - `03_authoring_guidelines/` — meta-guidance for authoring rules, skills, and agents
      - **Agent authoring:** `~/.claude/rules/03_authoring_guidelines/authoring_agents.md`, whose children are read on demand when creating or reviewing an agent
-   - `04_path_scoped/` — domain-specific rules tied to a file type through `paths:` (style guides, testing)
+   - `02_claude_standards/path_scoped_rules/` — domain-specific rules tied to a file type through `paths:` (style guides, testing)
    - `_rules_lazy_load/` — discretionary rules and bulky children, read on demand (tools, automation, style-guide detail)
 
 ## 🚀 Rule Creation (5 Steps)

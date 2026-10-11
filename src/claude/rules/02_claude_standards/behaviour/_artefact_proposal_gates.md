@@ -1,6 +1,6 @@
-<!-- version: 3.0.1 -->
+<!-- version: 3.0.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 # 🚪 Artefact Proposal Gates
 
 **Purpose:** Validate naming, placement, and duplication *before* proposing any new artefact (rule, skill, hook, agent, process), ensuring proposals already comply with established standards.
@@ -44,13 +44,13 @@ Before proposing any new artefact, run these gates in order:
 - **01_essentials/** — foundational principles and user-facing conventions (e.g. guiding_principles, writing style, naming)
 - **02_claude_standards/** — quality gates and operational conduct Claude applies to all work (e.g. behaviour, security, git, operational efficiency)
 - **03_authoring_guidelines/** — meta-guidance for authoring rules, skills, agents
-- **04_path_scoped/** — domain-specific rules with `paths:`; load only when a matching file is open
+- **02_claude_standards/path_scoped_rules/** — domain-specific rules with `paths:`; load only when a matching file is open
 - **_rules_lazy_load/** — under `rules/` in the repo and beside it once installed; read on demand only, never loaded automatically
 - **skills/** — reusable skills, in the folder their domain names in `skill_domains.yaml` (e.g. `_atlassian_skills/`, `_git_skills/`)
 - **hooks/** — enforcement and style-guide hooks
 - **agents/** — custom sub-agents (domain-grouped subdirectories, e.g. `agents/core/`)
 
-**Reference:** `~/.claude/rules/04_path_scoped/claude_directory_structure.md` (parent) → `_claude_directory_organisation.md` (full tree) + `_claude_directory_naming.md` (naming patterns)
+**Reference:** `~/.claude/rules/02_claude_standards/path_scoped_rules/claude_directory_structure.md` (parent) → `_claude_directory_organisation.md` (full tree) + `_claude_directory_naming.md` (naming patterns)
 
 **Action:** If placement is wrong, **recommend the correct directory directly** (no options; the standard is clear).
 
@@ -64,7 +64,7 @@ Before proposing any new artefact, run these gates in order:
 - Search for skills in `~/.claude/skills/` with matching domain or action
 - Search for hooks in `~/.claude/hooks/` with similar enforcement goal
 
-**Reference:** `~/.claude/rules/04_path_scoped/claude_rule_loading_strategy.md` (full rule index table)
+**Reference:** `~/.claude/rules/02_claude_standards/path_scoped_rules/claude_rule_loading_strategy.md` (full rule index table)
 
 **Action:** If found, offer integration option: extend existing artefact vs. create new one (present options with rationale).
 

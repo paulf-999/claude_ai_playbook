@@ -22,4 +22,4 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/05_lazy_load/test_claude_rule_loading_strategy.py` — the test being scored
-- `src/claude/rules/04_path_scoped/claude_rule_loading_strategy.md` — what the test guards
+- `src/claude/rules/02_claude_standards/path_scoped_rules/claude_rule_loading_strategy.md` — what the test guards

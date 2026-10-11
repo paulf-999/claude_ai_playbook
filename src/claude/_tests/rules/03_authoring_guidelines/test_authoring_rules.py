@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-11
-# Version:           2.3.1
+# Version:           2.3.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -23,7 +23,7 @@ import re
 from _shared_paths import CLAUDE_DIR, RULES_DIR, resolve_config_path
 
 AUTHORING_RULES = RULES_DIR / "03_authoring_guidelines" / "authoring_rules.md"
-TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_path_scoped")
+TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "02_claude_standards/path_scoped_rules")
 
 
 def content() -> str:

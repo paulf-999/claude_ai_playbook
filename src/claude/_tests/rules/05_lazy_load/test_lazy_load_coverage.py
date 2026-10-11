@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-11
-# Version:           2.5.5
+# Version:           2.5.6
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -135,7 +135,7 @@ def test_no_orphaned_lazy_load_files():
 # .md file must be the actual target of a markdown link or `@./` import
 # from some other file in the tree — not just live under a covered folder.
 
-# Path-scoped entry points (sql.md, testing.md, ...) live in rules/04_path_scoped/ and load through paths:,
+# Path-scoped entry points (sql.md, testing.md, ...) live in rules/02_claude_standards/path_scoped_rules/ and load through paths:,
 # so only the on-demand entry points are listed here, by installed path.
 ENTRY_POINT_RELATIVE_PATHS = {
     "_rules_lazy_load/claude_config/automation_troubleshooting.md",

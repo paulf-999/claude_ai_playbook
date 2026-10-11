@@ -3,7 +3,7 @@ paths:
   - "**/.claude/**"
   - "**/claude/**"
 ---
-<!-- version: 3.1.1 -->
+<!-- version: 3.1.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-11 -->
 # 🏗️ Directory Organisation — `~/.claude/`
@@ -31,9 +31,9 @@ paths:
 - `CLAUDE.md`, `aliases.md`, `settings.json`, `keybindings.json` — entry points and user-facing configuration
 
 **Tier 2: Core rules (rules/, _rules_lazy_load/)**
-- `rules/`: tiers `01_essentials/` to `03_authoring_guidelines/` load every session, and `04_path_scoped/` loads with matching files — Claude Code reads this folder natively, so it has no underscore
+- `rules/`: tiers `01_essentials/` to `03_authoring_guidelines/` load every session, and `02_claude_standards/path_scoped_rules/` loads with matching files — Claude Code reads this folder natively, so it has no underscore
 - `_rules_lazy_load/`: rules read on demand — kept under `rules/` in the repo and moved beside it on install; see `claude_rule_loading_strategy.md` for what belongs where
-- `_reference/_style_guide_standards/`: every style guide in one folder, read on demand — the install moves entry files with `paths:` to `rules/04_path_scoped/style_guide_standards/` so they load on matching files
+- `_reference/_style_guide_standards/`: every style guide in one folder, read on demand — the install moves entry files with `paths:` to `rules/02_claude_standards/path_scoped_rules/style_guide_standards/` so they load on matching files
 
 **Tier 3: Infrastructure (_tests/, _templates/, _reference/)**
 - Tests, templates, and `_reference/` (only the style guides and quality scorecards)

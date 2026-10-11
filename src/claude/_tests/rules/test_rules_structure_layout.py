@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           3.0.1
+# Version:           3.0.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -93,13 +93,14 @@ def test_rules_root_contains_only_expected_files():
 
 
 
-def test_rules_holds_exactly_the_four_tiers():
-    """rules/ holds tiers 01–03 and 04_path_scoped/ only — tier 04 was retired on 2026-10-06 (#330).
+def test_rules_holds_exactly_the_three_tiers():
+    """rules/ holds tiers 01–03 only — path-scoped rules moved into
+    02_claude_standards/path_scoped_rules/ on 2026-10-11.
 
     The repo also keeps the on-demand rules there, which the install moves beside rules/.
     """
     tiers = {d.name for d in RULES_DIR.iterdir() if d.is_dir() and d.name != LAZY_RULES_NAME}
-    expected = {"01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_path_scoped"}
+    expected = {"01_essentials", "02_claude_standards", "03_authoring_guidelines"}
     assert tiers == expected, f"rules/ tier folders drifted — missing {expected - tiers}, extra {tiers - expected}"
 
 

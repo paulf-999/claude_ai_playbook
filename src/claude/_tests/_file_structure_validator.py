@@ -93,12 +93,11 @@ DIR_RULES = {
             "01_essentials",
             "02_claude_standards",
             "03_authoring_guidelines",
-            "04_path_scoped",
         ],
         "rule": (
             "Rules organized by tier (01_essentials=blocking, 02_claude_standards=how Claude works, "
-            "03_authoring_guidelines=authoring standards, "
-            "04_path_scoped=domain-specific, loaded with matching files)"
+            "03_authoring_guidelines=authoring standards; "
+            "02_claude_standards/path_scoped_rules/ loads only with matching files)"
         ),
     },
     "hooks": {
