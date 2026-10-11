@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-03
 # Date updated:      2026-10-11
-# Version:           2.3.0
+# Version:           2.4.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -183,3 +183,10 @@ def test_your_own_lazy_file_is_kept(tmp_path: Path):
     output = migrate(tmp_path)
     assert (tmp_path / LAZY / "_learned" / "my_rule.md").is_file(), "your own lazy file was removed"
     assert "Removed old shipped copies" not in output, output
+
+
+def test_empty_old_file_is_moved_not_removed(tmp_path: Path):
+    """An empty file under _rules/ is treated as yours, since the repo storing an empty file proves nothing."""
+    write(tmp_path, "_rules/05_lazy_load/placeholder.md", "")
+    migrate(tmp_path)
+    assert (tmp_path / LAZY / "placeholder.md").is_file(), "an empty file was taken for a shipped copy and removed"
