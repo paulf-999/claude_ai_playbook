@@ -277,6 +277,7 @@ migrate_old_rules_layout() {
     local OLD_DIR="${TARGET_DIR}/_rules"
     local NEW_DIR="${TARGET_DIR}/_rules_lazy_load"
     local LINK FROM REL TO
+    local SHIPPED_COUNT=0
     # Links into the old _rules/ would dangle, and Claude Code would still try to load them
     if [[ -d "${TARGET_DIR}/rules" ]]; then
         while IFS= read -r LINK; do
@@ -291,7 +292,7 @@ migrate_old_rules_layout() {
         TO="${NEW_DIR}/${REL#05_lazy_load/}"
         if shipped_by_repo "${FROM}"; then
             rm "${FROM}"
-            log_message "${INFO}" "Removed old shipped copy: _rules/${REL}"
+            SHIPPED_COUNT=$((SHIPPED_COUNT + 1))
             continue
         fi
         if [[ -e "${TO}" ]]; then
@@ -302,6 +303,8 @@ migrate_old_rules_layout() {
         mv "${FROM}" "${TO}"
         log_message "${INFO}" "Moved your file: _rules/${REL} -> ${TO#"${TARGET_DIR}/"}"
     done < <(find "${OLD_DIR}" -type f | LC_ALL=C sort)
+    # One summary line rather than one per file, to keep the install output short
+    [[ "${SHIPPED_COUNT}" -gt 0 ]] && log_message "${INFO}" "Removed old shipped copies from _rules/: ${SHIPPED_COUNT} (the backup keeps them)"
     find "${OLD_DIR}" -depth -type d -empty -delete
     if [[ -d "${OLD_DIR}" ]]; then
         log_message "${WARNING}" "_rules/ still holds files that clash with the new layout — review: ${OLD_DIR}"

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-03
 # Date updated:      2026-10-11
-# Version:           2.1.0
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -136,7 +136,7 @@ def test_shipped_copy_is_removed_not_merged(tmp_path: Path):
     output = migrate(tmp_path)
     assert not (tmp_path / "_rules").exists(), "the stale shipped copy was kept"
     assert "merge it by hand" not in output, f"a shipped copy must never ask for a merge: {output}"
-    assert "Removed old shipped copy: _rules/README.md" in output, output
+    assert "Removed old shipped copies from _rules/: 1" in output, output
     assert (tmp_path / LAZY / "README.md").read_text() == "# Newer shipped index\n", "the new file was touched"
 
 
@@ -146,3 +146,12 @@ def test_shipped_copy_is_not_moved_into_the_lazy_folder(tmp_path: Path):
     output = migrate(tmp_path)
     assert not (tmp_path / LAZY / "turn_budgets.md").exists(), "a retired shipped rule was moved in as yours"
     assert "Moved your file" not in output, f"a shipped copy must not be reported as yours: {output}"
+
+
+def test_shipped_copies_get_one_summary_line(tmp_path: Path):
+    """Many shipped copies give one count line, not a line per file, so the install output stays short."""
+    for rel in ("_rules/README.md", "_rules/05_lazy_load/a.md", "_rules/05_lazy_load/org/b.md"):
+        write(tmp_path, rel, SHIPPED)
+    output = migrate(tmp_path)
+    assert "Removed old shipped copies from _rules/: 3 (the backup keeps them)" in output, output
+    assert output.count("_rules/05_lazy_load/") == 0, f"individual files were listed: {output}"
