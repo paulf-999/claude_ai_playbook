@@ -10,10 +10,10 @@ SHELL = /bin/bash
 # make lint             # run lint_tags and lint_skills
 # make audit_components # run periodic health audit on the Claude component library
 # make audit_rule_usage # measure how often each rule applies and loads, from session transcripts
-# make list_plans       # list saved plans in $CLAUDE_CONFIG_DIR/_plans/ by plan status, flagging stale Active ones
+# make list_plans       # list saved plans by plan status, flagging stale Active ones and anything to file
 # make install          # install Claude config files into $CLAUDE_CONFIG_DIR, or ~/.claude (previews, then asks you to type 'install')
 # make update           # [DISABLED] update Claude config files in ~/.claude/ (WSL)
-# make clean_plans      # archive Done and Dropped plans to _plans/archive/, and drafts over 14 days old to plans/archive/
+# make clean_plans      # file plans into _plans/<status>/ and drafts into plans/draft/ (plans/archive/ after 14 days)
 # make clean_backups    # move old ~/.claude_backup_* dirs to ~/.claude_backup_archive/
 # make clean            # run clean_plans and clean_backups
 # make all              # print this usage list
@@ -95,7 +95,7 @@ list_plans:
 	@python3 src/claude/_scripts/_audit_scripts/audit_plans.py
 
 clean_plans:
-	@echo "${INFO}\nArchiving Done and Dropped plans, and old plan-mode drafts${COLOUR_OFF}"
+	@echo "${INFO}\nFiling plans and drafts into their status folders${COLOUR_OFF}"
 	@python3 src/claude/_scripts/_clean_scripts/clean_plans.py
 
 clean_backups:

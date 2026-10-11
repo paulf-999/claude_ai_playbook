@@ -5,8 +5,8 @@ Each plan's status and last-updated date come from its "**Plan status:**" line
 (see _plan_file_format.md). Plans saved before that line existed fall back to their
 phase table for the status, and any plan without a date falls back to the file's
 modified time. Active plans untouched for stale_days or more are listed again as
-stale, to park or drop. Plan-mode drafts live apart in <config>/plans/, and archived
-plans in _plans/archive/ are never read, since only files directly in _plans/ are scanned.
+stale, to park or drop. Saved plans are read loose in _plans/ and in its status subfolders
+(active/, parked/, done/, dropped/), and plan-mode drafts are counted in <config>/plans/.
 
 Usage:
     make list_plans
@@ -24,7 +24,7 @@ from typing import NamedTuple
 
 STALE_DAYS = 14
 # Parked and Done/Dropped follow Active, which is what you came to find
-SHOWN = ("Active", "Parked")
+SHOWN = ("Active", "Parked", "Draft")  # Draft in _plans/ means the save step missed setting Active
 
 
 def _load_clean_plans():
@@ -66,8 +66,8 @@ def read_plan(path: Path, today: date) -> Plan:
 
 
 def collect(plans_dir: Path, today: date) -> list[Plan]:
-    """Read every plan directly in plans_dir, most recently updated first."""
-    plans = [read_plan(p, today) for p in plans_dir.glob("*.md")]
+    """Read every saved plan, loose or in a status subfolder, most recently updated first."""
+    plans = [read_plan(p, today) for p in CLEAN_PLANS.saved_plan_files(plans_dir)]
     return sorted(plans, key=lambda p: (p.days_since_update, p.name))
 
 
@@ -84,7 +84,7 @@ def _line(plan: Plan) -> str:
 
 
 def report(plans: list[Plan], stale_days: int = STALE_DAYS) -> str:
-    """Build the listing: Active and Parked plans in full, then stale ones, then a count of archivable ones."""
+    """Build the listing: Active, Parked and Draft plans in full, then stale ones, then a count of finished ones."""
     if not plans:
         return "No saved plans."
     lines = []
@@ -95,22 +95,28 @@ def report(plans: list[Plan], stale_days: int = STALE_DAYS) -> str:
     old = stale(plans, stale_days)
     if old:
         lines += [f"STALE — Active, untouched {stale_days}d+ ({len(old)}): park or drop?", *map(_line, old), ""]
-    finished = [p for p in plans if p.status in CLEAN_PLANS.ARCHIVABLE]
+    finished = [p for p in plans if p.status in CLEAN_PLANS.FINISHED]
     if finished:
-        lines.append(f"{len(finished)} Done or Dropped — run `make clean_plans` to archive them.")
+        lines.append(f"{len(finished)} Done or Dropped.")
     return "\n".join(lines).rstrip()
 
 
 def drafts_line(drafts_dir: Path, today: date, stale_days: int = STALE_DAYS) -> str:
-    """Count plan-mode drafts in plans/, and how many are old enough for make clean_plans to archive."""
+    """Count plan-mode drafts in plans/, and how many make clean_plans would file or archive."""
     if not drafts_dir.is_dir():
         return ""
-    total = len(list(drafts_dir.glob("*.md")))
+    total = len(CLEAN_PLANS.draft_files(drafts_dir))
     if not total:
         return ""
-    old = len(CLEAN_PLANS.find_old_drafts(drafts_dir, min_age_days=stale_days, today=today))
-    hint = f", {old} older than {stale_days}d — run `make clean_plans` to archive them" if old else ""
+    moves = len(CLEAN_PLANS.find_draft_moves(drafts_dir, min_age_days=stale_days, today=today))
+    hint = f", {moves} to file — run `make clean_plans`" if moves else ""
     return f"Drafts in {drafts_dir.name}/: {total}{hint}."
+
+
+def unfiled_line(plans_dir: Path) -> str:
+    """Count saved plans not yet in the subfolder their status names."""
+    moves = len(CLEAN_PLANS.find_plan_moves(plans_dir))
+    return f"{moves} saved plans not in their status folder — run `make clean_plans` to file them." if moves else ""
 
 
 def main(plans_dir: str | Path | None = None, today: date | None = None):
@@ -125,9 +131,10 @@ def main(plans_dir: str | Path | None = None, today: date | None = None):
         return
     today = today or date.today()
     print(report(collect(plans_dir, today)))
-    line = drafts_line(plans_dir.parent / "plans", today)  # plan mode's own drafts, beside _plans/
-    if line:
-        print(f"\n{line}")
+    # Plan mode's own drafts live in plans/, beside _plans/
+    extra = [line for line in (unfiled_line(plans_dir), drafts_line(plans_dir.parent / "plans", today)) if line]
+    if extra:
+        print("\n" + "\n".join(extra))
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-11
-# Version:           3.3.0
+# Version:           3.4.0
 # Test quality score: 9/10
 # Test complexity score: 10/10
 # Python style compliant: Yes
@@ -26,7 +26,7 @@ from _shared_paths import CLAUDE_DIR
 RULE_FILE = CLAUDE_DIR / "rules" / "02_claude_standards" / "claude_plans" / "_plan_mode_phase_gates.md"
 PARENT_FILE = CLAUDE_DIR / "rules" / "02_claude_standards" / "claude_plans.md"
 FORMAT_FILE = RULE_FILE.with_name("_plan_file_format.md")
-PLAN_STATUSES = ("Active", "Parked", "Done", "Dropped")
+PLAN_STATUSES = ("Draft", "Active", "Parked", "Done", "Dropped")
 
 PRESSURE_WORDS = ["MANDATORY", "CRITICAL", "BLOCKING", "non-negotiable", "absolute requirement"]
 
@@ -142,8 +142,9 @@ def test_keeps_plan_persistence_section():
 
 
 def test_saving_a_plan_marks_it_active():
-    """The copy-on-exit step saves the plan with an Active plan status."""
+    """A draft starts as Draft, and the copy-on-exit step saves the plan as Active."""
     content = _content()
+    assert "**Plan status:** 📝 Draft" in content, "Plan mode must mark its draft as Draft"
     assert "**Plan status:** 🟢 Active" in content, "Copy on exit must set the plan status to Active"
 
 

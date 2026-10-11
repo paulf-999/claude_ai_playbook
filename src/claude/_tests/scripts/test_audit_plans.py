@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-11
 # Date updated:      2026-10-11
-# Version:           1.2.0
+# Version:           2.0.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -84,8 +84,24 @@ def test_most_recently_updated_plan_comes_first(tmp_path):
     assert [p.name for p in AUDIT.collect(tmp_path, TODAY)] == ["new", "old"]
 
 
+def test_status_subfolders_are_read(tmp_path):
+    """Plans already filed in a status subfolder are listed like loose ones."""
+    (tmp_path / "active").mkdir()
+    write_plan(tmp_path / "active", "filed", "Active", days_old=1)
+    write_plan(tmp_path, "loose", "Active", days_old=2)
+    assert [p.name for p in AUDIT.collect(tmp_path, TODAY)] == ["filed", "loose"]
+
+
+def test_unfiled_line_counts_plans_outside_their_folder(tmp_path):
+    """A loose or misfiled plan is counted and points at the filing command, and none gives no line."""
+    assert AUDIT.unfiled_line(tmp_path) == "", "an empty folder should add nothing"
+    write_plan(tmp_path, "loose", "Active")
+    line = AUDIT.unfiled_line(tmp_path)
+    assert line.startswith("1 saved plans not in their status folder") and "make clean_plans" in line, line
+
+
 def test_subfolders_are_never_listed(tmp_path):
-    """Only files directly in _plans/ count, so archived plans and any other subfolder stay out."""
+    """Only _plans/ itself and its status subfolders count, so archive/ and any other folder stay out."""
     write_plan(tmp_path, "kept", "Active")
     for sub in ("archive", "notes"):
         (tmp_path / sub).mkdir()
@@ -125,13 +141,22 @@ def test_report_lists_active_before_parked(tmp_path):
     assert text.index("active_plan") < text.index("parked_plan"), f"plans must sit under their group:\n{text}"
 
 
+def test_draft_left_in_saved_plans_is_still_listed(tmp_path):
+    """A saved plan still marked Draft is listed after Active and Parked, so a missed save step shows up."""
+    write_plan(tmp_path, "forgot_to_activate", "📝 Draft")
+    write_plan(tmp_path, "parked_plan", "Parked")
+    text = AUDIT.report(AUDIT.collect(tmp_path, TODAY))
+    assert "DRAFT (1)" in text and "forgot_to_activate" in text, f"a Draft in _plans/ was hidden:\n{text}"
+    assert text.index("PARKED (1)") < text.index("DRAFT (1)"), f"Draft should follow Parked:\n{text}"
+
+
 def test_finished_plans_are_counted_not_listed(tmp_path):
-    """Done and Dropped plans only add a count with the archive command, not one line each."""
+    """Done and Dropped plans only add a count, not one line each."""
     write_plan(tmp_path, "done_plan", "Done")
     write_plan(tmp_path, "dropped_plan", "Dropped")
     text = AUDIT.report(AUDIT.collect(tmp_path, TODAY))
     assert "done_plan" not in text and "dropped_plan" not in text, f"finished plans were listed:\n{text}"
-    assert "2 Done or Dropped — run `make clean_plans`" in text, f"missing the archive hint:\n{text}"
+    assert "2 Done or Dropped." in text, f"missing the finished count:\n{text}"
 
 
 def test_stale_section_names_the_plan_and_the_choice(tmp_path):
@@ -170,12 +195,12 @@ def test_default_folder_follows_config_dir(tmp_path, monkeypatch, capsys):
 
 
 def test_drafts_line_counts_and_points_at_cleanup(tmp_path):
-    """The drafts line gives the total, how many are old, and the command that archives them."""
+    """The drafts line gives the total, how many need filing, and the command that files them."""
     write_plan(tmp_path, "old-draft", days_old=20)
     write_plan(tmp_path, "new-draft", days_old=1)
     line = AUDIT.drafts_line(tmp_path, TODAY)
-    assert line.startswith(f"Drafts in {tmp_path.name}/: 2, 1 older than 14d"), line
-    assert "make clean_plans" in line, f"the line should name the cleanup command: {line}"
+    assert line.startswith(f"Drafts in {tmp_path.name}/: 2, 2 to file"), line
+    assert "make clean_plans" in line, f"the line should name the filing command: {line}"
 
 
 def test_drafts_line_is_quiet_without_drafts(tmp_path):

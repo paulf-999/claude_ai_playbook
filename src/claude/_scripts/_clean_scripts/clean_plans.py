@@ -1,14 +1,14 @@
-"""Archive Done and Dropped plans from <config>/_plans/, and old plan-mode drafts from <config>/plans/.
+"""File saved plans and plan-mode drafts into subfolders named after their plan status.
 
-A plan's status comes from its "**Plan status:**" line (see _plan_file_format.md).
-Plans saved before that line existed count as Done only when every Status cell in
-their phase table reads Done. Active and Parked plans are always kept, and so are
-plans newer than min_age_days (by their YYYY_MM_DD_ filename prefix), so a
-just-finished plan stays easy to find.
+Saved plans in <config>/_plans/ move to active/, parked/, done/ or dropped/, following
+each plan's "**Plan status:**" line (see _plan_file_format.md). Plans saved before that
+line existed count as Done only when every phase in their table reads Done, and Active
+otherwise. The status line stays the source of truth, so a plan whose status changes is
+simply moved again on the next run.
 
-Drafts in <config>/plans/ not changed for min_age_days move to plans/archive/: a draft
-worth keeping was copied into _plans/ when approved. Both moves go to an archive/
-subfolder, never deleted, and only files directly in each folder are read.
+Drafts in <config>/plans/ move to plans/draft/ once a day old, and to plans/archive/ once
+unchanged for min_age_days: a draft worth keeping was copied into _plans/ when approved.
+Nothing is deleted or overwritten, and every move is previewed and confirmed first.
 
 <config> is $CLAUDE_CONFIG_DIR, falling back to ~/.claude.
 """
@@ -22,8 +22,6 @@ import sys
 from datetime import date
 from pathlib import Path
 
-# Plan files are named YYYY_MM_DD_<topic>.md
-PLAN_NAME_RE = re.compile(r"^(\d{4})_(\d{2})_(\d{2})_[a-z0-9_]+\.md$")
 # A Status cell counts as finished when it starts with Done, with or without the ✅ emoji
 DONE_RE = re.compile(r"^(✅\s*)?done\b", re.IGNORECASE)
 
@@ -89,11 +87,11 @@ def is_finished(text: str) -> bool:
     return bool(statuses) and all(DONE_RE.match(status) for status in statuses)
 
 
-PLAN_STATUSES = ("Active", "Parked", "Done", "Dropped")
-ARCHIVABLE = ("Done", "Dropped")
+PLAN_STATUSES = ("Draft", "Active", "Parked", "Done", "Dropped")
+FINISHED = ("Done", "Dropped")
 # The plan-level line from _plan_file_format.md, e.g. "**Plan status:** 🟢 Active"
 PLAN_STATUS_RE = re.compile(
-    r"^\*\*Plan status:\*\*\s*(?:\S+\s+)?(Active|Parked|Done|Dropped)\b", re.IGNORECASE | re.MULTILINE
+    r"^\*\*Plan status:\*\*\s*(?:\S+\s+)?(Draft|Active|Parked|Done|Dropped)\b", re.IGNORECASE | re.MULTILINE
 )
 
 
@@ -136,77 +134,88 @@ def plan_updated(text: str) -> date | None:
         return None
 
 
-def plan_date(name: str) -> date | None:
-    """Read the date from a plan's YYYY_MM_DD_ filename prefix.
+# Each status files into a subfolder named after it, e.g. _plans/active/ or plans/draft/
+STATUS_FOLDERS = {status: status.lower() for status in PLAN_STATUSES}
+DRAFTS_ARCHIVE = "archive"  # plans/archive/ holds drafts untouched for min_age_days
 
-    :param name: The plan's filename.
-    :type name: str
-    :return: The date, or None when the name doesn't follow the pattern or the date is invalid.
-    :rtype: date or None
+
+def saved_plan_files(plans_dir: Path) -> list[Path]:
+    """Return every saved plan: loose in _plans/ or in one of its status subfolders.
+
+    Any other subfolder, such as the archive/ used before status folders, is never read.
+
+    :param plans_dir: The _plans/ folder.
+    :return: Plan paths, sorted.
     """
-    match = PLAN_NAME_RE.match(name)
-    if not match:
-        return None
-    try:
-        return date(int(match.group(1)), int(match.group(2)), int(match.group(3)))
-    except ValueError:
-        return None
+    files = list(plans_dir.glob("*.md"))
+    for folder in STATUS_FOLDERS.values():
+        files += (plans_dir / folder).glob("*.md")
+    return sorted(files)
 
 
-def find_candidates(plans_dir: Path, min_age_days: int = 14, today: date | None = None) -> list[Path]:
-    """List Done and Dropped plans old enough to archive.
+def find_plan_moves(plans_dir: Path) -> list[tuple[Path, Path]]:
+    """List saved plans not yet in the subfolder their status names, with the folder each belongs in.
 
-    :param plans_dir: The _plans/ folder to scan; its archive/ subfolder is never scanned.
-    :type plans_dir: Path
-    :param min_age_days: Keep plans dated fewer than this many days ago.
-    :type min_age_days: int
+    :param plans_dir: The _plans/ folder.
+    :return: (plan, target folder) pairs, sorted by plan path.
+    """
+    moves = []
+    for path in saved_plan_files(plans_dir):
+        status, _ = plan_status(path.read_text(encoding="utf-8"))
+        target = plans_dir / STATUS_FOLDERS[status]
+        if path.parent != target:
+            moves.append((path, target))
+    return moves
+
+
+def draft_files(drafts_dir: Path) -> list[Path]:
+    """Return every plan-mode draft: loose in plans/ or already filed in plans/draft/."""
+    return sorted([*drafts_dir.glob("*.md"), *(drafts_dir / STATUS_FOLDERS["Draft"]).glob("*.md")])
+
+
+def find_draft_moves(drafts_dir: Path, min_age_days: int = 14, today: date | None = None) -> list[tuple[Path, Path]]:
+    """List drafts to file: into plans/draft/ once a day old, or plans/archive/ once min_age_days old.
+
+    Drafts changed today stay put, since plan mode may still be writing to them. A draft worth
+    keeping was copied into _plans/ when approved, so an old one is almost always abandoned —
+    archiving rather than deleting keeps one whose copy was missed recoverable.
+
+    :param drafts_dir: The plans/ folder plan mode writes to.
+    :param min_age_days: Archive drafts unchanged for this many days or more.
     :param today: Reference date for age calculations. Defaults to date.today().
-    :type today: date or None
-    :return: Paths of the plans to archive, sorted by name.
-    :rtype: list[Path]
+    :return: (draft, target folder) pairs, sorted by draft path.
     """
-    if today is None:
-        today = date.today()
+    today = today or date.today()
+    filed = drafts_dir / STATUS_FOLDERS["Draft"]
+    moves = []
+    for path in draft_files(drafts_dir):
+        age = (today - date.fromtimestamp(path.stat().st_mtime)).days
+        if age >= min_age_days:
+            moves.append((path, drafts_dir / DRAFTS_ARCHIVE))
+        elif age >= 1 and path.parent != filed:
+            moves.append((path, filed))
+    return moves
 
-    candidates = []
-    for path in sorted(plans_dir.glob("*.md")):
-        dated = plan_date(path.name)
-        # Undated or too-recent plans are kept, whatever their status
-        if dated is None or (today - dated).days < min_age_days:
+
+def _move_all(moves: list[tuple[Path, Path]], root: Path) -> int:
+    """Move each file into its target folder, never overwriting; return how many moved."""
+    moved = 0
+    for path, target in moves:
+        target.mkdir(parents=True, exist_ok=True)
+        if (target / path.name).exists():
+            print(f"  Skipped (already in {target.relative_to(root)}/): {path.name}")
             continue
-        if plan_status(path.read_text(encoding="utf-8"))[0] in ARCHIVABLE:
-            candidates.append(path)
-    return candidates
+        shutil.move(path, target / path.name)
+        moved += 1
+    return moved
 
 
-def find_old_drafts(drafts_dir: Path, min_age_days: int = 14, today: date | None = None) -> list[Path]:
-    """List plan-mode drafts not changed for min_age_days or more.
-
-    Drafts have random names and no status, so age is all there is to go on. A draft worth
-    keeping was copied into _plans/ when it was approved, so an old one is almost always
-    abandoned — and archiving, not deleting, keeps one whose copy was missed recoverable.
-
-    :param drafts_dir: The plans/ folder plan mode writes to; its archive/ subfolder is never scanned.
-    :param min_age_days: Keep drafts changed fewer than this many days ago.
-    :param today: Reference date for age calculations. Defaults to date.today().
-    :return: Paths of the drafts to archive, sorted by name.
-    """
-    if today is None:
-        today = date.today()
-    if not drafts_dir.is_dir():
-        return []
-    return [
-        path for path in sorted(drafts_dir.glob("*.md"))
-        if (today - date.fromtimestamp(path.stat().st_mtime)).days >= min_age_days
-    ]
-
-
-def _move_all(paths: list[Path], archive_dir: Path) -> None:
-    """Move each path into archive_dir, creating it first."""
-    archive_dir.mkdir(parents=True, exist_ok=True)
-    for path in paths:
-        shutil.move(path, archive_dir / path.name)
-        print(f"  Archived: {path.name}")
+def _preview(moves: list[tuple[Path, Path]], root: Path) -> None:
+    """Print the planned moves, grouped by target folder."""
+    for target in sorted({target for _, target in moves}):
+        names = [path.name for path, folder in moves if folder == target]
+        print(f"To {root.name}/{target.relative_to(root)}/ ({len(names)}):")
+        print("\n".join(f"  {name}" for name in names) + "\n")
 
 
 def main(
@@ -215,13 +224,12 @@ def main(
     today: date | None = None,
     drafts_dir: str | Path | None = None,
 ):
-    """Preview Done and Dropped plans and old drafts, ask once, then move each into its folder's archive/.
+    """Preview filing saved plans and drafts into their status subfolders, ask once, then move them.
 
     :param plans_dir: Override the saved plans folder. Defaults to $CLAUDE_CONFIG_DIR/_plans.
         Intended for use in tests.
-    :param min_age_days: Only archive plans and drafts this many days old or older.
-    :param today: Reference date for age calculations. Defaults to date.today().
-        Intended for use in tests.
+    :param min_age_days: Archive drafts unchanged for this many days or more.
+    :param today: Reference date for draft ages. Defaults to date.today(). Intended for use in tests.
     :param drafts_dir: Override the drafts folder. Defaults to plans/ beside the saved plans folder.
     """
     plans_dir = _default_plans_dir() if plans_dir is None else Path(plans_dir)
@@ -230,17 +238,14 @@ def main(
         print(f"No plans folder found at {plans_dir} or {drafts_dir}.")
         sys.exit(0)
 
-    plans = find_candidates(plans_dir, min_age_days=min_age_days, today=today) if plans_dir.is_dir() else []
-    drafts = find_old_drafts(drafts_dir, min_age_days=min_age_days, today=today)
-    if not plans and not drafts:
-        print(f"No Done or Dropped plans, and no drafts, older than {min_age_days} days to archive.")
+    plan_moves = find_plan_moves(plans_dir) if plans_dir.is_dir() else []
+    draft_moves = find_draft_moves(drafts_dir, min_age_days=min_age_days, today=today) if drafts_dir.is_dir() else []
+    if not plan_moves and not draft_moves:
+        print("Every plan and draft is already in its status folder.")
         sys.exit(0)
 
-    for label, paths, folder in (("Done or Dropped plans", plans, plans_dir), ("Old drafts", drafts, drafts_dir)):
-        if paths:
-            print(f"{label} to move to {folder / 'archive'}/ ({len(paths)}):")
-            print("\n".join(f"  {path.name}" for path in paths) + "\n")
-
+    _preview(plan_moves, plans_dir)
+    _preview(draft_moves, drafts_dir)
     try:
         confirm = input("Move these? [y/N] ").strip().lower()
     except (EOFError, KeyboardInterrupt):
@@ -251,9 +256,9 @@ def main(
         print("Aborted.")
         sys.exit(0)
 
-    _move_all(plans, plans_dir / "archive")
-    _move_all(drafts, drafts_dir / "archive")
-    print(f"\nDone. {len(plans)} plans and {len(drafts)} drafts archived.")
+    plans_moved = _move_all(plan_moves, plans_dir)
+    drafts_moved = _move_all(draft_moves, drafts_dir)
+    print(f"\nDone. {plans_moved} plans and {drafts_moved} drafts filed.")
 
 
 if __name__ == "__main__":

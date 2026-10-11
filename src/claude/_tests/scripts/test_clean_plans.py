@@ -2,18 +2,17 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
 # Date updated:      2026-10-11
-# Version:           1.3.0
+# Version:           2.0.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Validates that clean_plans.py archives only Done or Dropped, old-enough plans.
+"""Validates that clean_plans.py files plans and drafts into status subfolders.
 
-A plan's Plan status line decides it, and a plan without one is finished only
-when every Status cell in its phase table reads Done. Anything else — an Active
-or Parked plan, no table, a Pending phase, a recent date or an undated name —
-must stay in _plans/, because archiving a live plan would lose work.
+A plan's Plan status line decides its folder, and a plan without one counts as
+Done only when every Status cell in its phase table reads Done. Drafts are filed
+by age alone, and nothing is ever overwritten or moved without a yes.
 """
 
 import builtins
@@ -130,6 +129,14 @@ def test_plan_status_falls_back_to_phase_table():
     assert clean_plans.plan_status("# Plan\n\nJust prose.\n") == ("Active", False), "no table must read Active"
 
 
+def test_draft_status_is_read_and_never_filed_as_done(tmp_path):
+    """A Draft line parses, and a Draft left in _plans/ files as draft, even with every phase Done."""
+    assert clean_plans.plan_status("**Plan status:** 📝 Draft · updated 2026-09-01\n") == ("Draft", True)
+    write_plan(tmp_path, "2026_09_01_draft.md", "**Plan status:** 📝 Draft\n" + plan_text("✅ Done"))
+    moves = clean_plans.find_plan_moves(tmp_path)
+    assert [target.name for _, target in moves] == ["draft"], f"a Draft must file as draft, not done: {moves}"
+
+
 def test_unknown_plan_status_word_is_ignored():
     """A word outside the four statuses falls back to the phase table rather than being trusted."""
     assert clean_plans.plan_status("**Plan status:** Maybe\n" + plan_text("⏳ Pending")) == ("Active", False)
@@ -149,88 +156,52 @@ def test_missing_or_invalid_updated_date_gives_none():
     assert clean_plans.plan_updated("Plan updated 2026-09-20 in prose\n") is None, "only the status line counts"
 
 
-# ── reading plan dates ────────────────────────────────────────────────────────
+# ── filing saved plans ────────────────────────────────────────────────────────
 
 
-def test_plan_date_parsed_from_prefix():
-    """A YYYY_MM_DD_ prefix gives the plan's date."""
-    assert clean_plans.plan_date("2026_09_17_tidy_rules.md") == date(2026, 9, 17), "Date prefix should parse"
+def moves_by_name(moves):
+    """Map each moved file's name to its target folder's name."""
+    return {path.name: target.name for path, target in moves}
 
 
-def test_plan_date_none_for_bad_names():
-    """Undated names and impossible dates give None."""
-    assert clean_plans.plan_date("notes.md") is None, "An undated name should give None"
-    assert clean_plans.plan_date("2026_13_40_bad_date.md") is None, "An impossible date should give None"
+def test_each_status_files_into_its_own_folder(tmp_path):
+    """Active, Parked, Done and Dropped plans each go to the subfolder named after their status."""
+    for status in ("Active", "Parked", "Done", "Dropped"):
+        write_plan(tmp_path, f"2026_09_01_{status.lower()}.md", f"**Plan status:** {status}\n")
+    expected = {f"2026_09_01_{s}.md": s for s in ("active", "parked", "done", "dropped")}
+    assert moves_by_name(clean_plans.find_plan_moves(tmp_path)) == expected
 
 
-# ── choosing what to archive ──────────────────────────────────────────────────
+def test_legacy_plan_files_by_inferred_status(tmp_path):
+    """A plan with no status line files by its phase table: all Done to done/, anything else to active/."""
+    write_plan(tmp_path, "2026_09_01_finished.md", plan_text("✅ Done"))
+    write_plan(tmp_path, "2026_09_01_unfinished.md", plan_text("✅ Done", "⏳ Pending"))
+    moves = moves_by_name(clean_plans.find_plan_moves(tmp_path))
+    assert moves == {"2026_09_01_finished.md": "done", "2026_09_01_unfinished.md": "active"}, moves
 
 
-def test_find_candidates_picks_only_old_finished_plans(tmp_path):
-    """Only finished plans at least min_age_days old are picked."""
-    write_plan(tmp_path, "2026_09_01_old_done.md", plan_text("✅ Done"))
-    write_plan(tmp_path, "2026_09_01_old_pending.md", plan_text("⏳ Pending"))
-    write_plan(tmp_path, "2026_09_30_new_done.md", plan_text("✅ Done"))
-    write_plan(tmp_path, "undated_done.md", plan_text("✅ Done"))
-    names = [path.name for path in clean_plans.find_candidates(tmp_path, min_age_days=14, today=TODAY)]
-    assert names == ["2026_09_01_old_done.md"], f"Only the old finished plan should be picked, got {names}"
+def test_plan_already_in_its_folder_stays(tmp_path):
+    """A filed plan whose status hasn't changed isn't moved again."""
+    (tmp_path / "active").mkdir()
+    write_plan(tmp_path / "active", "2026_09_01_a.md", "**Plan status:** Active\n")
+    assert clean_plans.find_plan_moves(tmp_path) == [], "a correctly filed plan should stay put"
 
 
-def test_find_candidates_follows_plan_status(tmp_path):
-    """Dropped plans are archived, and a stated Active or Parked plan is kept even with every phase Done."""
-    write_plan(tmp_path, "2026_09_01_dropped.md", "**Plan status:** 🗑️ Dropped\n" + plan_text("⏳ Pending"))
-    write_plan(tmp_path, "2026_09_01_done.md", "**Plan status:** ✅ Done\n" + plan_text("✅ Done"))
-    write_plan(tmp_path, "2026_09_01_active.md", "**Plan status:** 🟢 Active\n" + plan_text("✅ Done"))
-    write_plan(tmp_path, "2026_09_01_parked.md", "**Plan status:** ⏸️ Parked\n" + plan_text("✅ Done"))
-    names = [path.name for path in clean_plans.find_candidates(tmp_path, min_age_days=14, today=TODAY)]
-    assert names == ["2026_09_01_done.md", "2026_09_01_dropped.md"], f"Only Done and Dropped should go, got {names}"
+def test_status_change_moves_a_filed_plan(tmp_path):
+    """A plan in active/ whose line now says Done moves to done/ — the line, not the folder, is the truth."""
+    (tmp_path / "active").mkdir()
+    write_plan(tmp_path / "active", "2026_09_01_a.md", "**Plan status:** Done\n")
+    assert moves_by_name(clean_plans.find_plan_moves(tmp_path)) == {"2026_09_01_a.md": "done"}
 
 
-def test_recent_dropped_plan_is_kept(tmp_path):
-    """The age floor applies to Dropped plans too, so a plan dropped by mistake can still be found."""
-    write_plan(tmp_path, "2026_09_30_dropped.md", "**Plan status:** Dropped\n")
-    assert clean_plans.find_candidates(tmp_path, min_age_days=14, today=TODAY) == [], "a recent drop must be kept"
+def test_other_subfolders_are_never_read(tmp_path):
+    """Plans in a non-status folder, such as the old archive/, are left alone."""
+    (tmp_path / "archive").mkdir()
+    write_plan(tmp_path / "archive", "2026_09_01_old.md", "**Plan status:** Active\n")
+    assert clean_plans.saved_plan_files(tmp_path) == [], "archive/ should not be read"
 
 
-def test_find_candidates_skips_archive_folder(tmp_path):
-    """Plans already in archive/ are never picked again."""
-    archive = tmp_path / "archive"
-    archive.mkdir()
-    write_plan(archive, "2026_09_01_old_done.md", plan_text("✅ Done"))
-    assert clean_plans.find_candidates(tmp_path, today=TODAY) == [], "archive/ should not be scanned"
-
-
-# ── the full run ──────────────────────────────────────────────────────────────
-
-
-def test_main_archives_on_yes(tmp_path, monkeypatch):
-    """Answering y moves finished plans into archive/ and leaves the rest."""
-    write_plan(tmp_path, "2026_09_01_old_done.md", plan_text("✅ Done"))
-    write_plan(tmp_path, "2026_09_01_old_pending.md", plan_text("⏳ Pending"))
-    monkeypatch.setattr(builtins, "input", lambda _prompt: "y")
-    clean_plans.main(plans_dir=tmp_path, today=TODAY, drafts_dir=tmp_path / "no_drafts")
-    assert (tmp_path / "archive" / "2026_09_01_old_done.md").exists(), "Finished plan should move to archive/"
-    assert not (tmp_path / "2026_09_01_old_done.md").exists(), "Finished plan should leave _plans/"
-    assert (tmp_path / "2026_09_01_old_pending.md").exists(), "Unfinished plan should stay"
-
-
-def test_main_moves_nothing_on_no(tmp_path, monkeypatch):
-    """Any answer other than y leaves every plan in place."""
-    write_plan(tmp_path, "2026_09_01_old_done.md", plan_text("✅ Done"))
-    monkeypatch.setattr(builtins, "input", lambda _prompt: "n")
-    with pytest.raises(SystemExit):
-        clean_plans.main(plans_dir=tmp_path, today=TODAY, drafts_dir=tmp_path / "no_drafts")
-    assert (tmp_path / "2026_09_01_old_done.md").exists(), "Plan should stay when the user says no"
-    assert not (tmp_path / "archive").exists(), "archive/ should not be created when the user says no"
-
-
-def test_default_plans_dir_uses_config_dir(monkeypatch, tmp_path):
-    """The default folder is $CLAUDE_CONFIG_DIR/_plans."""
-    monkeypatch.setenv("CLAUDE_CONFIG_DIR", str(tmp_path))
-    assert clean_plans._default_plans_dir() == tmp_path / "_plans", "Default should follow CLAUDE_CONFIG_DIR"
-
-
-# ── plan-mode drafts ──────────────────────────────────────────────────────────
+# ── filing drafts ─────────────────────────────────────────────────────────────
 
 
 def write_draft(folder, name, days_old):
@@ -243,39 +214,67 @@ def write_draft(folder, name, days_old):
     return path
 
 
-def test_old_drafts_found_by_age_only(tmp_path):
-    """Drafts 14 days old or more are picked, and newer ones and archive/ are left alone."""
-    write_draft(tmp_path, "old-draft-name.md", 14)
-    write_draft(tmp_path, "new-draft-name.md", 13)
-    write_draft(tmp_path / "archive", "archived-draft.md", 40)
-    names = [p.name for p in clean_plans.find_old_drafts(tmp_path, min_age_days=14, today=TODAY)]
-    assert names == ["old-draft-name.md"], f"only the 14-day-old draft should go, got {names}"
+def test_drafts_file_by_age(tmp_path):
+    """Today's drafts stay, older ones go to draft/, and 14-day-old ones go to archive/."""
+    write_draft(tmp_path, "today-draft.md", 0)
+    write_draft(tmp_path, "recent-draft.md", 3)
+    write_draft(tmp_path, "old-draft.md", 14)
+    write_draft(tmp_path / "draft", "filed-old-draft.md", 20)
+    moves = moves_by_name(clean_plans.find_draft_moves(tmp_path, today=TODAY))
+    expected = {"recent-draft.md": "draft", "old-draft.md": "archive", "filed-old-draft.md": "archive"}
+    assert moves == expected, f"drafts filed wrongly: {moves}"
 
 
-def test_missing_drafts_folder_gives_nothing(tmp_path):
-    """A config with no plans/ folder has no drafts to archive."""
-    assert clean_plans.find_old_drafts(tmp_path / "plans", today=TODAY) == []
+def test_filed_recent_draft_stays(tmp_path):
+    """A draft already in draft/ and under 14 days old isn't moved again."""
+    write_draft(tmp_path / "draft", "filed-draft.md", 5)
+    assert clean_plans.find_draft_moves(tmp_path, today=TODAY) == []
 
 
-def test_main_archives_drafts_and_plans_together(tmp_path, monkeypatch):
-    """One yes moves old drafts to plans/archive/ and finished plans to _plans/archive/."""
+# ── the full run ──────────────────────────────────────────────────────────────
+
+
+def setup_config(tmp_path):
+    """Build a config with one unfiled saved plan and one 3-day-old draft."""
     plans, drafts = tmp_path / "_plans", tmp_path / "plans"
     plans.mkdir()
-    write_plan(plans, "2026_09_01_old_done.md", plan_text("✅ Done"))
-    write_draft(drafts, "abandoned-draft.md", 20)
-    write_draft(drafts, "current-draft.md", 1)
-    monkeypatch.setattr(builtins, "input", lambda _prompt: "y")
-    clean_plans.main(plans_dir=plans, today=TODAY)
-    assert (drafts / "archive" / "abandoned-draft.md").exists(), "an old draft should move to plans/archive/"
-    assert (drafts / "current-draft.md").exists(), "a recent draft should stay"
-    assert (plans / "archive" / "2026_09_01_old_done.md").exists(), "the finished plan should still be archived"
+    write_plan(plans, "2026_09_01_done.md", "**Plan status:** Done\n")
+    write_draft(drafts, "some-draft.md", 3)
+    return plans, drafts
 
 
-def test_main_archives_drafts_when_no_plan_is_finished(tmp_path, monkeypatch):
-    """Old drafts are archived even when no saved plan is ready, rather than the run stopping early."""
-    plans, drafts = tmp_path / "_plans", tmp_path / "plans"
-    plans.mkdir()
-    write_draft(drafts, "abandoned-draft.md", 20)
+def test_main_files_plans_and_drafts_on_yes(tmp_path, monkeypatch):
+    """One yes files saved plans and drafts together, keeping drafts' modified times."""
+    plans, drafts = setup_config(tmp_path)
+    before = (drafts / "some-draft.md").stat().st_mtime
     monkeypatch.setattr(builtins, "input", lambda _prompt: "y")
     clean_plans.main(plans_dir=plans, today=TODAY)
-    assert (drafts / "archive" / "abandoned-draft.md").exists(), "drafts must not wait for a finished plan"
+    assert (plans / "done" / "2026_09_01_done.md").exists(), "the Done plan should move to done/"
+    assert (drafts / "draft" / "some-draft.md").stat().st_mtime == before, "filing must keep a draft's age"
+
+
+def test_main_moves_nothing_on_no(tmp_path, monkeypatch):
+    """Any answer other than y leaves everything in place."""
+    plans, drafts = setup_config(tmp_path)
+    monkeypatch.setattr(builtins, "input", lambda _prompt: "n")
+    with pytest.raises(SystemExit):
+        clean_plans.main(plans_dir=plans, today=TODAY)
+    assert (plans / "2026_09_01_done.md").exists() and (drafts / "some-draft.md").exists(), "nothing should move"
+
+
+def test_main_never_overwrites(tmp_path, monkeypatch, capsys):
+    """If the target folder already holds a file of the same name, the move is skipped and reported."""
+    plans, _ = setup_config(tmp_path)
+    (plans / "done").mkdir()
+    write_plan(plans / "done", "2026_09_01_done.md", "**Plan status:** Done\n# existing\n")
+    monkeypatch.setattr(builtins, "input", lambda _prompt: "y")
+    clean_plans.main(plans_dir=plans, today=TODAY)
+    kept = (plans / "done" / "2026_09_01_done.md").read_text()
+    assert kept.endswith("# existing\n"), "the existing file was overwritten"
+    assert "Skipped (already in done/)" in capsys.readouterr().out
+
+
+def test_default_plans_dir_uses_config_dir(monkeypatch, tmp_path):
+    """The default folder is $CLAUDE_CONFIG_DIR/_plans."""
+    monkeypatch.setenv("CLAUDE_CONFIG_DIR", str(tmp_path))
+    assert clean_plans._default_plans_dir() == tmp_path / "_plans", "Default should follow CLAUDE_CONFIG_DIR"
