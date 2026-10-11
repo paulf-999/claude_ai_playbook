@@ -262,6 +262,8 @@ prune_removed_files() {
     local CURRENT REL
     CURRENT=$(list_installed_files)
     if [[ -f "${MANIFEST}" ]]; then
+        # Kept for remove_stale_shipped_copies, which also checks the folders the last install filled
+        PREVIOUS_MANIFEST=$(cat "${MANIFEST}")
         LC_ALL=C comm -23 <(LC_ALL=C sort -u "${MANIFEST}") <(echo "${CURRENT}") | while IFS= read -r REL; do
             [[ -z "${REL}" || "${REL}" == /* || "/${REL}/" == */../* ]] && continue  # stay inside the target
             is_user_owned "${REL%%/*}" && continue
@@ -278,33 +280,65 @@ prune_removed_files() {
 
 # Tell whether a file's exact content is something this repo has stored, i.e. a copy an install shipped.
 # A file you edited has content the repo never stored, so it never matches. Without git, nothing matches.
+# An empty file never matches either: the repo stores an empty file, so every empty file would look shipped.
 shipped_by_repo() {
     local HASH
+    [[ -s "$1" ]] || return 1
     HASH=$(git -C "${ROOT_DIR}" hash-object "$1" 2>/dev/null) || return 1
     git -C "${ROOT_DIR}" cat-file -e "${HASH}^{blob}" 2>/dev/null
 }
 
-# Remove old shipped copies from _rules_lazy_load/: files this install doesn't ship but whose content the
-# repo once shipped. The first version of migrate_old_rules_layout (2026-10-06) moved every old _rules/ file
-# in here, and no manifest lists them, so pruning can't see them. Compares against this install's files
-# rather than the manifest, so the Windows sync (which keeps none) is covered too. A file you edited never
-# matches, so it stays. The install's backup holds a copy of everything removed here.
-remove_stale_lazy_copies() {
-    local LAZY_DIR="${TARGET_DIR}/${LAZY_RULES_NAME}"
-    local CURRENT FILE REL
-    local COUNT=0
-    [[ -d "${LAZY_DIR}" ]] || return 0
+# Print the top-level folders that hold shipped files: those this install fills, plus those the previous
+# manifest named, so a folder the repo renamed or retired (e.g. the old _scripts/) is still checked.
+# User-owned folders are skipped, and runtime folders are never named, since no install puts files there.
+stale_copy_folders() {
+    local NAME
+    { list_installed_files; echo "${PREVIOUS_MANIFEST:-}"; } | grep / | cut -d/ -f1 | LC_ALL=C sort -u \
+        | while IFS= read -r NAME; do
+            # Stay inside the target, whatever an old manifest holds
+            [[ -z "${NAME}" || "${NAME}" == "." || "${NAME}" == ".." ]] && continue
+            is_user_owned "${NAME}" && continue
+            [[ -d "${TARGET_DIR}/${NAME}" ]] && echo "${NAME}"
+        done
+    return 0
+}
+
+# Print, relative to the target, each old shipped copy: a non-empty file in a shipped folder that this
+# install doesn't ship, but whose exact content the repo has stored. Installs from before the manifest
+# existed, and renames inside a folder, leave these behind, and pruning can't see them. Every candidate
+# is hashed and looked up in one git call each, so a large config stays quick. Without git, nothing prints.
+list_stale_shipped_copies() {
+    local CURRENT CANDIDATES NAME TYPE REL
     CURRENT=$(list_installed_files)
-    while IFS= read -r FILE; do
-        REL="${FILE#"${TARGET_DIR}/"}"
-        grep -qxF "${REL}" <<< "${CURRENT}" && continue
-        shipped_by_repo "${FILE}" || continue
-        rm "${FILE}"
-        remove_empty_parents "$(dirname "${FILE}")"
-        COUNT=$((COUNT + 1))
-    done < <(find "${LAZY_DIR}" -type f | LC_ALL=C sort)
-    # One summary line rather than one per file, to keep the install output short
-    [[ "${COUNT}" -gt 0 ]] && log_message "${INFO}" "Removed old shipped copies from ${LAZY_RULES_NAME}/: ${COUNT} (the backup keeps them)"
+    CANDIDATES=$(stale_copy_folders | while IFS= read -r NAME; do
+        (cd "${TARGET_DIR}" && find "${NAME}" -type f ! -empty -not -path "*/__pycache__/*")
+    done | LC_ALL=C sort -u | LC_ALL=C comm -23 - <(echo "${CURRENT}"))
+    [[ -n "${CANDIDATES}" ]] || return 0
+    # cat-file prints "blob" for content the repo stores and "<hash> missing" otherwise, one line per candidate
+    paste <(while IFS= read -r REL; do echo "${TARGET_DIR}/${REL}"; done <<< "${CANDIDATES}" \
+                | git -C "${ROOT_DIR}" hash-object --stdin-paths 2>/dev/null \
+                | git -C "${ROOT_DIR}" cat-file --batch-check="%(objecttype)" 2>/dev/null) \
+          <(echo "${CANDIDATES}") \
+        | while IFS=$'\t' read -r TYPE REL; do
+            [[ "${TYPE}" == "blob" && -n "${REL}" ]] && echo "${REL}"
+        done
+    return 0
+}
+
+# Remove old shipped copies (see list_stale_shipped_copies) and any folders they leave empty. A file you
+# edited or wrote never matches, so it stays. The install's backup holds a copy of everything removed here.
+remove_stale_shipped_copies() {
+    local STALE REL COUNT NAME
+    STALE=$(list_stale_shipped_copies)
+    [[ -n "${STALE}" ]] || return 0
+    while IFS= read -r REL; do
+        rm "${TARGET_DIR}/${REL}"
+        remove_empty_parents "$(dirname "${TARGET_DIR}/${REL}")"
+    done <<< "${STALE}"
+    # One summary line per folder rather than one per file, to keep the install output short
+    cut -d/ -f1 <<< "${STALE}" | uniq -c | while read -r COUNT NAME; do
+        log_message "${INFO}" "Removed old shipped copies from ${NAME}/: ${COUNT} (the backup keeps them)"
+    done
     return 0
 }
 
@@ -319,7 +353,7 @@ migrate_old_rules_layout() {
     local NEW_DIR="${TARGET_DIR}/_rules_lazy_load"
     local LINK FROM REL TO
     local SHIPPED_COUNT=0
-    remove_stale_lazy_copies
+    remove_stale_shipped_copies
     # Links into the old _rules/ would dangle, and Claude Code would still try to load them
     if [[ -d "${TARGET_DIR}/rules" ]]; then
         while IFS= read -r LINK; do
