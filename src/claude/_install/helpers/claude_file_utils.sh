@@ -282,6 +282,30 @@ shipped_by_repo() {
     git -C "${ROOT_DIR}" cat-file -e "${HASH}^{blob}" 2>/dev/null
 }
 
+# Remove old shipped copies from _rules_lazy_load/: files this install doesn't ship but whose content the
+# repo once shipped. The first version of migrate_old_rules_layout (2026-10-06) moved every old _rules/ file
+# in here, and no manifest lists them, so pruning can't see them. Compares against this install's files
+# rather than the manifest, so the Windows sync (which keeps none) is covered too. A file you edited never
+# matches, so it stays. The install's backup holds a copy of everything removed here.
+remove_stale_lazy_copies() {
+    local LAZY_DIR="${TARGET_DIR}/${LAZY_RULES_NAME}"
+    local CURRENT FILE REL
+    local COUNT=0
+    [[ -d "${LAZY_DIR}" ]] || return 0
+    CURRENT=$(list_installed_files)
+    while IFS= read -r FILE; do
+        REL="${FILE#"${TARGET_DIR}/"}"
+        grep -qxF "${REL}" <<< "${CURRENT}" && continue
+        shipped_by_repo "${FILE}" || continue
+        rm "${FILE}"
+        remove_empty_parents "$(dirname "${FILE}")"
+        COUNT=$((COUNT + 1))
+    done < <(find "${LAZY_DIR}" -type f | LC_ALL=C sort)
+    # One summary line rather than one per file, to keep the install output short
+    [[ "${COUNT}" -gt 0 ]] && log_message "${INFO}" "Removed old shipped copies from ${LAZY_RULES_NAME}/: ${COUNT} (the backup keeps them)"
+    return 0
+}
+
 # Clear what the old _rules/ layout left behind (replaced 2026-10-06 by rules/ and _rules_lazy_load/):
 # the links earlier installs put in rules/, then each file left under _rules/. A file whose content the
 # repo shipped is a stale copy — installs before the manifest existed left them, so pruning can't see
@@ -293,6 +317,7 @@ migrate_old_rules_layout() {
     local NEW_DIR="${TARGET_DIR}/_rules_lazy_load"
     local LINK FROM REL TO
     local SHIPPED_COUNT=0
+    remove_stale_lazy_copies
     # Links into the old _rules/ would dangle, and Claude Code would still try to load them
     if [[ -d "${TARGET_DIR}/rules" ]]; then
         while IFS= read -r LINK; do
