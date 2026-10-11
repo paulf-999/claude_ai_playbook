@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           1.10.3
+# Version:           1.10.4
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -171,7 +171,8 @@ def test_repo_layout_style_guide_reads_map_to_installed_keys(tmp_path):
     """A transcript read of a repo style guide counts against its installed key."""
     make_rules(tmp_path)
     rules_dir = to_repo_style_guides(tmp_path)
-    assert AUDIT.rule_rel("/repo/src/claude/_reference/_style_guide_standards/sql.md", rules_dir) == f"{SCOPED_GUIDES}/sql.md"
+    entry = "/repo/src/claude/_reference/_style_guide_standards/sql.md"
+    assert AUDIT.rule_rel(entry, rules_dir) == f"{SCOPED_GUIDES}/sql.md"
     raw = "/repo/src/claude/_reference/_style_guide_standards/sql/formatting.md"
     assert AUDIT.rule_rel(raw, rules_dir) == f"{LAZY_GUIDES}/sql/formatting.md"
 

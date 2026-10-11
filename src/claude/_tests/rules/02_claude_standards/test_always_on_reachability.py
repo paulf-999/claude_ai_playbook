@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
 # Date updated:      2026-10-11
-# Version:           3.2.4
+# Version:           3.2.5
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -125,7 +125,8 @@ def test_demoted_rules_stay_out_of_startup():
     files = startup_files()
     assert not [f for f in files if f.endswith("/authoring_agents.md")], "authoring_agents.md is back at startup"
     assert not [f for f in files if "claude_directory_structure" in f], "directory-structure rule is back at startup"
-    assert not [f for f in files if "02_claude_standards/path_scoped_rules/" in f or "_rules_lazy_load/" in f], "a lazy rule is at startup"
+    lazy = [f for f in files if "02_claude_standards/path_scoped_rules/" in f or "_rules_lazy_load/" in f]
+    assert not lazy, f"a lazy rule is at startup: {lazy}"
 
 
 DIRECTORY_RULES = [
@@ -146,7 +147,8 @@ def test_directory_structure_loads_with_config_files():
 def test_directory_structure_keeps_a_pointer_and_a_backstop():
     """New config files rely on an always-on pointer, with the naming hook catching what slips through."""
     usage = (RULES_DIR / "01_essentials" / "claude_usage_standards.md").read_text()
-    assert "02_claude_standards/path_scoped_rules/claude_directory_structure.md" in usage, "claude_usage_standards.md lost its pointer"
+    pointer = "02_claude_standards/path_scoped_rules/claude_directory_structure.md"
+    assert pointer in usage, "claude_usage_standards.md lost its pointer"
     assert (CLAUDE_DIR / "hooks" / "hook_enforcement_naming_convention.sh").is_file(), (
         "the naming-convention hook is the backstop that makes this rule safe to lazy-load — keep it"
     )

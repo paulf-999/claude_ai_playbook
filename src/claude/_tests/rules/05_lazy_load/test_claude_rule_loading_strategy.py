@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
 # Date updated:      2026-10-11
-# Version:           2.1.6
+# Version:           2.1.7
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -114,7 +114,7 @@ def test_example_files_exist():
 
 
 def test_loading_column_matches_tier():
-    """Tiers 01–03 say always-on, 02_claude_standards/path_scoped_rules/ says path-scoped, and the lazy folder says never automatic."""
+    """Tiers 01–03 say always-on, path_scoped_rules/ says path-scoped, and the lazy folder says never automatic."""
     for tier, _example, loading in _rows():
         if tier == LAZY_FOLDER:
             assert "never loaded automatically" in loading, f"{tier} loading should say never loaded automatically"

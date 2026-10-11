@@ -151,7 +151,8 @@ def installed_rule_files(config_dir: Path, pattern: str = "*.md") -> dict[str, P
         # The install moves entry files with paths: under rules/ (split_style_guides in claude_file_utils.sh)
         rel = path.relative_to(guides).as_posix()
         scoped = path.is_file() and frontmatter_has_paths(path.read_text(encoding="utf-8", errors="ignore"))
-        found[f"rules/02_claude_standards/path_scoped_rules/style_guide_standards/{rel}" if scoped else f"{STYLE_GUIDES_NAME}/{rel}"] = path
+        scoped_rel = f"rules/02_claude_standards/path_scoped_rules/style_guide_standards/{rel}"
+        found[scoped_rel if scoped else f"{STYLE_GUIDES_NAME}/{rel}"] = path
     return {rel: found[rel] for rel in sorted(found) if found[rel].is_file()}
 
 

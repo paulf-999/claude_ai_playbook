@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
 # Date updated:      2026-10-11
-# Version:           3.2.1
+# Version:           3.2.2
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -36,7 +36,8 @@ def test_clean_tree_reports_nothing(tmp_path):
     pointer = "- **Read on demand:** `~/.claude/_rules_lazy_load/extra.md` — detail.\n"
     (rules / "01_essentials" / "a.md").write_text(pointer)
     (rules / "02_claude_standards" / "path_scoped_rules").mkdir(parents=True)
-    (rules / "02_claude_standards" / "path_scoped_rules" / "sql.md").write_text('---\npaths:\n  - "**/*.sql"\n---\n# SQL\n')
+    scoped = rules / "02_claude_standards" / "path_scoped_rules"
+    (scoped / "sql.md").write_text('---\npaths:\n  - "**/*.sql"\n---\n# SQL\n')
 
     issues = find_native_load_issues(rules)
 
@@ -102,7 +103,8 @@ def test_unscoped_file_in_path_scoped_folder_is_flagged(tmp_path):
     """A 02_claude_standards/path_scoped_rules/ file without paths: would load every session despite its folder."""
     rules = make_rules(tmp_path)
     (rules / "02_claude_standards" / "path_scoped_rules" / "style").mkdir(parents=True)
-    (rules / "02_claude_standards" / "path_scoped_rules" / "style" / "_child.md").write_text("# Child, no frontmatter\n")
+    child = rules / "02_claude_standards" / "path_scoped_rules" / "style" / "_child.md"
+    child.write_text("# Child, no frontmatter\n")
 
     assert find_native_load_issues(rules)["unscoped"] == ["rules/02_claude_standards/path_scoped_rules/style/_child.md"]
 

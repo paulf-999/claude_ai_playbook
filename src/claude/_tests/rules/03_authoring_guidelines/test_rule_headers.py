@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           1.9.4
+# Version:           1.9.5
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -231,7 +231,8 @@ def lazy_entry_points() -> list[Path]:
     # belongs to sql.md in rules/02_claude_standards/path_scoped_rules/, so look for the parent in every root.
     files = installed_rule_files(CLAUDE_DIR)
     scanned = ("rules/02_claude_standards/path_scoped_rules", *ON_DEMAND_ROOTS)
-    roots = [*scanned, "rules/02_claude_standards/path_scoped_rules/style_guide_standards"] + [f"rules/{tier}" for tier in ALWAYS_ON_TIERS]
+    roots = [*scanned, "rules/02_claude_standards/path_scoped_rules/style_guide_standards"]
+    roots += [f"rules/{tier}" for tier in ALWAYS_ON_TIERS]
     found = [p for tier in ALWAYS_ON_TIERS for p in (RULES_DIR / tier).glob("*.md") if has_paths(p.read_text())]
     for installed, path in files.items():
         root = next((r for r in scanned if installed.startswith(f"{r}/")), None)

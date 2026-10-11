@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           1.6.2
+# Version:           1.6.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -229,7 +229,8 @@ def _installed_files() -> dict[str, Path]:
 def rule_path(rel: Path) -> Path:
     """Return a tracked rule's absolute path wherever it installs, in either layout."""
     key = rel.as_posix()
-    candidates = [f"rules/02_claude_standards/path_scoped_rules/{key}", f"rules/02_claude_standards/{key}", f"{LAZY_RULES_NAME}/{key}"]
+    candidates = [f"rules/02_claude_standards/path_scoped_rules/{key}", f"rules/02_claude_standards/{key}",
+                  f"{LAZY_RULES_NAME}/{key}"]
     if rel.parts[0] == STYLE_DIR.name:
         candidates.append(f"{STYLE_GUIDES_NAME}/{rel.relative_to(STYLE_DIR).as_posix()}")
     files = _installed_files()
@@ -247,7 +248,8 @@ def test_rule_table_tracks_fourteen_distinct_rules():
 
 
 def test_every_tracked_rule_exists():
-    """Every tracked rule is still on disk under rules/02_claude_standards/path_scoped_rules/, rules/02_claude_standards/,
+    """Every tracked rule is still on disk under rules/02_claude_standards/path_scoped_rules/,
+    rules/02_claude_standards/,
     _rules_lazy_load/ or the style guides."""
     missing = [str(rel) for rel in RULES if not rule_path(rel).is_file()]
     assert not missing, f"Tracked rules missing from both rule folders — fix the path in RULES or restore: {missing}"

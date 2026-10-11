@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           1.7.5
+# Version:           1.7.6
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -135,8 +135,10 @@ def entry_points(config_dir: Path) -> dict[str, Path]:
     :rtype: dict[str, Path]
     """
     files = installed_rule_files(config_dir)
-    # A child's parent may sit under rules/, e.g. sql/formatting.md belongs to rules/02_claude_standards/path_scoped_rules/.../sql.md
-    parents = [*ON_DEMAND_ROOTS, "rules/02_claude_standards/path_scoped_rules", f"rules/02_claude_standards/path_scoped_rules/{STYLE_GUIDES}"]
+    # A child's parent may sit under rules/, e.g. sql/formatting.md belongs to
+    # rules/02_claude_standards/path_scoped_rules/.../sql.md
+    parents = [*ON_DEMAND_ROOTS, "rules/02_claude_standards/path_scoped_rules",
+               f"rules/02_claude_standards/path_scoped_rules/{STYLE_GUIDES}"]
     parents += [f"rules/{tier}" for tier in ALWAYS_ON_TIERS]
     found = {}
     for installed, path in on_demand_rule_files(config_dir).items():
@@ -209,7 +211,8 @@ def test_native_rules_without_paths_are_loaded(tmp_path):
     """Files under rules/ count as loaded at startup, except those with paths: frontmatter."""
     (tmp_path / "rules" / "02_claude_standards" / "path_scoped_rules").mkdir(parents=True)
     (tmp_path / "rules" / "a.md").write_text("always\n")
-    (tmp_path / "rules" / "02_claude_standards" / "path_scoped_rules" / "b.md").write_text('---\npaths:\n  - "**/*.sql"\n---\n# B\n')
+    scoped = tmp_path / "rules" / "02_claude_standards" / "path_scoped_rules"
+    (scoped / "b.md").write_text('---\npaths:\n  - "**/*.sql"\n---\n# B\n')
     assert set(native_texts(tmp_path / "rules")) == {"rules/a.md"}, sorted(native_texts(tmp_path / "rules"))
 
 
@@ -241,7 +244,8 @@ def test_every_lazy_rule_has_a_trigger():
         if not trigger_for(installed, p.read_text(), loaded, hooks)
     ]
     assert not orphans, (
-        f"lazy rules nothing loads: {orphans} — add paths: frontmatter and move it to rules/02_claude_standards/path_scoped_rules/, "
+        f"lazy rules nothing loads: {orphans} — add paths: frontmatter and move it to "
+        f"rules/02_claude_standards/path_scoped_rules/, "
         "a 'Read on demand' pointer with the full _rules_lazy_load path in an always-on rule or skill, "
         "or move the file to _archive/"
     )

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-10
 # Date updated:      2026-10-11
-# Version:           2.0.2
+# Version:           2.0.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -10,7 +10,8 @@
 """Validates that ``make install`` moves the style guides' entry files under ``rules/`` and leaves the rest.
 
 The repo keeps every style guide in ``_reference/_style_guide_standards/``, and so does the install, except that
-entry files (those with ``paths:`` frontmatter) must sit under ``rules/02_claude_standards/path_scoped_rules/`` so Claude Code
+entry files (those with ``paths:`` frontmatter) must sit under
+``rules/02_claude_standards/path_scoped_rules/`` so Claude Code
 loads them on matching files. Each test runs the real copy, flatten, relocate, split and prune steps
 from ``claude_file_utils.sh`` against a fake source and a temp target.
 """
@@ -87,7 +88,7 @@ def test_entry_files_land_in_path_scoped_rules(tmp_path: Path):
 
 
 def test_other_files_stay_in_the_style_guide_folder(tmp_path: Path):
-    """Detail files, templates and the README stay in _reference/_style_guide_standards/, keeping their relative paths."""
+    """Detail files, templates and the README stay in _reference/_style_guide_standards/, at the same relative paths."""
     target = setup(tmp_path)
     for rel in ("sql/formatting.md", "sql/templates/template_cte.sql", "README.md"):
         assert (target / ON_DEMAND / rel).is_file(), f"{rel} missing from the on-demand folder"

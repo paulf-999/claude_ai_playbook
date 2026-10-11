@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-11
-# Version:           1.2.1
+# Version:           1.2.2
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -22,9 +22,8 @@ import re
 
 from _shared_paths import ALIASES_FILE, RULES_DIR
 
-AUTOMATION_CONTROLS_FILE = (
-    RULES_DIR / "02_claude_standards" / "claude_working_practices" / "claude_operational_efficiency" / "_automation_controls.md"
-)
+GROUP_DIR = RULES_DIR / "02_claude_standards" / "claude_working_practices"
+AUTOMATION_CONTROLS_FILE = GROUP_DIR / "claude_operational_efficiency" / "_automation_controls.md"
 
 
 def _read_automation_controls():

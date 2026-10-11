@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           3.0.2
+# Version:           3.0.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -118,8 +118,10 @@ def test_behaviour_subdir_dissolved():
 def test_reference_holds_only_scorecards_and_style_guides():
     """_reference/ returned on 2026-10-11 to hold only the quality scorecards and style guides; docs stay in docs/."""
     allowed = {"_quality_scorecards", "_style_guide_standards"}
-    entries = {p.name for p in (CLAUDE_DIR / "_reference").iterdir()} if (CLAUDE_DIR / "_reference").is_dir() else set()
-    assert entries <= allowed, f"_reference/ holds more than the scorecards and style guides: {sorted(entries - allowed)}"
+    reference = CLAUDE_DIR / "_reference"
+    entries = {p.name for p in reference.iterdir()} if reference.is_dir() else set()
+    extra = sorted(entries - allowed)
+    assert not extra, f"_reference/ holds more than the scorecards and style guides: {extra}"
 
 
 def test_dissolved_paths_absent():
