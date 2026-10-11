@@ -19,6 +19,9 @@ USER_OWNED_ENTRIES=("memory" "TODO.md" "_plans" "settings.local.json")
 # Top-level entries that only make sense in the repo and are never installed: the installer itself
 REPO_ONLY_ENTRIES=("_install")
 
+# Caches left by local test and lint runs, never shipped wherever they sit
+CACHE_DIRS=("__pycache__" ".pytest_cache" ".ruff_cache")
+
 # Lists every file the last install put in the target, so the next one can remove what the repo dropped
 MANIFEST_NAME=".install_manifest"
 
@@ -78,6 +81,23 @@ create_target_dir_if_missing() {
     fi
 }
 
+# find arguments matching any cache folder name: -name a -o -name b ...
+CACHE_FIND_NAMES=()
+for CACHE_DIR in "${CACHE_DIRS[@]}"; do
+    [[ ${#CACHE_FIND_NAMES[@]} -gt 0 ]] && CACHE_FIND_NAMES+=(-o)
+    CACHE_FIND_NAMES+=(-name "${CACHE_DIR}")
+done
+
+# Tell whether a folder name is a test or lint cache
+is_cache_dir() {
+    local NAME="$1"  # folder name, e.g. ".pytest_cache"
+    local CACHE
+    for CACHE in "${CACHE_DIRS[@]}"; do
+        [[ "${NAME}" == "${CACHE}" ]] && return 0
+    done
+    return 1
+}
+
 # Return 0 when a top-level entry name is in USER_OWNED_ENTRIES
 # Tell whether a top-level entry stays in the repo and is never copied to the target
 is_repo_only() {
@@ -107,13 +127,14 @@ copy_claude_files() {
         [[ -e "${ENTRY}" ]] || continue
         NAME=$(basename "${ENTRY}")
         is_repo_only "${NAME}" && continue
+        is_cache_dir "${NAME}" && continue
         if is_user_owned "${NAME}" && [[ -e "${TARGET_DIR}/${NAME}" ]]; then
             log_message "${INFO}" "Kept user-owned: ${NAME}"
             continue
         fi
         cp -R "${ENTRY}" "${TARGET_DIR}/"
-        # Python caches from local test runs are never shipped: drop any the copy brought over
-        [[ -d "${ENTRY}" ]] && find "${TARGET_DIR}/${NAME}" -type d -name "__pycache__" -prune -exec rm -rf {} +
+        # Caches from local test and lint runs are never shipped: drop any the copy brought over
+        [[ -d "${ENTRY}" ]] && find "${TARGET_DIR}/${NAME}" -type d \( "${CACHE_FIND_NAMES[@]}" \) -prune -exec rm -rf {} +
     done
     find "${TARGET_DIR}" -name "*.sh" -exec chmod +x {} \;
     log_message "${INFO}" "Copied Claude files to: ${TARGET_DIR}"
@@ -231,7 +252,7 @@ split_style_guides() {
 # User-owned entries are left out, so pruning can never remove them.
 list_installed_files() {
     local REL
-    (cd "${SOURCE_DIR}" && find . -type d -name "__pycache__" -prune -o -type f -print) | sed 's#^\./##' | while IFS= read -r REL; do
+    (cd "${SOURCE_DIR}" && find . -type d \( "${CACHE_FIND_NAMES[@]}" \) -prune -o -type f -print) | sed 's#^\./##' | while IFS= read -r REL; do
         is_user_owned "${REL%%/*}" && continue
         is_repo_only "${REL%%/*}" && continue
         if [[ "${REL}" == "${STYLE_GUIDES_NAME}/"* ]]; then
@@ -311,7 +332,7 @@ list_stale_shipped_copies() {
     local CURRENT CANDIDATES NAME TYPE REL
     CURRENT=$(list_installed_files)
     CANDIDATES=$(stale_copy_folders | while IFS= read -r NAME; do
-        (cd "${TARGET_DIR}" && find "${NAME}" -type f ! -empty -not -path "*/__pycache__/*")
+        (cd "${TARGET_DIR}" && find "${NAME}" -type d \( "${CACHE_FIND_NAMES[@]}" \) -prune -o -type f ! -empty -print)
     done | LC_ALL=C sort -u | LC_ALL=C comm -23 - <(echo "${CURRENT}"))
     [[ -n "${CANDIDATES}" ]] || return 0
     # cat-file prints "blob" for content the repo stores and "<hash> missing" otherwise, one line per candidate
