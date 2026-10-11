@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
 # Date updated:      2026-10-11
-# Version:           1.2.1
+# Version:           1.2.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -100,8 +100,8 @@ def test_lazy_rule_change_runs_rule_tests(repo: Path):
 
 
 def test_style_guide_change_runs_rule_tests(repo: Path):
-    """A style guide, kept in _style_guide_standards/ in the repo, queues the rule tests."""
-    assert run_hook(repo, "src/claude/_style_guide_standards/sql.md")[1] == ["src/claude/_tests/rules/"]
+    """A style guide, kept in _reference/_style_guide_standards/ in the repo, queues the rule tests."""
+    assert run_hook(repo, "src/claude/_reference/_style_guide_standards/sql.md")[1] == ["src/claude/_tests/rules/"]
 
 
 def test_whole_suite_replaces_its_own_subfolders(repo: Path):

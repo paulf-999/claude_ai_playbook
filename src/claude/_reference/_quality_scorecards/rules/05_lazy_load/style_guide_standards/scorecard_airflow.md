@@ -18,7 +18,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/_style_guide_standards/airflow.md` — the rule being scored
+- `src/claude/_reference/_style_guide_standards/airflow.md` — the rule being scored
 
 ---
 

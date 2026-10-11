@@ -18,8 +18,8 @@
 
 ## 🔗 Related files
 
-- `src/claude/_style_guide_standards/sql.md` — the rule being scored
-- `src/claude/_style_guide_standards/dbt.md` — Structural Compliance dimension (same dual-loading-pattern issue)
+- `src/claude/_reference/_style_guide_standards/sql.md` — the rule being scored
+- `src/claude/_reference/_style_guide_standards/dbt.md` — Structural Compliance dimension (same dual-loading-pattern issue)
 
 ---
 

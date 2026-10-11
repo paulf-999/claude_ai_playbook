@@ -18,12 +18,12 @@
 
 ## 🔗 Related files
 
-- `src/claude/_style_guide_standards/python.md` — the rule being scored
-- `src/claude/_style_guide_standards/python/python_environment.md` — Currency dimension
-- `src/claude/_style_guide_standards/python/testing.md` — Currency dimension
-- `src/claude/_style_guide_standards/python/logging.md` — Currency dimension
-- `src/claude/_style_guide_standards/python/module_organisation.md` — Currency dimension
-- `src/claude/_style_guide_standards/python/code_complexity.md` — Currency dimension
+- `src/claude/_reference/_style_guide_standards/python.md` — the rule being scored
+- `src/claude/_reference/_style_guide_standards/python/python_environment.md` — Currency dimension
+- `src/claude/_reference/_style_guide_standards/python/testing.md` — Currency dimension
+- `src/claude/_reference/_style_guide_standards/python/logging.md` — Currency dimension
+- `src/claude/_reference/_style_guide_standards/python/module_organisation.md` — Currency dimension
+- `src/claude/_reference/_style_guide_standards/python/code_complexity.md` — Currency dimension
 
 ---
 

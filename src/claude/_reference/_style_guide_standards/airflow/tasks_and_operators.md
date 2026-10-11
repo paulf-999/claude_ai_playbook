@@ -1,6 +1,6 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.0.3 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 # ⚙️ Tasks, Operators & Dependencies
 
 **Purpose:** Establish standards for DAG boilerplate, task design, operator selection, helper files, and task dependencies to ensure consistent and maintainable DAG structure.
@@ -64,7 +64,7 @@ Prefer purpose-built operators over generic ones. Common patterns:
 | Wait for condition | `Sensor` with `mode="reschedule"` | avoid holding worker slots |
 | Branching | `BranchPythonOperator` | conditional task routing |
 
-- **Templates:** see `~/.claude/_style_guide_standards/airflow/templates/` for Snowflake and TriggerDagRun examples
+- **Templates:** see `~/.claude/_reference/_style_guide_standards/airflow/templates/` for Snowflake and TriggerDagRun examples
 
 ---
 
@@ -98,7 +98,7 @@ Both files are auto-imported by `common.get_default_dag_params()` if they exist 
 
 Use `TaskGroup` to visually group related tasks in the Airflow UI. Common patterns (Airbyte, dbt) are wrapped in reusable TaskGroup generators in `includes/airflow_tasks/`.
 
-- **Template:** see `~/.claude/_style_guide_standards/airflow/templates/template_dag_parent.py`
+- **Template:** see `~/.claude/_reference/_style_guide_standards/airflow/templates/template_dag_parent.py`
 
 ---
 

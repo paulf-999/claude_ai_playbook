@@ -1,6 +1,6 @@
-<!-- version: 1.0.3 -->
+<!-- version: 1.0.4 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 # 📄 YAML Resource Properties
 
 Standards for declaring dbt resource properties in YAML — covering file naming, formatting style, source definitions, tests, and sensitive data tagging.
@@ -52,7 +52,7 @@ models:
 ## 🗃️ Source definitions
 
 Source YAML files use Jinja templating to select the correct database per environment, and YAML anchors to avoid repeating the database name across tables in the same source. See the working example:
-`~/.claude/_style_guide_standards/dbt/templates/template_source.yml`
+`~/.claude/_reference/_style_guide_standards/dbt/templates/template_source.yml`
 
 - The `database` field uses a YAML anchor (`&db_name`) so that it can be referenced by other entries in the same file.
 - The Jinja block selects the environment-appropriate database based on `target.name`.

@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-10
-# Version:           1.7.2
+# Date updated:      2026-10-11
+# Version:           1.7.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -106,7 +106,7 @@ def has_paths(text: str) -> bool:
 def trigger_for(installed: str, text: str, loaded: dict[str, str], hooks: list[str]) -> str:
     """Name the trigger that loads a lazy rule, or return an empty string.
 
-    :param installed: Rule path relative to the installed config, e.g. ``_style_guide_standards/jira.md``.
+    :param installed: Rule path relative to the installed config, e.g. ``_reference/_style_guide_standards/jira.md``.
     :type installed: str
     :param text: Rule file text.
     :type text: str
@@ -140,7 +140,8 @@ def entry_points(config_dir: Path) -> dict[str, Path]:
     parents += [f"rules/{tier}" for tier in ALWAYS_ON_TIERS]
     found = {}
     for installed, path in on_demand_rule_files(config_dir).items():
-        rel = Path(installed.split("/", 1)[1])
+        root = next(r for r in ON_DEMAND_ROOTS if installed.startswith(f"{r}/"))
+        rel = Path(installed[len(root) + 1:])
         if path.name == "README.md" or path.name.startswith("_") or rel.parts[0] in NON_RULE_FOLDERS:
             continue
         folders = [rel.parents[i] for i in range(len(rel.parts) - 1)]
@@ -163,8 +164,8 @@ def test_hook_naming_the_rule_is_a_trigger():
 
 def test_pointer_in_a_loaded_file_is_a_trigger():
     """A pointer in a file Claude already has counts, whatever the config-dir prefix."""
-    loaded = {"rules/a.md": "- **Read on demand:** `~/.claude/_style_guide_standards/x.md`"}
-    assert trigger_for("_style_guide_standards/x.md", "# X\n", loaded, []) == "pointer"
+    loaded = {"rules/a.md": "- **Read on demand:** `~/.claude/_reference/_style_guide_standards/x.md`"}
+    assert trigger_for("_reference/_style_guide_standards/x.md", "# X\n", loaded, []) == "pointer"
 
 
 def test_nothing_loads_an_orphan():
@@ -174,7 +175,7 @@ def test_nothing_loads_an_orphan():
 
 def test_bare_file_name_is_not_a_pointer():
     """Naming only the file, without its installed path, is too vague to follow."""
-    assert trigger_for("_style_guide_standards/x.md", "# X\n", {"a.md": "see x.md"}, []) == ""
+    assert trigger_for("_reference/_style_guide_standards/x.md", "# X\n", {"a.md": "see x.md"}, []) == ""
 
 
 def test_paths_must_be_frontmatter():
@@ -253,7 +254,7 @@ def test_triggers_added_on_2026_10_01_stay():
     expected = {
         f"rules/04_path_scoped/{STYLE_GUIDES}/python.md": "paths",
         f"rules/04_path_scoped/{STYLE_GUIDES}/bash.md": "paths",
-        "_style_guide_standards/jira.md": "pointer",
+        "_reference/_style_guide_standards/jira.md": "pointer",
         "_rules_lazy_load/claude_config/claude_cost/latency_optimisation.md": "pointer",
     }
     files = installed_rule_files(CLAUDE_DIR)

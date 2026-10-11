@@ -5,7 +5,7 @@ paths:
   - "**/_style_guide_standards/**"
   - "**/CLAUDE.md"
 ---
-<!-- version: 4.3.1 -->
+<!-- version: 4.3.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-11 -->
 <!-- miss_cost: low — a rule lands in the wrong tier, which is easy to move -->
@@ -51,9 +51,9 @@ Decide from two numbers per rule, both in the playbook repo's `docs/audits/audit
 | **Low** | Always-on only if small | Lazy |
 
 - **Domain style guides:** SQL, Airflow, dbt and similar guides are lazy, triggered by `paths:` on their file type.
-  - **Their own folder:** every guide lives in `_style_guide_standards/`, read on demand, and the install moves the entry files with `paths:` to `rules/04_path_scoped/style_guide_standards/`.
+  - **Their own folder:** every guide lives in `_reference/_style_guide_standards/`, read on demand, and the install moves the entry files with `paths:` to `rules/04_path_scoped/style_guide_standards/`.
 - **Pointers aren't triggers:** a `**Read on demand:**` pointer works only if Claude remembers it, so it never counts for a high-cost rule.
-  - **Enforced by:** `test_high_cost_lazy_rules_load_mechanically` in `test_rule_headers.py`, across `_rules_lazy_load/` and `_style_guide_standards/`.
+  - **Enforced by:** `test_high_cost_lazy_rules_load_mechanically` in `test_rule_headers.py`, across `_rules_lazy_load/` and `_reference/_style_guide_standards/`.
   - **Medium is different:** a medium miss is rework you'd catch, so a pointer is enough when few sessions need the rule.
 
 ---

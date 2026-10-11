@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           1.6.0
+# Version:           1.6.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -208,7 +208,7 @@ def _child_names(rule: Path) -> list[str]:
     """
     folder = rule.parent / rule.stem
     if not folder.is_dir() and PATH_SCOPED_DIR / STYLE_DIR in rule.parents:
-        # Installed, an entry file's children stay in _style_guide_standards/ so they don't auto-load
+        # Installed, an entry file's children stay in _reference/_style_guide_standards/ so they don't auto-load
         folder = CLAUDE_DIR / STYLE_GUIDES_NAME / rule.relative_to(PATH_SCOPED_DIR / STYLE_DIR).with_suffix("")
     if not folder.is_dir():
         return []

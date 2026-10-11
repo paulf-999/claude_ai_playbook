@@ -3,9 +3,9 @@ paths:
   - "**/.claude/**"
   - "**/claude/**"
 ---
-<!-- version: 3.1.2 -->
+<!-- version: 3.1.3 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 # 🏷️ Naming — Directories and Files
 
 **Purpose:** Set the prefix conventions that tell user-created directories, auto-generated directories and child files apart in the Claude config.
@@ -19,7 +19,7 @@ paths:
 
 | Type | Pattern | Example | Note |
 |---|---|---|---|
-| **User-created** | `_<name>/` | `_rules_lazy_load/`, `_templates/`, `_docs/` | Always underscore prefix |
+| **User-created** | `_<name>/` | `_rules_lazy_load/`, `_templates/`, `_reference/` | Always underscore prefix |
 | **Auto-generated** | `<name>/` | `backups/`, `memory/`, `sessions/` | Never touch these |
 | **Child file** | `_<aspect>.md` | `_claude_directory_organisation.md` | Prefix indicates child of parent |
 

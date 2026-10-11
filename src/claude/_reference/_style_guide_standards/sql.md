@@ -2,9 +2,9 @@
 paths:
   - "**/*.sql"
 ---
-<!-- version: 1.2.7 -->
+<!-- version: 1.2.8 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 <!-- miss_cost: medium — SQL that fails SQLFluff or costs more to run -->
 <!-- loading: path-scoped — only applies to SQL, so it loads when a .sql file is open -->
 # 🗄️ SQL Style Guide & Standards
@@ -104,7 +104,7 @@ Before committing SQL changes:
 
 ## 📚 Read on demand
 
-- **Read on demand:** `~/.claude/_style_guide_standards/sql/formatting.md` — keywords, naming, structure, joins, indentation and commenting.
-- **Read on demand:** `~/.claude/_style_guide_standards/sql/cte_style_guide.md` — CTE grouping pattern for dbt models and queries.
-- **Read on demand:** `~/.claude/_style_guide_standards/sql/snowflake_data_type_standards.md` — which Snowflake data type to use.
-- **Read on demand:** `~/.claude/_style_guide_standards/sql/sqlfluff.md` — SQLFluff dialect, templater and excluded rules.
+- **Read on demand:** `~/.claude/_reference/_style_guide_standards/sql/formatting.md` — keywords, naming, structure, joins, indentation and commenting.
+- **Read on demand:** `~/.claude/_reference/_style_guide_standards/sql/cte_style_guide.md` — CTE grouping pattern for dbt models and queries.
+- **Read on demand:** `~/.claude/_reference/_style_guide_standards/sql/snowflake_data_type_standards.md` — which Snowflake data type to use.
+- **Read on demand:** `~/.claude/_reference/_style_guide_standards/sql/sqlfluff.md` — SQLFluff dialect, templater and excluded rules.

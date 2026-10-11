@@ -3,9 +3,9 @@ paths:
   - "**/models/**/*.sql"
   - "**/dbt_project.yml"
 ---
-<!-- version: 1.1.6 -->
+<!-- version: 1.1.7 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 <!-- miss_cost: medium — models that break naming or layering and fail review -->
 <!-- loading: path-scoped — only applies to dbt models, so it loads when a model or dbt_project.yml is open -->
 # 🔵 dbt Style Guide & Standards
@@ -129,8 +129,8 @@ Before marking a model PR as ready:
 
 ## 📚 Read on demand
 
-- **Read on demand:** `~/.claude/_style_guide_standards/dbt/model_organisation.md` — layers, folders and materialisation.
-- **Read on demand:** `~/.claude/_style_guide_standards/dbt/naming_conventions.md` — model, column and file names.
-- **Read on demand:** `~/.claude/_style_guide_standards/dbt/yaml_resource_properties.md` — YAML properties for models and sources.
-- **Read on demand:** `~/.claude/_style_guide_standards/dbt/snapshots.md` — snapshot configuration.
-- **Read on demand:** `~/.claude/_style_guide_standards/dbt/macros.md` — macros and packages.
+- **Read on demand:** `~/.claude/_reference/_style_guide_standards/dbt/model_organisation.md` — layers, folders and materialisation.
+- **Read on demand:** `~/.claude/_reference/_style_guide_standards/dbt/naming_conventions.md` — model, column and file names.
+- **Read on demand:** `~/.claude/_reference/_style_guide_standards/dbt/yaml_resource_properties.md` — YAML properties for models and sources.
+- **Read on demand:** `~/.claude/_reference/_style_guide_standards/dbt/snapshots.md` — snapshot configuration.
+- **Read on demand:** `~/.claude/_reference/_style_guide_standards/dbt/macros.md` — macros and packages.

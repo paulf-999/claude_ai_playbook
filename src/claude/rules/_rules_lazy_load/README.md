@@ -19,7 +19,7 @@
 | `claude_config/claude_cost/` | **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
 | — | **testing.md** (in `rules/04_path_scoped/`) | When tests are required, test goals, test layers and running the suite; lazy children in `testing_lazy_load/` cover design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit | Loads through `paths:` on Python, shell, SQL and `_tests/` files |
 | — | **claude_rule_loading_strategy.md** (in `rules/04_path_scoped/`) | The rule folders and when a rule should be always-on or lazy, from measured usage and miss cost | Loads through `paths:` on rule files and `CLAUDE.md` |
-| — | **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | Moved to their own `_style_guide_standards/` folder beside this one, read on demand; entry files install to `rules/04_path_scoped/style_guide_standards/` and load through `paths:` |
+| — | **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | Moved to their own `_reference/_style_guide_standards/` folder beside this one, read on demand; entry files install to `rules/04_path_scoped/style_guide_standards/` and load through `paths:` |
 
 ---
 
@@ -37,8 +37,8 @@ Files in this directory follow the **lazy-load by default** principle (from `gui
 ## 🔍 How to find and load a lazy-load rule
 
 ### If you know the domain:
-1. Look in the `_style_guide_standards/` directory for domain-specific rules (e.g., `sql.md`, `airflow.md`)
-2. Read the file with: `Read ~/.claude/_style_guide_standards/jira.md`
+1. Look in the `_reference/_style_guide_standards/` directory for domain-specific rules (e.g., `sql.md`, `airflow.md`)
+2. Read the file with: `Read ~/.claude/_reference/_style_guide_standards/jira.md`
 
 ### If you're setting up config:
 1. Read `claude_config_naming.md` for naming standards specific to the config structure
@@ -308,11 +308,11 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 
 ### `style_guide_standards/python.md`
 
-- [`python/python_environment.md`](../../_style_guide_standards/python/python_environment.md) — Virtual environment setup, dependency management, and tooling
-- [`python/testing.md`](../../_style_guide_standards/python/testing.md) — Pytest conventions: test naming, structure, fixtures, mocking, assertions
-- [`python/logging.md`](../../_style_guide_standards/python/logging.md) — Logging standards for debugging, monitoring, and auditing
-- [`python/code_complexity.md`](../../_style_guide_standards/python/code_complexity.md) — Metrics to identify and prevent overly complex code
-- [`python/module_organisation.md`](../../_style_guide_standards/python/module_organisation.md) — Module docstrings, metadata, and public/private organisation
+- [`python/python_environment.md`](../../_reference/_style_guide_standards/python/python_environment.md) — Virtual environment setup, dependency management, and tooling
+- [`python/testing.md`](../../_reference/_style_guide_standards/python/testing.md) — Pytest conventions: test naming, structure, fixtures, mocking, assertions
+- [`python/logging.md`](../../_reference/_style_guide_standards/python/logging.md) — Logging standards for debugging, monitoring, and auditing
+- [`python/code_complexity.md`](../../_reference/_style_guide_standards/python/code_complexity.md) — Metrics to identify and prevent overly complex code
+- [`python/module_organisation.md`](../../_reference/_style_guide_standards/python/module_organisation.md) — Module docstrings, metadata, and public/private organisation
 
 ### `style_guide_standards/sql.md`
 

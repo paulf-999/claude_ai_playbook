@@ -1,6 +1,6 @@
-<!-- version: 1.2.2 -->
+<!-- version: 1.2.3 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 # 📛 Naming
 
 **Purpose:** Establish self-describing, unambiguous naming conventions that enable readers to understand files and identifiers without additional context.
@@ -18,7 +18,7 @@ All naming conventions follow four foundational principles:
 These principles apply across all artefacts: files, directories, hooks, skills, rules, and identifiers.
 
 - **Read on demand:** `~/.claude/_rules_lazy_load/org.md` — when naming repositories, infrastructure or automation jobs, for any organisation-specific naming standards.
-- **Read on demand:** `~/.claude/_style_guide_standards/utilities/datetime.md` — when writing dates or times into names, code, metadata or logs.
+- **Read on demand:** `~/.claude/_reference/_style_guide_standards/utilities/datetime.md` — when writing dates or times into names, code, metadata or logs.
 
 ## 📋 Contents
 

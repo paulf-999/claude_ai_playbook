@@ -27,7 +27,7 @@ Rules in two folders: `rules/` tiers 01–03 load every session, `rules/04_path_
 
 ## 🎨 Style guides
 
-See [`src/claude/_style_guide_standards/`](../src/claude/_style_guide_standards/)
+See [`src/claude/_reference/_style_guide_standards/`](../src/claude/_reference/_style_guide_standards/)
 
 Coding standards for the technologies the team uses: each guide's entry file loads when Claude reads a matching file, and its detail files are read on demand.
 

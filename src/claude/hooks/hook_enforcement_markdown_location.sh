@@ -1,9 +1,10 @@
 #!/bin/bash
-# version: 3.0.0
+# version: 3.1.1
 # created: 2026-08-28
-# updated: 2026-10-10
+# updated: 2026-10-11
 # PostToolUse hook — checks where markdown files written inside the Claude config dir live.
 # Root: only the known top-level files may sit at the config root (see claude_directory_structure.md).
+# Reference: _reference/ holds only _style_guide_standards/ and _quality_scorecards/, which have their own conventions.
 # Every other folder has its own conventions, and files outside the config dir are ignored.
 # The edit has already happened, so exit 2 feeds the fix back to Claude rather than blocking.
 
@@ -37,7 +38,11 @@ if [[ "${RELATIVE_PATH}" != */* ]]; then
   for allowed in "${ROOT_FILES[@]}"; do
     [[ "${RELATIVE_PATH}" == "${allowed}" ]] && exit 0
   done
-  PROBLEM="Markdown files don't belong at the config root — move it to _docs/ or another folder."
+  PROBLEM="Markdown files don't belong at the config root — move it to _rules_lazy_load/ or another folder."
+elif [[ "${RELATIVE_PATH}" == _reference/* ]]; then
+  [[ "${RELATIVE_PATH}" == _reference/_style_guide_standards/* ]] && exit 0
+  [[ "${RELATIVE_PATH}" == _reference/_quality_scorecards/* ]] && exit 0
+  PROBLEM="_reference/ holds only _style_guide_standards/ and _quality_scorecards/ — put a guide Claude reads on demand in _rules_lazy_load/."
 else
   exit 0
 fi

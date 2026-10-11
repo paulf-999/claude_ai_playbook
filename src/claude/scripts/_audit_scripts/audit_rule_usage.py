@@ -3,7 +3,7 @@
 
 Reads Claude Code session transcripts and the rule folders (``rules/`` and
 ``_rules_lazy_load/``, which sits beside it once installed and inside it in the repo, plus
-``_style_guide_standards/``, whose entry files the install moves under ``rules/``), then writes a markdown
+``_reference/_style_guide_standards/``, whose entry files the install moves under ``rules/``), then writes a markdown
 report and appends one row per rule to a CSV history, so dates survive after old
 transcripts are deleted.
 
@@ -49,7 +49,7 @@ STALE_AFTER_DAYS = 90
 EVERY_SESSION = "*"
 LAZY_FOLDER = "_rules_lazy_load"
 PATH_SCOPED_TIER = "04_path_scoped"
-STYLE_GUIDES_FOLDER = "_style_guide_standards"  # read on demand; the install moves entry files to 04
+STYLE_GUIDES_FOLDER = "_reference/_style_guide_standards"  # read on demand; the install moves entry files to 04
 STYLE_GUIDES = "style_guide_standards"
 # Where on-demand style guides were keyed before 2026-10-10, so older history rows still match
 OLD_LAZY_GUIDES = f"{LAZY_FOLDER}/{STYLE_GUIDES}/"
@@ -73,7 +73,7 @@ TOP_SECTIONS = 15
 CHARS_PER_TOKEN = 4
 TIER_DIR = re.compile(r"^\d\d_")
 # A rule path in a transcript: the new folders, or the old _rules/ layout older sessions used
-RULE_PATH = re.compile(r"(?:^|/)(rules|_rules_lazy_load|_rules|_style_guide_standards)/(\S+\.md)$")
+RULE_PATH = re.compile(r"(?:^|/)(rules|_rules_lazy_load|_rules|_reference/_style_guide_standards)/(\S+\.md)$")
 # A parent's pointer to a child that loads on its own from rules/
 NATIVE_POINTER = re.compile(r"^- \*\*Loads on its own from:\*\* `(rules/\S+\.md)`", re.M)
 MISS_COST = re.compile(r"<!--\s*miss_cost:\s*(high|medium|low)\b", re.I)
@@ -263,7 +263,7 @@ def current_rel(rel: str) -> str:
 
     :param rel: A rule key, e.g. ``_rules_lazy_load/style_guide_standards/jira.md``.
     :type rel: str
-    :return: The key as it is now, e.g. ``_style_guide_standards/jira.md``.
+    :return: The key as it is now, e.g. ``_reference/_style_guide_standards/jira.md``.
     :rtype: str
     """
     return f"{STYLE_GUIDES_FOLDER}/{rel.removeprefix(OLD_LAZY_GUIDES)}" if rel.startswith(OLD_LAZY_GUIDES) else rel
@@ -276,7 +276,7 @@ def style_guide_rel(config_dir: Path, rest: str) -> str:
     :type config_dir: Path
     :param rest: Its path inside the style-guide folder, e.g. ``sql/formatting.md``.
     :type rest: str
-    :return: e.g. ``_style_guide_standards/sql/formatting.md``.
+    :return: e.g. ``_reference/_style_guide_standards/sql/formatting.md``.
     :rtype: str
     """
     scoped_rel = f"rules/{PATH_SCOPED_TIER}/{STYLE_GUIDES}/{rest}"
@@ -349,7 +349,7 @@ def discover_rules(rules_dir: Path) -> list[Rule]:
     guides_dir = config_dir / STYLE_GUIDES_FOLDER
     tier_dirs = sorted(d for d in rules_dir.iterdir() if d.is_dir() and TIER_DIR.match(d.name))
     roots = tuple(tier_dirs) + tuple(d for d in (lazy_dir, guides_dir) if d.is_dir())
-    # Installed, a style guide's children sit in _style_guide_standards/ and its entry file under rules/
+    # Installed, a style guide's children sit in _reference/_style_guide_standards/ and its entry file under rules/
     parent_roots = roots + (rules_dir / PATH_SCOPED_TIER / STYLE_GUIDES,)
     rules = []
     for tier_dir in roots:
@@ -933,6 +933,8 @@ def tier_of(rel: str) -> str:
     :return: e.g. ``01_essentials`` or ``_rules_lazy_load``.
     :rtype: str
     """
+    if rel.startswith(f"{STYLE_GUIDES_FOLDER}/"):
+        return Path(STYLE_GUIDES_FOLDER).name  # the tier name history recorded before the folder moved
     parts = rel.split("/")
     return parts[1] if parts[0] == "rules" and len(parts) > 2 else parts[0]
 

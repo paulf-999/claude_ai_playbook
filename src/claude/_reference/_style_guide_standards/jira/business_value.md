@@ -1,6 +1,6 @@
-<!-- version: 2.0.2 -->
+<!-- version: 2.0.3 -->
 <!-- created: 2026-06-07 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 # 💼 Business Value Tab
 
 Standards for populating the Business Value tab on Jira tickets — covering format, audience, scoring framework, and a worked example. The field ID, framework name, matrix link and weights live in the Jira values in `~/.claude/_rules_lazy_load/org.md`.
@@ -69,4 +69,4 @@ Use your organisation's framework, with the categories and weights listed in `or
 
 ## Worked example
 
-See: `~/.claude/_style_guide_standards/jira/templates/template_business_value_example.txt`
+See: `~/.claude/_reference/_style_guide_standards/jira/templates/template_business_value_example.txt`

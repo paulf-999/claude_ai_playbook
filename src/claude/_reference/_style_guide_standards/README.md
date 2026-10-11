@@ -17,10 +17,10 @@
 | File | Installs to |
 |---|---|
 | **Has `paths:` frontmatter** | `rules/04_path_scoped/style_guide_standards/` |
-| **Everything else** | `_style_guide_standards/`, unchanged |
+| **Everything else** | `_reference/_style_guide_standards/`, unchanged |
 
 - **Why:** a detail file under `rules/` would load in every session, so only entry files move there.
-- **Pointers:** `**Read on demand:**` pointers name the installed path, e.g. `~/.claude/_style_guide_standards/sql/formatting.md`.
+- **Pointers:** `**Read on demand:**` pointers name the installed path, e.g. `~/.claude/_reference/_style_guide_standards/sql/formatting.md`.
 
 ## ➕ Adding a guide
 

@@ -21,7 +21,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/_style_guide_standards/bash.md` — the rule being scored
+- `src/claude/_reference/_style_guide_standards/bash.md` — the rule being scored
 - `src/claude/_templates/template_bash_script.sh` — Currency dimension (the real location the stale reference should point to)
 - `src/claude/_templates/utils/shell_utils.sh` — Currency dimension (the one reference confirmed correct)
 

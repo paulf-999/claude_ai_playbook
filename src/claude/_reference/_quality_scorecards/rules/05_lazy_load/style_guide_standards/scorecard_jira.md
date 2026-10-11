@@ -18,7 +18,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/_style_guide_standards/jira.md` — the rule being scored
+- `src/claude/_reference/_style_guide_standards/jira.md` — the rule being scored
 - `src/claude/_tests/skills/jira_create/test_jira_create_handler.py` — Test Coverage dimension (a different artifact, not this rule)
 
 ---

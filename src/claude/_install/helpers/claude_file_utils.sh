@@ -28,7 +28,7 @@ LAZY_RULES_NAME="_rules_lazy_load"
 
 # Style guides sit in one folder, in the repo and once installed, except their entry files (with paths:
 # frontmatter), which the install moves under rules/ so Claude Code loads them on matching files
-STYLE_GUIDES_NAME="_style_guide_standards"
+STYLE_GUIDES_NAME="_reference/_style_guide_standards"
 STYLE_GUIDES_PATH_SCOPED="rules/04_path_scoped/style_guide_standards"
 
 #=======================================================================
@@ -200,7 +200,7 @@ is_path_scoped() {
 # Print where a style-guide file installs, relative to the target: under rules/ when path-scoped, else in place
 style_guide_install_path() {
     local FILE="$1"  # the file itself, to read its frontmatter
-    local REL="$2"   # its path inside _style_guide_standards/
+    local REL="$2"   # its path inside _reference/_style_guide_standards/
     if is_path_scoped "${FILE}"; then
         echo "${STYLE_GUIDES_PATH_SCOPED}/${REL}"
     else
@@ -208,7 +208,7 @@ style_guide_install_path() {
     fi
 }
 
-# Move the style guides' entry files from _style_guide_standards/ into rules/, where Claude Code loads them
+# Move the style guides' entry files from _reference/_style_guide_standards/ into rules/, where Claude Code loads them
 # on matching files, overwriting the last install's copy. Every other file stays put and is read on demand.
 split_style_guides() {
     local FROM_DIR="${TARGET_DIR}/${STYLE_GUIDES_NAME}"
