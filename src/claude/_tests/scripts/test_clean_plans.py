@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
 # Date updated:      2026-10-11
-# Version:           1.2.0
+# Version:           1.3.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -18,6 +18,8 @@ must stay in _plans/, because archiving a live plan would lose work.
 
 import builtins
 import importlib.util
+import os
+import time
 from datetime import date
 
 import pytest
@@ -206,7 +208,7 @@ def test_main_archives_on_yes(tmp_path, monkeypatch):
     write_plan(tmp_path, "2026_09_01_old_done.md", plan_text("✅ Done"))
     write_plan(tmp_path, "2026_09_01_old_pending.md", plan_text("⏳ Pending"))
     monkeypatch.setattr(builtins, "input", lambda _prompt: "y")
-    clean_plans.main(plans_dir=tmp_path, today=TODAY)
+    clean_plans.main(plans_dir=tmp_path, today=TODAY, drafts_dir=tmp_path / "no_drafts")
     assert (tmp_path / "archive" / "2026_09_01_old_done.md").exists(), "Finished plan should move to archive/"
     assert not (tmp_path / "2026_09_01_old_done.md").exists(), "Finished plan should leave _plans/"
     assert (tmp_path / "2026_09_01_old_pending.md").exists(), "Unfinished plan should stay"
@@ -217,7 +219,7 @@ def test_main_moves_nothing_on_no(tmp_path, monkeypatch):
     write_plan(tmp_path, "2026_09_01_old_done.md", plan_text("✅ Done"))
     monkeypatch.setattr(builtins, "input", lambda _prompt: "n")
     with pytest.raises(SystemExit):
-        clean_plans.main(plans_dir=tmp_path, today=TODAY)
+        clean_plans.main(plans_dir=tmp_path, today=TODAY, drafts_dir=tmp_path / "no_drafts")
     assert (tmp_path / "2026_09_01_old_done.md").exists(), "Plan should stay when the user says no"
     assert not (tmp_path / "archive").exists(), "archive/ should not be created when the user says no"
 
@@ -226,3 +228,54 @@ def test_default_plans_dir_uses_config_dir(monkeypatch, tmp_path):
     """The default folder is $CLAUDE_CONFIG_DIR/_plans."""
     monkeypatch.setenv("CLAUDE_CONFIG_DIR", str(tmp_path))
     assert clean_plans._default_plans_dir() == tmp_path / "_plans", "Default should follow CLAUDE_CONFIG_DIR"
+
+
+# ── plan-mode drafts ──────────────────────────────────────────────────────────
+
+
+def write_draft(folder, name, days_old):
+    """Write a draft with a modified time days_old before TODAY."""
+    folder.mkdir(parents=True, exist_ok=True)
+    path = folder / name
+    path.write_text("# Draft\n")
+    stamp = time.mktime(TODAY.timetuple()) - days_old * 86400 + 3600
+    os.utime(path, (stamp, stamp))
+    return path
+
+
+def test_old_drafts_found_by_age_only(tmp_path):
+    """Drafts 14 days old or more are picked, and newer ones and archive/ are left alone."""
+    write_draft(tmp_path, "old-draft-name.md", 14)
+    write_draft(tmp_path, "new-draft-name.md", 13)
+    write_draft(tmp_path / "archive", "archived-draft.md", 40)
+    names = [p.name for p in clean_plans.find_old_drafts(tmp_path, min_age_days=14, today=TODAY)]
+    assert names == ["old-draft-name.md"], f"only the 14-day-old draft should go, got {names}"
+
+
+def test_missing_drafts_folder_gives_nothing(tmp_path):
+    """A config with no plans/ folder has no drafts to archive."""
+    assert clean_plans.find_old_drafts(tmp_path / "plans", today=TODAY) == []
+
+
+def test_main_archives_drafts_and_plans_together(tmp_path, monkeypatch):
+    """One yes moves old drafts to plans/archive/ and finished plans to _plans/archive/."""
+    plans, drafts = tmp_path / "_plans", tmp_path / "plans"
+    plans.mkdir()
+    write_plan(plans, "2026_09_01_old_done.md", plan_text("✅ Done"))
+    write_draft(drafts, "abandoned-draft.md", 20)
+    write_draft(drafts, "current-draft.md", 1)
+    monkeypatch.setattr(builtins, "input", lambda _prompt: "y")
+    clean_plans.main(plans_dir=plans, today=TODAY)
+    assert (drafts / "archive" / "abandoned-draft.md").exists(), "an old draft should move to plans/archive/"
+    assert (drafts / "current-draft.md").exists(), "a recent draft should stay"
+    assert (plans / "archive" / "2026_09_01_old_done.md").exists(), "the finished plan should still be archived"
+
+
+def test_main_archives_drafts_when_no_plan_is_finished(tmp_path, monkeypatch):
+    """Old drafts are archived even when no saved plan is ready, rather than the run stopping early."""
+    plans, drafts = tmp_path / "_plans", tmp_path / "plans"
+    plans.mkdir()
+    write_draft(drafts, "abandoned-draft.md", 20)
+    monkeypatch.setattr(builtins, "input", lambda _prompt: "y")
+    clean_plans.main(plans_dir=plans, today=TODAY)
+    assert (drafts / "archive" / "abandoned-draft.md").exists(), "drafts must not wait for a finished plan"

@@ -13,7 +13,7 @@ SHELL = /bin/bash
 # make list_plans       # list saved plans in $CLAUDE_CONFIG_DIR/_plans/ by plan status, flagging stale Active ones
 # make install          # install Claude config files into $CLAUDE_CONFIG_DIR, or ~/.claude (previews, then asks you to type 'install')
 # make update           # [DISABLED] update Claude config files in ~/.claude/ (WSL)
-# make clean_plans      # archive Done and Dropped plans to $CLAUDE_CONFIG_DIR/_plans/archive/
+# make clean_plans      # archive Done and Dropped plans to _plans/archive/, and drafts over 14 days old to plans/archive/
 # make clean_backups    # move old ~/.claude_backup_* dirs to ~/.claude_backup_archive/
 # make clean            # run clean_plans and clean_backups
 # make all              # print this usage list
@@ -95,7 +95,7 @@ list_plans:
 	@python3 src/claude/_scripts/_audit_scripts/audit_plans.py
 
 clean_plans:
-	@echo "${INFO}\nArchiving Done and Dropped plans to _plans/archive/${COLOUR_OFF}"
+	@echo "${INFO}\nArchiving Done and Dropped plans, and old plan-mode drafts${COLOUR_OFF}"
 	@python3 src/claude/_scripts/_clean_scripts/clean_plans.py
 
 clean_backups:

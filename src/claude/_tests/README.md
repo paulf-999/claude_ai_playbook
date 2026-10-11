@@ -166,9 +166,9 @@ Tests for the maintenance scripts in `_scripts/`.
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_audit_claude_component_root.py` | Validates how audit_claude_component.py chooses the folder it scans | 9/10 | 2026-10-01 | 2026-10-02 | 1.0.2 |
-| `test_audit_plans.py` | `audit_plans.py` lists saved plans by plan status, Active first, marks inferred statuses and flags Active plans untouched for 14 days | 9/10 | 2026-10-11 | 2026-10-11 | 1.1.0 |
+| `test_audit_plans.py` | `audit_plans.py` lists saved plans by plan status, Active first, marks inferred statuses, flags Active plans untouched for 14 days, and counts drafts | 9/10 | 2026-10-11 | 2026-10-11 | 1.2.0 |
 | `test_audit_rule_usage.py` | Validates audit_rule_usage.py against small fixture rules and transcripts | 9/10 | 2026-10-01 | 2026-10-10 | 1.10.1 |
-| `test_clean_plans.py` | `clean_plans.py` archives only Done or Dropped plans at least 14 days old, reading each plan's status line or, without one, its phase table | 9/10 | 2026-10-02 | 2026-10-11 | 1.2.0 |
+| `test_clean_plans.py` | `clean_plans.py` archives only Done or Dropped plans at least 14 days old, reading each plan's status line or, without one, its phase table, and archives plan-mode drafts over 14 days old | 9/10 | 2026-10-02 | 2026-10-11 | 1.3.0 |
 | `test_script_naming.py` | Validates that every script under _scripts/ follows the script naming pattern | 9/10 | 2026-10-02 | 2026-10-06 | 1.1.0 |
 
 ---

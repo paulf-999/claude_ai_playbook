@@ -101,6 +101,18 @@ def report(plans: list[Plan], stale_days: int = STALE_DAYS) -> str:
     return "\n".join(lines).rstrip()
 
 
+def drafts_line(drafts_dir: Path, today: date, stale_days: int = STALE_DAYS) -> str:
+    """Count plan-mode drafts in plans/, and how many are old enough for make clean_plans to archive."""
+    if not drafts_dir.is_dir():
+        return ""
+    total = len(list(drafts_dir.glob("*.md")))
+    if not total:
+        return ""
+    old = len(CLEAN_PLANS.find_old_drafts(drafts_dir, min_age_days=stale_days, today=today))
+    hint = f", {old} older than {stale_days}d — run `make clean_plans` to archive them" if old else ""
+    return f"Drafts in {drafts_dir.name}/: {total}{hint}."
+
+
 def main(plans_dir: str | Path | None = None, today: date | None = None):
     """Print the listing for the config's _plans/ folder.
 
@@ -111,7 +123,11 @@ def main(plans_dir: str | Path | None = None, today: date | None = None):
     if not plans_dir.is_dir():
         print(f"No plans folder found at {plans_dir}.")
         return
-    print(report(collect(plans_dir, today or date.today())))
+    today = today or date.today()
+    print(report(collect(plans_dir, today)))
+    line = drafts_line(plans_dir.parent / "plans", today)  # plan mode's own drafts, beside _plans/
+    if line:
+        print(f"\n{line}")
 
 
 if __name__ == "__main__":

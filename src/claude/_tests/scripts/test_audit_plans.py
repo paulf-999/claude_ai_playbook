@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-11
 # Date updated:      2026-10-11
-# Version:           1.1.0
+# Version:           1.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -164,3 +164,21 @@ def test_default_folder_follows_config_dir(tmp_path, monkeypatch, capsys):
     monkeypatch.setenv("CLAUDE_CONFIG_DIR", str(tmp_path))
     AUDIT.main(today=TODAY)
     assert "from_config_dir" in capsys.readouterr().out, "default folder must come from CLAUDE_CONFIG_DIR"
+
+
+# ── Drafts line ─────────────────────────────────────────────────────────
+
+
+def test_drafts_line_counts_and_points_at_cleanup(tmp_path):
+    """The drafts line gives the total, how many are old, and the command that archives them."""
+    write_plan(tmp_path, "old-draft", days_old=20)
+    write_plan(tmp_path, "new-draft", days_old=1)
+    line = AUDIT.drafts_line(tmp_path, TODAY)
+    assert line.startswith(f"Drafts in {tmp_path.name}/: 2, 1 older than 14d"), line
+    assert "make clean_plans" in line, f"the line should name the cleanup command: {line}"
+
+
+def test_drafts_line_is_quiet_without_drafts(tmp_path):
+    """No drafts folder, or an empty one, adds nothing to the listing."""
+    assert AUDIT.drafts_line(tmp_path / "absent", TODAY) == ""
+    assert AUDIT.drafts_line(tmp_path, TODAY) == ""

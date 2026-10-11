@@ -1,4 +1,4 @@
-<!-- version: 1.2.0 -->
+<!-- version: 1.3.0 -->
 <!-- created: 2026-09-17 -->
 <!-- updated: 2026-10-11 -->
 # 📊 Plan File Format
@@ -44,6 +44,7 @@ Put one `**Plan status:**` line straight under the plan's H1, giving the whole p
   - **Why:** the file's modified time resets on any edit or copy, so only this date says when work last moved.
 - **Why:** phase cells alone can't tell a finished plan from an abandoned one, so plans still being acted on get lost among the rest.
 - **Find them:** `make list_plans` groups plans by status and flags Active plans whose updated date is 14 or more days old, to park or drop.
-- **Archive:** `make clean_plans` moves Done and Dropped plans to `_plans/archive/`.
+- **Archive:** `make clean_plans` moves Done and Dropped plans to `_plans/archive/`, and plan-mode drafts in `plans/` older than 14 days to `plans/archive/`.
+  - **Why:** an approved draft was already copied into `_plans/`, so an old draft is almost always abandoned.
 
 **Not a replacement:** the "How to apply" format in the parent rule is the live chat progress report during execution — this table is the plan document's own record. `writing_style.md` still governs all other plan-file prose.
