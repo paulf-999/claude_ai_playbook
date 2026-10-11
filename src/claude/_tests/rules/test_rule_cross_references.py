@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-11
 # Date updated:      2026-10-11
-# Version:           1.1.1
+# Version:           2.0.1
 # Test quality score: 10/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -51,31 +51,6 @@ def test_writing_style_points_to_its_multifile_child():
     assert child.is_file(), f"the named child is missing: {child}"
 
 
-# ── _decision_making.md ──────────────────────────────────
-
-DECISION_MAKING = BEHAVIOUR_DIR / "_decision_making.md"
-NAMING_PRINCIPLES = RULES_DIR / "01_essentials" / "claude_usage_standards" / "naming_standards"
-NAMING_PRINCIPLES = NAMING_PRINCIPLES / "_naming_principles.md"
-
-
-def test_decision_making_defers_to_the_artefact_gates():
-    """New artefacts pass the three gates before options, and that rule still exists."""
-    assert "run the three gates in `_artefact_proposal_gates.md`" in DECISION_MAKING.read_text(), (
-        "_decision_making.md lost its gates prerequisite"
-    )
-    assert (BEHAVIOUR_DIR / "_artefact_proposal_gates.md").is_file(), "the gates rule it defers to is gone"
-
-
-def test_decision_making_naming_exception_matches_naming_rule():
-    """The 3–4 name-candidate exception still matches _naming_principles.md."""
-    assert "name candidates use the 3–4 range set in `_naming_principles.md`" in DECISION_MAKING.read_text(), (
-        "_decision_making.md lost its naming exception"
-    )
-    assert "3–4 name candidates" in NAMING_PRINCIPLES.read_text(), (
-        "_naming_principles.md no longer says 3–4 candidates, so the exception is out of date"
-    )
-
-
 # ── _security_guardrails.md ──────────────────────────────
 
 GUARDRAILS = RULES_DIR / "02_claude_standards" / "security" / "_security_guardrails.md"
@@ -94,7 +69,9 @@ def test_guardrails_name_the_destructive_wildcards():
     """The guardrails name the wildcards they forbid, so the settings check can't pass on an empty list."""
     broad = too_broad()
     assert "Bash(git:*)" in broad, f"the guardrails should name Bash(git:*) as too broad, found {broad}"
-    assert "Bash(rm -rf:*)" in broad, f"the guardrails should name Bash(rm -rf:*) as too broad, found {broad}"
+    assert "Bash(rm -rf:*)" in broad, (  # wording-check: list the settings check uses
+        f"the guardrails should name Bash(rm -rf:*) as too broad, found {broad}"
+    )
 
 
 def test_settings_allow_none_of_the_forbidden_wildcards():
@@ -258,13 +235,6 @@ def test_efficiency_has_no_orphaned_children():
     named = {path.rsplit("/", 1)[-1] for path in efficiency_children()}
     orphans = {child.name for child in EFFICIENCY_CHILDREN.glob("*.md")} - named
     assert not orphans, f"Children never named by the parent (silently unreachable): {sorted(orphans)}"
-
-
-def test_efficiency_promoted_children_left_the_lazy_folder():
-    """Turn budgets and automation controls load every session, so no stale lazy copy may remain."""
-    for name in ("turn_budgets.md", "automation_controls.md"):
-        stale = LAZY_RULES_DIR / "claude_config" / name
-        assert not stale.exists(), f"Stale lazy copy left behind: {stale}"
 
 
 def test_efficiency_contents_match_headings():

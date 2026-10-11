@@ -18,7 +18,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/test_file_structure_compliance.py` — the test being scored
-- `src/claude/_tests/_file_structure_validator.py` — the scanner it runs
-- `src/claude/_tests/test_file_structure_validator.py` — proves the scanner on fake config trees
+- `src/claude/_tests/_core/test_file_structure_compliance.py` — the test being scored
+- `src/claude/_tests/_core/_file_structure_validator.py` — the scanner it runs
+- `src/claude/_tests/_core/test_file_structure_validator.py` — proves the scanner on fake config trees
 - `src/claude/rules/02_claude_standards/path_scoped_rules/claude_directory_structure.md` — what the test guards

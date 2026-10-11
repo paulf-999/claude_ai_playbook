@@ -22,6 +22,6 @@
 ## 🔗 Related files
 
 - `src/claude/hooks/hook_enforcement_naming_convention.sh` — the hook being scored
-- `src/claude/_tests/_file_structure_validator.py` — Complexity and Failure Safety dimensions
+- `src/claude/_tests/_core/_file_structure_validator.py` — Complexity and Failure Safety dimensions
 - `src/claude/_tests/hooks/enforcement/test_enforcement_naming_convention.py` — Test Coverage dimension
 - `docs/decisions/claude_config/hooks.md` — Evidence of Need dimension

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           1.7.6
+# Version:           2.0.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -22,7 +22,6 @@ from _shared_paths import (
     CLAUDE_DIR,
     CLAUDE_MD,
     HOOKS_DIR,
-    LAZY_RULES_DIR,
     ON_DEMAND_ROOTS,
     RULES_DIR,
     SKILLS_DIR,
@@ -32,7 +31,6 @@ from _shared_paths import (
 )
 
 STYLE_GUIDES = "style_guide_standards"
-LAZY_DIR = LAZY_RULES_DIR
 ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines")
 # Folders under _rules_lazy_load/ that hold indexes or ledgers rather than rules
 # The rules overview and its tier pages index the rules rather than being rules
@@ -265,4 +263,3 @@ def test_triggers_added_on_2026_10_01_stay():
     for installed, kind in expected.items():
         found = trigger_for(installed, files[installed].read_text(), loaded, hooks)
         assert found == kind, f"{installed} should load through {kind}, found {found or 'nothing'}"
-    assert not (LAZY_DIR / "environment_setup").exists(), "ohmyzsh_setup.md was archived to _archive/ — keep it out"

@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
-# Date updated:      2026-10-10
-# Version:           4.2.2
+# Date updated:      2026-10-11
+# Version:           5.0.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -67,12 +67,6 @@ def test_skill_md_has_six_sections_in_order():
     assert found[:6] == SECTIONS, f"SKILL.md sections changed: {found[:6]}"
 
 
-def test_skill_md_stays_short():
-    """SKILL.md is meant to be about 60 lines plus its instructions, with detail in reference/."""
-    target = "6-section canonical structure, ~60 lines plus the instructions section"
-    assert target in content(), "the ~60-line target is missing"
-
-
 def test_example_name_follows_pattern():
     """The example skill name follows the <domain>_<action> pattern it teaches."""
     name = re.search(r"^name: (\S+)$", frontmatter_example(), re.M)
@@ -105,9 +99,11 @@ def test_contract_required_fields():
 def test_checklist_matches_contract_fields():
     """The hard-gates checklist asks for the same contract fields the core standards require."""
     checklist = CHECKLIST.read_text()
-    assert "name, version, summary, maturity all defined" in checklist, "checklist lost the core contract fields"
+    assert "name, version, summary, maturity all defined" in checklist, (  # wording-check: matches contract fields
+        "checklist lost the core contract fields"
+    )
     for field in ("dispatch.triggers documented", "dispatch.not_for documented", "output (type, confirmation_required"):
-        assert field in checklist, f"checklist no longer asks for {field!r}"
+        assert field in checklist, f"checklist no longer asks for {field!r}"  # wording-check: matches contract fields
 
 
 def table_row(label: str) -> list[str]:

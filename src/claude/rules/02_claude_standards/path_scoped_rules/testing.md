@@ -5,7 +5,7 @@ paths:
   - "**/*.sql"
   - "**/_tests/**"
 ---
-<!-- version: 2.0.0 -->
+<!-- version: 3.0.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-11 -->
 <!-- miss_cost: medium — untested code the user catches in review -->
@@ -26,8 +26,9 @@ paths:
 - **🐛 Bug fixes:** include a regression test so the bug can't recur.
 - **📄 Instructional content:** READMEs and docs need no behaviour test, since following a rule can't be graded without a live-session eval harness.
   - **Note:** `test_rules_structure.py` already checks every rule's file quality.
-- **🧷 Content-regression test:** when a rule records a real incident or hard-won lesson, assert its key phrases survive, as `test_concurrent_sessions.py` does for the 2026-09-21 incident.
-  - **Why:** it catches silent loss of the text in a later edit or merge, so reserve it for content that would be costly to lose.
+- **🧷 Content-regression test:** for incident records only, assert the record's key phrases survive, as `test_concurrent_sessions.py` does for the 2026-09-21 incident.
+  - **Tag:** mark each pinning assert `# wording-check: incident record`, since `test_no_wording_pinning.py` fails any untagged one.
+  - **Why:** pinning other rule wording breaks on every rewording without catching a bug, so it's an anti-pattern.
 
 ---
 
@@ -60,8 +61,8 @@ Define the goal before writing the test, because tests validate *intended behavi
 |---|---|---|
 | **Structure** | Format and layout drift across many files | `test_rules_structure.py`, `test_rules_structure_layout.py`, `test_file_structure_compliance.py` |
 | **Reachability** | Misplaced files under `rules/`, dead pointers and unlinked lazy files | `test_always_on_reachability.py`, `test_lazy_load_coverage.py` |
-| **Metadata** | Missing or malformed version/created/updated headers | `test_claude_config_metadata.py` and the hook, agent and skill header tests |
-| **Rule content** | Silent loss of an incident record or hard-won lesson | `_tests/rules/<tier>/test_<rule>.py`, only for rules that record one, such as `test_concurrent_sessions.py` |
+| **Metadata** | Missing or malformed version/created/updated headers | `test_metadata_header_format.py` for the shared format, plus one real-file scan each for rules, hooks, agents and skills |
+| **Rule content** | Silent loss of an incident record, and new tests that pin rule wording | `_tests/rules/<tier>/test_<rule>.py`, only for rules that record one, such as `test_concurrent_sessions.py`, plus the `test_no_wording_pinning.py` guard |
 | **Hooks** | Registered hooks that are missing or stop behaving as documented | `_tests/hooks/`, grouped by hook type |
 | **Skills** | Skills that break the authoring standard or carry orphaned files | `_tests/skills/`, plus each skill's own `tests/evals.yaml` |
 | **Settings** | Unsafe permissions, secrets and broken aliases | `_tests/settings/`, `test_aliases_behavior.py` |
@@ -83,6 +84,6 @@ Define the goal before writing the test, because tests validate *intended behavi
 
 - **Live config:** from the config folder, run `python3 -m pytest _tests`.
 - **Playbook repo:** from the repo root, run `CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest src/claude/_tests`, where the repo's `pytest.ini` adds coverage.
-- **Paths:** resolve the config directory through `_tests/_shared_paths.py`, never a hardcoded home path, per `portable_paths.md`.
+- **Paths:** resolve the config directory through `_tests/_core/_shared_paths.py`, never a hardcoded home path, per `portable_paths.md`.
 - **Update tests with code:** change a test in the same commit as the behaviour it covers.
 - **Delete dead tests:** remove a feature's tests when the feature is removed.

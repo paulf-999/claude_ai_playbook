@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-28
 # Date updated:      2026-10-11
-# Version:           1.1.1
-# Test quality score: 10/10
+# Version:           2.0.0
+# Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
@@ -13,9 +13,9 @@
 Every SKILL.md carries the three-line header straight after its YAML
 frontmatter, holds no ``version:`` in that frontmatter, and its header
 version matches ``skill.contract.yaml``.
+Format cases for the shared validator live in ``_tests/test_metadata_header_format.py``.
 """
 from pathlib import Path
-from typing import Optional
 
 import yaml
 
@@ -26,21 +26,6 @@ from _shared_paths import CLAUDE_DIR, SKILLS_DIR
 
 SKILL_TEMPLATE = CLAUDE_DIR / "_templates" / "skills" / "SKILL.md.template"
 HINT = "— see 03_authoring_guidelines/shared_standards/_claude_config_metadata.md"
-
-
-def build_skill(frontmatter: str = "name: demo_skill\nmaturity: draft", header: Optional[str] = None) -> str:
-    """Build a minimal SKILL.md from a frontmatter body and an optional header.
-
-    :param frontmatter: YAML lines between the ``---`` fences.
-    :type frontmatter: str
-    :param header: Header lines to place after the frontmatter; a valid default when omitted.
-    :type header: Optional[str]
-    :return: SKILL.md content.
-    :rtype: str
-    """
-    if header is None:
-        header = "<!-- version: 0.1.0 -->\n<!-- created: 2026-09-28 -->\n<!-- updated: 2026-09-28 -->\n"
-    return f"---\n{frontmatter}\n---\n{header}\n## 🎯 Purpose\n"
 
 
 def skill_dirs() -> list[Path]:
@@ -56,49 +41,6 @@ def skill_dirs() -> list[Path]:
         if not any(part.startswith(".") for part in path.relative_to(SKILLS_DIR).parts)
     )
 
-
-# --- Validator: accepted ---
-
-def test_valid_skill_layout_accepted():
-    """Frontmatter without version, followed by a valid header, produces no errors."""
-    assert skill_header_errors(build_skill()) == [], "valid skill layout was rejected"
-    nested = "name: demo_skill\nmaturity: draft\ntags:\n  status: active\n  tested: false"
-    assert skill_header_errors(build_skill(frontmatter=nested)) == [], "nested frontmatter was rejected"
-
-
-def test_header_version_is_read_after_frontmatter():
-    """The version helper reads the header line, not the frontmatter."""
-    assert header_version(build_skill()) == "0.1.0", "header version was not extracted"
-
-
-# --- Validator: rejected ---
-
-def test_missing_frontmatter_rejected():
-    """A SKILL.md must still open with frontmatter."""
-    errors = skill_header_errors("<!-- version: 0.1.0 -->\n# demo\n")
-    assert errors and "frontmatter" in errors[0], f"missing frontmatter not caught: {errors}"
-
-
-def test_version_left_in_frontmatter_rejected():
-    """version must move out of the frontmatter into the header."""
-    errors = skill_header_errors(build_skill(frontmatter="name: demo_skill\nversion: 0.1.0"))
-    assert errors and "not the frontmatter" in errors[0], f"frontmatter version not caught: {errors}"
-
-
-def test_header_not_directly_after_frontmatter_rejected():
-    """A blank line or content between frontmatter and header is rejected."""
-    errors = skill_header_errors(build_skill(header="\n<!-- version: 0.1.0 -->\n"))
-    assert errors and "line after the frontmatter" in errors[0], f"gap not caught: {errors}"
-
-
-def test_missing_header_rejected():
-    """A skill with no header at all is rejected."""
-    errors = skill_header_errors(build_skill(header=""))
-    assert errors, "missing header was accepted"
-    assert "line after the frontmatter" in errors[0], f"unexpected error text: {errors}"
-
-
-# --- Real files ---
 
 def test_skills_exist():
     """The scan below is meaningful only if skills are found."""

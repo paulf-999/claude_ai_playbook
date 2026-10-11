@@ -15,6 +15,8 @@ Each table's **Quality**, **Created**, **Updated**, and **Version** columns are 
 the test file's own metadata header — see `testing.md`'s Test Metadata Standard section for the
 format and scoring rubric.
 
+**Layout:** the shared helpers below (`_*.py`) and the suite-wide tests live in `_core/`; `conftest.py` puts it on `sys.path`, so tests import helpers by name, e.g. `from _shared_paths import CLAUDE_DIR`.
+
 **Utility (not a scored test):** `_skill_orphans.py` — pure detectors for orphaned skill files, broken `reference/` links and eager imports.
 
 **Utility (not a scored test):** `_gate_fixtures.py` — loads the skill authoring gate linter and builds fake skills for its walk and run tests.
@@ -39,7 +41,7 @@ Tests for the quality scorecards in `_reference/_quality_scorecards/`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_scorecard_coverage.py` | Every hook, agent and skill has a scorecard on its folder's dimensions, and the summaries add up | 8/10 | 2026-10-01 | 2026-10-11 | 1.1.2 |
+| `test_scorecard_coverage.py` | Every hook, agent and skill has a scorecard on its folder's dimensions, and the summaries add up | 8/10 | 2026-10-01 | 2026-10-11 | 1.1.3 |
 | `test_scorecard_dates.py` | Validates the per-row Date Updated column in every quality scorecard table | 10/10 | 2026-10-01 | 2026-10-11 | 1.0.3 |
 
 ---
@@ -50,8 +52,8 @@ Tests for custom sub-agents in `agents/`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_agent_metadata_header.py` | Validates the agent metadata header defined in _claude_config_metadata.md | 10/10 | 2026-09-29 | 2026-10-11 | 1.0.3 |
-| `test_agent_triggers.py` | No agent trigger competes with a skill for the same request | 7/10 | 2026-10-01 | 2026-10-11 | 1.0.2 |
+| `test_agent_metadata_header.py` | Every AGENT.md carries a valid header after its frontmatter, its major version matches its maturity, and the template models it | 9/10 | 2026-09-29 | 2026-10-11 | 2.0.0 |
+| `test_agent_triggers.py` | No agent trigger competes with a skill for the same request | 9/10 | 2026-10-01 | 2026-10-11 | 2.0.0 |
 
 ---
 
@@ -71,6 +73,7 @@ Tests for Claude Code hook scripts in `~/.claude/hooks/`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
+| `test_hook_metadata_header.py` | Every hook script carries a valid metadata header on lines 2–4, after its shebang | 9/10 | 2026-09-29 | 2026-10-11 | 2.0.0 |
 | `test_hook_registry_utils.py` | `settings.json` hook registry — known events, command hooks, no duplicates, every referenced hook file exists, and every hook file is registered or listed in `RESERVED_HOOKS` | 8/10 | 2026-08-28 | 2026-10-11 | 2.3.4 |
 
 **Archived:** `test_auto_rotate_todo.py` moved to `_tests/_archived/` (2026-09-18) — `rotate_todo.sh` and `hook_auto_rotate_todo.sh` were never built despite a stale "Ready for production" claim in `TODO.md`; see the file's own archival note.
@@ -102,37 +105,38 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_rules_structure.py` | Per-file format across all `rules/` files — line limits, H1 and H2 heading emoji, trailing newlines, and no Related or unearned Contents sections | 10/10 | 2026-08-28 | 2026-10-11 | 2.5.4 |
-| `test_rules_structure_layout.py` | Where `rules/` files live, every import in `CLAUDE.md` and `rules/` resolves, and no import chain reaches `_reference/` | 7/10 | 2026-10-01 | 2026-10-11 | 3.0.4 |
-| `test_rule_cross_references.py` | Rule files point at things that exist and agree with the files that repeat them, across seven rules, including git.md's branch pattern and its examples | 10/10 | 2026-10-11 | 2026-10-11 | 1.1.1 |
+| `test_rules_structure_layout.py` | Where `rules/` files live, every import in `CLAUDE.md` and `rules/` resolves, and no import chain reaches `_reference/` | 7/10 | 2026-10-01 | 2026-10-11 | 5.0.0 |
+| `test_rule_cross_references.py` | Rule files point at things that exist and agree with the files that repeat them, across six rules, including git.md's branch pattern and its examples | 10/10 | 2026-10-11 | 2026-10-11 | 2.0.1 |
 
 ### `rules/01_essentials/`
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_guiding_principles.py` | CLAUDE.md imports only memory and aliases, each with a purpose comment, unique and under the Imports heading | 9/10 | 2026-08-28 | 2026-10-11 | 3.0.2 |
-| `test_rule_directory_organisation.py` | `01_essentials/` holds its expected files and folders, and tiers 01–03 follow the parent-and-children layout (`_` prefix, 2+ children, parent beside each folder) | 9/10 | 2026-08-28 | 2026-10-11 | 2.3.2 |
+| `test_guiding_principles.py` | CLAUDE.md imports only memory and aliases, each with a purpose comment, unique and under the Imports heading | 9/10 | 2026-08-28 | 2026-10-11 | 3.0.3 |
+| `test_rule_directory_organisation.py` | `01_essentials/` holds its expected files and folders, and tiers 01–03 follow the parent-and-children layout (`_` prefix, 2+ children, parent beside each folder) | 9/10 | 2026-08-28 | 2026-10-11 | 2.4.1 |
 
 ### `rules/02_claude_standards/`
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_always_on_reachability.py` | Every file under `rules/` loads the way its folder says — no README, `_lazy_load/` folder, `@import` or unscoped `02_claude_standards/path_scoped_rules/` file — and every 'Read on demand' pointer | 9/10 | 2026-09-18 | 2026-10-11 | 3.2.5 |
-| `test_claude_rule_loading_strategy.py` | The five-folder table matches the real `rules/` and `_rules_lazy_load/` folders, and its example files exist, matching each tier's loading claim; placement uses measured usage, not 70% | 10/10 | 2026-09-30 | 2026-10-11 | 2.1.8 |
-| `test_concurrent_sessions.py` | `git/_concurrent_sessions.md` keeps its incident record and shared-working-tree safety guidance | 10/10 | 2026-09-21 | 2026-10-11 | 2.0.1 |
+| `test_claude_rule_loading_strategy.py` | The five-folder table matches the real `rules/` and `_rules_lazy_load/` folders, and its example files exist, matching each tier's loading claim | 9/10 | 2026-09-30 | 2026-10-11 | 4.0.0 |
+| `test_concurrent_sessions.py` | `git/_concurrent_sessions.md` stays reachable from `git.md` and keeps its 2026-09-21 incident record | 9/10 | 2026-09-21 | 2026-10-11 | 3.0.0 |
+| `test_no_wording_pinning.py` | No test pins an instructional rule's prose (a multi-word literal checked against a real file's text) or guards a finished migration (`assert not <path>.exists()`), unless tagged `# wording-check:` or `# absence-check:` with a reason | 10/10 | 2026-10-11 | 2026-10-11 | 1.1.0 |
 | `test_path_scoped_rules.py` | Path-scoped rules in `rules/` carry no `@` imports, `rules/` holds real files not links, and every `02_claude_standards/path_scoped_rules/` file has `paths:` | 7/10 | 2026-10-01 | 2026-10-11 | 2.3.2 |
 | `test_path_scoped_rules_live.py` | Proves in a live session that a `paths:` rule loads when, and only when, a matching file is read | 9/10 | 2026-10-01 | 2026-10-11 | 1.2.3 |
-| `test_plan_mode_phase_gates.py` | Plan-mode phase gates, plan-approval exceptions and their 2026-09-19 incident record, and saving each approved plan as Active | 9/10 | 2026-09-16 | 2026-10-11 | 3.4.2 |
-| `test_portable_paths_hooks.py` | Hooks resolve the config dir from their own location — no hardcoded `~/.claude/` file operations or guard substrings | 10/10 | 2026-09-18 | 2026-10-11 | 2.0.2 |
-| `test_portable_paths_python.py` | Python test files use `CLAUDE_DIR` — no `.expanduser()` outside `_shared_paths.py`, home-directory constants or one-convention import prefixes | 8/10 | 2026-09-18 | 2026-10-11 | 2.0.2 |
-| `test_testing.py` | Every enforcement hook has a test (aspect splits allowed), no orphaned hook tests, testing.md's pointers exist and the score floor's enforcer is named | 10/10 | 2026-08-28 | 2026-10-11 | 1.4.4 |
+| `test_plan_mode_phase_gates.py` | `_plan_mode_phase_gates.md` keeps its plan-persistence section and 2026-09-19 incident record | 9/10 | 2026-09-16 | 2026-10-11 | 4.0.0 |
+| `test_portable_paths_hooks.py` | Hooks resolve the config dir from their own location — no hardcoded `~/.claude/` file operations or guard substrings | 10/10 | 2026-09-18 | 2026-10-11 | 2.0.3 |
+| `test_portable_paths_python.py` | Python test files use `CLAUDE_DIR` — no `.expanduser()` outside `_shared_paths.py`, home-directory constants or one-convention import prefixes | 8/10 | 2026-09-18 | 2026-10-11 | 2.0.3 |
+| `test_testing.py` | Every enforcement hook has a test (aspect splits allowed), no orphaned hook tests, and testing.md's pointers exist | 10/10 | 2026-08-28 | 2026-10-11 | 2.1.0 |
 
 ### `rules/03_authoring_guidelines/`
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_authoring_agents.py` | `authoring_agents.md` points to each of its 5 on-demand children, which are present and well-formed | 9/10 | 2026-09-28 | 2026-10-10 | 2.2.2 |
-| `test_authoring_skills.py` | `authoring_skills.md` and its children: SKILL.md's six sections, the frontmatter example, contract fields matching the checklist, and the maturity table matching the checklist and complexity formula | 9/10 | 2026-09-16 | 2026-10-10 | 4.2.2 |
-| `test_claude_config_metadata.py` | Every rule opens with the three-line version, created and updated metadata header | 10/10 | 2026-09-28 | 2026-10-11 | 2.4.2 |
+| `test_authoring_skills.py` | `authoring_skills.md` and its children: SKILL.md's six sections, the frontmatter example, contract fields matching the checklist, and the maturity table matching the checklist and complexity formula | 9/10 | 2026-09-16 | 2026-10-11 | 5.0.1 |
+| `test_claude_config_metadata.py` | Every rule opens with the three-line version, created and updated metadata header | 9/10 | 2026-09-28 | 2026-10-11 | 3.0.0 |
 | `test_rule_headers.py` | Validates the rule-only `applies_to`, `miss_cost` and `loading` headers defined in _claude_config_metadata.md | 8/10 | 2026-10-01 | 2026-10-11 | 1.9.6 |
 | `test_skill_domains.py` | Keeps skill_domains.yaml and the real skills/ layout in step | 10/10 | 2026-09-30 | 2026-10-11 | 1.0.4 |
 
@@ -141,12 +145,12 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_lazy_load_coverage.py` | Every `_rules_lazy_load/` file is reachable from at least one hook (direct or via a parent index file) | 8/10 | 2026-09-16 | 2026-10-11 | 2.5.8 |
-| `test_lazy_load_rule_structure.py` | The 14 rules once lacking a dedicated test keep their metadata header, Purpose line, key sections, linked child pages, working links and accurate Contents, plus latency_optimisation.md's name, opening and temperature limit | 10/10 | 2026-10-01 | 2026-10-11 | 1.7.1 |
-| `test_lazy_load_triggers.py` | Validates that every lazy rule has something that makes Claude load it | 9/10 | 2026-10-01 | 2026-10-11 | 1.7.6 |
+| `test_lazy_load_rule_structure.py` | The 14 rules once lacking a dedicated test keep their metadata header, Purpose line, linked child pages, working links and accurate Contents | 10/10 | 2026-10-01 | 2026-10-11 | 2.0.0 |
+| `test_lazy_load_triggers.py` | Validates that every lazy rule has something that makes Claude load it | 9/10 | 2026-10-01 | 2026-10-11 | 2.0.0 |
 | `test_org.py` | Organisation-specific terms stay inside _rules_lazy_load/org/ and never leak into shared files | 8/10 | 2026-10-01 | 2026-10-11 | 1.3.6 |
 | `test_test_metadata.py` | Every test's metadata header, in `_tests/` and the repo's `src/claude/_install/_tests/`, is complete, in order and well formed (banners, dates, semver, scores) | 10/10 | 2026-10-01 | 2026-10-11 | 1.3.2 |
 | `test_test_quality_score.py` | Every test header's quality score is exactly what its file earns from four content checks: failure messages, docstrings, a non-vacuous scan and a test proven to fail | 10/10 | 2026-10-02 | 2026-10-11 | 2.0.0 |
-| `test_test_score_floor.py` | Every test, in `_tests/` and the repo's `src/claude/_install/_tests/`, meets quality 7, complexity 7 and style Yes, with no exemptions, and the minimums match `_test_metadata.md` | 8/10 | 2026-10-01 | 2026-10-11 | 2.2.2 |
+| `test_test_score_floor.py` | Every test, in `_tests/` and the repo's `src/claude/_install/_tests/`, meets quality 7, complexity 7 and style Yes, and the minimums match `_test_metadata.md` | 8/10 | 2026-10-01 | 2026-10-11 | 4.0.0 |
 
 ---
 
@@ -160,7 +164,7 @@ Tests for the maintenance scripts in `scripts/`.
 | `test_audit_plans.py` | `audit_plans.py` lists saved plans by status from `_plans/` and its status folders, flags stale Active plans, and counts plans and drafts to file | 9/10 | 2026-10-11 | 2026-10-11 | 2.0.1 |
 | `test_audit_rule_usage.py` | Validates audit_rule_usage.py against small fixture rules and transcripts | 10/10 | 2026-10-01 | 2026-10-11 | 1.10.5 |
 | `test_clean_plans.py` | `clean_plans.py` files saved plans into `_plans/<status>/` by their status line (or phase table), files drafts into `plans/draft/` or `plans/archive/` by age, never overwrites, and runs without asking during `make install` | 9/10 | 2026-10-02 | 2026-10-11 | 2.1.1 |
-| `test_script_naming.py` | Validates that every script under scripts/ follows the script naming pattern | 10/10 | 2026-10-02 | 2026-10-11 | 1.1.2 |
+| `test_script_naming.py` | Validates that every script under scripts/ follows the script naming pattern | 10/10 | 2026-10-02 | 2026-10-11 | 1.1.3 |
 
 ---
 
@@ -168,8 +172,8 @@ Tests for the maintenance scripts in `scripts/`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_aliases.py` | Each `aliases.md` entry is complete, well formed and unique, its links and controls note stay in sync, and core aliases stay documented | 10/10 | 2026-08-28 | 2026-10-11 | 2.2.6 |
-| `test_settings.py` | `settings.json` permission structure, security denies, no broad destructive allows and no real secrets | 9/10 | 2026-08-28 | 2026-10-02 | 1.2.1 |
+| `test_aliases.py` | Each `aliases.md` entry is complete, well formed and unique, its links and controls note stay in sync, and core aliases stay documented | 10/10 | 2026-08-28 | 2026-10-11 | 2.2.7 |
+| `test_settings.py` | `settings.json` permission structure, security denies, no broad destructive allows and no real secrets | 9/10 | 2026-08-28 | 2026-10-11 | 1.2.2 |
 
 **Merged (2026-10-01):** `rules/test_aliases_behavior.py` — its unique checks moved into `settings/test_aliases.py`, so one test covers `aliases.md`.
 
@@ -187,7 +191,7 @@ Tests for the maintenance scripts in `scripts/`.
 | `test_skill_authoring_gate_run.py` | The gate linter's run checks (R2–R4) on fake skills, and failures block while judgement calls only warn | 10/10 | 2026-10-01 | 2026-10-11 | 1.1.2 |
 | `test_skill_index_versions.py` | Every skill group README lists each of its skills at the version in that skill's SKILL.md header | 10/10 | 2026-10-05 | 2026-10-11 | 1.0.1 |
 | `test_skill_instructions_section.py` | Every SKILL.md must carry its own must-follow instructions for Claude | 8/10 | 2026-10-01 | 2026-10-11 | 2.2.4 |
-| `test_skill_metadata_header.py` | Validates the skill metadata header defined in _claude_config_metadata.md | 10/10 | 2026-09-28 | 2026-10-11 | 1.1.1 |
+| `test_skill_metadata_header.py` | Every SKILL.md carries a valid header after its frontmatter, matching its contract version, and the template models it | 9/10 | 2026-09-28 | 2026-10-11 | 2.0.0 |
 
 ### `skills/claude_capture_session_prompts/`
 
@@ -207,14 +211,16 @@ Tests for the skill's eval scorer, `evals/runner.py`.
 
 ---
 
-## 📁 Top level
+## 📁 `_core/`
+
+Suite-wide tests that span the whole config, kept beside the helpers they exercise.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_file_structure_compliance.py` | Every file in the real Claude config passes the file-structure scan, checked area by area | 7/10 | 2026-08-28 | 2026-10-11 | 3.0.2 |
 | `test_file_structure_validator.py` | The file-structure scanner flags bad names and skips auto-generated, hidden and exempt files | 10/10 | 2026-10-01 | 2026-10-11 | 1.3.3 |
 | `test_rule_reachability.py` | The native-load detector flags READMEs, `_lazy_load/` folders, imports, unscoped path-scoped files and broken pointers under `rules/`, on fake rule trees | 8/10 | 2026-09-18 | 2026-10-11 | 3.2.3 |
-| `test_hook_metadata_header.py` | Validates the hook metadata header defined in _claude_config_metadata.md | 10/10 | 2026-09-29 | 2026-10-11 | 1.1.1 |
+| `test_metadata_header_format.py` | Format cases for the shared metadata-header validator, run once for rules, skills, agents and hooks: field order, values, placement, shell style and header after frontmatter | 10/10 | 2026-10-11 | 2026-10-11 | 1.0.0 |
 
 ---
 

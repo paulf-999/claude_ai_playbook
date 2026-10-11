@@ -19,5 +19,5 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/rules/02_claude_standards/test_always_on_reachability.py` — the test being scored
-- `src/claude/_tests/_rule_reachability.py` — the detector it runs
+- `src/claude/_tests/_core/_rule_reachability.py` — the detector it runs
 - `src/claude/rules/03_authoring_guidelines/authoring_rules.md` — the "wire up every documented child" gate it enforces

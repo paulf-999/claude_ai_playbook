@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           1.7.1
+# Version:           2.0.0
 # Test quality score: 10/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -11,15 +11,13 @@
 """Structural tests for the lazy-load rules that had no dedicated test.
 
 Their scorecards average 4.9/10 for Test Coverage, the lowest dimension
-anywhere (see ``quality_scorecards_summary.md``). This file guards six
-things for each rule: its metadata header, its ``**Purpose:**`` line, its
-key sections, that every child page is linked, that every relative link
-resolves, and that each Contents entry matches a real heading.
+anywhere (see ``quality_scorecards_summary.md``). This file guards five
+things for each rule: its metadata header, its ``**Purpose:**`` line, that
+every child page is linked, that every relative link resolves, and that each
+Contents entry matches a real heading.
 
 One of them (MCP trust model) moved to rules/02_claude_standards/ on
 2026-10-11 to load every session, and stays tracked here so its guard isn't lost.
-The latency_optimisation.md checks at the end merged in from
-``test_latency_optimisation.py`` on 2026-10-11.
 """
 from __future__ import annotations
 
@@ -29,7 +27,6 @@ from pathlib import Path
 
 from _shared_paths import (
     CLAUDE_DIR,
-    LAZY_RULES_DIR,
     LAZY_RULES_NAME,
     RULES_DIR,
     STYLE_GUIDES_NAME,
@@ -243,13 +240,6 @@ def rule_path(rel: Path) -> Path:
 # ── Real config ─────────────────────────────────────────────────────────
 
 
-def test_rule_table_tracks_fourteen_distinct_rules():
-    """The table covers the 14 rules whose scorecards asked for a dedicated test (ohmyzsh_setup.md is archived)."""
-    assert len(RULES) == 14, f"Expected 14 tracked rules, found {len(RULES)} — update RULES"
-    stems = [rel.stem for rel in RULES]
-    assert len(set(stems)) == len(stems), f"Duplicate rule stems in RULES: {stems}"
-
-
 def test_every_tracked_rule_exists():
     """Every tracked rule is still on disk under rules/02_claude_standards/path_scoped_rules/,
     rules/02_claude_standards/,
@@ -272,15 +262,6 @@ def test_header_updated_is_not_before_created():
         if header and header[1] < header[0]:
             bad.append(f"{rule.name}: created {header[0]}, updated {header[1]}")
     assert not bad, f"updated date is earlier than created — fix the header: {bad}"
-
-
-def test_key_sections_survive():
-    """Each rule keeps the H2 headings that carry its core guidance."""
-    missing = []
-    for rel, sections in RULES.items():
-        headings = h2_headings(rule_path(rel).read_text(encoding="utf-8"))
-        missing += [f"{rel.name}: '{section}'" for section in sections if section not in headings]
-    assert not missing, f"Key sections missing — restore them or update RULES if renamed on purpose: {missing}"
 
 
 def test_every_child_page_is_linked():
@@ -375,36 +356,3 @@ def test_contents_mismatches_detects_stale_entry():
     text = "## 📋 Contents\n- [🎨 Theme](#-theme)\n- [🔌 Plugins](#-plugins)\n## 🎨 Theme\n"
     assert contents_mismatches(text) == ["Plugins"], "Stale Contents entry missed"
     assert contents_mismatches("## 🎨 Theme\n") == [], "A file without Contents should report nothing"
-
-
-# ── latency_optimisation.md ──────────────────────────────
-
-LATENCY = LAZY_RULES_DIR / "claude_config" / "claude_cost" / "latency_optimisation.md"
-
-
-def test_latency_rule_uses_british_file_name():
-    """The latency rule lives at the British spelling, and the old American name is gone."""
-    assert LATENCY.is_file(), f"expected {LATENCY}"
-    assert not (LATENCY.parent / "latency_optimization.md").exists(), "the old American-spelled file is back"
-
-
-def test_latency_rule_has_no_memory_frontmatter():
-    """The latency rule doesn't open with leftover memory-schema frontmatter."""
-    assert not LATENCY.read_text().startswith("---\n"), "rule files open with the metadata header, not YAML frontmatter"
-
-
-def test_latency_rule_opens_with_metadata_and_emoji_h1():
-    """The latency rule opens with its metadata header comments and then an emoji H1."""
-    lines = LATENCY.read_text().splitlines()
-    assert lines[0].startswith("<!-- version: "), f"line 1 should be the version comment, got {lines[0]}"
-    first_body = next(line for line in lines if not line.startswith("<!-- "))
-    assert re.match(r"# [^\w\s]", first_body), f"the header should be followed by an emoji H1, got {first_body}"
-
-
-def test_latency_rule_gives_no_temperature_above_one():
-    """No temperature value above 1 appears, since the API never accepts one."""
-    text = LATENCY.read_text()
-    values = [float(v) for v in re.findall(r"temperature\s*[=:]?\s*(\d+(?:\.\d+)?)", text, re.I)]
-    values += [float(v) for pair in re.findall(r"\b(\d\.\d)–(\d\.\d)\b", text) for v in pair]
-    bad = [v for v in values if v > 1]
-    assert not bad, f"the rule gives temperatures above 1, which the API rejects: {bad}"

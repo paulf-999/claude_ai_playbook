@@ -20,4 +20,4 @@
 
 - `src/claude/_tests/skills/test_skill_authoring_gate_walk.py` — the test being scored
 - `src/claude/scripts/_lint_scripts/lint_skill_authoring_gate.py` — the gate linter whose checks it proves
-- `src/claude/_tests/_gate_fixtures.py` — builds the fake skills
+- `src/claude/_tests/_core/_gate_fixtures.py` — builds the fake skills

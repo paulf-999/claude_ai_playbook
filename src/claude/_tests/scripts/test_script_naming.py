@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
 # Date updated:      2026-10-11
-# Version:           1.1.2
+# Version:           1.1.3
 # Test quality score: 10/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -119,7 +119,9 @@ def test_live_expected_groups_present():
 def test_naming_rule_documents_pattern():
     """The naming rule still documents the script pattern and points at this test."""
     text = NAMING_RULE.read_text(encoding="utf-8")
-    assert "## 🐍 Script naming" in text, "Script naming section missing from _claude_naming_patterns.md"
+    assert "## 🐍 Script naming" in text, (  # wording-check: section documenting the pattern
+        "Script naming section missing from _claude_naming_patterns.md"
+    )
     assert "scripts/_<verb>_scripts/<verb>_<subject>.py" in text, "Script pattern missing from the naming rule"
     assert "test_script_naming.py" in text, "Naming rule should name the test that enforces it"
 

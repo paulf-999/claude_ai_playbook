@@ -19,5 +19,5 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/skills/test_no_orphaned_skill_files.py` — the test being scored
-- `src/claude/_tests/_skill_orphans.py` — the pure detectors it proves and runs
+- `src/claude/_tests/_core/_skill_orphans.py` — the pure detectors it proves and runs
 - `src/claude/rules/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_skills/_no_orphaned_files.md` — the rule it enforces
