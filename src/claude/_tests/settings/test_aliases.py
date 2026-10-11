@@ -1,7 +1,7 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-10
+# Date updated:      2026-10-11
 # Version:           2.2.3
 # Test quality score: 9/10
 # Test complexity score: 9/10
@@ -25,7 +25,7 @@ from _shared_paths import ALIASES_FILE, CLAUDE_DIR, resolve_config_path
 COLUMNS = ["Input", "Theme", "Status", "Meaning"]
 VALID_STATUSES = {"Ready", "Testing"}
 INPUT_PATTERN = r"`/?[a-z][a-z0-9_-]*`"
-CONTROLS_DOC = "_rules_lazy_load/claude_config/automation_controls.md"
+CONTROLS_DOC = "rules/02_claude_standards/claude_operational_efficiency/_automation_controls.md"
 # A rule path an alias meaning names, under rules/ or _rules_lazy_load/
 RULE_PATH = r"\b_?rules(?:_lazy_load)?/[\w/]+\.md"
 

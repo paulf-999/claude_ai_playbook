@@ -1,7 +1,7 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-04-11 -->
-<!-- updated: 2026-10-06 -->
-<!-- miss_cost: medium — dates that sort or compare wrongly unnoticed; high once it has a trigger -->
+<!-- updated: 2026-10-11 -->
+<!-- miss_cost: low — a date in the wrong format, which review catches and is cheap to fix -->
 <!-- loading: lazy — only matters when writing dates into names, code or logs, which no single file type marks -->
 # 📅 Date & Time Standards
 

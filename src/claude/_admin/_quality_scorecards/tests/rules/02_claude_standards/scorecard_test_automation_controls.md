@@ -18,5 +18,5 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/rules/05_lazy_load/test_automation_controls.py` — the test being scored
-- `src/claude/rules/_rules_lazy_load/claude_config/automation_controls.md` — what the test guards
+- `src/claude/_tests/rules/02_claude_standards/test_automation_controls.py` — the test being scored
+- `src/claude/rules/02_claude_standards/claude_operational_efficiency/_automation_controls.md` — what the test guards

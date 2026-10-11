@@ -5,9 +5,9 @@ paths:
   - "**/_style_guide_standards/**"
   - "**/CLAUDE.md"
 ---
-<!-- version: 4.1.5 -->
+<!-- version: 4.3.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 <!-- miss_cost: low — a rule lands in the wrong tier, which is easy to move -->
 <!-- loading: path-scoped — only needed when placing or moving a rule, so it loads when rule files or CLAUDE.md are open -->
 # 📋 Rules Loading Strategy
@@ -28,7 +28,7 @@ Claude Code loads every `.md` under `rules/` on its own, so every always-on file
 | `02_claude_standards/` | Blocking quality gates and safe operational conduct (testing, security, git, portable paths, efficiency, delegation, external system access) that gate new features, rules and abstractions | `behaviour.md` | Quality decay, security vulnerabilities, scope creep, safety regression | Always-on |
 | `03_authoring_guidelines/` | Standards for authoring the config's own rules, skills and agents — used whenever an artefact is being created | `authoring_rules.md` | Inconsistent artefact structure, scope creep, missing tests | Always-on |
 | `04_path_scoped/` | Domain-specific rules tied to one file type (SQL, Airflow, dbt, Terraform, testing) through `paths:` frontmatter | `style_guide_standards/sql.md` | Nothing outside that domain — that's why it loads only with matching files | Path-scoped; loads when a matching file is open |
-| `_rules_lazy_load/` | Niche tools, discretionary rules and bulky children, under `rules/` in the repo and moved beside it on install | `claude_config/claude_cost/turn_budgets.md` | Nothing until Claude follows a pointer to it | On demand; never loaded automatically |
+| `_rules_lazy_load/` | Niche tools, discretionary rules and bulky children, under `rules/` in the repo and moved beside it on install | `claude_config/claude_cost/latency_optimisation.md` | Nothing until Claude follows a pointer to it | On demand; never loaded automatically |
 
 - **Source of truth:** each folder is the current list of its rules — the examples above are illustrative only.
 - **Folder sets the mode:** tiers 01–03 load every session, unless a rule there has `paths:` (e.g. `authoring_agents.md`), and nothing under `rules/` is `@import`ed.
@@ -53,6 +53,8 @@ Decide from two numbers per rule, both in `_admin/_audits/audit_rule_usage.md`:
 - **Domain style guides:** SQL, Airflow, dbt and similar guides are lazy, triggered by `paths:` on their file type.
   - **Their own folder:** every guide lives in `_style_guide_standards/`, read on demand, and the install moves the entry files with `paths:` to `rules/04_path_scoped/style_guide_standards/`.
 - **Pointers aren't triggers:** a `**Read on demand:**` pointer works only if Claude remembers it, so it never counts for a high-cost rule.
+  - **Enforced by:** `test_high_cost_lazy_rules_load_mechanically` in `test_rule_headers.py`, across `_rules_lazy_load/` and `_style_guide_standards/`.
+  - **Medium is different:** a medium miss is rework you'd catch, so a pointer is enough when few sessions need the rule.
 
 ---
 
@@ -66,7 +68,7 @@ A rule under `rules/` with `paths:` frontmatter loads whenever Claude reads a ma
 - **Backstop for high cost:** a high miss cost also needs a hook or test that catches the mistake, such as the naming-convention hook.
 - **Not for every-session rules:** a rule about how Claude works, rather than which file it touches, stays always-on.
 - **Proven:** `test_path_scoped_rules_live.py` shows in a real session that a `paths:` rule loads with a matching file and not otherwise.
-- **Stays pointer-based:** a rule with no file type of its own, such as delegation, MCP trust or date formats — its `load:` reason names the pointer.
+- **Stays pointer-based:** a rule with no file type of its own, such as delegation or date formats — its `load:` reason names the pointer.
 
 ---
 

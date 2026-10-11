@@ -1,7 +1,7 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
-# Date updated:      2026-10-10
+# Date updated:      2026-10-11
 # Version:           3.2.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
@@ -86,7 +86,9 @@ def test_lazy_rules_live_outside_rules():
 # Config files loaded at every session start: CLAUDE.md, its imports, and every rules/ file
 # without paths:. Lower it when a rule is demoted; raising it needs the evidence
 # guiding_principles.md asks for.
-MAX_STARTUP_FILES = 39
+# 39 -> 42 on 2026-10-11: _mcp_trust_model.md, _turn_budgets.md and _automation_controls.md load every
+# session because a high miss cost can't rest on a pointer and no file type marks their sessions.
+MAX_STARTUP_FILES = 42
 STARTUP_IMPORT = re.compile(r"^@~/[^/\s]+/(\S+\.md)\s*$", re.M)
 
 

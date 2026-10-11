@@ -1,6 +1,6 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.1.0 -->
 <!-- created: 2025-11-15 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 # 🔄 Rule Lifecycle
 
 **Purpose:** Explain how to promote a lazy rule to always-on, how to remove an unused rule, and the design trade-offs behind those choices.
@@ -12,7 +12,7 @@
 
 ## ⬆️ Promoting a rule from lazy to always-on
 
-Promotion is rare, and happens when a rule becomes foundational.
+Promote a rule when a miss would go unnoticed and only a pointer loads it, or when it becomes foundational.
 
 ### 🎯 Promotion criteria
 
@@ -20,17 +20,20 @@ Use the two numbers in `_admin/_audits/audit_rule_usage.md`, read against the ta
 
 - **Applied %:** the share of sessions matching the rule's `applies_to` globs, from `make audit_rule_usage`.
 - **Miss cost:** what breaks when the rule applies but isn't loaded, from its `miss_cost` header.
-- **Promote when:** the rule is applied in half of sessions or more and its miss cost is medium or high.
-- **Promote when:** the rule has `miss_cost: high`, the report shows it missed, and no `paths:` or hook trigger can load it.
-- **Not enough data:** with fewer than 10 applied sessions, make no decision yet.
+- **Promote when:** the rule has `miss_cost: high` and no `paths:` frontmatter or hook loads it — a pointer alone is never enough.
+  - **Why:** a high miss is silent or unsafe by definition, and a pointer works only if Claude remembers to follow it.
+  - **Enforced by:** `test_high_cost_lazy_rules_load_mechanically` in `test_rule_headers.py`.
+- **Medium can stay on a pointer:** a medium miss is rework you'd catch, so promote it only when it's applied in half of sessions or more.
+- **Promote when:** a low-cost rule is small and applied in half of sessions or more.
+- **Not enough data:** for the applied % checks, make no decision with fewer than 10 applied sessions.
 
 ### 📌 Promotion example
 
-**MCP trust model** shows where the line sits: it stays lazy at `_rules_lazy_load/claude_config/mcp_trust_model.md`.
+**MCP trust model** shows the high-cost criterion at work: it moved to `rules/02_claude_standards/security/_mcp_trust_model.md`.
 
-- **High cost:** it prevents prompt injection, so a miss matters.
-- **Low applied %:** it's only needed in sessions that use MCP tools, so it isn't applied in half of sessions.
-- **Outcome:** it stays lazy, and a trigger rather than promotion is the fix if the report shows it missed.
+- **High cost:** a miss lets an injected instruction be followed with no warning.
+- **No trigger:** no file type marks the sessions that use MCP tools, so only a pointer could load it.
+- **Outcome:** it loads every session as a child of `security.md`, even though its applied % is low.
 
 ### 🛠️ Promotion process
 

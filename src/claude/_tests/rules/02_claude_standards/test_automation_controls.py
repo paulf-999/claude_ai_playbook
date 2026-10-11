@@ -1,14 +1,16 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
-# Date updated:      2026-10-10
-# Version:           1.1.3
+# Date updated:      2026-10-11
+# Version:           1.2.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Tests for automation_controls.md — validates experimental feature guards.
+"""Tests for _automation_controls.md — validates experimental feature guards.
+
+The rule loads every session as a child of claude_operational_efficiency.md (since 2026-10-11).
 
 Ensures:
 - Turn budgets are defined (default: 10 for /loop, 20 for /goal)
@@ -18,9 +20,11 @@ Ensures:
 """
 import re
 
-from _shared_paths import ALIASES_FILE, LAZY_RULES_DIR
+from _shared_paths import ALIASES_FILE, RULES_DIR
 
-AUTOMATION_CONTROLS_FILE = LAZY_RULES_DIR / "claude_config" / "automation_controls.md"
+AUTOMATION_CONTROLS_FILE = (
+    RULES_DIR / "02_claude_standards" / "claude_operational_efficiency" / "_automation_controls.md"
+)
 
 
 def _read_automation_controls():
@@ -85,7 +89,7 @@ def test_batch_controls_documented():
     )
 
     # Check for approval gate
-    assert "approve" in content.lower(), (
+    assert "approv" in content.lower(), (
         "automation_controls.md must document approval gate before /batch execution"
     )
 

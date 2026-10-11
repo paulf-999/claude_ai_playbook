@@ -1,15 +1,13 @@
-<!-- version: 1.1.3 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
-<!-- miss_cost: medium — uncapped /loop, /batch or /goal runs; high once it has a trigger -->
-<!-- loading: lazy — only matters when setting up /loop, /batch or /goal, which few sessions do -->
+<!-- updated: 2026-10-11 -->
 # ⚙️ Automation Controls
 
 **Purpose:** Establish guardrails for experimental automation features (`/loop`, `/batch`, `/goal`) to prevent runaway sessions, excessive token usage, and unintended side effects.
 
 Automation features are powerful but risky — these rules protect against costly mistakes.
 
-- **Turn caps for other non-interactive runs:** see [turn_budgets.md](claude_cost/turn_budgets.md).
+- **Turn caps for other non-interactive runs:** see [_turn_budgets.md](_turn_budgets.md).
 
 ## 📋 Contents
 
@@ -18,6 +16,7 @@ Automation features are powerful but risky — these rules protect against costl
 - [🔀 `/batch` — Parallel subagents](#-batch-parallel-subagents)
 - [🛑 Kill-switch procedures](#-kill-switch-procedures)
 - [🔍 Permission gates](#-permission-gates)
+- [🩺 Troubleshooting](#-troubleshooting)
 
 ---
 
@@ -97,64 +96,6 @@ If a looping automation is consuming tokens too quickly or behaving unexpectedly
 
 ---
 
-## 📊 Common Failure Scenarios & Recovery
+## 🩺 Troubleshooting
 
-### `/loop` runaway
-
-**Symptom:** Loop fires every 5m for 2+ hours, accumulating tokens
-
-**Recovery:**
-1. Stop immediately: `TaskStop`
-2. Extend interval: was 5m → try 15m
-3. Clarify condition: is the endpoint responding? Is the logic sound?
-4. Restart: approve new interval explicitly
-
-### `/goal` never converges
-
-**Symptom:** 20+ turns, condition never met, tokens wasted
-
-**Recovery:**
-1. Check transcript: is the agent actually making progress?
-2. Verify condition: is it achievable? Is it measurable?
-3. Fallback to `/loop`: if the goal is unbounded, use `/loop` instead with a timeout
-4. Narrow scope: smaller changes converge faster
-
-### `/batch` conflicts
-
-**Symptom:** Subagents clash on shared files, PRs conflict
-
-**Recovery:**
-1. Stop batch: kill remaining agents
-2. Split items: ensure each PR touches disjoint files
-3. Sequence manually: do 3 items in sequence instead of 12 parallel
-4. Review PR merging order: must merge in dependency order
-
----
-
-## 🎯 Decision Tree: Which Automation?
-
-```
-Need something done repeatedly on a schedule?
-├─ YES → Use /loop (e.g., "check deploy every 5m")
-│
-Need something done once, but iteratively until a condition?
-├─ YES → Use /goal (e.g., "implement until tests pass")
-│
-Need to do the same change 10+ times in parallel?
-├─ YES → Use /batch (e.g., "migrate 12 microservices")
-│
-Otherwise → Manual invocation (faster, clearer)
-```
-
----
-
-## ✅ Verification Checklist
-
-Before invoking any automation feature:
-
-- [ ] Condition/goal/interval is explicit and measurable
-- [ ] Success criteria are defined upfront
-- [ ] Kill-switch procedure is clear
-- [ ] Side effects are understood and acceptable
-- [ ] Token budget is estimated and acceptable
-- [ ] Manual alternative was considered and rejected
+- **Read on demand:** `~/.claude/_rules_lazy_load/claude_config/automation_troubleshooting.md` — when a run misbehaves, or before choosing between `/loop`, `/goal` and `/batch`, for recovery steps, a decision tree and a pre-flight checklist.
