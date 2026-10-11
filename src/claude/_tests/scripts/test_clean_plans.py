@@ -1,18 +1,19 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
-# Date updated:      2026-10-02
-# Version:           1.0.0
+# Date updated:      2026-10-11
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Validates that clean_plans.py archives only finished, old-enough plans.
+"""Validates that clean_plans.py archives only Done or Dropped, old-enough plans.
 
-A plan is finished when every Status cell in its phase table reads Done. Anything
-else — no table, a Pending or In Progress phase, a recent date or an undated
-name — must stay in _plans/, because archiving a live plan would lose work.
+A plan's Plan status line decides it, and a plan without one is finished only
+when every Status cell in its phase table reads Done. Anything else — an Active
+or Parked plan, no table, a Pending phase, a recent date or an undated name —
+must stay in _plans/, because archiving a live plan would lose work.
 """
 
 import builtins
@@ -109,6 +110,29 @@ def test_only_first_status_table_is_read():
     assert clean_plans.phase_statuses(text) == ["✅ Done"], "Only the first Status table should be read"
 
 
+# ── reading the plan-level status ─────────────────────────────────────────────
+
+
+def test_plan_status_line_is_read_with_or_without_emoji():
+    """The Plan status line wins over the phase table, in any case, with or without its emoji."""
+    assert clean_plans.plan_status("# P\n\n**Plan status:** 🗑️ Dropped\n") == ("Dropped", True)
+    assert clean_plans.plan_status("**Plan status:** parked\n" + plan_text("✅ Done")) == ("Parked", True), (
+        "a stated Parked must not be overridden by an all-Done table"
+    )
+
+
+def test_plan_status_falls_back_to_phase_table():
+    """Without a status line, an all-Done plan reads Done and anything else Active, so nothing hides."""
+    assert clean_plans.plan_status(plan_text("✅ Done", "Done")) == ("Done", False)
+    assert clean_plans.plan_status(plan_text("✅ Done", "⏳ Pending")) == ("Active", False)
+    assert clean_plans.plan_status("# Plan\n\nJust prose.\n") == ("Active", False), "no table must read Active"
+
+
+def test_unknown_plan_status_word_is_ignored():
+    """A word outside the four statuses falls back to the phase table rather than being trusted."""
+    assert clean_plans.plan_status("**Plan status:** Maybe\n" + plan_text("⏳ Pending")) == ("Active", False)
+
+
 # ── reading plan dates ────────────────────────────────────────────────────────
 
 
@@ -134,6 +158,22 @@ def test_find_candidates_picks_only_old_finished_plans(tmp_path):
     write_plan(tmp_path, "undated_done.md", plan_text("✅ Done"))
     names = [path.name for path in clean_plans.find_candidates(tmp_path, min_age_days=14, today=TODAY)]
     assert names == ["2026_09_01_old_done.md"], f"Only the old finished plan should be picked, got {names}"
+
+
+def test_find_candidates_follows_plan_status(tmp_path):
+    """Dropped plans are archived, and a stated Active or Parked plan is kept even with every phase Done."""
+    write_plan(tmp_path, "2026_09_01_dropped.md", "**Plan status:** 🗑️ Dropped\n" + plan_text("⏳ Pending"))
+    write_plan(tmp_path, "2026_09_01_done.md", "**Plan status:** ✅ Done\n" + plan_text("✅ Done"))
+    write_plan(tmp_path, "2026_09_01_active.md", "**Plan status:** 🟢 Active\n" + plan_text("✅ Done"))
+    write_plan(tmp_path, "2026_09_01_parked.md", "**Plan status:** ⏸️ Parked\n" + plan_text("✅ Done"))
+    names = [path.name for path in clean_plans.find_candidates(tmp_path, min_age_days=14, today=TODAY)]
+    assert names == ["2026_09_01_done.md", "2026_09_01_dropped.md"], f"Only Done and Dropped should go, got {names}"
+
+
+def test_recent_dropped_plan_is_kept(tmp_path):
+    """The age floor applies to Dropped plans too, so a plan dropped by mistake can still be found."""
+    write_plan(tmp_path, "2026_09_30_dropped.md", "**Plan status:** Dropped\n")
+    assert clean_plans.find_candidates(tmp_path, min_age_days=14, today=TODAY) == [], "a recent drop must be kept"
 
 
 def test_find_candidates_skips_archive_folder(tmp_path):

@@ -1,12 +1,13 @@
-"""Archive finished plans from <config>/_plans/ into <config>/_plans/archive/.
+"""Archive Done and Dropped plans from <config>/_plans/ into <config>/_plans/archive/.
 
-A plan is finished when every Status cell in its phase table reads Done. Plans
-with no phase table, or with any phase not Done, are always kept. Plans newer
-than min_age_days (by their YYYY_MM_DD_ filename prefix) are kept too, so a
+A plan's status comes from its "**Plan status:**" line (see _plan_file_format.md).
+Plans saved before that line existed count as Done only when every Status cell in
+their phase table reads Done. Active and Parked plans are always kept, and so are
+plans newer than min_age_days (by their YYYY_MM_DD_ filename prefix), so a
 just-finished plan stays easy to find.
 
-<config> is $CLAUDE_CONFIG_DIR, falling back to ~/.claude, matching the
-plansDirectory the installer writes into settings.json.
+<config> is $CLAUDE_CONFIG_DIR, falling back to ~/.claude. Plan-mode drafts live apart
+in <config>/plans/, and only files directly in _plans/ are read, never archive/.
 """
 
 from __future__ import annotations
@@ -85,6 +86,29 @@ def is_finished(text: str) -> bool:
     return bool(statuses) and all(DONE_RE.match(status) for status in statuses)
 
 
+PLAN_STATUSES = ("Active", "Parked", "Done", "Dropped")
+ARCHIVABLE = ("Done", "Dropped")
+# The plan-level line from _plan_file_format.md, e.g. "**Plan status:** 🟢 Active"
+PLAN_STATUS_RE = re.compile(
+    r"^\*\*Plan status:\*\*\s*(?:\S+\s+)?(Active|Parked|Done|Dropped)\b", re.IGNORECASE | re.MULTILINE
+)
+
+
+def plan_status(text: str) -> tuple[str, bool]:
+    """Return a plan's overall status, and whether it came from a Plan status line.
+
+    Plans saved before the line existed fall back to their phase table: all Done means Done,
+    anything else Active, so an unfinished legacy plan is never hidden.
+
+    :param text: The plan file's content.
+    :return: One of PLAN_STATUSES, and True when the plan states it rather than it being inferred.
+    """
+    match = PLAN_STATUS_RE.search(text)
+    if match:
+        return match.group(1).capitalize(), True
+    return ("Done" if is_finished(text) else "Active"), False
+
+
 def plan_date(name: str) -> date | None:
     """Read the date from a plan's YYYY_MM_DD_ filename prefix.
 
@@ -103,7 +127,7 @@ def plan_date(name: str) -> date | None:
 
 
 def find_candidates(plans_dir: Path, min_age_days: int = 14, today: date | None = None) -> list[Path]:
-    """List finished plans old enough to archive.
+    """List Done and Dropped plans old enough to archive.
 
     :param plans_dir: The _plans/ folder to scan; its archive/ subfolder is never scanned.
     :type plans_dir: Path
@@ -123,7 +147,7 @@ def find_candidates(plans_dir: Path, min_age_days: int = 14, today: date | None 
         # Undated or too-recent plans are kept, whatever their status
         if dated is None or (today - dated).days < min_age_days:
             continue
-        if is_finished(path.read_text(encoding="utf-8")):
+        if plan_status(path.read_text(encoding="utf-8"))[0] in ARCHIVABLE:
             candidates.append(path)
     return candidates
 
@@ -133,7 +157,7 @@ def main(
     min_age_days: int = 14,
     today: date | None = None,
 ):
-    """Preview the finished plans, ask for confirmation, then move them to archive/.
+    """Preview the Done and Dropped plans, ask for confirmation, then move them to archive/.
 
     :param plans_dir: Override the plans directory path. Defaults to $CLAUDE_CONFIG_DIR/_plans.
         Intended for use in tests.
@@ -151,10 +175,10 @@ def main(
 
     candidates = find_candidates(plans_dir, min_age_days=min_age_days, today=today)
     if not candidates:
-        print(f"No finished plans older than {min_age_days} days to archive.")
+        print(f"No Done or Dropped plans older than {min_age_days} days to archive.")
         sys.exit(0)
 
-    print(f"Finished plans to archive ({len(candidates)}):\n")
+    print(f"Done or Dropped plans to archive ({len(candidates)}):\n")
     for path in candidates:
         print(f"  {path.name}")
 

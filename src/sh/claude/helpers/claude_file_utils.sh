@@ -129,11 +129,12 @@ rewrite_config_paths() {
     log_message "${INFO}" "Pointed ~/.claude/ paths at: ${PREFIX}"
 }
 
-# Set settings.json's plansDirectory to the target's own _plans/ folder
+# Set settings.json's plansDirectory to the target's own plans/ folder, where plan mode keeps its drafts.
+# Saved plans live apart in _plans/, so drafts never mix with them.
 set_plans_directory() {
     local SETTINGS="${TARGET_DIR}/settings.json"
     [[ -f "${SETTINGS}" ]] || return 0
-    PLANS="${TARGET_DIR}/_plans" perl -pi -e 's{("plansDirectory":\s*)"[^"]*"}{$1"$ENV{PLANS}"}' "${SETTINGS}"
+    PLANS="${TARGET_DIR}/plans" perl -pi -e 's{("plansDirectory":\s*)"[^"]*"}{$1"$ENV{PLANS}"}' "${SETTINGS}"
 }
 
 # Flatten skill group directories in ~/.claude/skills/.

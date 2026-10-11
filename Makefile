@@ -10,9 +10,10 @@ SHELL = /bin/bash
 # make lint             # run lint_tags and lint_skills
 # make audit_components # run periodic health audit on the Claude component library
 # make audit_rule_usage # measure how often each rule applies and loads, from session transcripts
+# make list_plans       # list saved plans in $CLAUDE_CONFIG_DIR/_plans/ by plan status, flagging stale Active ones
 # make install          # install Claude config files into $CLAUDE_CONFIG_DIR, or ~/.claude (previews, then asks you to type 'install')
 # make update           # [DISABLED] update Claude config files in ~/.claude/ (WSL)
-# make clean_plans      # archive finished plans (every phase Done) to $CLAUDE_CONFIG_DIR/_plans/archive/
+# make clean_plans      # archive Done and Dropped plans to $CLAUDE_CONFIG_DIR/_plans/archive/
 # make clean_backups    # move old ~/.claude_backup_* dirs to ~/.claude_backup_archive/
 # make clean            # run clean_plans and clean_backups
 # make all              # print this usage list
@@ -89,8 +90,12 @@ audit_rule_usage:
 		--transcripts "$${CLAUDE_CONFIG_DIR:-$$HOME/.claude}/projects" \
 		--out src/claude/_admin/_audits
 
+list_plans:
+	@echo "${INFO}\nListing saved plans by plan status${COLOUR_OFF}"
+	@python3 src/claude/_scripts/_audit_scripts/audit_plans.py
+
 clean_plans:
-	@echo "${INFO}\nArchiving executed/superseded plans to ~/.claude/plans/archive/${COLOUR_OFF}"
+	@echo "${INFO}\nArchiving Done and Dropped plans to _plans/archive/${COLOUR_OFF}"
 	@python3 src/claude/_scripts/_clean_scripts/clean_plans.py
 
 clean_backups:
@@ -104,4 +109,4 @@ all:
 	@grep -E '^# make ' Makefile
 
 # .PHONY tells Make that these targets don't represent files
-.PHONY: all clean deps install install_windows update_windows install_plugins patch_plugins test lint lint_tags lint_skills audit_components audit_rule_usage clean_plans clean_backups
+.PHONY: all clean deps install install_windows update_windows install_plugins patch_plugins test lint lint_tags lint_skills audit_components audit_rule_usage list_plans clean_plans clean_backups
