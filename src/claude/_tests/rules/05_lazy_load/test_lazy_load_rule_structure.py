@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-10
-# Version:           1.5.1
+# Date updated:      2026-10-11
+# Version:           1.6.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -15,6 +15,9 @@ anywhere (see ``quality_scorecards_summary.md``). This file guards six
 things for each rule: its metadata header, its ``**Purpose:**`` line, its
 key sections, that every child page is linked, that every relative link
 resolves, and that each Contents entry matches a real heading.
+
+One of them (MCP trust model) moved to rules/02_claude_standards/ on
+2026-10-11 to load every session, and stays tracked here so its guard isn't lost.
 """
 from __future__ import annotations
 
@@ -34,9 +37,9 @@ from _shared_paths import (
 
 PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
 STYLE_DIR = Path("style_guide_standards")
-CONFIG_DIR = Path("claude_config")
 
-# Rule path (relative to rules/04_path_scoped/ or _rules_lazy_load/, or style_guide_standards/ for any style guide)
+# Rule path (relative to rules/04_path_scoped/, rules/02_claude_standards/ or _rules_lazy_load/,
+# or style_guide_standards/ for any style guide)
 # -> H2 headings it must keep, emoji stripped.
 RULES: dict[Path, list[str]] = {
     Path("org.md"): ["Child pages", "Organisation facts", "Internal references"],
@@ -45,7 +48,7 @@ RULES: dict[Path, list[str]] = {
     STYLE_DIR / "infra" / "ansible.md": ["Child pages", "Repo structure", "Naming conventions", "Linting"],
     STYLE_DIR / "infra" / "terraform.md": ["Child pages", "Core principles"],
     STYLE_DIR / "python.md": ["Naming conventions", "Error handling", "Docstrings", "Child files"],
-    CONFIG_DIR / "mcp_trust_model.md": ["Core principle", "Injection attack patterns", "Secure MCP practices"],
+    Path("security/_mcp_trust_model.md"): ["Core principle", "Injection attack patterns", "Secure MCP practices"],
     STYLE_DIR / "dbt.md": ["Child pages", "Core Principles", "Model Acceptance Checklist"],
     STYLE_DIR / "utilities" / "mermaid.md": ["Structure"],
     STYLE_DIR / "infra" / "docker.md": ["Structure"],
@@ -226,7 +229,7 @@ def _installed_files() -> dict[str, Path]:
 def rule_path(rel: Path) -> Path:
     """Return a tracked rule's absolute path wherever it installs, in either layout."""
     key = rel.as_posix()
-    candidates = [f"rules/04_path_scoped/{key}", f"{LAZY_RULES_NAME}/{key}"]
+    candidates = [f"rules/04_path_scoped/{key}", f"rules/02_claude_standards/{key}", f"{LAZY_RULES_NAME}/{key}"]
     if rel.parts[0] == STYLE_DIR.name:
         candidates.append(f"{STYLE_GUIDES_NAME}/{rel.relative_to(STYLE_DIR).as_posix()}")
     files = _installed_files()
@@ -244,7 +247,8 @@ def test_rule_table_tracks_fourteen_distinct_rules():
 
 
 def test_every_tracked_rule_exists():
-    """Every rule in the table is still on disk under rules/04_path_scoped/, _rules_lazy_load/ or the style guides."""
+    """Every tracked rule is still on disk under rules/04_path_scoped/, rules/02_claude_standards/,
+    _rules_lazy_load/ or the style guides."""
     missing = [str(rel) for rel in RULES if not rule_path(rel).is_file()]
     assert not missing, f"Tracked rules missing from both rule folders — fix the path in RULES or restore: {missing}"
 

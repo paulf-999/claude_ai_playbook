@@ -1,8 +1,8 @@
-<!-- version: 1.3.4 -->
+<!-- version: 1.4.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 <!-- applies_to: * -->
-<!-- miss_cost: low — wasted turns and tokens -->
+<!-- miss_cost: high — uncapped automation or non-interactive runs overrun cost before anyone notices -->
 <!-- loading: always-on — tool-use and delegation choices come up in every session -->
 # 🔧 Claude Operational Discipline
 
@@ -13,7 +13,8 @@
 - [Token awareness](#-token-awareness)
 - [Default behaviours](#-default-behaviours)
 - [When to delegate](#-when-to-delegate) — `_claude_when_to_delegate.md`
-- [Turn budgets](#-turn-budgets) — read on demand for non-interactive runs
+- [Turn budgets](#-turn-budgets) — `--max-turns` caps for non-interactive runs; `_turn_budgets.md`
+- [Automation controls](#-automation-controls) — caps and kill-switch for `/loop`, `/goal`, `/batch`; `_automation_controls.md`
 - [Intervention mode](#-intervention-mode)
 - [External system access](#-external-system-access)
 - [Task request conventions](#-task-request-conventions)
@@ -47,7 +48,13 @@
 
 ## 🔄 Turn budgets
 
-- **Read on demand:** `~/.claude/_rules_lazy_load/claude_config/claude_cost/turn_budgets.md` — before any non-interactive run (skills, automation, CI) that needs a `--max-turns` cap.
+- **Loads on its own from:** `rules/02_claude_standards/claude_operational_efficiency/_turn_budgets.md`
+
+---
+
+## ⚙️ Automation controls
+
+- **Loads on its own from:** `rules/02_claude_standards/claude_operational_efficiency/_automation_controls.md`
 
 ---
 

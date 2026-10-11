@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
-# Date updated:      2026-10-10
-# Version:           1.2.2
+# Date updated:      2026-10-11
+# Version:           1.3.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -12,7 +12,8 @@
 
 Tier 04 is instructional, so these tests don't prove compliance. They catch
 a section, child import or key phrase that gets silently dropped in an edit,
-since the rule's four children moved into a subfolder on 2026-09-30.
+since the rule's children moved into a subfolder on 2026-09-30, and turn budgets and
+automation controls joined them from _rules_lazy_load/ on 2026-10-11.
 """
 import re
 
@@ -27,6 +28,7 @@ EXPECTED_SECTIONS = [
     "Default behaviours",
     "When to delegate",
     "Turn budgets",
+    "Automation controls",
     "Intervention mode",
     "External system access",
     "Task request conventions",
@@ -38,6 +40,8 @@ EXPECTED_CHILDREN = {
     "_external_system_access.md",
     "_task_request_conventions.md",
     "_mcp_server_toggling.md",
+    "_turn_budgets.md",
+    "_automation_controls.md",
 }
 
 # Matches any config-dir name (~/.claude/, ~/claude/, ...) per portable_paths.md.
@@ -82,7 +86,7 @@ def test_child_directory_exists():
 
 
 def test_expected_sections_present():
-    """Each of the 8 expected sections must keep its ``##`` heading."""
+    """Each of the 9 expected sections must keep its ``##`` heading."""
     headings = _headings()
     for section in EXPECTED_SECTIONS:
         assert section in headings, (
@@ -90,8 +94,8 @@ def test_expected_sections_present():
         )
 
 
-def test_exactly_four_child_imports():
-    """The rule must import exactly its 4 children, with no duplicates."""
+def test_exactly_six_child_imports():
+    """The rule must load exactly its 6 children, with no duplicates."""
     imports = _imports()
     names = [path.rsplit("/", 1)[-1] for path in imports]
     assert len(imports) == len(EXPECTED_CHILDREN), (
@@ -129,15 +133,11 @@ def test_children_use_underscore_prefix():
         assert child.name.startswith("_"), f"Child file lacks _ prefix: {child.name}"
 
 
-def test_turn_budgets_pointer_resolves():
-    """The turn budgets section must point at an existing lazy-load file."""
-    content = _content()
-    assert "**Read on demand:**" in content, "Turn budgets read-on-demand pointer removed"
-    assert "_rules_lazy_load/claude_config/claude_cost/turn_budgets.md" in content, (
-        "Turn budgets pointer no longer names _rules_lazy_load/claude_config/claude_cost/turn_budgets.md"
-    )
-    target = LAZY_RULES_DIR / "claude_config" / "claude_cost" / "turn_budgets.md"
-    assert target.is_file(), f"Turn budgets pointer target missing: {target}"
+def test_promoted_children_left_the_lazy_folder():
+    """Turn budgets and automation controls load every session, so no stale lazy copy may remain."""
+    for rel in (("claude_cost", "turn_budgets.md"), ("automation_controls.md",)):
+        stale = LAZY_RULES_DIR.joinpath("claude_config", *rel)
+        assert not stale.exists(), f"Stale lazy copy left behind: {stale}"
 
 
 def test_key_phrases_survive():
