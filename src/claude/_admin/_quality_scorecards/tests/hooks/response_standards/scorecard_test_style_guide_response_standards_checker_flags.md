@@ -1,4 +1,4 @@
-# Quality Scorecard — test_style_guide_response_standards_flags.py
+# Quality Scorecard — test_style_guide_response_standards_checker_flags.py
 
 **Date Created:** 2026-10-01
 **Date Updated:** 2026-10-01
@@ -18,6 +18,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_flags.py` — the test being scored
-- `src/claude/hooks/hook_style_guide_response_standards.sh` — what the test guards
+- `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_checker_flags.py` — the test being scored
+- `src/claude/hooks/hook_style_guide_response_standards_checker.sh` — what the test guards
 - `src/claude/rules/_rules_lazy_load/claude_config/response_standards_enforcement.md` — why the hook is kept unregistered

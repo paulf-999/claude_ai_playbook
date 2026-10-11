@@ -1,26 +1,26 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.0.0
+# Date updated:      2026-10-11
+# Version:           1.0.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Proves hook_style_guide_response_standards.sh flags each response-format gap.
+"""Proves hook_style_guide_response_standards_checker.sh flags each response-format gap.
 
 The hook is reserved, not registered (see response_standards_enforcement.md), so
 these tests keep it working for the day it's wired in as a Stop hook. Each test
 sends a substantive response (50+ words) missing one part of the standard: the
 Summary, the offer line, the timing footer, or a clean ending after the footer.
-``test_style_guide_response_standards_waivers.py`` covers the responses it skips.
+``test_style_guide_response_standards_checker_waivers.py`` covers the responses it skips.
 """
 import subprocess
 
 from _shared_paths import HOOKS_DIR
 
-HOOK_PATH = HOOKS_DIR / "hook_style_guide_response_standards.sh"
+HOOK_PATH = HOOKS_DIR / "hook_style_guide_response_standards_checker.sh"
 FLAG_HEADER = "🚩 Response Standards Check"
 SUMMARY_FLAG = "Missing **Summary** block"
 OFFER_FLAG = "Missing offer line"

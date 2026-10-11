@@ -51,7 +51,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hooks/hook_style_guide_response_standards_inject.sh\""
+            "command": "bash \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hooks/hook_style_guide_response_standards_reminder.sh\""
           },
           {
             "type": "command",

@@ -12,7 +12,7 @@
 
 | Group | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
-| Hooks | 5 | 8.5/10 | 2026-10-02 | • 💪 **Strongest:** `hook_enforcement_mcp_stale_settings.sh` (9.0/10)<br>• ⚠️ **Weakest:** `hook_style_guide_response_standards.sh` (8.0/10) |
+| Hooks | 5 | 8.5/10 | 2026-10-02 | • 💪 **Strongest:** `hook_enforcement_mcp_stale_settings.sh` (9.0/10)<br>• ⚠️ **Weakest:** `hook_style_guide_response_standards_checker.sh` (8.0/10) |
 
 ---
 
@@ -22,7 +22,7 @@ Ranked by impact, highest first.
 
 | # | Action | Why | Source |
 |---|---|---|---|
-| 1 | • 🔧 **`hook_style_guide_response_standards.sh`:** set a date to wire in or remove the reserved hook | • 🔻 **Score:** 8.0/10 | `scorecard_hook_style_guide_response_standards.md` |
+| 1 | • 🔧 **`hook_style_guide_response_standards_checker.sh`:** set a date to wire in or remove the reserved hook | • 🔻 **Score:** 8.0/10 | `scorecard_hook_style_guide_response_standards_checker.md` |
 | 2 | • 🔧 **`hook_enforcement_naming_convention.sh`:** test the validator's `--check` mode directly | • 🔻 **Score:** 8.4/10 | `scorecard_hook_enforcement_naming_convention.md` |
 | 3 | • 🔧 **`hook_enforcement_markdown_location.sh`:** record its first real hit, or retire it after 90 days | • 🔻 **Score:** 8.4/10 | `scorecard_hook_enforcement_markdown_location.md` |
 
@@ -35,10 +35,10 @@ Sorted by Overall score, highest first.
 | Scorecard | Overall | Date Updated | Recommended improvements |
 |---|---|---|---|
 | `scorecard_hook_enforcement_mcp_stale_settings.md` | 9.0/10 | 2026-10-02 | — (≥8.5) |
-| `scorecard_hook_style_guide_response_standards_inject.md` | 8.6/10 | 2026-10-02 | — (≥8.5) |
+| `scorecard_hook_style_guide_response_standards_reminder.md` | 8.6/10 | 2026-10-02 | — (≥8.5) |
 | `scorecard_hook_enforcement_naming_convention.md` | 8.4/10 | 2026-10-02 | • Test the validator's `--check` mode directly |
 | `scorecard_hook_enforcement_markdown_location.md` | 8.4/10 | 2026-10-02 | • Record its first real hit, or retire it after 90 days |
-| `scorecard_hook_style_guide_response_standards.md` | 8.0/10 | 2026-10-02 | • Set a date to wire in or remove the reserved hook |
+| `scorecard_hook_style_guide_response_standards_checker.md` | 8.0/10 | 2026-10-02 | • Set a date to wire in or remove the reserved hook |
 
 ---
 
