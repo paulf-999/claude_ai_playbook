@@ -109,6 +109,30 @@ def plan_status(text: str) -> tuple[str, bool]:
     return ("Done" if is_finished(text) else "Active"), False
 
 
+# The optional date on the same line, e.g. "**Plan status:** 🟢 Active · updated 2026-10-11"
+PLAN_UPDATED_RE = re.compile(
+    r"^\*\*Plan status:\*\*.*?\bupdated (\d{4})-(\d{2})-(\d{2})", re.IGNORECASE | re.MULTILINE
+)
+
+
+def plan_updated(text: str) -> date | None:
+    """Return the date on a plan's status line, which Claude moves forward whenever a phase or the status changes.
+
+    A file's modified time can't stand in for it: adding a status line, copying a backup or any small
+    edit resets it, which would hide a stale plan.
+
+    :param text: The plan file's content.
+    :return: The date, or None when the line has no valid one.
+    """
+    match = PLAN_UPDATED_RE.search(text)
+    if not match:
+        return None
+    try:
+        return date(int(match.group(1)), int(match.group(2)), int(match.group(3)))
+    except ValueError:
+        return None
+
+
 def plan_date(name: str) -> date | None:
     """Read the date from a plan's YYYY_MM_DD_ filename prefix.
 

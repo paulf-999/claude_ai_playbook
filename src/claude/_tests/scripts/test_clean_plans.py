@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
 # Date updated:      2026-10-11
-# Version:           1.1.0
+# Version:           1.2.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -131,6 +131,20 @@ def test_plan_status_falls_back_to_phase_table():
 def test_unknown_plan_status_word_is_ignored():
     """A word outside the four statuses falls back to the phase table rather than being trusted."""
     assert clean_plans.plan_status("**Plan status:** Maybe\n" + plan_text("⏳ Pending")) == ("Active", False)
+
+
+def test_plan_updated_date_is_read_from_the_status_line():
+    """The status line's updated date is read, and the status still parses with the date after it."""
+    line = "**Plan status:** 🟢 Active · updated 2026-09-20\n"
+    assert clean_plans.plan_updated(line) == date(2026, 9, 20)
+    assert clean_plans.plan_status(line) == ("Active", True), "a date after the status must not break the status"
+
+
+def test_missing_or_invalid_updated_date_gives_none():
+    """No date, an impossible date, or a date outside the status line all give None."""
+    assert clean_plans.plan_updated("**Plan status:** Active\n") is None
+    assert clean_plans.plan_updated("**Plan status:** Active · updated 2026-13-40\n") is None
+    assert clean_plans.plan_updated("Plan updated 2026-09-20 in prose\n") is None, "only the status line counts"
 
 
 # ── reading plan dates ────────────────────────────────────────────────────────

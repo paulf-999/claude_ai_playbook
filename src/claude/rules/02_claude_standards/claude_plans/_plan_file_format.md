@@ -1,4 +1,4 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-09-17 -->
 <!-- updated: 2026-10-11 -->
 # 📊 Plan File Format
@@ -39,9 +39,11 @@ Put one `**Plan status:**` line straight under the plan's H1, giving the whole p
 | ✅ **Done** | Every phase is Done | Claude, in the same edit that marks the last phase Done |
 | 🗑️ **Dropped** | Abandoned, and kept only as a record | Claude, only when the user says so |
 
-- **Format:** `**Plan status:** 🟢 Active` — the emoji is optional, and the word must be one of the four above.
+- **Format:** `**Plan status:** 🟢 Active · updated 2026-10-11` — the emoji is optional, and the word must be one of the four above.
+- **Updated date:** set it to today whenever a phase's Status cell or the plan status changes.
+  - **Why:** the file's modified time resets on any edit or copy, so only this date says when work last moved.
 - **Why:** phase cells alone can't tell a finished plan from an abandoned one, so plans still being acted on get lost among the rest.
-- **Find them:** `make list_plans` groups plans by status and flags Active plans untouched for 14 days, to park or drop.
+- **Find them:** `make list_plans` groups plans by status and flags Active plans whose updated date is 14 or more days old, to park or drop.
 - **Archive:** `make clean_plans` moves Done and Dropped plans to `_plans/archive/`.
 
 **Not a replacement:** the "How to apply" format in the parent rule is the live chat progress report during execution — this table is the plan document's own record. `writing_style.md` still governs all other plan-file prose.

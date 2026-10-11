@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-11
 # Date updated:      2026-10-11
-# Version:           1.0.0
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -64,6 +64,14 @@ def test_legacy_plan_status_is_inferred_and_marked(tmp_path):
     plan = AUDIT.read_plan(write_plan(tmp_path, "legacy"), TODAY)
     assert (plan.status, plan.stated) == ("Active", False), f"unfinished legacy plan must read Active, got {plan}"
     assert "(no status line, inferred)" in AUDIT._line(plan), "an inferred status must be marked in the listing"
+
+
+def test_status_line_date_wins_over_file_time(tmp_path):
+    """A plan touched today but last progressed long ago is dated by its status line, so it can still go stale."""
+    path = write_plan(tmp_path, "edited_today", "🟢 Active · updated 2026-09-01")
+    plan = AUDIT.read_plan(path, TODAY)
+    assert plan.days_since_update == 40, f"the status line date should win, got {plan.days_since_update}"
+    assert [p.name for p in AUDIT.stale([plan])] == ["edited_today"], "an old updated date must flag the plan"
 
 
 # ── Collecting the folder ───────────────────────────────────────────────

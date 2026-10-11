@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
 # Date updated:      2026-10-11
-# Version:           3.2.0
+# Version:           3.3.0
 # Test quality score: 9/10
 # Test complexity score: 10/10
 # Python style compliant: Yes
@@ -157,6 +157,7 @@ def test_format_defines_each_plan_status_and_who_sets_it():
     for status in ("Parked", "Dropped"):
         assert "only when the user says so" in rows[status], f"{status} must be set only on the user's word"
     assert "make list_plans" in text, "Plan status section must say how to find plans by status"
+    assert "**Updated date:**" in text, "Plan status section must say when to move the updated date"
 
 
 def test_rule_line_limit():

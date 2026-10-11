@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """List saved plans in <config>/_plans/ by plan status, so the ones still being acted on are easy to find.
 
-Each plan's status comes from its "**Plan status:**" line (see _plan_file_format.md), or, for plans
-saved before that line existed, from its phase table. Active plans untouched for stale_days or more
-are listed again as stale, to park or drop. Plan-mode drafts live apart in <config>/plans/, and
-archived plans in _plans/archive/ are never read, since only files directly in _plans/ are scanned.
+Each plan's status and last-updated date come from its "**Plan status:**" line
+(see _plan_file_format.md). Plans saved before that line existed fall back to their
+phase table for the status, and any plan without a date falls back to the file's
+modified time. Active plans untouched for stale_days or more are listed again as
+stale, to park or drop. Plan-mode drafts live apart in <config>/plans/, and archived
+plans in _plans/archive/ are never read, since only files directly in _plans/ are scanned.
 
 Usage:
     make list_plans
@@ -58,7 +60,8 @@ def read_plan(path: Path, today: date) -> Plan:
     status, stated = CLEAN_PLANS.plan_status(text)
     statuses = CLEAN_PLANS.phase_statuses(text)
     done = sum(1 for s in statuses if CLEAN_PLANS.DONE_RE.match(s))
-    updated = date.fromtimestamp(path.stat().st_mtime)
+    # The status line's date, falling back to the file's modified time for plans without one
+    updated = CLEAN_PLANS.plan_updated(text) or date.fromtimestamp(path.stat().st_mtime)
     return Plan(path.stem, status, stated, (today - updated).days, done, len(statuses))
 
 
