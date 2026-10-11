@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-02
-# Version:           1.0.2
+# Date updated:      2026-10-11
+# Version:           1.0.3
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -21,7 +21,7 @@ from datetime import date
 
 from _shared_paths import CLAUDE_DIR
 
-SCRIPT = CLAUDE_DIR / "_scripts" / "_audit_scripts" / "audit_claude_component.py"
+SCRIPT = CLAUDE_DIR / "scripts" / "_audit_scripts" / "audit_claude_component.py"
 
 
 def load_audit():

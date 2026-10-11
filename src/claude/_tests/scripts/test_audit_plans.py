@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-11
 # Date updated:      2026-10-11
-# Version:           2.0.0
+# Version:           2.0.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -22,7 +22,7 @@ from datetime import date
 
 from _shared_paths import CLAUDE_DIR
 
-SCRIPT = CLAUDE_DIR / "_scripts" / "_audit_scripts" / "audit_plans.py"
+SCRIPT = CLAUDE_DIR / "scripts" / "_audit_scripts" / "audit_plans.py"
 TODAY = date(2026, 10, 11)
 TABLE = "| Phase | Action | Status |\n|---|---|---|\n| 1 | a | ✅ Done |\n| 2 | b | ⏳ Pending |\n"
 

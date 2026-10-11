@@ -90,7 +90,7 @@ These criteria ensure the skill is clear, well-tested, and follows style standar
 - **Too few:** the linter fails the skill.
 - **Too many:** the linter warns that the skill may be ready to promote.
 - **Pytest files:** extra coverage in any folder under `src/claude/_tests/skills/`, never counted or capped by W3.
-- **How to test locally:** `CLAUDE_CONFIG_DIR=$PWD/src/claude python3 src/claude/_scripts/_lint_scripts/lint_skill_authoring_gate.py`
+- **How to test locally:** `CLAUDE_CONFIG_DIR=$PWD/src/claude python3 src/claude/scripts/_lint_scripts/lint_skill_authoring_gate.py`
 
 ### W4: No unexplained Claude jargon
 - ❌ Don't use jargon without explanation:
@@ -218,7 +218,7 @@ These criteria apply to **strategic skills only** — production-ready skills ex
 make lint_skills
 
 # Or just your skill's group
-python3 src/claude/_scripts/_lint_scripts/lint_skill_authoring_gate.py src/claude/skills/_<group>_skills
+python3 src/claude/scripts/_lint_scripts/lint_skill_authoring_gate.py src/claude/skills/_<group>_skills
 ```
 
 If linter fails, fix the issues and retry. If tests skip/warn, review the feedback and address in your PR.

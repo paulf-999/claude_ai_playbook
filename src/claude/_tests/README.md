@@ -150,7 +150,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_path_scoped_rules.py` | Path-scoped rules in `rules/` carry no `@` imports, `rules/` holds real files not links, and every `04_path_scoped/` file has `paths:` | 9/10 | 2026-10-01 | 2026-10-10 | 2.3.0 |
 | `test_authoring_agents.py` | `authoring_agents.md` is always-on and points to each of its 5 on-demand children, which are present and well-formed | 9/10 | 2026-09-28 | 2026-10-10 | 2.2.2 |
 | `test_lazy_load_triggers.py` | Validates that every lazy rule has something that makes Claude load it | 9/10 | 2026-10-01 | 2026-10-10 | 1.7.2 |
-| `test_org.py` | Organisation-specific terms stay inside _rules_lazy_load/org/ and never leak into shared files | 9/10 | 2026-10-01 | 2026-10-10 | 1.3.2 |
+| `test_org.py` | Organisation-specific terms stay inside _rules_lazy_load/org/ and never leak into shared files | 9/10 | 2026-10-01 | 2026-10-11 | 1.3.2 |
 | `test_path_scoped_rules_live.py` | Proves in a live session that a `paths:` rule loads when, and only when, a matching file is read | 9/10 | 2026-10-01 | 2026-10-10 | 1.2.1 |
 | `test_test_metadata.py` | Every test's metadata header, in `_tests/` and the repo's `src/claude/_install/_tests/`, is complete, in order and well formed (banners, dates, semver, scores) | 9/10 | 2026-10-01 | 2026-10-11 | 1.3.1 |
 | `test_test_quality_score.py` | Every test header's quality score matches the band its own test-function and assertion counts support | 9/10 | 2026-10-02 | 2026-10-02 | 1.0.0 |
@@ -161,15 +161,15 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 
 ## 📁 `scripts/`
 
-Tests for the maintenance scripts in `_scripts/`.
+Tests for the maintenance scripts in `scripts/`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_audit_claude_component_root.py` | Validates how audit_claude_component.py chooses the folder it scans | 9/10 | 2026-10-01 | 2026-10-02 | 1.0.2 |
-| `test_audit_plans.py` | `audit_plans.py` lists saved plans by status from `_plans/` and its status folders, flags stale Active plans, and counts plans and drafts to file | 9/10 | 2026-10-11 | 2026-10-11 | 2.0.0 |
-| `test_audit_rule_usage.py` | Validates audit_rule_usage.py against small fixture rules and transcripts | 9/10 | 2026-10-01 | 2026-10-10 | 1.10.1 |
-| `test_clean_plans.py` | `clean_plans.py` files saved plans into `_plans/<status>/` by their status line (or phase table), files drafts into `plans/draft/` or `plans/archive/` by age, never overwrites, and runs without asking during `make install` | 9/10 | 2026-10-02 | 2026-10-11 | 2.1.0 |
-| `test_script_naming.py` | Validates that every script under _scripts/ follows the script naming pattern | 9/10 | 2026-10-02 | 2026-10-06 | 1.1.0 |
+| `test_audit_claude_component_root.py` | Validates how audit_claude_component.py chooses the folder it scans | 9/10 | 2026-10-01 | 2026-10-11 | 1.0.3 |
+| `test_audit_plans.py` | `audit_plans.py` lists saved plans by status from `_plans/` and its status folders, flags stale Active plans, and counts plans and drafts to file | 9/10 | 2026-10-11 | 2026-10-11 | 2.0.1 |
+| `test_audit_rule_usage.py` | Validates audit_rule_usage.py against small fixture rules and transcripts | 9/10 | 2026-10-01 | 2026-10-11 | 1.10.1 |
+| `test_clean_plans.py` | `clean_plans.py` files saved plans into `_plans/<status>/` by their status line (or phase table), files drafts into `plans/draft/` or `plans/archive/` by age, never overwrites, and runs without asking during `make install` | 9/10 | 2026-10-02 | 2026-10-11 | 2.1.1 |
+| `test_script_naming.py` | Validates that every script under scripts/ follows the script naming pattern | 9/10 | 2026-10-02 | 2026-10-11 | 1.1.1 |
 
 ---
 
@@ -190,7 +190,7 @@ Tests for the maintenance scripts in `_scripts/`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_skill_structure_compliance.py` | Every installed skill passes the skill authoring gate's crawl checks, and each check is proven to fire | 9/10 | 2026-08-28 | 2026-10-10 | 2.0.4 |
+| `test_skill_structure_compliance.py` | Every installed skill passes the skill authoring gate's crawl checks, and each check is proven to fire | 9/10 | 2026-08-28 | 2026-10-11 | 2.0.5 |
 | `test_no_orphaned_skill_files.py` | Every skill file is referenced somewhere in its skill, every `reference/` link in SKILL.md exists, and no SKILL.md @-imports a file | 9/10 | 2026-09-19 | 2026-10-02 | 2.0.1 |
 | `test_skill_authoring_gate_walk.py` | The gate linter's walk checks (W1–W6) fail or warn as intended on fake skills | 9/10 | 2026-10-01 | 2026-10-02 | 1.1.0 |
 | `test_skill_authoring_gate_run.py` | The gate linter's run checks (R2–R4) on fake skills, and failures block while judgement calls only warn | 9/10 | 2026-10-01 | 2026-10-05 | 1.1.1 |

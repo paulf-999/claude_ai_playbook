@@ -356,7 +356,7 @@ migrate_old_rules_layout() {
 # Runs without its own prompt: the install was already confirmed and backed up, and filing
 # only moves files — never deletes or overwrites — so it stays safe on a config you own.
 file_plans() {
-    local SCRIPT="${SOURCE_DIR}/_scripts/_clean_scripts/clean_plans.py"
+    local SCRIPT="${SOURCE_DIR}/scripts/_clean_scripts/clean_plans.py"
     local OUTPUT
     if ! command -v python3 >/dev/null 2>&1; then
         log_message "${WARNING}" "python3 not found — skipped filing plans; run: make clean_plans"

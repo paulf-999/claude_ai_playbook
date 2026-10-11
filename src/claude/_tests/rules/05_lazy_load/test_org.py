@@ -1,7 +1,7 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-10
+# Date updated:      2026-10-11
 # Version:           1.3.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
@@ -23,7 +23,7 @@ from _shared_paths import CLAUDE_DIR, LAZY_RULES_DIR
 
 TERMS_FILE = LAZY_RULES_DIR / "org" / "_shared_file_terms.txt"
 SHARED_DIRS = (
-    "_rules_lazy_load", "_templates", "_tests", "_scripts", "_admin",
+    "_rules_lazy_load", "_templates", "_tests", "scripts", "_admin",
     "agents", "hooks", "skills", "rules",
 )
 SHARED_TOP_FILES = ("CLAUDE.md", "aliases.md", "README.md", "settings.json", "settings_json_readme.md", "TODO.md")

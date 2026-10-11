@@ -70,37 +70,37 @@ test:
 
 lint_tags:
 	@echo "${INFO}\nValidating Tier 1 tags on Claude components${COLOUR_OFF}"
-	@python3 src/claude/_scripts/_lint_scripts/lint_claude_tags.py
+	@python3 src/claude/scripts/_lint_scripts/lint_claude_tags.py
 
 lint_skills:
 	@echo "${INFO}\nValidating skill authoring gate (crawl criteria)${COLOUR_OFF}"
-	@python3 src/claude/_scripts/_lint_scripts/lint_skill_authoring_gate.py
+	@python3 src/claude/scripts/_lint_scripts/lint_skill_authoring_gate.py
 
 lint: lint_tags lint_skills
 	@echo "${INFO}\nLinting complete${COLOUR_OFF}"
 
 audit_components:
 	@echo "${INFO}\nRunning Claude component health audit${COLOUR_OFF}"
-	@python3 src/claude/_scripts/_audit_scripts/audit_claude_component.py src/claude
+	@python3 src/claude/scripts/_audit_scripts/audit_claude_component.py src/claude
 
 audit_rule_usage:
 	@echo "${INFO}\nMeasuring rule usage from session transcripts${COLOUR_OFF}"
-	@python3 src/claude/_scripts/_audit_scripts/audit_rule_usage.py \
+	@python3 src/claude/scripts/_audit_scripts/audit_rule_usage.py \
 		--rules src/claude/rules \
 		--transcripts "$${CLAUDE_CONFIG_DIR:-$$HOME/.claude}/projects" \
 		--out src/claude/_admin/_audits
 
 list_plans:
 	@echo "${INFO}\nListing saved plans by plan status${COLOUR_OFF}"
-	@python3 src/claude/_scripts/_audit_scripts/audit_plans.py
+	@python3 src/claude/scripts/_audit_scripts/audit_plans.py
 
 clean_plans:
 	@echo "${INFO}\nFiling plans and drafts into their status folders${COLOUR_OFF}"
-	@python3 src/claude/_scripts/_clean_scripts/clean_plans.py
+	@python3 src/claude/scripts/_clean_scripts/clean_plans.py
 
 clean_backups:
 	@echo "${INFO}\nMoving old ~/.claude_backup_* dirs to ~/.claude_backup_archive/${COLOUR_OFF}"
-	@python3 src/claude/_scripts/_clean_scripts/clean_backups.py
+	@python3 src/claude/scripts/_clean_scripts/clean_backups.py
 
 clean: clean_plans clean_backups
 

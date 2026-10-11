@@ -1,1 +1,1 @@
-"""Tests for the _scripts/ helper scripts."""
+"""Tests for the scripts/ helper scripts."""

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
 # Date updated:      2026-10-11
-# Version:           2.1.0
+# Version:           2.1.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -25,7 +25,7 @@ import pytest
 
 from _shared_paths import CLAUDE_DIR
 
-SCRIPT = CLAUDE_DIR / "_scripts" / "_clean_scripts" / "clean_plans.py"
+SCRIPT = CLAUDE_DIR / "scripts" / "_clean_scripts" / "clean_plans.py"
 TODAY = date(2026, 10, 2)
 TABLE_HEADER = "| Phase | Action | Status |\n|---|---|---|\n"
 
