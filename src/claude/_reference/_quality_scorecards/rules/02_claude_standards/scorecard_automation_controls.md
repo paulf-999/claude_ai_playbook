@@ -1,7 +1,7 @@
 # Quality Scorecard — automation_controls.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-11
 
 **Overall score:** 7.5/10 (6-dimension average, Token Cost N/A)
 
@@ -16,13 +16,12 @@
 | **Token Cost Justification** | N/A | 2026-09-28 | • N/A — lazy-loaded, not always-on |
 | **Structural Compliance** | 6/10 | 2026-09-28 | • 🚩 **Line-limit violation:** 162 lines, well past the ~100-line (110 tolerated) limit in `writing_style.md`, with no child files to split into<br>• ✅ **Otherwise compliant:** emoji headers, Purpose statement, trailing newline |
 | **Currency** | 5/10 | 2026-09-28 | • 🐛 **Stale reference:** "Related Rules" cites `claude_efficiency.md`, which doesn't exist — the real file is `claude_operational_efficiency.md` |
-| **Test Coverage** | 10/10 | 2026-09-28 | • 🧪 **Strong:** `test_automation_controls.py` — 10 test functions, 20 assertions, self-rated 9/10 quality |
-| **Overall** | **7.5/10** | 2026-09-28 | • 💪 **Strength:** heavily and correctly tested, clear decision tree for choosing between features<br>• ⚠️ **Gap:** too long for a childless file, plus a stale cross-reference |
+| **Test Coverage** | 10/10 | 2026-10-11 | • 🧪 **Rubric met:** passes `test_rules_structure.py`, and records no incident<br>• ✂️ **Pins dropped:** `test_automation_controls.py` only pinned wording, so it was removed on 2026-10-11 |
+| **Overall** | **7.5/10** | 2026-10-11 | • 💪 **Strength:** heavily and correctly tested, clear decision tree for choosing between features<br>• ⚠️ **Gap:** too long for a childless file, plus a stale cross-reference |
 
 ## 🔗 Related files
 
 - `src/claude/rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md` — the rule being scored
-- `src/claude/_tests/rules/02_claude_standards/test_automation_controls.py` — Test Coverage dimension
 - `src/claude/rules/02_claude_standards/claude_working_practices/claude_operational_efficiency.md` — Currency dimension (the real file the stale reference should point to)
 
 ---

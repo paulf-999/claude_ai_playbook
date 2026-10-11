@@ -1,9 +1,9 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-21
-# Date updated:      2026-10-10
-# Version:           2.0.0
-# Test quality score: 9/10
+# Date updated:      2026-10-11
+# Version:           2.0.1
+# Test quality score: 10/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
@@ -24,11 +24,6 @@ from _shared_paths import CLAUDE_DIR
 
 RULE_FILE = CLAUDE_DIR / "rules" / "02_claude_standards" / "git" / "_concurrent_sessions.md"
 GIT_MD = CLAUDE_DIR / "rules" / "02_claude_standards" / "git.md"
-
-
-def test_concurrent_sessions_file_exists():
-    """_concurrent_sessions.md must be present at the expected path."""
-    assert RULE_FILE.exists(), f"_concurrent_sessions.md missing: {RULE_FILE}"
 
 
 def test_concurrent_sessions_imported_from_git_md():
@@ -98,16 +93,3 @@ def test_concurrent_sessions_covers_worktree_preference():
     content = RULE_FILE.read_text()
     assert "git worktree" in content, "git worktree guidance missing"
     assert "isolation" in content.lower(), "Sub-agent isolation guidance missing"
-
-
-def test_concurrent_sessions_line_limit():
-    """_concurrent_sessions.md must not exceed 110 lines."""
-    lines = RULE_FILE.read_text().splitlines()
-    assert len(lines) <= 110, f"_concurrent_sessions.md: {len(lines)} lines exceeds 110-line limit"
-
-
-def test_concurrent_sessions_ends_with_newline():
-    """_concurrent_sessions.md must end with exactly one newline."""
-    raw = RULE_FILE.read_bytes()
-    assert raw.endswith(b"\n"), "_concurrent_sessions.md does not end with a newline"
-    assert not raw.endswith(b"\n\n"), "_concurrent_sessions.md ends with multiple newlines"

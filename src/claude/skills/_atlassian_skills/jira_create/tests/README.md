@@ -13,6 +13,4 @@
 | 5 | `validation_failure_missing_title` | Validate | A missing title is rejected; Claude asks for one rather than defaulting |
 | 6 | `ticket_created_reports_id_and_link` | Create & report | On success, Claude reports both the new issue's ID and its Jira link |
 
-- **Handler tests:** `jira_create_handler.py` also has a separate pytest suite at `~/.claude/_tests/skills/jira_create/` (repo root's `_tests/`, not this folder)
-- **Pytest suite covers:** the Python handler code
-- **evals.yaml covers:** the skill's behavior as a whole
+- **Only test suite:** `evals.yaml` is this skill's whole test suite, since the skill has no Python code of its own.

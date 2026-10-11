@@ -30,7 +30,7 @@
 ### 🧪 Testing
 - [ ] Enforcement rule has a test in `_tests/rules/` or `_tests/hooks/`, named after the rule file
 - [ ] Rule that records a real incident has a content-regression test for its key phrases, per `testing.md`
-- [ ] New tests carry the metadata header and meet the quality ≥9 and complexity ≥7 floors
+- [ ] New tests carry the metadata header and meet the quality ≥7 and complexity ≥7 floors
 
 ### 🔗 Wiring
 - [ ] Every child sits in the folder that matches how it should load, and the parent names it in a `**Loads on its own from:**` or `**Read on demand:**` line

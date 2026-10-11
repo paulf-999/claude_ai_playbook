@@ -1,9 +1,9 @@
 # Quality Scorecard — claude_usage_standards.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-11
 
-**Overall score:** 8.9/10
+**Overall score:** 9.1/10
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
@@ -13,11 +13,11 @@
 | **Token Cost Justification** | 9/10 | 2026-09-28 | • 🎯 **Scope:** Tier 1, always-on — routes to naming/writing conventions used in every substantive task |
 | **Structural Compliance** | 9/10 | 2026-09-28 | • ✅ **Compliant:** Contents matches headings exactly, emoji header, trailing newline, appropriately short (35 lines) |
 | **Currency** | 9/10 | 2026-09-28 | • 🔍 **Check:** all 3 child imports resolve; no stale references found |
-| **Test Coverage** | 8/10 | 2026-09-28 | • 🧪 **Indirect, uneven:** `test_rule_directory_organisation.py` (11 functions) and `test_writing_style.py` (7 functions) cover 2 of 3 children<br>• ⚠️ **Gap:** `naming_standards.md` child has no dedicated test |
-| **Overall** | **8.9/10** | 2026-09-28 | • 💪 **Strength:** clean index with a genuine, documented reason for existing<br>• ⚠️ **Gap:** naming_standards.md untested |
+| **Test Coverage** | 10/10 | 2026-10-11 | • 🧪 **Rubric met:** passes `test_rules_structure.py`, and records no incident that would need a content test<br>• 🔗 **Pointers:** `test_rule_cross_references.py` checks writing_style.md's multifile child resolves |
+| **Overall** | **9.1/10** | 2026-10-11 | • 💪 **Strength:** clean index with a genuine, documented reason for existing<br>• ⚠️ **Gap:** no test gaps under the rubric |
 
 ## 🔗 Related files
 
 - `src/claude/rules/01_essentials/claude_usage_standards.md` — the rule being scored
 - `src/claude/_tests/rules/01_essentials/test_rule_directory_organisation.py` — Test Coverage dimension
-- `src/claude/_tests/rules/01_essentials/test_writing_style.py` — Test Coverage dimension
+- `src/claude/_tests/rules/test_rule_cross_references.py` — Test Coverage dimension

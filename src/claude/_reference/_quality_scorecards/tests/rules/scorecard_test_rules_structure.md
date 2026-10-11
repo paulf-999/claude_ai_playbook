@@ -1,7 +1,7 @@
 # Quality Scorecard — test_rules_structure.py
 
 **Date Created:** 2026-09-30
-**Date Updated:** 2026-10-01
+**Date Updated:** 2026-10-11
 
 **Overall score:** 9.0/10
 
@@ -10,7 +10,7 @@
 | **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and every assertion carries a failure message |
 | **Complexity** | 7/10 | 2026-10-01 | • 🧮 **Raw complexity 3:** Concepts 1 (file size, emoji headings, context-budget sections) + Scope 2 (`_rules/` and `_reference/`) + Dependencies 0 + Prerequisites 0 |
 | **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** every rule loads into every session, so its size and shape matter |
-| **Coverage** | 9/10 | 2026-09-30 | • 📊 **Counts:** 12 test functions and 16 assertions<br>• 🧩 **Detectors:** the header exemption, `~~~` fences and URL-only References are proven on samples |
+| **Coverage** | 9/10 | 2026-10-11 | • 📊 **Counts:** 13 test functions and 17 assertions<br>• 🧩 **Detectors:** the header exemption, `~~~` fences and URL-only References are proven on samples |
 | **Structural Compliance** | 10/10 | 2026-10-01 | • ✅ **Header:** full metadata header, marked Python style compliant and checked with `ruff` |
 | **Currency** | 10/10 | 2026-10-01 | • 🔍 **References:** passes against the current config, header last updated 2026-10-01 |
 | **Regression Value** | 9/10 | 2026-10-01 | • 🛡️ **Non-vacuous:** fails if the scan finds no rule files or lets READMEs and lazy-load files in |

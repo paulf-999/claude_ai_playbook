@@ -1,0 +1,22 @@
+# Quality Scorecard — test_authoring_agents.py
+
+**Date Created:** 2026-09-30
+**Date Updated:** 2026-10-11
+
+**Overall score:** 8.4/10
+
+| Dimension | Score | Date Updated | Notes |
+|---|---|---|---|
+| **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
+| **Complexity** | 8/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 8/10 (raw complexity 2) |
+| **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact |
+| **Coverage** | 8/10 | 2026-10-11 | • 📊 **Counts:** 10 test functions and 14 assertions<br>• ✂️ **Trimmed:** structure checks and section and phrase pins on the parent |
+| **Structural Compliance** | 9/10 | 2026-09-30 | • ✅ **Header:** full metadata header, marked Python style compliant |
+| **Currency** | 9/10 | 2026-09-30 | • 🔍 **References:** passes against the current config, header last updated 2026-09-30 |
+| **Regression Value** | 7/10 | 2026-09-30 | • 🛡️ **Failure cases:** checks real files, but no function proves the check fails on a bad case |
+| **Overall** | **8.4/10** | 2026-10-11 | • 💪 **Strongest:** Clarity (9/10)<br>• ⚠️ **Weakest:** Regression Value (7/10) |
+
+## 🔗 Related files
+
+- `src/claude/_tests/rules/03_authoring_guidelines/test_authoring_agents.py` — the test being scored
+- `src/claude/rules/03_authoring_guidelines/authoring_agents.md` — what the test guards

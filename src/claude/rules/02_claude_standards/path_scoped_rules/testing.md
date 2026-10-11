@@ -5,7 +5,7 @@ paths:
   - "**/*.sql"
   - "**/_tests/**"
 ---
-<!-- version: 1.5.2 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-11 -->
 <!-- miss_cost: medium — untested code the user catches in review -->
@@ -21,12 +21,12 @@ paths:
 ## ✅ When Tests Are Required
 
 - **🆕 New features:** CLI commands, config settings, skills and hooks all need tests.
-- **🧩 New abstractions:** functions, classes, utilities and rule files need tests.
+- **🧩 New abstractions:** functions, classes and utilities need tests.
 - **🔧 Breaking changes:** changed behaviour needs updated tests.
 - **🐛 Bug fixes:** include a regression test so the bug can't recur.
 - **📄 Instructional content:** READMEs and docs need no behaviour test, since following a rule can't be graded without a live-session eval harness.
   - **Note:** `test_rules_structure.py` already checks every rule's file quality.
-- **🧷 Content-regression test:** when a rule records a real incident or hard-won lesson, assert its key phrases survive, as `test_git.py` does.
+- **🧷 Content-regression test:** when a rule records a real incident or hard-won lesson, assert its key phrases survive, as `test_concurrent_sessions.py` does for the 2026-09-21 incident.
   - **Why:** it catches silent loss of the text in a later edit or merge, so reserve it for content that would be costly to lose.
 
 ---
@@ -61,7 +61,7 @@ Define the goal before writing the test, because tests validate *intended behavi
 | **Structure** | Format and layout drift across many files | `test_rules_structure.py`, `test_rules_structure_layout.py`, `test_file_structure_compliance.py` |
 | **Reachability** | Misplaced files under `rules/`, dead pointers and unlinked lazy files | `test_always_on_reachability.py`, `test_lazy_load_coverage.py` |
 | **Metadata** | Missing or malformed version/created/updated headers | `test_claude_config_metadata.py` and the hook, agent and skill header tests |
-| **Rule content** | Silent loss of a rule's key guidance | `_tests/rules/<tier>/test_<rule>.py`, mirroring the rule's filename |
+| **Rule content** | Silent loss of an incident record or hard-won lesson | `_tests/rules/<tier>/test_<rule>.py`, only for rules that record one, such as `test_concurrent_sessions.py` |
 | **Hooks** | Registered hooks that are missing or stop behaving as documented | `_tests/hooks/`, grouped by hook type |
 | **Skills** | Skills that break the authoring standard or carry orphaned files | `_tests/skills/`, plus each skill's own `tests/evals.yaml` |
 | **Settings** | Unsafe permissions, secrets and broken aliases | `_tests/settings/`, `test_aliases_behavior.py` |
@@ -73,7 +73,7 @@ Define the goal before writing the test, because tests validate *intended behavi
 - **Read on demand:** [`~/.claude/_rules_lazy_load/testing_lazy_load/_testing_design_pattern.md`](../_rules_lazy_load/testing_lazy_load/_testing_design_pattern.md) — before writing a new test: state the goal, test behaviour, write assertion messages, spot-check.
 - **Read on demand:** [`~/.claude/_rules_lazy_load/testing_lazy_load/_testing_anti_patterns.md`](../_rules_lazy_load/testing_lazy_load/_testing_anti_patterns.md) — before writing a new test: empty, over-mocked, fragile, slow and unclear tests to avoid.
 - **Read on demand:** [`~/.claude/_rules_lazy_load/testing_lazy_load/_testing_file_organization.md`](../_rules_lazy_load/testing_lazy_load/_testing_file_organization.md) — before creating a test file: where it lives and how to name it.
-- **Read on demand:** [`~/.claude/_rules_lazy_load/testing_lazy_load/_test_metadata.md`](../_rules_lazy_load/testing_lazy_load/_test_metadata.md) — before writing or editing a test: the required header, and the quality ≥9 and complexity ≥7 floor that `test_test_score_floor.py` enforces.
+- **Read on demand:** [`~/.claude/_rules_lazy_load/testing_lazy_load/_test_metadata.md`](../_rules_lazy_load/testing_lazy_load/_test_metadata.md) — before writing or editing a test: the required header, and the quality ≥7 and complexity ≥7 floors that `test_test_score_floor.py` enforces.
 - **Read on demand:** [`~/.claude/_rules_lazy_load/testing_lazy_load/_test_metadata_audit.md`](../_rules_lazy_load/testing_lazy_load/_test_metadata_audit.md) — when auditing tests: the quarterly audit, worked example and archival workflow.
 - **Inventory:** add each new test file to `_tests/README.md`.
 

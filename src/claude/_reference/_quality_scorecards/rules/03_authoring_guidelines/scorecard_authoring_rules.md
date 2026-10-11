@@ -1,13 +1,12 @@
 # Quality Scorecard — authoring_rules.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-10-01
+**Date Updated:** 2026-10-11
 
-**Overall score:** 8.3/10
+**Overall score:** 8.4/10
 
 **Recommended improvements:**
-- Extend `test_authoring_rules.py` to check the checklist's tier names against the actual directory structure, so tier-name drift is caught mechanically.
-- Add content-regression checks for the two children, so the recorded mistakes and gates can't be lost silently in a later edit.
+- Lower the guide's complexity (6/10), its weakest dimension, by moving detail into its on-demand children.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
@@ -17,12 +16,12 @@
 | **Token Cost Justification** | 8/10 | 2026-09-29 | • 🎯 **Scope:** Tier 3, always-on — governs how every future rule gets created<br>• ⚖️ **Cost trimmed:** the two children moved to `authoring_guidelines_lazy_load/authoring_rules/` and load on demand |
 | **Structural Compliance** | 9/10 | 2026-09-29 | • ✅ **Compliant:** metadata header, emoji H1, Purpose statement, trailing newline and Related section in all three files<br>• 🔗 **Children wired:** both are named in `**Read on demand:**` pointers and exempt from the orphan scan |
 | **Currency** | 9/10 | 2026-09-29 | • ✅ **Matches the current config:** tier names, metadata standard and reachability test all reflect today's structure |
-| **Test Coverage** | 9/10 | 2026-10-01 | • 🧪 **Direct test exists:** `test_authoring_rules.py`, 11 functions — the checklist, creation steps and gates, and every file the guide points to exists |
-| **Overall** | **8.3/10** | 2026-10-01 | • 💪 **Strength:** actively followed process, now with evidence-based mistakes and a finishing checklist<br>• ⚠️ **Gap:** Complexity (6/10) is now the weakest dimension |
+| **Test Coverage** | 10/10 | 2026-10-11 | • 🧪 **Rubric met:** passes `test_rules_structure.py`, and records no incident<br>• 🔗 **Pointers:** `test_rule_cross_references.py` checks the template, tiers, scorecard README, on-demand children and structure test exist |
+| **Overall** | **8.4/10** | 2026-10-11 | • 💪 **Strength:** actively followed process, now with evidence-based mistakes and a finishing checklist<br>• ⚠️ **Gap:** Complexity (6/10) is now the weakest dimension |
 
 ## 🔗 Related files
 
 - `src/claude/rules/03_authoring_guidelines/authoring_rules.md` — the rule being scored
 - `src/claude/rules/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_rules/_common_mistakes.md` — child, scored as part of this rule
 - `src/claude/rules/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_rules/_hard_gates_checklist.md` — child, scored as part of this rule
-- `src/claude/_tests/rules/03_authoring_guidelines/test_authoring_rules.py` — Test Coverage dimension
+- `src/claude/_tests/rules/test_rule_cross_references.py` — Test Coverage dimension

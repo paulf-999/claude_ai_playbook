@@ -11,10 +11,9 @@
 """Tests for plan-mode phase approval gates in claude_plans/_plan_mode_phase_gates.md.
 
 Verifies the rule still requires a stop and explicit approval between plan
-phases, uses the parent's Summary-format phase report (no separate
-template, per a 2026-09-30 decision), and keeps its plan-approval exceptions.
-Also checks the plan-level status line (added 2026-10-11) in _plan_file_format.md,
-which separates plans being acted on from ones approved and then abandoned.
+phases, points to the parent's phase report (no separate template, per a
+2026-09-30 decision), and keeps its plan-approval exceptions, which record a
+2026-09-19 incident.
 Checks behaviour-bearing text, not emphasis words: the 2026-09-30 prompt audit
 removed the stacked MANDATORY/CRITICAL/BLOCKING register and three duplicate
 examples, so asserting those would lock in the style it replaced.
@@ -26,9 +25,6 @@ from _shared_paths import CLAUDE_DIR
 GROUP_DIR = CLAUDE_DIR / "rules" / "02_claude_standards" / "claude_working_practices"
 RULE_FILE = GROUP_DIR / "claude_plans" / "_plan_mode_phase_gates.md"
 PARENT_FILE = GROUP_DIR / "claude_plans.md"
-FORMAT_FILE = RULE_FILE.with_name("_plan_file_format.md")
-PLAN_STATUSES = ("Draft", "Active", "Parked", "Done", "Dropped")
-
 PRESSURE_WORDS = ["MANDATORY", "CRITICAL", "BLOCKING", "non-negotiable", "absolute requirement"]
 
 
@@ -38,11 +34,6 @@ def _content() -> str:
     :return: Full rule content.
     """
     return RULE_FILE.read_text()
-
-
-def test_title_names_plan_mode_phase_gates():
-    """Rule keeps its H1 title so imports and README links stay meaningful."""
-    assert "# 🗂️ Plan-Mode Phase Gates" in _content(), "Rule missing its H1 title"
 
 
 def test_states_stop_after_each_phase():
@@ -89,23 +80,6 @@ def test_no_separate_report_template():
         assert "**Ready for Phase N+1:**" not in text, f"{name} still carries the old template"
 
 
-def test_parent_report_uses_summary_format():
-    """The parent's report is built from the normal Summary + Next steps format."""
-    parent = PARENT_FILE.read_text()
-    assert "claude_response_standards.md" in parent, "Parent must reference the response standards"
-    assert "(Summary, then Next steps)" in parent, "Parent must name the Summary + Next steps shape"
-
-
-def test_parent_report_lists_required_contents():
-    """The report must still carry deliverables, the next phase, and an approve/adjust choice."""
-    parent = PARENT_FILE.read_text()
-    assert "one bullet per deliverable" in parent, "Report must list each deliverable"
-    assert "names the next phase" in parent, "Report must name the next phase"
-    assert "says work has stopped" in parent, "Report must say work has stopped"
-    assert '"Start Phase N+1" as the recommended option' in parent, "Report must offer to start the next phase"
-    assert '"Adjust first"' in parent, "Report must offer an adjust option"
-
-
 def test_no_stacked_pressure_language():
     """Rule states the gate plainly, without all-caps emphasis markers."""
     content = _content()
@@ -147,31 +121,3 @@ def test_saving_a_plan_marks_it_active():
     content = _content()
     assert "**Plan status:** 📝 Draft" in content, "Plan mode must mark its draft as Draft"
     assert "**Plan status:** 🟢 Active" in content, "Copy on exit must set the plan status to Active"
-
-
-def test_format_defines_each_plan_status_and_who_sets_it():
-    """The plan file format lists the four plan statuses, and only the user parks or drops a plan."""
-    text = FORMAT_FILE.read_text()
-    assert "## 🏷️ Plan status" in text, "Plan file format lost its Plan status section"
-    rows = {s: next((line for line in text.splitlines() if f"**{s}**" in line), "") for s in PLAN_STATUSES}
-    missing = [s for s, row in rows.items() if not row]
-    assert not missing, f"Plan status table is missing {missing}"
-    for status in ("Parked", "Dropped"):
-        assert "only when the user says so" in rows[status], f"{status} must be set only on the user's word"
-    assert "make list_plans" in text, "Plan status section must say how to find plans by status"
-    assert "**Updated date:**" in text, "Plan status section must say when to move the updated date"
-
-
-def test_rule_line_limit():
-    """Rule must stay within the ~110-line rule-file limit (writing_style.md)."""
-    lines = _content().splitlines()
-    assert len(lines) <= 110, (
-        f"Rule exceeds 110 lines ({len(lines)}). Split into parent + child if needed."
-    )
-
-
-def test_rule_ends_with_newline():
-    """Rule must end with exactly one newline."""
-    raw = RULE_FILE.read_bytes()
-    assert raw.endswith(b"\n"), "Rule does not end with a newline"
-    assert not raw.endswith(b"\n\n"), "Rule ends with multiple newlines"

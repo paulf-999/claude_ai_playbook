@@ -323,7 +323,7 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 ### `testing.md`
 
 - Children: `testing_lazy_load/_testing_design_pattern.md`, `testing_lazy_load/_testing_anti_patterns.md`, `testing_lazy_load/_testing_file_organization.md`, `testing_lazy_load/_test_metadata.md` and `testing_lazy_load/_test_metadata_audit.md`, read on demand
-- `_tests/rules/05_lazy_load/test_test_score_floor.py` — enforces the test score minimum
+- `_tests/rules/rules_lazy_load/test_test_score_floor.py` — enforces the test score minimum
 
 ### `testing_lazy_load/_test_metadata.md`
 
