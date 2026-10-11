@@ -312,6 +312,22 @@ migrate_old_rules_layout() {
     return 0
 }
 
+# File saved plans and plan-mode drafts into their status folders (see clean_plans.py).
+# Runs without its own prompt: the install was already confirmed and backed up, and filing
+# only moves files — never deletes or overwrites — so it stays safe on a config you own.
+file_plans() {
+    local SCRIPT="${SOURCE_DIR}/_scripts/_clean_scripts/clean_plans.py"
+    local OUTPUT
+    if ! command -v python3 >/dev/null 2>&1; then
+        log_message "${WARNING}" "python3 not found — skipped filing plans; run: make clean_plans"
+        return 0
+    fi
+    OUTPUT=$(CLAUDE_CONFIG_DIR="${TARGET_DIR}" python3 "${SCRIPT}" --yes 2>&1) \
+        || { log_message "${WARNING}" "Filing plans failed — run: make clean_plans"; return 0; }
+    [[ -n "${OUTPUT}" ]] && log_message "${INFO}" "${OUTPUT}"
+    return 0
+}
+
 # Print summary of Claude file operation (install/update)
 print_operation_summary() {
     local OPERATION="$1"  # operation type: "installation" or "update"

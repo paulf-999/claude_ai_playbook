@@ -25,9 +25,10 @@ confirm_install() {
     echo "  2. Copy the repo's Claude files over the target, keeping your memory/, TODO.md, _plans/,"
     echo "     settings.local.json and all runtime data (transcripts, history, app state)"
     echo "  3. Remove files an earlier install added that the repo has since deleted or moved"
-    echo "  4. Install the Claude CLI via npm"
-    echo "  5. Install the core MCP servers"
-    echo "  6. Install the Claude Code plugins"
+    echo "  4. File your plans and plan-mode drafts into status folders (moves only, nothing deleted)"
+    echo "  5. Install the Claude CLI via npm"
+    echo "  6. Install the core MCP servers"
+    echo "  7. Install the Claude Code plugins"
     echo
 
     local ANSWER
@@ -50,6 +51,7 @@ install_claude_files() {
     prune_removed_files          # from claude_file_utils.sh — drops files the repo removed since the last install
     rewrite_config_paths         # from claude_file_utils.sh — @ imports can't read CLAUDE_CONFIG_DIR
     migrate_old_rules_layout     # from claude_file_utils.sh — after pruning, so only your own files are left in _rules/
+    file_plans                   # from claude_file_utils.sh — moves plans and drafts into their status folders
 }
 
 # Install the Claude CLI via npm (optional step — failure does not abort the install)

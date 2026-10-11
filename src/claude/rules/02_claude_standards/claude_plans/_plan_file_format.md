@@ -1,4 +1,4 @@
-<!-- version: 1.5.0 -->
+<!-- version: 1.6.0 -->
 <!-- created: 2026-09-17 -->
 <!-- updated: 2026-10-11 -->
 # 📊 Plan File Format
@@ -45,7 +45,7 @@ Put one `**Plan status:**` line straight under the plan's H1, giving the whole p
   - **Why:** the file's modified time resets on any edit or copy, so only this date says when work last moved.
 - **Why:** phase cells alone can't tell a finished plan from an abandoned one, so plans still being acted on get lost among the rest.
 - **Find them:** `make list_plans` groups plans by status and flags Active plans whose updated date is 14 or more days old, to park or drop.
-- **Status folders:** `make clean_plans` files each saved plan into `_plans/<status>/` (`active/`, `parked/`, `done/`, `dropped/`), and each draft into `plans/draft/`, or `plans/archive/` after 14 days unchanged.
+- **Status folders:** `make install` and `make clean_plans` file each saved plan into `_plans/<status>/` (`active/`, `parked/`, `done/`, `dropped/`), and each draft into `plans/draft/`, or `plans/archive/` after 14 days unchanged.
   - **Line wins:** the folder follows the status line, so change the line and the next run moves the file.
   - **Why archive drafts:** an approved draft was already copied into `_plans/`, so an old draft is almost always abandoned.
 

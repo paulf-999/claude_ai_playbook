@@ -13,7 +13,7 @@ SHELL = /bin/bash
 # make list_plans       # list saved plans by plan status, flagging stale Active ones and anything to file
 # make install          # install Claude config files into $CLAUDE_CONFIG_DIR, or ~/.claude (previews, then asks you to type 'install')
 # make update           # [DISABLED] update Claude config files in ~/.claude/ (WSL)
-# make clean_plans      # file plans into _plans/<status>/ and drafts into plans/draft/ (plans/archive/ after 14 days)
+# make clean_plans      # file plans into _plans/<status>/ and drafts into plans/draft/ (plans/archive/ after 14 days); make install also does this
 # make clean_backups    # move old ~/.claude_backup_* dirs to ~/.claude_backup_archive/
 # make clean            # run clean_plans and clean_backups
 # make all              # print this usage list

@@ -1,19 +1,22 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-10
-# Version:           2.1.0
+# Date updated:      2026-10-11
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
-"""Tests for ``flatten_skills`` in ``claude_file_utils.sh``.
+"""Tests for ``flatten_skills`` and ``file_plans`` in ``claude_file_utils.sh``.
 
 Goal: after install or update, every grouped skill sits flat at
 ``skills/<name>`` with its latest content, and no ``_<group>_skills/`` folder
 is left behind. Regression for the update path (found 2026-10-01): ``cp -R``
 into an existing ``skills/<name>`` nested the new copy as ``<name>/<name>``
 and left the stale copy in place.
+
+``file_plans`` runs ``clean_plans.py --yes`` as the install's last step, so saved plans and
+drafts land in their status folders without a second prompt, and nothing is ever lost.
 """
 
 import os
@@ -172,3 +175,45 @@ def test_nothing_to_flatten_prints_nothing(skills: Path):
     result = flatten(skills.parent)
     assert result.returncode == 0, f"flatten_skills failed with nothing to do: {result.stdout}"
     assert "Flattened" not in result.stdout, f"the step claimed work with nothing to flatten: {result.stdout}"
+
+
+# --- file_plans ---
+
+INSTALL_SCRIPTS = [REPO_ROOT / "src" / "sh" / "claude" / name
+                   for name in ("install_claude_files.sh", "install_claude_files_windows.sh")]
+
+
+def file_plans(target: Path) -> subprocess.CompletedProcess:
+    """Source the real helper script and run ``file_plans`` against ``target``."""
+    env = {**os.environ, "CLAUDE_CONFIG_DIR": str(target)}
+    return subprocess.run(
+        ["bash", "-c", f"source {UTILS_SCRIPT} && file_plans"],
+        cwd=REPO_ROOT, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+        text=True, timeout=30,
+    )
+
+
+def test_install_files_plans_without_asking(tmp_path: Path):
+    """A saved plan lands in its status folder with no prompt, and the step logs one line."""
+    (tmp_path / "_plans").mkdir()
+    (tmp_path / "_plans" / "2026_09_01_x.md").write_text("# X\n\n**Plan status:** ✅ Done\n")
+    done = file_plans(tmp_path)
+    assert done.returncode == 0, done.stdout
+    assert (tmp_path / "_plans" / "done" / "2026_09_01_x.md").exists(), "the Done plan wasn't filed"
+    assert "Filed 1 plans and 0 drafts into their status folders" in done.stdout, done.stdout
+
+
+def test_install_with_nothing_to_file_is_silent(tmp_path: Path):
+    """No plans folder at all, as on a fresh install, adds no output and doesn't fail."""
+    done = file_plans(tmp_path)
+    assert done.returncode == 0, done.stdout
+    assert "Filed" not in done.stdout and "plans" not in done.stdout.lower(), f"unexpected output: {done.stdout}"
+
+
+@pytest.mark.parametrize("script", INSTALL_SCRIPTS, ids=lambda p: p.name)
+def test_both_installers_file_plans_last(script: Path):
+    """Both install flows call file_plans after the steps that put files in place."""
+    text = script.read_text()
+    assert "    file_plans" in text, f"{script.name} doesn't file plans"
+    order = text.index("migrate_old_rules_layout "), text.index("    file_plans")
+    assert order[0] < order[1], f"{script.name}: filing runs too early"

@@ -223,26 +223,39 @@ def main(
     min_age_days: int = 14,
     today: date | None = None,
     drafts_dir: str | Path | None = None,
+    assume_yes: bool = False,
 ):
     """Preview filing saved plans and drafts into their status subfolders, ask once, then move them.
+
+    With assume_yes, as ``make install`` runs it, there's no preview or question, and one summary
+    line is printed only when something moved — the install has already been confirmed and backed up.
 
     :param plans_dir: Override the saved plans folder. Defaults to $CLAUDE_CONFIG_DIR/_plans.
         Intended for use in tests.
     :param min_age_days: Archive drafts unchanged for this many days or more.
     :param today: Reference date for draft ages. Defaults to date.today(). Intended for use in tests.
     :param drafts_dir: Override the drafts folder. Defaults to plans/ beside the saved plans folder.
+    :param assume_yes: Move without asking, printing one summary line. Set by ``--yes``.
     """
     plans_dir = _default_plans_dir() if plans_dir is None else Path(plans_dir)
     drafts_dir = plans_dir.parent / "plans" if drafts_dir is None else Path(drafts_dir)
     if not plans_dir.is_dir() and not drafts_dir.is_dir():
-        print(f"No plans folder found at {plans_dir} or {drafts_dir}.")
-        sys.exit(0)
+        if not assume_yes:
+            print(f"No plans folder found at {plans_dir} or {drafts_dir}.")
+        return
 
     plan_moves = find_plan_moves(plans_dir) if plans_dir.is_dir() else []
     draft_moves = find_draft_moves(drafts_dir, min_age_days=min_age_days, today=today) if drafts_dir.is_dir() else []
     if not plan_moves and not draft_moves:
-        print("Every plan and draft is already in its status folder.")
-        sys.exit(0)
+        if not assume_yes:
+            print("Every plan and draft is already in its status folder.")
+        return
+
+    if assume_yes:
+        plans_moved = _move_all(plan_moves, plans_dir)
+        drafts_moved = _move_all(draft_moves, drafts_dir)
+        print(f"Filed {plans_moved} plans and {drafts_moved} drafts into their status folders")
+        return
 
     _preview(plan_moves, plans_dir)
     _preview(draft_moves, drafts_dir)
@@ -262,4 +275,4 @@ def main(
 
 
 if __name__ == "__main__":
-    main()
+    main(assume_yes="--yes" in sys.argv[1:])

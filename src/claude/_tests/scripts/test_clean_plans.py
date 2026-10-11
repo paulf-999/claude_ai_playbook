@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
 # Date updated:      2026-10-11
-# Version:           2.0.0
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -272,6 +272,22 @@ def test_main_never_overwrites(tmp_path, monkeypatch, capsys):
     kept = (plans / "done" / "2026_09_01_done.md").read_text()
     assert kept.endswith("# existing\n"), "the existing file was overwritten"
     assert "Skipped (already in done/)" in capsys.readouterr().out
+
+
+def test_yes_moves_without_asking(tmp_path, monkeypatch, capsys):
+    """With assume_yes, as make install runs it, everything is filed without a question and one line is printed."""
+    plans, drafts = setup_config(tmp_path)
+    monkeypatch.setattr(builtins, "input", lambda _prompt: pytest.fail("assume_yes must not ask"))
+    clean_plans.main(plans_dir=plans, today=TODAY, assume_yes=True)
+    assert (plans / "done" / "2026_09_01_done.md").exists(), "the plan should be filed"
+    assert capsys.readouterr().out.strip() == "Filed 1 plans and 1 drafts into their status folders"
+
+
+def test_yes_with_nothing_to_file_prints_nothing(tmp_path, capsys):
+    """An already-filed config adds nothing to the install output."""
+    (tmp_path / "_plans").mkdir()
+    clean_plans.main(plans_dir=tmp_path / "_plans", today=TODAY, assume_yes=True)
+    assert capsys.readouterr().out == "", "nothing to file should print nothing"
 
 
 def test_default_plans_dir_uses_config_dir(monkeypatch, tmp_path):

@@ -109,6 +109,7 @@ sync_windows_claude_files() {
     split_style_guides                # from claude_file_utils.sh
     migrate_old_rules_layout          # from claude_file_utils.sh
     restore_user_editable_files
+    file_plans                        # from claude_file_utils.sh — after restoring, so user files are in place
 }
 
 # Print a reminder if the Claude CLI is not yet installed on Windows.
