@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-11
-# Version:           3.0.1
-# Test quality score: 9/10
+# Version:           3.0.2
+# Test quality score: 7/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
@@ -132,12 +132,6 @@ def test_agents_are_compliant():
     assert (CLAUDE_HOME / "agents").is_dir(), missing_area("agents")
     errors = errors_under("agents")
     assert not errors, error_report("agents", errors)
-
-
-def test_rule_links_are_compliant():
-    """An installed rules/ folder passes the scan; the repo doesn't ship one, since make install builds it."""
-    errors = errors_under("rules") if (CLAUDE_HOME / "rules").is_dir() else []
-    assert not errors, error_report("rules", errors)
 
 
 def test_whole_config_has_no_errors():

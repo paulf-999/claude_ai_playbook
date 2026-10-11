@@ -11,8 +11,8 @@
 
 - [Format](#-format)
 - [Quality Scoring](#-quality-scoring-1-10)
-- [New Tests Must Score ≥9/10](#-new-tests-must-score-910)
-- [Complexity Scoring](#-complexity-scoring) — reward simplicity; quality and complexity are independent floors, not a cap (see `_test_metadata_complexity_scoring.md`)
+- [Minimum for New Tests](#-minimum-for-new-tests)
+- [Complexity Scoring](#-complexity-scoring) — reward simplicity; quality and complexity are independent minimums (see `_test_metadata_complexity_scoring.md`)
 - [Maintenance](#-maintenance) — when to update the header
 
 ---
@@ -45,27 +45,29 @@ Every test file in `~/.claude/_tests/` must open with this metadata header:
 
 ## 🎯 Quality Scoring (1–10)
 
-| Score | Meaning | Indicators |
-|-------|---------|-----------|
-| **9–10** | Excellent | 15+ assertions, 10+ test functions, comprehensive, <200 lines, maintained quarterly |
-| **7–8** | Good | 10–14 assertions, 8+ test functions, main scenarios, maintainable complexity |
-| **5–6** | Adequate | 5–9 assertions, 4–7 test functions, works, has coverage gaps, occasional maintenance |
-| **3–4** | Poor | <5 assertions, <4 test functions, brittle, stale references, needs refactoring |
-| **1–2** | Broken | Failing tests, removed feature references, unmaintained 3+ months, archive candidate |
+Quality is scored from what a file's tests catch and how clearly they report it, never from how many tests it has.
 
-**Scoring rule:** Count assertions and test functions as primary indicators. Adjust ±1 for clarity (docstring, maintainability), complexity (lines), or staleness (deprecated refs).
+| Check | Points | What earns them |
+|---|---|---|
+| 💬 **Failure messages** | 0–4 | The share of `assert` statements that carry a message, times 4 |
+| 📝 **Docstrings** | 0–3 | The share of test functions with a docstring, times 3 |
+| 🔎 **Non-vacuous scan** | 2 | At least one assert proves a scan of the real config found something: `assert len(x) >= n`, `assert any(...)` or `assert found, "..."`; a file that scans nothing real earns these automatically |
+| 🧪 **Proven to fail** | 1 | At least one test feeds bad input and is named for what it catches, e.g. `..._is_flagged` or `..._rejected` |
+
+- **Score:** the rounded sum of the four checks, so a file of 3 clear tests can score 10.
+- **Computed, not judged:** `test_test_quality_score.py` works the score out from the file and fails when the header disagrees.
+- **Why:** counting tests rewarded padding, which helped the suite pass 1,000 tests by 2026-10-11.
 
 ---
 
-## 🎯 New tests must score ≥9/10
+## 🎯 Minimum for new tests
 
-**Any test Claude writes from now on must be built to reach quality ≥9/10 AND complexity score ≥7/10** — not scored honestly after the fact at whatever level it lands. Design for 15+ assertions and 10+ test functions up front (quality), while keeping the test to one concept and one file with minimal dependencies/fixtures (complexity) — see `_test_metadata_complexity_scoring.md` for why these don't trade off against each other. A test that only reaches 5/10 or 6/10 quality wasn't finished; a test padded with unnecessary scope/dependencies just to look thorough missed the point.
-
-**Style counts too:** a new test must also set `Python style compliant: Yes`.
-
-**Enforced:** `test_test_score_floor.py` fails any test file below quality 9, complexity 7 or style Yes.
-- **No exemptions:** every test met the minimum on 2026-10-01, so the old exemption list is gone and the rule applies to every test.
-- **Can't meet it?** split the test by concept rather than padding it — see `_test_metadata_complexity_scoring.md`.
+- **Minimums:** every test file must score quality ≥7/10 and complexity score ≥7/10, keeping to one concept with minimal dependencies and fixtures.
+- **Style:** every test must also set `Python style compliant: Yes`.
+- **Write only what's needed:** one test that proves a checker can fail is enough, so don't add near-identical cases to raise a score.
+- **Enforced:** `test_test_score_floor.py` fails any test file below quality 7, complexity 7 or style Yes.
+  - **Note:** `test_test_quality_score.py` checks that each quality score matches what its file earns.
+- **Can't meet complexity?** split the test by concept rather than letting complexity slide — see `_test_metadata_complexity_scoring.md`.
 
 ---
 

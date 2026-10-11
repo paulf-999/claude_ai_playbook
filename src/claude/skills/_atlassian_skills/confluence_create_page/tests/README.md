@@ -16,6 +16,4 @@
 | 8 | `publish_timeout_all_choices` | Publish | Each choice (Abort / Retry / Continue) in the publish-timeout dialog behaves correctly |
 | 9 | `publish_permission_denied` | Publish | A permission error names the space, preserves the draft, and points to troubleshooting docs |
 
-- **Handler tests:** `confluence_create_page_handler.py` also has a separate pytest suite at `~/.claude/_tests/skills/confluence_create_page/` (repo root's `_tests/`, not this folder)
-- **Pytest suite covers:** the Python handler code
-- **evals.yaml covers:** the skill's behavior as a whole
+- **Only test suite:** `evals.yaml` is this skill's whole test suite, since the skill has no Python code of its own.

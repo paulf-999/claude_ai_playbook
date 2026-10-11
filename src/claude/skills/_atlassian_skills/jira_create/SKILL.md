@@ -8,7 +8,7 @@ tags:
   tested: true
 tools: Read, mcp__atlassian__createJiraIssue
 ---
-<!-- version: 0.2.3 -->
+<!-- version: 0.2.4 -->
 <!-- created: 2026-04-11 -->
 <!-- updated: 2026-10-11 -->
 

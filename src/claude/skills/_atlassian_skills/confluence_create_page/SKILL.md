@@ -7,10 +7,10 @@ tags:
   status: active
   tested: true
   date_created: "2026-06-07"
-  date_updated: "2026-10-01"
+  date_updated: "2026-10-11"
 tools: Read, Write, mcp__atlassian__getAccessibleAtlassianResources, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
-<!-- version: 1.2.1 -->
+<!-- version: 1.2.2 -->
 <!-- created: 2026-04-08 -->
 <!-- updated: 2026-10-11 -->
 

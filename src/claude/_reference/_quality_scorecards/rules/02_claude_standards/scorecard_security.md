@@ -1,13 +1,12 @@
 # Quality Scorecard — security.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-10-01
+**Date Updated:** 2026-10-11
 
-**Overall score:** 7.7/10
+**Overall score:** 8.1/10
 
 **Recommended improvements:**
 - Add a "Related rules" section cross-linking to `behaviour.md` and other rules touching conduct/injection concerns.
-- Add dedicated tests for the `_code_security.md` child and the `security.md` parent file itself.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
@@ -17,11 +16,11 @@
 | **Token Cost Justification** | 9/10 | 2026-09-28 | • 🎯 **Scope:** Tier 2, always-on, safety-critical by nature |
 | **Structural Compliance** | 6/10 | 2026-09-28 | • ✅ **Compliant:** emoji headers, Purpose statement, trailing newline<br>• ❌ **Gap:** no "Related rules" section at all — unlike every sibling in this tier, no cross-links to `behaviour.md` or other rules touching conduct/injection concerns |
 | **Currency** | 8/10 | 2026-09-28 | • 🔍 **Check:** both children and the reference doc resolve; no stale references found |
-| **Test Coverage** | 7/10 | 2026-10-01 | • 🧪 **Partial:** `test_security_guardrails.py` (12 functions) checks each guardrail in `_security_guardrails.md` and that `settings.json` allows no forbidden wildcard<br>• ⚠️ **Untested:** `_code_security.md` child and the parent itself have no dedicated test |
-| **Overall** | **7.7/10** | 2026-10-01 | • 💪 **Strength:** clean separation of concerns between the two children<br>• ⚠️ **Gap:** missing Related section and half the children untested |
+| **Test Coverage** | 10/10 | 2026-10-11 | • 🧪 **Rubric met:** parent and children pass `test_rules_structure.py`, and none records an incident<br>• 🔗 **Settings check:** `test_rule_cross_references.py` fails if `settings.json` allows a wildcard the guardrails forbid |
+| **Overall** | **8.1/10** | 2026-10-11 | • 💪 **Strength:** clean separation of concerns between the two children<br>• ⚠️ **Gap:** Structural Compliance (6/10) |
 
 ## 🔗 Related files
 
 - `src/claude/rules/02_claude_standards/security.md` — the rule being scored
-- `src/claude/_tests/rules/02_claude_standards/test_security_guardrails.py` — Test Coverage dimension
+- `src/claude/_tests/rules/test_rule_cross_references.py` — Test Coverage dimension
 - `src/claude/rules/02_claude_standards/security/_code_security.md` — Test Coverage dimension (untested child)

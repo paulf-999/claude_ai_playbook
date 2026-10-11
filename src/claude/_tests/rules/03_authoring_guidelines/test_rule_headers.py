@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           1.9.5
-# Test quality score: 9/10
+# Version:           1.9.6
+# Test quality score: 8/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────

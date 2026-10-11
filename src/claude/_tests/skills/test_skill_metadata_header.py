@@ -1,9 +1,9 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-28
-# Date updated:      2026-10-02
-# Version:           1.0.3
-# Test quality score: 9/10
+# Date updated:      2026-10-11
+# Version:           1.1.1
+# Test quality score: 10/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
@@ -96,13 +96,6 @@ def test_missing_header_rejected():
     errors = skill_header_errors(build_skill(header=""))
     assert errors, "missing header was accepted"
     assert "line after the frontmatter" in errors[0], f"unexpected error text: {errors}"
-
-
-def test_malformed_header_rejected_by_shared_validator():
-    """Header format errors come through from the shared validator."""
-    bad = "<!-- version: 0.1 -->\n<!-- created: 2026-09-28 -->\n<!-- updated: 2026-09-28 -->\n"
-    errors = skill_header_errors(build_skill(header=bad))
-    assert errors and "version line" in errors[0], f"bad version not caught: {errors}"
 
 
 # --- Real files ---

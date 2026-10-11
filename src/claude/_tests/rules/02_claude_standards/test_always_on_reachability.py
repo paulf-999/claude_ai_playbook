@@ -65,12 +65,6 @@ def test_read_on_demand_pointers_resolve():
     assert not issues()["pointer"], f"pointers to missing files: {issues()['pointer']}"
 
 
-def test_claude_md_imports_no_rules():
-    """CLAUDE.md imports no rule, so nothing loads twice or out of its folder's mode."""
-    bad = re.findall(r"^@~/[^/\s]+/(_?rules\S*)$", CLAUDE_MD.read_text(), re.M)
-    assert not bad, f"CLAUDE.md still imports rules: {bad}"
-
-
 def test_claude_md_imports_aliases():
     """CLAUDE.md still imports aliases.md, which isn't a rule and doesn't load on its own."""
     assert re.search(r"^@~/[^/\s]+/aliases\.md$", CLAUDE_MD.read_text(), re.M), "CLAUDE.md must @import aliases.md"

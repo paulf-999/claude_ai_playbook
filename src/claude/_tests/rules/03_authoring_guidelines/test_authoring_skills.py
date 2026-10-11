@@ -10,12 +10,12 @@
 
 """Tests what authoring_skills.md says every skill must contain.
 
-Covers the SKILL.md structure, the good-frontmatter example, the contract's required
-fields and trigger design, read from the parent rule and every child it points to.
+Covers the SKILL.md structure, which records a 2026-10-01 incident, the good-frontmatter
+example and the contract's required fields, read from the parent rule and its children.
 Where the rule states something twice — the contract fields in the core standards and
-in the hard-gates checklist — the two must agree. The old checks matched words such
-as "use" that any text contains, so they could never fail.
-``test_authoring_skills_maturity.py`` covers maturity, scope and maintenance.
+in the hard-gates checklist — the two must agree. The maturity table's eval counts and
+complexity caps must also match the checklist and the shared complexity formula; those
+checks merged in from ``test_authoring_skills_maturity.py`` on 2026-10-11.
 """
 from __future__ import annotations
 
@@ -26,6 +26,8 @@ from _shared_paths import LAZY_RULES_DIR, RULES_DIR
 
 RULE_FILE = RULES_DIR / "03_authoring_guidelines" / "authoring_skills.md"
 CHECKLIST = LAZY_RULES_DIR / "authoring_guidelines_lazy_load" / "authoring_skills" / "_hard_gates_checklist.md"
+COMPLEXITY_FORMULA = RULES_DIR / "03_authoring_guidelines" / "shared_standards" / "_complexity_scoring.md"
+LEVELS = ("Draft", "Tactical", "Strategic")
 SECTIONS = ["Frontmatter", "Instructions for Claude", "Purpose", "Example Usage", "Best For", "References"]
 CONTRACT_FIELDS = ["`name`, `version`, `summary`, `maturity`", "`dispatch.triggers`", "`dispatch.not_for`", "`output`"]
 MATURITY_LEVELS = {"draft", "tactical", "strategic"}
@@ -108,18 +110,24 @@ def test_checklist_matches_contract_fields():
         assert field in checklist, f"checklist no longer asks for {field!r}"
 
 
-def test_not_for_is_most_important():
-    """The checklist marks not_for as the most important contract field."""
-    assert "specific and not empty (scope boundaries; MOST IMPORTANT)" in CHECKLIST.read_text(), "not_for emphasis lost"
+def table_row(label: str) -> list[str]:
+    """Return the Draft, Tactical and Strategic cells of one maturity-table row, e.g. ``Test coverage``."""
+    row = re.search(rf"^\| \*\*{re.escape(label)}\*\* \|(.+)\|$", content(), re.M)
+    assert row, f"the maturity table has no '{label}' row"
+    return [cell.strip() for cell in row.group(1).split("|")]
 
 
-def test_trigger_design_prefers_explicit_triggers():
-    """Explicit triggers drive auto-invocation, and phrase lists should be exhaustive."""
-    assert "**Explicit triggers drive auto-invocation.**" in content(), "the explicit-trigger rule is missing"
-    exhaustive = "**Be exhaustive:** a false positive costs less than a missed invocation."
-    assert exhaustive in content(), "the be-exhaustive rule is missing"
+def test_eval_counts_match_checklist():
+    """The maturity table's eval counts per level match the hard-gates checklist."""
+    counts = [re.match(r"(\d+(?:–\d+|\+)) evals", cell).group(1) for cell in table_row("Test coverage")]
+    assert counts == ["5–8", "8–12", "12+"], f"maturity eval counts changed: {counts}"
+    expected = ", ".join(f"{level} {count} evals" for level, count in zip(LEVELS, counts))
+    assert expected in CHECKLIST.read_text(), f"the checklist should say '{expected}'"
 
 
-def test_trigger_design_warns_against_generic_phrases():
-    """Triggers that are too generic, such as 'help', are called out."""
-    assert '**Not too generic:** "help" or "please" alone' in content(), "the too-generic warning is missing"
+def test_complexity_caps_match_shared_formula():
+    """The maturity table's complexity caps match the shared complexity formula."""
+    caps = [re.match(r"≤(\d)", cell).group(1) for cell in table_row("Complexity (raw sum)")]
+    assert caps == ["4", "6", "8"], f"maturity complexity caps changed: {caps}"
+    expected = f"Draft ≤{caps[0]}, Tactical ≤{caps[1]}, Strategic ≤{caps[2]}"
+    assert expected in COMPLEXITY_FORMULA.read_text(), f"_complexity_scoring.md should say '{expected}'"

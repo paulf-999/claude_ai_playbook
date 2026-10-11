@@ -1,7 +1,7 @@
 ---
 name: jira_create
 description: Create Jira tickets with full field configuration and story point validation
-version: 0.2.3
+version: 0.2.4
 maturity: draft
 summary: Create Jira tickets with field configuration and security checks
 
@@ -13,7 +13,7 @@ test_coverage_level: comprehensive
   # none           = no tests exist
   # basic          = 1–2 happy path tests
   # comprehensive  = main path + error cases + edge cases + security
-  # This skill has 42 test cases covering tickets, validation, security, design, and error cases
+  # tests/evals.yaml has 6 scenarios covering creation, validation and MCP errors
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Usage

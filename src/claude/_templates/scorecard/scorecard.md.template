@@ -20,7 +20,7 @@
 
 <!--
 How to fill this template:
-- <artefact_name>: the scored file or skill name, e.g. `git.md`, `test_git.py` or `git_create_pr`.
+- <artefact_name>: the scored file or skill name, e.g. `git.md`, `test_concurrent_sessions.py` or `git_create_pr`.
 - Dimensions: one row per dimension for the artefact's type, in this order —
   - Rules: Clarity, Complexity, Evidence of Need, Token Cost Justification, Structural Compliance, Currency, Test Coverage
     (criteria in `_reference/_quality_scorecards/rules/README.md`).

@@ -1,7 +1,7 @@
 # Quality Scorecard — test_plan_mode_phase_gates.py
 
 **Date Created:** 2026-09-30
-**Date Updated:** 2026-09-30
+**Date Updated:** 2026-10-11
 
 **Overall score:** 9.0/10
 
@@ -10,11 +10,11 @@
 | **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
 | **Complexity** | 10/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 10/10 (raw complexity 0) |
 | **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact |
-| **Coverage** | 9/10 | 2026-09-30 | • 📊 **Counts:** 15 test functions and 29 assertions |
+| **Coverage** | 9/10 | 2026-10-11 | • 📊 **Counts:** 11 test functions and 20 assertions<br>• ✂️ **Trimmed:** structure checks and pins on the parent and plan-format files, which record no incident |
 | **Structural Compliance** | 9/10 | 2026-09-30 | • ✅ **Header:** full metadata header, marked Python style compliant |
 | **Currency** | 9/10 | 2026-09-30 | • 🔍 **References:** passes against the current config, header last updated 2026-09-30 |
 | **Regression Value** | 8/10 | 2026-09-30 | • 🛡️ **Failure cases:** 1 test function named for a failure case |
-| **Overall** | **9.0/10** | 2026-09-30 | • 💪 **Strongest:** Complexity (10/10)<br>• ⚠️ **Weakest:** Regression Value (8/10) |
+| **Overall** | **9.0/10** | 2026-10-11 | • 💪 **Strongest:** Complexity (10/10)<br>• ⚠️ **Weakest:** Regression Value (8/10) |
 
 ## 🔗 Related files
 
