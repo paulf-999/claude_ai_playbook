@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-10
-# Version:           1.2.3
+# Date updated:      2026-10-11
+# Version:           1.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -11,7 +11,7 @@
 
 ``@`` imports can't read ``CLAUDE_CONFIG_DIR``, so the repo's ``@~/.claude/`` imports break in a
 config at ``~/claude``. The install now rewrites paths into the installed folder to its real
-prefix, and sets ``plansDirectory`` to its ``_plans/``. Each test runs the real install steps
+prefix, and sets ``plansDirectory`` to its ``plans/``. Each test runs the real install steps
 from ``claude_file_utils.sh`` against a temp ``HOME``.
 """
 
@@ -125,9 +125,9 @@ def test_user_owned_and_runtime_files_untouched(custom: dict[str, Path]):
 
 
 def test_plans_directory_is_the_targets(custom: dict[str, Path]):
-    """plansDirectory points at the installed folder's own _plans/."""
+    """plansDirectory points at the installed folder's own plans/, keeping drafts out of saved plans in _plans/."""
     settings = json.loads((custom["target"] / "settings.json").read_text())
-    assert settings["plansDirectory"] == str(custom["target"] / "_plans"), settings["plansDirectory"]
+    assert settings["plansDirectory"] == str(custom["target"] / "plans"), settings["plansDirectory"]
 
 
 def test_rewrite_is_idempotent(custom: dict[str, Path]):
@@ -146,7 +146,7 @@ def test_default_folder_is_left_as_shipped(tmp_path: Path):
     shipped = (REPO_ROOT / "src" / "claude" / "CLAUDE.md").read_text()
     assert (target / "CLAUDE.md").read_text() == shipped, "CLAUDE.md changed in the default folder"
     settings = json.loads((target / "settings.json").read_text())
-    assert settings["plansDirectory"] == str(target / "_plans"), settings["plansDirectory"]
+    assert settings["plansDirectory"] == str(target / "plans"), settings["plansDirectory"]
 
 
 def test_folder_outside_home_uses_absolute_paths(tmp_path: Path):

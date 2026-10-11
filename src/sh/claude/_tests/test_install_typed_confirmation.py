@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
-# Date updated:      2026-10-02
-# Version:           1.0.1
+# Date updated:      2026-10-11
+# Version:           1.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -54,16 +54,17 @@ def test_preview_shows_the_repo_source(tmp_path: Path):
     assert f"Source:  {REPO_ROOT / 'src' / 'claude'}" in output, "Preview must show where the files come from"
 
 
-def test_preview_lists_six_steps(tmp_path: Path):
-    """The preview lists all six install steps."""
+def test_preview_lists_seven_steps(tmp_path: Path):
+    """The preview lists all seven install steps."""
     _, output = run_with_tty(make_sandbox(tmp_path)["env"], b"no\n")
     steps = (
         "1. Back up",
         "2. Copy",
         "3. Remove files",
-        "4. Install the Claude CLI",
-        "5. Install the core MCP",
-        "6. Install the Claude Code plugins",
+        "4. File your plans",
+        "5. Install the Claude CLI",
+        "6. Install the core MCP",
+        "7. Install the Claude Code plugins",
     )
     missing = [step for step in steps if step not in output]
     assert not missing, f"Preview is missing steps: {missing}"
@@ -72,7 +73,7 @@ def test_preview_lists_six_steps(tmp_path: Path):
 def test_preview_comes_before_the_prompt(tmp_path: Path):
     """The user sees every step before being asked to type ``install``."""
     _, output = run_with_tty(make_sandbox(tmp_path)["env"], b"no\n")
-    assert output.index("6. Install the Claude Code plugins") < output.index("Type 'install' to continue"), (
+    assert output.index("7. Install the Claude Code plugins") < output.index("Type 'install' to continue"), (
         "The prompt must come after the full preview"
     )
 

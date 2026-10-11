@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-16
-# Date updated:      2026-10-06
-# Version:           3.1.0
+# Date updated:      2026-10-11
+# Version:           3.4.0
 # Test quality score: 9/10
 # Test complexity score: 10/10
 # Python style compliant: Yes
@@ -13,6 +13,8 @@
 Verifies the rule still requires a stop and explicit approval between plan
 phases, uses the parent's Summary-format phase report (no separate
 template, per a 2026-09-30 decision), and keeps its plan-approval exceptions.
+Also checks the plan-level status line (added 2026-10-11) in _plan_file_format.md,
+which separates plans being acted on from ones approved and then abandoned.
 Checks behaviour-bearing text, not emphasis words: the 2026-09-30 prompt audit
 removed the stacked MANDATORY/CRITICAL/BLOCKING register and three duplicate
 examples, so asserting those would lock in the style it replaced.
@@ -23,6 +25,8 @@ from _shared_paths import CLAUDE_DIR
 
 RULE_FILE = CLAUDE_DIR / "rules" / "02_claude_standards" / "claude_plans" / "_plan_mode_phase_gates.md"
 PARENT_FILE = CLAUDE_DIR / "rules" / "02_claude_standards" / "claude_plans.md"
+FORMAT_FILE = RULE_FILE.with_name("_plan_file_format.md")
+PLAN_STATUSES = ("Draft", "Active", "Parked", "Done", "Dropped")
 
 PRESSURE_WORDS = ["MANDATORY", "CRITICAL", "BLOCKING", "non-negotiable", "absolute requirement"]
 
@@ -135,6 +139,26 @@ def test_keeps_plan_persistence_section():
     content = _content()
     assert "## 📁 Persist the plan to `_plans/`" in content, "Rule lost the persistence section"
     assert "Incident (2026-09-19)" in content, "Rule lost the literal-~ incident note"
+
+
+def test_saving_a_plan_marks_it_active():
+    """A draft starts as Draft, and the copy-on-exit step saves the plan as Active."""
+    content = _content()
+    assert "**Plan status:** 📝 Draft" in content, "Plan mode must mark its draft as Draft"
+    assert "**Plan status:** 🟢 Active" in content, "Copy on exit must set the plan status to Active"
+
+
+def test_format_defines_each_plan_status_and_who_sets_it():
+    """The plan file format lists the four plan statuses, and only the user parks or drops a plan."""
+    text = FORMAT_FILE.read_text()
+    assert "## 🏷️ Plan status" in text, "Plan file format lost its Plan status section"
+    rows = {s: next((line for line in text.splitlines() if f"**{s}**" in line), "") for s in PLAN_STATUSES}
+    missing = [s for s, row in rows.items() if not row]
+    assert not missing, f"Plan status table is missing {missing}"
+    for status in ("Parked", "Dropped"):
+        assert "only when the user says so" in rows[status], f"{status} must be set only on the user's word"
+    assert "make list_plans" in text, "Plan status section must say how to find plans by status"
+    assert "**Updated date:**" in text, "Plan status section must say when to move the updated date"
 
 
 def test_rule_line_limit():

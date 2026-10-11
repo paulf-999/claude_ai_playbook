@@ -193,6 +193,7 @@ See `~/.claude/rules/01_essentials/guiding_principles.md` for the decision frame
 | 2026-10-01 | `hooks` | Commands read `CLAUDE_CONFIG_DIR`, falling back to `~/.claude` | The repo hardcoded `~/.claude/hooks/`, so installing at `~/claude` would have broken all 4 hooks |
 | 2026-10-01 | `syncClaudeAiSkills` | Added as `false` (was live-only) | Brings the repo in line with live, so `make install` no longer drops it |
 | 2026-10-01 | `plansDirectory` | `/Users/<you>/claude/_plans` → `~/.claude/_plans` | A personal absolute path broke other installs; `make install` now sets it to the target's own `_plans/` |
+| 2026-10-11 | `plansDirectory` | `~/.claude/_plans` → `~/.claude/plans` | Plan-mode drafts would mix with saved plans in `_plans/`, and their hyphenated names break the naming checks there; `plans/` is Claude Code's own exempt folder |
 | 2026-10-01 | `cleanupPeriodDays` | Raised `30` → `90` | The rule-usage audit needs more sessions than 30 days holds; accepts 3× the transcript exposure on disk |
 | 2026-08-07 | `permissions.deny` | Added `rm -fr` / `rm -r -f` / `rm -f -r` flag-reordering variants | Widen destructive-op coverage; still defense-in-depth (Bash-text denial can't be airtight) |
 | 2026-08-07 | `model` + key order | Reconciled live `~/.claude/settings.json` with repo source (added missing `model`, aligned key order) | `src/claude/` must mirror `~/.claude/`; the two had drifted |

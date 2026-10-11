@@ -5,9 +5,9 @@ paths:
   - "**/*.sql"
   - "**/_tests/**"
 ---
-<!-- version: 1.5.1 -->
+<!-- version: 1.5.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 <!-- miss_cost: medium — untested code the user catches in review -->
 <!-- loading: path-scoped — only matters when writing code, so it loads when a Python, shell or SQL file is open -->
 # 🧪 Testing
@@ -81,8 +81,8 @@ Define the goal before writing the test, because tests validate *intended behavi
 
 ## 🔄 Running and Maintaining
 
-- **Live config:** run `pytest` from the config root, where `pytest.ini` sets `testpaths = _tests`.
-- **Playbook repo:** run `pytest` from the repo root with `CLAUDE_CONFIG_DIR` pointing at `src/claude/`.
+- **Live config:** from the config folder, run `python3 -m pytest _tests`.
+- **Playbook repo:** from the repo root, run `CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest src/claude/_tests`, where the repo's `pytest.ini` adds coverage.
 - **Paths:** resolve the config directory through `_tests/_shared_paths.py`, never a hardcoded home path, per `portable_paths.md`.
 - **Update tests with code:** change a test in the same commit as the behaviour it covers.
 - **Delete dead tests:** remove a feature's tests when the feature is removed.

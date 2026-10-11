@@ -122,7 +122,7 @@ Tests for structural properties and behavioral compliance of files in `~/.claude
 | `test_concurrent_sessions.py` | `git/_concurrent_sessions.md` keeps its incident record and shared-working-tree safety guidance | 9/10 | 2026-09-21 | 2026-10-10 | 2.0.0 |
 | `test_decision_making.py` | `_decision_making.md` keeps each clause of the intentionality gate, and the rules it defers to still exist and agree | 9/10 | 2026-08-28 | 2026-10-06 | 2.1.0 |
 | `test_git.py` | `git.md` keeps each git rule, imports its children, and its branch-name pattern matches its own examples | 9/10 | 2026-08-28 | 2026-10-06 | 2.1.0 |
-| `test_plan_mode_phase_gates.py` | Mandatory plan-mode phase gates — blocking requirements, plan-type examples | 9/10 | 2026-09-16 | 2026-10-06 | 3.1.0 |
+| `test_plan_mode_phase_gates.py` | Plan-mode phase gates, plan-approval exceptions, saving each approved plan as Active, and the four plan statuses with who sets each | 9/10 | 2026-09-16 | 2026-10-11 | 3.4.0 |
 | `test_portable_paths_hooks.py` | Hooks resolve the config dir from their own location — no hardcoded `~/.claude/` file operations or guard substrings | 9/10 | 2026-09-18 | 2026-10-02 | 2.0.1 |
 | `test_portable_paths_python.py` | Python test files use `CLAUDE_DIR` — no `.expanduser()` outside `_shared_paths.py`, home-directory constants or one-convention import prefixes | 9/10 | 2026-09-18 | 2026-10-02 | 2.0.1 |
 | `test_security_guardrails.py` | `_security_guardrails.md` keeps each guardrail, and settings.json allows none of the wildcards it forbids | 9/10 | 2026-08-28 | 2026-10-06 | 2.1.0 |
@@ -166,8 +166,9 @@ Tests for the maintenance scripts in `_scripts/`.
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_audit_claude_component_root.py` | Validates how audit_claude_component.py chooses the folder it scans | 9/10 | 2026-10-01 | 2026-10-02 | 1.0.2 |
+| `test_audit_plans.py` | `audit_plans.py` lists saved plans by status from `_plans/` and its status folders, flags stale Active plans, and counts plans and drafts to file | 9/10 | 2026-10-11 | 2026-10-11 | 2.0.0 |
 | `test_audit_rule_usage.py` | Validates audit_rule_usage.py against small fixture rules and transcripts | 9/10 | 2026-10-01 | 2026-10-10 | 1.10.1 |
-| `test_clean_plans.py` | Validates that clean_plans.py archives only finished, old-enough plans | 9/10 | 2026-10-02 | 2026-10-02 | 1.0.0 |
+| `test_clean_plans.py` | `clean_plans.py` files saved plans into `_plans/<status>/` by their status line (or phase table), files drafts into `plans/draft/` or `plans/archive/` by age, never overwrites, and runs without asking during `make install` | 9/10 | 2026-10-02 | 2026-10-11 | 2.1.0 |
 | `test_script_naming.py` | Validates that every script under _scripts/ follows the script naming pattern | 9/10 | 2026-10-02 | 2026-10-06 | 1.1.0 |
 
 ---

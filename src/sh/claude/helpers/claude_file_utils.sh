@@ -129,11 +129,12 @@ rewrite_config_paths() {
     log_message "${INFO}" "Pointed ~/.claude/ paths at: ${PREFIX}"
 }
 
-# Set settings.json's plansDirectory to the target's own _plans/ folder
+# Set settings.json's plansDirectory to the target's own plans/ folder, where plan mode keeps its drafts.
+# Saved plans live apart in _plans/, so drafts never mix with them.
 set_plans_directory() {
     local SETTINGS="${TARGET_DIR}/settings.json"
     [[ -f "${SETTINGS}" ]] || return 0
-    PLANS="${TARGET_DIR}/_plans" perl -pi -e 's{("plansDirectory":\s*)"[^"]*"}{$1"$ENV{PLANS}"}' "${SETTINGS}"
+    PLANS="${TARGET_DIR}/plans" perl -pi -e 's{("plansDirectory":\s*)"[^"]*"}{$1"$ENV{PLANS}"}' "${SETTINGS}"
 }
 
 # Flatten skill group directories in ~/.claude/skills/.
@@ -258,15 +259,25 @@ prune_removed_files() {
     echo "${CURRENT}" > "${MANIFEST}"
 }
 
+# Tell whether a file's exact content is something this repo has stored, i.e. a copy an install shipped.
+# A file you edited has content the repo never stored, so it never matches. Without git, nothing matches.
+shipped_by_repo() {
+    local HASH
+    HASH=$(git -C "${ROOT_DIR}" hash-object "$1" 2>/dev/null) || return 1
+    git -C "${ROOT_DIR}" cat-file -e "${HASH}^{blob}" 2>/dev/null
+}
+
 # Clear what the old _rules/ layout left behind (replaced 2026-10-06 by rules/ and _rules_lazy_load/):
-# the links earlier installs put in rules/, and files you added under _rules/, which move to the same
-# place in _rules_lazy_load/ (whose root was _rules/05_lazy_load/). Runs after pruning, which already
-# removed the files earlier installs shipped there, so whatever is left in _rules/ is yours.
-# Never overwrites: if the new path is taken, the old file stays in _rules/ and a warning names it.
+# the links earlier installs put in rules/, then each file left under _rules/. A file whose content the
+# repo shipped is a stale copy — installs before the manifest existed left them, so pruning can't see
+# them — and is removed. Anything else is yours and moves to the same place in _rules_lazy_load/ (whose
+# root was _rules/05_lazy_load/). Never overwrites: if the new path is taken, your file stays in _rules/
+# and a warning names it. The install's backup holds a copy of everything removed here.
 migrate_old_rules_layout() {
     local OLD_DIR="${TARGET_DIR}/_rules"
     local NEW_DIR="${TARGET_DIR}/_rules_lazy_load"
     local LINK FROM REL TO
+    local SHIPPED_COUNT=0
     # Links into the old _rules/ would dangle, and Claude Code would still try to load them
     if [[ -d "${TARGET_DIR}/rules" ]]; then
         while IFS= read -r LINK; do
@@ -279,6 +290,11 @@ migrate_old_rules_layout() {
     while IFS= read -r FROM; do
         REL="${FROM#"${OLD_DIR}/"}"
         TO="${NEW_DIR}/${REL#05_lazy_load/}"
+        if shipped_by_repo "${FROM}"; then
+            rm "${FROM}"
+            SHIPPED_COUNT=$((SHIPPED_COUNT + 1))
+            continue
+        fi
         if [[ -e "${TO}" ]]; then
             log_message "${WARNING}" "Kept _rules/${REL}: ${TO#"${TARGET_DIR}/"} already exists — merge it by hand"
             continue
@@ -287,10 +303,28 @@ migrate_old_rules_layout() {
         mv "${FROM}" "${TO}"
         log_message "${INFO}" "Moved your file: _rules/${REL} -> ${TO#"${TARGET_DIR}/"}"
     done < <(find "${OLD_DIR}" -type f | LC_ALL=C sort)
+    # One summary line rather than one per file, to keep the install output short
+    [[ "${SHIPPED_COUNT}" -gt 0 ]] && log_message "${INFO}" "Removed old shipped copies from _rules/: ${SHIPPED_COUNT} (the backup keeps them)"
     find "${OLD_DIR}" -depth -type d -empty -delete
     if [[ -d "${OLD_DIR}" ]]; then
         log_message "${WARNING}" "_rules/ still holds files that clash with the new layout — review: ${OLD_DIR}"
     fi
+    return 0
+}
+
+# File saved plans and plan-mode drafts into their status folders (see clean_plans.py).
+# Runs without its own prompt: the install was already confirmed and backed up, and filing
+# only moves files — never deletes or overwrites — so it stays safe on a config you own.
+file_plans() {
+    local SCRIPT="${SOURCE_DIR}/_scripts/_clean_scripts/clean_plans.py"
+    local OUTPUT
+    if ! command -v python3 >/dev/null 2>&1; then
+        log_message "${WARNING}" "python3 not found — skipped filing plans; run: make clean_plans"
+        return 0
+    fi
+    OUTPUT=$(CLAUDE_CONFIG_DIR="${TARGET_DIR}" python3 "${SCRIPT}" --yes 2>&1) \
+        || { log_message "${WARNING}" "Filing plans failed — run: make clean_plans"; return 0; }
+    [[ -n "${OUTPUT}" ]] && log_message "${INFO}" "${OUTPUT}"
     return 0
 }
 
