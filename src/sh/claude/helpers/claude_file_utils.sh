@@ -259,11 +259,20 @@ prune_removed_files() {
     echo "${CURRENT}" > "${MANIFEST}"
 }
 
+# Tell whether a file's exact content is something this repo has stored, i.e. a copy an install shipped.
+# A file you edited has content the repo never stored, so it never matches. Without git, nothing matches.
+shipped_by_repo() {
+    local HASH
+    HASH=$(git -C "${ROOT_DIR}" hash-object "$1" 2>/dev/null) || return 1
+    git -C "${ROOT_DIR}" cat-file -e "${HASH}^{blob}" 2>/dev/null
+}
+
 # Clear what the old _rules/ layout left behind (replaced 2026-10-06 by rules/ and _rules_lazy_load/):
-# the links earlier installs put in rules/, and files you added under _rules/, which move to the same
-# place in _rules_lazy_load/ (whose root was _rules/05_lazy_load/). Runs after pruning, which already
-# removed the files earlier installs shipped there, so whatever is left in _rules/ is yours.
-# Never overwrites: if the new path is taken, the old file stays in _rules/ and a warning names it.
+# the links earlier installs put in rules/, then each file left under _rules/. A file whose content the
+# repo shipped is a stale copy — installs before the manifest existed left them, so pruning can't see
+# them — and is removed. Anything else is yours and moves to the same place in _rules_lazy_load/ (whose
+# root was _rules/05_lazy_load/). Never overwrites: if the new path is taken, your file stays in _rules/
+# and a warning names it. The install's backup holds a copy of everything removed here.
 migrate_old_rules_layout() {
     local OLD_DIR="${TARGET_DIR}/_rules"
     local NEW_DIR="${TARGET_DIR}/_rules_lazy_load"
@@ -280,6 +289,11 @@ migrate_old_rules_layout() {
     while IFS= read -r FROM; do
         REL="${FROM#"${OLD_DIR}/"}"
         TO="${NEW_DIR}/${REL#05_lazy_load/}"
+        if shipped_by_repo "${FROM}"; then
+            rm "${FROM}"
+            log_message "${INFO}" "Removed old shipped copy: _rules/${REL}"
+            continue
+        fi
         if [[ -e "${TO}" ]]; then
             log_message "${WARNING}" "Kept _rules/${REL}: ${TO#"${TARGET_DIR}/"} already exists — merge it by hand"
             continue

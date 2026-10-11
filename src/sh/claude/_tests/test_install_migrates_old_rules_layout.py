@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-03
-# Date updated:      2026-10-06
-# Version:           2.0.0
+# Date updated:      2026-10-11
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -12,8 +12,9 @@
 
 Rules used to live in ``_rules/``, with path-scoped ones linked into ``rules/`` by the install.
 They now ship in ``rules/`` and ``_rules_lazy_load/`` directly, so the install removes the old
-links and moves any file you added under ``_rules/`` to the same place in ``_rules_lazy_load/``
-(whose root was ``_rules/05_lazy_load/``), never overwriting. Each test runs the real
+links, removes any old file whose content the repo shipped, and moves any file you added under
+``_rules/`` to the same place in ``_rules_lazy_load/`` (whose root was ``_rules/05_lazy_load/``),
+never overwriting. Each test runs the real
 ``migrate_old_rules_layout`` step against a temp target.
 """
 
@@ -121,3 +122,27 @@ def test_installers_run_the_step_after_pruning():
     windows = WINDOWS_SCRIPT.read_text()
     assert "migrate_old_rules_layout" in windows, "the Windows sync should clear old rule links too"
     assert 'RETIRED_ITEMS=("_rules")' in windows, "the Windows sync should remove the retired _rules/ folder"
+
+
+# --- Old copies the repo shipped ---
+
+SHIPPED = (REPO_ROOT / "src" / "claude" / "rules" / LAZY / "README.md").read_text()  # committed, so the repo stores it
+
+
+def test_shipped_copy_is_removed_not_merged(tmp_path: Path):
+    """An old copy whose content the repo shipped is removed, even when the new path exists, with no merge prompt."""
+    write(tmp_path, "_rules/README.md", SHIPPED)
+    write(tmp_path, f"{LAZY}/README.md", "# Newer shipped index\n")
+    output = migrate(tmp_path)
+    assert not (tmp_path / "_rules").exists(), "the stale shipped copy was kept"
+    assert "merge it by hand" not in output, f"a shipped copy must never ask for a merge: {output}"
+    assert "Removed old shipped copy: _rules/README.md" in output, output
+    assert (tmp_path / LAZY / "README.md").read_text() == "# Newer shipped index\n", "the new file was touched"
+
+
+def test_shipped_copy_is_not_moved_into_the_lazy_folder(tmp_path: Path):
+    """A shipped copy with no new counterpart is removed, so a retired rule never comes back as a lazy file."""
+    write(tmp_path, "_rules/05_lazy_load/turn_budgets.md", SHIPPED)
+    output = migrate(tmp_path)
+    assert not (tmp_path / LAZY / "turn_budgets.md").exists(), "a retired shipped rule was moved in as yours"
+    assert "Moved your file" not in output, f"a shipped copy must not be reported as yours: {output}"
