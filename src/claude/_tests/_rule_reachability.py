@@ -8,7 +8,8 @@ when a matching file is open if the file has ``paths:`` frontmatter. So the fold
 - **lazy_folder:** a ``_lazy_load/`` folder under ``rules/``, whose on-demand children would load anyway,
   or ``rules/_rules_lazy_load/`` left behind in an installed config that already has the folder beside ``rules/``.
 - **import:** an ``@~/...`` import line under ``rules/``, which the native loader makes redundant.
-- **unscoped:** a file in ``rules/04_path_scoped/`` without ``paths:``, which would load every session.
+- **unscoped:** a file in ``rules/02_claude_standards/path_scoped_rules/`` without ``paths:``,
+  which would load every session.
 - **pointer:** a ``**Read on demand:**`` pointer under ``rules/`` naming a file that doesn't exist.
 
 The repo keeps on-demand rules in ``rules/_rules_lazy_load/`` and the install moves them beside
@@ -24,7 +25,7 @@ from pathlib import Path
 
 from _shared_paths import LAZY_RULES_NAME, native_rule_files, resolve_config_path
 
-PATH_SCOPED_DIR = "04_path_scoped"
+PATH_SCOPED_DIR = "path_scoped_rules"
 POINTER = re.compile(r"\*\*Read on demand:\*\*\s*\[?`~/[^/`]+/([^`]+\.md)`")
 
 

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
 # Date updated:      2026-10-11
-# Version:           3.2.2
+# Version:           3.2.5
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -56,7 +56,7 @@ def test_no_imports_under_rules():
 
 
 def test_path_scoped_folder_holds_only_scoped_files():
-    """Every file in rules/04_path_scoped/ has paths:, or it would load every session."""
+    """Every file in rules/02_claude_standards/path_scoped_rules/ has paths:, or it would load every session."""
     assert not issues()["unscoped"], f"add paths: frontmatter or move to _rules_lazy_load/: {issues()['unscoped']}"
 
 
@@ -88,7 +88,8 @@ def test_lazy_rules_live_outside_rules():
 # guiding_principles.md asks for.
 # 39 -> 42 on 2026-10-11: _mcp_trust_model.md, _turn_budgets.md and _automation_controls.md load every
 # session because a high miss cost can't rest on a pointer and no file type marks their sessions.
-MAX_STARTUP_FILES = 42
+# 42 -> 43 on 2026-10-11: claude_working_practices.md indexes the plans, efficiency and portable-paths group.
+MAX_STARTUP_FILES = 43
 STARTUP_IMPORT = re.compile(r"^@~/[^/\s]+/(\S+\.md)\s*$", re.M)
 
 
@@ -124,7 +125,8 @@ def test_demoted_rules_stay_out_of_startup():
     files = startup_files()
     assert not [f for f in files if f.endswith("/authoring_agents.md")], "authoring_agents.md is back at startup"
     assert not [f for f in files if "claude_directory_structure" in f], "directory-structure rule is back at startup"
-    assert not [f for f in files if "04_path_scoped/" in f or "_rules_lazy_load/" in f], "a lazy rule is at startup"
+    lazy = [f for f in files if "02_claude_standards/path_scoped_rules/" in f or "_rules_lazy_load/" in f]
+    assert not lazy, f"a lazy rule is at startup: {lazy}"
 
 
 DIRECTORY_RULES = [
@@ -138,14 +140,15 @@ DIRECTORY_RULES = [
 def test_directory_structure_loads_with_config_files():
     """The directory-structure rule and its 3 children load through paths: whenever a config file is read."""
     for target in DIRECTORY_RULES:
-        path = RULES_DIR / "04_path_scoped" / target
+        path = RULES_DIR / "02_claude_standards" / "path_scoped_rules" / target
         assert path.read_text().startswith('---\npaths:\n  - "**/.claude/**"\n'), f"{target} lost its paths: trigger"
 
 
 def test_directory_structure_keeps_a_pointer_and_a_backstop():
     """New config files rely on an always-on pointer, with the naming hook catching what slips through."""
     usage = (RULES_DIR / "01_essentials" / "claude_usage_standards.md").read_text()
-    assert "04_path_scoped/claude_directory_structure.md" in usage, "claude_usage_standards.md lost its pointer"
+    pointer = "02_claude_standards/path_scoped_rules/claude_directory_structure.md"
+    assert pointer in usage, "claude_usage_standards.md lost its pointer"
     assert (CLAUDE_DIR / "hooks" / "hook_enforcement_naming_convention.sh").is_file(), (
         "the naming-convention hook is the backstop that makes this rule safe to lazy-load — keep it"
     )

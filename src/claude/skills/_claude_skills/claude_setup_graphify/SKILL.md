@@ -8,9 +8,9 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 1.2.1 -->
+<!-- version: 1.2.2 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-11 -->
 
 ## 🤖 Instructions for Claude
 
@@ -57,4 +57,4 @@ Large codebases, around 1,000 files or more, where reading files costs too many 
 - `reference/_troubleshooting.md` — common install and extraction errors
 - `reference/_examples.md` — example setup scenarios
 - `tests/evals.yaml` — 15 test scenarios covering checks, phases and errors
-- `_admin/_quality_scorecards/skills/scorecard_claude_setup_graphify.md` — quality scorecard
+- `_reference/_quality_scorecards/skills/scorecard_claude_setup_graphify.md` — quality scorecard

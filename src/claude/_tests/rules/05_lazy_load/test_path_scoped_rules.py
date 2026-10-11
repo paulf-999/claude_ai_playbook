@@ -1,14 +1,14 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-10
-# Version:           2.3.0
+# Date updated:      2026-10-11
+# Version:           2.3.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Tests for the path-scoped rules under rules/ (mostly rules/04_path_scoped/).
+"""Tests for the path-scoped rules under rules/ (mostly rules/02_claude_standards/path_scoped_rules/).
 
 Claude Code only loads a rule with ``paths:`` frontmatter when a matching
 file is read, but any ``@`` import inside that rule still loads at session
@@ -24,7 +24,7 @@ from pathlib import Path
 
 from _shared_paths import CLAUDE_DIR, RULES_DIR, STYLE_GUIDES_NAME, path_scoped_rule_files
 
-PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
+PATH_SCOPED_DIR = RULES_DIR / "02_claude_standards" / "path_scoped_rules"
 IMPORT_LINE_PATTERN = re.compile(r"^@\S")
 FENCE_PATTERN = re.compile(r"^\s*(```|~~~)")
 
@@ -111,7 +111,7 @@ def test_rules_holds_real_files_not_links():
 
 
 def test_path_scoped_folder_holds_only_scoped_rules():
-    """Every .md in rules/04_path_scoped/ has paths:, or it would load in every session."""
+    """Every .md in rules/02_claude_standards/path_scoped_rules/ has paths:, or it would load in every session."""
     unscoped = [
         p.relative_to(RULES_DIR).as_posix() for p in PATH_SCOPED_DIR.rglob("*.md")
         if not frontmatter_paths(p.read_text(encoding="utf-8"))

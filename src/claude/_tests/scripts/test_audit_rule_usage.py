@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           1.10.1
+# Version:           1.10.4
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -27,8 +27,8 @@ from _shared_paths import CLAUDE_DIR
 
 SCRIPT = CLAUDE_DIR / "scripts" / "_audit_scripts" / "audit_rule_usage.py"
 TODAY = date(2026, 10, 1)
-LAZY_GUIDES = "_style_guide_standards"  # on-demand style guides, in their own folder once installed too
-SCOPED_GUIDES = "rules/04_path_scoped/style_guide_standards"
+LAZY_GUIDES = "_reference/_style_guide_standards"  # on-demand style guides, in their own folder once installed too
+SCOPED_GUIDES = "rules/02_claude_standards/path_scoped_rules/style_guide_standards"
 
 
 def load_audit():
@@ -142,7 +142,7 @@ def test_repo_layout_lazy_rules_keep_installed_keys(tmp_path):
 
 
 def to_repo_style_guides(tmp_path):
-    """Move the fake entry file back into _style_guide_standards/, as the repo keeps it.
+    """Move the fake entry file back into _reference/_style_guide_standards/, as the repo keeps it.
 
     :param tmp_path: The config folder ``make_rules`` built.
     :return: The ``rules`` folder.
@@ -171,8 +171,9 @@ def test_repo_layout_style_guide_reads_map_to_installed_keys(tmp_path):
     """A transcript read of a repo style guide counts against its installed key."""
     make_rules(tmp_path)
     rules_dir = to_repo_style_guides(tmp_path)
-    assert AUDIT.rule_rel("/repo/src/claude/_style_guide_standards/sql.md", rules_dir) == f"{SCOPED_GUIDES}/sql.md"
-    raw = "/repo/src/claude/_style_guide_standards/sql/formatting.md"
+    entry = "/repo/src/claude/_reference/_style_guide_standards/sql.md"
+    assert AUDIT.rule_rel(entry, rules_dir) == f"{SCOPED_GUIDES}/sql.md"
+    raw = "/repo/src/claude/_reference/_style_guide_standards/sql/formatting.md"
     assert AUDIT.rule_rel(raw, rules_dir) == f"{LAZY_GUIDES}/sql/formatting.md"
 
 

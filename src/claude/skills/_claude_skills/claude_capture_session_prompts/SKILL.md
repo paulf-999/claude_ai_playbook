@@ -8,9 +8,9 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 0.4.0 -->
+<!-- version: 0.4.1 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-11 -->
 
 ## 🤖 Instructions for Claude
 
@@ -57,4 +57,4 @@ Reviewing a session's activity and spotting pending work for the next one. Curre
 - `reference/_examples.md` — daily capture, historical review and refinement examples
 - `reference/_error_recovery.md` — troubleshooting
 - `tests/evals.yaml` — 6 test scenarios, plus pytest in `_tests/skills/claude_capture_session_prompts/`
-- `_admin/_quality_scorecards/skills/scorecard_claude_capture_session_prompts.md` — quality scorecard
+- `_reference/_quality_scorecards/skills/scorecard_claude_capture_session_prompts.md` — quality scorecard

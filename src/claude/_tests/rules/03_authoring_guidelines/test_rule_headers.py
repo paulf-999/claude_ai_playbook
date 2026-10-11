@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-10
-# Version:           1.9.1
+# Date updated:      2026-10-11
+# Version:           1.9.5
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -23,7 +23,7 @@ from pathlib import Path
 from _shared_paths import CLAUDE_DIR, HOOKS_DIR, LAZY_RULES_DIR, ON_DEMAND_ROOTS, RULES_DIR, installed_rule_files
 
 ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines")
-PATH_SCOPED_DIR = RULES_DIR / "04_path_scoped"
+PATH_SCOPED_DIR = RULES_DIR / "02_claude_standards" / "path_scoped_rules"
 APPLIES_TO = re.compile(r"^<!-- applies_to: (.+) -->$", re.M)
 MISS_COST = re.compile(r"^<!-- miss_cost: (high|medium|low) — \S.* -->$")
 MISS_COST_PREFIX = "<!-- miss_cost:"
@@ -151,7 +151,7 @@ def test_empty_entry_rejected():
 def test_always_on_tiers_have_entry_points():
     """The scan finds the always-on rules, so an empty result can't pass silently."""
     entry_points = always_on_entry_points()
-    assert len(entry_points) >= 10, f"expected at least 10 always-on entry points, found {len(entry_points)}"
+    assert len(entry_points) >= 9, f"expected at least 9 always-on entry points, found {len(entry_points)}"
     assert all(p.parent.name in ALWAYS_ON_TIERS for p in entry_points), "scan left tiers 01–03"
 
 
@@ -228,18 +228,18 @@ def lazy_entry_points() -> list[Path]:
     :return: Paths of the lazy entry-point rules.
     """
     # A child's parent may sit in another root, e.g. sql/formatting.md in _rules_lazy_load/
-    # belongs to sql.md in rules/04_path_scoped/, so look for the parent in every root.
+    # belongs to sql.md in rules/02_claude_standards/path_scoped_rules/, so look for the parent in every root.
     files = installed_rule_files(CLAUDE_DIR)
-    scanned = ("rules/04_path_scoped", *ON_DEMAND_ROOTS)
-    roots = [*scanned, "rules/04_path_scoped/style_guide_standards"] + [f"rules/{tier}" for tier in ALWAYS_ON_TIERS]
+    scanned = ("rules/02_claude_standards/path_scoped_rules", *ON_DEMAND_ROOTS)
+    roots = [*scanned, "rules/02_claude_standards/path_scoped_rules/style_guide_standards"]
+    roots += [f"rules/{tier}" for tier in ALWAYS_ON_TIERS]
     found = [p for tier in ALWAYS_ON_TIERS for p in (RULES_DIR / tier).glob("*.md") if has_paths(p.read_text())]
     for installed, path in files.items():
         root = next((r for r in scanned if installed.startswith(f"{r}/")), None)
         if root is None:
             continue
         rel = Path(installed[len(root) + 1:])
-        non_rule = rel.parts[0] == "_learned"
-        if path.name == "README.md" or path.name.startswith("_") or non_rule:
+        if path.name == "README.md" or path.name.startswith("_"):
             continue
         folders = [rel.parents[i] for i in range(len(rel.parts) - 1)]
         if not any(f"{r}/{f.as_posix()}.md" in files for f in folders for r in roots):

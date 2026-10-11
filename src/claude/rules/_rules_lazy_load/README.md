@@ -2,7 +2,7 @@
 
 **Purpose:** Rules read on demand, kept under `rules/` in the repo and moved beside it on install, so Claude Code never loads them by itself. These reduce baseline context cost while remaining discoverable and accessible when needed.
 
-**Path-scoped rules:** rules with `paths:` frontmatter live in `rules/04_path_scoped/` instead, because Claude Code reads `paths:` only there; their bulky children stay here, at the same sub-path.
+**Path-scoped rules:** rules with `paths:` frontmatter live in `rules/02_claude_standards/path_scoped_rules/` instead, because Claude Code reads `paths:` only there; their bulky children stay here, at the same sub-path.
 
 **Scope:** Rules specific to a single language, tool, platform, or domain that are only relevant when actively working in that domain.
 
@@ -17,9 +17,9 @@
 | `claude_config/` | **hooks_decision_framework.md** | ROI criteria for proposing hooks; child `hooks_decision_framework/` holds the 2026-08-07 precedent | Before proposing a hook or automation |
 | `claude_config/` | **response_standards_enforcement.md** | How the per-turn injection hook enforces the response format, and the reserved validator path | Changing the response-standards hook or its tests |
 | `claude_config/claude_cost/` | **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
-| — | **testing.md** (in `rules/04_path_scoped/`) | When tests are required, test goals, test layers and running the suite; lazy children in `testing_lazy_load/` cover design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit | Loads through `paths:` on Python, shell, SQL and `_tests/` files |
-| — | **claude_rule_loading_strategy.md** (in `rules/04_path_scoped/`) | The rule folders and when a rule should be always-on or lazy, from measured usage and miss cost | Loads through `paths:` on rule files and `CLAUDE.md` |
-| — | **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | Moved to their own `_style_guide_standards/` folder beside this one, read on demand; entry files install to `rules/04_path_scoped/style_guide_standards/` and load through `paths:` |
+| — | **testing.md** (in `rules/02_claude_standards/path_scoped_rules/`) | When tests are required, test goals, test layers and running the suite; lazy children in `testing_lazy_load/` cover design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit | Loads through `paths:` on Python, shell, SQL and `_tests/` files |
+| — | **claude_rule_loading_strategy.md** (in `rules/02_claude_standards/path_scoped_rules/`) | The rule folders and when a rule should be always-on or lazy, from measured usage and miss cost | Loads through `paths:` on rule files and `CLAUDE.md` |
+| — | **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | Moved to their own `_reference/_style_guide_standards/` folder beside this one, read on demand; entry files install to `rules/02_claude_standards/path_scoped_rules/style_guide_standards/` and load through `paths:` |
 
 ---
 
@@ -37,8 +37,8 @@ Files in this directory follow the **lazy-load by default** principle (from `gui
 ## 🔍 How to find and load a lazy-load rule
 
 ### If you know the domain:
-1. Look in the `_style_guide_standards/` directory for domain-specific rules (e.g., `sql.md`, `airflow.md`)
-2. Read the file with: `Read ~/.claude/_style_guide_standards/jira.md`
+1. Look in the `_reference/_style_guide_standards/` directory for domain-specific rules (e.g., `sql.md`, `airflow.md`)
+2. Read the file with: `Read ~/.claude/_reference/_style_guide_standards/jira.md`
 
 ### If you're setting up config:
 1. Read `claude_config_naming.md` for naming standards specific to the config structure
@@ -158,7 +158,7 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 - **Parent:** `claude_directory_structure.md` — entry point; organisation and naming overview
 - **Sibling:** `_claude_directory_naming.md` — naming patterns for files and directories
 - **Related:** `writing_style.md` → `multifile_document_organisation.md` — when to split documents into parent + child files
-- **Related:** `authoring_rules.md` — directory placement for new rules (01_essentials to 03_authoring_guidelines, 04_path_scoped and _rules_lazy_load)
+- **Related:** `authoring_rules.md` — directory placement for new rules (01_essentials to 03_authoring_guidelines, 02_claude_standards/path_scoped_rules and _rules_lazy_load)
 
 ### `claude_directory_structure/_file_structure_validation.md`
 
@@ -169,7 +169,7 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 ### `claude_directory_structure.md`
 
 - `naming_standards.md` — General naming principles for all identifiers; see child file `_naming_principles.md` for foundational concepts
-- `authoring_rules.md` — Directory placement rules for new rules (01_essentials to 03_authoring_guidelines, 04_path_scoped and _rules_lazy_load)
+- `authoring_rules.md` — Directory placement rules for new rules (01_essentials to 03_authoring_guidelines, 02_claude_standards/path_scoped_rules and _rules_lazy_load)
 - `writing_style.md` → `multifile_document_organisation.md` — When to create subdirectories for multi-file documents
 - Loads through `paths:` (`**/.claude/**`, `**/claude/**`) and a pointer in `01_essentials/claude_usage_standards.md`
 
@@ -179,7 +179,7 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 
 ### `claude_config/delegating_to_subagent.md`
 
-- Pointer from: `02_claude_standards/claude_operational_efficiency/_claude_when_to_delegate.md` — delegating to user vs. sub-agent overview
+- Pointer from: `02_claude_standards/claude_working_practices/claude_operational_efficiency/_claude_when_to_delegate.md` — delegating to user vs. sub-agent overview
 
 ### `claude_config/hooks_decision_framework.md`
 
@@ -191,7 +191,7 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 
 ### `claude_config/automation_troubleshooting.md`
 
-- Pointer from: `02_claude_standards/claude_operational_efficiency/_automation_controls.md` — the caps and kill-switch this file helps recover from
+- Pointer from: `02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md` — the caps and kill-switch this file helps recover from
 
 ### `claude_config/hooks_decision_framework/_precedent_and_examples.md`
 
@@ -308,11 +308,11 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 
 ### `style_guide_standards/python.md`
 
-- [`python/python_environment.md`](../../_style_guide_standards/python/python_environment.md) — Virtual environment setup, dependency management, and tooling
-- [`python/testing.md`](../../_style_guide_standards/python/testing.md) — Pytest conventions: test naming, structure, fixtures, mocking, assertions
-- [`python/logging.md`](../../_style_guide_standards/python/logging.md) — Logging standards for debugging, monitoring, and auditing
-- [`python/code_complexity.md`](../../_style_guide_standards/python/code_complexity.md) — Metrics to identify and prevent overly complex code
-- [`python/module_organisation.md`](../../_style_guide_standards/python/module_organisation.md) — Module docstrings, metadata, and public/private organisation
+- [`python/python_environment.md`](../../_reference/_style_guide_standards/python/python_environment.md) — Virtual environment setup, dependency management, and tooling
+- [`python/testing.md`](../../_reference/_style_guide_standards/python/testing.md) — Pytest conventions: test naming, structure, fixtures, mocking, assertions
+- [`python/logging.md`](../../_reference/_style_guide_standards/python/logging.md) — Logging standards for debugging, monitoring, and auditing
+- [`python/code_complexity.md`](../../_reference/_style_guide_standards/python/code_complexity.md) — Metrics to identify and prevent overly complex code
+- [`python/module_organisation.md`](../../_reference/_style_guide_standards/python/module_organisation.md) — Module docstrings, metadata, and public/private organisation
 
 ### `style_guide_standards/sql.md`
 

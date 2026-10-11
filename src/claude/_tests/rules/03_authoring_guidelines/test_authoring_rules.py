@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-10
-# Version:           2.3.0
+# Date updated:      2026-10-11
+# Version:           2.3.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -23,7 +23,7 @@ import re
 from _shared_paths import CLAUDE_DIR, RULES_DIR, resolve_config_path
 
 AUTHORING_RULES = RULES_DIR / "03_authoring_guidelines" / "authoring_rules.md"
-TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_path_scoped")
+TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines", "02_claude_standards/path_scoped_rules")
 
 
 def content() -> str:
@@ -81,7 +81,7 @@ def test_every_tier_named_exists():
 
 def test_scorecard_template_exists():
     """The scorecard README the guide points to exists."""
-    readme = CLAUDE_DIR / "_admin" / "_quality_scorecards" / "rules" / "README.md"
+    readme = CLAUDE_DIR / "_reference" / "_quality_scorecards" / "rules" / "README.md"
     assert readme.is_file(), f"the guide points to a scorecard template that's gone: {readme}"
 
 

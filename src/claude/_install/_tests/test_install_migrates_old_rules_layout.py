@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-03
 # Date updated:      2026-10-11
-# Version:           2.4.0
+# Version:           2.4.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -127,7 +127,11 @@ def test_installers_run_the_step_after_pruning():
 
 # --- Old copies the repo shipped ---
 
-SHIPPED = (REPO_ROOT / "src" / "claude" / "rules" / LAZY / "README.md").read_text()  # committed, so the repo stores it
+# Read from HEAD, not the working tree, so the repo stores this exact content even mid-edit
+SHIPPED = subprocess.run(
+    ["git", "show", f"HEAD:src/claude/rules/{LAZY}/README.md"],
+    cwd=REPO_ROOT, capture_output=True, text=True, check=True,
+).stdout
 
 
 def test_shipped_copy_is_removed_not_merged(tmp_path: Path):

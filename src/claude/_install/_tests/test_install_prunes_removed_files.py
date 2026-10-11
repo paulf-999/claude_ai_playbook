@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
 # Date updated:      2026-10-11
-# Version:           1.1.0
+# Version:           1.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -201,3 +201,16 @@ def test_python_caches_are_not_installed_or_listed(tmp_path: Path):
     assert not list(target.rglob("__pycache__")), "a Python cache folder reached the target"
     assert not [line for line in manifest(target) if "__pycache__" in line], "a cache file was put on the manifest"
     assert (target / "_tests" / "old" / "test_old.py").is_file(), "the real file beside the cache was lost"
+
+
+def test_tool_caches_are_not_installed_or_listed(tmp_path: Path):
+    """pytest and ruff caches, at the top level or nested, never reach the target or the manifest."""
+    caches = {".pytest_cache/v/cache/nodeids": "[]\n", "_tests/.ruff_cache/0.1/123": "cache\n"}
+    make_tree(tmp_path / "src", {**SOURCE_FILES, **caches})
+    (tmp_path / "home").mkdir()
+    target = tmp_path / "target"
+    target.mkdir()
+    install(tmp_path)
+    for name in (".pytest_cache", ".ruff_cache"):
+        assert not list(target.rglob(name)), f"a {name} folder reached the target"
+        assert not [line for line in manifest(target) if name in line], f"a {name} file was put on the manifest"

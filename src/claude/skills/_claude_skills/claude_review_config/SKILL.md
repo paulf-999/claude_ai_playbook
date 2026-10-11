@@ -8,9 +8,9 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-11 -->
 
 ## 🤖 Instructions for Claude
 
@@ -56,11 +56,11 @@ Apply fixes? [y/n] → n
 
 Monthly or quarterly config health checks, and justifying clean-up priorities. Currently at the **tactical** stage — main paths and error cases are covered, but not adversarial or edge-case inputs yet.
 
-**Caveats:** scoring is heuristic, and each audit stands alone with no history. It reviews the installed config, not individual skills, which have their own scorecards in `_admin/_quality_scorecards/skills/`. The contract sets `waives_response_standards: true`, so the audit keeps its own format.
+**Caveats:** scoring is heuristic, and each audit stands alone with no history. It reviews the installed config, not individual skills, which have their own scorecards in `_reference/_quality_scorecards/skills/`. The contract sets `waives_response_standards: true`, so the audit keeps its own format.
 
 ## 📚 References
 
 - `reference/_implementation.md` — four phases: read and score, gaps, report, optional fixes
 - `reference/_scoring_guide.md` — scoring dimensions and criteria
 - `tests/evals.yaml` — 11 test scenarios covering all phases and edge cases
-- `_admin/_quality_scorecards/skills/scorecard_claude_review_config.md` — quality scorecard
+- `_reference/_quality_scorecards/skills/scorecard_claude_review_config.md` — quality scorecard

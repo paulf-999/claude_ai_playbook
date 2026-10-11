@@ -19,15 +19,15 @@ The root config, settings and aliases that every session starts from.
 
 ## 📏 Rules
 
-See [`src/claude/rules/04_path_scoped/claude_rule_loading_strategy.md`](../src/claude/rules/04_path_scoped/claude_rule_loading_strategy.md)
+See [`src/claude/rules/02_claude_standards/path_scoped_rules/claude_rule_loading_strategy.md`](../src/claude/rules/02_claude_standards/path_scoped_rules/claude_rule_loading_strategy.md)
 
-Rules in two folders: `rules/` tiers 01–03 load every session, `rules/04_path_scoped/` loads with matching files, and `_rules_lazy_load/` is read on demand — kept under `rules/` in the repo, the install moves it beside `rules/` so it never loads by itself.
+Rules in two folders: `rules/` tiers 01–03 load every session, `rules/02_claude_standards/path_scoped_rules/` loads with matching files, and `_rules_lazy_load/` is read on demand — kept under `rules/` in the repo, the install moves it beside `rules/` so it never loads by itself.
 
 ---
 
 ## 🎨 Style guides
 
-See [`src/claude/_style_guide_standards/`](../src/claude/_style_guide_standards/)
+See [`src/claude/_reference/_style_guide_standards/`](../src/claude/_reference/_style_guide_standards/)
 
 Coding standards for the technologies the team uses: each guide's entry file loads when Claude reads a matching file, and its detail files are read on demand.
 

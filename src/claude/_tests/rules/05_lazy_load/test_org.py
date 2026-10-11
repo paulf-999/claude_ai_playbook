@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           1.3.2
+# Version:           1.3.5
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -23,11 +23,11 @@ from _shared_paths import CLAUDE_DIR, LAZY_RULES_DIR
 
 TERMS_FILE = LAZY_RULES_DIR / "org" / "_shared_file_terms.txt"
 SHARED_DIRS = (
-    "_rules_lazy_load", "_templates", "_tests", "scripts", "_admin",
+    "_rules_lazy_load", "_templates", "_reference", "_tests", "scripts",
     "agents", "hooks", "skills", "rules",
 )
 SHARED_TOP_FILES = ("CLAUDE.md", "aliases.md", "README.md", "settings.json", "settings_json_readme.md", "TODO.md")
-EXCLUDED_PREFIXES = ("_rules_lazy_load/org/", "_admin/_audits/")
+EXCLUDED_PREFIXES = ("_rules_lazy_load/org/",)
 EXCLUDED_FILES = {"_rules_lazy_load/org.md"}
 ORG_PATH_MARKER = "lazy_load/org/"  # matches _rules_lazy_load/org/ and scorecard paths under 05_lazy_load/org/
 # Shared files known to hold organisation terms, awaiting a decision. Shrink-only.
@@ -59,7 +59,7 @@ def is_excluded(rel: str) -> bool:
     rel = rel.removeprefix("rules/") if rel.startswith("rules/_rules_lazy_load/") else rel  # repo layout
     if rel in EXCLUDED_FILES or rel.startswith(EXCLUDED_PREFIXES):
         return True
-    return rel.startswith("_admin/_quality_scorecards/") and "/org/" in rel
+    return rel.startswith("_reference/_quality_scorecards/") and "/org/" in rel
 
 
 def shared_files(root: Path) -> list[str]:
@@ -108,13 +108,13 @@ def test_missing_terms_file_gives_no_terms(tmp_path):
     assert load_terms(tmp_path / "absent.txt") == []
 
 
-def test_org_content_and_audits_are_excluded():
-    """org.md, org/, org scorecards and generated audits are never scanned."""
+def test_org_content_is_excluded():
+    """org.md, org/ and org scorecards are never scanned."""
     assert is_excluded("_rules_lazy_load/org.md")
     assert is_excluded("_rules_lazy_load/org/jira.md")
-    assert is_excluded("_admin/_quality_scorecards/rules/05_lazy_load/org/scorecard_jira.md")
-    assert is_excluded("_admin/_audits/rule_usage_history.csv")
-    assert not is_excluded("rules/04_path_scoped/style_guide_standards/sql.md"), "a shared rule must be scanned"
+    assert is_excluded("_reference/_quality_scorecards/rules/05_lazy_load/org/scorecard_jira.md")
+    shared = "rules/02_claude_standards/path_scoped_rules/style_guide_standards/sql.md"
+    assert not is_excluded(shared), "a shared rule must be scanned"
 
 
 def test_leak_found_case_insensitively():

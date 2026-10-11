@@ -3,7 +3,7 @@
 
 Reads Claude Code session transcripts and the rule folders (``rules/`` and
 ``_rules_lazy_load/``, which sits beside it once installed and inside it in the repo, plus
-``_style_guide_standards/``, whose entry files the install moves under ``rules/``), then writes a markdown
+``_reference/_style_guide_standards/``, whose entry files the install moves under ``rules/``), then writes a markdown
 report and appends one row per rule to a CSV history, so dates survive after old
 transcripts are deleted.
 
@@ -17,7 +17,7 @@ script is installed into the live config too and must never guess the repo.
 
 Usage:
     python3 src/claude/scripts/_audit_scripts/audit_rule_usage.py \\
-        --rules src/claude/rules --transcripts ~/.claude/projects --out src/claude/_admin/_audits
+        --rules src/claude/rules --transcripts ~/.claude/projects --out docs/audits
     make audit_rule_usage
 """
 
@@ -48,8 +48,10 @@ STALE_AFTER_DAYS = 90
 
 EVERY_SESSION = "*"
 LAZY_FOLDER = "_rules_lazy_load"
-PATH_SCOPED_TIER = "04_path_scoped"
-STYLE_GUIDES_FOLDER = "_style_guide_standards"  # read on demand; the install moves entry files to 04
+PATH_SCOPED_TIER = "04_path_scoped"  # tier label, kept so usage history stays comparable
+PATH_SCOPED_FOLDER = "02_claude_standards/path_scoped_rules"  # where path-scoped rules sit under rules/
+OLD_PATH_SCOPED = "rules/04_path_scoped/"  # their folder before 2026-10-11
+STYLE_GUIDES_FOLDER = "_reference/_style_guide_standards"  # read on demand; the install moves entry files to 04
 STYLE_GUIDES = "style_guide_standards"
 # Where on-demand style guides were keyed before 2026-10-10, so older history rows still match
 OLD_LAZY_GUIDES = f"{LAZY_FOLDER}/{STYLE_GUIDES}/"
@@ -73,7 +75,7 @@ TOP_SECTIONS = 15
 CHARS_PER_TOKEN = 4
 TIER_DIR = re.compile(r"^\d\d_")
 # A rule path in a transcript: the new folders, or the old _rules/ layout older sessions used
-RULE_PATH = re.compile(r"(?:^|/)(rules|_rules_lazy_load|_rules|_style_guide_standards)/(\S+\.md)$")
+RULE_PATH = re.compile(r"(?:^|/)(rules|_rules_lazy_load|_rules|_reference/_style_guide_standards)/(\S+\.md)$")
 # A parent's pointer to a child that loads on its own from rules/
 NATIVE_POINTER = re.compile(r"^- \*\*Loads on its own from:\*\* `(rules/\S+\.md)`", re.M)
 MISS_COST = re.compile(r"<!--\s*miss_cost:\s*(high|medium|low)\b", re.I)
@@ -84,7 +86,7 @@ APPLIES_TO = re.compile(r"^<!--\s*applies_to:\s*(.+?)\s*-->$")
 HEADER_LINES = 10
 
 # First-guess globs for lazy rules with no ``applies_to`` header and no ``paths:`` frontmatter,
-# keyed by path under 04_path_scoped/ or _rules_lazy_load/.
+# keyed by path under 02_claude_standards/path_scoped_rules/ or _rules_lazy_load/.
 DEFAULT_APPLIES_TO = {
     "style_guide_standards/python.md": ["**/*.py"],
     "style_guide_standards/bash.md": ["**/*.sh"],
@@ -250,7 +252,7 @@ def config_path(config_dir: Path, rel: str) -> Path:
     :return: The file on disk.
     :rtype: Path
     """
-    installed = f"rules/{PATH_SCOPED_TIER}/{STYLE_GUIDES}/"
+    installed = f"rules/{PATH_SCOPED_FOLDER}/{STYLE_GUIDES}/"
     repo_copy = config_dir / STYLE_GUIDES_FOLDER / rel.removeprefix(installed)
     if rel.startswith(installed) and repo_copy.is_file():
         return repo_copy
@@ -263,9 +265,11 @@ def current_rel(rel: str) -> str:
 
     :param rel: A rule key, e.g. ``_rules_lazy_load/style_guide_standards/jira.md``.
     :type rel: str
-    :return: The key as it is now, e.g. ``_style_guide_standards/jira.md``.
+    :return: The key as it is now, e.g. ``_reference/_style_guide_standards/jira.md``.
     :rtype: str
     """
+    if rel.startswith(OLD_PATH_SCOPED):
+        return f"rules/{PATH_SCOPED_FOLDER}/{rel.removeprefix(OLD_PATH_SCOPED)}"
     return f"{STYLE_GUIDES_FOLDER}/{rel.removeprefix(OLD_LAZY_GUIDES)}" if rel.startswith(OLD_LAZY_GUIDES) else rel
 
 
@@ -276,10 +280,10 @@ def style_guide_rel(config_dir: Path, rest: str) -> str:
     :type config_dir: Path
     :param rest: Its path inside the style-guide folder, e.g. ``sql/formatting.md``.
     :type rest: str
-    :return: e.g. ``_style_guide_standards/sql/formatting.md``.
+    :return: e.g. ``_reference/_style_guide_standards/sql/formatting.md``.
     :rtype: str
     """
-    scoped_rel = f"rules/{PATH_SCOPED_TIER}/{STYLE_GUIDES}/{rest}"
+    scoped_rel = f"rules/{PATH_SCOPED_FOLDER}/{STYLE_GUIDES}/{rest}"
     repo_copy = config_dir / STYLE_GUIDES_FOLDER / rest
     if (config_dir / scoped_rel).is_file() or (
         repo_copy.is_file() and frontmatter_paths(repo_copy.read_text(encoding="utf-8"))
@@ -347,15 +351,18 @@ def discover_rules(rules_dir: Path) -> list[Rule]:
     """
     config_dir, lazy_dir = rules_dir.parent, lazy_dir_for(rules_dir.parent)
     guides_dir = config_dir / STYLE_GUIDES_FOLDER
+    scoped_dir = rules_dir / PATH_SCOPED_FOLDER
     tier_dirs = sorted(d for d in rules_dir.iterdir() if d.is_dir() and TIER_DIR.match(d.name))
-    roots = tuple(tier_dirs) + tuple(d for d in (lazy_dir, guides_dir) if d.is_dir())
-    # Installed, a style guide's children sit in _style_guide_standards/ and its entry file under rules/
-    parent_roots = roots + (rules_dir / PATH_SCOPED_TIER / STYLE_GUIDES,)
+    roots = tuple(tier_dirs) + tuple(d for d in (scoped_dir, lazy_dir, guides_dir) if d.is_dir())
+    # Installed, a style guide's children sit in _reference/_style_guide_standards/ and its entry file under rules/
+    parent_roots = roots + (rules_dir / PATH_SCOPED_FOLDER / STYLE_GUIDES,)
     rules = []
     for tier_dir in roots:
         for path in sorted(tier_dir.rglob("*.md")):
             in_tier = path.relative_to(tier_dir)
-            if path.name == "README.md" or in_tier.parts[0] == "_learned":
+            if path.name == "README.md":
+                continue
+            if tier_dir != scoped_dir and scoped_dir in path.parents:  # scanned once, under its own root
                 continue
             if is_child(path, tier_dir, tuple(r for r in parent_roots if r != tier_dir)):
                 continue
@@ -364,6 +371,8 @@ def discover_rules(rules_dir: Path) -> list[Rule]:
                 rel = style_guide_rel(config_dir, in_tier.as_posix())
                 tier = PATH_SCOPED_TIER if rel.startswith("rules/") else LAZY_FOLDER
                 in_tier = Path(STYLE_GUIDES) / in_tier
+            elif tier_dir == scoped_dir:
+                rel, tier = path.relative_to(config_dir).as_posix(), PATH_SCOPED_TIER
             elif tier_dir == lazy_dir:
                 rel, tier = f"{LAZY_FOLDER}/{in_tier.as_posix()}", LAZY_FOLDER
             else:
@@ -419,10 +428,10 @@ def rule_rel(raw: str, rules_dir: Path) -> str | None:
         if not rest.startswith("05_lazy_load/"):
             return f"rules/{rest}"
         rest = rest.removeprefix("05_lazy_load/")
-        scoped = (rules_dir / PATH_SCOPED_TIER / rest).is_file()
-        return f"rules/{PATH_SCOPED_TIER}/{rest}" if scoped else current_rel(f"{LAZY_FOLDER}/{rest}")
+        scoped = (rules_dir / PATH_SCOPED_FOLDER / rest).is_file()
+        return f"rules/{PATH_SCOPED_FOLDER}/{rest}" if scoped else current_rel(f"{LAZY_FOLDER}/{rest}")
     if "/" in rest:
-        return f"rules/{rest}"
+        return current_rel(f"rules/{rest}")
     # A flat rules/<name>.md was an old install link to a path-scoped rule
     found = sorted(rules_dir.rglob(rest))
     return f"rules/{found[0].relative_to(rules_dir).as_posix()}" if len(found) == 1 else None
@@ -933,6 +942,10 @@ def tier_of(rel: str) -> str:
     :return: e.g. ``01_essentials`` or ``_rules_lazy_load``.
     :rtype: str
     """
+    if rel.startswith(f"rules/{PATH_SCOPED_FOLDER}/"):
+        return PATH_SCOPED_TIER  # path-scoped rules keep their own table, wherever their folder sits
+    if rel.startswith(f"{STYLE_GUIDES_FOLDER}/"):
+        return Path(STYLE_GUIDES_FOLDER).name  # the tier name history recorded before the folder moved
     parts = rel.split("/")
     return parts[1] if parts[0] == "rules" and len(parts) > 2 else parts[0]
 
@@ -1089,7 +1102,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Measure how often each rule applies and loads.")
     parser.add_argument("--rules", required=True, type=Path, help="the rules folder, e.g. src/claude/rules")
     parser.add_argument("--transcripts", required=True, type=Path, help="session logs, e.g. ~/.claude/projects")
-    parser.add_argument("--out", required=True, type=Path, help="output folder, e.g. src/claude/_admin/_audits")
+    parser.add_argument("--out", required=True, type=Path, help="output folder, e.g. docs/audits")
     args = parser.parse_args(argv)
     for name in ("rules", "transcripts"):
         if not getattr(args, name).is_dir():

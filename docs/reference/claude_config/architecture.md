@@ -62,7 +62,7 @@ This page describes the principle, not an inventory — the README in each direc
 | Path | What lives there | Current contents |
 |---|---|---|
 | `CLAUDE.md` | Entry point; imports memory and aliases | Read the file itself |
-| `rules/` | Rules Claude Code loads natively, in tiers `01_essentials/` to `03_authoring_guidelines/` plus `04_path_scoped/` | `04_path_scoped/claude_rule_loading_strategy.md` and the tier folders themselves |
+| `rules/` | Rules Claude Code loads natively, in tiers `01_essentials/` to `03_authoring_guidelines/` plus `02_claude_standards/path_scoped_rules/` | `02_claude_standards/path_scoped_rules/claude_rule_loading_strategy.md` and the tier folders themselves |
 | `_rules_lazy_load/` | Rules read on demand, never loaded automatically | `_rules_lazy_load/README.md` |
 | `_tests/` | pytest suite for rules, hooks, skills and settings | `_tests/README.md` |
 | `hooks/`, `skills/`, `agents/`, `_templates/` | Hooks, skills, sub-agents, authoring templates | Each directory's README |
@@ -72,7 +72,7 @@ This page describes the principle, not an inventory — the README in each direc
 ## 🔄 What loads when
 
 - **Always-on:** Claude Code loads every `.md` under `rules/` without `paths:` frontmatter — tiers 01–03 and their children; the folders are the current list.
-- **With matching files:** rules with `paths:` (mostly `rules/04_path_scoped/`) load when Claude reads a file their globs match.
+- **With matching files:** rules with `paths:` (mostly `rules/02_claude_standards/path_scoped_rules/`) load when Claude reads a file their globs match.
 - **On demand:** `_rules_lazy_load/` is never imported; Claude reads it when a task needs it.
 - **Cost:** measure it rather than estimate it — `make audit_rule_usage` reports measured tier sizes, and each always-on file adds its full size to every session.
 
@@ -90,7 +90,7 @@ Rules are organized by concern, creating clear separation that simplifies auditi
 
 For detailed security architecture, see `~/.claude/_rules_lazy_load/security_design.md`.
 
-For testing strategy and coverage, see the Test Layers section of `~/.claude/rules/04_path_scoped/testing.md`.
+For testing strategy and coverage, see the Test Layers section of `~/.claude/rules/02_claude_standards/path_scoped_rules/testing.md`.
 
 ---
 
@@ -112,11 +112,11 @@ Regular maintenance cycles ensure the config stays intentional and focused on cu
 Use this decision tree:
 
 1. **Does it apply to EVERY session** (regardless of project type)?
-   - **Yes** → Place in the matching always-on tier (`01_essentials/` to `03_authoring_guidelines/`, per `04_path_scoped/claude_rule_loading_strategy.md`) — Claude Code loads it natively, so it needs no `@import`
+   - **Yes** → Place in the matching always-on tier (`01_essentials/` to `03_authoring_guidelines/`, per `02_claude_standards/path_scoped_rules/claude_rule_loading_strategy.md`) — Claude Code loads it natively, so it needs no `@import`
    - **No** → Go to step 2
 
 2. **Is it domain-specific** (SQL, dbt, Terraform, etc.)?
-   - **Yes** → Place in `rules/04_path_scoped/` with `paths:` if it's tied to one file type, otherwise in `_rules_lazy_load/`; list it in `_rules_lazy_load/README.md`
+   - **Yes** → Place in `rules/02_claude_standards/path_scoped_rules/` with `paths:` if it's tied to one file type, otherwise in `_rules_lazy_load/`; list it in `_rules_lazy_load/README.md`
    - **No** → Reconsider whether it's needed at all
 
 3. **Will you use this 5+ times/month**?

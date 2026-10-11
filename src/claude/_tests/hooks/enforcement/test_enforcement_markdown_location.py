@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-10
-# Version:           3.0.0
+# Date updated:      2026-10-11
+# Version:           3.1.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -60,6 +60,36 @@ def config_path(relative: str) -> str:
     :rtype: str
     """
     return str(CLAUDE_DIR / relative)
+
+
+def test_style_guide_file_passes():
+    """A style guide or its child under _reference/_style_guide_standards/ is allowed silently."""
+    for rel in ("sql.md", "sql/formatting.md", "README.md"):
+        result = run_hook(config_path(f"_reference/_style_guide_standards/{rel}"))
+        assert result.returncode == 0, f"style guide {rel} should pass, got {result.returncode}: {result.stderr}"
+        assert result.stderr == "", f"style guide {rel} should give no message, got {result.stderr}"
+
+
+def test_quality_scorecard_passes():
+    """A scorecard or summary under _reference/_quality_scorecards/ is allowed."""
+    for rel in ("rules/01_essentials/scorecard_guiding_principles.md", "quality_scorecards_summary.md"):
+        result = run_hook(config_path(f"_reference/_quality_scorecards/{rel}"))
+        assert result.returncode == 0, f"scorecard {rel} should pass, got {result.returncode}: {result.stderr}"
+
+
+def test_loose_reference_file_is_flagged():
+    """A topic file straight in _reference/ is flagged and pointed at _rules_lazy_load/."""
+    for rel in ("claude_code_automation.md", "README.md", "2026_10_01_topic.md"):
+        result = run_hook(config_path(f"_reference/{rel}"))
+        assert result.returncode == 2, f"_reference/{rel} should exit 2, got {result.returncode}"
+        assert "_rules_lazy_load/" in result.stderr, f"message should name _rules_lazy_load/, got {result.stderr}"
+        assert STYLE_RULE in result.stderr, f"message should point to {STYLE_RULE}, got {result.stderr}"
+
+
+def test_other_reference_subfolder_is_flagged():
+    """Only the two known subfolders may sit under _reference/."""
+    result = run_hook(config_path("_reference/claude_config_architecture/_security.md"))
+    assert result.returncode == 2, f"unknown _reference/ subfolder should exit 2, got {result.returncode}"
 
 
 def test_known_root_files_pass():

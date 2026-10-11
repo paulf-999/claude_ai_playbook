@@ -24,13 +24,14 @@ SKILLS_DIR = CLAUDE_DIR / "skills"
 HOOKS_DIR = CLAUDE_DIR / "hooks"
 RULES_DIR = CLAUDE_DIR / "rules"  # loaded natively by Claude Code
 LAZY_RULES_NAME = "_rules_lazy_load"  # read on demand only
-STYLE_GUIDES_NAME = "_style_guide_standards"  # every style guide, read on demand except entry files once installed
+# Every style guide, read on demand except entry files once installed
+STYLE_GUIDES_NAME = "_reference/_style_guide_standards"
 ON_DEMAND_ROOTS = (LAZY_RULES_NAME, STYLE_GUIDES_NAME)  # installed folders read only when a pointer is followed
 
 # Installed path prefix -> repo path prefix. The repo keeps on-demand rules inside rules/ and style-guide
 # entry files with the rest of their guide; the install moves both (see claude_file_utils.sh).
 INSTALLED_TO_REPO = (
-    ("rules/04_path_scoped/style_guide_standards/", f"{STYLE_GUIDES_NAME}/"),
+    ("rules/02_claude_standards/path_scoped_rules/style_guide_standards/", f"{STYLE_GUIDES_NAME}/"),
     (f"{LAZY_RULES_NAME}/", f"rules/{LAZY_RULES_NAME}/"),
 )
 
@@ -140,7 +141,7 @@ def installed_rule_files(config_dir: Path, pattern: str = "*.md") -> dict[str, P
 
     :param config_dir: The Claude config directory, installed or the repo's ``src/claude``.
     :param pattern: Glob for ``rglob``.
-    :return: e.g. ``_style_guide_standards/sql/formatting.md`` -> its path; sorted by key.
+    :return: e.g. ``_reference/_style_guide_standards/sql/formatting.md`` -> its path; sorted by key.
     """
     found = {p.relative_to(config_dir).as_posix(): p for p in native_rule_files(config_dir / "rules", pattern)}
     lazy = lazy_rules_dir(config_dir)
@@ -150,19 +151,20 @@ def installed_rule_files(config_dir: Path, pattern: str = "*.md") -> dict[str, P
         # The install moves entry files with paths: under rules/ (split_style_guides in claude_file_utils.sh)
         rel = path.relative_to(guides).as_posix()
         scoped = path.is_file() and frontmatter_has_paths(path.read_text(encoding="utf-8", errors="ignore"))
-        found[f"rules/04_path_scoped/style_guide_standards/{rel}" if scoped else f"{STYLE_GUIDES_NAME}/{rel}"] = path
+        scoped_rel = f"rules/02_claude_standards/path_scoped_rules/style_guide_standards/{rel}"
+        found[scoped_rel if scoped else f"{STYLE_GUIDES_NAME}/{rel}"] = path
     return {rel: found[rel] for rel in sorted(found) if found[rel].is_file()}
 
 
 def on_demand_rule_files(config_dir: Path, pattern: str = "*.md") -> dict[str, Path]:
-    """Map each file read only on demand, in ``_rules_lazy_load/`` or ``_style_guide_standards/``, to its path.
+    """Map each file read only on demand, in ``_rules_lazy_load/`` or the style guides, to its path.
 
     :param config_dir: The Claude config directory, installed or the repo's ``src/claude``.
     :param pattern: Glob for ``rglob``.
     :return: Installed path, relative to the config, mapped to the file on disk; sorted by key.
     """
     files = installed_rule_files(config_dir, pattern)
-    return {rel: path for rel, path in files.items() if rel.split("/", 1)[0] in ON_DEMAND_ROOTS}
+    return {rel: path for rel, path in files.items() if rel.startswith(tuple(f"{root}/" for root in ON_DEMAND_ROOTS))}
 
 
 LAZY_RULES_DIR = lazy_rules_dir(CLAUDE_DIR)

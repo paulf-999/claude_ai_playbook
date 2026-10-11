@@ -88,7 +88,7 @@ audit_rule_usage:
 	@python3 src/claude/scripts/_audit_scripts/audit_rule_usage.py \
 		--rules src/claude/rules \
 		--transcripts "$${CLAUDE_CONFIG_DIR:-$$HOME/.claude}/projects" \
-		--out src/claude/_admin/_audits
+		--out docs/audits
 
 list_plans:
 	@echo "${INFO}\nListing saved plans by plan status${COLOUR_OFF}"

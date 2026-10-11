@@ -42,7 +42,7 @@ If working tree is clean (nothing to commit), stop.
 
 **Labels:** Map using file paths, branch name, commit message:
 - `src/claude/skills/` → `claude-skill`
-- `src/claude/_style_guide_standards/` → `style-guide-and-standards`
+- `src/claude/_reference/_style_guide_standards/` → `style-guide-and-standards`
 - `src/claude/rules/`, including `rules/_rules_lazy_load/` (anything else) → `claude-rule`
 - `src/claude/agents/` → `claude-agent`
 - `src/claude/hooks/` → `claude-hook`

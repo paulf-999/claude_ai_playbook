@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
-# Date updated:      2026-10-10
-# Version:           3.2.0
+# Date updated:      2026-10-11
+# Version:           3.2.2
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -35,8 +35,9 @@ def test_clean_tree_reports_nothing(tmp_path):
     (tmp_path / "_rules_lazy_load" / "extra.md").write_text("# Extra\n")
     pointer = "- **Read on demand:** `~/.claude/_rules_lazy_load/extra.md` — detail.\n"
     (rules / "01_essentials" / "a.md").write_text(pointer)
-    (rules / "04_path_scoped").mkdir()
-    (rules / "04_path_scoped" / "sql.md").write_text('---\npaths:\n  - "**/*.sql"\n---\n# SQL\n')
+    (rules / "02_claude_standards" / "path_scoped_rules").mkdir(parents=True)
+    scoped = rules / "02_claude_standards" / "path_scoped_rules"
+    (scoped / "sql.md").write_text('---\npaths:\n  - "**/*.sql"\n---\n# SQL\n')
 
     issues = find_native_load_issues(rules)
 
@@ -99,12 +100,13 @@ def test_leftover_import_is_flagged_for_either_config_dir(tmp_path, config_dir_n
 
 
 def test_unscoped_file_in_path_scoped_folder_is_flagged(tmp_path):
-    """A 04_path_scoped/ file without paths: would load every session despite its folder."""
+    """A 02_claude_standards/path_scoped_rules/ file without paths: would load every session despite its folder."""
     rules = make_rules(tmp_path)
-    (rules / "04_path_scoped" / "style").mkdir(parents=True)
-    (rules / "04_path_scoped" / "style" / "_child.md").write_text("# Child, no frontmatter\n")
+    (rules / "02_claude_standards" / "path_scoped_rules" / "style").mkdir(parents=True)
+    child = rules / "02_claude_standards" / "path_scoped_rules" / "style" / "_child.md"
+    child.write_text("# Child, no frontmatter\n")
 
-    assert find_native_load_issues(rules)["unscoped"] == ["rules/04_path_scoped/style/_child.md"]
+    assert find_native_load_issues(rules)["unscoped"] == ["rules/02_claude_standards/path_scoped_rules/style/_child.md"]
 
 
 def test_scoped_file_in_tier_folder_is_allowed(tmp_path):
@@ -130,8 +132,8 @@ def test_broken_pointer_is_flagged_in_both_forms(tmp_path, pointer):
 def test_template_files_are_ignored(tmp_path):
     """Non-markdown files such as templates or YAML never load, so they are never flagged."""
     rules = make_rules(tmp_path)
-    (rules / "04_path_scoped").mkdir()
-    (rules / "04_path_scoped" / "domains.yaml").write_text("x: 1\n")
+    (rules / "02_claude_standards" / "path_scoped_rules").mkdir(parents=True)
+    (rules / "02_claude_standards" / "path_scoped_rules" / "domains.yaml").write_text("x: 1\n")
 
     assert not any(find_native_load_issues(rules).values()), "a non-markdown file was flagged"
 

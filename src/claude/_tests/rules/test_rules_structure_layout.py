@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-10
-# Version:           3.0.0
+# Date updated:      2026-10-11
+# Version:           3.0.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -93,13 +93,14 @@ def test_rules_root_contains_only_expected_files():
 
 
 
-def test_rules_holds_exactly_the_four_tiers():
-    """rules/ holds tiers 01–03 and 04_path_scoped/ only — tier 04 was retired on 2026-10-06 (#330).
+def test_rules_holds_exactly_the_three_tiers():
+    """rules/ holds tiers 01–03 only — path-scoped rules moved into
+    02_claude_standards/path_scoped_rules/ on 2026-10-11.
 
     The repo also keeps the on-demand rules there, which the install moves beside rules/.
     """
     tiers = {d.name for d in RULES_DIR.iterdir() if d.is_dir() and d.name != LAZY_RULES_NAME}
-    expected = {"01_essentials", "02_claude_standards", "03_authoring_guidelines", "04_path_scoped"}
+    expected = {"01_essentials", "02_claude_standards", "03_authoring_guidelines"}
     assert tiers == expected, f"rules/ tier folders drifted — missing {expected - tiers}, extra {tiers - expected}"
 
 
@@ -114,11 +115,13 @@ def test_behaviour_subdir_dissolved():
     assert not (RULES_DIR / "behaviour").is_dir(), "rules/behaviour/ should not exist"
 
 
-def test_reference_dir_retired():
-    """_reference/ was retired on 2026-10-10 (#344), and its docs now live in docs/, which isn't installed."""
-    assert not (CLAUDE_DIR / "_reference").exists(), (
-        "_reference/ should not exist — background docs belong in docs/; delete any old folder on a live install"
-    )
+def test_reference_holds_only_scorecards_and_style_guides():
+    """_reference/ returned on 2026-10-11 to hold only the quality scorecards and style guides; docs stay in docs/."""
+    allowed = {"_quality_scorecards", "_style_guide_standards"}
+    reference = CLAUDE_DIR / "_reference"
+    entries = {p.name for p in reference.iterdir()} if reference.is_dir() else set()
+    extra = sorted(entries - allowed)
+    assert not extra, f"_reference/ holds more than the scorecards and style guides: {extra}"
 
 
 def test_dissolved_paths_absent():

@@ -8,9 +8,9 @@ tags:
   tested: true
 tools: Read, mcp__atlassian__createJiraIssue
 ---
-<!-- version: 0.2.1 -->
+<!-- version: 0.2.3 -->
 <!-- created: 2026-04-11 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-11 -->
 
 ## 🤖 Instructions for Claude
 
@@ -48,6 +48,6 @@ One ticket at a time, with basic fields. Currently at the **draft** development 
 
 - `reference/_error_handling.md` — Atlassian connection errors and recovery steps
 - `reference/_field_constraints.md` — story point rules and other field validation
-- `~/.claude/_style_guide_standards/jira.md` — team ticket conventions, read before drafting the ticket
+- `~/.claude/_reference/_style_guide_standards/jira.md` — team ticket conventions, read before drafting the ticket
 - `~/.claude/_rules_lazy_load/org.md` — your organisation's Jira values, such as the site and project keys, if it lists any
-- `_admin/_quality_scorecards/skills/scorecard_jira_create.md` — 7-dimension quality assessment
+- `_reference/_quality_scorecards/skills/scorecard_jira_create.md` — 7-dimension quality assessment

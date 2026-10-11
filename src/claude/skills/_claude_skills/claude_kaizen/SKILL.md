@@ -66,4 +66,4 @@ Currently at the **draft** stage — one repo at a time, with no SessionStart tr
 - `reference/_implementation.md` — audit, promote, validate and prune phases
 - `reference/_roadmap.md` — planned v2 enhancements
 - `tests/evals.yaml` — 7 test scenarios covering promotion, validation, pruning and scope
-- `_admin/_quality_scorecards/skills/scorecard_claude_kaizen.md` — 7-dimension quality scorecard
+- `_reference/_quality_scorecards/skills/scorecard_claude_kaizen.md` — 7-dimension quality scorecard

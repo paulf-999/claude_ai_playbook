@@ -26,7 +26,7 @@ This repo is the source of truth for the team's Claude configuration. `src/claud
 
 ```text
 @~/.claude/rules/01_essentials/guiding_principles.md
-@~/.claude/rules/02_claude_standards/claude_plans.md
+@~/.claude/rules/02_claude_standards/claude_working_practices/claude_plans.md
 @~/.claude/rules/02_claude_standards/git.md
 ```
 

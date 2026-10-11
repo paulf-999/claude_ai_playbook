@@ -1,6 +1,6 @@
 ---
 name: claude_setup_graphify
-version: 1.2.1
+version: 1.2.2
 summary: Set up Graphify on a repo to generate a local AST-based knowledge graph, reducing token cost for codebase exploration.
 maturity: tactical
 test_coverage_level: comprehensive

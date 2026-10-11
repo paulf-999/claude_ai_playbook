@@ -1,6 +1,6 @@
 ---
 name: git_create_pr
-version: 1.4.0
+version: 1.4.1
 summary: Create GitHub PR from staged changes
 maturity: tactical
 test_coverage_level: comprehensive

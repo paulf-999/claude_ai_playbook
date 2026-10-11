@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-11
 # Date updated:      2026-10-11
-# Version:           1.0.0
+# Version:           1.0.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -23,8 +23,11 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[4]
 UTILS = REPO_ROOT / "src" / "claude" / "_install" / "helpers" / "claude_file_utils.sh"
 
-# Committed, so the repo stores this exact content
-SHIPPED = (REPO_ROOT / "src" / "claude" / "rules" / "_rules_lazy_load" / "README.md").read_text()
+# Read from HEAD, not the working tree, so the repo stores this exact content even mid-edit
+SHIPPED = subprocess.run(
+    ["git", "show", "HEAD:src/claude/rules/_rules_lazy_load/README.md"],
+    cwd=REPO_ROOT, capture_output=True, text=True, check=True,
+).stdout
 
 
 def write(target: Path, rel: str, text: str = SHIPPED):
@@ -63,21 +66,21 @@ def test_retired_folder_not_on_the_manifest_is_untouched(tmp_path: Path):
 
 
 def test_renamed_copy_in_a_current_folder_is_removed(tmp_path: Path):
-    """An old name left in a folder the repo still installs goes, e.g. a scorecard renamed since."""
+    """An old name left in a folder the repo still installs goes, e.g. a template renamed since."""
     target = tmp_path / "cfg"
-    write(target, "_admin/_quality_scorecards/tests/scripts/scorecard_old_name.md")
+    write(target, "_templates/skills/old_name.md.template")
     output = remove_stale(target)
-    assert not (target / "_admin").exists(), "the renamed scorecard's old copy was kept"
-    assert "Removed old shipped copies from _admin/: 1 (the backup keeps them)" in output, output
+    assert not (target / "_templates").exists(), "the renamed template's old copy was kept"
+    assert "Removed old shipped copies from _templates/: 1 (the backup keeps them)" in output, output
 
 
 def test_copies_get_one_line_per_folder(tmp_path: Path):
     """Several copies give one count line per folder, not a line per file."""
     target = tmp_path / "cfg"
-    for rel in ("_admin/a.md", "_admin/b/c.md", "hooks/old_hook.md"):
+    for rel in ("_templates/a.md", "_templates/b/c.md", "hooks/old_hook.md"):
         write(target, rel)
     output = remove_stale(target)
-    assert "Removed old shipped copies from _admin/: 2" in output, output
+    assert "Removed old shipped copies from _templates/: 2" in output, output
     assert "Removed old shipped copies from hooks/: 1" in output, output
     assert "b/c.md" not in output, f"individual files were listed: {output}"
 
@@ -85,10 +88,10 @@ def test_copies_get_one_line_per_folder(tmp_path: Path):
 def test_file_you_wrote_or_edited_is_kept(tmp_path: Path):
     """Content the repo never stored stays, even in a folder the install fills."""
     target = tmp_path / "cfg"
-    write(target, "_admin/my_notes.md", "# My own notes\n")
+    write(target, "_templates/my_notes.md", "# My own notes\n")
     write(target, "hooks/edited_copy.md", SHIPPED + "my edit\n")
     output = remove_stale(target)
-    assert (target / "_admin" / "my_notes.md").is_file(), "a file you wrote was removed"
+    assert (target / "_templates" / "my_notes.md").is_file(), "a file you wrote was removed"
     assert (target / "hooks" / "edited_copy.md").is_file(), "a file you edited was removed"
     assert "Removed old shipped copies" not in output, output
 

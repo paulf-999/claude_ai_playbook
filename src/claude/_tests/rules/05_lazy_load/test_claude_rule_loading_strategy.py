@@ -1,14 +1,14 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
-# Date updated:      2026-10-10
-# Version:           2.1.5
+# Date updated:      2026-10-11
+# Version:           2.1.7
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Drift tests for rules/04_path_scoped/claude_rule_loading_strategy.md.
+"""Drift tests for rules/02_claude_standards/path_scoped_rules/claude_rule_loading_strategy.md.
 
 The rule's folder table describes the real ``rules/`` and ``_rules_lazy_load/`` layout. These tests
 fail when the table and the folders on disk stop matching, or when the table's
@@ -18,17 +18,17 @@ import re
 
 from _shared_paths import CLAUDE_DIR, CLAUDE_MD, LAZY_RULES_DIR, RULES_DIR, resolve_config_path
 
-RULE = RULES_DIR / "04_path_scoped" / "claude_rule_loading_strategy.md"
+RULE = RULES_DIR / "02_claude_standards" / "path_scoped_rules" / "claude_rule_loading_strategy.md"
 
 # A table row: | `01_essentials/` | ... | `example.md` | ... | Loading |
 ROW_PATTERN = re.compile(
-    r"^\| `(\d{2}_[a-z_]+|_rules_lazy_load)/` \|[^|]+\| `([^`]+)` \|[^|]+\| ([^|]+) \|$",
+    r"^\| `(\d{2}_[a-z_]+(?:/[a-z_]+)?|_rules_lazy_load)/` \|[^|]+\| `([^`]+)` \|[^|]+\| ([^|]+) \|$",
     re.MULTILINE,
 )
 # Matches any config-dir name (~/.claude/, ~/claude/, ...) per portable_paths.md.
 IMPORT_PATTERN = re.compile(r"^@~/[^/]+/(_?rules\S*)$", re.MULTILINE)
 LAZY_FOLDER = "_rules_lazy_load"
-PATH_SCOPED_TIER = "04_path_scoped"
+PATH_SCOPED_TIER = "02_claude_standards/path_scoped_rules"
 # paths: frontmatter (5 lines) + version, created, updated, miss_cost
 HEADER_LINES = 9
 LINE_LIMIT = 110
@@ -114,7 +114,7 @@ def test_example_files_exist():
 
 
 def test_loading_column_matches_tier():
-    """Tiers 01–03 say always-on, 04_path_scoped/ says path-scoped, and the lazy folder says never automatic."""
+    """Tiers 01–03 say always-on, path_scoped_rules/ says path-scoped, and the lazy folder says never automatic."""
     for tier, _example, loading in _rows():
         if tier == LAZY_FOLDER:
             assert "never loaded automatically" in loading, f"{tier} loading should say never loaded automatically"
