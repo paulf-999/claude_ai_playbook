@@ -10,9 +10,9 @@ tags:
   date_updated: "2026-10-01"
 tools: Read, Write, mcp__atlassian__getAccessibleAtlassianResources, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
-<!-- version: 1.2.0 -->
+<!-- version: 1.2.1 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-11 -->
 
 ## 🤖 Instructions for Claude
 

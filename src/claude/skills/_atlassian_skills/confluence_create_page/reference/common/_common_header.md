@@ -1,6 +1,6 @@
 ---
 date_created: "2026-06-07"
-date_updated: "2026-09-19"
+date_updated: "2026-10-11"
 status: active
 ---
 
@@ -8,7 +8,7 @@ status: active
 
 All `confluence_create_page` patterns must include this header at the start of every generated page. Read this file and include the nodes below — in order — as the first items in the ADF `content` array.
 
-Also read `~/.claude/skills/_atlassian_skills/confluence_create_page/reference/common/_common_formatting.md` and apply those formatting rules throughout the entire page body.
+Also read `~/.claude/skills/confluence_create_page/reference/common/_common_formatting.md` and apply those formatting rules throughout the entire page body.
 
 ---
 
