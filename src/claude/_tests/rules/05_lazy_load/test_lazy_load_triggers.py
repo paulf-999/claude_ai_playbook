@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           1.7.3
+# Version:           1.7.4
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -36,7 +36,7 @@ LAZY_DIR = LAZY_RULES_DIR
 ALWAYS_ON_TIERS = ("01_essentials", "02_claude_standards", "03_authoring_guidelines")
 # Folders under _rules_lazy_load/ that hold indexes or ledgers rather than rules
 # The rules overview and its tier pages index the rules rather than being rules
-NON_RULE_FOLDERS = {"_learned"}
+NON_RULE_FOLDERS: set[str] = set()
 IMPORT = re.compile(r"^@~/[^/\s]+/(\S+\.md)\s*$", re.M)
 
 
