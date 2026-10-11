@@ -112,6 +112,8 @@ copy_claude_files() {
             continue
         fi
         cp -R "${ENTRY}" "${TARGET_DIR}/"
+        # Python caches from local test runs are never shipped: drop any the copy brought over
+        [[ -d "${ENTRY}" ]] && find "${TARGET_DIR}/${NAME}" -type d -name "__pycache__" -prune -exec rm -rf {} +
     done
     find "${TARGET_DIR}" -name "*.sh" -exec chmod +x {} \;
     log_message "${INFO}" "Copied Claude files to: ${TARGET_DIR}"
@@ -229,7 +231,7 @@ split_style_guides() {
 # User-owned entries are left out, so pruning can never remove them.
 list_installed_files() {
     local REL
-    (cd "${SOURCE_DIR}" && find . -type f) | sed 's#^\./##' | while IFS= read -r REL; do
+    (cd "${SOURCE_DIR}" && find . -type d -name "__pycache__" -prune -o -type f -print) | sed 's#^\./##' | while IFS= read -r REL; do
         is_user_owned "${REL%%/*}" && continue
         is_repo_only "${REL%%/*}" && continue
         if [[ "${REL}" == "${STYLE_GUIDES_NAME}/"* ]]; then
@@ -282,6 +284,30 @@ shipped_by_repo() {
     git -C "${ROOT_DIR}" cat-file -e "${HASH}^{blob}" 2>/dev/null
 }
 
+# Remove old shipped copies from _rules_lazy_load/: files this install doesn't ship but whose content the
+# repo once shipped. The first version of migrate_old_rules_layout (2026-10-06) moved every old _rules/ file
+# in here, and no manifest lists them, so pruning can't see them. Compares against this install's files
+# rather than the manifest, so the Windows sync (which keeps none) is covered too. A file you edited never
+# matches, so it stays. The install's backup holds a copy of everything removed here.
+remove_stale_lazy_copies() {
+    local LAZY_DIR="${TARGET_DIR}/${LAZY_RULES_NAME}"
+    local CURRENT FILE REL
+    local COUNT=0
+    [[ -d "${LAZY_DIR}" ]] || return 0
+    CURRENT=$(list_installed_files)
+    while IFS= read -r FILE; do
+        REL="${FILE#"${TARGET_DIR}/"}"
+        grep -qxF "${REL}" <<< "${CURRENT}" && continue
+        shipped_by_repo "${FILE}" || continue
+        rm "${FILE}"
+        remove_empty_parents "$(dirname "${FILE}")"
+        COUNT=$((COUNT + 1))
+    done < <(find "${LAZY_DIR}" -type f | LC_ALL=C sort)
+    # One summary line rather than one per file, to keep the install output short
+    [[ "${COUNT}" -gt 0 ]] && log_message "${INFO}" "Removed old shipped copies from ${LAZY_RULES_NAME}/: ${COUNT} (the backup keeps them)"
+    return 0
+}
+
 # Clear what the old _rules/ layout left behind (replaced 2026-10-06 by rules/ and _rules_lazy_load/):
 # the links earlier installs put in rules/, then each file left under _rules/. A file whose content the
 # repo shipped is a stale copy — installs before the manifest existed left them, so pruning can't see
@@ -293,6 +319,7 @@ migrate_old_rules_layout() {
     local NEW_DIR="${TARGET_DIR}/_rules_lazy_load"
     local LINK FROM REL TO
     local SHIPPED_COUNT=0
+    remove_stale_lazy_copies
     # Links into the old _rules/ would dangle, and Claude Code would still try to load them
     if [[ -d "${TARGET_DIR}/rules" ]]; then
         while IFS= read -r LINK; do
@@ -331,7 +358,7 @@ migrate_old_rules_layout() {
 # Runs without its own prompt: the install was already confirmed and backed up, and filing
 # only moves files — never deletes or overwrites — so it stays safe on a config you own.
 file_plans() {
-    local SCRIPT="${SOURCE_DIR}/_scripts/_clean_scripts/clean_plans.py"
+    local SCRIPT="${SOURCE_DIR}/scripts/_clean_scripts/clean_plans.py"
     local OUTPUT
     if ! command -v python3 >/dev/null 2>&1; then
         log_message "${WARNING}" "python3 not found — skipped filing plans; run: make clean_plans"

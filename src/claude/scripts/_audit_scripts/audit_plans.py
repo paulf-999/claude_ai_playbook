@@ -10,7 +10,7 @@ stale, to park or drop. Saved plans are read loose in _plans/ and in its status 
 
 Usage:
     make list_plans
-    python3 src/claude/_scripts/_audit_scripts/audit_plans.py
+    python3 src/claude/scripts/_audit_scripts/audit_plans.py
 
 <config> is $CLAUDE_CONFIG_DIR, falling back to ~/.claude, as in clean_plans.py. Always exits 0.
 """

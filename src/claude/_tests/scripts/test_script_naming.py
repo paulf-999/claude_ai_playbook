@@ -1,14 +1,14 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
-# Date updated:      2026-10-06
-# Version:           1.1.0
+# Date updated:      2026-10-11
+# Version:           1.1.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Validates that every script under _scripts/ follows the script naming pattern.
+"""Validates that every script under scripts/ follows the script naming pattern.
 
 The pattern lives in _claude_naming_patterns.md: each script sits in a
 _<verb>_scripts/ folder and its filename starts with that verb, so the name
@@ -20,7 +20,7 @@ from pathlib import Path
 
 from _shared_paths import CLAUDE_DIR
 
-SCRIPTS_DIR = CLAUDE_DIR / "_scripts"
+SCRIPTS_DIR = CLAUDE_DIR / "scripts"
 NAMING_STANDARDS_DIR = CLAUDE_DIR / "rules" / "01_essentials" / "claude_usage_standards" / "naming_standards"
 NAMING_RULE = NAMING_STANDARDS_DIR / "_claude_naming_patterns.md"
 
@@ -33,7 +33,7 @@ IGNORED_NAMES = {"__pycache__", ".DS_Store"}
 def find_violations(scripts_dir: Path) -> list[str]:
     """List every way the scripts under scripts_dir break the naming pattern.
 
-    :param scripts_dir: The _scripts/ folder to check.
+    :param scripts_dir: The scripts/ folder to check.
     :type scripts_dir: Path
     :return: One message per violation, empty when everything complies.
     :rtype: list[str]
@@ -45,7 +45,7 @@ def find_violations(scripts_dir: Path) -> list[str]:
 
         # Scripts must sit in a group folder, never loose at the top level
         if entry.is_file():
-            violations.append(f"{entry.name}: loose in _scripts/ — move it into a _<verb>_scripts/ folder")
+            violations.append(f"{entry.name}: loose in scripts/ — move it into a _<verb>_scripts/ folder")
             continue
 
         match = GROUP_PATTERN.match(entry.name)
@@ -73,7 +73,7 @@ def find_violations(scripts_dir: Path) -> list[str]:
 def make_group(root: Path, folder: str, *names: str) -> Path:
     """Create a group folder holding empty files with the given names.
 
-    :param root: The fake _scripts/ folder.
+    :param root: The fake scripts/ folder.
     :type root: Path
     :param folder: Name of the group folder to create.
     :type folder: str
@@ -93,7 +93,7 @@ def make_group(root: Path, folder: str, *names: str) -> Path:
 
 
 def test_scripts_dir_exists():
-    """The _scripts/ folder exists in the config under test."""
+    """The scripts/ folder exists in the config under test."""
     assert SCRIPTS_DIR.is_dir(), f"Expected {SCRIPTS_DIR} to exist"
 
 
@@ -104,7 +104,7 @@ def test_live_scripts_follow_naming_pattern():
 
 
 def test_live_has_no_loose_scripts():
-    """No file sits directly in _scripts/."""
+    """No file sits directly in scripts/."""
     loose = [path.name for path in SCRIPTS_DIR.iterdir() if path.is_file() and path.name not in IGNORED_NAMES]
     assert loose == [], f"Move these into a _<verb>_scripts/ folder: {loose}"
 
@@ -120,7 +120,7 @@ def test_naming_rule_documents_pattern():
     """The naming rule still documents the script pattern and points at this test."""
     text = NAMING_RULE.read_text(encoding="utf-8")
     assert "## 🐍 Script naming" in text, "Script naming section missing from _claude_naming_patterns.md"
-    assert "_scripts/_<verb>_scripts/<verb>_<subject>.py" in text, "Script pattern missing from the naming rule"
+    assert "scripts/_<verb>_scripts/<verb>_<subject>.py" in text, "Script pattern missing from the naming rule"
     assert "test_script_naming.py" in text, "Naming rule should name the test that enforces it"
 
 
@@ -135,12 +135,12 @@ def test_compliant_tree_passes(tmp_path):
 
 
 def test_loose_script_flagged(tmp_path):
-    """A script directly in _scripts/ is flagged."""
+    """A script directly in scripts/ is flagged."""
     make_group(tmp_path, "_lint_scripts", "lint_tags.py", "lint_skills.py")
     (tmp_path / "score_things.py").touch()
     violations = find_violations(tmp_path)
     assert len(violations) == 1, f"Expected one violation, got {violations}"
-    assert "loose in _scripts/" in violations[0], "Loose script message should say where it is"
+    assert "loose in scripts/" in violations[0], "Loose script message should say where it is"
 
 
 def test_wrong_verb_prefix_flagged(tmp_path):

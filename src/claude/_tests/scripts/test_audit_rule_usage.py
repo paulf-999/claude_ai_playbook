@@ -1,7 +1,7 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-10
+# Date updated:      2026-10-11
 # Version:           1.10.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
@@ -25,7 +25,7 @@ import pytest
 
 from _shared_paths import CLAUDE_DIR
 
-SCRIPT = CLAUDE_DIR / "_scripts" / "_audit_scripts" / "audit_rule_usage.py"
+SCRIPT = CLAUDE_DIR / "scripts" / "_audit_scripts" / "audit_rule_usage.py"
 TODAY = date(2026, 10, 1)
 LAZY_GUIDES = "_style_guide_standards"  # on-demand style guides, in their own folder once installed too
 SCOPED_GUIDES = "rules/04_path_scoped/style_guide_standards"

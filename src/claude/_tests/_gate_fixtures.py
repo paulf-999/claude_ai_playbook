@@ -1,6 +1,6 @@
 """Builds fake skills for the skill authoring gate's walk and run tests.
 
-The gate linter ships in the config's ``_scripts/_lint_scripts/``, so it is loaded from
+The gate linter ships in the config's ``scripts/_lint_scripts/``, so it is loaded from
 there. A config without it, such as a partial install, has no linter, so tests
 that import this module skip there rather than fail.
 """
@@ -13,7 +13,7 @@ import pytest
 
 from _shared_paths import CLAUDE_DIR
 
-LINTER_PATH = CLAUDE_DIR / "_scripts" / "_lint_scripts" / "lint_skill_authoring_gate.py"
+LINTER_PATH = CLAUDE_DIR / "scripts" / "_lint_scripts" / "lint_skill_authoring_gate.py"
 if not LINTER_PATH.exists():
     pytest.skip(f"skill authoring gate linter not found at {LINTER_PATH}", allow_module_level=True)
 

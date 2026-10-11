@@ -3,9 +3,9 @@ paths:
   - "**/.claude/**"
   - "**/claude/**"
 ---
-<!-- version: 3.0.0 -->
+<!-- version: 3.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-11 -->
 # 🏗️ Directory Organisation — `~/.claude/`
 
 **Purpose:** Define what directories exist in the Claude config, their purpose, and the distinction between user-created and auto-generated directories.
@@ -38,7 +38,7 @@ paths:
 **Tier 3: Infrastructure (_tests/, _templates/, _docs/)**
 - Tests, templates and additional documentation
 
-**Tier 4: Domain-specific (agents/, hooks/, skills/, wip/)**
+**Tier 4: Domain-specific (agents/, hooks/, scripts/, skills/, wip/)**
 - Custom sub-agents, enforcement/style-guide hooks, reusable skills, work-in-progress features
 
 **Tier 5: Auto-generated (backups/, memory/, projects/, sessions/)**

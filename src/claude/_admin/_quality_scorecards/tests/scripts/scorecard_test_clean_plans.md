@@ -19,4 +19,4 @@
 ## 🔗 Related files
 
 - `src/claude/_tests/scripts/test_clean_plans.py` — the test being scored
-- `src/claude/_scripts/_clean_scripts/clean_plans.py` — what the test guards
+- `src/claude/scripts/_clean_scripts/clean_plans.py` — what the test guards

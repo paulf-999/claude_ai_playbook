@@ -1,7 +1,7 @@
-<!-- version: 1.1.1 -->
+<!-- version: 1.1.2 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-10-06 -->
-<!-- applies_to: **/hooks/*.sh, **/_tests/**/*.py, **/_scripts/**/*.py -->
+<!-- updated: 2026-10-11 -->
+<!-- applies_to: **/hooks/*.sh, **/_tests/**/*.py, **/scripts/**/*.py -->
 <!-- miss_cost: high — hooks and tests fail silently on another machine -->
 <!-- loading: always-on — a miss fails silently on another machine, and a new hook or test can start before a matching file is open -->
 # 🌍 Portable Paths

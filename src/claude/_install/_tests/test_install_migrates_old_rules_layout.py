@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-03
 # Date updated:      2026-10-11
-# Version:           2.2.0
+# Version:           2.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -12,7 +12,8 @@
 
 Rules used to live in ``_rules/``, with path-scoped ones linked into ``rules/`` by the install.
 They now ship in ``rules/`` and ``_rules_lazy_load/`` directly, so the install removes the old
-links, removes any old file whose content the repo shipped, and moves any file you added under
+links, removes any old file whose content the repo shipped (in ``_rules/`` or already moved into
+``_rules_lazy_load/``), and moves any file you added under
 ``_rules/`` to the same place in ``_rules_lazy_load/`` (whose root was ``_rules/05_lazy_load/``),
 never overwriting. Each test runs the real
 ``migrate_old_rules_layout`` step against a temp target.
@@ -155,3 +156,30 @@ def test_shipped_copies_get_one_summary_line(tmp_path: Path):
     output = migrate(tmp_path)
     assert "Removed old shipped copies from _rules/: 3 (the backup keeps them)" in output, output
     assert output.count("_rules/05_lazy_load/") == 0, f"individual files were listed: {output}"
+
+
+# --- Old shipped copies already moved into _rules_lazy_load/ ---
+
+
+def test_stale_shipped_copy_in_lazy_folder_is_removed(tmp_path: Path):
+    """A shipped copy the first migration moved into _rules_lazy_load/ is removed, with empty folders."""
+    write(tmp_path, f"{LAZY}/01_essentials/guiding_principles.md", SHIPPED)
+    output = migrate(tmp_path)
+    assert not (tmp_path / LAZY / "01_essentials").exists(), "the stale shipped copy or its folder was kept"
+    assert f"Removed old shipped copies from {LAZY}/: 1 (the backup keeps them)" in output, output
+
+
+def test_lazy_file_the_install_ships_is_kept(tmp_path: Path):
+    """A file this install ships stays, even though its content is in the repo's history."""
+    write(tmp_path, f"{LAZY}/README.md", SHIPPED)
+    output = migrate(tmp_path)
+    assert (tmp_path / LAZY / "README.md").read_text() == SHIPPED, "a currently shipped lazy file was removed"
+    assert "Removed old shipped copies" not in output, output
+
+
+def test_your_own_lazy_file_is_kept(tmp_path: Path):
+    """A file you wrote has content the repo never stored, so it stays where it is."""
+    write(tmp_path, f"{LAZY}/_learned/my_rule.md", "# My own learned rule\n")
+    output = migrate(tmp_path)
+    assert (tmp_path / LAZY / "_learned" / "my_rule.md").is_file(), "your own lazy file was removed"
+    assert "Removed old shipped copies" not in output, output

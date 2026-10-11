@@ -1,4 +1,4 @@
-<!-- version: 4.3.2 -->
+<!-- version: 4.3.3 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-11 -->
 # 🏷️ Naming patterns — files, objects, and artefacts
@@ -53,11 +53,11 @@
 
 | Pattern | Example | What it's for |
 |---|---|---|
-| `_scripts/_<verb>_scripts/<verb>_<subject>.py` | `_audit_scripts/audit_rule_usage.py` | Reports on the config without changing it |
+| `scripts/_<verb>_scripts/<verb>_<subject>.py` | `_audit_scripts/audit_rule_usage.py` | Reports on the config without changing it |
 | | `_clean_scripts/clean_plans.py` | Archives or removes old files |
 | | `_lint_scripts/lint_claude_tags.py` | Checks files against a standard and fails on breaches |
 
-- **Group folder:** every script sits in a `_<verb>_scripts/` folder, never loose in `_scripts/`.
+- **Group folder:** every script sits in a `_<verb>_scripts/` folder, never loose in `scripts/`.
 - **Verb first:** the filename starts with its folder's verb, so the name says what the script does.
 - **New verb:** add a new `_<verb>_scripts/` folder only once two scripts share that verb.
 - **Enforced by:** `_tests/scripts/test_script_naming.py`.

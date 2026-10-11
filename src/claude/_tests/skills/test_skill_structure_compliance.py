@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-10
-# Version:           2.0.4
+# Date updated:      2026-10-11
+# Version:           2.0.5
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -11,7 +11,7 @@
 """Every installed skill must pass the skill authoring gate's crawl criteria.
 
 The current skill standard (``authoring_guidelines_lazy_load/authoring_skills/_core_standards.md``)
-is implemented once, in ``_scripts/_lint_scripts/lint_skill_authoring_gate.py``. The
+is implemented once, in ``scripts/_lint_scripts/lint_skill_authoring_gate.py``. The
 pre-commit hook only runs it when skill files are staged, so this suite runs
 the same checks on every pytest run, and proves each check really fires
 using deliberately broken fixture skills.
@@ -26,9 +26,9 @@ import pytest
 
 from _shared_paths import CLAUDE_DIR, SKILLS_DIR
 
-# The linter ships in the config's _scripts/_lint_scripts/. A config without it
+# The linter ships in the config's scripts/_lint_scripts/. A config without it
 # skips the whole module rather than failing.
-LINTER_PATH = CLAUDE_DIR / "_scripts" / "_lint_scripts" / "lint_skill_authoring_gate.py"
+LINTER_PATH = CLAUDE_DIR / "scripts" / "_lint_scripts" / "lint_skill_authoring_gate.py"
 if not LINTER_PATH.exists():
     pytest.skip(f"skill authoring gate linter not found at {LINTER_PATH}", allow_module_level=True)
 
