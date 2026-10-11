@@ -179,7 +179,7 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 
 ### `claude_config/delegating_to_subagent.md`
 
-- Pointer from: `02_claude_standards/claude_operational_efficiency/_claude_when_to_delegate.md` — delegating to user vs. sub-agent overview
+- Pointer from: `02_claude_standards/claude_working_practices/claude_operational_efficiency/_claude_when_to_delegate.md` — delegating to user vs. sub-agent overview
 
 ### `claude_config/hooks_decision_framework.md`
 
@@ -191,7 +191,7 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 
 ### `claude_config/automation_troubleshooting.md`
 
-- Pointer from: `02_claude_standards/claude_operational_efficiency/_automation_controls.md` — the caps and kill-switch this file helps recover from
+- Pointer from: `02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md` — the caps and kill-switch this file helps recover from
 
 ### `claude_config/hooks_decision_framework/_precedent_and_examples.md`
 

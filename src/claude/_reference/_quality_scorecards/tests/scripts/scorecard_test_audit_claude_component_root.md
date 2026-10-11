@@ -20,4 +20,4 @@
 
 - `src/claude/_tests/scripts/test_audit_claude_component_root.py` — the test being scored
 - `src/claude/scripts/_audit_scripts/audit_claude_component.py` — what the test guards
-- `src/claude/rules/02_claude_standards/portable_paths.md` — why the root is never guessed
+- `src/claude/rules/02_claude_standards/claude_working_practices/portable_paths.md` — why the root is never guessed

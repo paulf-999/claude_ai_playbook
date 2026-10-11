@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           1.3.1
+# Version:           1.3.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -36,7 +36,7 @@ STEPS = (
 )
 IMPORT = re.compile(r"^@(\S+\.md)\s*$", re.M)
 SQL_GUIDE = Path("rules/04_path_scoped/style_guide_standards/sql.md")
-PORTABLE = Path("rules/02_claude_standards/portable_paths.md")
+PORTABLE = Path("rules/02_claude_standards/claude_working_practices/portable_paths.md")
 BARE_PROSE = "`~/.claude/` exists (Claude Code's own state dir"
 
 

@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
 # Date updated:      2026-10-11
-# Version:           3.2.2
+# Version:           3.2.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -88,7 +88,8 @@ def test_lazy_rules_live_outside_rules():
 # guiding_principles.md asks for.
 # 39 -> 42 on 2026-10-11: _mcp_trust_model.md, _turn_budgets.md and _automation_controls.md load every
 # session because a high miss cost can't rest on a pointer and no file type marks their sessions.
-MAX_STARTUP_FILES = 42
+# 42 -> 43 on 2026-10-11: claude_working_practices.md indexes the plans, efficiency and portable-paths group.
+MAX_STARTUP_FILES = 43
 STARTUP_IMPORT = re.compile(r"^@~/[^/\s]+/(\S+\.md)\s*$", re.M)
 
 

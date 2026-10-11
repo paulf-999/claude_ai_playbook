@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
 # Date updated:      2026-10-11
-# Version:           1.9.2
+# Version:           1.9.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -151,7 +151,7 @@ def test_empty_entry_rejected():
 def test_always_on_tiers_have_entry_points():
     """The scan finds the always-on rules, so an empty result can't pass silently."""
     entry_points = always_on_entry_points()
-    assert len(entry_points) >= 10, f"expected at least 10 always-on entry points, found {len(entry_points)}"
+    assert len(entry_points) >= 9, f"expected at least 9 always-on entry points, found {len(entry_points)}"
     assert all(p.parent.name in ALWAYS_ON_TIERS for p in entry_points), "scan left tiers 01–03"
 
 

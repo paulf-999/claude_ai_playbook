@@ -1,4 +1,4 @@
-<!-- version: 1.4.0 -->
+<!-- version: 1.4.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-11 -->
 <!-- applies_to: * -->
@@ -42,19 +42,19 @@
 
 ## 🤝 When to delegate
 
-- **Loads on its own from:** `rules/02_claude_standards/claude_operational_efficiency/_claude_when_to_delegate.md`
+- **Loads on its own from:** `rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_claude_when_to_delegate.md`
 
 ---
 
 ## 🔄 Turn budgets
 
-- **Loads on its own from:** `rules/02_claude_standards/claude_operational_efficiency/_turn_budgets.md`
+- **Loads on its own from:** `rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_turn_budgets.md`
 
 ---
 
 ## ⚙️ Automation controls
 
-- **Loads on its own from:** `rules/02_claude_standards/claude_operational_efficiency/_automation_controls.md`
+- **Loads on its own from:** `rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md`
 
 ---
 
@@ -68,16 +68,16 @@
 
 ## 🔐 External system access
 
-- **Loads on its own from:** `rules/02_claude_standards/claude_operational_efficiency/_external_system_access.md`
+- **Loads on its own from:** `rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_external_system_access.md`
 
 ---
 
 ## 📋 Task request conventions
 
-- **Loads on its own from:** `rules/02_claude_standards/claude_operational_efficiency/_task_request_conventions.md`
+- **Loads on its own from:** `rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_task_request_conventions.md`
 
 ---
 
 ## 🔌 MCP server toggling
 
-- **Loads on its own from:** `rules/02_claude_standards/claude_operational_efficiency/_mcp_server_toggling.md`
+- **Loads on its own from:** `rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_mcp_server_toggling.md`

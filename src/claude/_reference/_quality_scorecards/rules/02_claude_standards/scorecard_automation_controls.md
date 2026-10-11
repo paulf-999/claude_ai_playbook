@@ -21,9 +21,9 @@
 
 ## 🔗 Related files
 
-- `src/claude/rules/02_claude_standards/claude_operational_efficiency/_automation_controls.md` — the rule being scored
+- `src/claude/rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md` — the rule being scored
 - `src/claude/_tests/rules/02_claude_standards/test_automation_controls.py` — Test Coverage dimension
-- `src/claude/rules/02_claude_standards/claude_operational_efficiency.md` — Currency dimension (the real file the stale reference should point to)
+- `src/claude/rules/02_claude_standards/claude_working_practices/claude_operational_efficiency.md` — Currency dimension (the real file the stale reference should point to)
 
 ---
 

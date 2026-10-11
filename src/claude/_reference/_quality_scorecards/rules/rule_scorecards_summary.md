@@ -14,7 +14,7 @@
 | Tier | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
 | 01_essentials | 3 | 8.6/10 | 2026-10-01 | • 💪 **Strongest:** `guiding_principles.md` (9.0/10)<br>• ⚠️ **Weakest:** `claude_response_standards.md` (7.9/10) |
-| 02_claude_standards | 5 | 8.2/10 | 2026-10-01 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_plans.md` (7.6/10) |
+| 02_claude_standards | 6 | 8.2/10 | 2026-10-11 | • 💪 **Strongest:** `portable_paths.md` (9.4/10)<br>• ⚠️ **Weakest:** `claude_plans.md` (7.6/10) |
 | 03_authoring_guidelines | 4 | 8.3/10 | 2026-10-01 | • 💪 **Strongest:** `authoring_skills.md` (8.7/10)<br>• ⚠️ **Weakest:** `authoring_agents.md` (7.9/10) |
 | 04_claude_reference | 1 | 7.1/10 | 2026-09-28 | • 💪 **Only file:** `claude_operational_efficiency.md` (7.1/10) |
 | 05_lazy_load | 17 | 8.3/10 | 2026-10-01 | • 💪 **Strongest:** `latency_optimisation.md` (9.2/10)<br>• ⚠️ **Weakest:** `makefile.md` (6.8/10) |
@@ -59,6 +59,7 @@ Sorted by Overall score, highest first.
 | `05_lazy_load/style_guide_standards/scorecard_python.md` | 8.5/10 | 2026-10-01 | — (≥8.5) |
 | `03_authoring_guidelines/scorecard_claude_config_metadata.md` | 8.4/10 | 2026-09-28 | • Re-score Evidence of Need after one audit cycle has used the backfilled `updated` dates<br>• Decide whether shared authoring standards should stay always-on or move behind a reachability exemption, to recover the ~400 tokens/session |
 | `03_authoring_guidelines/scorecard_authoring_rules.md` | 8.3/10 | 2026-10-01 | • Extend `test_authoring_rules.py` to check the checklist's tier names against the actual directory structure, so tier-name drift is caught mechanically<br>• Add content-regression checks for the two children, so the recorded mistakes and gates can't be lost silently in a later edit |
+| `02_claude_standards/scorecard_claude_working_practices.md` | 8.3/10 | 2026-10-11 | • Add a content test for the index, or drop it if the extra startup file isn't worth it |
 | `05_lazy_load/style_guide_standards/infra/scorecard_docker.md` | 8.2/10 | 2026-10-01 | • Add some inline content (principles, examples, or a "when to load" column) |
 | `05_lazy_load/style_guide_standards/scorecard_dbt.md` | 8.2/10 | 2026-10-01 | • Reconcile the redundant `@./dbt/*.md` imports block with the "Child pages" markdown-link table above it |
 | `05_lazy_load/style_guide_standards/utilities/scorecard_mermaid.md` | 8.2/10 | 2026-10-01 | • Add inline principles or a short example, so the file is more than a 2-item routing list |

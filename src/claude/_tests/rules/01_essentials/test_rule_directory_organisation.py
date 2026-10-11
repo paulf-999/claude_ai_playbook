@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-06
-# Version:           2.3.0
+# Date updated:      2026-10-11
+# Version:           2.3.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -42,6 +42,7 @@ USAGE_STANDARDS_SUBDIRS = {"naming_standards"}
 # Folders that group parents or shared children rather than one parent's children
 GROUPING_DIRS = {
     "01_essentials/claude_usage_standards",
+    "02_claude_standards/claude_working_practices",
     "03_authoring_guidelines/shared_standards",
 }
 

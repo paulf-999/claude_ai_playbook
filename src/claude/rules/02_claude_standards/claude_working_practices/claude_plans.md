@@ -1,6 +1,6 @@
-<!-- version: 2.1.1 -->
+<!-- version: 2.1.2 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-11 -->
 <!-- applies_to: * -->
 <!-- miss_cost: medium — phases run without approval, so wrong turns need rework -->
 <!-- loading: always-on — any task can grow into multi-phase work that needs approval gates -->
@@ -53,13 +53,13 @@
 
 ## 🗂️ Plan-Mode Phase Gates
 
-- **Loads on its own from:** `rules/02_claude_standards/claude_plans/_plan_mode_phase_gates.md`
+- **Loads on its own from:** `rules/02_claude_standards/claude_working_practices/claude_plans/_plan_mode_phase_gates.md`
 
 ---
 
 ## 📊 Plan file format
 
-- **Loads on its own from:** `rules/02_claude_standards/claude_plans/_plan_file_format.md`
+- **Loads on its own from:** `rules/02_claude_standards/claude_working_practices/claude_plans/_plan_file_format.md`
 
 ---
 
