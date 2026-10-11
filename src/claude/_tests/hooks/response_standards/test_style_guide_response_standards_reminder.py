@@ -1,14 +1,14 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-07
-# Date updated:      2026-10-02
-# Version:           2.1.0
+# Date updated:      2026-10-11
+# Version:           2.1.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Test suite for hook_style_guide_response_standards_inject.sh.
+"""Test suite for hook_style_guide_response_standards_reminder.sh.
 
 Validates the per-turn salience-injection hook: it must exit 0 and emit valid
 JSON whose hookSpecificOutput.additionalContext carries the response-standards
@@ -31,7 +31,7 @@ import pytest
 
 from _shared_paths import CLAUDE_DIR
 
-HOOK_SCRIPT = str(CLAUDE_DIR / "hooks" / "hook_style_guide_response_standards_inject.sh")
+HOOK_SCRIPT = str(CLAUDE_DIR / "hooks" / "hook_style_guide_response_standards_reminder.sh")
 
 
 class TestResponseStandardsInjectHook:

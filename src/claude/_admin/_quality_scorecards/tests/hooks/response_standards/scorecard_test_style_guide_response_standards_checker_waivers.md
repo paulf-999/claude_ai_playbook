@@ -1,4 +1,4 @@
-# Quality Scorecard — test_style_guide_response_standards_waivers.py
+# Quality Scorecard — test_style_guide_response_standards_checker_waivers.py
 
 **Date Created:** 2026-10-01
 **Date Updated:** 2026-10-01
@@ -18,5 +18,5 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_waivers.py` — the test being scored
-- `src/claude/hooks/hook_style_guide_response_standards.sh` — what the test guards
+- `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_checker_waivers.py` — the test being scored
+- `src/claude/hooks/hook_style_guide_response_standards_checker.sh` — what the test guards

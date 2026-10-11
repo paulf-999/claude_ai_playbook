@@ -1,15 +1,15 @@
 #!/bin/bash
 # version: 1.0.3
 # created: 2026-09-07
-# updated: 2026-10-10
-# hook_style_guide_response_standards.sh
+# updated: 2026-10-11
+# hook_style_guide_response_standards_checker.sh
 #
 # Enforce Response Standards hook: validates response format compliance
 # Checks for Summary structure, offer line, response timing footer
 # Flags deviations but does not block execution
 #
 # RESERVED — deliberately NOT registered in settings.json. Do not delete it as unused.
-# It is the planned "walk" step if per-turn injection (hook_style_guide_response_standards_inject.sh)
+# It is the planned "walk" step if per-turn injection (hook_style_guide_response_standards_reminder.sh)
 # stops keeping responses compliant — see _rules_lazy_load/claude_config/response_standards_enforcement.md.
 # test_hook_registry_utils.py fails if this file is removed, registered or loses this note
 # without its RESERVED_HOOKS entry being updated to match.

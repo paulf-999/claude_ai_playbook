@@ -71,7 +71,7 @@ Tests for Claude Code hook scripts in `~/.claude/hooks/`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_hook_registry_utils.py` | `settings.json` hook registry — known events, command hooks, no duplicates, every referenced hook file exists, and every hook file is registered or listed in `RESERVED_HOOKS` | 9/10 | 2026-08-28 | 2026-10-10 | 2.3.3 |
+| `test_hook_registry_utils.py` | `settings.json` hook registry — known events, command hooks, no duplicates, every referenced hook file exists, and every hook file is registered or listed in `RESERVED_HOOKS` | 9/10 | 2026-08-28 | 2026-10-11 | 2.3.3 |
 
 **Archived:** `test_auto_rotate_todo.py` moved to `_tests/_archived/` (2026-09-18) — `rotate_todo.sh` and `hook_auto_rotate_todo.sh` were never built despite a stale "Ready for production" claim in `TODO.md`; see the file's own archival note.
 
@@ -89,9 +89,9 @@ Tests for Claude Code hook scripts in `~/.claude/hooks/`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_style_guide_response_standards_flags.py` | `hook_style_guide_response_standards.sh` (reserved) — flags a missing Summary, offer line or timing footer, and text after the footer | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
-| `test_style_guide_response_standards_waivers.py` | `hook_style_guide_response_standards.sh` (reserved) — skips short answers, skill output, code blocks, errors and plan-mode output | 9/10 | 2026-10-01 | 2026-10-01 | 1.0.0 |
-| `test_style_guide_response_standards_inject.py` | `hook_style_guide_response_standards_inject.sh` — per-turn salience injection, timestamp, waiver handling | 9/10 | 2026-09-07 | 2026-10-02 | 2.1.0 |
+| `test_style_guide_response_standards_checker_flags.py` | `hook_style_guide_response_standards_checker.sh` (reserved) — flags a missing Summary, offer line or timing footer, and text after the footer | 9/10 | 2026-10-01 | 2026-10-11 | 1.0.1 |
+| `test_style_guide_response_standards_checker_waivers.py` | `hook_style_guide_response_standards_checker.sh` (reserved) — skips short answers, skill output, code blocks, errors and plan-mode output | 9/10 | 2026-10-01 | 2026-10-11 | 1.0.1 |
+| `test_style_guide_response_standards_reminder.py` | `hook_style_guide_response_standards_reminder.sh` — per-turn salience injection, timestamp, waiver handling | 9/10 | 2026-09-07 | 2026-10-11 | 2.1.1 |
 
 ---
 

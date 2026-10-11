@@ -1,6 +1,6 @@
-<!-- version: 1.2.2 -->
+<!-- version: 1.2.3 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-10-02 -->
+<!-- updated: 2026-10-11 -->
 <!-- miss_cost: low — the enforcement hook changes without its tests -->
 <!-- loading: lazy — only matters when changing the response-format hook or its tests -->
 # 🔒 Response Standards Enforcement
@@ -31,7 +31,7 @@ This standard is enforced by **per-turn salience injection** (the "crawl" mechan
 
 ## 🛠️ Implementation
 
-Enforcement is implemented via the injection hook: `~/.claude/hooks/hook_style_guide_response_standards_inject.sh`
+Enforcement is implemented via the injection hook: `~/.claude/hooks/hook_style_guide_response_standards_reminder.sh`
 
 - **Event:** `UserPromptSubmit` — fires before Claude responds (the high-salience slot).
 - **Behaviour:** Emits the compact directive (Summary format, offer line, timing footer) as `hookSpecificOutput.additionalContext` on stdout.
@@ -39,10 +39,10 @@ Enforcement is implemented via the injection hook: `~/.claude/hooks/hook_style_g
 - **Cost:** Zero LLM cost; a small per-turn context injection — salience, not volume, is what makes it work.
 - **Skill waiver:** a prompt starting with `/<skill_name>` gets no injection when that skill's `skill.contract.yaml` sets `waives_response_standards: true`; natural-language skill runs and follow-up turns still get it.
 
-**Test coverage:** `_tests/hooks/response_standards/test_style_guide_response_standards_inject.py` — asserts the hook exits 0 and emits valid JSON whose `additionalContext` contains the required markers (`**Summary**`, `More detail? (Y/N)`, `Response time: Xs`) plus a real injected `PROMPT_SUBMITTED_AT` start timestamp.
+**Test coverage:** `_tests/hooks/response_standards/test_style_guide_response_standards_reminder.py` — asserts the hook exits 0 and emits valid JSON whose `additionalContext` contains the required markers (`**Summary**`, `More detail? (Y/N)`, `Response time: Xs`) plus a real injected `PROMPT_SUBMITTED_AT` start timestamp.
 
 **Future path (the "walk" escalation) — build only if injection proves insufficient:**
 - **Mechanism:** 🚪 A `type:"prompt"` `Stop` hook that runs an LLM to validate each finished response and force correction.
 - **Trade-off:** ⚖️ Hard mechanical guarantee, but incurs a model call on every substantive turn (cost + latency).
-- **Reserved asset:** 🧪 The post-response validator `hook_style_guide_response_standards.sh` (+ its `_flags` and `_waivers` tests) is retained for this path — it is not wired into `settings.json` today.
+- **Reserved asset:** 🧪 The post-response validator `hook_style_guide_response_standards_checker.sh` (+ its `_checker_flags` and `_checker_waivers` tests) is retained for this path — it is not wired into `settings.json` today.
 - **Kept on purpose:** 🛡️ `test_hook_registry_utils.py` lists it in `RESERVED_HOOKS`, so deleting it, wiring it in, or dropping its RESERVED header note fails the suite until that list is updated too.

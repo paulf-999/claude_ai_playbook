@@ -7,7 +7,7 @@ Practices that pay off once you are comfortable with the basics. Each one reduce
 | 🧠 Enable auto-memory | Anthropic | Persist project knowledge across sessions — dbt patterns, DAG conventions, decisions — without manual effort. | [`"autoMemoryEnabled": true`](../../src/claude/settings.json#L2) |
 | 🔌 MCP server discipline | Team | Integration servers (Jira, Confluence, email) enabled per session, not always-on — keeps attack surface small. | [enable/disable config](#mcp-discipline) |
 | ⚖️ Frame work as trivial or non-trivial | Anthropic | Match your process to task complexity — not every change deserves the same approach. | [Trivial vs non-trivial](#trivial-vs-non-trivial) |
-| 🤖 Automate repetitive instructions | Anthropic | Turn recurring instructions (run the linter, follow these conventions) into hooks or skills so they fire automatically. | [`hook_enforcement_naming_convention.sh`](../../src/claude/hooks/hook_enforcement_naming_convention.sh), [`hook_style_guide_response_standards_inject.sh`](../../src/claude/hooks/hook_style_guide_response_standards_inject.sh) |
+| 🤖 Automate repetitive instructions | Anthropic | Turn recurring instructions (run the linter, follow these conventions) into hooks or skills so they fire automatically. | [`hook_enforcement_naming_convention.sh`](../../src/claude/hooks/hook_enforcement_naming_convention.sh), [`hook_style_guide_response_standards_reminder.sh`](../../src/claude/hooks/hook_style_guide_response_standards_reminder.sh) |
 | 🏷️ Tag schema | Team | Stamp maturity and criticality metadata on every skill you create — makes auditing the skill library meaningful. | [Tag schema](#tag-schema) |
 
 ---

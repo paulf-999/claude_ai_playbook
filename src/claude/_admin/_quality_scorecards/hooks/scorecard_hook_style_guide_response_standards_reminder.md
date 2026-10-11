@@ -1,4 +1,4 @@
-# Quality Scorecard — hook_style_guide_response_standards_inject.sh
+# Quality Scorecard — hook_style_guide_response_standards_reminder.sh
 
 **Date Created:** 2026-10-02
 **Date Updated:** 2026-10-02
@@ -18,7 +18,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/hooks/hook_style_guide_response_standards_inject.sh` — the hook being scored
+- `src/claude/hooks/hook_style_guide_response_standards_reminder.sh` — the hook being scored
 - `src/claude/rules/_rules_lazy_load/claude_config/response_standards_enforcement.md` — Evidence of Need dimension
-- `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_inject.py` — Test Coverage dimension
+- `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_reminder.py` — Test Coverage dimension
 - `src/claude/rules/01_essentials/claude_response_standards.md` — the full rules the directive points to

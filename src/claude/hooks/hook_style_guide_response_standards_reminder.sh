@@ -1,7 +1,7 @@
 #!/bin/bash
-# version: 4.0.0
+# version: 4.0.1
 # created: 2026-09-07
-# updated: 2026-10-02
+# updated: 2026-10-11
 #
 # Per-turn salience injection for Response Standards.
 # Fires on UserPromptSubmit (before Claude responds) and emits a compact,

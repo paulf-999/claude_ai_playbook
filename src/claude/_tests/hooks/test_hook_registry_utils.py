@@ -1,7 +1,7 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-10
+# Date updated:      2026-10-11
 # Version:           2.3.3
 # Test quality score: 9/10
 # Test complexity score: 7/10
@@ -26,7 +26,9 @@ from _shared_paths import CLAUDE_DIR, HOOKS_DIR, SETTINGS_FILE, resolve_config_p
 
 # Hooks kept on purpose but not registered, mapped to the rule that explains why
 RESERVED_HOOKS = {
-    "hook_style_guide_response_standards.sh": "_rules_lazy_load/claude_config/response_standards_enforcement.md",
+    "hook_style_guide_response_standards_checker.sh": (
+        "_rules_lazy_load/claude_config/response_standards_enforcement.md"
+    ),
 }
 RESERVED_MARKER = "RESERVED"
 

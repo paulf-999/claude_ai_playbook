@@ -1,26 +1,26 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-01
-# Version:           1.0.0
+# Date updated:      2026-10-11
+# Version:           1.0.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Proves hook_style_guide_response_standards.sh skips the responses the standard waives.
+"""Proves hook_style_guide_response_standards_checker.sh skips the responses the standard waives.
 
 Short answers, skill output, code blocks, errors and plan-mode output are exempt
 from the format checks. Each waiver test uses a response long enough to be checked
 (50+ words) and pairs it with a control that has the marker removed and is flagged,
 so a waiver can't pass just because its sample text is short.
-``test_style_guide_response_standards_flags.py`` covers the checks themselves.
+``test_style_guide_response_standards_checker_flags.py`` covers the checks themselves.
 """
 import subprocess
 
 from _shared_paths import HOOKS_DIR
 
-HOOK_PATH = HOOKS_DIR / "hook_style_guide_response_standards.sh"
+HOOK_PATH = HOOKS_DIR / "hook_style_guide_response_standards_checker.sh"
 FLAG_HEADER = "🚩 Response Standards Check"
 LONG_TEXT = (
     "This text is long enough to count as a substantive response under the fifty word rule, "

@@ -1,4 +1,4 @@
-# Quality Scorecard — test_style_guide_response_standards_inject.py
+# Quality Scorecard — test_style_guide_response_standards_reminder.py
 
 **Date Created:** 2026-09-30
 **Date Updated:** 2026-10-01
@@ -18,5 +18,5 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_inject.py` — the test being scored
-- `src/claude/hooks/hook_style_guide_response_standards_inject.sh` — what the test guards
+- `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_reminder.py` — the test being scored
+- `src/claude/hooks/hook_style_guide_response_standards_reminder.sh` — what the test guards
