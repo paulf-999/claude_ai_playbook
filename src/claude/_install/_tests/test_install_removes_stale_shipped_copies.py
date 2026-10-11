@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-11
 # Date updated:      2026-10-11
-# Version:           1.0.1
+# Version:           1.0.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -23,8 +23,11 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[4]
 UTILS = REPO_ROOT / "src" / "claude" / "_install" / "helpers" / "claude_file_utils.sh"
 
-# Committed, so the repo stores this exact content
-SHIPPED = (REPO_ROOT / "src" / "claude" / "rules" / "_rules_lazy_load" / "README.md").read_text()
+# Read from HEAD, not the working tree, so the repo stores this exact content even mid-edit
+SHIPPED = subprocess.run(
+    ["git", "show", "HEAD:src/claude/rules/_rules_lazy_load/README.md"],
+    cwd=REPO_ROOT, capture_output=True, text=True, check=True,
+).stdout
 
 
 def write(target: Path, rel: str, text: str = SHIPPED):
