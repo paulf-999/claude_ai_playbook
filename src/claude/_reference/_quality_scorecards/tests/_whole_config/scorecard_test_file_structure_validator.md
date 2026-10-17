@@ -18,6 +18,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/_helpers/test_file_structure_validator.py` — the test being scored
+- `src/claude/_tests/_whole_config/test_file_structure_validator.py` — the test being scored
 - `src/claude/_tests/_helpers/_file_structure_validator.py` — the scanner under test
 - `src/claude/rules/02_claude_standards/path_scoped_rules/claude_directory_structure.md` — what the scanner guards

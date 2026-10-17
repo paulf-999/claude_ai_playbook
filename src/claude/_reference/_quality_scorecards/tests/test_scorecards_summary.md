@@ -20,7 +20,7 @@
 | scripts | 5 | 9.2/10 | 2026-10-11 | • 💪 **Strongest:** 3 files tied at 9.3/10, including `test_audit_claude_component_root.py`<br>• ⚠️ **Weakest:** `test_audit_plans.py` (9.0/10) |
 | settings | 2 | 9.4/10 | 2026-10-01 | • 💪 **Strongest:** `test_aliases.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_settings.py` (9.3/10) |
 | skills | 9 | 9.0/10 | 2026-10-11 | • 💪 **Strongest:** 3 files tied at 9.4/10, including `test_no_orphaned_skill_files.py`<br>• ⚠️ **Weakest:** `test_capture_session_prompts.py` (8.1/10) |
-| _core | 4 | 9.3/10 | 2026-10-11 | • 💪 **Strongest:** `test_rule_reachability.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_file_structure_compliance.py` (8.9/10) |
+| _whole_config | 4 | 9.3/10 | 2026-10-11 | • 💪 **Strongest:** `test_rule_reachability.py` (9.6/10)<br>• ⚠️ **Weakest:** `test_file_structure_compliance.py` (8.9/10) |
 
 ---
 
@@ -41,16 +41,16 @@ Sorted by Overall score, highest first.
 
 | Scorecard | Overall | Date Updated | Recommended improvements |
 |---|---|---|---|
-| `_helpers/scorecard_test_rule_reachability.md` | 9.6/10 | 2026-10-11 | — (≥8.5) |
+| `_whole_config/scorecard_test_rule_reachability.md` | 9.6/10 | 2026-10-11 | — (≥8.5) |
 | `settings/scorecard_test_aliases.md` | 9.6/10 | 2026-10-01 | — (≥8.5) |
-| `_helpers/scorecard_test_metadata_header_format.md` | 9.4/10 | 2026-10-11 | — (≥8.5) |
+| `_whole_config/scorecard_test_metadata_header_format.md` | 9.4/10 | 2026-10-11 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_no_wording_pinning.md` | 9.4/10 | 2026-10-11 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_portable_paths_hooks.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_portable_paths_python.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
 | `skills/scorecard_test_no_orphaned_skill_files.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
 | `skills/scorecard_test_skill_authoring_gate_run.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
 | `skills/scorecard_test_skill_authoring_gate_walk.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
-| `_helpers/scorecard_test_file_structure_validator.md` | 9.3/10 | 2026-10-11 | — (≥8.5) |
+| `_whole_config/scorecard_test_file_structure_validator.md` | 9.3/10 | 2026-10-11 | — (≥8.5) |
 | `admin/scorecard_test_scorecard_dates.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
 | `agents/scorecard_test_agent_triggers.md` | 9.3/10 | 2026-10-11 | — (≥8.5) |
 | `hooks/enforcement/scorecard_test_enforcement_markdown_location.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
@@ -87,7 +87,7 @@ Sorted by Overall score, highest first.
 | `rules/scorecard_test_rules_structure_layout.md` | 9.0/10 | 2026-10-11 | — (≥8.5) |
 | `scripts/scorecard_test_audit_plans.md` | 9.0/10 | 2026-10-11 | — (≥8.5) |
 | `skills/scorecard_test_skill_instructions_section.md` | 9.0/10 | 2026-10-02 | — (≥8.5) |
-| `_helpers/scorecard_test_file_structure_compliance.md` | 8.9/10 | 2026-10-11 | — (≥8.5) |
+| `_whole_config/scorecard_test_file_structure_compliance.md` | 8.9/10 | 2026-10-11 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_concurrent_sessions.md` | 8.9/10 | 2026-10-11 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_testing.md` | 8.9/10 | 2026-10-11 | — (≥8.5) |
 | `rules/rules_lazy_load/scorecard_test_org.md` | 8.9/10 | 2026-10-11 | — (≥8.5) |
