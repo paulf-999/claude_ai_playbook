@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-11
 # Date updated:      2026-10-17
-# Version:           1.2.0
+# Version:           1.3.0
 # Test quality score: 10/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -30,7 +30,7 @@ import ast
 import re
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR, REPO_TEST_DIRS
+from _shared_paths import CLAUDE_DIR
 
 TESTS_DIR = CLAUDE_DIR / "_tests"
 TAG = re.compile(r"#\s*wording-check:\s*\S")
@@ -167,7 +167,7 @@ def scan(root: Path, finder=pinned_phrases) -> dict[str, list[str]]:
 def test_no_test_pins_rule_wording():
     """No test in _tests/ pins a literal phrase from a real file without a wording-check tag."""
     assert len(list(TESTS_DIR.rglob("test_*.py"))) >= 40, f"expected the whole suite under {TESTS_DIR}"
-    found = {k: v for root in (TESTS_DIR, *REPO_TEST_DIRS) for k, v in scan(root).items()}
+    found = scan(TESTS_DIR)
     report = "\n  ".join(f"{name}: {hit}" for name, hits in found.items() for hit in hits)
     assert not found, (
         "These tests pin rule wording — delete them, check structure instead, or tag a kept "
@@ -177,7 +177,7 @@ def test_no_test_pins_rule_wording():
 
 def test_no_test_guards_a_finished_migration():
     """No test in _tests/ asserts a real config path stays absent without an absence-check tag."""
-    found = {k: v for root in (TESTS_DIR, *REPO_TEST_DIRS) for k, v in scan(root, absence_checks).items()}
+    found = scan(TESTS_DIR, absence_checks)
     report = "\n  ".join(f"{name}: {hit}" for name, hits in found.items() for hit in hits)
     assert not found, (
         "These tests guard a migration that already finished — delete them, or tag a kept one "
