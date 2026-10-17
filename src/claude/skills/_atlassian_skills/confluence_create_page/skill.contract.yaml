@@ -1,14 +1,14 @@
 ---
 name: confluence_create_page
-version: 1.2.2
-summary: Create Confluence pages using the general_page pattern with local draft review and explicit approval
+version: 1.3.0
+summary: Create Confluence pages using the general_page or platform_risk_assessment pattern with local draft review and explicit approval
 maturity: tactical
 test_coverage_level: comprehensive
   # comprehensive = tests/evals.yaml covers validation, draft review,
-  # publish errors and the timeout dialog (9 scenarios);
+  # publish errors and the timeout dialog (10 scenarios);
   # matches tags.tested: true in SKILL.md
 date_created: '2026-08-28'
-date_updated: '2026-10-11'
+date_updated: '2026-10-17'
 
 dispatch:
     triggers:
@@ -20,10 +20,12 @@ dispatch:
             - add to confluence
             - write a confluence page
             - create a page in confluence
+            - platform risk assessment
+            - maturity assessment
     not_for:
         - Bulk page creation (planned for v2.0)
         - Page updates or editing (use /confluence_update_page in v2.0)
-        - Multiple page patterns beyond general_page (v2.0+)
+        - Page patterns beyond general_page and platform_risk_assessment (v2.0+)
         - Complex ADF formatting beyond standard sections
 
 output:
