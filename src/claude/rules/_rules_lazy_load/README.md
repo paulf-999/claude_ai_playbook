@@ -15,6 +15,7 @@
 | `claude_config/` | **automation_troubleshooting.md** | Recovery steps, a decision tree and a pre-flight checklist for `/loop`, `/batch` and `/goal` | When an automation run misbehaves, or before choosing one |
 | `claude_config/` | **delegating_to_subagent.md** | When to spawn a sub-agent vs. work directly; constraints and token-cost breakeven | Before spawning a sub-agent |
 | `claude_config/` | **hooks_decision_framework.md** | ROI criteria for proposing hooks; child `hooks_decision_framework/` holds the 2026-08-07 precedent | Before proposing a hook or automation |
+| `claude_config/` | **usage_evidence.md** | How to show a config feature gets used, red flags for speculative ones, and the audit cadence | Before adding or keeping a hook, setting, import or alias |
 | `claude_config/` | **response_standards_enforcement.md** | How the per-turn injection hook enforces the response format, and the reserved validator path | Changing the response-standards hook or its tests |
 | `claude_config/claude_cost/` | **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
 | — | **testing.md** (in `rules/02_claude_standards/path_scoped_rules/`) | When tests are required, test goals, test layers and running the suite; lazy children in `testing_lazy_load/` cover design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit | Loads through `paths:` on Python, shell, SQL and `_tests/` files |

@@ -1,6 +1,6 @@
 ---
 date_created: "2026-08-28"
-date_updated: "2026-10-01"
+date_updated: "2026-10-17"
 status: active
 ---
 
@@ -10,21 +10,22 @@ status: active
 
 **Skip this phase if:** Pattern argument was provided and validated ✓
 
-**Otherwise:** Ask the user which type of Confluence page they want to create. For the MVP, present:
+**Otherwise:** Ask the user which type of Confluence page they want to create. Present:
 
-**Available pattern:**
+**Available patterns:**
 
 | Pattern | Description |
 |---|---|
 | `general_page` | General-purpose page — free-form sections using the standard DM page template |
-
-Additional patterns may be added later — not part of this MVP.
+| `platform_risk_assessment` | Platform Risk & Maturity Assessment — rates one tool or component across fixed themes (L/M/H) |
 
 Wait for the user's response before proceeding.
 
 ---
 
 ## 🏗️ Phase 2 — Follow the general_page pattern
+
+**For `platform_risk_assessment`:** skip this phase — read `reference/_pattern_platform_risk_assessment.md` and follow it instead, then continue to the Local Draft Review phase below.
 
 You are acting as the **technical writer** agent. Adopt that persona fully: gather inputs precisely, build the page from the template, and produce a draft ready to publish.
 

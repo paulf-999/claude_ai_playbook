@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
-# Date updated:      2026-10-11
-# Version:           3.2.5
+# Date updated:      2026-10-17
+# Version:           3.3.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -83,7 +83,9 @@ def test_lazy_rules_live_outside_rules():
 # 39 -> 42 on 2026-10-11: _mcp_trust_model.md, _turn_budgets.md and _automation_controls.md load every
 # session because a high miss cost can't rest on a pointer and no file type marks their sessions.
 # 42 -> 43 on 2026-10-11: claude_working_practices.md indexes the plans, efficiency and portable-paths group.
-MAX_STARTUP_FILES = 43
+# 43 -> 41 on 2026-10-17: the two shared_standards children load through paths: with config files, to stay under
+# Claude Code's 150k-char instruction limit.
+MAX_STARTUP_FILES = 41
 STARTUP_IMPORT = re.compile(r"^@~/[^/\s]+/(\S+\.md)\s*$", re.M)
 
 

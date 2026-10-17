@@ -1,6 +1,11 @@
-<!-- version: 2.5.1 -->
+---
+paths:
+  - "**/.claude/**"
+  - "**/claude/**"
+---
+<!-- version: 2.6.0 -->
 <!-- created: 2026-09-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-17 -->
 # 🗂️ Claude Config Metadata
 
 **Purpose:** One shared per-file metadata standard (version, created, updated) for every authored artefact type in this config — rules, skills, agents, and hooks — defined once here so each domain references it instead of redefining it.

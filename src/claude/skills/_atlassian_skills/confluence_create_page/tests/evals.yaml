@@ -1,7 +1,7 @@
 ---
 _metadata:
     date_created: '2026-06-07'
-    date_updated: '2026-09-19'
+    date_updated: '2026-10-17'
     status: active
 
 skill_name: confluence_create_page
@@ -23,6 +23,24 @@ evals:
           - Claude writes a draft to ~/claude/_drafts/confluence/ before creating anything in Confluence
           - Draft filename uses lowercase with underscores (no spaces, no hyphens)
           - Claude asks the user to review the draft and requests approval before publishing
+          - Claude does not call createConfluencePage until the user explicitly approves the draft
+
+    - name: happy_path_platform_risk_assessment
+      description: Platform risk pattern — gather theme descriptions, rate L/M/H, draft review, publish after approval
+      input:
+          prompt: create a platform risk assessment page for Airbyte
+      setup: {}
+      expected_output: >
+          Claude follows reference/_pattern_platform_risk_assessment.md instead of
+          the general_page phase, gathers the tool, space, parent page and theme
+          descriptions, proposes L/M/H ratings and an executive summary for
+          confirmation, writes a local draft, and publishes only after approval.
+      assertions:
+          - Claude reads reference/_pattern_platform_risk_assessment.md in place of the general_page Phase 2
+          - Claude asks for the target space and parent page rather than defaulting to one
+          - Claude presents L/M/H ratings per theme and flags uncertain ones before writing the draft
+          - Claude writes a draft to ~/_drafts/confluence/ before creating anything in Confluence
+          - The page title follows 'Platform Risk & Maturity Assessment: <tool name>'
           - Claude does not call createConfluencePage until the user explicitly approves the draft
 
     - name: mcp_unavailable
@@ -75,7 +93,7 @@ evals:
           - Claude asks the user to confirm the correct space key rather than guessing one
 
     - name: validation_failure_pattern
-      description: Pattern name outside VALID_PATTERNS (only general_page exists)
+      description: Pattern name outside VALID_PATTERNS (general_page and platform_risk_assessment)
       input:
           title: Data Platform Q4 Roadmap
           space: DOCS
@@ -84,11 +102,12 @@ evals:
       setup: {}
       expected_output: >
           create_confluence_page returns {"success": False, "errors": [...]} with
-          "Invalid pattern 'requirements'. Valid options: general_page".
+          "Invalid pattern 'requirements'. Valid options: general_page,
+          platform_risk_assessment".
       assertions:
           - validate_pattern rejects any pattern name not in VALID_PATTERNS
           - The error message lists the actual valid options, not a generic refusal
-          - Claude falls back to offering the general_page pattern instead of failing silently
+          - Claude falls back to offering the valid patterns instead of failing silently
 
     - name: validation_failure_sections
       description: Duplicate section names — sections must be unique

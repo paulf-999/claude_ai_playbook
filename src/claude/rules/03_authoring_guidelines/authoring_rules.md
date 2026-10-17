@@ -1,6 +1,6 @@
-<!-- version: 4.0.2 -->
+<!-- version: 4.0.3 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-17 -->
 <!-- applies_to: **/rules/**, **/_rules_lazy_load/** -->
 <!-- miss_cost: medium — rules ship without tests or in the wrong tier -->
 <!-- loading: always-on — a new rule can start before any rule file is open, and it points to the shared complexity formula -->
@@ -66,9 +66,9 @@ Before writing any rule, answer these five essential questions:
 - **Metadata header** — lines 1–3 carry `version`, `created` and `updated`, one per line; bump `updated` and `version` on every edit, per the standard below
 - **Staleness reviews** — per `guiding_principles.md` reset cycles, audit all rules every ~6 months, archiving unused rules and refreshing evidence for kept ones
 
-- **Loads on its own from:** `rules/03_authoring_guidelines/shared_standards/_claude_config_metadata.md`
+- **Loads with config files from:** `rules/03_authoring_guidelines/shared_standards/_claude_config_metadata.md` — through `paths:`, whenever a config-directory file is open
 
-- **Loads on its own from:** `rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md`
+- **Loads with config files from:** `rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md` — through `paths:`, whenever a config-directory file is open
 
 ## 🚫 Common Mistakes & ✅ Hard Gates Checklist
 
