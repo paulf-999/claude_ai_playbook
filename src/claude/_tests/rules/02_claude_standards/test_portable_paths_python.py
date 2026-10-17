@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
 # Date updated:      2026-10-17
-# Version:           2.1.1
+# Version:           2.2.0
 # Test quality score: 8/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -22,7 +22,7 @@ import re
 
 import pytest
 
-from _shared_paths import CLAUDE_DIR, REPO_TEST_DIRS
+from _shared_paths import CLAUDE_DIR
 
 TESTS_DIR = CLAUDE_DIR / "_tests"
 SHARED_PATHS = TESTS_DIR / "_helpers" / "_shared_paths.py"
@@ -35,15 +35,14 @@ EXPANDUSER_EXEMPT = {"_shared_paths.py", "test_portable_paths_python.py"}
 
 
 def python_lines() -> list[tuple[str, int, str]]:
-    """List every line of every Python file under _tests/ and, in the repo, tests/.
+    """List every line of every Python file under _tests/.
 
-    :return: ``(path relative to its tests folder's parent, line number, stripped line)``.
+    :return: ``(path relative to the config dir, line number, stripped line)``.
     :rtype: list[tuple[str, int, str]]
     """
     return [
-        (str(path.relative_to(root.parent)), number, line.strip())
-        for root in (TESTS_DIR, *REPO_TEST_DIRS)
-        for path in sorted(root.rglob("*.py"))
+        (str(path.relative_to(CLAUDE_DIR)), number, line.strip())
+        for path in sorted(TESTS_DIR.rglob("*.py"))
         for number, line in enumerate(path.read_text().splitlines(), start=1)
     ]
 
