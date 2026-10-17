@@ -1,6 +1,6 @@
-<!-- version: 3.0.0 -->
+<!-- version: 3.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-17 -->
 # ✏️ Writing style
 
 **Purpose:** Establish consistent, scannable, and user-friendly writing conventions for all content Claude produces — ensuring clarity, respect for reader time, and professional presentation.
@@ -31,6 +31,9 @@ Applies to **all** content Claude produces — responses, drafts, Confluence pag
   - `**Example:**` a concrete illustration
 - **One sentence per bullet:** if a bullet needs more than one sentence, use child bullets — never run multiple sentences in a single bullet.
 - **Brevity:** if a sentence can be cut without losing meaning, cut it.
+- **History lives in git:** describe only the current state in repo files, and leave notes about removed, merged, archived or renamed files to the git log.
+  - **Exception:** an incident that justifies a rule stays as that rule's evidence (e.g. `portable_paths.md`).
+  - **Example:** ❌ `**Removed (2026-09-18):** settings/test_aliases_behavior.py was a standalone script…`
 - **British English spelling:** use British spellings (organise, behaviour, centralise) over American (organize, behavior, centralize) throughout prose — matches this config's established house style (`behaviour.md`, not `behavior.md`).
   - **Exception:** code identifiers, filenames, and function names that already use American spelling stay as-is (e.g. `test_aliases_behavior.py`) — don't rename real files or code to chase this.
 - **No transposition exemption:** moving, copying, or splitting existing content into new files does not exempt the output — apply house style on the first draft, never as a later pass.
