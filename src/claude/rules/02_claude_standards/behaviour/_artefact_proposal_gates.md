@@ -1,23 +1,15 @@
-<!-- version: 3.0.2 -->
+<!-- version: 3.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-17 -->
 # 🚪 Artefact Proposal Gates
 
 **Purpose:** Validate naming, placement, and duplication *before* proposing any new artefact (rule, skill, hook, agent, process), ensuring proposals already comply with established standards.
 
 ---
 
-## 📋 Contents
-
-- [The Three Gates](#-the-three-gates)
-- [Gate Sequence](#-gate-sequence)
-- [When to Present Options](#-when-to-present-options)
-
----
-
 ## 🚪 The Three Gates
 
-Before proposing any new artefact, run these gates in order:
+Before proposing any new artefact, run these gates in order — when every gate passes, the proposal proceeds without options:
 
 ### Gate 1️⃣: Naming
 
@@ -33,7 +25,7 @@ Before proposing any new artefact, run these gates in order:
 
 **Reference:** `~/.claude/rules/01_essentials/claude_usage_standards/naming_standards.md` (parent) → `_claude_naming_patterns.md` (child file with detailed patterns)
 
-**Action:** If naming violates convention, **recommend the corrected name directly** (no options needed — the standard is clear).
+**Action:** If naming violates convention, **recommend the corrected name directly** (no options needed — the standard is clear), and present options only when the standard is ambiguous or several patterns fit.
 
 ---
 
@@ -52,7 +44,7 @@ Before proposing any new artefact, run these gates in order:
 
 **Reference:** `~/.claude/rules/02_claude_standards/path_scoped_rules/claude_directory_structure.md` (parent) → `_claude_directory_organisation.md` (full tree) + `_claude_directory_naming.md` (naming patterns)
 
-**Action:** If placement is wrong, **recommend the correct directory directly** (no options; the standard is clear).
+**Action:** If placement is wrong, **recommend the correct directory directly** (no options; the standard is clear), and present placement options with token-cost and scope trade-offs only when scope is genuinely unclear.
 
 ---
 
@@ -67,35 +59,3 @@ Before proposing any new artefact, run these gates in order:
 **Reference:** `~/.claude/rules/02_claude_standards/path_scoped_rules/claude_rule_loading_strategy.md` (full rule index table)
 
 **Action:** If found, offer integration option: extend existing artefact vs. create new one (present options with rationale).
-
----
-
-## 🔄 Gate Sequence
-
-**Always run gates in order:**
-
-```
-1. Does naming follow convention?
-   ├─ No  → Recommend correct name
-   └─ Yes → Continue to Gate 2
-
-2. Is placement correct for artefact type?
-   ├─ No  → Recommend correct directory
-   └─ Yes → Continue to Gate 3
-
-3. Does similar artefact already exist?
-   ├─ Yes → Present integration options
-   └─ No  → Safe to proceed with proposal
-```
-
----
-
-## ❓ When to Present Options
-
-Present options *only* in these scenarios:
-
-- **Gate 1 (Naming):** Standard is ambiguous or multiple valid patterns exist for the artefact type (rare)
-- **Gate 2 (Placement):** Scope is genuinely unclear (e.g., "is this 01_essentials or _rules_lazy_load?") — present placement options with token cost / scope tradeoffs
-- **Gate 3 (Duplication):** Similar artefact exists; present integration options (extend existing + cost, vs. create new + maintenance)
-
-**Otherwise:** Gates pass and proposal proceeds without options.

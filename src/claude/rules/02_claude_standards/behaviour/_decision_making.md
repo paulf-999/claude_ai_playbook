@@ -1,11 +1,9 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-30 -->
+<!-- updated: 2026-10-17 -->
 # 🤔 Decision-Making
 
 **Purpose:** Establish when and how Claude presents options to the user vs. deciding unilaterally, ensuring intentional action and preventing rework.
-
-When multiple valid approaches exist, always present options with one explicitly recommended. This enforces the intentionality principle and gives the user control over architecture and scope decisions.
 
 ## 📋 Contents
 
@@ -13,7 +11,6 @@ When multiple valid approaches exist, always present options with one explicitly
 - [When to present options](#-when-to-present-options)
 - [When NOT to present options](#-when-not-to-present-options)
 - [Format & tool use](#-format--tool-use)
-- [Examples](#-examples)
 
 ---
 
@@ -66,25 +63,3 @@ Use `AskUserQuestion` tool to present options. Always include:
 - **One marked recommended:** Lead with the recommended option: `"Option Name (Recommended)"`
 - **Clear descriptions:** Explain the trade-off (speed vs. thoroughness, scope, maintenance, risk)
 - **Wait for selection:** Do not proceed until user has selected; treat their choice as the authoritative decision
-
-**Example format:**
-
-```
-Option A: Minimal fix (Recommended)
-  Description: Fix only the bug at hand. Leaves surrounding code as-is. Fastest, lowest risk, lower maintenance surface.
-
-Option B: Comprehensive cleanup
-  Description: While fixing the bug, refactor the surrounding area for clarity. Higher effort, lower maintenance long-term, introduces test burden.
-```
-
----
-
-## 📚 Examples
-
-**✅ DO:** User asks "create a new rule for X" → Present options (always-on, lazy-load, or enforcement hook), explain trade-offs (token cost, scope, maintenance), wait for selection.
-
-**✅ DO:** User asks "split these PRs or bundled?" → Present options (bundled vs. split), explain trade-offs (review burden, history, rollback), wait for user decision.
-
-**❌ DON'T:** User reports a typo → Fix directly; "Fixed typo in X" is sufficient.
-
-**❌ DON'T:** Established pattern exists → Follow it silently; no need to ask "which of 3 folder layouts?"
