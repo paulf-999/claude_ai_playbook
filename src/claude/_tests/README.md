@@ -5,7 +5,7 @@
 ## 🎯 Summary
 
 - **One suite:** run everything at once with `pytest`, and it checks whichever config `CLAUDE_CONFIG_DIR` points at.
-- **One folder per artefact:** each folder tests one kind of Claude artefact, apart from `_core/`.
+- **Named after what they test:** each folder is named after the config folder or files it checks, apart from `_core/`.
 - **`_core/` is the shared engine:** it holds the helpers every other folder imports and the few tests that span the whole config.
 - **Scores come from the files:** each table's Quality, Created, Updated and Version columns are copied from that test's own metadata header.
 
@@ -26,13 +26,13 @@ cd ~/.claude && python3 -m pytest _tests
 | Folder | Claude artefact | What it checks |
 |---|---|---|
 | `_core/` | None, it's shared infrastructure | Helpers used across the suite, plus whole-config checks like file naming |
-| `admin/` | Quality scorecards | Every artefact has a scorecard, and its dates are valid |
+| `_reference/` | Quality scorecards in `_reference/_quality_scorecards/` | Every artefact has a scorecard, and its dates are valid |
 | `agents/` | Sub-agents | Agent headers and triggers |
 | `docs/` | Repo docs | Local links in `README.md` and `docs/` |
 | `hooks/` | Hooks | Hook headers, registration and each hook's behaviour |
 | `rules/` | Rules | Rule structure, loading, headers and cross-references, by tier |
+| `root_files/` | Single files at the config root | `settings.json` permissions and `aliases.md` entries |
 | `scripts/` | Maintenance scripts | Each script's behaviour and naming |
-| `settings/` | Settings and aliases | `settings.json` permissions and `aliases.md` entries |
 | `skills/` | Skills | Skill structure, headers, references and each skill's own scripts |
 
 ## 🧩 Why `_core/` exists
@@ -71,7 +71,7 @@ Suite-wide tests that span the whole config, kept beside the shared helpers list
 
 ---
 
-## 📁 `admin/`
+## 📁 `_reference/`
 
 Tests for the quality scorecards in `_reference/_quality_scorecards/`.
 
@@ -202,7 +202,7 @@ Tests for the maintenance scripts in `scripts/`.
 
 ---
 
-## 📁 `settings/`
+## 📁 `root_files/`
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|

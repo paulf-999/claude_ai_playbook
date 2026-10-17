@@ -1,4 +1,4 @@
-# 🧪 Settings Tests
+# 🧪 Root File Tests
 
 Quality assurance for configuration files: `aliases.md`, `settings.json`, and related documentation.
 
@@ -20,7 +20,7 @@ Validates `src/claude/aliases.md` table entries:
 
 **Run:**
 ```bash
-python3 src/claude/_tests/settings/test_aliases.py
+python3 src/claude/_tests/root_files/test_aliases.py
 ```
 
 ---
@@ -38,7 +38,7 @@ Validates `src/claude/settings.json` and enforces guiding principles:
 
 **Run:**
 ```bash
-python3 src/claude/_tests/settings/test_settings.py
+python3 src/claude/_tests/root_files/test_settings.py
 ```
 
 **Framework for proposing new settings:**
@@ -106,12 +106,12 @@ If adding a new settings-related file (e.g., `hooks.json`, `agents.json`):
 These tests should run on every PR to `src/claude/`:
 
 ```bash
-python3 -m pytest src/claude/_tests/settings/ -v
+python3 -m pytest src/claude/_tests/root_files/ -v
 ```
 
 Or manually:
 
 ```bash
-python3 src/claude/_tests/settings/test_aliases.py && \
-python3 src/claude/_tests/settings/test_settings.py
+python3 src/claude/_tests/root_files/test_aliases.py && \
+python3 src/claude/_tests/root_files/test_settings.py
 ```

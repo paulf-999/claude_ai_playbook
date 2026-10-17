@@ -1,7 +1,7 @@
 # Quality Scorecard — test_scorecard_coverage.py
 
 **Date Created:** 2026-10-11
-**Date Updated:** 2026-10-11
+**Date Updated:** 2026-10-17
 
 **Overall score:** 8.7/10
 
@@ -18,5 +18,5 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/admin/test_scorecard_coverage.py` — the test being scored
+- `src/claude/_tests/_reference/test_scorecard_coverage.py` — the test being scored
 - `src/claude/_reference/_quality_scorecards/README.md` — the layout and threshold it enforces
