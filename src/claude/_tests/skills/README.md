@@ -12,6 +12,7 @@ Tests that every skill must pass.
 | `test_no_orphaned_skill_files.py` | Every skill file is referenced somewhere in its skill, every `reference/` link in SKILL.md exists, and no SKILL.md @-imports a file | 10/10 | 2026-09-19 | 2026-10-11 | 2.0.2 |
 | `test_skill_authoring_gate_walk.py` | The gate linter's walk checks (W1–W6) fail or warn as intended on fake skills | 10/10 | 2026-10-01 | 2026-10-11 | 1.1.1 |
 | `test_skill_authoring_gate_run.py` | The gate linter's run checks (R2–R4) on fake skills, and failures block while judgement calls only warn | 10/10 | 2026-10-01 | 2026-10-11 | 1.1.2 |
+| `test_skill_authoring_gate_cli.py` | The gate linter's command line exits 1 on a failing skill or missing folder, and 0 on clean, warning-only or empty folders | 10/10 | 2026-10-17 | 2026-10-17 | 1.0.0 |
 | `test_skill_index_versions.py` | Every skill group README lists each of its skills at the version in that skill's SKILL.md header | 10/10 | 2026-10-05 | 2026-10-11 | 1.0.1 |
 | `test_skill_instructions_section.py` | Every SKILL.md must carry its own must-follow instructions for Claude | 8/10 | 2026-10-01 | 2026-10-11 | 2.2.4 |
 | `test_skill_metadata_header.py` | Every SKILL.md carries a valid header after its frontmatter, matching its contract version, and the template models it | 9/10 | 2026-09-28 | 2026-10-17 | 2.0.2 |
