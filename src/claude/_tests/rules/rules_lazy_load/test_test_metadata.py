@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-11
-# Version:           1.3.2
+# Date updated:      2026-10-17
+# Version:           1.4.0
 # Test quality score: 10/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -10,7 +10,7 @@
 
 """Validates every test's metadata header against _test_metadata.md.
 
-Each test file, in the config's ``_tests/`` and the repo's ``src/claude/_install/_tests/``,
+Each test file, in the config's ``_tests/`` and the repo's ``src/claude/_install/_tests/`` and ``tests/``,
 must open with the full header: banners, fields in order and well-formed values.
 Whether the quality score matches the test's own counts is checked by
 ``test_test_quality_score.py``.
@@ -21,7 +21,7 @@ import re
 from datetime import date
 from pathlib import Path
 
-from _shared_paths import CLAUDE_DIR
+from _shared_paths import CLAUDE_DIR, REPO_TEST_DIRS
 
 TESTS_DIR = CLAUDE_DIR / "_tests"
 # The installer's own tests live in _install/, which install never copies, so a live config skips them
@@ -61,12 +61,12 @@ ONE_TEST = '\n\ndef test_demo():\n    """Demo."""\n    assert True\n'
 
 
 def find_test_files() -> list[Path]:
-    """Return every pytest file under the config's tests directory and, in the repo, the shell tooling tests.
+    """Return every pytest file under the config's tests directory and, in the repo, the shell tooling and repo tests.
 
     :return: Paths of ``test_*.py`` files, skipping ``_archived`` folders.
     :rtype: list[Path]
     """
-    folders = [TESTS_DIR] + ([SH_TESTS_DIR] if SH_TESTS_DIR.is_dir() else [])
+    folders = [TESTS_DIR, *REPO_TEST_DIRS] + ([SH_TESTS_DIR] if SH_TESTS_DIR.is_dir() else [])
     return sorted(p for folder in folders for p in folder.rglob("test_*.py") if "_archived" not in p.parts)
 
 
@@ -75,10 +75,15 @@ def label(path: Path) -> str:
 
     :param path: A path from :func:`find_test_files`.
     :type path: Path
-    :return: The path under ``_tests/``, or under ``src/`` for the shell tooling tests.
+    :return: The path under ``_tests/``, under ``src/`` for the shell tooling tests, or under the repo root.
     :rtype: str
     """
-    base = TESTS_DIR if path.is_relative_to(TESTS_DIR) else CLAUDE_DIR.parent
+    if path.is_relative_to(TESTS_DIR):
+        base = TESTS_DIR
+    elif path.is_relative_to(CLAUDE_DIR.parent):
+        base = CLAUDE_DIR.parent
+    else:
+        base = CLAUDE_DIR.parent.parent
     return path.relative_to(base).as_posix()
 
 

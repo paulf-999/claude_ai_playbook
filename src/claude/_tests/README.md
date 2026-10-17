@@ -6,6 +6,7 @@
 
 - **One suite:** run everything at once with `pytest`, and it checks whichever config `CLAUDE_CONFIG_DIR` points at.
 - **Named after what they test:** each folder is named after the config folder or files it checks, apart from `_core/`.
+- **Repo-only tests:** checks on the repo itself, like its docs links, live in [repo-root `tests/`](../../../tests/docs/README.md) so they never install.
 - **`_core/` is the shared engine:** it holds the helpers every other folder imports and the few tests that span the whole config.
 - **Per-folder detail:** each folder's README lists its tests, with Quality, Created, Updated and Version copied from each test's own metadata header.
 
@@ -28,7 +29,6 @@ cd ~/.claude && python3 -m pytest _tests
 | [`_core/`](_core/README.md) | None, it's shared infrastructure | Helpers used across the suite, plus whole-config checks like file naming |
 | [`_reference/`](_reference/README.md) | Quality scorecards in `_reference/_quality_scorecards/` | Every artefact has a scorecard, and its dates are valid |
 | [`agents/`](agents/README.md) | Sub-agents | Agent headers and triggers |
-| [`docs/`](docs/README.md) | Repo docs | Local links in `README.md` and `docs/` |
 | [`hooks/`](hooks/README.md) | Hooks | Hook headers, registration and each hook's behaviour |
 | [`rules/`](rules/README.md) | Rules | Rule structure, loading, headers and cross-references, by tier |
 | [`root_files/`](root_files/README.md) | Single files at the config root | `settings.json` permissions and `aliases.md` entries |

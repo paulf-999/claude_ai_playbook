@@ -18,6 +18,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/docs/test_docs_local_links.py` — the test being scored
+- `tests/docs/test_docs_local_links.py` — the test being scored
 - `README.md` — the repo README whose links it checks
 - `docs/` — the docs folder whose links it checks
