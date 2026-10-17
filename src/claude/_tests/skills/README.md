@@ -2,7 +2,7 @@
 
 **Purpose:** Tests for skills in `skills/`, plus the scripts some skills carry.
 
-## 📁 `_skill_standards/`
+## 📁 `_all_skills/`
 
 Tests that every skill must pass.
 
