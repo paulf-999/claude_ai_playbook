@@ -1,7 +1,15 @@
 # 🧪 Tests
 
-Tests verify that enforcement hooks and rule files behave as intended.
-Run the whole suite at once — the tests check whichever config `CLAUDE_CONFIG_DIR` points at.
+**Purpose:** Check that every part of the Claude config (rules, skills, agents, hooks, settings and scripts) is well formed and behaves as intended, so a broken change fails here before it reaches a live session.
+
+## 🎯 Summary
+
+- **One suite:** run everything at once with `pytest`, and it checks whichever config `CLAUDE_CONFIG_DIR` points at.
+- **One folder per artefact:** each folder tests one kind of Claude artefact, apart from `_core/`.
+- **`_core/` is the shared engine:** it holds the helpers every other folder imports and the few tests that span the whole config.
+- **Scores come from the files:** each table's Quality, Created, Updated and Version columns are copied from that test's own metadata header.
+
+## ▶️ Running the tests
 
 ```bash
 # Playbook repo: from the repo root, where pytest.ini adds coverage and the install tests
@@ -11,27 +19,55 @@ CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest src/claude/_tests
 cd ~/.claude && python3 -m pytest _tests
 ```
 
-Each table's **Quality**, **Created**, **Updated**, and **Version** columns are read directly from
-the test file's own metadata header — see `testing.md`'s Test Metadata Standard section for the
-format and scoring rubric.
+- **Why set `CLAUDE_CONFIG_DIR`:** without it, the suite may check your live config instead of the repo.
 
-**Layout:** the shared helpers below (`_*.py`) and the suite-wide tests live in `_core/`; `conftest.py` puts it on `sys.path`, so tests import helpers by name, e.g. `from _shared_paths import CLAUDE_DIR`.
+## 🗂️ What each folder tests
 
-**Utility (not a scored test):** `_skill_orphans.py` — pure detectors for orphaned skill files, broken `reference/` links and eager imports.
+| Folder | Claude artefact | What it checks |
+|---|---|---|
+| `_core/` | None, it's shared infrastructure | Helpers used across the suite, plus whole-config checks like file naming |
+| `admin/` | Quality scorecards | Every artefact has a scorecard, and its dates are valid |
+| `agents/` | Sub-agents | Agent headers and triggers |
+| `docs/` | Repo docs | Local links in `README.md` and `docs/` |
+| `hooks/` | Hooks | Hook headers, registration and each hook's behaviour |
+| `rules/` | Rules | Rule structure, loading, headers and cross-references, by tier |
+| `scripts/` | Maintenance scripts | Each script's behaviour and naming |
+| `settings/` | Settings and aliases | `settings.json` permissions and `aliases.md` entries |
+| `skills/` | Skills | Skill structure, headers, references and each skill's own scripts |
 
-**Utility (not a scored test):** `_gate_fixtures.py` — loads the skill authoring gate linter and builds fake skills for its walk and run tests.
+## 🧩 Why `_core/` exists
 
-**Utility (not a scored test):** `_resolved_rule.py` — reads a parent rule with every child it imports or points to on demand inlined.
+Every other folder maps to one kind of artefact, but some code and checks belong to none of them.
 
-**Utility (not a scored test):** `_rule_reachability.py` — reports files under `rules/` that would load wrongly (READMEs, `_lazy_load/` folders, `@import` lines, unscoped `02_claude_standards/path_scoped_rules/` files) and Read-on-demand pointers that lead nowhere.
+- **Shared helpers:** path resolution, the file-structure scanner and the metadata-header validator are used by tests in several folders, so they live in one place.
+- **Whole-config tests:** checks like "every file in the config is named correctly" cover all artefacts at once, so they sit beside the helpers they use.
+- **How tests find it:** `conftest.py` puts `_core/` on `sys.path`, so tests import helpers by name, e.g. `from _shared_paths import CLAUDE_DIR`.
+- **Why the `_` prefix:** it marks the folder as infrastructure rather than an artefact type, and sorts it first.
 
-**Utility (not a scored test):** `_file_structure_validator.py` — the file-structure scanner, and the `--check` mode the naming hook calls for one new path.
+### 🔧 Shared helpers (not scored tests)
 
-**Utility (not a scored test):** `_shared_paths.py` — resolves `CLAUDE_DIR` (via `CLAUDE_CONFIG_DIR`,
-default `~/.claude`) plus the handful of path constants (`CLAUDE_MD`, `ALIASES_FILE`,
-`SETTINGS_FILE`, `SKILLS_DIR`, `HOOKS_DIR`, `RULES_DIR`) that were independently redeclared with
-identical values across multiple test files. Single-use, test-specific path constants stay local
-to their own test file.
+| Helper | What it does |
+|---|---|
+| `_shared_paths.py` | Resolves `CLAUDE_DIR` (via `CLAUDE_CONFIG_DIR`, default `~/.claude`) and the path constants several tests share (`CLAUDE_MD`, `ALIASES_FILE`, `SETTINGS_FILE`, `SKILLS_DIR`, `HOOKS_DIR`, `RULES_DIR`); single-use constants stay in their own test file |
+| `_file_structure_validator.py` | The file-structure scanner, and the `--check` mode the naming hook calls for one new path |
+| `_metadata_header.py` | Validates the three-line version, created and updated header for rules, skills, agents and hooks |
+| `_rule_reachability.py` | Reports files under `rules/` that would load wrongly (READMEs, `_lazy_load/` folders, `@import` lines, unscoped path-scoped files) and Read-on-demand pointers that lead nowhere |
+| `_resolved_rule.py` | Reads a parent rule with every child it imports or points to on demand inlined |
+| `_skill_orphans.py` | Detects orphaned skill files, broken `reference/` links and eager imports |
+| `_gate_fixtures.py` | Loads the skill authoring gate linter and builds fake skills for its walk and run tests |
+
+---
+
+## 📁 `_core/`
+
+Suite-wide tests that span the whole config, kept beside the shared helpers listed above.
+
+| File | What it tests | Quality | Created | Updated | Version |
+|---|---|---|---|---|---|
+| `test_file_structure_compliance.py` | Every file in the real Claude config passes the file-structure scan, checked area by area | 7/10 | 2026-08-28 | 2026-10-11 | 3.0.2 |
+| `test_file_structure_validator.py` | The file-structure scanner flags bad names and skips auto-generated, hidden and exempt files | 10/10 | 2026-10-01 | 2026-10-11 | 1.3.3 |
+| `test_rule_reachability.py` | The native-load detector flags READMEs, `_lazy_load/` folders, imports, unscoped path-scoped files and broken pointers under `rules/`, on fake rule trees | 8/10 | 2026-09-18 | 2026-10-11 | 3.2.3 |
+| `test_metadata_header_format.py` | Format cases for the shared metadata-header validator, run once for rules, skills, agents and hooks: field order, values, placement, shell style and header after frontmatter | 10/10 | 2026-10-11 | 2026-10-11 | 1.0.0 |
 
 ---
 
@@ -75,8 +111,6 @@ Tests for Claude Code hook scripts in `~/.claude/hooks/`.
 |---|---|---|---|---|---|
 | `test_hook_metadata_header.py` | Every hook script carries a valid metadata header on lines 2–4, after its shebang | 9/10 | 2026-09-29 | 2026-10-11 | 2.0.0 |
 | `test_hook_registry_utils.py` | `settings.json` hook registry — known events, command hooks, no duplicates, every referenced hook file exists, and every hook file is registered or listed in `RESERVED_HOOKS` | 8/10 | 2026-08-28 | 2026-10-11 | 2.3.4 |
-
-**Archived:** `test_auto_rotate_todo.py` moved to `_tests/_archived/` (2026-09-18) — `rotate_todo.sh` and `hook_auto_rotate_todo.sh` were never built despite a stale "Ready for production" claim in `TODO.md`; see the file's own archival note.
 
 **Utility (not a scored test):** `hook_test_utils.py` — shared `run_hook()` helper, pipes a JSON payload to a hook and returns the result.
 
@@ -175,10 +209,6 @@ Tests for the maintenance scripts in `scripts/`.
 | `test_aliases.py` | Each `aliases.md` entry is complete, well formed and unique, its links and controls note stay in sync, and core aliases stay documented | 10/10 | 2026-08-28 | 2026-10-11 | 2.2.7 |
 | `test_settings.py` | `settings.json` permission structure, security denies, no broad destructive allows and no real secrets | 9/10 | 2026-08-28 | 2026-10-11 | 1.2.2 |
 
-**Merged (2026-10-01):** `rules/test_aliases_behavior.py` — its unique checks moved into `settings/test_aliases.py`, so one test covers `aliases.md`.
-
-**Removed (2026-09-18):** `settings/test_aliases_behavior.py` — written to run as a standalone script (per its own docstring/README), not as native pytest: 3 of its 5 functions required positional arguments pytest couldn't supply (collection errors), and the other 2 used `print`/`return` instead of `assert`, so they never actually failed regardless of outcome. `rules/test_aliases_behavior.py` already covers "aliases are documented and functional" with real assertions. **Lost, not replaced:** the skill/command-existence and convention-documentation checks this file's logic described but never actually enforced as pytest.
-
 ---
 
 ## 📁 `skills/`
@@ -211,20 +241,7 @@ Tests for the skill's eval scorer, `evals/runner.py`.
 
 ---
 
-## 📁 `_core/`
-
-Suite-wide tests that span the whole config, kept beside the helpers they exercise.
-
-| File | What it tests | Quality | Created | Updated | Version |
-|---|---|---|---|---|---|
-| `test_file_structure_compliance.py` | Every file in the real Claude config passes the file-structure scan, checked area by area | 7/10 | 2026-08-28 | 2026-10-11 | 3.0.2 |
-| `test_file_structure_validator.py` | The file-structure scanner flags bad names and skips auto-generated, hidden and exempt files | 10/10 | 2026-10-01 | 2026-10-11 | 1.3.3 |
-| `test_rule_reachability.py` | The native-load detector flags READMEs, `_lazy_load/` folders, imports, unscoped path-scoped files and broken pointers under `rules/`, on fake rule trees | 8/10 | 2026-09-18 | 2026-10-11 | 3.2.3 |
-| `test_metadata_header_format.py` | Format cases for the shared metadata-header validator, run once for rules, skills, agents and hooks: field order, values, placement, shell style and header after frontmatter | 10/10 | 2026-10-11 | 2026-10-11 | 1.0.0 |
-
----
-
 ## 📐 When to add a test
 
-Per `rules/02_claude_standards/behaviour.md` — adding or modifying an **enforcement hook** requires a corresponding test.
-Instructional rules (files Claude reads but no mechanical hook fires) do not require tests; structural quality is covered by `test_rules_structure.py`.
+- **Enforcement hooks:** adding or changing one needs a matching test, per `rules/02_claude_standards/behaviour.md`.
+- **Instructional rules:** files Claude reads but no hook enforces need no test of their own, because `test_rules_structure.py` covers their structure.
