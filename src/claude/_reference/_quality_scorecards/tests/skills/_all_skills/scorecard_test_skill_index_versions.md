@@ -18,5 +18,5 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/skills/_skill_standards/test_skill_index_versions.py` — the test being scored
+- `src/claude/_tests/skills/_all_skills/test_skill_index_versions.py` — the test being scored
 - `src/claude/skills/` — what the test guards

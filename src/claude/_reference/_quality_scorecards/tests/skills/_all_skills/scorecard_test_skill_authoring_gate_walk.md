@@ -18,6 +18,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/skills/_skill_standards/test_skill_authoring_gate_walk.py` — the test being scored
+- `src/claude/_tests/skills/_all_skills/test_skill_authoring_gate_walk.py` — the test being scored
 - `src/claude/scripts/_lint_scripts/lint_skill_authoring_gate.py` — the gate linter whose checks it proves
 - `src/claude/_tests/_helpers/_gate_fixtures.py` — builds the fake skills
