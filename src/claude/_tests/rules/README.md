@@ -36,7 +36,7 @@
 |---|---|---|---|---|---|
 | `test_authoring_agents.py` | `authoring_agents.md` points to each of its 5 on-demand children, which are present and well-formed | 9/10 | 2026-09-28 | 2026-10-10 | 2.2.2 |
 | `test_authoring_skills.py` | `authoring_skills.md` and its children: SKILL.md's six sections, the frontmatter example, contract fields matching the checklist, and the maturity table matching the checklist and complexity formula | 9/10 | 2026-09-16 | 2026-10-11 | 5.0.1 |
-| `test_claude_config_metadata.py` | Every rule opens with the three-line version, created and updated metadata header | 9/10 | 2026-09-28 | 2026-10-17 | 3.0.1 |
+| `test_claude_config_metadata.py` | Every rule opens with the three-line version, created and updated metadata header | 9/10 | 2026-09-28 | 2026-10-17 | 3.0.2 |
 | `test_rule_headers.py` | Validates the rule-only `applies_to`, `miss_cost` and `loading` headers defined in _claude_config_metadata.md | 8/10 | 2026-10-01 | 2026-10-11 | 1.9.6 |
 | `test_skill_domains.py` | Keeps skill_domains.yaml and the real skills/ layout in step | 10/10 | 2026-09-30 | 2026-10-11 | 1.0.4 |
 

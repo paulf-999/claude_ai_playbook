@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-28
 # Date updated:      2026-10-17
-# Version:           3.0.1
+# Version:           3.0.2
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -13,7 +13,7 @@
 Lines 1–3 must be ``<!-- version: X.Y.Z -->``, ``<!-- created: YYYY-MM-DD -->`` and
 ``<!-- updated: YYYY-MM-DD -->``, with ``updated`` on or after ``created``. A path-scoped rule's
 ``paths:`` frontmatter comes first, and the header sits straight after it.
-Format cases for the shared validator live in ``_tests/_whole_config/test_metadata_header_format.py``.
+Format cases for the shared validator live in ``_tests/_shared_checks/test_metadata_header_format.py``.
 """
 from _metadata_header import FRONTMATTER_RE, metadata_header_errors
 from _shared_paths import RULES_DIR, native_rule_files
