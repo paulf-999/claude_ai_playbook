@@ -5,9 +5,9 @@ paths:
   - "**/*.sql"
   - "**/_tests/**"
 ---
-<!-- version: 3.0.2 -->
+<!-- version: 3.0.3 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-17 -->
 <!-- miss_cost: medium — untested code the user catches in review -->
 <!-- loading: path-scoped — only matters when writing code, so it loads when a Python, shell or SQL file is open -->
 # 🧪 Testing
@@ -65,7 +65,7 @@ Define the goal before writing the test, because tests validate *intended behavi
 | **Rule content** | Silent loss of an incident record, and new tests that pin rule wording | `_tests/rules/<tier>/test_<rule>.py`, only for rules that record one, such as `test_concurrent_sessions.py`, plus the `test_no_wording_pinning.py` guard |
 | **Hooks** | Registered hooks that are missing or stop behaving as documented | `_tests/hooks/`, grouped by hook type |
 | **Skills** | Skills that break the authoring standard or carry orphaned files | `_tests/skills/`, plus each skill's own `tests/evals.yaml` |
-| **Settings** | Unsafe permissions, secrets and broken aliases | `_tests/settings/`, `test_aliases_behavior.py` |
+| **Root files** | Unsafe permissions, secrets and broken aliases | `_tests/root_files/` |
 
 ---
 

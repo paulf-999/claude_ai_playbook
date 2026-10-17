@@ -1,7 +1,7 @@
 # Quality Scorecard — test_settings.py
 
 **Date Created:** 2026-09-30
-**Date Updated:** 2026-10-01
+**Date Updated:** 2026-10-17
 
 **Overall score:** 9.3/10
 
@@ -18,6 +18,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/settings/test_settings.py` — the test being scored
+- `src/claude/_tests/root_files/test_settings.py` — the test being scored
 - `src/claude/settings.json` — what the test guards
 - `src/claude/rules/02_claude_standards/security/_security_guardrails.md` — the permission guidance it enforces
