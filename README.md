@@ -57,7 +57,7 @@ See [docs/training.md](docs/training.md) for free training resources from Anthro
 ### Testing
 
 - **What is tested:** each test folder and file is listed in [src/claude/_tests/README.md](src/claude/_tests/README.md).
-- **Run locally:** `make deps` once, then `CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest src/claude/_tests`, so the suite checks the repo rather than your live config.
+- **Run locally:** `make deps` once, then `CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest`, so the suite checks the repo rather than your live config.
 - **Automatic runs:** the pre-commit hook runs only the tests for the files you staged, and GitHub Actions runs structural validation on every PR touching `src/claude/`.
 
 ### Contributing
