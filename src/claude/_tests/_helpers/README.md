@@ -1,4 +1,4 @@
-# 🧪 `_core/` tests
+# 🧪 `_helpers/` tests
 
 **Purpose:** Shared helpers the whole suite imports, plus the tests that span the whole config rather than one artefact.
 

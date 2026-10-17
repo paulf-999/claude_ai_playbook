@@ -3,9 +3,9 @@ paths:
   - "**/.claude/**"
   - "**/claude/**"
 ---
-<!-- version: 1.1.4 -->
+<!-- version: 1.1.5 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-17 -->
 # 📋 File Structure Validation
 
 **Purpose:** Instruct Claude to validate `~/.claude/` naming and structure compliance after creating or modifying files, ensuring consistency and preventing configuration drift.
@@ -27,7 +27,7 @@ Automatically validate file structure after:
 Run the compliance test after any file/directory changes:
 
 ```bash
-python3 ~/.claude/_tests/_core/test_file_structure_compliance.py
+python3 ~/.claude/_tests/_helpers/test_file_structure_compliance.py
 ```
 
 **What it checks:**

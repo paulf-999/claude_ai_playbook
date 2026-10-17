@@ -1,7 +1,7 @@
 # Quality Scorecard — test_skill_authoring_gate_run.py
 
 **Date Created:** 2026-10-01
-**Date Updated:** 2026-10-01
+**Date Updated:** 2026-10-17
 
 **Overall score:** 9.4/10
 
@@ -20,4 +20,4 @@
 
 - `src/claude/_tests/skills/test_skill_authoring_gate_run.py` — the test being scored
 - `src/claude/scripts/_lint_scripts/lint_skill_authoring_gate.py` — the gate linter whose checks it proves
-- `src/claude/_tests/_core/_gate_fixtures.py` — builds the fake skills
+- `src/claude/_tests/_helpers/_gate_fixtures.py` — builds the fake skills

@@ -27,7 +27,7 @@
 | `test_path_scoped_rules_live.py` | Proves in a live session that a `paths:` rule loads when, and only when, a matching file is read | 9/10 | 2026-10-01 | 2026-10-11 | 1.2.3 |
 | `test_plan_mode_phase_gates.py` | `_plan_mode_phase_gates.md` keeps its plan-persistence section and 2026-09-19 incident record | 9/10 | 2026-09-16 | 2026-10-11 | 4.0.0 |
 | `test_portable_paths_hooks.py` | Hooks resolve the config dir from their own location — no hardcoded `~/.claude/` file operations or guard substrings | 10/10 | 2026-09-18 | 2026-10-11 | 2.0.3 |
-| `test_portable_paths_python.py` | Python test files use `CLAUDE_DIR` — no `.expanduser()` outside `_shared_paths.py`, home-directory constants or one-convention import prefixes | 8/10 | 2026-09-18 | 2026-10-17 | 2.1.0 |
+| `test_portable_paths_python.py` | Python test files use `CLAUDE_DIR` — no `.expanduser()` outside `_shared_paths.py`, home-directory constants or one-convention import prefixes | 8/10 | 2026-09-18 | 2026-10-17 | 2.1.1 |
 | `test_testing.py` | Every enforcement hook has a test (aspect splits allowed), no orphaned hook tests, and testing.md's pointers exist | 10/10 | 2026-08-28 | 2026-10-11 | 2.1.0 |
 
 ## 📁 `03_authoring_guidelines/`

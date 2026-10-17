@@ -1,7 +1,7 @@
 # Quality Scorecard — test_enforcement_naming_convention.py
 
 **Date Created:** 2026-09-30
-**Date Updated:** 2026-10-01
+**Date Updated:** 2026-10-17
 
 **Overall score:** 9.1/10
 
@@ -23,4 +23,4 @@
 
 - `src/claude/_tests/hooks/enforcement/test_enforcement_naming_convention.py` — the test being scored
 - `src/claude/hooks/hook_enforcement_naming_convention.sh` — what the test guards
-- `src/claude/_tests/_core/_file_structure_validator.py` — the checks the hook calls
+- `src/claude/_tests/_helpers/_file_structure_validator.py` — the checks the hook calls

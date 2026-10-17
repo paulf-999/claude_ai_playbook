@@ -5,7 +5,7 @@ paths:
   - "**/*.sql"
   - "**/_tests/**"
 ---
-<!-- version: 3.0.3 -->
+<!-- version: 3.0.4 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-17 -->
 <!-- miss_cost: medium — untested code the user catches in review -->
@@ -65,7 +65,7 @@ Define the goal before writing the test, because tests validate *intended behavi
 | **Rule content** | Silent loss of an incident record, and new tests that pin rule wording | `_tests/rules/<tier>/test_<rule>.py`, only for rules that record one, such as `test_concurrent_sessions.py`, plus the `test_no_wording_pinning.py` guard |
 | **Hooks** | Registered hooks that are missing or stop behaving as documented | `_tests/hooks/`, grouped by hook type |
 | **Skills** | Skills that break the authoring standard or carry orphaned files | `_tests/skills/`, plus each skill's own `tests/evals.yaml` |
-| **Root files** | Unsafe permissions, secrets and broken aliases | `_tests/root_files/` |
+| **Root files** | Unsafe permissions, secrets and broken aliases | `_tests/_root_files/` |
 
 ---
 
@@ -84,6 +84,6 @@ Define the goal before writing the test, because tests validate *intended behavi
 
 - **Live config:** from the config folder, run `python3 -m pytest _tests`.
 - **Playbook repo:** from the repo root, run `CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest src/claude/_tests`, where the repo's `pytest.ini` adds coverage.
-- **Paths:** resolve the config directory through `_tests/_core/_shared_paths.py`, never a hardcoded home path, per `portable_paths.md`.
+- **Paths:** resolve the config directory through `_tests/_helpers/_shared_paths.py`, never a hardcoded home path, per `portable_paths.md`.
 - **Update tests with code:** change a test in the same commit as the behaviour it covers.
 - **Delete dead tests:** remove a feature's tests when the feature is removed.

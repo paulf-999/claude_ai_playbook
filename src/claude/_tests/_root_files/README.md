@@ -1,4 +1,4 @@
-# 🧪 `root_files/` tests
+# 🧪 `_root_files/` tests
 
 **Purpose:** Tests for single files at the config root: `settings.json` and `aliases.md`.
 

@@ -41,16 +41,16 @@ Sorted by Overall score, highest first.
 
 | Scorecard | Overall | Date Updated | Recommended improvements |
 |---|---|---|---|
-| `_core/scorecard_test_rule_reachability.md` | 9.6/10 | 2026-10-11 | — (≥8.5) |
+| `_helpers/scorecard_test_rule_reachability.md` | 9.6/10 | 2026-10-11 | — (≥8.5) |
 | `settings/scorecard_test_aliases.md` | 9.6/10 | 2026-10-01 | — (≥8.5) |
-| `_core/scorecard_test_metadata_header_format.md` | 9.4/10 | 2026-10-11 | — (≥8.5) |
+| `_helpers/scorecard_test_metadata_header_format.md` | 9.4/10 | 2026-10-11 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_no_wording_pinning.md` | 9.4/10 | 2026-10-11 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_portable_paths_hooks.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_portable_paths_python.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
 | `skills/scorecard_test_no_orphaned_skill_files.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
 | `skills/scorecard_test_skill_authoring_gate_run.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
 | `skills/scorecard_test_skill_authoring_gate_walk.md` | 9.4/10 | 2026-10-01 | — (≥8.5) |
-| `_core/scorecard_test_file_structure_validator.md` | 9.3/10 | 2026-10-11 | — (≥8.5) |
+| `_helpers/scorecard_test_file_structure_validator.md` | 9.3/10 | 2026-10-11 | — (≥8.5) |
 | `admin/scorecard_test_scorecard_dates.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
 | `agents/scorecard_test_agent_triggers.md` | 9.3/10 | 2026-10-11 | — (≥8.5) |
 | `hooks/enforcement/scorecard_test_enforcement_markdown_location.md` | 9.3/10 | 2026-10-01 | — (≥8.5) |
@@ -87,7 +87,7 @@ Sorted by Overall score, highest first.
 | `rules/scorecard_test_rules_structure_layout.md` | 9.0/10 | 2026-10-11 | — (≥8.5) |
 | `scripts/scorecard_test_audit_plans.md` | 9.0/10 | 2026-10-11 | — (≥8.5) |
 | `skills/scorecard_test_skill_instructions_section.md` | 9.0/10 | 2026-10-02 | — (≥8.5) |
-| `_core/scorecard_test_file_structure_compliance.md` | 8.9/10 | 2026-10-11 | — (≥8.5) |
+| `_helpers/scorecard_test_file_structure_compliance.md` | 8.9/10 | 2026-10-11 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_concurrent_sessions.md` | 8.9/10 | 2026-10-11 | — (≥8.5) |
 | `rules/02_claude_standards/scorecard_test_testing.md` | 8.9/10 | 2026-10-11 | — (≥8.5) |
 | `rules/rules_lazy_load/scorecard_test_org.md` | 8.9/10 | 2026-10-11 | — (≥8.5) |

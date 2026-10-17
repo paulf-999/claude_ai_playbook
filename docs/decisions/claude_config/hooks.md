@@ -15,7 +15,7 @@
 
 | Hook | Event | Reason |
 |---|---|---|
-| `hook_enforcement_naming_convention.sh` | PreToolUse (Write) | Block before the file is created — naming can't be fixed after the fact without a rename. Denies only names with an error under `_tests/_core/_file_structure_validator.py`, which it calls for that one path |
+| `hook_enforcement_naming_convention.sh` | PreToolUse (Write) | Block before the file is created — naming can't be fixed after the fact without a rename. Denies only names with an error under `_tests/_helpers/_file_structure_validator.py`, which it calls for that one path |
 | `hook_enforcement_markdown_location.sh` | PostToolUse (Edit/Write) | Flag stray markdown at the config root after the edit — exit 2 feeds the fix back to Claude, since the file is already written. Enforces the root-files rule in `_claude_directory_organisation.md` and `writing_style.md`. It never ran before the 2026-10-01 fix in #195, so no hit has been recorded yet |
 | `hook_enforcement_mcp_stale_settings.sh` | UserPromptSubmit | Warn once when `deniedMcpServers` in `settings.json` changes mid-session — Claude Code reads it only at startup, so a toggle doesn't apply until restart (a disabled server kept working on 2026-10-01). Silent otherwise |
 | `hook_style_guide_response_standards_reminder.sh` | UserPromptSubmit | Only place to act before Claude starts reasoning — adds the response-format reminder to every prompt |

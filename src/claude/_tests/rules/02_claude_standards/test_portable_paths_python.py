@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
 # Date updated:      2026-10-17
-# Version:           2.1.0
+# Version:           2.1.1
 # Test quality score: 8/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -25,7 +25,7 @@ import pytest
 from _shared_paths import CLAUDE_DIR, REPO_TEST_DIRS
 
 TESTS_DIR = CLAUDE_DIR / "_tests"
-SHARED_PATHS = TESTS_DIR / "_core" / "_shared_paths.py"
+SHARED_PATHS = TESTS_DIR / "_helpers" / "_shared_paths.py"
 EXPANDUSER_CALL_PATTERN = re.compile(r"\.expanduser\(\s*\)")
 HARDCODED_HOME_CONSTANT = re.compile(r'^[A-Z_]+\s*=\s*["\'](/home/|/Users/)[^"\']+["\']')
 # Only real comparisons, not fixture strings that contain the same text
