@@ -10,7 +10,7 @@ tags:
   date_updated: "2026-10-17"
 tools: Read, Write, mcp__atlassian__getAccessibleAtlassianResources, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
-<!-- version: 1.3.1 -->
+<!-- version: 1.4.0 -->
 <!-- created: 2026-04-08 -->
 <!-- updated: 2026-10-17 -->
 

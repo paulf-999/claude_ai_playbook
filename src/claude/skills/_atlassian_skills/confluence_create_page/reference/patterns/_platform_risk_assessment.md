@@ -30,15 +30,20 @@ Ask the user the following in a single message:
 4. What is the purpose of this page — complete the sentence: "The purpose of this page is to…" If the user is unsure, offer to draft it from the tool name.
 5. Who is conducting the assessment (role, not a personal name), and on what date?
 6. Which Confluence space and parent page should the page go under?
-7. For each theme below, describe the current state in 1–2 sentences:
-   - **Environments** — How many environments exist (dev/UAT/prod)? Are they isolated?
-   - **Deployment** — How is the tool deployed and updated — manually, scripted, or IaC?
-   - **Versioning & Updates** — What version is running, and how are upgrades managed?
-   - **Connectivity / Dependencies** — What external systems does it connect to or depend on at runtime?
-   - **Monitoring & Alerting** — What monitoring exists? How are failures surfaced?
-   - **Resilience / DR** — Is there a backup and restore process? Has it been tested?
-   - **Operational Governance** _(optional)_ — Change management, runbooks, quality controls, key person dependencies?
-   - **Documentation** _(optional)_ — Is there up-to-date technical documentation or architecture diagrams?
+7. For each theme below, describe the current state in 1–2 sentences — every theme needs an answer, or `<TODO>` if unknown:
+   - 🏗️ **Build**
+     - **Code quality and documentation** — Is the code or configuration reviewed and tested, and is there up-to-date technical documentation or architecture diagrams?
+     - **Deployment mechanism** — How is the tool deployed — manually, scripted, or IaC?
+     - **Environments** — How many environments exist (dev/UAT/prod)? Are they isolated?
+     - **Versioning and updates** — What version is running, and how are upgrades managed?
+   - ⚙️ **Run**
+     - **Monitoring and alerting** — What monitoring exists? How are failures surfaced?
+     - **Resilience and disaster recovery** — Is there a backup and restore process? Has it been tested?
+     - **Integrations and connectivity** — What external systems does it connect to or depend on at runtime?
+   - 🧭 **Govern** — operational governance
+     - **Change and incident management** — How are changes approved and incidents handled?
+     - **Runbooks and procedures** — Are there runbooks for routine and failure scenarios?
+     - **Key person dependencies** — Does running or fixing the tool depend on one or two people?
 
 Wait for the user's responses before proceeding.
 
@@ -46,7 +51,7 @@ Wait for the user's responses before proceeding.
 
 ## 📐 Step 2 — Rate and summarise
 
-For each theme, apply the maturity definitions above to assign a rating (L/M/H) from the user's descriptions. Flag any uncertain rating and explain why.
+For each theme, apply the maturity definitions above to assign a rating (L/M/H) from the user's descriptions, keeping the Build, Run and Govern grouping. Flag any uncertain rating and explain why.
 
 Identify the top 2–4 issues or recommendations across all themes, and draft a 3–6 line executive summary for the Maturity Status Summary table.
 
@@ -82,23 +87,15 @@ Include the following nodes in the `content` array, in order:
 |---|---|---|
 | Maturity Status Summary | `🔎 1. Maturity Status Summary` | `table` — two columns (bold label \| value); rows: Date of Assessment, Assessed By, Overall Maturity Level, Issues & Recommendations |
 | Maturity Definitions | `📖 2. Maturity Definitions` | `bulletList` — three items: High (green badge), Medium (yellow badge), Low (red badge), each with its definition above |
-| Detailed Maturity Assessment | `📋 3. Detailed Maturity Assessment` | `table` — columns: Theme \| Sub-Theme \| Current State \| Maturity (L/M/H) \| Key Observations / Comments; one row per row below |
+| Detailed Maturity Assessment | `📋 3. Detailed Maturity Assessment` | Three level-2 sub-headings — `🏗️ 3.1 Build`, `⚙️ 3.2 Run`, `🧭 3.3 Govern` — each followed by a `table` with columns: Theme \| Current State \| Maturity (L/M/H) \| Key Observations / Comments; one row per theme below |
 
-**Detailed Maturity Assessment rows** (Theme → Sub-Theme):
+**Detailed Maturity Assessment rows** (sub-heading → themes, in order):
 
-| Theme | Sub-Theme |
+| Sub-heading | Themes |
 |---|---|
-| Environments | — |
-| Deployment | Deployment model (manual / automated / IaC) |
-| Versioning & Updates | Tool version & upgrade approach |
-| Connectivity / Dependencies | External integrations & runtime dependencies |
-| Monitoring & Alerting | — |
-| Resilience / DR | Backup & restore approach |
-| Operational Governance | Change & incident management |
-| Operational Governance | Quality controls |
-| Operational Governance | Runbooks / procedures |
-| Operational Governance | Key person dependency |
-| Documentation | Technical documentation & diagrams |
+| 🏗️ 3.1 Build | Code quality and documentation · Deployment mechanism · Environments · Versioning and updates |
+| ⚙️ 3.2 Run | Monitoring and alerting · Resilience and disaster recovery · Integrations and connectivity |
+| 🧭 3.3 Govern | Change and incident management · Runbooks and procedures · Key person dependencies |
 
 Mark anything unknown or unconfirmed as `<TODO>`.
 
