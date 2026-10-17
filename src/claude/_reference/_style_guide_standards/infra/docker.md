@@ -2,10 +2,11 @@
 paths:
   - "**/Dockerfile*"
   - "**/docker-compose*.yml"
+  - "**/docker-compose*.yaml"
 ---
-<!-- version: 1.1.4 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-17 -->
 <!-- miss_cost: medium — images that fail review or bloat -->
 <!-- loading: path-scoped — only applies to Docker, so it loads when a Dockerfile or compose file is open -->
 # 🐳 Docker & Dockerfile Style Guide & Standards
