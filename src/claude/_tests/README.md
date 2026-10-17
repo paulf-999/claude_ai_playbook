@@ -5,9 +5,9 @@
 ## 🎯 Summary
 
 - **One suite:** run everything at once with `pytest`, and it checks whichever config `CLAUDE_CONFIG_DIR` points at.
-- **Named after what they test:** each folder is named exactly after the config folder it checks, including `_reference/`; only `_docs/`, `_helpers/`, `_root_files/` and `_whole_config/` match no config folder, which their underscore-led names keep apart.
+- **Named after what they test:** each folder is named exactly after the config folder it checks, including `_reference/`; only `_docs/`, `_helpers/`, `_root_files/` and `_shared_checks/` match no config folder, which their underscore-led names keep apart.
 - **`_helpers/` is the shared engine:** it holds the helpers every other folder imports, and no tests.
-- **`_whole_config/` spans everything:** it holds the few tests that check the whole config at once.
+- **`_shared_checks/` proves the shared checks:** it holds the tests for the checks every artefact type shares, and the scan that runs them over the whole config.
 - **Per-folder detail:** each folder's README lists its tests, with Quality, Created, Updated and Version copied from each test's own metadata header.
 
 ## ▶️ Running the tests
@@ -29,7 +29,7 @@ cd ~/.claude && python3 -m pytest _tests
 | [`_docs/`](_docs/README.md) | The repo's own docs, not the config | Local links in the repo's `README.md` and `docs/` |
 | [`_helpers/`](_helpers/README.md) | None, it's shared infrastructure | Helpers used across the suite |
 | [`_root_files/`](_root_files/README.md) | Single files at the config root | `settings.json` permissions and `aliases.md` entries |
-| [`_whole_config/`](_whole_config/README.md) | The whole config at once | File naming and structure, rule loading and the shared metadata-header format |
+| [`_shared_checks/`](_shared_checks/README.md) | Checks every artefact type shares | File naming and structure, rule loading and the shared metadata-header format |
 | [`_reference/`](_reference/README.md) | Quality scorecards in `_reference/_quality_scorecards/` | Every artefact has a scorecard, and its dates are valid |
 | [`agents/`](agents/README.md) | Sub-agents | Agent headers and triggers |
 | [`hooks/`](hooks/README.md) | Hooks | Hook headers, registration and each hook's behaviour |
@@ -37,12 +37,12 @@ cd ~/.claude && python3 -m pytest _tests
 | [`scripts/`](scripts/README.md) | Maintenance scripts | Each script's behaviour and naming |
 | [`skills/`](skills/README.md) | Skills | Skill structure, headers, references and each skill's own scripts |
 
-## 🧩 Why `_helpers/` and `_whole_config/` exist
+## 🧩 Why `_helpers/` and `_shared_checks/` exist
 
 Most folders map to one config folder, but some code and checks belong to none of them.
 
 - **Shared helpers:** path resolution, the file-structure scanner and the metadata-header validator are used by tests in several folders, so they live in one place.
-- **Whole-config tests:** checks like "every file in the config is named correctly" cover all artefacts at once, so they live in `_whole_config/` rather than beside any one artefact's tests.
+- **Shared checks:** checks like "every file is named correctly" apply to every artefact type, so their tests live in `_shared_checks/` rather than beside any one artefact's tests.
 - **How tests find it:** `conftest.py` puts `_helpers/` on `sys.path`, so tests import helpers by name, e.g. `from _shared_paths import CLAUDE_DIR`.
 - **Why the `_` prefix:** it marks the folder as infrastructure rather than an artefact type, and sorts it first.
 - **Its helpers:** listed in [`_helpers/README.md`](_helpers/README.md).
