@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-29
-# Date updated:      2026-10-11
-# Version:           2.0.0
+# Date updated:      2026-10-17
+# Version:           2.0.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -13,7 +13,7 @@
 Every AGENT.md carries the three-line header straight after its YAML
 frontmatter, holds no ``version:`` in that frontmatter, and its major
 version matches its maturity (0.x draft, 1.x tactical, 2+.x strategic).
-Format cases for the shared validator live in ``_tests/test_metadata_header_format.py``.
+Format cases for the shared validator live in ``_tests/_whole_config/test_metadata_header_format.py``.
 """
 from pathlib import Path
 
