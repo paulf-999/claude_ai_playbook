@@ -10,7 +10,7 @@
 | **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
 | **Complexity** | 8/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 8/10 (raw complexity 2) |
 | **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact |
-| **Coverage** | 9/10 | 2026-10-11 | • 📊 **Counts:** 4 test functions and 7 assertions<br>• 🧩 **Checks:** every SKILL.md header, its match with `skill.contract.yaml`, and the template<br>• 🔀 **Split:** format cases moved to `_whole_config/test_metadata_header_format.py` on 2026-10-11 |
+| **Coverage** | 9/10 | 2026-10-11 | • 📊 **Counts:** 4 test functions and 7 assertions<br>• 🧩 **Checks:** every SKILL.md header, its match with `skill.contract.yaml`, and the template<br>• 🔀 **Split:** format cases moved to `_shared_checks/test_metadata_header_format.py` on 2026-10-11 |
 | **Structural Compliance** | 9/10 | 2026-09-30 | • ✅ **Header:** full metadata header, marked Python style compliant |
 | **Currency** | 10/10 | 2026-10-11 | • 🔍 **References:** passes against the current config, header version 2.0.0 updated 2026-10-11 |
 | **Regression Value** | 8/10 | 2026-10-11 | • 🛡️ **Failure cases:** fails on any bad skill header or contract mismatch, with the bad-input proofs in the shared format test |

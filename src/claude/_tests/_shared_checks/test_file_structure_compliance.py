@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-17
-# Version:           3.0.3
+# Version:           3.0.4
 # Test quality score: 7/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -141,6 +141,6 @@ def test_whole_config_has_no_errors():
 
 
 if __name__ == "__main__":
-    # Kept so `python3 _tests/_whole_config/test_file_structure_compliance.py` still runs the scan
+    # Kept so `python3 _tests/_shared_checks/test_file_structure_compliance.py` still runs the scan
     # (see claude_directory_structure/_file_structure_validation.md)
     raise SystemExit(pytest.main([__file__, "-q"]))

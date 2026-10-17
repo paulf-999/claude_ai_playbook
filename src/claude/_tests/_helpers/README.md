@@ -12,6 +12,6 @@
 | `_skill_orphans.py` | Detects orphaned skill files, broken `reference/` links and eager imports |
 | `_gate_fixtures.py` | Loads the skill authoring gate linter and builds fake skills for its walk and run tests |
 
-- **Whole-config tests:** the tests that span the whole config live in [`_whole_config/`](../_whole_config/README.md).
+- **Shared checks:** the tests that prove these helpers, and the scan that runs them over the whole config, live in [`_shared_checks/`](../_shared_checks/README.md).
 
 [← All tests](../README.md)
