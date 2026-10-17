@@ -5,8 +5,7 @@
 ## 🎯 Summary
 
 - **One suite:** run everything at once with `pytest`, and it checks whichever config `CLAUDE_CONFIG_DIR` points at.
-- **Named after what they test:** each folder is named exactly after the config folder it checks, including `_reference/`; only `_helpers/`, `_root_files/` and `_whole_config/` match no config folder, which their underscore-led names keep apart.
-- **Repo-only tests:** checks on the repo itself, like its docs links, live in [repo-root `tests/`](../../../tests/docs/README.md) so they never install.
+- **Named after what they test:** each folder is named exactly after the config folder it checks, including `_reference/`; only `_docs/`, `_helpers/`, `_root_files/` and `_whole_config/` match no config folder, which their underscore-led names keep apart.
 - **`_helpers/` is the shared engine:** it holds the helpers every other folder imports, and no tests.
 - **`_whole_config/` spans everything:** it holds the few tests that check the whole config at once.
 - **Per-folder detail:** each folder's README lists its tests, with Quality, Created, Updated and Version copied from each test's own metadata header.
@@ -27,6 +26,7 @@ cd ~/.claude && python3 -m pytest _tests
 
 | Folder | What it tests | What it checks |
 |---|---|---|
+| [`_docs/`](_docs/README.md) | The repo's own docs, not the config | Local links in the repo's `README.md` and `docs/` |
 | [`_helpers/`](_helpers/README.md) | None, it's shared infrastructure | Helpers used across the suite |
 | [`_root_files/`](_root_files/README.md) | Single files at the config root | `settings.json` permissions and `aliases.md` entries |
 | [`_whole_config/`](_whole_config/README.md) | The whole config at once | File naming and structure, rule loading and the shared metadata-header format |
