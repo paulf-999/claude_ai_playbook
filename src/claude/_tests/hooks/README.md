@@ -4,7 +4,7 @@
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_hook_metadata_header.py` | Every hook script carries a valid metadata header on lines 2–4, after its shebang | 9/10 | 2026-09-29 | 2026-10-11 | 2.0.0 |
+| `test_hook_metadata_header.py` | Every hook script carries a valid metadata header on lines 2–4, after its shebang | 9/10 | 2026-09-29 | 2026-10-17 | 2.0.1 |
 | `test_hook_registry_utils.py` | `settings.json` hook registry — known events, command hooks, no duplicates, every referenced hook file exists, and every hook file is registered or listed in `RESERVED_HOOKS` | 8/10 | 2026-08-28 | 2026-10-11 | 2.3.4 |
 
 **Utility (not a scored test):** `hook_test_utils.py` — shared `run_hook()` helper, pipes a JSON payload to a hook and returns the result.

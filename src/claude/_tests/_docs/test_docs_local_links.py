@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-04
 # Date updated:      2026-10-17
-# Version:           1.0.2
+# Version:           1.0.3
 # Test quality score: 7/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -20,8 +20,8 @@ from pathlib import Path
 
 import pytest
 
-# repo/tests/docs/<this file> → parents[2] is the repo root
-REPO_ROOT = Path(__file__).resolve().parents[2]
+# repo/src/claude/_tests/_docs/<this file> → parents[4] is the repo root
+REPO_ROOT = Path(__file__).resolve().parents[4]
 LINK = re.compile(r"\[[^\]]*\]\(([^)\s]+)")
 SKIP_PREFIXES = ("http://", "https://", "mailto:", "#")
 

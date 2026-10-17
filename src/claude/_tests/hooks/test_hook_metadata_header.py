@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-29
-# Date updated:      2026-10-11
-# Version:           2.0.0
+# Date updated:      2026-10-17
+# Version:           2.0.1
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -12,7 +12,7 @@
 
 Every hook script carries three ``#`` comment lines on lines 2–4, straight
 after the shebang, one field each: version, created, updated.
-Format cases for the shared validator live in ``_tests/test_metadata_header_format.py``.
+Format cases for the shared validator live in ``_tests/_whole_config/test_metadata_header_format.py``.
 """
 
 from pathlib import Path
