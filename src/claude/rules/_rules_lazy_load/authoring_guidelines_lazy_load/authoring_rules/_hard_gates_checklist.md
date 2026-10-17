@@ -1,6 +1,6 @@
-<!-- version: 3.0.2 -->
+<!-- version: 3.0.3 -->
 <!-- created: 2026-09-28 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-17 -->
 # ✅ Rule Hard Gates Checklist
 
 **Purpose:** Final tick-box check before finishing a rule — verify placement, content, testing, wiring and docs, then run the before-merging review.
@@ -46,6 +46,6 @@
 
 ## 🔎 Before merging
 
-1. **Run the suite:** `pytest src/claude/_tests/` passes, including `test_rules_structure.py`, `test_always_on_reachability.py` and `test_file_structure_compliance.py`.
+1. **Run the suite:** `CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest` passes from the repo root, including `test_rules_structure.py`, `test_always_on_reachability.py` and `test_file_structure_compliance.py`.
 2. **Re-read the scorecard:** its scores still match the rule as written, not the first draft.
 3. **Scan the docs:** check `quickstart.md`, `training.md` and `docs/reference/` for pages that mention the area you changed.
