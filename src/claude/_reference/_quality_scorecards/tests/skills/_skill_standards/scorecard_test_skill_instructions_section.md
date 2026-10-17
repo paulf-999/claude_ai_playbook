@@ -1,7 +1,7 @@
 # Quality Scorecard — test_skill_instructions_section.py
 
 **Date Created:** 2026-10-02
-**Date Updated:** 2026-10-02
+**Date Updated:** 2026-10-17
 
 **Overall score:** 9.0/10
 
@@ -18,5 +18,5 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/skills/test_skill_instructions_section.py` — the test being scored
+- `src/claude/_tests/skills/_skill_standards/test_skill_instructions_section.py` — the test being scored
 - `src/claude/rules/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_skills/_core_standards.md` — the rule the test enforces
