@@ -18,6 +18,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/_helpers/test_rule_reachability.py` — the test being scored
+- `src/claude/_tests/_whole_config/test_rule_reachability.py` — the test being scored
 - `src/claude/_tests/_helpers/_rule_reachability.py` — the detector under test
 - `src/claude/_tests/rules/02_claude_standards/test_always_on_reachability.py` — runs the detector on the real config
