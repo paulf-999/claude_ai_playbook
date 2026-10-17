@@ -27,6 +27,9 @@ LAZY_RULES_NAME = "_rules_lazy_load"  # read on demand only
 # Every style guide, read on demand except entry files once installed
 STYLE_GUIDES_NAME = "_reference/_style_guide_standards"
 ON_DEMAND_ROOTS = (LAZY_RULES_NAME, STYLE_GUIDES_NAME)  # installed folders read only when a pointer is followed
+# The repo's own tests in <repo>/tests/, which check the repo rather than the config; empty for a live config
+_REPO_TESTS = CLAUDE_DIR.parent.parent / "tests"
+REPO_TEST_DIRS = (_REPO_TESTS,) if CLAUDE_DIR.parent.name == "src" and _REPO_TESTS.is_dir() else ()
 
 # Installed path prefix -> repo path prefix. The repo keeps on-demand rules inside rules/ and style-guide
 # entry files with the rest of their guide; the install moves both (see claude_file_utils.sh).

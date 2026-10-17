@@ -22,12 +22,12 @@
 | `test_always_on_reachability.py` | Every file under `rules/` loads the way its folder says — no README, `_lazy_load/` folder, `@import` or unscoped `02_claude_standards/path_scoped_rules/` file — and every 'Read on demand' pointer | 9/10 | 2026-09-18 | 2026-10-11 | 3.2.5 |
 | `test_claude_rule_loading_strategy.py` | The five-folder table matches the real `rules/` and `_rules_lazy_load/` folders, and its example files exist, matching each tier's loading claim | 9/10 | 2026-09-30 | 2026-10-11 | 4.0.0 |
 | `test_concurrent_sessions.py` | `git/_concurrent_sessions.md` stays reachable from `git.md` and keeps its 2026-09-21 incident record | 9/10 | 2026-09-21 | 2026-10-11 | 3.0.0 |
-| `test_no_wording_pinning.py` | No test pins an instructional rule's prose (a multi-word literal checked against a real file's text) or guards a finished migration (`assert not <path>.exists()`), unless tagged `# wording-check:` or `# absence-check:` with a reason | 10/10 | 2026-10-11 | 2026-10-11 | 1.1.0 |
+| `test_no_wording_pinning.py` | No test pins an instructional rule's prose (a multi-word literal checked against a real file's text) or guards a finished migration (`assert not <path>.exists()`), unless tagged `# wording-check:` or `# absence-check:` with a reason | 10/10 | 2026-10-11 | 2026-10-17 | 1.2.0 |
 | `test_path_scoped_rules.py` | Path-scoped rules in `rules/` carry no `@` imports, `rules/` holds real files not links, and every `02_claude_standards/path_scoped_rules/` file has `paths:` | 7/10 | 2026-10-01 | 2026-10-11 | 2.3.2 |
 | `test_path_scoped_rules_live.py` | Proves in a live session that a `paths:` rule loads when, and only when, a matching file is read | 9/10 | 2026-10-01 | 2026-10-11 | 1.2.3 |
 | `test_plan_mode_phase_gates.py` | `_plan_mode_phase_gates.md` keeps its plan-persistence section and 2026-09-19 incident record | 9/10 | 2026-09-16 | 2026-10-11 | 4.0.0 |
 | `test_portable_paths_hooks.py` | Hooks resolve the config dir from their own location — no hardcoded `~/.claude/` file operations or guard substrings | 10/10 | 2026-09-18 | 2026-10-11 | 2.0.3 |
-| `test_portable_paths_python.py` | Python test files use `CLAUDE_DIR` — no `.expanduser()` outside `_shared_paths.py`, home-directory constants or one-convention import prefixes | 8/10 | 2026-09-18 | 2026-10-11 | 2.0.3 |
+| `test_portable_paths_python.py` | Python test files use `CLAUDE_DIR` — no `.expanduser()` outside `_shared_paths.py`, home-directory constants or one-convention import prefixes | 8/10 | 2026-09-18 | 2026-10-17 | 2.1.0 |
 | `test_testing.py` | Every enforcement hook has a test (aspect splits allowed), no orphaned hook tests, and testing.md's pointers exist | 10/10 | 2026-08-28 | 2026-10-11 | 2.1.0 |
 
 ## 📁 `03_authoring_guidelines/`
@@ -48,7 +48,7 @@
 | `test_lazy_load_rule_structure.py` | The 14 rules once lacking a dedicated test keep their metadata header, Purpose line, linked child pages, working links and accurate Contents | 10/10 | 2026-10-01 | 2026-10-11 | 2.0.0 |
 | `test_lazy_load_triggers.py` | Validates that every lazy rule has something that makes Claude load it | 9/10 | 2026-10-01 | 2026-10-11 | 2.0.0 |
 | `test_org.py` | Organisation-specific terms stay inside _rules_lazy_load/org/ and never leak into shared files | 8/10 | 2026-10-01 | 2026-10-11 | 1.3.6 |
-| `test_test_metadata.py` | Every test's metadata header, in `_tests/` and the repo's `src/claude/_install/_tests/`, is complete, in order and well formed (banners, dates, semver, scores) | 10/10 | 2026-10-01 | 2026-10-11 | 1.3.2 |
+| `test_test_metadata.py` | Every test's metadata header, in `_tests/` and the repo's `src/claude/_install/_tests/` and `tests/`, is complete, in order and well formed (banners, dates, semver, scores) | 10/10 | 2026-10-01 | 2026-10-17 | 1.4.0 |
 | `test_test_quality_score.py` | Every test header's quality score is exactly what its file earns from four content checks: failure messages, docstrings, a non-vacuous scan and a test proven to fail | 10/10 | 2026-10-02 | 2026-10-11 | 2.0.0 |
 | `test_test_score_floor.py` | Every test, in `_tests/` and the repo's `src/claude/_install/_tests/`, meets quality 7, complexity 7 and style Yes, and the minimums match `_test_metadata.md` | 8/10 | 2026-10-01 | 2026-10-11 | 4.0.0 |
 
