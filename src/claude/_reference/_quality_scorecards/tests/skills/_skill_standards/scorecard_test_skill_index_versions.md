@@ -1,7 +1,7 @@
 # Quality Scorecard — test_skill_index_versions.py
 
 **Date Created:** 2026-10-05
-**Date Updated:** 2026-10-05
+**Date Updated:** 2026-10-17
 
 **Overall score:** 9.1/10
 
@@ -18,5 +18,5 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/skills/test_skill_index_versions.py` — the test being scored
+- `src/claude/_tests/skills/_skill_standards/test_skill_index_versions.py` — the test being scored
 - `src/claude/skills/` — what the test guards

@@ -2,6 +2,10 @@
 
 **Purpose:** Tests for skills in `skills/`, plus the scripts some skills carry.
 
+## 📁 `_skill_standards/`
+
+Tests that every skill must pass.
+
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_skill_structure_compliance.py` | Every installed skill passes the skill authoring gate's crawl checks, and each check is proven to fire | 9/10 | 2026-08-28 | 2026-10-11 | 2.0.5 |
