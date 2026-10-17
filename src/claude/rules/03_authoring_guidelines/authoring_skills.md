@@ -1,6 +1,6 @@
-<!-- version: 4.1.4 -->
+<!-- version: 4.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-17 -->
 <!-- applies_to: **/skills/** -->
 <!-- miss_cost: medium — skills ship without contracts or evals -->
 <!-- loading: always-on — a new skill can start before any skills/ file is open, so a path trigger would miss it -->
@@ -43,5 +43,7 @@ skill_name/
 **`evals.yaml` always lives in `tests/`, never at skill root** — "evals" is jargon; a `tests/` folder reads as familiar to a non-technical browser of the skill directory. `tests/README.md` is mandatory alongside it, in plain language, so anyone who does open the folder isn't left guessing what the file is.
 
 **Nothing else.** No `templates/`, `patterns/`, `references/`, or domain-specific subdirectories. Keep scope tight, keep structure clean.
+
+- **Exception — grouping inside `reference/`:** `reference/` may hold subfolders of 2 or more related files, such as `reference/patterns/` or `reference/common/`.
 
 - **Exception — a skill's own script:** a skill that runs code may keep that one script at skill root, named for what it does (e.g. `capture_session_prompts.py`) and referenced from SKILL.md; its pytest file lives in `_tests/skills/<skill_name>/`.

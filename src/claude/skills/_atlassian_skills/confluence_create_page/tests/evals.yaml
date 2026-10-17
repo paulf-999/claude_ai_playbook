@@ -19,7 +19,7 @@ evals:
           then publishes to Confluence only after the user explicitly approves
           the draft.
       assertions:
-          - Claude reads reference/_phases.md and follows the general_page pattern inline (Phase 2)
+          - Claude reads reference/_phases.md and follows reference/patterns/_general_page.md (Phase 2)
           - Claude writes a draft to ~/claude/_drafts/confluence/ before creating anything in Confluence
           - Draft filename uses lowercase with underscores (no spaces, no hyphens)
           - Claude asks the user to review the draft and requests approval before publishing
@@ -31,12 +31,12 @@ evals:
           prompt: create a platform risk assessment page for Airbyte
       setup: {}
       expected_output: >
-          Claude follows reference/_pattern_platform_risk_assessment.md instead of
-          the general_page phase, gathers the tool, space, parent page and theme
+          Claude follows reference/patterns/_platform_risk_assessment.md for
+          Phase 2, gathers the tool, space, parent page and theme
           descriptions, proposes L/M/H ratings and an executive summary for
           confirmation, writes a local draft, and publishes only after approval.
       assertions:
-          - Claude reads reference/_pattern_platform_risk_assessment.md in place of the general_page Phase 2
+          - Claude reads reference/patterns/_platform_risk_assessment.md for Phase 2
           - Claude asks for the target space and parent page rather than defaulting to one
           - Claude presents L/M/H ratings per theme and flags uncertain ones before writing the draft
           - Claude writes a draft to ~/_drafts/confluence/ before creating anything in Confluence

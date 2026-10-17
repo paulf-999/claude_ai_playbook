@@ -10,7 +10,7 @@ tags:
   date_updated: "2026-10-17"
 tools: Read, Write, mcp__atlassian__getAccessibleAtlassianResources, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
-<!-- version: 1.3.0 -->
+<!-- version: 1.3.1 -->
 <!-- created: 2026-04-08 -->
 <!-- updated: 2026-10-17 -->
 
@@ -53,7 +53,8 @@ One-off pages using the general_page pattern, or a Platform Risk & Maturity Asse
 ## 📚 References
 
 - `reference/_phases.md` — the three interactive phases in full
-- `reference/_pattern_platform_risk_assessment.md` — the platform_risk_assessment pattern, used in place of Phase 2
+- `reference/patterns/_general_page.md` — the general_page pattern, followed in Phase 2
+- `reference/patterns/_platform_risk_assessment.md` — the platform_risk_assessment pattern, followed in Phase 2
 - `reference/_error_recovery.md` — what to do when Confluence access, drafts, or publishing fail
 - `reference/_troubleshooting.md` — common issues, including publish timeouts
 - `reference/_confluence_page_formatting.md` — page header structure and formatting rules
