@@ -1,7 +1,7 @@
 # Quality Scorecard — test_rule_reachability.py
 
 **Date Created:** 2026-10-01
-**Date Updated:** 2026-10-11
+**Date Updated:** 2026-10-17
 
 **Overall score:** 9.6/10
 
@@ -18,6 +18,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/_core/test_rule_reachability.py` — the test being scored
-- `src/claude/_tests/_core/_rule_reachability.py` — the detector under test
+- `src/claude/_tests/_helpers/test_rule_reachability.py` — the test being scored
+- `src/claude/_tests/_helpers/_rule_reachability.py` — the detector under test
 - `src/claude/_tests/rules/02_claude_standards/test_always_on_reachability.py` — runs the detector on the real config

@@ -1,7 +1,7 @@
 # Quality Scorecard — test_agent_metadata_header.py
 
 **Date Created:** 2026-09-30
-**Date Updated:** 2026-10-11
+**Date Updated:** 2026-10-17
 
 **Overall score:** 9.0/10
 
@@ -10,7 +10,7 @@
 | **Clarity** | 9/10 | 2026-09-30 | • 🔍 **Messages:** every test function has a docstring, and 100% of assertions carry a failure message |
 | **Complexity** | 8/10 | 2026-09-30 | • 🧮 **Complexity:** header complexity score 8/10 (raw complexity 2) |
 | **Evidence of Need** | 9/10 | 2026-09-30 | • 🔗 **Target:** guards a real, installed artefact |
-| **Coverage** | 9/10 | 2026-10-11 | • 📊 **Counts:** 7 test functions and 14 assertions<br>• 🧩 **Checks:** every AGENT.md header, version against maturity, and the template<br>• 🔀 **Split:** format cases moved to `_core/test_metadata_header_format.py` on 2026-10-11 |
+| **Coverage** | 9/10 | 2026-10-11 | • 📊 **Counts:** 7 test functions and 14 assertions<br>• 🧩 **Checks:** every AGENT.md header, version against maturity, and the template<br>• 🔀 **Split:** format cases moved to `_helpers/test_metadata_header_format.py` on 2026-10-11 |
 | **Structural Compliance** | 9/10 | 2026-09-30 | • ✅ **Header:** full metadata header, marked Python style compliant |
 | **Currency** | 10/10 | 2026-10-11 | • 🔍 **References:** passes against the current config, header version 2.0.0 updated 2026-10-11 |
 | **Regression Value** | 9/10 | 2026-09-30 | • 🛡️ **Failure cases:** the maturity check proves a mismatched version is caught |

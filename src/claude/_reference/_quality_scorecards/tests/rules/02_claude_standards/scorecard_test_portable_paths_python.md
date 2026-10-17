@@ -1,7 +1,7 @@
 # Quality Scorecard — test_portable_paths_python.py
 
 **Date Created:** 2026-10-01
-**Date Updated:** 2026-10-01
+**Date Updated:** 2026-10-17
 
 **Overall score:** 9.4/10
 
@@ -20,4 +20,4 @@
 
 - `src/claude/_tests/rules/02_claude_standards/test_portable_paths_python.py` — the test being scored
 - `src/claude/rules/02_claude_standards/claude_working_practices/portable_paths.md` — what the test guards
-- `src/claude/_tests/_core/_shared_paths.py` — the one file allowed to resolve the config dir from the home directory
+- `src/claude/_tests/_helpers/_shared_paths.py` — the one file allowed to resolve the config dir from the home directory

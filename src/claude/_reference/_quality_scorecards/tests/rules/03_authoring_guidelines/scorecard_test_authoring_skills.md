@@ -1,7 +1,7 @@
 # Quality Scorecard — test_authoring_skills.py
 
 **Date Created:** 2026-09-30
-**Date Updated:** 2026-10-11
+**Date Updated:** 2026-10-17
 
 **Overall score:** 9.3/10
 
@@ -20,4 +20,4 @@
 
 - `src/claude/_tests/rules/03_authoring_guidelines/test_authoring_skills.py` — the test being scored
 - `src/claude/rules/03_authoring_guidelines/authoring_skills.md` — the rule it guards, with its on-demand children
-- `src/claude/_tests/_core/_resolved_rule.py` — inlines the rule's children before checking
+- `src/claude/_tests/_helpers/_resolved_rule.py` — inlines the rule's children before checking

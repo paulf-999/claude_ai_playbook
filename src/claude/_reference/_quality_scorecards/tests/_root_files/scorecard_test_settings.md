@@ -18,6 +18,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/root_files/test_settings.py` — the test being scored
+- `src/claude/_tests/_root_files/test_settings.py` — the test being scored
 - `src/claude/settings.json` — what the test guards
 - `src/claude/rules/02_claude_standards/security/_security_guardrails.md` — the permission guidance it enforces

@@ -1,7 +1,7 @@
 # Quality Scorecard — test_file_structure_compliance.py
 
 **Date Created:** 2026-09-30
-**Date Updated:** 2026-10-11
+**Date Updated:** 2026-10-17
 
 **Overall score:** 8.9/10
 
@@ -18,7 +18,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/_core/test_file_structure_compliance.py` — the test being scored
-- `src/claude/_tests/_core/_file_structure_validator.py` — the scanner it runs
-- `src/claude/_tests/_core/test_file_structure_validator.py` — proves the scanner on fake config trees
+- `src/claude/_tests/_helpers/test_file_structure_compliance.py` — the test being scored
+- `src/claude/_tests/_helpers/_file_structure_validator.py` — the scanner it runs
+- `src/claude/_tests/_helpers/test_file_structure_validator.py` — proves the scanner on fake config trees
 - `src/claude/rules/02_claude_standards/path_scoped_rules/claude_directory_structure.md` — what the test guards

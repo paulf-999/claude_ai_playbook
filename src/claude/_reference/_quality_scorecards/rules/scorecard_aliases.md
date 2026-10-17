@@ -19,6 +19,6 @@
 ## 🔗 Related files
 
 - `src/claude/aliases.md` — the rule being scored
-- `src/claude/_tests/root_files/test_aliases.py` — Test Coverage dimension
+- `src/claude/_tests/_root_files/test_aliases.py` — Test Coverage dimension
 - `src/claude/_tests/rules/test_aliases_behavior.py` — Test Coverage dimension
 - `src/claude/rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md` — Currency dimension

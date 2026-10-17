@@ -1,7 +1,7 @@
 # Quality Scorecard — hook_enforcement_naming_convention.sh
 
 **Date Created:** 2026-10-02
-**Date Updated:** 2026-10-02
+**Date Updated:** 2026-10-17
 
 **Overall score:** 8.4/10
 
@@ -22,6 +22,6 @@
 ## 🔗 Related files
 
 - `src/claude/hooks/hook_enforcement_naming_convention.sh` — the hook being scored
-- `src/claude/_tests/_core/_file_structure_validator.py` — Complexity and Failure Safety dimensions
+- `src/claude/_tests/_helpers/_file_structure_validator.py` — Complexity and Failure Safety dimensions
 - `src/claude/_tests/hooks/enforcement/test_enforcement_naming_convention.py` — Test Coverage dimension
 - `docs/decisions/claude_config/hooks.md` — Evidence of Need dimension

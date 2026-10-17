@@ -1,7 +1,7 @@
 # Quality Scorecard — test_file_structure_validator.py
 
 **Date Created:** 2026-10-01
-**Date Updated:** 2026-10-11
+**Date Updated:** 2026-10-17
 
 **Overall score:** 9.3/10
 
@@ -18,6 +18,6 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/_core/test_file_structure_validator.py` — the test being scored
-- `src/claude/_tests/_core/_file_structure_validator.py` — the scanner under test
+- `src/claude/_tests/_helpers/test_file_structure_validator.py` — the test being scored
+- `src/claude/_tests/_helpers/_file_structure_validator.py` — the scanner under test
 - `src/claude/rules/02_claude_standards/path_scoped_rules/claude_directory_structure.md` — what the scanner guards

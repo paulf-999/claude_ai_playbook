@@ -18,7 +18,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/_tests/root_files/test_aliases.py` — the test being scored
+- `src/claude/_tests/_root_files/test_aliases.py` — the test being scored
 - `src/claude/aliases.md` — what the test guards
 - `src/claude/_tests/rules/test_aliases_behavior.py` — the sibling test that checks alias behaviour
 - `src/claude/_tests/rules/test_aliases_behavior.py` — merged into this test on 2026-10-01 and deleted
