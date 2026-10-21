@@ -1,6 +1,6 @@
-<!-- version: 3.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-17 -->
+<!-- updated: 2026-10-21 -->
 # ✏️ Writing style
 
 **Purpose:** Establish consistent, scannable, and user-friendly writing conventions for all content Claude produces — ensuring clarity, respect for reader time, and professional presentation.
@@ -33,7 +33,6 @@ Applies to **all** content Claude produces — responses, drafts, Confluence pag
 - **Brevity:** if a sentence can be cut without losing meaning, cut it.
 - **History lives in git:** describe only the current state in repo files, and leave notes about removed, merged, archived or renamed files to the git log.
   - **Exception:** an incident that justifies a rule stays as that rule's evidence (e.g. `portable_paths.md`).
-  - **Example:** ❌ `**Removed (2026-09-18):** settings/test_aliases_behavior.py was a standalone script…`
 - **British English spelling:** use British spellings (organise, behaviour, centralise) over American (organize, behavior, centralize) throughout prose — matches this config's established house style (`behaviour.md`, not `behavior.md`).
   - **Exception:** code identifiers, filenames, and function names that already use American spelling stay as-is (e.g. `test_aliases_behavior.py`) — don't rename real files or code to chase this.
 - **No transposition exemption:** moving, copying, or splitting existing content into new files does not exempt the output — apply house style on the first draft, never as a later pass.
@@ -45,6 +44,8 @@ Applies to **all** content Claude produces — responses, drafts, Confluence pag
 ## 👥 Clarity principles — all content
 
 Lead with what things do, not how they work. Assume no prior familiarity with the domain. Explain jargon or use plain language instead. Readers should understand core idea in 60 seconds. Structure for progressive disclosure: heading + opening = complete idea; first section = enough to use; later sections = advanced cases.
+
+- 📋 **Executive Summary first:** open long-form written content (blog posts, Confluence pages, reports) with a `📋 Executive Summary` section of 3–5 bullets that gives the whole idea before any detail — the first layer of progressive disclosure, and the written counterpart of the chat Summary in `claude_response_standards.md`.
 
 ### ✍️ Writing Style for Skills
 
@@ -88,9 +89,10 @@ When writing SKILL.md files, apply these conventions specific to skill documenta
 
 ## 📝 Drafts and errors
 
-- **Drafts:** write proposed content to `~/claude/_drafts/<domain>/YYYY_MM_DD_<topic>.md`
-- **Errors:** write error details to `~/claude/_errors/<domain>/YYYY_MM_DD_<topic>.md`
-- **File naming:** date-first, then a snake_case topic — e.g. `2026_08_04_onboarding_plan.md`
+- **Drafts:** write proposed content to `~/_drafts/<domain>/YYYY_MM_DD_<topic>.md`
+- **Errors:** write error details to `~/_errors/<domain>/YYYY_MM_DD_<topic>.md`
+- **Reference:** put an evergreen guide Claude reads on demand in `~/.claude/_rules_lazy_load/<topic>.md`, named in a `**Read on demand:**` pointer, and human-only background in the playbook repo's `docs/reference/` — no date prefix; topic-named in snake_case
+- **File naming:** date-first for drafts/errors, snake_case topic-only for reference — e.g. `2026_08_04_onboarding_plan.md` or `claude_code_automation_commands.md`
   - **Why underscores, not hyphens:** the date prefix is part of the filename, so it must satisfy `naming_standards.md`'s snake_case rule (no hyphens) like every other filename — `YYYY-MM-DD` is correct as a data *value* (e.g. in frontmatter), but not as a filename segment.
 
 | Domain | Use for |
