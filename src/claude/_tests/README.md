@@ -14,7 +14,7 @@
 
 ```bash
 # Playbook repo: from the repo root, where pytest.ini adds coverage and the install tests
-CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest src/claude/_tests
+CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest
 
 # Live config: from the config folder
 cd ~/.claude && python3 -m pytest _tests

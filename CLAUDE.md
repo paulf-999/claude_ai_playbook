@@ -58,10 +58,12 @@ After updating the required files above, scan the rest of `docs/` for pages that
 Tests read the config from `CLAUDE_CONFIG_DIR`, which a local shell may point at the live `~/claude/` install. Point it at the repo explicitly — the same target CI uses:
 
 ```bash
-CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest src/claude/_tests
+CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest
 ```
 
 - **Why:** a plain `pytest` (or `make test`) checks whatever `CLAUDE_CONFIG_DIR` points at, so it can pass or fail on the live config instead of your changes (found 2026-09-30).
+- **No path:** `pytest.ini`'s `testpaths` then runs both `src/claude/_tests` and `src/claude/_install/_tests`, as CI does — naming a path skips the install tests and lowers coverage (found 2026-10-17).
+- **Coverage scope:** the percentage counts only the Python in `scripts/`, `_install/helpers/`, `skills/` and `_tests/_helpers/`, since markdown, shell hooks and the style-guide examples can't be measured or aren't run.
 - **Flat live install:** the live `skills/` has no `_<group>_skills/` folders, so skill-folder checks skip there and only run against the repo.
 
 ---
