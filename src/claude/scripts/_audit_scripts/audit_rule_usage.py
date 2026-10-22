@@ -169,11 +169,10 @@ def is_child(path: Path, tier_dir: Path, roots: tuple[Path, ...] = ()) -> bool:
     """
     if path.name.startswith("_"):
         return True
-    for folder in path.parents:
-        if folder == tier_dir:
-            return False
-        rel = folder.relative_to(tier_dir).with_suffix(".md")
-        if folder.with_suffix(".md").is_file() or any((root / rel).is_file() for root in roots):
+    # Every folder between the file and the tier, nearest first; the last entry is the tier itself (".")
+    for folder in list(path.relative_to(tier_dir).parents)[:-1]:
+        rel = folder.with_suffix(".md")
+        if (tier_dir / rel).is_file() or any((root / rel).is_file() for root in roots):
             return True
     return False
 

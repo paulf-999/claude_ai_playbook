@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-11
-# Version:           1.10.5
+# Date updated:      2026-10-22
+# Version:           1.11.0
 # Test quality score: 10/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -491,3 +491,88 @@ def test_insights_show_most_used_rules():
     assert any("**Every-session rules:** 1 rules" in line and "loaded in 95–95" in line for line in lines), lines
     assert "1. `big.md` — applied in 40 sessions, loaded in 38" in lines, lines
     assert "2. `small.md` — applied in 12 sessions, loaded in 12" in lines, lines
+
+
+# --- Edge cases in rules and transcripts ---
+
+
+def test_readme_inside_a_tier_is_not_a_rule(tmp_path):
+    """A README.md sitting in a tier folder is skipped, not counted as a rule."""
+    rules_dir = make_rules(tmp_path)
+    (rules_dir / "01_essentials" / "README.md").write_text("# Index\n")
+    names = [r.rel.rsplit("/", 1)[1] for r in AUDIT.discover_rules(rules_dir)]
+    assert "README.md" not in names, f"a tier README should not be a rule, got {names}"
+
+
+def test_rule_with_its_own_folder_but_no_parent_is_standalone(tmp_path):
+    """A rule inside a plain subfolder, with no parent .md for that folder, is an entry point."""
+    tier = tmp_path / "01_essentials"
+    (tier / "group").mkdir(parents=True)
+    rule = tier / "group" / "solo.md"
+    rule.write_text("# Solo\n")
+    assert AUDIT.is_child(rule, tier) is False, "a rule with no parent file should stand alone"
+
+
+def test_frontmatter_without_paths_has_no_globs():
+    """Frontmatter that sets other keys but no paths: gives no globs."""
+    globs = AUDIT.frontmatter_paths("---\ntitle: x\n---\n# Rule\n")
+    assert globs == [], f"frontmatter without paths: should give no globs, got {globs}"
+
+
+def test_old_path_scoped_keys_map_to_today():
+    """History keys from the old 04_path_scoped folder map to the current path-scoped folder."""
+    key = AUDIT.current_rel("rules/04_path_scoped/sql.md")
+    assert key == f"rules/{AUDIT.PATH_SCOPED_FOLDER}/sql.md", f"old key mapped to {key}"
+
+
+@pytest.mark.parametrize("stamp", [None, 12345, "not-a-date"])
+def test_record_without_a_valid_timestamp_has_no_date(stamp):
+    """A missing, non-text or malformed timestamp gives no date instead of failing."""
+    assert AUDIT.record_date({"timestamp": stamp}) is None, f"timestamp {stamp!r} should give no date"
+
+
+def test_non_file_tools_and_text_are_ignored():
+    """Only file tools count: a Bash call and a plain text block add no paths."""
+    record = {"message": {"content": [
+        {"type": "text", "text": "hi"},
+        {"type": "tool_use", "name": "Bash", "input": {"command": "ls"}},
+        {"type": "tool_use", "name": "Read", "input": {"file_path": "/repo/a.md"}},
+    ]}}
+    calls = AUDIT.tool_calls(record)
+    assert calls == [("Read", "/repo/a.md")], f"only the Read call should count, got {calls}"
+
+
+@pytest.mark.parametrize(
+    "attachment, expected",
+    [
+        ({"type": "edited_text_file", "filename": "/repo/a.py"}, ([], ["/repo/a.py"])),
+        ({"type": "edited_text_file"}, ([], [])),
+        ({"type": "something_new"}, ([], [])),
+    ],
+)
+def test_edited_and_unknown_attachments(attachment, expected):
+    """An edited-file notice counts as touched, and anything unrecognised adds nothing."""
+    paths = AUDIT.attachment_paths(attachment)
+    assert paths == expected, f"{attachment} gave {paths}, expected {expected}"
+
+
+def test_broken_and_non_object_transcript_lines_are_skipped(tmp_path):
+    """Bad JSON and JSON that isn't an object are skipped, and the rest of the session still counts."""
+    log = tmp_path / "projects" / "-repo" / "s.jsonl"
+    log.parent.mkdir(parents=True)
+    good = json.dumps({**tool("Edit", "/repo/a.py"), "timestamp": "2026-09-10T10:00:00.000Z"})
+    log.write_text("{not json\n[1, 2]\n" + good + "\n")
+    session = AUDIT.parse_session(log, make_rules(tmp_path))
+    assert session.touched == {"/repo/a.py"}, f"the good line should still count, got {session.touched}"
+    assert session.last_date == date(2026, 9, 10), f"expected the good line's date, got {session.last_date}"
+
+
+def test_main_writes_the_report_and_history(tmp_path, capsys):
+    """With real folders, main exits 0, writes both files and says where."""
+    out = tmp_path / "out"
+    rules_dir = make_rules(tmp_path)
+    code = AUDIT.main(["--rules", str(rules_dir), "--transcripts", str(make_transcripts(tmp_path)), "--out", str(out)])
+    assert code == 0, f"expected exit 0, got {code}"
+    written = {p.name for p in out.iterdir()}
+    assert {AUDIT.REPORT_NAME, AUDIT.HISTORY_NAME} <= written, f"expected the report and history, got {written}"
+    assert f"Wrote {out / AUDIT.REPORT_NAME}" in capsys.readouterr().out, "main should say where it wrote the report"

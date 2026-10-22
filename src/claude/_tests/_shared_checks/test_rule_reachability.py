@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
-# Date updated:      2026-10-11
-# Version:           3.2.3
+# Date updated:      2026-10-22
+# Version:           3.2.4
 # Test quality score: 8/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -142,6 +142,7 @@ def test_template_files_are_ignored(tmp_path):
     ('---\npaths:\n  - "**/*.py"\n---\n# X\n', True),
     ("---\ntitle: x\n---\npaths: not frontmatter\n", False),
     ("# No frontmatter\npaths: x\n", False),
+    ("---\ntitle: never closed\n", False),
 ])
 def test_paths_frontmatter_is_read_only_from_the_opening_block(text, expected):
     """paths: counts only inside the frontmatter block that opens the file."""

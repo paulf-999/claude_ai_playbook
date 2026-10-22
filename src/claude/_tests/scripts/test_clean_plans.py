@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
-# Date updated:      2026-10-11
-# Version:           2.1.1
+# Date updated:      2026-10-22
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -109,6 +109,12 @@ def test_only_first_status_table_is_read():
     """Rows from a later table don't leak into the phase statuses."""
     text = plan_text("✅ Done") + "\nSome prose.\n\n| Item | Status |\n|---|---|\n| x | ⏳ Pending |\n"
     assert clean_plans.phase_statuses(text) == ["✅ Done"], "Only the first Status table should be read"
+
+
+def test_table_without_status_column_is_passed_over():
+    """A table with no Status column is skipped, and the next table that has one is read."""
+    text = "| Item | Owner |\n|---|---|\n| x | me |\n\n" + plan_text("✅ Done")
+    assert clean_plans.phase_statuses(text) == ["✅ Done"], "the Status table after a plain table should be read"
 
 
 # ── reading the plan-level status ─────────────────────────────────────────────
@@ -294,3 +300,39 @@ def test_default_plans_dir_uses_config_dir(monkeypatch, tmp_path):
     """The default folder is $CLAUDE_CONFIG_DIR/_plans."""
     monkeypatch.setenv("CLAUDE_CONFIG_DIR", str(tmp_path))
     assert clean_plans._default_plans_dir() == tmp_path / "_plans", "Default should follow CLAUDE_CONFIG_DIR"
+
+
+def test_no_folders_says_so_when_asked(tmp_path, capsys):
+    """With neither folder present, an interactive run says where it looked."""
+    clean_plans.main(plans_dir=tmp_path / "_plans", today=TODAY)
+    assert "No plans folder found" in capsys.readouterr().out
+
+
+def test_no_folders_prints_nothing_on_yes(tmp_path, capsys):
+    """With neither folder present, the install's --yes run adds nothing to its output."""
+    clean_plans.main(plans_dir=tmp_path / "_plans", today=TODAY, assume_yes=True)
+    assert capsys.readouterr().out == "", "a missing folder should print nothing under --yes"
+
+
+def test_nothing_to_file_says_so_when_asked(tmp_path, monkeypatch, capsys):
+    """An already-filed config tells an interactive user so, without asking anything."""
+    (tmp_path / "_plans").mkdir()
+    monkeypatch.setattr(builtins, "input", lambda _prompt: pytest.fail("nothing to move, so nothing to ask"))
+    clean_plans.main(plans_dir=tmp_path / "_plans", today=TODAY)
+    assert "already in its status folder" in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("interrupt", [EOFError, KeyboardInterrupt])
+def test_closed_input_aborts_cleanly(tmp_path, monkeypatch, capsys, interrupt):
+    """Ctrl-D or Ctrl-C at the question exits 0 and moves nothing."""
+    plans, drafts = setup_config(tmp_path)
+
+    def stop(_prompt):
+        raise interrupt
+
+    monkeypatch.setattr(builtins, "input", stop)
+    with pytest.raises(SystemExit) as exit_info:
+        clean_plans.main(plans_dir=plans, today=TODAY)
+    assert exit_info.value.code == 0, f"expected exit 0, got {exit_info.value.code}"
+    assert "Aborted." in capsys.readouterr().out
+    assert (plans / "2026_09_01_done.md").exists() and (drafts / "some-draft.md").exists(), "nothing should move"

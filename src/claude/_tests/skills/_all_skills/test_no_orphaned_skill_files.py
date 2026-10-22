@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-19
-# Date updated:      2026-10-11
-# Version:           2.0.2
+# Date updated:      2026-10-22
+# Version:           2.1.0
 # Test quality score: 10/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -144,3 +144,8 @@ def test_eager_import_detector_ignores_fences_and_prose():
     assert find_eager_imports("```\n@reference/_x.md\n```\n") == [], "fenced examples must be ignored"
     assert find_eager_imports("~~~\n@reference/_x.md\n~~~\n") == [], "tilde fences must be ignored"
     assert find_eager_imports("Contact team@example.com.\n") == [], "a mid-line @ must be ignored"
+
+
+def test_missing_skills_folder_finds_no_skills(tmp_path):
+    """A config without a skills folder reports no skills instead of failing."""
+    assert skill_dirs(tmp_path / "skills") == [], "a missing skills folder should give no skills"

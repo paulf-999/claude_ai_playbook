@@ -1,9 +1,9 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
-# Date updated:      2026-10-11
-# Version:           1.1.1
-# Test quality score: 7/10
+# Date updated:      2026-10-22
+# Version:           1.2.0
+# Test quality score: 8/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
@@ -146,6 +146,36 @@ def test_status_and_moscow_heuristics():
     assert csp.determine_status("create the file") == "✅ Done"
     assert csp.extract_moscow("⏳ Pending", "this must happen") == "Must"
     assert csp.extract_moscow("✅ Done", "this must happen") == ""
+
+
+@pytest.mark.parametrize(("prompt", "theme"), [
+    ("refactor the module layout", "Process"),
+])
+def test_process_theme(prompt, theme):
+    """Restructuring words with no rule or skill keyword map to the Process theme."""
+    assert csp.categorize_theme(prompt) == theme, f"{prompt!r} should be {theme}"
+
+
+@pytest.mark.parametrize(("prompt", "status"), [
+    ("but that breaks the build", "↩️ Response"),
+    ("yes", "↩️ Response"),
+    ("this looks fine to me", "📋 Note"),
+    ("please create a dir for drafts", "✅ Done"),
+])
+def test_response_note_and_done_markers(prompt, status):
+    """Replies, bare yeses, observations and finished actions each get their own status."""
+    assert csp.determine_status(prompt) == status, f"{prompt!r} should be {status}"
+
+
+def test_pending_prompt_without_priority_word_has_no_moscow():
+    """A pending prompt naming no priority gets no MoSCoW label rather than a guess."""
+    assert csp.extract_moscow("⏳ Pending", "i want this eventually") == "", "no priority word means no label"
+
+
+def test_proposed_action_and_closure_are_extracted():
+    """A named action and a file-change phrase are pulled out of the prompt text."""
+    assert csp.extract_proposed_action("ok, go to plan mode now") == "Go To Plan Mode", "the action should be found"
+    assert csp.extract_closure("I created notes.md just now") == "created notes.md", "the change should be found"
 
 
 def test_markdown_cell_escaping():
