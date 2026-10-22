@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-11
-# Version:           2.0.5
+# Date updated:      2026-10-22
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -254,6 +254,81 @@ def test_version_in_frontmatter_is_caught(tmp_path):
     skill_md = VALID_SKILL_MD.replace("maturity: tactical\n---", "maturity: tactical\nversion: 1.0.0\n---")
     failures = failures_for(make_fixture_skill(tmp_path, skill_md=skill_md))
     assert any("C5" in f and "must not carry version" in f for f in failures), failures
+
+
+@pytest.mark.parametrize(
+    "skill_md, expected",
+    [
+        ("---\nname: demo_skill\n", "not closed"),
+        ("---\nname: [unclosed\n---\n", "not valid YAML"),
+        ("---\nname: demo_skill\n---\n", "missing required field: description"),
+        ("---\nname: demo_skill\ndescription: d\nmaturity: draft\n---\n# Demo\n", "metadata header"),
+    ],
+)
+def test_broken_frontmatter_is_caught(tmp_path, skill_md, expected):
+    """An unclosed, unparseable or incomplete frontmatter block, or no header after it, fails C5."""
+    failures = gate._check_c2_and_c4_and_c5_skill_md(make_fixture_skill(tmp_path, skill_md=skill_md))
+    assert any(f.startswith("C5") and expected in f for f in failures), failures
+
+
+def test_unreadable_skill_md_is_caught(tmp_path):
+    """A SKILL.md that isn't valid UTF-8 fails C2, C4 and C5 instead of crashing the crawl checks."""
+    skill_dir = make_fixture_skill(tmp_path)
+    (skill_dir / "SKILL.md").write_bytes(b"\xff\xfe not utf-8")
+    failures = gate._check_c2_and_c4_and_c5_skill_md(skill_dir)
+    assert [f.split(":", 1)[0] for f in failures] == ["C2", "C4", "C5"], failures
+
+
+def test_hardcoded_skill_name_is_caught(tmp_path):
+    """A SKILL.md that tells Claude to 'execute <its own name>' fails C2."""
+    skill_md = VALID_SKILL_MD.replace("Shows the canonical structure.", "Then execute demo_skill again.")
+    failures = failures_for(make_fixture_skill(tmp_path, skill_md=skill_md))
+    assert any(f.startswith("C2") and "execute demo_skill" in f for f in failures), failures
+
+
+def test_unparseable_contract_is_caught(tmp_path):
+    """A skill.contract.yaml that isn't valid YAML fails C1 and stops there."""
+    failures = failures_for(make_fixture_skill(tmp_path, contract="name: [unclosed\n"))
+    assert len(failures) == 1 and failures[0].startswith("C1: skill.contract.yaml parse error"), failures
+
+
+def test_requires_that_isnt_a_mapping_warns(tmp_path):
+    """A requires field given as a list is a C7 warning."""
+    warnings = gate._check_c7_requires_section({"requires": ["tools"]})
+    assert warnings and warnings[0].startswith("C7: requires field must be a dict"), warnings
+
+
+@pytest.mark.parametrize("contract", [{}, {"version": "1.0.0"}])
+def test_c3_skips_when_version_or_maturity_is_missing(contract):
+    """C3 has nothing to compare without both a version and a maturity, so it stays silent."""
+    assert gate._check_c3_version_maturity(contract) == []
+
+
+@pytest.mark.parametrize(
+    "major, maturity, aligned",
+    [(2, "strategic", True), (1, "strategic", False), (1, "experimental", False)],
+)
+def test_strategic_and_unknown_maturity_alignment(major, maturity, aligned):
+    """Strategic needs a 2+ major, and an unknown maturity never aligns."""
+    assert gate._check_maturity_version_alignment(major, maturity) is aligned
+
+
+def test_unparseable_skill_md_frontmatter_reads_as_empty(tmp_path):
+    """The walk checks treat frontmatter they can't parse as empty rather than crashing."""
+    skill_dir = make_fixture_skill(tmp_path, skill_md="---\nname: [unclosed\n---\nBody\n")
+    _, frontmatter, prose = gate._skill_md_parts(skill_dir)
+    assert frontmatter == {} and prose == ["Body", ""], (frontmatter, prose)
+
+
+def test_missing_tests_dir_finds_no_test_files(tmp_path):
+    """A config with no skills tests folder reports no pytest files instead of failing."""
+    assert gate.find_test_files(make_fixture_skill(tmp_path), tmp_path / "no_such_dir") == []
+
+
+def test_path_outside_root_is_shown_in_full(tmp_path):
+    """A skill outside the scanned root's parent is printed with its full path."""
+    outside = Path("/elsewhere/demo_skill")
+    assert gate._rel(outside, tmp_path / "skills") == str(outside)
 
 
 # ── Skill discovery ──────────────────────────────────────────────────────────

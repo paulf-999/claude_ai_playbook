@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-31
-# Date updated:      2026-10-11
-# Version:           1.1.1
+# Date updated:      2026-10-22
+# Version:           1.2.0
 # Test quality score: 7/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -168,6 +168,46 @@ def test_invalid_action_exit_code(monkeypatch):
     with pytest.raises(SystemExit) as exc_info:
         mcp_toggle.main()
     assert exc_info.value.code == 1
+
+
+def test_too_few_arguments_shows_usage(monkeypatch, capsys):
+    """With no server named, main exits 1 and lists the groups and servers it accepts."""
+    import mcp_toggle
+
+    monkeypatch.setattr(sys, "argv", ["mcp_toggle.py", "enable"])
+    with pytest.raises(SystemExit) as exc_info:
+        mcp_toggle.main()
+    assert exc_info.value.code == 1, f"expected exit 1, got {exc_info.value.code}"
+    err = capsys.readouterr().err
+    assert "Usage:" in err and "Groups:" in err and "Integration servers:" in err, f"usage help incomplete: {err!r}"
+
+
+def test_enable_through_main_then_already_enabled(tmp_path, monkeypatch, capsys):
+    """Enabling a denied server exits 1 for a restart, and enabling it again exits 0 and says so."""
+    import mcp_toggle
+
+    settings_path = tmp_path / "settings.json"
+    settings_path.write_text(json.dumps({"deniedMcpServers": [{"serverName": "github"}]}))
+    monkeypatch.setattr("mcp_toggle.SETTINGS_PATH", settings_path)
+    monkeypatch.setattr(sys, "argv", ["mcp_toggle.py", "enable", "github"])
+
+    with pytest.raises(SystemExit) as exc_info:
+        mcp_toggle.main()
+    assert exc_info.value.code == 1, "a change should exit 1 to signal a restart"
+    assert "Enabled:  github" in capsys.readouterr().out, "the change should be reported"
+
+    with pytest.raises(SystemExit) as exc_info:
+        mcp_toggle.main()
+    assert exc_info.value.code == 0, "no change should exit 0"
+    assert "Already enabled: github" in capsys.readouterr().out, "the no-op should be reported"
+
+
+def test_missing_settings_file_reads_as_empty(tmp_path, monkeypatch):
+    """With no settings.json yet, the toggle starts from empty settings instead of failing."""
+    import mcp_toggle
+
+    monkeypatch.setattr("mcp_toggle.SETTINGS_PATH", tmp_path / "absent.json")
+    assert mcp_toggle.load_settings() == {}, "a missing settings file should read as empty"
 
 
 MCP_TOGGLE = HELPERS_DIR / "mcp_toggle.py"

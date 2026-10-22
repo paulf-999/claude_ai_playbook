@@ -20,6 +20,7 @@
 *.csv
 !docs/audits/rule_usage_history.csv
 !docs/audits/rule_usage_sessions.csv
+!src/claude/_reference/_quality_scorecards/score_history.csv
 *.csv.gz
 *.tsv
 *.tsv.gz

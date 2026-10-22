@@ -1,0 +1,8 @@
+# Coverage settings, read by pytest-cov. CI fails below 100% (see .github/workflows/test.yml),
+# so only lines that tests can't usefully run are excluded here, each by a rule rather than per line.
+[report]
+exclude_also =
+    # Script entry points: tests call main() directly instead
+    if __name__ == .__main__.:
+    # A test helper's guard for a partial install with no linter, never hit on a full config
+    pytest\.skip\(.*allow_module_level=True

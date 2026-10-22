@@ -1,6 +1,6 @@
-<!-- version: 1.2.0 -->
+<!-- version: 1.3.0 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-10-02 -->
+<!-- updated: 2026-10-22 -->
 # ✅ Agent Hard Gates Checklist
 
 **Purpose:** Final validation checklist before finalizing an agent — verify naming, content quality, testing, scope, and integration.
@@ -41,3 +41,5 @@
 - [ ] Model and isolation mode specified
 - [ ] `tools:` lists only what the job needs — no Bash or MCP tools unless the agent's job requires them
 - [ ] References or related rules linked (if applicable)
+- [ ] Quality scorecard at `_reference/_quality_scorecards/agents/scorecard_<agent_name>.md`, scored by the `quality_scorecard_reviewer` agent in a fresh context
+- [ ] The run is recorded as a row in `_reference/_quality_scorecards/score_history.csv`
