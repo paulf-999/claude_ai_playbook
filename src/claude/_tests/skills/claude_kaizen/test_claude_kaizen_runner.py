@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
-# Date updated:      2026-10-06
-# Version:           1.2.0
+# Date updated:      2026-10-22
+# Version:           1.3.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -268,3 +268,16 @@ def test_state_folders_are_not_linked(tmp_path, monkeypatch):
     linked = sorted(entry.name for entry in isolated.iterdir())
     assert not {"backups", "plugins", "projects"} & set(linked), f"state folders were linked: {linked}"
     assert "rules" in linked and "CLAUDE.md" in linked, f"rules missing: {linked}"
+
+
+def test_print_results_shows_totals_and_each_case(tmp_path, capsys):
+    """The printed report shows the context, the totals and one marked line per case."""
+    results = {"context": "before", "total": 2, "passed": 1, "failed": 1, "results": [
+        {"name": "good_case", "status": "PASS", "details": "all patterns as expected"},
+        {"name": "bad_case", "status": "FAIL", "details": "missing 'x'"},
+    ]}
+    runner.EvalRunner(write_evals(tmp_path, CASE), config_dir=tmp_path).print_results(results)
+    out = capsys.readouterr().out
+    assert "Eval Results — BEFORE" in out, f"the context should head the report, got:\n{out}"
+    assert "Total: 2 | Passed: 1 | Failed: 1" in out, f"the totals line is missing, got:\n{out}"
+    assert "✅ good_case" in out and "❌ bad_case" in out, f"each case should be marked, got:\n{out}"

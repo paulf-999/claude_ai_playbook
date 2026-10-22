@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-11
-# Version:           1.3.3
+# Date updated:      2026-10-22
+# Version:           1.4.0
 # Test quality score: 10/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -17,7 +17,7 @@ that silences it fails here.
 """
 from pathlib import Path
 
-from _file_structure_validator import FileStructureValidator
+from _file_structure_validator import FileStructureValidator, check_new_path
 
 HINT = "— see claude_directory_structure/_claude_directory_naming.md"
 
@@ -172,3 +172,33 @@ def test_every_violation_has_required_keys(tmp_path: Path):
         missing = {"path", "rule", "severity", "message"} - violation.keys()
         assert not missing, f"violation {violation} is missing keys {missing}"
         assert violation["severity"] in {"error", "warning", "info"}, f"unknown severity {violation['severity']}"
+
+
+def test_missing_and_unreadable_folders_are_skipped(tmp_path: Path, monkeypatch):
+    """A folder that's gone, or one the scanner can't list, adds no violations instead of failing."""
+    validator = FileStructureValidator(tmp_path)
+    validator._scan_directory(tmp_path / "gone")
+
+    def deny(_self):
+        raise PermissionError("no access")
+
+    monkeypatch.setattr(Path, "iterdir", deny)
+    validator._scan_directory(tmp_path)
+    assert validator.violations == [], f"skipped folders should add nothing, got {validator.violations}"
+
+
+def test_special_file_names_count_as_valid():
+    """CLAUDE.md, README.md and the other fixed names pass even though they aren't snake_case."""
+    validator = FileStructureValidator(Path())
+    for name in ["CLAUDE.md", "README.md", "SKILL.md", "settings.json", "keybindings.json"]:
+        assert validator._is_valid_snake_case(name), f"{name} should be allowed as a fixed name"
+
+
+def test_new_path_check_covers_only_scanned_files(tmp_path: Path):
+    """A new file outside the config or in a skipped folder raises nothing, and a bad name inside does."""
+    home = tmp_path / "claude"
+    home.mkdir()
+    assert check_new_path(tmp_path / "elsewhere" / "Bad-Name.md", home) == [], "outside the config is ignored"
+    assert check_new_path(home / ".hidden" / "Bad-Name.md", home) == [], "hidden folders are ignored"
+    violations = check_new_path(home / "Bad-Name.md", home)
+    assert any("snake_case" in v["rule"] for v in violations), f"a bad name should be flagged, got {violations}"
