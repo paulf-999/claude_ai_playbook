@@ -8,7 +8,7 @@ Tests that every skill must pass.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_skill_structure_compliance.py` | Every installed skill passes the skill authoring gate's crawl checks, and each check is proven to fire | 9/10 | 2026-08-28 | 2026-10-22 | 2.1.0 |
+| `test_skill_structure_compliance.py` | Every installed skill passes the skill authoring gate's crawl checks, and each check is proven to fire | 9/10 | 2026-08-28 | 2026-10-22 | 2.1.1 |
 | `test_no_orphaned_skill_files.py` | Every skill file is referenced somewhere in its skill, every `reference/` link in SKILL.md exists, and no SKILL.md @-imports a file | 10/10 | 2026-09-19 | 2026-10-22 | 2.1.0 |
 | `test_skill_authoring_gate_walk.py` | The gate linter's walk checks (W1–W6) fail or warn as intended on fake skills | 10/10 | 2026-10-01 | 2026-10-11 | 1.1.1 |
 | `test_skill_authoring_gate_run.py` | The gate linter's run checks (R2–R4) on fake skills, and failures block while judgement calls only warn | 10/10 | 2026-10-01 | 2026-10-11 | 1.1.2 |
