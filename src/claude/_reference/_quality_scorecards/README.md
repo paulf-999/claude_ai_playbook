@@ -23,6 +23,25 @@
 
 ---
 
+## 🔍 Independent review
+
+Skills, rules and agents are scored by a reviewer that didn't write them, so the author never marks their own work.
+
+1. **Deterministic checks:** `make lint` and `CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest` pass before any scoring.
+2. **Evals:** the artefact's evals exist at the count its maturity needs.
+3. **Fresh-context review:** call the Agent tool with `subagent_type: quality_scorecard_reviewer`, passing only the artefact's path and its type.
+   - **Its inputs:** the artefact, its contract, its evals, the type's rubric and `scoring_anchors.md`.
+   - **Never pass:** the authoring conversation or the current scorecard's scores, since either would anchor the result.
+4. **History row:** append the row it returns to `score_history.csv` as the next attempt, then copy the scores into the scorecard and its summaries.
+   - **Enforced by:** `test_score_history.py`, which fails when attempts skip or the latest row doesn't match the scorecard.
+5. **Human review:** a CODEOWNERS reviewer approves the scorecard change in the PR.
+
+- **Anchors:** `scoring_anchors.md` shows what a 5, a 7 and a 9 look like for each type.
+- **Seed rows:** attempt 1 for every scorecard that existed before this flow says `reviewer=author`, since those scores were self-assessed.
+- **Not yet covered:** hooks and tests keep author scoring for now.
+
+---
+
 ## 🚀 Top 5 recommended actions
 
 The five lowest-scoring artefacts, each with the first recommended improvement from its scorecard.

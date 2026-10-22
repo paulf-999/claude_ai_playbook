@@ -1,6 +1,6 @@
-<!-- version: 2.2.1 -->
+<!-- version: 2.3.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-22 -->
 # Quality Scorecard — Template
 
 Every skill has a scorecard at `_reference/_quality_scorecards/skills/scorecard_<skill_name>.md` following the shared `_templates/scorecard/scorecard.md.template`, with the skill dimensions below (no justification or rationale sections).
@@ -102,7 +102,7 @@ Every skill has a scorecard at `_reference/_quality_scorecards/skills/scorecard_
 
 ## Notes
 
-- Score every dimension **against evals.yaml** — if the evals don't cover a dimension, its score reflects that gap
+- Every dimension is **scored by `quality_scorecard_reviewer`** in a fresh context, with evals.yaml as evidence — if the evals don't cover a dimension, its score reflects that gap
 - Each dimension is scored **independently** — a 10/10 in Design doesn't guarantee 10/10 in Code Quality
 - Scores reflect the **current version** — update when significant changes occur
 - Overall score is **not a grade** — a 9.5/10 skill is production-ready, not "A-"
