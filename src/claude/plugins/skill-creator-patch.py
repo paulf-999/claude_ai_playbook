@@ -13,8 +13,12 @@ the patch has already been applied.
 Must be run from the repo root after `make install_plugins`.
 """
 
-import shutil
 import sys
+
+if sys.version_info < (3, 10):  # pragma: no cover
+    sys.exit("This script needs Python 3.10 or newer — you're running " + sys.version.split()[0] + ".")
+
+import shutil
 from pathlib import Path
 
 PATCH_MARKER = "<!-- [TEAM-PATCH:skill-contract-first-design] -->"

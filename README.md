@@ -6,6 +6,13 @@ This repo provides a starting point for every session across every project: how 
 
 ## 🚀 Setup
 
+### Requirements
+
+- **Python 3.10 or newer:** the `make` script targets, the test suite and the plan-filing step of `make install` run on it.
+  - **Older Python:** each script stops straight away and names the version it found.
+  - **macOS:** the built-in `python3` is 3.9, so install a newer one with `brew install python@3.13`.
+  - **Packages:** run `make deps` inside a virtual environment — see [virtual environment setup](docs/reference/other/virtualenv_setup.md).
+
 ### Getting started
 
 Run the install from your own terminal:

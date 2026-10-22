@@ -5,10 +5,14 @@ Usage:
     python3 mcp_toggle.py disable <server-name> [server-name ...]
 """
 
+import sys
+
+if sys.version_info < (3, 10):  # pragma: no cover
+    sys.exit("This script needs Python 3.10 or newer — you're running " + sys.version.split()[0] + ".")
+
 import json
 import os
 import pathlib
-import sys
 
 # Live Claude config dir: CLAUDE_CONFIG_DIR when set, otherwise Claude Code's default ~/.claude,
 # matching make install

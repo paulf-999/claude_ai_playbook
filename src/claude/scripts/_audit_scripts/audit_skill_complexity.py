@@ -16,9 +16,13 @@ Returns:
     Exit code 1 if score exceeds maturity limit (crawl violation)
 """
 
+import sys
+
+if sys.version_info < (3, 10):  # pragma: no cover
+    sys.exit("This script needs Python 3.10 or newer — you're running " + sys.version.split()[0] + ".")
+
 import argparse
 import json
-import sys
 from pathlib import Path
 from typing import Any
 

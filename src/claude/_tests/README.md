@@ -29,7 +29,7 @@ cd ~/.claude && python3 -m pytest _tests
 | [`_docs/`](_docs/README.md) | The repo's own docs, not the config | Local links in the repo's `README.md` and `docs/` |
 | [`_helpers/`](_helpers/README.md) | None, it's shared infrastructure | Helpers used across the suite |
 | [`_root_files/`](_root_files/README.md) | Single files at the config root | `settings.json` permissions and `aliases.md` entries |
-| [`_shared_checks/`](_shared_checks/README.md) | Checks every artefact type shares | File naming and structure, rule loading and the shared metadata-header format |
+| [`_shared_checks/`](_shared_checks/README.md) | Checks every artefact type shares | File naming and structure, rule loading, the shared metadata-header format and the Python version check |
 | [`_reference/`](_reference/README.md) | Quality scorecards in `_reference/_quality_scorecards/` | Every artefact has a scorecard, and its dates are valid |
 | [`agents/`](agents/README.md) | Sub-agents | Agent headers and triggers |
 | [`hooks/`](hooks/README.md) | Hooks | Hook headers, registration and each hook's behaviour |
