@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
 # Date updated:      2026-10-22
-# Version:           2.1.0
+# Version:           2.1.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -129,6 +129,10 @@ def make_fixture_skill(
         (skill_dir / "skill.contract.yaml").write_text(contract)
     if skill_md is not None:
         (skill_dir / "SKILL.md").write_text(skill_md)
+    # W3 fails a skill with no evals.yaml, so the fixture carries 9 — inside the tactical range
+    (skill_dir / "tests").mkdir()
+    scenarios = "".join(f"  - name: case_{i}\n" for i in range(9))
+    (skill_dir / "tests" / "evals.yaml").write_text(f"evals:\n{scenarios}")
     return skill_dir
 
 

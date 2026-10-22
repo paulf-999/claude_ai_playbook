@@ -87,6 +87,7 @@ These criteria ensure the skill is clear, well-tested, and follows style standar
 - Draft: 5–8 evals (happy paths + basic validation)
 - Tactical: 8–12 evals (+ error cases, retries, clarifying questions)
 - Strategic: 12+ evals (+ edge cases, adversarial inputs, security)
+- **Missing file:** the linter fails the skill.
 - **Too few:** the linter fails the skill.
 - **Too many:** the linter warns that the skill may be ready to promote.
 - **Pytest files:** extra coverage in any folder under `src/claude/_tests/skills/`, never counted or capped by W3.
