@@ -111,7 +111,10 @@ def judge(output: str, must_match: list[str], must_not_match: list[str]) -> tupl
 class EvalRunner:
     """Runs eval cases against Claude and reports results."""
 
-    def __init__(self, eval_file: Path, config_dir: Path | None = None, timeout: int = DEFAULT_TIMEOUT_SECONDS):
+    def __init__(
+        self, eval_file: Path, config_dir: Path | None = None, timeout: int = DEFAULT_TIMEOUT_SECONDS,
+        cli_args: list[str] | None = None, isolate: bool = True,
+    ):
         """Load the eval cases and remember which rules to test against.
 
         :param eval_file: YAML file with a top-level ``evals`` list.
@@ -120,10 +123,17 @@ class EvalRunner:
         :type config_dir: Path | None
         :param timeout: Seconds to allow each Claude call.
         :type timeout: int
+        :param cli_args: Extra ``claude`` arguments, such as ``["--agent", "code_reviewer"]``.
+        :type cli_args: list[str] | None
+        :param isolate: Run Claude against an isolated copy of the config; False uses the caller's own config
+            and login, which an isolated copy can't reach when the login lives in the macOS Keychain.
+        :type isolate: bool
         """
         self.eval_file = eval_file
         self.config_dir = config_dir or find_config_dir(Path(__file__).resolve().parent)
         self.timeout = timeout
+        self.cli_args = list(cli_args or [])
+        self.isolate = isolate
         self.evals = self._load_evals()
 
     def _load_evals(self) -> list[dict[str, Any]]:
@@ -144,19 +154,20 @@ class EvalRunner:
         :rtype: str
         :raises RuntimeError: If the CLI is missing, times out or exits non-zero.
         """
-        if self.config_dir and not self.config_dir.is_dir():
+        if self.isolate and self.config_dir and not self.config_dir.is_dir():
             raise RuntimeError(f"config folder {self.config_dir} doesn't exist")
         env = dict(os.environ)
         # No tools and an empty working folder: Claude answers from the rules alone and can't touch any files.
-        # The prompt goes on stdin because --tools takes every following argument as a tool name.
+        # The prompt goes on stdin, and extra arguments go before --tools, because --tools takes every following
+        # argument as a tool name.
         try:
             with tempfile.TemporaryDirectory() as root:
                 workdir = Path(root) / "work"
                 workdir.mkdir()
-                if self.config_dir:
+                if self.isolate and self.config_dir:
                     env["CLAUDE_CONFIG_DIR"] = str(build_isolated_config(self.config_dir, Path(root)))
                 done = subprocess.run(
-                    ["claude", "-p", "--tools", ""], input=prompt,
+                    ["claude", "-p", *self.cli_args, "--tools", ""], input=prompt,
                     capture_output=True, text=True, env=env, cwd=str(workdir), timeout=self.timeout, check=False,
                 )
         except FileNotFoundError as exc:
