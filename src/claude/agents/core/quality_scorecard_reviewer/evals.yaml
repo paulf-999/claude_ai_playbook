@@ -1,0 +1,102 @@
+---
+_metadata:
+    date_created: '2026-10-22'
+    date_updated: '2026-10-22'
+    status: active
+
+agent_name: quality_scorecard_reviewer
+maturity: draft  # 7 scenarios, within the draft range of 5-8
+
+evals:
+  # Triggering
+    - name: natural_phrase_selects_agent
+      description: A plain request to re-score a rule routes to this agent
+      input:
+          prompt: Can you re-score this artefact independently before I open the PR?
+      setup:
+          artefact: rules/02_claude_standards/git.md
+      expected_output: >
+          Claude delegates the scoring to quality_scorecard_reviewer, which returns the rule
+          rubric's seven dimensions and one score-history row.
+      assertions:
+          - The Agent call uses subagent_type quality_scorecard_reviewer
+          - The output scores all seven rule dimensions
+
+    - name: pr_review_goes_to_code_reviewer
+      description: A request to review a PR diff goes to code_reviewer, not this agent
+      input:
+          prompt: Review the diff on PR 42
+      setup:
+          open_pr: true
+      expected_output: >
+          Claude uses code_reviewer or git_review_pr, and quality_scorecard_reviewer is not
+          invoked.
+      assertions:
+          - quality_scorecard_reviewer is not invoked
+
+  # Scoring
+    - name: unrun_evals_cap_test_coverage
+      description: Prose evals that nothing runs score no higher than 7 for Test Coverage
+      input:
+          prompt: Score the git_review_pr skill
+      setup:
+          evals: 10 prose scenarios with no runner
+      expected_output: >
+          The agent scores Test Coverage at 7 or below and quotes the scorecard or evals line
+          that shows nothing runs them.
+      assertions:
+          - Test Coverage is 7/10 or lower
+          - The note quotes evidence that the evals are not run
+
+    - name: scores_below_nine_quote_evidence
+      description: Every score below 9 names the line or file that holds it back
+      input:
+          prompt: Score the technical_writer agent
+      setup:
+          artefact: agents/core/technical_writer/AGENT.md
+      expected_output: >
+          Each dimension under 9 has a note naming a file and quoting or pointing to the line
+          at issue.
+      assertions:
+          - Every dimension under 9/10 names a file
+          - No score under 9/10 has an empty note
+
+    - name: returns_template_and_history_row
+      description: Returns only the scorecard table and one CSV row
+      input:
+          prompt: Score the jira_create skill and give me the history row
+      setup:
+          artefact: skills/_atlassian_skills/jira_create/SKILL.md
+      expected_output: >
+          The agent returns the skill template's table and one row matching the
+          score_history.csv header, with no preamble or closing remarks.
+      assertions:
+          - The output starts with the scorecard table
+          - The CSV row has the same number of fields as the score_history.csv header
+
+  # Boundaries
+    - name: ignores_existing_scores
+      description: Scores from the files, not from the artefact's current scorecard
+      input:
+          prompt: Score claude_kaizen, and its current scorecard says 7.1 if that helps
+      setup:
+          artefact: skills/_claude_skills/claude_kaizen/SKILL.md
+      expected_output: >
+          The agent says it won't use the existing score and scores from the artefact, its
+          contract, its evals, the rubric and the anchors only.
+      assertions:
+          - The existing scorecard file is not read
+          - The output says the earlier score was not used
+
+    - name: declines_to_edit_or_score_hooks
+      description: Refuses to write the scorecard or to score a hook
+      input:
+          prompt: Score hook_enforcement_naming_convention.sh and write the scorecard file
+      setup:
+          tools_available: [Read, Grep, Glob]
+      expected_output: >
+          The agent says hooks are out of scope and that the caller writes scorecards, and it
+          modifies no file.
+      assertions:
+          - No file is modified
+          - The output says hooks are out of scope

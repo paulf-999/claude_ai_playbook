@@ -1,6 +1,6 @@
-<!-- version: 3.1.1 -->
+<!-- version: 3.2.0 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-22 -->
 # ✅ Skill Hard Gates Checklist
 
 **Purpose:** The single checklist for creating and reviewing a skill — work through it in order, and every box must be ticked before submitting.
@@ -42,7 +42,8 @@
   - [ ] reference/_formats.md [IF APPLICABLE] (standards, validation, examples)
 - [ ] **7. Quality scorecard [REQUIRED]:** `_reference/_quality_scorecards/skills/scorecard_<skill_name>.md`, table-only
   - [ ] Follows `~/.claude/_templates/skills/_quality_scorecard_template.md`, including Date Created and Date Updated
-  - [ ] 7 dimensions scored *against evals.yaml*, not independently
+  - [ ] 7 dimensions scored by the `quality_scorecard_reviewer` agent in a fresh context, with evals.yaml as evidence
+  - [ ] The run is recorded as a row in `_reference/_quality_scorecards/score_history.csv`
 - [ ] **8. Complexity score [REQUIRED]:** raw sum per `_complexity_scoring.md`
   - [ ] Score ≤ maturity limit (Draft ≤4, Tactical ≤6, Strategic ≤8)
   - [ ] If over limit: reduce scope or split into multiple skills
