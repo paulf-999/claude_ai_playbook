@@ -12,6 +12,8 @@ It previews the target, backup path and six install steps, then asks you to type
 
 > **First-time install:** open a new terminal after `make install` before running `claude`.
 
+> **Python:** the playbook's scripts need Python 3.10 or newer — on macOS, whose built-in `python3` is 3.9, run `brew install python@3.13` first.
+
 > **Custom folder:** the config installs into Claude Code's default folder, `~/.claude`. To use another one, such as `~/claude`, add `export CLAUDE_CONFIG_DIR="$HOME/claude"` to your shell profile (e.g. `~/.zshrc`) and open a new terminal before running `make install` — Claude Code reads the same variable to find it.
 
 ---

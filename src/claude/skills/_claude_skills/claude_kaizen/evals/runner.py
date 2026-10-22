@@ -16,10 +16,14 @@ Usage:
 """
 from __future__ import annotations
 
+import sys
+
+if sys.version_info < (3, 10):  # pragma: no cover
+    sys.exit("This script needs Python 3.10 or newer — you're running " + sys.version.split()[0] + ".")
+
 import os
 import re
 import subprocess
-import sys
 import tempfile
 from pathlib import Path
 from typing import Any

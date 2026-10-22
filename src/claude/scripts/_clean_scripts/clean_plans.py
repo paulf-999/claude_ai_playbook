@@ -15,10 +15,14 @@ Nothing is deleted or overwritten, and every move is previewed and confirmed fir
 
 from __future__ import annotations
 
+import sys
+
+if sys.version_info < (3, 10):  # pragma: no cover
+    sys.exit("This script needs Python 3.10 or newer — you're running " + sys.version.split()[0] + ".")
+
 import os
 import re
 import shutil
-import sys
 from datetime import date
 from pathlib import Path
 
