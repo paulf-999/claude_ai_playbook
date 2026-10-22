@@ -296,21 +296,15 @@ def _check_w1_w2_readability(lines: list[str], prose: list[str]) -> tuple[list[s
     return failures, warnings
 
 
-def _check_w3_coverage(
-    skill_dir: Path, frontmatter: dict[str, Any], maturity: str, tests_dir: Path
-) -> tuple[list[str], list[str]]:
-    """W3: the evals.yaml scenario count fits the maturity, and a tested: true claim is backed by tests.
+def _check_w3_coverage(skill_dir: Path, maturity: str) -> tuple[list[str], list[str]]:
+    """W3: the skill has a tests/evals.yaml whose scenario count fits the maturity.
 
     Pytest files are extra coverage on top of evals.yaml, so they never count toward or cap the range.
 
     :param skill_dir: Path to the skill directory.
     :type skill_dir: Path
-    :param frontmatter: SKILL.md's parsed frontmatter.
-    :type frontmatter: dict[str, Any]
     :param maturity: The contract's maturity level.
     :type maturity: str
-    :param tests_dir: Folder holding the skills' pytest files.
-    :type tests_dir: Path
     :return: Tuple of (failures, warnings).
     :rtype: tuple[list[str], list[str]]
     """
@@ -319,10 +313,7 @@ def _check_w3_coverage(
     except (ValueError, yaml.YAMLError) as exc:
         return [f"W3: {exc}"], []
     if count is None:
-        tags = frontmatter.get("tags") or {}
-        if isinstance(tags, dict) and tags.get("tested") is True and not find_test_files(skill_dir, tests_dir):
-            return ["W3: SKILL.md claims tags.tested: true, but there's no tests/evals.yaml or pytest file"], []
-        return [], ["W3: no tests/evals.yaml yet — every skill needs one"]
+        return ["W3: no tests/evals.yaml — every skill needs one"], []
     low, high = EVAL_COUNT_RANGE.get(maturity, (0, None))
     expected = f"{low}+" if high is None else f"{low}–{high}"
     if count < low:
@@ -361,21 +352,19 @@ def _check_w4_to_w6_focus(skill_dir: Path, text: str, prose: list[str], maturity
     return failures
 
 
-def _check_walk(skill_dir: Path, maturity: str, tests_dir: Path) -> tuple[list[str], list[str]]:
+def _check_walk(skill_dir: Path, maturity: str) -> tuple[list[str], list[str]]:
     """W1–W6: readability, style, test coverage, jargon, open TODOs and phase files.
 
     :param skill_dir: Path to the skill directory.
     :type skill_dir: Path
     :param maturity: The contract's maturity level.
     :type maturity: str
-    :param tests_dir: Folder holding the skills' pytest files.
-    :type tests_dir: Path
     :return: Tuple of (failures, warnings).
     :rtype: tuple[list[str], list[str]]
     """
-    text, frontmatter, prose = _skill_md_parts(skill_dir)
+    text, _, prose = _skill_md_parts(skill_dir)
     readability_failures, readability_warnings = _check_w1_w2_readability(text.split("\n"), prose)
-    coverage_failures, coverage_warnings = _check_w3_coverage(skill_dir, frontmatter, maturity, tests_dir)
+    coverage_failures, coverage_warnings = _check_w3_coverage(skill_dir, maturity)
     focus_failures = _check_w4_to_w6_focus(skill_dir, text, prose, maturity)
     return readability_failures + coverage_failures + focus_failures, readability_warnings + coverage_warnings
 
@@ -429,7 +418,7 @@ def check_walk_run(
     :rtype: tuple[list[str], list[str]]
     """
     maturity = contract.get("maturity", "draft")
-    walk_failures, walk_warnings = _check_walk(skill_dir, maturity, tests_dir)
+    walk_failures, walk_warnings = _check_walk(skill_dir, maturity)
     run_failures, run_warnings = _check_run(skill_dir, maturity, tests_dir)
     return walk_failures + run_failures, walk_warnings + run_warnings
 

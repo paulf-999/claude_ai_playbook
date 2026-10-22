@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-11
-# Version:           1.1.1
+# Date updated:      2026-10-22
+# Version:           1.2.0
 # Test quality score: 10/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -59,14 +59,14 @@ def test_w3_false_tested_claim_fails(tmp_path: Path):
     """Claiming tags.tested: true with no tests or evals fails W3."""
     skill = make_skill(tmp_path, tested=True, evals=False)
     failures, _ = walk_run(skill, tmp_path)
-    assert any("claims tags.tested: true" in f for f in failures), f"a false claim should fail W3, got {failures}"
+    assert any("no tests/evals.yaml" in f for f in failures), f"a false claim should fail W3, got {failures}"
 
 
-def test_w3_disclosed_gap_warns(tmp_path: Path):
-    """No tests, no evals and an honest tested: false is a W3 warning only."""
+def test_w3_missing_evals_fails(tmp_path: Path):
+    """No evals.yaml fails W3 even when tested: false discloses the gap."""
     failures, warnings = walk_run(make_skill(tmp_path, tested=False, evals=False), tmp_path)
-    assert "W3" in codes(warnings), f"an honest untested skill should warn W3, got {warnings}"
-    assert "W3" not in codes(failures), "an honest, disclosed gap shouldn't block"
+    assert "W3" in codes(failures), f"a skill with no evals.yaml should fail W3, got {failures}"
+    assert "W3" not in codes(warnings), f"a missing evals.yaml should block, not warn, got {warnings}"
 
 
 def test_w3_too_few_evals_fails(tmp_path: Path):
