@@ -42,3 +42,4 @@ run_date,artefact,type,attempt,reviewer,model,overall,commit
 2026-10-22,quality_scorecard_reviewer,agent,1,author,unrecorded,8.6,uncommitted
 2026-10-02,technical_writer,agent,1,author,unrecorded,8.1,b7e49c7
 2026-10-22,git_review_pr,skill,2,quality_scorecard_reviewer,claude-opus-5-5,7.1,e38fcee
+2026-10-25,git_review_pr,skill,3,quality_scorecard_reviewer,claude-opus-5-5,7.1,4efbecd
