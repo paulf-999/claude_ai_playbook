@@ -44,7 +44,6 @@ See `~/.claude/rules/01_essentials/guiding_principles.md` for the decision frame
 | `Bash(gh pr:*)` | Read GitHub PRs | Very common |
 | `Bash(gh repo view:*)` | Inspect repository metadata | Occasional |
 | `Bash(gh run:*)` | View CI/CD runs | Occasional |
-| `Bash(git -C:*)` | Run git commands in other directories | Very common (25 uses/session) |
 | `Bash(git add:*)` | Stage files (safe: isolated to current branch) | Common |
 | `Bash(git branch:*)` | List/read branches | Common (8 uses/session) |
 | `Bash(git checkout:*)` | Switch branches (intentional via `--`) | Common |

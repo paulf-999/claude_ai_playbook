@@ -138,7 +138,6 @@ cat > "${HOME}/.claude/settings.json" << 'EOF'
       "Bash(git push:*)",
       "Bash(git rebase:*)",
       "Bash(git status:*)",
-      "Bash(git -C:*)",
       "Bash(gh:*)",
       "Bash(find:*)"
     ]

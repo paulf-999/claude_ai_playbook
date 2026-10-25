@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-11
-# Version:           1.2.2
+# Date updated:      2026-10-25
+# Version:           1.3.0
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -125,8 +125,6 @@ def test_allow_list_intentional():
         "Bash(find:*)",
         # Used for code search
         "Bash(grep:*)",
-        # Git in any directory
-        "Bash(git -C:*)",
         # GitHub API flexibility
         "Bash(gh api:*)",
     }
@@ -220,3 +218,13 @@ def test_cleanup_period_days_is_chosen_value():
         f"cleanupPeriodDays is {days}, expected {EXPECTED_CLEANUP_PERIOD_DAYS} — "
         f"update settings_json_readme.md and this test together if the choice changes"
     )
+
+
+def test_git_c_wildcard_not_allowed():
+    """`git -C` is never auto-allowed, since the path sits before the subcommand and the wildcard approves any write.
+
+    Issue #410: `Bash(git -C:*)` auto-approved `git -C <repo> push --force` and `reset --hard`.
+    """
+    allow_list = _load_settings()["permissions"]["allow"]
+    broad = [entry for entry in allow_list if entry.startswith("Bash(git -C")]
+    assert not broad, f"git -C must prompt, not be auto-allowed: {broad}"

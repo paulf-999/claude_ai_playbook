@@ -10,7 +10,6 @@
       "Bash(gh pr:*)",
       "Bash(gh repo view:*)",
       "Bash(gh run:*)",
-      "Bash(git -C:*)",
       "Bash(git add:*)",
       "Bash(git branch:*)",
       "Bash(git checkout:*)",
