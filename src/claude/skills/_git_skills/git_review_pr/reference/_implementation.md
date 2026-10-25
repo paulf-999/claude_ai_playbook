@@ -48,18 +48,25 @@ Call the Agent tool with `subagent_type: code_reviewer`, and pass it:
 - **Approve with suggestions or Request changes:** ask "Would you like to address any of these before posting?", listing each recommendation as a numbered one-liner, and accept numbers, `all` or `n`.
 - **Addressing:** for each selected item, make the change the user agrees, then re-show the updated comment.
 - **Approve:** skip the amendment prompt, since there is nothing actionable.
-- **Save:** write the comment to `$HOME/claude/_drafts/general/YYYY_MM_DD_review_pr_<number>.md`, with the date as today.
-- **Secret check:** run the check below on the draft, and stop before any post prompt if it finds a match.
+- **Secret check:** run the check below on the comment text, before anything is written to disk.
+- **Save:** write the comment to `<drafts>/YYYY_MM_DD_review_pr_<number>.md`, with the date as today.
+  - **`<drafts>`:** `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/_drafts/general`, resolved to an absolute path, since the Write tool doesn't expand `~` or variables.
+  - **Check flagged it:** save the redacted text from the check instead, then stop before any post prompt.
 - **Dry run:** stop here, and tell the user the draft path and that nothing was posted.
 - **Confirm:** ask "Post this as a comment on PR #<number>? (y/n)", and stop on anything other than `y`.
 
 ### 🔒 Secret check
 
 ```bash
-grep -nE 'AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{36}|xox[abprs]-[A-Za-z0-9-]+|(password|secret|token|api[_-]?key)[[:space:]]*[:=][[:space:]]*[^[:space:]]{8,}' "<draft file>"
+SECRET_RE="AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{22,}|xox[abprs]-[A-Za-z0-9-]+|sk-[A-Za-z0-9_-]{20,}|[rs]k_live_[A-Za-z0-9]{16,}|AIza[0-9A-Za-z_-]{35}|(password|passwd|secret|token|api[_-]?key)[\"']?[[:space:]]*[:=][[:space:]]*[\"']?[^[:space:]\"']{8,}"
+grep -inE "$SECRET_RE" <<'CLAUDE_REVIEW_DRAFT' | cut -d: -f1
+<comment text>
+CLAUDE_REVIEW_DRAFT
 ```
 
-- **Match found:** show only the line numbers, never the matched text, and ask the user to edit the draft before re-running.
+- **Why a quoted heredoc:** the comment reaches `grep` without touching disk, and the quotes stop the shell expanding `$` or backticks inside it.
+- **Why only line numbers:** `cut` drops the matched text, so a secret never reaches the output, even for Claude.
+- **Match found:** tell the user the line numbers, then make the redacted text to save by running the same heredoc through `perl -pe "s/$SECRET_RE/[REDACTED]/gi"`.
 
 ## 5️⃣ Phase 5 — Post or update the comment
 
@@ -85,7 +92,7 @@ gh api "repos/<owner>/<repo>/issues/<number>/comments" --paginate \
 | "No open PR found" | The branch has no PR, or the PR is in another repo | Pass the PR URL instead of a number |
 | `gh: Not Found` (404) | No read access to the repo, or the wrong account is active | Run `gh auth status` and switch with `gh auth switch` |
 | `Resource not accessible` (403) on post | The token can't comment on this repo | Re-run `gh auth login` with repo scope, or ask for write access |
-| Secret check blocks posting | The comment quotes a token, key or password | Edit the draft to remove or mask the value, then re-run |
+| Secret check blocks posting | The comment quotes a token, key or password | Open the saved draft, where the value shows as `[REDACTED]`, reword that finding so it doesn't quote the value, then re-run |
 | The review misses changes | The diff was over 500 lines, so some files were summarised | Split the PR, or review the summarised files separately |
 
 ## ❓ FAQ
