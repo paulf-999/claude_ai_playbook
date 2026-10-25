@@ -48,18 +48,19 @@ Call the Agent tool with `subagent_type: code_reviewer`, and pass it:
 - **Approve with suggestions or Request changes:** ask "Would you like to address any of these before posting?", listing each recommendation as a numbered one-liner, and accept numbers, `all` or `n`.
 - **Addressing:** for each selected item, make the change the user agrees, then re-show the updated comment.
 - **Approve:** skip the amendment prompt, since there is nothing actionable.
-- **Save:** write the comment to `$HOME/claude/_drafts/general/YYYY_MM_DD_review_pr_<number>.md`, with the date as today.
-- **Secret check:** run the check below on the draft, and stop before any post prompt if it finds a match.
+- **Secret check:** write the comment to a temporary file from `mktemp`, outside `_drafts/`, and run the check below on it.
+- **Save:** only once the check passes, move the temporary file to `~/claude/_drafts/general/YYYY_MM_DD_review_pr_<number>.md`, with `~` expanded to the absolute home path and the date as today.
 - **Dry run:** stop here, and tell the user the draft path and that nothing was posted.
 - **Confirm:** ask "Post this as a comment on PR #<number>? (y/n)", and stop on anything other than `y`.
 
 ### 🔒 Secret check
 
 ```bash
-grep -nE 'AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{36}|xox[abprs]-[A-Za-z0-9-]+|(password|secret|token|api[_-]?key)[[:space:]]*[:=][[:space:]]*[^[:space:]]{8,}' "<draft file>"
+grep -nE 'AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{36}|xox[abprs]-[A-Za-z0-9-]+|(^|[^[:alnum:]_-])sk-(ant-|proj-)?[A-Za-z0-9_-]{20,}|AIza[0-9A-Za-z_-]{35}|(^|[^[:alnum:]_])[rs]k_live_[0-9A-Za-z]{16,}|(password|secret|token|api[_-]?key)"?[[:space:]]*[:=][[:space:]]*[^[:space:]]{8,}' "<temp file>"
 ```
 
-- **Match found:** show only the line numbers, never the matched text, and ask the user to edit the draft before re-running.
+- **Match found:** delete the temporary file, show only the line numbers, never the matched text, and ask the user what to change before re-running, so a flagged comment never reaches `_drafts/`.
+- **What it catches:** AWS, PEM, GitHub, Slack, Anthropic and OpenAI `sk-`, Google `AIza` and Stripe live keys, plus `key=value` and JSON `"key": "value"` secrets of 8 or more characters.
 
 ## 5️⃣ Phase 5 — Post or update the comment
 
@@ -85,7 +86,7 @@ gh api "repos/<owner>/<repo>/issues/<number>/comments" --paginate \
 | "No open PR found" | The branch has no PR, or the PR is in another repo | Pass the PR URL instead of a number |
 | `gh: Not Found` (404) | No read access to the repo, or the wrong account is active | Run `gh auth status` and switch with `gh auth switch` |
 | `Resource not accessible` (403) on post | The token can't comment on this repo | Re-run `gh auth login` with repo scope, or ask for write access |
-| Secret check blocks posting | The comment quotes a token, key or password | Edit the draft to remove or mask the value, then re-run |
+| Secret check blocks saving | The comment quotes a token, key or password | Ask for the value to be removed or masked in the comment, then re-run |
 | The review misses changes | The diff was over 500 lines, so some files were summarised | Split the PR, or review the summarised files separately |
 
 ## ❓ FAQ

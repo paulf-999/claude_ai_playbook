@@ -14,7 +14,12 @@
 | 6 | `dry_run_posts_nothing` | Confirm | With `--dry-run`, saves the draft and posts nothing |
 | 7 | `earlier_review_updated_not_duplicated` | Post | Uses a PR number argument and updates the user's earlier review instead of duplicating it |
 | 8 | `failed_post_keeps_draft` | Post | Keeps the draft and reports the error when posting fails |
+| 9 | `invalid_argument_rejected` | Pre-check | Rejects anything but a PR number or pull URL before it reaches a shell command |
+| 10 | `empty_diff_stops` | Fetch | Stops before analysis when the PR has no changes |
+| 11 | `secret_never_saved_to_drafts` | Confirm | Checks the comment before saving, so a flagged secret never reaches `_drafts/` |
+| 12 | `local_diff_routed_to_code_reviewer` | Hand-off | Sends a local diff with no PR to `code_reviewer` instead |
 
-- **Maturity:** 8 scenarios sits within the 5–8 expected for a **draft** skill
-- **Dropped to stay within 8:** complexity scoring (the `code_reviewer` agent's job) and a declined post, so neither has a scenario at the moment
-- **No handler tests:** this skill has no Python code, so there's no pytest suite. `evals.yaml` is its only test
+- **Maturity:** 12 scenarios sits within the 8–12 expected for a **tactical** skill
+- **Not covered:** complexity scoring (the `code_reviewer` agent's job) and a declined post
+- **Secret pattern test:** `_tests/skills/git_review_pr/test_git_review_pr_secret_check.py` runs the check's `grep` pattern against sample secrets and safe text
+- **No handler tests:** this skill has no Python code, so nothing else runs the scenarios yet
