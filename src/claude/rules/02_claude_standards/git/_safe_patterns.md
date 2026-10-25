@@ -1,24 +1,23 @@
-<!-- version: 1.0.1 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-25 -->
 # 🔒 Safe Git Patterns
 
-**Purpose:** Protect against git hook execution risks when running commands in untrusted directories.
+**Purpose:** Keep git from running code planted in an untrusted repository, and keep git commands from changing the shell's working directory.
 
 ---
 
-## 🔒 Git hook execution risk
+## ⚠️ Untrusted repositories
 
-**Pattern:** `cd && git` compound commands — ALWAYS use `git -C` instead
+- **Hooks run either way:** git runs a repository's `.git/hooks/` scripts whether you `cd` into it or use `git -C`, so `git -C` is not a safety control.
+- **Config can run code too:** a repository's own `.git/config` can set options such as `core.fsmonitor` or `core.pager` that run commands, even for a read-only command like `git status`.
+- **Default:** don't run git in a repository that you didn't create or clone from a trusted source.
+- **If you must:** ask first, then turn off hooks, the file monitor and the pager for that command with `git --no-pager -c core.hooksPath=/dev/null -c core.fsmonitor=false -C <repo> <command>`.
 
-**Risk:** Git hook execution from untrusted repositories.
+## 📍 Use `git -C`, not `cd && git`
 
-When `cd /some/repo && git <command>` runs, git executes hooks from that directory's `.git/hooks/`. If redirected to a malicious repository, those hooks execute silently.
-
-**Mitigation:** Always use `git -C /path/to/repo <command>` instead. This runs the git command in the specified directory without changing the shell's working directory, eliminating the hook-execution risk.
-
-**Rule:** Proactively rewrite compound `cd && git` patterns to use `git -C`:
+- **Rule:** write `git -C /path/to/repo <command>` instead of `cd /path/to/repo && git <command>`.
+- **Why:** the shell's working directory stays where it was, so later commands don't run in the wrong folder.
 - ❌ `cd /repo && git status`
 - ✅ `git -C /repo status`
-
-This applies to all git commands, including destructive ones (`reset --hard`, `push --force`).
+- **Scope:** this applies to every git command, and destructive ones such as `reset --hard` and `push --force` still need confirmation under `git.md`.
