@@ -1,24 +1,25 @@
 # Quality Scorecard — _claude_config_metadata.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-09-28
+**Date Updated:** 2026-10-25
 
-**Overall score:** 8.4/10
+**Overall score:** 7.7/10
 
 **Recommended improvements:**
-- Re-score Evidence of Need after one audit cycle has used the backfilled `updated` dates.
-- Decide whether shared authoring standards should stay always-on or move behind a reachability exemption, to recover the ~400 tokens/session.
+- Change line 60's "up to three more lines" to say which usage fields are required
+- Update line 72's `path-scoped` definition to match `test_rule_headers.py` lines 345–346
+- Add a test for line 24's bump-on-edit rule
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 9/10 | 2026-09-28 | • 📋 **Exact formats:** two tables give the fields and the per-artefact placement verbatim<br>• ⚠️ **Judgement call:** MAJOR vs MINOR ("reversed or removed" vs "added") still needs the author's judgement on mixed edits |
-| **Complexity** | 9/10 | 2026-09-28 | • 🧮 **Raw complexity 1:** single file, ~3 concepts (fields, version bumps, placement), no dependencies or prerequisites |
-| **Evidence of Need** | 7/10 | 2026-09-28 | • 🔗 **Real gap:** the live `~/claude/` copy carries no git history, so audits and 6-month resets had no created/updated signal<br>• ⚠️ **Unproven yet:** no audit has used the fields, since the backfill hasn't happened |
-| **Token Cost Justification** | 6/10 | 2026-09-28 | • 🎯 **Always-on:** imported from `authoring_rules.md` so `test_always_on_reachability.py` can reach it<br>• ⚠️ **Narrow use:** only relevant while authoring or editing artefacts, yet costs ~400 tokens every session |
-| **Structural Compliance** | 9/10 | 2026-09-28 | • ✅ **Compliant:** three-line metadata header, emoji H1, Purpose statement, Related section, 57 lines, trailing newline |
-| **Currency** | 10/10 | 2026-09-28 | • 🔍 **New:** written 2026-09-28, all references resolve |
-| **Test Coverage** | 9/10 | 2026-09-28 | • 🧪 **Dedicated test:** `test_claude_config_metadata.py`, 13 functions covering placement, format and value errors<br>• ✅ **Required:** every rule file must carry a header, since the backfill added them to all 147 rules |
-| **Overall** | **8.4/10** | 2026-09-28 | • 💪 **Strength:** one lean, testable standard shared across rules, skills, agents and hooks<br>• ⚠️ **Gap:** always-on token cost for guidance used only while authoring |
+| **Clarity** | 8/10 | 2026-10-25 | • 🎯 **Unambiguous core:** the three fields, the bump rules (lines 23–27) and the per-artefact placement table (lines 36–41) leave little room for different readings<br>• ⚠️ **Understated requirement:** `_claude_config_metadata.md` line 60 says entry-point rules "add up to three more lines", but line 69 makes `applies_to` required on always-on entry points and line 74 makes `loading` required on every entry point, so "up to" makes them sound optional |
+| **Complexity** | 6/10 | 2026-10-25 | • 🧮 **Raw complexity 4:** Concepts 2 (three fields, bump semantics, per-artefact placement, rule-only usage fields) + Scope 2 (rules, skills, agents and hooks across several folders) + Dependencies 0 + Prerequisites 0, per `_complexity_scoring.md`<br>• ⚠️ **Two jobs in one file:** lines 58–77 add a rule-only usage-field standard (`applies_to`, `miss_cost`, `loading`) on top of the shared header standard set out in line 11's Purpose |
+| **Evidence of Need** | 7/10 | 2026-10-25 | • ✅ **Real consumers:** four header tests and `make audit_rule_usage` (line 75) depend on the format, so it is in active use<br>• ⚠️ **No dated problem:** line 20 ("git history doesn't travel with the live `~/.claude/` copy") gives a reason, but no incident or recorded failure is cited, and the 2026-09-28 note on line 53 is a design check, not a need |
+| **Token Cost Justification** | 8/10 | 2026-10-25 | • ✅ **Path-scoped, cost near zero:** `paths:` frontmatter (lines 1–5) keeps it out of non-config sessions, and line 53 records that HTML-comment headers cost no tokens<br>• ⚠️ **Broad trigger:** lines 3–4 (`**/.claude/**`, `**/claude/**`) match every file under the config, including reads unrelated to authoring, so in this repo it loads on almost any read |
+| **Structural Compliance** | 9/10 | 2026-10-25 | • ✅ **Clean:** 78 lines, emoji H1, one-line Purpose, metadata header straight after `paths:`, bold-keyword one-sentence bullets, no Related section<br>• 🔍 **Not run:** compliance is judged from the file against `_hard_gates_checklist.md`, and `test_claude_config_metadata.py` covers it, but I didn't run that test this pass |
+| **Currency** | 8/10 | 2026-10-25 | • ✅ **References exist:** `testing_lazy_load/_test_metadata.md` (line 54) and `test_rule_headers.py` (line 73) both exist, and line 73's folder-match claim matches `expected_loading()` in that test<br>• ⚠️ **Drifted definition:** line 72 defines `path-scoped` as "lazy with `paths:` frontmatter", but this rule sits in tier 03 with `paths:`, and `test_rule_headers.py` lines 345–346 treat any rule with `paths:` as path-scoped wherever it lives<br>• 🔍 **Unverified:** `make audit_rule_usage` (line 75) falls outside the allowed inputs and was only seen named in `test_rule_headers.py` line 17 |
+| **Test Coverage** | 8/10 | 2026-10-25 | • ✅ **Mechanically enforced:** `test_claude_config_metadata.py` scans every rule header, `test_rule_headers.py` checks `applies_to`, `miss_cost` and `loading` against the folder, and the skill, agent, hook and shared-format header tests cover the other artefacts<br>• ⚠️ **Untested behaviour:** no test found checks line 24's "bump `version` on every edit, never change `created`" or line 23's new-artefact defaults, and I only grepped the skill, agent and hook test files, so line 51's contract-version match wasn't confirmed |
+| **Overall** | **7.7/10** | 2026-10-25 | • 💪 **Strength:** one shared standard enforced by tests across all four artefact types<br>• ⚠️ **Gaps:** the rule-only usage fields widen the scope, line 72's path-scoped definition has drifted, and the bump-on-edit rule has no test |
 
 ## 🔗 Related files
 

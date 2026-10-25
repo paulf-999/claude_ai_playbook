@@ -1,20 +1,26 @@
 # Quality Scorecard — claude_rule_loading_strategy.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-10-01
+**Date Updated:** 2026-10-25
 
-**Overall score:** 8.9/10
+**Overall score:** 7.0/10 (6-dimension average, Token Cost N/A)
+
+**Recommended improvements:**
+- Change line 71's `load:` to the real field name, `loading:`
+- Update `HEADER_LINES` in `test_claude_rule_loading_strategy.py` lines 30–31 to the current 12-line header
+- Record evidence of need for the placement rules
+- Split the multi-sentence lines 17, 19 and 92, and give the numbered steps bold keywords
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 9/10 | 2026-10-01 | • 📋 **Rewritten:** v2.0.0 replaces the unmeasurable 70% threshold with a placement table driven by the audit's applied % and each rule's `miss_cost` |
-| **Complexity** | 8/10 | 2026-10-01 | • 🧮 **Raw complexity 2:** Concepts 2 (tiers, placement table, audit flags, adding a rule) + Scope 0 + Dependencies 0 + Prerequisites 0 |
-| **Evidence of Need** | 9/10 | 2026-10-01 | • 🔗 **Load-bearing:** referenced by `authoring_rules.md`'s checklist for rule placement<br>• 📊 **Measured:** its placement inputs now come from `make audit_rule_usage` |
-| **Token Cost Justification** | 9/10 | 2026-10-01 | • 🎯 **Lazy since v2.1.0:** `paths:` loads it only when a `_rules/` file or `CLAUDE.md` is read, saving ≈1.1k tokens in the 70% of sessions that never touch rules |
-| **Structural Compliance** | 9/10 | 2026-10-01 | • ✅ **Fixed:** every `##` heading now has an emoji, now enforced by `test_h2_headings_have_emoji()`<br>• ✅ **Compliant:** metadata header with `applies_to` and `miss_cost`, Purpose statement, 70 lines |
-| **Currency** | 9/10 | 2026-10-01 | • ✅ **Fixed:** the tier table lists all five tiers, including `03_authoring_guidelines/`, and points to the tier folders as the source of truth |
-| **Test Coverage** | 9/10 | 2026-10-01 | • 🧪 **Dedicated test:** `test_claude_rule_loading_strategy.py` (16 functions) checks the tier table against the real folders and CLAUDE.md imports, and that the 70% threshold stays gone<br>• ✅ **Generic checks:** passes `test_rules_structure.py`, including the new H2 emoji check |
-| **Overall** | **8.9/10** | 2026-10-01 | • 💪 **Strength:** a clear five-tier table, now checked against the real folders by a dedicated test<br>• ⚠️ **Gap:** Complexity (8/10) is now the weakest dimension |
+| **Clarity** | 8/10 | 2026-10-25 | • 🎯 **Decision table:** the miss-cost by applied-% grid (lines 47–51) gives one answer per cell, so two readers will place a rule the same way.<br>• ⚠️ **Wrong field name:** line 71 says "its `load:` reason names the pointer", but the header field is `loading:` (line 12 of the same file), so a reader may look for a field that doesn't exist.<br>• ⚠️ **Tier overlap:** line 34 says "tiers 01–03 load every session", yet the path-scoped folder sits inside `02_claude_standards/` (line 29), and only the `paths:` clause explains the exception. |
+| **Complexity** | 6/10 | 2026-10-25 | • 🧮 **Raw complexity 4:** Concepts 2 (tier table, load decision grid, `paths:` fit, audit flags, adding steps) + Scope 2 (`rules/`, `_rules_lazy_load/` and `_reference/_style_guide_standards/`, lines 31 and 54) + Dependencies 0 (`make audit_rule_usage` is the config's own script) + Prerequisites 0.<br>• ⚠️ **Five jobs in one file:** lines 75–81 (audit flags) and 85–92 (adding steps) sit on top of the placement guidance, which pushes the Concepts count up. |
+| **Evidence of Need** | 6/10 | 2026-10-25 | • ❓ **No incident recorded:** lines 17–19 state the per-session cost but give no dated incident or misplacement that the rule fixed.<br>• 🔗 **Uses measured data:** lines 42–45 base the decision on `docs/audits/audit_rule_usage.md`, which exists, but the rule records no result from it. |
+| **Token Cost Justification** | N/A | 2026-10-25 | • N/A — path-scoped rule in `path_scoped_rules/`, so the rubric leaves this out of the average<br>• 🔍 **Reviewer note:** `paths:` on lines 2–6 loads it only with rule, lazy-rule, style-guide or `CLAUDE.md` files, which the reviewer would have scored 9/10. |
+| **Structural Compliance** | 7/10 | 2026-10-25 | • ✅ **Header and length:** metadata comments on lines 8–12, emoji H1, Purpose line, about 80 body lines and no Related section.<br>• ⚠️ **Multi-sentence lines:** line 17 (`**Principle:**` has two sentences), line 19 and line 92 are each more than one sentence.<br>• ⚠️ **Steps lack keywords:** the numbered steps on lines 87–90 don't start with a bold keyword. |
+| **Currency** | 7/10 | 2026-10-25 | • ✅ **Paths exist:** `test_rule_headers.py` (with `test_high_cost_lazy_rules_load_mechanically`), `test_path_scoped_rules_live.py`, `audit_rule_usage.py`, `rule_usage_history.csv`, `docs/audits/audit_rule_usage.md`, `authoring_agents.md`, `_claude_config_metadata.md` and `latency_optimisation.md` all exist today.<br>• 🍂 **One stale reference:** line 71 names a `load:` field, but the metadata standard and this file's own line 12 use `loading:`. |
+| **Test Coverage** | 8/10 | 2026-10-25 | • ✅ **Drift test runs:** `src/claude/_tests/rules/02_claude_standards/test_claude_rule_loading_strategy.py` checks the five-row table against the folders on disk, plus tier order, example files, loading claims, the on-demand pointer, line limit and trailing newline. No incident is recorded, so no content-regression test is needed.<br>• ⚠️ **Header count out of date:** that test's lines 30–31 set `HEADER_LINES = 9` ("5 lines + version, created, updated, miss_cost"), but the rule now has a 7-line frontmatter plus 5 comment lines (12 in total, including `loading:`). The line-limit check still passes, but its maths is wrong.<br>• ⚠️ **Gaps:** nothing checks the test and script names on lines 56, 70 and 81 or the field name on line 71. I did not run the test. |
+| **Overall** | **7.0/10** | 2026-10-25 | • 💪 **Strengths:** a decisive placement grid, path-scoped loading, and a drift test tied to the real folders.<br>• ⚠️ **Gaps:** the stale `load:` field name (line 71), no recorded incident, multi-sentence lines (17, 19, 92), and an out-of-date header count in the test. |
 
 ## 🔗 Related files
 
