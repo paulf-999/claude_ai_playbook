@@ -49,7 +49,7 @@ Call the Agent tool with `subagent_type: code_reviewer`, and pass it:
 - **Addressing:** for each selected item, make the change the user agrees, then re-show the updated comment.
 - **Approve:** skip the amendment prompt, since there is nothing actionable.
 - **Secret check:** write the comment to a temporary file from `mktemp`, outside `_drafts/`, and run the check below on it.
-- **Save:** only once the check passes, move the temporary file to `~/claude/_drafts/general/YYYY_MM_DD_review_pr_<number>.md`, with `~` expanded to the absolute home path and the date as today.
+- **Save:** only once the check passes, move the temporary file to `~/_drafts/general/YYYY_MM_DD_review_pr_<number>.md`, with `~` expanded to the absolute home path and the date as today.
 - **Dry run:** stop here, and tell the user the draft path and that nothing was posted.
 - **Confirm:** ask "Post this as a comment on PR #<number>? (y/n)", and stop on anything other than `y`.
 
