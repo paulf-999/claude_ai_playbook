@@ -8,8 +8,8 @@
 
 ## 1️⃣ Audit
 
-- **Source:** read the error logs in `~/claude/_errors/`.
-- **Missing folder:** if `~/claude/_errors/` doesn't exist or is empty, say so and stop, without proposing any rule.
+- **Source:** read the error logs in `~/_errors/`.
+- **Missing folder:** if `~/_errors/` doesn't exist or is empty, say so and stop, without proposing any rule.
 - **Patterns:** group logs that describe the same mistake, such as missing input validation.
 
 ## 2️⃣ Track candidates
