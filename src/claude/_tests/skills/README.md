@@ -31,7 +31,7 @@ Tests for the skill's eval scorer, `evals/runner.py`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_claude_kaizen_runner.py` | Tests for claude_kaizen's evals/runner.py, the before/after eval scorer | 9/10 | 2026-10-02 | 2026-10-22 | 1.3.0 |
+| `test_claude_kaizen_runner.py` | Tests for claude_kaizen's evals/runner.py, the before/after eval scorer | 9/10 | 2026-10-02 | 2026-10-25 | 1.5.0 |
 
 ## 📁 `git_review_pr/`
 

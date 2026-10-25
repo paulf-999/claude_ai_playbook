@@ -29,6 +29,7 @@ Skills, rules and agents are scored by a reviewer that didn't write them, so the
 
 1. **Deterministic checks:** `make lint` and `CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest` pass before any scoring.
 2. **Evals:** the artefact's evals exist at the count its maturity needs.
+   - **Agents:** run `python3 src/claude/scripts/_audit_scripts/audit_agent_evals.py <agent>` and give the reviewer its pass rate, which costs one Claude call per runnable eval.
 3. **Fresh-context review:** call the Agent tool with `subagent_type: quality_scorecard_reviewer`, passing only the artefact's path and its type.
    - **Its inputs:** the artefact, its contract, its evals, the type's rubric and `scoring_anchors.md`.
    - **Never pass:** the authoring conversation or the current scorecard's scores, since either would anchor the result.
