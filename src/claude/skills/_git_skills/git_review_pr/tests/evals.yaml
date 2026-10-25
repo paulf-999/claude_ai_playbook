@@ -1,7 +1,7 @@
 ---
 _metadata:
     date_created: '2026-10-05'
-    date_updated: '2026-10-06'
+    date_updated: '2026-10-22'
     status: active
 
 skill_name: git_review_pr
@@ -127,3 +127,59 @@ evals:
           - The post used --body-file with the dated draft path
           - The draft file still exists
           - No success message or comment URL is shown
+
+  # Edge cases and hand-offs
+    - name: invalid_argument_rejected
+      description: Rejects an argument that isn't a PR number or a GitHub pull URL
+      input:
+          prompt: /git_review_pr 42; rm -rf ~
+      setup:
+          gh_auth_status: passes
+      expected_output: >
+          The skill says the argument must be a PR number or a https://github.com/.../pull/<n>
+          URL, and stops without passing the argument to any shell command.
+      assertions:
+          - No `gh` command receives the argument
+          - The message names the two accepted forms
+
+    - name: empty_diff_stops
+      description: Stops with a message when the PR has no changes to review
+      input:
+          prompt: /git_review_pr 12
+      setup:
+          open_pr: 12
+          diff_lines: 0
+      expected_output: >
+          The skill tells the user PR 12 has no diff to review and stops before calling the
+          code_reviewer agent.
+      assertions:
+          - The message says the PR has no changes
+          - No Agent call runs
+
+    - name: secret_never_saved_to_drafts
+      description: Checks the comment before saving, so a flagged secret never reaches _drafts/
+      input:
+          prompt: review this PR
+      setup:
+          comment_contains: an Anthropic API key quoted from the diff
+      expected_output: >
+          The skill writes the comment to a mktemp file, the secret check flags it, the temporary
+          file is deleted, and no file is written under _drafts/.
+      assertions:
+          - No file is written under `_drafts/general/`
+          - The temporary file no longer exists
+          - The key's value never appears in the output
+
+    - name: local_diff_routed_to_code_reviewer
+      description: Hands a local diff with no GitHub PR to the code_reviewer agent
+      input:
+          prompt: review my uncommitted changes
+      setup:
+          current_branch_has_open_pr: false
+          local_diff: true
+      expected_output: >
+          The skill is not used, and Claude calls the code_reviewer agent on the local diff
+          directly, since there is no PR to comment on.
+      assertions:
+          - No `gh pr comment` call runs
+          - The Agent call uses subagent_type code_reviewer

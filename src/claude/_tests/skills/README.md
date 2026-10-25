@@ -33,4 +33,12 @@ Tests for the skill's eval scorer, `evals/runner.py`.
 |---|---|---|---|---|---|
 | `test_claude_kaizen_runner.py` | Tests for claude_kaizen's evals/runner.py, the before/after eval scorer | 9/10 | 2026-10-02 | 2026-10-22 | 1.3.0 |
 
+## 📁 `git_review_pr/`
+
+Tests for the skill's secret check, the `grep -nE` pattern in `reference/_implementation.md`.
+
+| File | What it tests | Quality | Created | Updated | Version |
+|---|---|---|---|---|---|
+| `test_git_review_pr_secret_check.py` | The secret check flags every key shape it documents, lets ordinary review text through, and runs before the draft is saved | 10/10 | 2026-10-22 | 2026-10-22 | 1.0.0 |
+
 [← All tests](../README.md)

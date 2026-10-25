@@ -1,8 +1,8 @@
 ---
 name: git_review_pr
-version: 0.5.1
+version: 1.0.0
 summary: Review a GitHub PR with the code_reviewer agent and post a scored review comment once approved
-maturity: draft
+maturity: tactical
 test_coverage_level: basic
 
 dispatch:
