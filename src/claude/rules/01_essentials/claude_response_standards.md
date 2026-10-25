@@ -1,6 +1,6 @@
-<!-- version: 3.1.3 -->
+<!-- version: 3.1.4 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-25 -->
 <!-- applies_to: * -->
 <!-- miss_cost: medium — replies in the wrong shape, which the user asks to redo -->
 <!-- loading: always-on — shapes every substantive reply -->
@@ -90,7 +90,7 @@
 
 - **Start is injected:** The `UserPromptSubmit` hook fires before any reasoning and injects the submission time as `PROMPT_SUBMITTED_AT=<epoch>` — this is the timer start, so elapsed includes reasoning.
 - **End timestamp:** As the very last action before finalizing, run a real `date +%s` and compute elapsed = end − `PROMPT_SUBMITTED_AT`. Never mention the check in the visible response.
-- **Mandatory in all modes:** Always emit the footer, including in plan mode — never skip it and never fabricate the number; always run the real end timestamp.
+- **Every mode:** emit the footer on every reply that the skip rule below doesn't cover, including in plan mode, always from a real end timestamp.
 - **Real numbers only:** The duration must be real — never fabricate or use a placeholder like "checking...".
 - **Human-readable format:** Under 60 seconds show `Ss` (e.g. `45s`); 60 seconds or more show `Mmin Ss` (e.g. `1min 15s`).
 - **Format:** On its own line after the offer line:

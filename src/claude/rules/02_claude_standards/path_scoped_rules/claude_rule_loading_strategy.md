@@ -5,9 +5,9 @@ paths:
   - "**/_style_guide_standards/**"
   - "**/CLAUDE.md"
 ---
-<!-- version: 4.3.3 -->
+<!-- version: 4.3.4 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-25 -->
 <!-- miss_cost: low — a rule lands in the wrong tier, which is easy to move -->
 <!-- loading: path-scoped — only needed when placing or moving a rule, so it loads when rule files or CLAUDE.md are open -->
 # 📋 Rules Loading Strategy
@@ -68,7 +68,7 @@ A rule under `rules/` with `paths:` frontmatter loads whenever Claude reads a ma
 - **Backstop for high cost:** a high miss cost also needs a hook or test that catches the mistake, such as the naming-convention hook.
 - **Not for every-session rules:** a rule about how Claude works, rather than which file it touches, stays always-on.
 - **Proven:** `test_path_scoped_rules_live.py` shows in a real session that a `paths:` rule loads with a matching file and not otherwise.
-- **Stays pointer-based:** a rule with no file type of its own, such as delegation or date formats — its `load:` reason names the pointer.
+- **Stays pointer-based:** a rule with no file type of its own, such as delegation or date formats — its `loading:` reason names the pointer.
 
 ---
 

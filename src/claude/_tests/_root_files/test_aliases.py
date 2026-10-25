@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-11
-# Version:           2.2.7
+# Date updated:      2026-10-25
+# Version:           2.3.0
 # Test quality score: 10/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -20,6 +20,7 @@ import re
 
 import pytest
 
+from _metadata_header import metadata_header_errors
 from _shared_paths import ALIASES_FILE, CLAUDE_DIR, resolve_config_path
 
 COLUMNS = ["Input", "Theme", "Status", "Meaning"]
@@ -196,3 +197,11 @@ def test_parser_reads_good_row():
     assert len(rows) == 1, f"expected one row, got {rows}"
     expected = {"input": "`x`", "theme": "Demo", "status": "Ready", "meaning": "Does the x thing"}
     assert rows[0] == expected, f"got {rows[0]}"
+
+
+def test_aliases_has_metadata_header():
+    """aliases.md opens with the standard version, created and updated header, like every rule."""
+    content = ALIASES_FILE.read_text()
+    assert content.startswith("<!-- version:"), "aliases.md should start with the metadata header (#403)"
+    errors = metadata_header_errors(content)
+    assert not errors, f"aliases.md metadata header is malformed: {errors}"

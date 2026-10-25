@@ -1,3 +1,9 @@
+<!-- version: 1.0.0 -->
+<!-- created: 2026-08-28 -->
+<!-- updated: 2026-10-25 -->
+<!-- applies_to: * -->
+<!-- miss_cost: low — a shortcut goes unrecognised and the user types it out -->
+<!-- loading: always-on — CLAUDE.md imports it so the shortcuts work in every session -->
 # ⌨️ Aliases
 
 **Purpose:** Quick reference for all Claude Code shortcuts and automated commands.
