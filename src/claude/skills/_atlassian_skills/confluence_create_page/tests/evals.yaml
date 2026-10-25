@@ -1,7 +1,7 @@
 ---
 _metadata:
     date_created: '2026-06-07'
-    date_updated: '2026-10-17'
+    date_updated: '2026-10-25'
     status: active
 
 skill_name: confluence_create_page
@@ -15,12 +15,12 @@ evals:
       setup: {}
       expected_output: >
           Claude gathers page details for the general_page pattern, writes a local
-          draft to ~/claude/_drafts/confluence/, asks for review, iterates on feedback,
+          draft to ~/_drafts/confluence/, asks for review, iterates on feedback,
           then publishes to Confluence only after the user explicitly approves
           the draft.
       assertions:
           - Claude reads reference/_phases.md and follows reference/patterns/_general_page.md (Phase 2)
-          - Claude writes a draft to ~/claude/_drafts/confluence/ before creating anything in Confluence
+          - Claude writes a draft to ~/_drafts/confluence/ before creating anything in Confluence
           - Draft filename uses lowercase with underscores (no spaces, no hyphens)
           - Claude asks the user to review the draft and requests approval before publishing
           - Claude does not call createConfluencePage until the user explicitly approves the draft
@@ -40,7 +40,7 @@ evals:
           - Claude reads reference/patterns/_platform_risk_assessment.md for Phase 2
           - Claude asks for the target space and parent page rather than defaulting to one
           - Claude presents L/M/H ratings per theme and flags uncertain ones before writing the draft
-          - Claude writes a draft to ~/claude/_drafts/confluence/ before creating anything in Confluence
+          - Claude writes a draft to ~/_drafts/confluence/ before creating anything in Confluence
           - The page title follows 'Platform Risk & Maturity Assessment: <tool name>'
           - Claude does not call createConfluencePage until the user explicitly approves the draft
 
