@@ -62,3 +62,15 @@ run_date,artefact,type,attempt,reviewer,model,overall,commit
 2026-10-25,authoring_skills,rule,2,quality_scorecard_reviewer,claude-opus-5-5,7.3,4efbecd
 2026-10-25,claude_config_metadata,rule,2,quality_scorecard_reviewer,claude-opus-5-5,7.7,4efbecd
 2026-10-25,aliases,rule,2,quality_scorecard_reviewer,claude-opus-5-5,7.1,4efbecd
+2026-10-25,latency_optimisation,rule,2,quality_scorecard_reviewer,claude-opus-5-5,7.0,69b3077
+2026-10-25,docker,rule,2,quality_scorecard_reviewer,claude-opus-5-5,6.3,69b3077
+2026-10-25,datetime,rule,2,quality_scorecard_reviewer,claude-opus-5-5,6.7,69b3077
+2026-10-25,bash,rule,2,quality_scorecard_reviewer,claude-opus-5-5,6.8,69b3077
+2026-10-25,terraform,rule,2,quality_scorecard_reviewer,claude-opus-5-5,6.2,69b3077
+2026-10-25,mermaid,rule,2,quality_scorecard_reviewer,claude-opus-5-5,6.2,69b3077
+2026-10-25,makefile,rule,2,quality_scorecard_reviewer,claude-opus-5-5,6.2,69b3077
+2026-10-25,sql,rule,2,quality_scorecard_reviewer,claude-opus-5-5,5.7,69b3077
+2026-10-25,airflow,rule,2,quality_scorecard_reviewer,claude-opus-5-5,5.7,69b3077
+2026-10-25,python,rule,2,quality_scorecard_reviewer,claude-opus-5-5,6.5,69b3077
+2026-10-25,dbt,rule,2,quality_scorecard_reviewer,claude-opus-5-5,5.5,69b3077
+2026-10-25,ansible,rule,2,quality_scorecard_reviewer,claude-opus-5-5,6.3,69b3077
