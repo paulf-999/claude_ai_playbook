@@ -1,30 +1,31 @@
 # Quality Scorecard — git_review_pr
 
 **Date Created:** 2026-10-05
-**Date Updated:** 2026-10-25
+**Date Updated:** 2026-10-26
 
-**Overall score:** 7.1/10
+**Overall score:** 7.6/10
 
 **Recommended improvements:**
-- Add scenarios for the 4 untested "not for" cases (creating a PR, a formal review, editing the PR's code and a bug hunt) and for a declined post
-- Write the exact pattern for accepted arguments into Phase 1 and the Instructions, including the owner and repo parts of a PR URL
-- Resolve the drafts path from the config directory instead of hardcoding `~/claude/`
-- Bring raw complexity below the tactical limit of 6, for example by splitting Phase 4 into amend and secure-save-confirm
+- Record the raw complexity sum, and bring it below the tactical limit of 6, for example by splitting off the post-or-update step or the large-diff budget
+- Add scenarios for the 4 untested "not for" cases, or a runner that proves the routing, to lift Test Coverage above the unrun cap
+- Split Phase 5 into "check and save" and "confirm", and say which phase a flagged-secret retry returns to
+- Make `tested:` and `test_coverage_level` match the secret-check pytest that exists
+- Check that the PR is still open before analysis
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Design** | 8/10 | 2026-10-25 | • ✅ **Clean split:** five clear phases, with the procedure in `reference/`<br>• 📐 **Overloaded phase:** Phase 4 still shows, amends, checks for secrets, saves, handles dry-run and confirms<br>• 🔁 **Repetition:** the SKILL.md Instructions repeat parts of that procedure |
-| **Complexity** | 4/10 | 2026-10-25 | • 🧮 **Raw complexity 6:** Concepts 3, Scope 1 (`_drafts/` plus a temp file), Dependencies 1 (`gh`), Prerequisites 1 (`gh` login)<br>• ⚠️ **At the ceiling:** 6 is the most a tactical skill may have |
-| **Test Coverage** | 6/10 | 2026-10-25 | • 📊 **Right count, unrun:** 12 prose scenarios, the tactical count, but nothing runs them, which caps this at 7<br>• ⚠️ **One "not for" case:** only `local_diff_routed_to_code_reviewer` covers a `not_for` entry<br>• 🧪 **One runnable test:** `test_git_review_pr_secret_check.py` covers only the secret pattern |
-| **Code Quality** | 8/10 | 2026-10-25 | • ✅ **Handled:** a failed login, no PR, an empty diff, a failed post (draft kept) and 403 or 404 errors<br>• ✅ **Safe save:** writes a temporary file and moves it once the check passes<br>• ⚠️ **Loose validation:** Phase 1 says "anything else is rejected" but gives no exact pattern |
-| **Security** | 8/10 | 2026-10-25 | • 🛡️ **Defended:** an explicit `y` before posting, PR content treated as untrusted, the secret check before saving and only line numbers shown<br>• ⚠️ **Unconstrained URL:** the owner and repo parts of an accepted PR URL aren't limited before they reach `gh`<br>• 🔍 **Heuristic:** the secret pattern is a list of known formats, so new ones can slip through |
-| **Documentation** | 9/10 | 2026-10-25 | • ✅ **Complete set:** purpose, a realistic example, caveats, reasons for the limits, troubleshooting and FAQ<br>• 🕳️ **Minor gaps:** the example shows no dry run, and `tested: false` sits beside an existing pytest without explanation |
-| **Standards Compliance** | 7/10 | 2026-10-25 | • ✅ **Most gates met:** naming, contract, `tests/` layout, README, reference files and a 52-line body<br>• ❌ **Hardcoded path (gate 9):** the Instructions write `~/claude/_drafts/general/...`, against `portable_paths.md`<br>• ⚠️ **Reviewer error:** it also flagged an unbumped version, but #391 raised it from 0.5.1 to 1.0.0 in the same edit, so that finding doesn't stand |
-| **Overall** | **7.1/10** | 2026-10-25 | A sound, well-defended tactical skill held back by unrun evals with few "not for" cases, complexity at the ceiling and a hardcoded drafts path. |
+| **Design** | 8/10 | 2026-10-26 | • ✅ **Clear order:** six phases, with the detail in `reference/`<br>• 📐 **Busy phase:** Phase 5 runs the secret check, saves, stops for a dry run and confirms<br>• 🔁 **Open retry:** after a flagged secret, it doesn't say which phase to go back to |
+| **Complexity** | 4/10 | 2026-10-26 | • 🧮 **Raw complexity 6:** Concepts 3, Scope 0, Dependencies 2 (`gh` and the `code_reviewer` agent), Prerequisites 1 (`gh` login and an open PR)<br>• ⚠️ **At the ceiling:** 6 is the tactical limit, and no file records the calculation |
+| **Test Coverage** | 7/10 | 2026-10-26 | • 📊 **Right count, unrun:** 12 prose scenarios cover happy paths, errors, edge cases and adversarial input, capped at 7 because nothing runs them<br>• 🧪 **One runnable test:** `test_git_review_pr_secret_check.py` runs the doc's own pattern<br>• 🕳️ **Gap:** 4 of the 5 `not_for` cases have no scenario |
+| **Code Quality** | 8/10 | 2026-10-26 | • ✅ **Handled:** a strict argument pattern, a failed login, no PR, an empty diff and a failed post<br>• ✅ **Safe writes:** `mktemp` then a move, and posting with `--body-file`<br>• ⚠️ **Gaps:** no check that the PR is still open, and no limit on secret-check retries |
+| **Security** | 9/10 | 2026-10-26 | • 🛡️ **Defended:** an explicit `y` before posting, PR content treated as untrusted, input checked against a pattern before any shell call, and no formal review<br>• 🔒 **Secret check:** runs before saving, prints only line numbers and is tested<br>• 🔍 **Heuristic:** it only catches known shapes, so a JWT or an Azure connection string would get through |
+| **Documentation** | 9/10 | 2026-10-26 | • ✅ **Complete set:** purpose, a six-phase example, troubleshooting, FAQ and caveats<br>• ⚠️ **Mismatch:** `tested: false` sits beside an existing skill test, with no reason given |
+| **Standards Compliance** | 8/10 | 2026-10-26 | • ✅ **Most gates met:** name, contract, `not_for`, a matching 1.1.0 version, `tests/` layout, README, reference files and body length<br>• ❌ **Complexity unrecorded (gate 8):** no file gives the calculation, and the skill sits at the limit<br>• ⚠️ **Tags:** `tested: false` and `test_coverage_level: basic` don't match the existing test |
+| **Overall** | **7.6/10** | 2026-10-26 | A safe, well-documented tactical skill held back by complexity at the ceiling with no recorded calculation, and by prose evals that leave four "not for" hand-offs untested. |
 
 ## 🔗 Related files
 
 - `src/claude/skills/_git_skills/git_review_pr/SKILL.md` — the skill being scored
 - `src/claude/skills/_git_skills/git_review_pr/reference/_implementation.md` — Design, Code Quality and Security dimensions
 - `src/claude/skills/_git_skills/git_review_pr/tests/evals.yaml` — Test Coverage dimension
-- `src/claude/_reference/_quality_scorecards/score_history.csv` — attempt 3, scored by `quality_scorecard_reviewer`
+- `src/claude/_reference/_quality_scorecards/score_history.csv` — attempt 4, scored blind by `quality_scorecard_reviewer`
