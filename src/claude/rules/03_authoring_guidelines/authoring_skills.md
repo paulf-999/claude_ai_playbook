@@ -1,6 +1,6 @@
-<!-- version: 4.2.0 -->
+<!-- version: 4.2.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-17 -->
+<!-- updated: 2026-10-26 -->
 <!-- applies_to: **/skills/** -->
 <!-- miss_cost: medium — skills ship without contracts or evals -->
 <!-- loading: always-on — a new skill can start before any skills/ file is open, so a path trigger would miss it -->
@@ -22,7 +22,7 @@ Before creating or reviewing a skill, read the children below in order, and fini
 
 ---
 
-## 📁 File Organization
+## 📁 File Organisation
 
 Minimal, focused structure. Each skill directory contains **only**:
 
@@ -38,11 +38,11 @@ skill_name/
     └── README.md           # Plain-language: what evals.yaml is, how many scenarios, why
 ```
 
-**Scorecards live outside the skill, at `_reference/_quality_scorecards/skills/scorecard_<skill_name>.md`** — they're review records (scored when the skill is created or audited), not something Claude reads while running the skill. Everything in `reference/` is runtime behavioural documentation.
-
-**`evals.yaml` always lives in `tests/`, never at skill root** — "evals" is jargon; a `tests/` folder reads as familiar to a non-technical browser of the skill directory. `tests/README.md` is mandatory alongside it, in plain language, so anyone who does open the folder isn't left guessing what the file is.
-
-**Nothing else.** No `templates/`, `patterns/`, `references/`, or domain-specific subdirectories. Keep scope tight, keep structure clean.
+- **Scorecards:** they live outside the skill, at `_reference/_quality_scorecards/skills/scorecard_<skill_name>.md`, because they're review records scored when the skill is created or audited, not something Claude reads while running it.
+- **Runtime docs:** everything in `reference/` is runtime behavioural documentation.
+- **`evals.yaml`:** it always lives in `tests/`, never at skill root, because "evals" is jargon and a `tests/` folder reads as familiar to a non-technical browser.
+- **`tests/README.md`:** it is mandatory beside `evals.yaml`, in plain language, so anyone who opens the folder isn't left guessing what the file is.
+- **Nothing else:** add no `templates/`, `patterns/`, `references/` or domain-specific subdirectories, so scope and structure stay tight.
 
 - **Exception — grouping inside `reference/`:** `reference/` may hold subfolders of 2 or more related files, such as `reference/patterns/` or `reference/common/`.
 

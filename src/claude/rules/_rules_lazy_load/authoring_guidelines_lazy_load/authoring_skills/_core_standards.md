@@ -1,6 +1,6 @@
-<!-- version: 4.0.2 -->
+<!-- version: 4.0.3 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-10-25 -->
+<!-- updated: 2026-10-26 -->
 # 📐 Skill Core Standards
 
 **Purpose:** Define the baseline every skill must follow — naming, SKILL.md's 6-section structure, what `skill.contract.yaml` must declare, and how to choose a maturity level.
@@ -9,11 +9,11 @@
 
 ## 🏷️ Naming Pattern
 
-- Format: `<domain>_<action>` (lowercase, snake_case)
-- Domain: must match valid domain ID from `skill_domains.yaml`
-- Action: imperative verb describing what the skill does
-- Examples: `confluence_create_page`, `jira_create`, `git_create_pr`, `claude_review_config`
-- Hard rule: the skill lives in the folder its domain's `directory:` names in `skill_domains.yaml` (e.g. `confluence_create_page` → `_atlassian_skills/`)
+- **Format:** `<domain>_<action>` (lowercase, snake_case)
+- **Domain:** must match valid domain ID from `skill_domains.yaml`
+- **Action:** imperative verb describing what the skill does
+- **Examples:** `confluence_create_page`, `jira_create`, `git_create_pr`, `claude_review_config`
+- **Hard rule:** the skill lives in the folder its domain's `directory:` names in `skill_domains.yaml` (e.g. `confluence_create_page` → `_atlassian_skills/`)
 
 ## 📄 SKILL.md Structure [REQUIRED]
 
