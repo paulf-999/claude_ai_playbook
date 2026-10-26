@@ -30,7 +30,7 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 |---|---|---|---|
 | 1 | • 🔧 **Lowest always-on rule score:** add or stop naming the `make disable_mcp` target in `claude_operational_efficiency.md`'s children | • 🔻 **Bottom of the table:** at 5.9/10 it is the lowest-scoring always-on rule | `rules/rule_scorecards_summary.md` |
 | 2 | • 📅 **Reserved hook:** set a date to wire in or remove `hook_style_guide_response_standards_checker.sh` | • 🔻 **Weakest hook:** at 8.0/10 it is the lowest-scoring hook | `hooks/hook_scorecards_summary.md` |
-| 3 | • 🔧 **Lowest skill score:** record the raw complexity sum and bring it below the tactical limit of 6 (`git_review_pr`) | • 🔻 **Bottom of the table:** at 7.6/10 it is the lowest-scoring skill | `skills/skill_scorecards_summary.md` |
+| 3 | • 🔧 **Lowest skill score:** add scenarios for the 4 untested "not for" hand-offs, and a runner for them (#387) (`git_review_pr`) | • 🔻 **Bottom of the table:** at 7.6/10 it is the lowest-scoring skill | `skills/skill_scorecards_summary.md` |
 | 4 | • 🔧 **Lowest lazy-load rule score:** make `dbt.md`'s layers, prefixes and commands match its children, and replace the non-existent `dbt lineage` | • 🔻 **Bottom of the table:** at 5.5/10 it is the lowest-scoring lazy-load rule | `rules/rule_scorecards_summary.md` |
 
 ---

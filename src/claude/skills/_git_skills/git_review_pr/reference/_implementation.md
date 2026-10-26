@@ -1,6 +1,6 @@
 # 🛠️ git_review_pr — Implementation
 
-**Purpose:** The six phases the skill runs, in order, with what to do when a step fails, plus troubleshooting and FAQs.
+**Purpose:** The seven phases the skill runs, in order, with what to do when a step fails, plus troubleshooting and FAQs.
 
 ---
 
@@ -49,24 +49,29 @@ Call the Agent tool with `subagent_type: code_reviewer`, and pass it:
 - **Addressing:** for each selected item, make the change the user agrees, then re-show the updated comment.
 - **Approve:** skip the amendment prompt, since there is nothing actionable.
 
-## 5️⃣ Phase 5 — Check, save and confirm
+## 5️⃣ Phase 5 — Check and save
 
 - **Secret check:** write the comment to a temporary file from `mktemp`, outside `_drafts/`, and run the check below on it.
 - **Save:** only once the check passes, move the temporary file to `~/_drafts/general/YYYY_MM_DD_review_pr_<number>.md`, with `~` expanded to the absolute home path and the date as today.
 - **Dry run:** stop here, and tell the user the draft path and that nothing was posted.
-- **Confirm:** ask "Post this as a comment on PR #<number>? (y/n)".
-- **Declined:** on anything other than `y`, keep the saved draft, tell the user its path, and post nothing.
 
 ### 🔒 Secret check
 
 ```bash
+set -o pipefail
 grep -inE 'AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{22,}|xox[abprs]-[A-Za-z0-9-]+|(^|[^[:alnum:]_-])sk-(ant-|proj-)?[A-Za-z0-9_-]{20,}|AIza[0-9A-Za-z_-]{35}|(^|[^[:alnum:]_])[rs]k_live_[0-9A-Za-z]{16,}|(password|secret|token|api[_-]?key)[^[:alnum:][:space:]]?[[:space:]]*[:=][[:space:]]*[^[:space:]]{8,}' "<temp file>" | cut -d: -f1
 ```
 
-- **Match found:** delete the temporary file, show only the line numbers, which `cut` leaves as the only output, never the matched text, and ask the user what to change before re-running, so a flagged comment never reaches `_drafts/`.
+- **Result:** read the exit status, since `cut` alone would always exit 0: `1` means no secret, so save; `0` means a match; and `2` means `grep` failed, so stop without saving.
+- **Match found:** delete the temporary file, show only the line numbers, which `cut` leaves as the only output, never the matched text, and ask the user what to change, then return to Phase 4 to amend the comment and run this check again, so a flagged comment never reaches `_drafts/`.
 - **What it catches:** AWS, PEM, GitHub classic and fine-grained (`github_pat_`), Slack, Anthropic and OpenAI `sk-`, Google `AIza` and Stripe live keys, plus `key=value`, JSON `"key": "value"` and single-quoted `'key': 'value'` secrets of 8 or more characters, in any letter case.
 
-## 6️⃣ Phase 6 — Post or update the comment
+## 6️⃣ Phase 6 — Confirm
+
+- **Confirm:** ask "Post this as a comment on PR #<number>? (y/n)".
+- **Declined:** on anything other than `y`, keep the saved draft, tell the user its path, and post nothing.
+
+## 7️⃣ Phase 7 — Post or update the comment
 
 Look for an earlier Claude review by the same user:
 
