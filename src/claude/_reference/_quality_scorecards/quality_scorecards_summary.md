@@ -40,7 +40,7 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 | Summary | Scored | Overall | Date Updated |
 |---|---|---|---|
 | `tests/test_scorecards_summary.md` | 60 | 9.1/10 | 2026-10-11 |
-| `skills/skill_scorecards_summary.md` | 8 | 8.2/10 | 2026-10-22 |
+| `skills/skill_scorecards_summary.md` | 8 | 8.3/10 | 2026-10-26 |
 | `rules/rule_scorecards_summary.md` | 31 | 6.7/10 | 2026-10-25 |
 | `hooks/hook_scorecards_summary.md` | 5 | 8.5/10 | 2026-10-02 |
 | `agents/agent_scorecards_summary.md` | 3 | 7.7/10 | 2026-10-26 |
