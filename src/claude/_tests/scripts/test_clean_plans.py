@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
-# Date updated:      2026-10-22
-# Version:           2.2.0
+# Date updated:      2026-10-26
+# Version:           2.3.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -300,6 +300,13 @@ def test_default_plans_dir_uses_config_dir(monkeypatch, tmp_path):
     """The default folder is $CLAUDE_CONFIG_DIR/_plans."""
     monkeypatch.setenv("CLAUDE_CONFIG_DIR", str(tmp_path))
     assert clean_plans._default_plans_dir() == tmp_path / "_plans", "Default should follow CLAUDE_CONFIG_DIR"
+
+
+def test_default_plans_dir_falls_back_to_home(monkeypatch, tmp_path):
+    """With CLAUDE_CONFIG_DIR unset, the default is ~/.claude/_plans, resolved through Path.home()."""
+    monkeypatch.delenv("CLAUDE_CONFIG_DIR", raising=False)
+    monkeypatch.setattr(clean_plans.Path, "home", lambda: tmp_path)
+    assert clean_plans._default_plans_dir() == tmp_path / ".claude" / "_plans", "Unset should fall back to ~/.claude"
 
 
 def test_no_folders_says_so_when_asked(tmp_path, capsys):

@@ -1,6 +1,6 @@
-<!-- version: 1.1.2 -->
+<!-- version: 1.1.3 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-26 -->
 <!-- applies_to: **/hooks/*.sh, **/_tests/**/*.py, **/scripts/**/*.py -->
 <!-- miss_cost: high — hooks and tests fail silently on another machine -->
 <!-- loading: always-on — a miss fails silently on another machine, and a new hook or test can start before a matching file is open -->
@@ -20,7 +20,7 @@
 
 ## 🐛 Real incidents (evidence, not hypothetical)
 
-Found in one session (2026-09-17), all three shipped without failing until tested on a second machine:
+Found across two sessions (2026-09-17 and 2026-09-18), all four shipped without failing until tested on a second machine:
 
 - **Test files:** `test_response_standards_hook.py` / `_inject.py` hardcoded `/home/paul/.claude/hooks/...` — a different user's home directory from a different machine entirely.
 - **Test-harness bug:** `test_rules_structure.py`'s import-reachability check used `Path(...).expanduser()`, resolving `~` against the real `$HOME` instead of substituting `CLAUDE_CONFIG_DIR` — always failed off the one machine it was written on.

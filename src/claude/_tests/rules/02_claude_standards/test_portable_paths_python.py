@@ -1,14 +1,14 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
-# Date updated:      2026-10-17
-# Version:           2.2.0
+# Date updated:      2026-10-26
+# Version:           2.3.0
 # Test quality score: 8/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""Tests that Python test files follow portable_paths.md — no machine-specific paths.
+"""Tests that Python test and script files follow portable_paths.md — no machine-specific paths.
 
 Catches the bug classes found on 2026-09-17/18: calling ``.expanduser()`` outside
 ``_shared_paths.py``, hardcoding another machine's home directory as a constant, and
@@ -25,6 +25,7 @@ import pytest
 from _shared_paths import CLAUDE_DIR
 
 TESTS_DIR = CLAUDE_DIR / "_tests"
+SCRIPTS_DIR = CLAUDE_DIR / "scripts"
 SHARED_PATHS = TESTS_DIR / "_helpers" / "_shared_paths.py"
 EXPANDUSER_CALL_PATTERN = re.compile(r"\.expanduser\(\s*\)")
 HARDCODED_HOME_CONSTANT = re.compile(r'^[A-Z_]+\s*=\s*["\'](/home/|/Users/)[^"\']+["\']')
@@ -35,14 +36,14 @@ EXPANDUSER_EXEMPT = {"_shared_paths.py", "test_portable_paths_python.py"}
 
 
 def python_lines() -> list[tuple[str, int, str]]:
-    """List every line of every Python file under _tests/.
+    """List every line of every Python file under _tests/ and scripts/.
 
     :return: ``(path relative to the config dir, line number, stripped line)``.
     :rtype: list[tuple[str, int, str]]
     """
     return [
         (str(path.relative_to(CLAUDE_DIR)), number, line.strip())
-        for path in sorted(TESTS_DIR.rglob("*.py"))
+        for path in sorted([*TESTS_DIR.rglob("*.py"), *SCRIPTS_DIR.rglob("*.py")])
         for number, line in enumerate(path.read_text().splitlines(), start=1)
     ]
 

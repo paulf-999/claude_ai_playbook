@@ -6,7 +6,7 @@
 |---|---|---|---|---|---|
 | `test_rules_structure.py` | Per-file format across all `rules/` files — line limits, H1 and H2 heading emoji, trailing newlines, and no Related or unearned Contents sections | 10/10 | 2026-08-28 | 2026-10-11 | 2.5.4 |
 | `test_rules_structure_layout.py` | Where `rules/` files live, every import in `CLAUDE.md` and `rules/` resolves, and no import chain reaches `_reference/` | 7/10 | 2026-10-01 | 2026-10-11 | 5.0.0 |
-| `test_rule_cross_references.py` | Rule files point at things that exist and agree with the files that repeat them, across six rules, including git.md's branch pattern and its examples | 10/10 | 2026-10-11 | 2026-10-11 | 2.0.1 |
+| `test_rule_cross_references.py` | Rule files point at things that exist and agree with the files that repeat them, across six rules, including git.md's branch pattern and its examples, and every `make` target a rule names is defined | 10/10 | 2026-10-11 | 2026-10-26 | 2.1.0 |
 
 ## 📁 `01_essentials/`
 
@@ -27,8 +27,8 @@
 | `test_path_scoped_rules_live.py` | Proves in a live session that a `paths:` rule loads when, and only when, a matching file is read | 9/10 | 2026-10-01 | 2026-10-11 | 1.2.3 |
 | `test_plan_mode_phase_gates.py` | `_plan_mode_phase_gates.md` keeps its plan-persistence section and 2026-09-19 incident record | 9/10 | 2026-09-16 | 2026-10-11 | 4.0.0 |
 | `test_portable_paths_hooks.py` | Hooks resolve the config dir from their own location — no hardcoded `~/.claude/` file operations or guard substrings | 10/10 | 2026-09-18 | 2026-10-11 | 2.0.3 |
-| `test_portable_paths_python.py` | Python test files use `CLAUDE_DIR` — no `.expanduser()` outside `_shared_paths.py`, home-directory constants or one-convention import prefixes | 8/10 | 2026-09-18 | 2026-10-17 | 2.2.0 |
-| `test_testing.py` | Every enforcement hook has a test (aspect splits allowed), no orphaned hook tests, and testing.md's pointers exist | 10/10 | 2026-08-28 | 2026-10-11 | 2.1.0 |
+| `test_portable_paths_python.py` | Python test and script files use `CLAUDE_DIR` — no `.expanduser()` outside `_shared_paths.py`, home-directory constants or one-convention import prefixes | 8/10 | 2026-09-18 | 2026-10-26 | 2.3.0 |
+| `test_testing.py` | Every enforcement hook has a test (aspect splits allowed), no orphaned hook tests, and testing.md's pointers, example test files and relative links exist | 10/10 | 2026-08-28 | 2026-10-26 | 2.2.0 |
 
 ## 📁 `03_authoring_guidelines/`
 

@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-11
-# Date updated:      2026-10-11
-# Version:           2.0.1
+# Date updated:      2026-10-26
+# Version:           2.1.0
 # Test quality score: 10/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -14,13 +14,15 @@ Rule guidance is instructional, so its wording isn't pinned. What can break sile
 is a pointer to a moved file, or two copies of one fact drifting apart, so each test
 checks one of those. Merged on 2026-10-11 from seven per-rule test files: writing_style,
 _decision_making, _security_guardrails, authoring_rules, _artefact_proposal_gates,
-claude_operational_efficiency and git.
+claude_operational_efficiency and git. Also checks every ``make`` target a rule names exists.
 """
 from __future__ import annotations
 
 import json
 import re
 from pathlib import Path
+
+import pytest
 
 from _shared_paths import (
     CLAUDE_DIR,
@@ -288,3 +290,46 @@ def test_git_branch_pattern_rejects_bad_names():
     """Hyphens, capitals, a missing prefix or an unknown prefix all fail git.md's pattern."""
     for name in ("feature/add-pr-template", "feature/AddTemplate", "add_pr_template", "bugfix/x"):
         assert not branch_pattern().fullmatch(name), f"'{name}' should not match the branch pattern"
+
+
+# ── make targets named in rules ──────────────────────────
+
+REPO_ROOT = CLAUDE_DIR.parent.parent
+MAKE_TARGET_REF = re.compile(r"`make ([a-z_]+)")
+MAKE_TARGET_DEF = re.compile(r"^([a-z_]+):", re.MULTILINE)
+
+
+def rule_make_targets() -> set[str]:
+    """Return every target named as `` `make <target>` `` in a rule file.
+
+    :return: The target names, e.g. ``{"install", "enable_mcp"}``.
+    """
+    return {target for path in RULES_DIR.rglob("*.md") for target in MAKE_TARGET_REF.findall(path.read_text())}
+
+
+def defined_make_targets(root: Path) -> set[str]:
+    """Return the targets defined in a repo's root ``Makefile`` and its ``src/make/*.mk`` includes.
+
+    :param root: The repo root holding ``Makefile``.
+    :return: The defined target names.
+    """
+    makefiles = [root / "Makefile", *sorted((root / "src" / "make").glob("*.mk"))]
+    return {target for path in makefiles if path.is_file() for target in MAKE_TARGET_DEF.findall(path.read_text())}
+
+
+def test_rules_name_only_real_make_targets():
+    """Every `make <target>` a rule tells the user to run is defined in the repo's makefiles."""
+    if not (REPO_ROOT / "Makefile").is_file() or REPO_ROOT / "src" / "claude" != CLAUDE_DIR:
+        pytest.skip("no repo Makefile beside this config — a live install has none")
+    named = rule_make_targets()
+    assert named, "no `make <target>` found in rules — the pattern may be wrong"
+    missing = sorted(named - defined_make_targets(REPO_ROOT))
+    assert not missing, f"rules name make targets that don't exist: {missing}"
+
+
+def test_make_target_helpers_flag_a_missing_target(tmp_path: Path):
+    """Targets come from the root Makefile and src/make/*.mk, and variables and .PHONY don't count."""
+    (tmp_path / "src" / "make").mkdir(parents=True)
+    (tmp_path / "Makefile").write_text("SHELL := bash\ninstall:\n\t@echo hi\n.PHONY: install\n")
+    (tmp_path / "src" / "make" / "mcp.mk").write_text("enable_mcp:\n\t@echo on\n")
+    assert defined_make_targets(tmp_path) == {"install", "enable_mcp"}, "only real targets should be found"
