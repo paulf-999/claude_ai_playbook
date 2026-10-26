@@ -24,6 +24,28 @@ evals:
           - Every template section appears in the draft, in the template's order
           - The draft opens with a one-sentence summary
           - The draft file path uses an absolute home path, not a literal ~
+      run:
+          prompt: |
+              Draft a PR body for the auth retry fix, using only this repo template, and reply with the body only.
+              The change: login now retries a failed token refresh once before showing an error. Tested locally.
+
+              Template (.github/pull_request_template.md):
+              ## Summary
+              <one sentence>
+
+              ## Type of change
+              - [ ] Feature
+              - [ ] Bugfix
+
+              ## Related Jira Issue
+              <ticket link or None>
+
+              ## Testing
+              <how it was tested>
+
+          must_match:
+              - (?s)## Summary.*## Type of change.*## Related Jira Issue.*## Testing
+              - (?i)\[x\] Bugfix
 
     - name: pr_body_links_jira_ticket
       description: Picks up a Jira key from the branch name and links it
@@ -38,6 +60,28 @@ evals:
       assertions:
           - The Related Jira Issue section contains PROJ-1234
           - No template section is added or removed
+      run:
+          prompt: |
+              Draft the PR description for this branch, using only this repo template, and reply with the body only.
+              Branch: feature/PROJ-1234_add_retry. The change adds a retry to the export job.
+
+              Template (.github/pull_request_template.md):
+              ## Summary
+              <one sentence>
+
+              ## Type of change
+              - [ ] Feature
+              - [ ] Bugfix
+
+              ## Related Jira Issue
+              <ticket link or None>
+
+              ## Testing
+              <how it was tested>
+
+          must_match:
+              - (?s)## Related Jira Issue[^#]*PROJ-1234
+              - (?s)## Summary.*## Testing
 
     - name: pr_body_missing_template_stops
       description: Stops instead of inventing a PR body when there is no template
@@ -51,6 +95,13 @@ evals:
       assertions:
           - No draft file is written
           - The reply names .github/pull_request_template.md
+      run:
+          prompt: |
+              Draft a PR body for the readme typo fix. This repo has no .github/pull_request_template.md file.
+          must_match:
+              - pull_request_template
+          must_not_match:
+              - (?m)^## Summary
 
   # Confluence pages
     - name: confluence_technical_audience
@@ -91,6 +142,10 @@ evals:
       assertions:
           - The reply asks about the audience
           - No draft file is written before the answer
+      run:
+          prompt: Draft a Confluence page about the new deployment process.
+          must_match:
+              - (?i)(audience|who (is|will be) (it|this|the page) for|who will read)
 
   # Clarity and tone
     - name: restructures_prose_into_bullets
@@ -146,6 +201,10 @@ evals:
       assertions:
           - The agent makes no Confluence or Bash call
           - The reply names confluence_create_page and the draft path
+      run:
+          prompt: Write and publish a Confluence page about the on-call rota.
+          must_match:
+              - confluence_create_page
 
     - name: declines_adr
       description: Declines to write an Architecture Decision Record
@@ -157,6 +216,10 @@ evals:
       assertions:
           - No draft file is written
           - The reply says ADRs are out of scope
+      run:
+          prompt: Write an ADR for choosing Snowflake over BigQuery.
+          must_match:
+              - (?i)(out of scope|not something I (write|draft)|don't (write|draft) ADRs|(fall|falls|is) outside|outside (my|what (I|this agent)))
 
     - name: declines_editing_existing_docs
       description: Declines to improve an existing document
@@ -170,3 +233,7 @@ evals:
       assertions:
           - docs/quickstart.md is unchanged
           - The reply says editing existing docs is out of scope
+      run:
+          prompt: Improve the wording of docs/quickstart.md.
+          must_match:
+              - (?i)(out of scope|don't edit|not edit|outside (my|what I)|only draft new)
