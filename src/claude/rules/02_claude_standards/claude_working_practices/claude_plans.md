@@ -1,6 +1,6 @@
-<!-- version: 2.1.2 -->
+<!-- version: 2.2.0 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-26 -->
 <!-- applies_to: * -->
 <!-- miss_cost: medium — phases run without approval, so wrong turns need rework -->
 <!-- loading: always-on — any task can grow into multi-phase work that needs approval gates -->
@@ -28,7 +28,7 @@
 
 **Do NOT apply gates when:**
 - User explicitly says "proceed without interruption" or "no gates"
-- Phases are tightly coupled (output of phase N is required input for phase N+1; stopping breaks workflow)
+- Phases are tightly coupled (output of phase N is required input for phase N+1; stopping breaks workflow) — outside plan mode only, since a plan keeps its gates unless the user waives them
 - Single-phase work (no gates needed)
 
 ---

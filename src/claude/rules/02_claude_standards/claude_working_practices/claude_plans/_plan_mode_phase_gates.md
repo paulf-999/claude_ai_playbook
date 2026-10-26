@@ -1,9 +1,9 @@
-<!-- version: 3.5.0 -->
+<!-- version: 3.6.0 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-26 -->
 # 🗂️ Plan-Mode Phase Gates
 
-**Purpose:** Apply phase gates without exception in plan mode — a plan's whole point is structured, checkpointed progression.
+**Purpose:** Apply phase gates in plan mode for every 3+ phase plan, unless the user explicitly waives gates — a plan's whole point is structured, checkpointed progression.
 
 In plan mode, stop after each phase and wait for the user's explicit approval before starting the next.
 
