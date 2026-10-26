@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-11
-# Version:           1.2.2
+# Date updated:      2026-10-26
+# Version:           1.3.0
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -14,6 +14,7 @@ Ensures:
 - Permission structure is valid (allow/deny lists present)
 - Deny list includes security-critical paths
 - Broad wildcard permissions are intentional and documented
+- Git writes and allow-list bypasses are not auto-approved
 - Configuration aligns with guiding principles (least privilege)
 - No real secret is written into the file
 - Transcript retention is the chosen 90 days
@@ -125,8 +126,6 @@ def test_allow_list_intentional():
         "Bash(find:*)",
         # Used for code search
         "Bash(grep:*)",
-        # Git in any directory
-        "Bash(git -C:*)",
         # GitHub API flexibility
         "Bash(gh api:*)",
     }
@@ -140,27 +139,57 @@ def test_allow_list_intentional():
         )
 
 
-def test_allow_list_git_operations_present():
-    """Allow list must include common git operations needed for workflow."""
+def test_allow_list_git_read_operations_present():
+    """Allow list must include the read-only git operations used every session."""
     settings = _load_settings()
     allow_list = settings["permissions"]["allow"]
 
-    # Core git operations required by git.md rules
+    # Read-only git operations, safe to run without a prompt
     required_git_ops = {
-        "Bash(git add:*)",
-        "Bash(git commit:*)",
-        "Bash(git push:*)",
         "Bash(git branch:*)",
-        "Bash(git status:*)",
         "Bash(git diff:*)",
+        "Bash(git log:*)",
+        "Bash(git status:*)",
     }
 
     allow_set = set(allow_list)
     missing = required_git_ops - allow_set
 
     assert not missing, (
-        f"Allow list missing git operations: {missing}. "
-        f"These are required by git.md rules."
+        f"Allow list missing read-only git operations: {missing}. "
+        f"These run every session and are safe to auto-approve."
+    )
+
+
+def test_allow_list_gates_git_writes():
+    """Allow list must not auto-approve git writes or commands that bypass the allow list.
+
+    `_security_guardrails.md` keeps write commands gated for per-use approval. A prefix
+    such as `git push:*` also matches `git push --force`, and `git -C:*` or `bash -c:*`
+    match any command at all, including those writes.
+    """
+    settings = _load_settings()
+    allow_list = settings["permissions"]["allow"]
+
+    # Writes and bypasses that must prompt each time
+    gated_ops = {
+        "Bash(bash -c:*)",
+        "Bash(git -C:*)",
+        "Bash(git checkout:*)",
+        "Bash(git commit:*)",
+        "Bash(git merge:*)",
+        "Bash(git pull:*)",
+        "Bash(git push:*)",
+        "Bash(git rebase:*)",
+        "Bash(git reset:*)",
+        "Bash(git:*)",
+    }
+
+    auto_approved = gated_ops & set(allow_list)
+
+    assert not auto_approved, (
+        f"Allow list auto-approves git writes or bypasses: {sorted(auto_approved)}. "
+        f"Remove them so each one prompts, per _security_guardrails.md."
     )
 
 

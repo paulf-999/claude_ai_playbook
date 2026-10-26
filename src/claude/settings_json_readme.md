@@ -44,24 +44,23 @@ See `~/.claude/rules/01_essentials/guiding_principles.md` for the decision frame
 | `Bash(gh pr:*)` | Read GitHub PRs | Very common |
 | `Bash(gh repo view:*)` | Inspect repository metadata | Occasional |
 | `Bash(gh run:*)` | View CI/CD runs | Occasional |
-| `Bash(git -C:*)` | Run git commands in other directories | Very common (25 uses/session) |
 | `Bash(git add:*)` | Stage files (safe: isolated to current branch) | Common |
 | `Bash(git branch:*)` | List/read branches | Common (8 uses/session) |
-| `Bash(git checkout:*)` | Switch branches (intentional via `--`) | Common |
-| `Bash(git commit:*)` | Create commits (with message) | Common |
 | `Bash(git diff:*)` | View uncommitted changes | Very common (4+ uses/session) |
 | `Bash(git fetch:*)` | Download remote updates (no merge) | Common |
 | `Bash(git log:*)` | View commit history | Very common |
-| `Bash(git merge:*)` | Merge branches (requires explicit intent) | Intentional |
-| `Bash(git pull:*)` | Fetch + merge (requires intent) | Intentional |
-| `Bash(git push:*)` | Push to remote (requires intent, only to feature branches per rules) | Intentional |
-| `Bash(git rebase:*)` | Rebase (dangerous but intentional) | Intentional |
 | `Bash(git show:*)` | Display git object info (read-only) | 4 uses/session |
 | `Bash(git status:*)` | Show repo status | Very common (7 uses/session) |
 | `Bash(grep *)` | Text search | Very common (48 uses/session) |
 | `Bash(mkdir:*)` | Create directories under `~/.claude/` | Occasional config work |
 
-**Rationale for breadth:** Git and gh operations are controlled via `CLAUDE.md` rules (no force-push to main, no skipping hooks, stage by name). The allowlist just removes friction; the rules prevent misuse.
+**Rationale for breadth:** read-only git and gh operations run without a prompt to remove friction, while the rules in `git.md` (no force-push to main, no skipping hooks, stage by name) guide the rest.
+
+**Git writes prompt each time:** `checkout`, `commit`, `merge`, `pull`, `push` and `rebase` are left out of the allow list, per `_security_guardrails.md`.
+- **Why:** a prefix such as `git push:*` also matches `git push --force`, and `git commit:*` matches `git commit --amend`.
+- **No bypasses:** `git -C:*` and `bash -c:*` stay out too, since either one matches any command, including those writes.
+- **Reads still run freely:** Claude Code auto-approves read-only forms of git on its own ([permissions docs](https://code.claude.com/docs/en/permissions#read-only-commands)), so dropping `git -C:*` mainly adds prompts for writes.
+- **Enforced by:** `test_allow_list_gates_git_writes` in `_tests/_root_files/test_settings.py`.
 
 ---
 
