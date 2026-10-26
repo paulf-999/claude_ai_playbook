@@ -1,6 +1,6 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-25 -->
 # 📝 Commits
 
 **Purpose:** Establish commit boundaries, formatting, and staging discipline to maintain clean history and safe operations.
@@ -22,7 +22,7 @@
   - Description: lowercase, imperative, no trailing period
   - Examples: `feat(pre-commit): add ruff`, `fix(dbt): correct model reference`
 - **No-verify:** only use `--no-verify` when explicitly instructed — not by default.
-- **Stage by name:** stage specific files by name — never `git add -A` or `git add .` without review.
+- **Stage by name:** stage specific files by name, and never use `git add -A` or `git add .`.
 - **Confirm branch:** run `git branch --show-current` before staging and confirm it matches the expected branch.
   - **Note:** if it does not match, stop and alert the user — do not stage or commit until confirmed.
 - **After stash/switch:** run `git diff --name-only origin/<branch>` before staging — only stage files that belong to the current task.

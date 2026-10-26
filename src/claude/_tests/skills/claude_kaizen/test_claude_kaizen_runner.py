@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-02
-# Date updated:      2026-10-22
-# Version:           1.3.0
+# Date updated:      2026-10-25
+# Version:           1.5.0
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -121,6 +121,22 @@ def test_claude_gets_the_prompt_and_the_rules_under_test(tmp_path, monkeypatch):
     assert prompt == "Write a try block"
     assert not Path(cwd).exists(), "Claude should run in a throwaway folder that's removed afterwards"
     assert links["CLAUDE.md"] == (patched / "CLAUDE.md").resolve(), "the isolated config must link the rules under test"
+
+
+def test_extra_cli_args_go_before_tools(tmp_path, monkeypatch):
+    """Extra arguments such as ``--agent`` come before ``--tools``, which would otherwise swallow them as tool names."""
+    calls = fake_claude(monkeypatch, stdout="except KeyError:")
+    runner.EvalRunner(write_evals(tmp_path, CASE), config_dir=tmp_path, cli_args=["--agent", "code_reviewer"]).run()
+    assert calls[0][0] == ["claude", "-p", "--agent", "code_reviewer", "--tools", ""], calls[0][0]
+
+
+def test_isolate_false_keeps_the_callers_config(tmp_path, monkeypatch):
+    """With isolate=False, Claude runs with the caller's own CLAUDE_CONFIG_DIR, so a Keychain login still works."""
+    monkeypatch.setenv("CLAUDE_CONFIG_DIR", "/caller/own/config")
+    calls = fake_claude(monkeypatch, stdout="except KeyError:")
+    runner.EvalRunner(write_evals(tmp_path, CASE), config_dir=tmp_path / "missing", isolate=False).run()
+    env = calls[0][2]
+    assert env["CLAUDE_CONFIG_DIR"] == "/caller/own/config", "isolate=False must not swap in an isolated config"
 
 
 def test_case_without_patterns_fails_without_calling_claude(tmp_path, monkeypatch):

@@ -8,15 +8,15 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 1.1.1 -->
+<!-- version: 1.1.2 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-25 -->
 
 ## 🤖 Instructions for Claude
 
 - **Pre-check:** resolve the config folder from `$CLAUDE_CONFIG_DIR` (or `~/.claude` when unset), and stop if it has no `CLAUDE.md`.
 - **Read first:** read `reference/_implementation.md` for the four phases, then `reference/_scoring_guide.md` before scoring.
-- **Always:** write the report to `~/claude/_drafts/general/YYYY_MM_DD_claude_config_review.md`, with `~` expanded to the absolute home path.
+- **Always:** write the report to `~/_drafts/general/YYYY_MM_DD_claude_config_review.md`, with `~` expanded to the absolute home path.
 - **Never:** apply a fix the user hasn't approved individually.
 - **Never:** commit changes, and instead list the files changed so the user can commit them.
 
@@ -48,7 +48,7 @@ Auditing the config folder...
 | Must | Reduce 2 files over 100 lines | Standards |
 | Should | Update stale memory entries | Documentation |
 
-✅ Report saved to ~/claude/_drafts/general/2026_10_06_claude_config_review.md
+✅ Report saved to ~/_drafts/general/2026_10_06_claude_config_review.md
 Apply fixes? [y/n] → n
 ```
 

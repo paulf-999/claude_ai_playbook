@@ -42,7 +42,7 @@ Generates comprehensive audit report with:
 - **Gap analysis:** MoSCoW table of missing elements
 - **Recommendations:** Severity-rated improvements with rationale
 
-**Output:** Markdown file (`~/claude/_drafts/general/YYYY_MM_DD_claude_config_review.md`) with full scorecard, analysis, and recommendations
+**Output:** Markdown file (`~/_drafts/general/YYYY_MM_DD_claude_config_review.md`) with full scorecard, analysis, and recommendations
 
 ---
 

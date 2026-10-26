@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-22
-# Date updated:      2026-10-22
-# Version:           1.0.0
+# Date updated:      2026-10-26
+# Version:           1.2.0
 # Test quality score: 10/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -10,9 +10,10 @@
 
 """git_review_pr's secret check catches real secret shapes and lets ordinary review text through.
 
-The check is a ``grep -nE`` pattern in ``reference/_implementation.md`` that runs on the comment
+The check is a ``grep`` pattern in ``reference/_implementation.md`` that runs on the comment
 before it is saved. Issue #388 found it missed Anthropic, OpenAI, Google and Stripe keys and JSON
-``"api_key": "..."`` pairs. Each test runs the pattern from the doc itself, so a change to the doc
+``"api_key": "..."`` pairs, and issue #394 added fine-grained GitHub tokens, single-quoted pairs,
+any letter case and line-numbers-only output. Each test runs the pattern from the doc itself, so a change to the doc
 is what gets tested.
 
 Sample secrets are built by joining pieces, so this file never holds a literal that secret
@@ -31,12 +32,14 @@ IMPLEMENTATION = next(
      if (SKILLS_DIR / rel / "reference" / "_implementation.md").is_file()),
     None,
 )
-GREP_LINE = re.compile(r"^grep -nE '(?P<pattern>.+)' \"<temp file>\"$", re.M)
+CHECK_BLOCK = re.compile(r"```bash\n(?P<code>[^`]*?^grep -[^`]*?)```", re.M)
+GREP_LINE = re.compile(r"^grep -(?P<flags>[a-zA-Z]+) '(?P<pattern>.+)' \"<temp file>\"(?P<pipe>.*)$", re.M)
 
 SECRETS = {
     "aws": "AKIA" + "ABCDEFGHIJKLMNOP",
     "pem": "-----BEGIN " + "RSA PRIVATE" + " KEY-----",
     "github": "gh" + "p_" + "a" * 36,
+    "github_fine_grained": "github" + "_pat_" + "g" * 30,
     "slack": "xo" + "xb-" + "1234-abcd",
     "anthropic": "sk" + "-ant-" + "api03-" + "b" * 24,
     "openai": "key is sk" + "-proj-" + "c" * 24,
@@ -44,6 +47,8 @@ SECRETS = {
     "stripe": "sk" + "_live_" + "e" * 16,
     "key_value": "password = " + "hunter2hunter2",
     "json_pair": '{"api_key": "' + "f" * 12 + '"}',
+    "single_quoted_pair": "{'api_key': '" + "h" * 12 + "'}",
+    "upper_case_key": "PASSWORD=" + "hunter2hunter2",
 }
 SAFE = {
     "prose": "The token is read from an environment variable, never hard-coded.",
@@ -53,18 +58,20 @@ SAFE = {
 }
 
 
-def secret_pattern():
-    """Return the check's pattern exactly as the skill's doc gives it."""
+def grep_line():
+    """Return the check's grep command, split into flags, pattern and pipe, exactly as the doc gives it."""
     match = GREP_LINE.search(IMPLEMENTATION.read_text())
-    assert match, f"no grep -nE line found in {IMPLEMENTATION}"
-    return match["pattern"]
+    assert match, f"no grep line found in {IMPLEMENTATION}"
+    return match
 
 
 def flagged(text, tmp_path):
     """Tell whether the doc's grep command matches a comment holding this text."""
     comment = tmp_path / "comment.md"
     comment.write_text(f"**Claude review — PR #1**\n\n{text}\n")
-    done = subprocess.run(["grep", "-nE", secret_pattern(), str(comment)], capture_output=True, text=True, check=False)
+    line = grep_line()
+    command = ["grep", f"-{line['flags']}", line["pattern"], str(comment)]
+    done = subprocess.run(command, capture_output=True, text=True, check=False)
     assert done.returncode in (0, 1), f"grep failed: {done.stderr}"
     return done.returncode == 0
 
@@ -86,7 +93,33 @@ def test_safe_text_passes(name, tmp_path):
     assert not flagged(SAFE[name], tmp_path), f"{name} text was wrongly flagged"
 
 
+def test_check_ignores_case():
+    """The grep runs with -i, so upper-case keywords such as PASSWORD= are caught."""
+    assert "i" in grep_line()["flags"], "the secret check's grep is missing -i"
+
+
+def test_check_prints_line_numbers_only():
+    """The grep output goes through cut, so only line numbers print and the secret never shows."""
+    assert grep_line()["pipe"].strip() == "| cut -d: -f1", "the secret check doesn't pipe through cut -d: -f1"
+
+
+def run_check_block(target):
+    """Run the doc's whole secret-check code block against a file and return its exit status."""
+    block = CHECK_BLOCK.search(IMPLEMENTATION.read_text())
+    assert block, f"no bash block holding the grep found in {IMPLEMENTATION}"
+    script = block["code"].replace("<temp file>", str(target))
+    return subprocess.run(["bash", "-c", script], capture_output=True, text=True, check=False).returncode
+
+
+def test_check_exit_status_tells_pass_from_error(tmp_path):
+    """The check exits 1 for a clean comment and 2 for a missing file, so a grep error never reads as a pass."""
+    clean = tmp_path / "clean.md"
+    clean.write_text("**Claude review — PR #1**\n\nNothing secret here.\n")
+    assert run_check_block(clean) == 1, "a clean comment should exit 1, not look like a match or an error"
+    assert run_check_block(tmp_path / "missing.md") == 2, "a missing file should exit 2, not pass silently"
+
+
 def test_check_runs_before_save():
-    """Phase 4 lists the secret check before the save step, so a flagged comment never reaches _drafts/."""
+    """Phase 5 lists the secret check before the save step, so a flagged comment never reaches _drafts/."""
     text = IMPLEMENTATION.read_text()
     assert text.index("- **Secret check:**") < text.index("- **Save:**"), "Save comes before the secret check"

@@ -8,13 +8,13 @@ tags:
   tested: true
   disable_model_invocation: false
 ---
-<!-- version: 0.6.1 -->
+<!-- version: 0.6.2 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-25 -->
 
 ## 🤖 Instructions for Claude
 
-- **Pre-check:** confirm `~/claude/_errors/` exists and holds logs, and if not, say so and stop without proposing any rule.
+- **Pre-check:** confirm `~/_errors/` exists and holds logs, and if not, say so and stop without proposing any rule.
 - **Read first:** read `reference/_implementation.md` for the audit, promote, validate and prune phases.
 - **Always:** show every rule and eval case as a diff with before/after results, and wait for an explicit yes before writing to `_rules_lazy_load/_learned/`.
 - **Always:** tell the user that `evals/runner.py` makes one Claude call per case before running it.
@@ -35,7 +35,7 @@ Self-improving development loop: capture recurring mistakes, promote only verifi
 **Scenario:** You fix the same bug (e.g., missing input validation) twice in one week.
 
 1. Run `/claude_kaizen` (manually or auto-triggered at session start)
-2. Skill audits `~/claude/_errors/` and finds 2 occurrences of the same mistake
+2. Skill audits `~/_errors/` and finds 2 occurrences of the same mistake
 3. Candidate is already in `_rules_lazy_load/_learned/candidates.md` with count = 2
 4. Meets promotion threshold; skill drafts a rule + eval case
 5. Runs full test suite (before/after) to catch regressions

@@ -11,6 +11,10 @@
 - **10 and below 5:** use the "10 looks like" and "1 looks like" columns in the type's rubric.
 - **Evidence only:** an anchor counts as met only when a file shows it, never because the author says so.
 - **Bands:** 9–10 is excellent, 7–8 meets the bar with minor gaps, 5–6 has notable gaps and 1–4 needs work, as in `claude_review_config`'s scoring guide.
+- **Run pass rate:** for agents, `scripts/_audit_scripts/audit_agent_evals.py` runs the evals that have a `run` block and reports a pass rate.
+  - **90% or more:** Test Coverage can reach 9, if the skipped evals are only ones that need a full session, such as routing.
+  - **75–89%:** Test Coverage stays at 8 or below until the failures are fixed or explained.
+  - **Below 75%, or no run:** the unrun-evals cap of 7 still applies.
 
 ---
 
