@@ -128,17 +128,15 @@ cat > "${HOME}/.claude/settings.json" << 'EOF'
     "allow": [
       "Bash(git add:*)",
       "Bash(git branch:*)",
-      "Bash(git checkout:*)",
-      "Bash(git commit:*)",
       "Bash(git diff:*)",
       "Bash(git fetch:*)",
       "Bash(git log:*)",
-      "Bash(git merge:*)",
-      "Bash(git pull:*)",
-      "Bash(git push:*)",
-      "Bash(git rebase:*)",
       "Bash(git status:*)",
-      "Bash(gh:*)",
+      "Bash(gh api:*)",
+      "Bash(gh issue:*)",
+      "Bash(gh pr:*)",
+      "Bash(gh repo view:*)",
+      "Bash(gh run:*)",
       "Bash(find:*)"
     ]
   }
