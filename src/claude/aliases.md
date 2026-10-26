@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-25 -->
+<!-- updated: 2026-10-26 -->
 <!-- applies_to: * -->
 <!-- miss_cost: low — a shortcut goes unrecognised and the user types it out -->
 <!-- loading: always-on — CLAUDE.md imports it so the shortcuts work in every session -->
@@ -13,7 +13,7 @@
 | `/batch` | Automation | Testing | Decompose a large change into parallel isolated subagents, each opening a PR — **controls in `rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md`** |
 | `bullets` | Formatting | Ready | Format with **keyword:** bullet style — bold keyword + colon opening each bullet |
 | `draft` | Atlassian | Ready | Draft content to a local `.md` file first before pushing to an external system (Confluence, Jira, etc.) |
-| `/fewer-permission-prompts` | Configuration | Ready | Audit transcripts for read-only command usage; optimize `permissions.allow` in settings.json to reduce permission prompts |
+| `/fewer-permission-prompts` | Configuration | Ready | Audit transcripts for read-only command usage; optimise `permissions.allow` in settings.json to reduce permission prompts |
 | `/goal` | Automation | Testing | Work until a verifiable condition is met — **controls in `rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md`** |
 | `/loop` | Automation | Testing | Repeat a prompt on a schedule — **controls in `rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md`** |
 | `plan` | Claude mode | Ready | Enter plan mode |
@@ -22,10 +22,6 @@
 
 ## 📝 Note on automation controls
 
-The three experimental automation commands (`/batch`, `/goal`, `/loop`) have detailed usage constraints documented in `rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md`. When using these features, always reference that file for:
-- Turn budgets and caps
-- Minimum intervals (for `/loop`)
-- Approval gates
-- Kill-switch procedures if the feature becomes unreliable
-
-This consolidation prevents duplication while keeping aliases.md focused on quick reference.
+- **Controls file:** the three experimental automation commands (`/batch`, `/goal`, `/loop`) take their usage limits from `rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md`.
+- **Check it for:** turn budgets and caps, minimum intervals, approval gates and kill-switch procedures, before using any of them.
+- **Why one file:** keeping the limits there avoids duplication and keeps this file a quick reference.

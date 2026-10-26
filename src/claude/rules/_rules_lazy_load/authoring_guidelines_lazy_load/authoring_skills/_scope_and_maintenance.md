@@ -1,6 +1,6 @@
-<!-- version: 3.0.1 -->
+<!-- version: 3.0.2 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-26 -->
 # 🚪 Scope Boundaries & Low-Maintenance Design
 
 **Purpose:** Every skill must declare what it does NOT do, and be designed to stay stable once shipped.
@@ -27,14 +27,14 @@ not_for:
 ### Anti-Patterns: What NOT to Do
 
 **❌ Don't try to handle everything**
-- A skill that handles "all Confluence page operations" becomes bloated and unmaintainable
-- Better: narrow scope (e.g., `confluence_create_page`, `confluence_update_page` as separate skills)
-- Use `not_for` to document explicit boundaries
+- **Bloat:** a skill that handles "all Confluence page operations" becomes bloated and unmaintainable
+- **Better:** narrow scope (e.g., `confluence_create_page`, `confluence_update_page` as separate skills)
+- **Boundaries:** use `not_for` to document explicit boundaries
 
 **❌ Don't substitute `test_*_handler.py` for `evals.yaml` — match the test type to what's being tested**
-- `evals.yaml` is mandatory for every skill — it specifies the skill's prompt-driven behavior (what Claude should do reading `SKILL.md`), which isn't automatable in this repo's tooling since nothing invokes a live Claude session to grade it
-- `test_<handler>.py` (pytest) is a welcome *addition*, not a replacement, when a skill ships deterministic Python code (an MCP handler, validation logic) — automate what's automatable, since pytest runs unattended in pre-commit/CI
-- The anti-pattern is skipping `evals.yaml` in favour of pytest, not writing pytest at all — a skill with real code should have both; a skill that's pure prompt-following logic only needs `evals.yaml`
+- **`evals.yaml`:** mandatory for every skill — it specifies the skill's prompt-driven behaviour (what Claude should do reading `SKILL.md`), which isn't automatable in this repo's tooling since nothing invokes a live Claude session to grade it
+- **pytest:** `test_<handler>.py` is a welcome *addition*, not a replacement, when a skill ships deterministic Python code (an MCP handler, validation logic) — automate what's automatable, since pytest runs unattended in pre-commit/CI
+- **The anti-pattern:** skipping `evals.yaml` in favour of pytest, not writing pytest at all — a skill with real code should have both; a skill that's pure prompt-following logic only needs `evals.yaml`
 
 ---
 

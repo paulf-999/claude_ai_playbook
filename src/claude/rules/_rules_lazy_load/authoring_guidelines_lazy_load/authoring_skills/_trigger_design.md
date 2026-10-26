@@ -1,6 +1,6 @@
-<!-- version: 3.0.2 -->
+<!-- version: 3.0.3 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-26 -->
 # 🎯 Trigger Design
 
 **Purpose:** Define how to design trigger phrases so a skill runs whenever users naturally ask for it.
@@ -14,13 +14,13 @@ Triggers determine how users invoke your skill. Comprehensive trigger coverage e
 **Trigger Types**
 
 - **Explicit triggers:** `/skill_name` slash commands and direct phrase matches
-  - Format: `- /skill_name` or `- exact phrase`
-  - Example: `/confluence_create_page`, `create a confluence page`
+  - **Format:** `- /skill_name` or `- exact phrase`
+  - **Example:** `/confluence_create_page`, `create a confluence page`
 - **Contextual triggers:** Natural language patterns the system uses to detect user intent
-  - Format: `- user wants to <action>`
-  - Example: `user wants to create a Confluence page`
+  - **Format:** `- user wants to <action>`
+  - **Example:** `user wants to create a Confluence page`
 
-**Explicit triggers drive auto-invocation.** Contextual triggers are fallback guidance. Prioritize explicit phrase coverage.
+**Explicit triggers drive auto-invocation.** Contextual triggers are fallback guidance. Prioritise explicit phrase coverage.
 
 **Designing phrase triggers:**
 - **Verbs:** list every natural way to ask — e.g. "create", "make", "open", "submit" a PR.
