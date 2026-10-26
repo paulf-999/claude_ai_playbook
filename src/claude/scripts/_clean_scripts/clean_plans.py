@@ -36,8 +36,8 @@ def _default_plans_dir() -> Path:
     :return: ``$CLAUDE_CONFIG_DIR/_plans``, or ``~/.claude/_plans`` when the variable is unset.
     :rtype: Path
     """
-    config_dir = os.environ.get("CLAUDE_CONFIG_DIR") or "~/.claude"
-    return Path(config_dir).expanduser() / "_plans"
+    config_dir = os.environ.get("CLAUDE_CONFIG_DIR")
+    return (Path(config_dir) if config_dir else Path.home() / ".claude") / "_plans"
 
 
 def _split_row(line: str) -> list[str]:

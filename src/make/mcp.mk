@@ -39,4 +39,8 @@ enable_mcp:
 	@echo "${INFO}\nEnabling MCP server: $(server)${COLOUR_OFF}"
 	@bash src/claude/_install/mcp_toggle.sh enable $(server)
 
-.PHONY: install_core_mcp_servers install_mcp_server_github install_mcp_server_omni install_mcp_server_atlassian install_mcp_server_o365 enable_mcp
+disable_mcp:
+	@echo "${INFO}\nDisabling MCP server: $(server)${COLOUR_OFF}"
+	@bash src/claude/_install/mcp_toggle.sh disable $(server)
+
+.PHONY: install_core_mcp_servers install_mcp_server_github install_mcp_server_omni install_mcp_server_atlassian install_mcp_server_o365 enable_mcp disable_mcp

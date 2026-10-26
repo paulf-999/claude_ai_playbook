@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-11
-# Version:           2.1.0
+# Date updated:      2026-10-26
+# Version:           2.2.0
 # Test quality score: 10/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -12,13 +12,13 @@
 
 - Every enforcement hook in hooks/ has a corresponding test file.
 - No hook test is left without its hook.
-- testing.md's children exist.
+- testing.md's children exist, and every test file and relative link it names is real.
 """
 from __future__ import annotations
 
 import re
 
-from _shared_paths import CLAUDE_DIR, HOOKS_DIR, RULES_DIR, resolve_config_path
+from _shared_paths import CLAUDE_DIR, HOOKS_DIR, RULES_DIR, resolve_config_path, resolve_link
 
 TESTS_HOOKS_DIR = CLAUDE_DIR / "_tests/hooks"
 TESTING_MD = RULES_DIR / "02_claude_standards" / "path_scoped_rules" / "testing.md"
@@ -167,6 +167,23 @@ def test_testing_md_children_exist():
     assert children, "testing.md should point to its children with 'Read on demand' pointers"
     missing = [c for c in children if not resolve_config_path(CLAUDE_DIR, c).is_file()]
     assert not missing, f"testing.md points to files that don't exist: {missing}"
+
+
+def test_testing_md_names_only_real_test_files():
+    """Every ``test_*.py`` testing.md names as an example exists somewhere under _tests/."""
+    named = set(re.findall(r"`(test_\w+\.py)`", TESTING_MD.read_text()))
+    assert named, "testing.md should name example test files"
+    found = {path.name for path in (CLAUDE_DIR / "_tests").rglob("test_*.py")}
+    missing = sorted(named - found)
+    assert not missing, f"testing.md names test files that don't exist: {missing}"
+
+
+def test_testing_md_relative_links_resolve():
+    """Every relative markdown link in testing.md reaches a real file."""
+    links = re.findall(r"\]\(([^)#\s]+)", TESTING_MD.read_text())
+    relative = [link for link in links if not link.startswith(("http", "~"))]
+    broken = [link for link in relative if not resolve_link(TESTING_MD, link).exists()]
+    assert not broken, f"testing.md has dead relative links: {broken}"
 
 
 def test_hook_tests_exist_to_check():

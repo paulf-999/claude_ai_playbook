@@ -5,9 +5,9 @@ paths:
   - "**/*.sql"
   - "**/_tests/**"
 ---
-<!-- version: 3.0.5 -->
+<!-- version: 3.0.6 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-17 -->
+<!-- updated: 2026-10-26 -->
 <!-- miss_cost: medium — untested code the user catches in review -->
 <!-- loading: path-scoped — only matters when writing code, so it loads when a Python, shell or SQL file is open -->
 # 🧪 Testing
@@ -45,7 +45,7 @@ Define the goal before writing the test, because tests validate *intended behavi
 | Goal | Example | Purpose |
 |---|---|---|
 | **Structure** | `test_aliases.py` | Config file structure and required fields are valid |
-| **Behavior** | `test_aliases_behavior.py` | Feature works as documented |
+| **Behavior** | `test_enforcement_naming_convention.py` | Feature works as documented |
 | **Principles** | `test_settings.py` | Change aligns with guiding principles |
 | **Integration** | Skill runs end-to-end | Feature integrates with the rest of the system |
 | **Regression** | Bug fix test | Bug won't silently reappear |
@@ -71,11 +71,11 @@ Define the goal before writing the test, because tests validate *intended behavi
 
 ## ✍️ Writing a Test
 
-- **Read on demand:** [`~/.claude/_rules_lazy_load/testing_lazy_load/_testing_design_pattern.md`](../_rules_lazy_load/testing_lazy_load/_testing_design_pattern.md) — before writing a new test: state the goal, test behaviour, write assertion messages, spot-check.
-- **Read on demand:** [`~/.claude/_rules_lazy_load/testing_lazy_load/_testing_anti_patterns.md`](../_rules_lazy_load/testing_lazy_load/_testing_anti_patterns.md) — before writing a new test: empty, over-mocked, fragile, slow and unclear tests to avoid.
-- **Read on demand:** [`~/.claude/_rules_lazy_load/testing_lazy_load/_testing_file_organization.md`](../_rules_lazy_load/testing_lazy_load/_testing_file_organization.md) — before creating a test file: where it lives and how to name it.
-- **Read on demand:** [`~/.claude/_rules_lazy_load/testing_lazy_load/_test_metadata.md`](../_rules_lazy_load/testing_lazy_load/_test_metadata.md) — before writing or editing a test: the required header, and the quality ≥7 and complexity ≥7 floors that `test_test_score_floor.py` enforces.
-- **Read on demand:** [`~/.claude/_rules_lazy_load/testing_lazy_load/_test_metadata_audit.md`](../_rules_lazy_load/testing_lazy_load/_test_metadata_audit.md) — when auditing tests: the quarterly audit, worked example and archival workflow.
+- **Read on demand:** `~/.claude/_rules_lazy_load/testing_lazy_load/_testing_design_pattern.md` — before writing a new test: state the goal, test behaviour, write assertion messages, spot-check.
+- **Read on demand:** `~/.claude/_rules_lazy_load/testing_lazy_load/_testing_anti_patterns.md` — before writing a new test: empty, over-mocked, fragile, slow and unclear tests to avoid.
+- **Read on demand:** `~/.claude/_rules_lazy_load/testing_lazy_load/_testing_file_organization.md` — before creating a test file: where it lives and how to name it.
+- **Read on demand:** `~/.claude/_rules_lazy_load/testing_lazy_load/_test_metadata.md` — before writing or editing a test: the required header, and the quality ≥7 and complexity ≥7 floors that `test_test_score_floor.py` enforces.
+- **Read on demand:** `~/.claude/_rules_lazy_load/testing_lazy_load/_test_metadata_audit.md` — when auditing tests: the quarterly audit, worked example and archival workflow.
 - **Inventory:** add each new test file to `_tests/README.md`.
 
 ---
