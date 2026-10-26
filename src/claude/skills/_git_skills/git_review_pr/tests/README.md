@@ -19,7 +19,7 @@
 | 11 | `empty_diff_stops` | Fetch | Stops before analysis when the PR has no changes |
 | 12 | `local_diff_routed_to_code_reviewer` | Hand-off | Sends a local diff with no PR to `code_reviewer` instead |
 
-- **Maturity:** 12 scenarios sits within the 8–12 expected for a **tactical** skill
+- **Maturity:** 12 scenarios meets the 12 or more expected for a **strategic** skill
 - **Not covered:** complexity scoring (the `code_reviewer` agent's job), and four `not_for` cases (creating a PR, a formal review, editing the PR's code and a bug hunt), left out to stay within 12
 - **Merged:** the two secret scenarios became one on 2026-10-26, to make room for the declined post
 - **Secret pattern test:** `_tests/skills/git_review_pr/test_git_review_pr_secret_check.py` runs the check's `grep` pattern against sample secrets and safe text

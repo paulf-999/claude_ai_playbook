@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-22
 # Date updated:      2026-10-26
-# Version:           1.1.0
+# Version:           1.2.0
 # Test quality score: 10/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -32,6 +32,7 @@ IMPLEMENTATION = next(
      if (SKILLS_DIR / rel / "reference" / "_implementation.md").is_file()),
     None,
 )
+CHECK_BLOCK = re.compile(r"```bash\n(?P<code>[^`]*?^grep -[^`]*?)```", re.M)
 GREP_LINE = re.compile(r"^grep -(?P<flags>[a-zA-Z]+) '(?P<pattern>.+)' \"<temp file>\"(?P<pipe>.*)$", re.M)
 
 SECRETS = {
@@ -100,6 +101,22 @@ def test_check_ignores_case():
 def test_check_prints_line_numbers_only():
     """The grep output goes through cut, so only line numbers print and the secret never shows."""
     assert grep_line()["pipe"].strip() == "| cut -d: -f1", "the secret check doesn't pipe through cut -d: -f1"
+
+
+def run_check_block(target):
+    """Run the doc's whole secret-check code block against a file and return its exit status."""
+    block = CHECK_BLOCK.search(IMPLEMENTATION.read_text())
+    assert block, f"no bash block holding the grep found in {IMPLEMENTATION}"
+    script = block["code"].replace("<temp file>", str(target))
+    return subprocess.run(["bash", "-c", script], capture_output=True, text=True, check=False).returncode
+
+
+def test_check_exit_status_tells_pass_from_error(tmp_path):
+    """The check exits 1 for a clean comment and 2 for a missing file, so a grep error never reads as a pass."""
+    clean = tmp_path / "clean.md"
+    clean.write_text("**Claude review — PR #1**\n\nNothing secret here.\n")
+    assert run_check_block(clean) == 1, "a clean comment should exit 1, not look like a match or an error"
+    assert run_check_block(tmp_path / "missing.md") == 2, "a missing file should exit 2, not pass silently"
 
 
 def test_check_runs_before_save():
