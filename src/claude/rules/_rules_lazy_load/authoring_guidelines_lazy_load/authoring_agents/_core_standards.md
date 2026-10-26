@@ -1,6 +1,6 @@
-<!-- version: 1.2.0 -->
+<!-- version: 1.3.0 -->
 <!-- created: 2026-09-18 -->
-<!-- updated: 2026-10-02 -->
+<!-- updated: 2026-10-26 -->
 # 📐 Agent Core Standards
 
 **Purpose:** The baseline every agent follows — 5-section structure, naming pattern, frontmatter fields, maturity levels, and testing requirements.
@@ -27,9 +27,9 @@
 
 ## 📁 Directory Structure
 
-- **Location:** `~/.claude/agents/core/` or organized by domain (flexible for now)
-- **Filename:** `<domain>_<purpose>.md`
-- **Example:** `~/.claude/agents/core/technical_writer.md`
+- **Location:** `~/.claude/agents/<group>/<name>/`, one folder per agent inside a group folder such as `core/`
+- **Files:** `AGENT.md` holds the agent, with its `evals.yaml` beside it
+- **Example:** `~/.claude/agents/core/technical_writer/AGENT.md` and `~/.claude/agents/core/technical_writer/evals.yaml`
 
 ## 🧾 Agent Frontmatter [REQUIRED]
 
