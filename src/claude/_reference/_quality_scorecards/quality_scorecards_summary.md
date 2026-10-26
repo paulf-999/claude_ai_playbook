@@ -18,7 +18,7 @@
 | Rules — always-on | 19 | 7.0/10 | 2026-10-25 | • 💪 **Strongest:** `claude_working_practices.md` (7.9/10)<br>• ⚠️ **Weakest:** `claude_operational_efficiency.md` (5.9/10) |
 | Rules — lazy-load | 12 | 6.3/10 | 2026-10-25 | • 💪 **Strongest:** `latency_optimisation.md` (7.0/10)<br>• ⚠️ **Weakest:** `dbt.md` (5.5/10) |
 | Hooks | 5 | 8.5/10 | 2026-10-02 | • 💪 **Strongest:** `hook_enforcement_mcp_stale_settings.sh` (9.0/10)<br>• ⚠️ **Weakest:** `hook_style_guide_response_standards_checker.sh` (8.0/10) |
-| Agents | 3 | 8.5/10 | 2026-10-22 | • 💪 **Strongest:** `code_reviewer` (8.9/10)<br>• ⚠️ **Weakest:** `technical_writer` (8.1/10) |
+| Agents | 3 | 7.7/10 | 2026-10-26 | • 💪 **Strongest:** `code_reviewer` (8.0/10)<br>• ⚠️ **Weakest:** `technical_writer` (7.3/10) |
 
 ---
 
@@ -40,10 +40,10 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 | Summary | Scored | Overall | Date Updated |
 |---|---|---|---|
 | `tests/test_scorecards_summary.md` | 60 | 9.1/10 | 2026-10-11 |
-| `skills/skill_scorecards_summary.md` | 8 | 8.2/10 | 2026-10-22 |
+| `skills/skill_scorecards_summary.md` | 8 | 8.3/10 | 2026-10-26 |
 | `rules/rule_scorecards_summary.md` | 31 | 6.7/10 | 2026-10-25 |
 | `hooks/hook_scorecards_summary.md` | 5 | 8.5/10 | 2026-10-02 |
-| `agents/agent_scorecards_summary.md` | 3 | 8.5/10 | 2026-10-22 |
+| `agents/agent_scorecards_summary.md` | 3 | 7.7/10 | 2026-10-26 |
 
 ---
 

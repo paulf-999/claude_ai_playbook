@@ -75,3 +75,6 @@ run_date,artefact,type,attempt,reviewer,model,overall,commit
 2026-10-25,dbt,rule,2,quality_scorecard_reviewer,claude-opus-5-5,5.5,69b3077
 2026-10-25,ansible,rule,2,quality_scorecard_reviewer,claude-opus-5-5,6.3,69b3077
 2026-10-26,git_review_pr,skill,4,quality_scorecard_reviewer,claude-opus-5-5,7.6,8040a24
+2026-10-26,code_reviewer,agent,2,quality_scorecard_reviewer,claude-opus-5-5,8.0,9cfc85e
+2026-10-26,quality_scorecard_reviewer,agent,2,quality_scorecard_reviewer,claude-opus-5-5,7.9,9cfc85e
+2026-10-26,technical_writer,agent,2,quality_scorecard_reviewer,claude-opus-5-5,7.3,9cfc85e
