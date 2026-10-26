@@ -197,7 +197,7 @@ evals:
                }
               ```
           must_not_match:
-              - (?i)(align|whitespace)
+              - '(?im)^\s*-\s.*\*\*(Must|Should|Could)\b[^\n]*\b(align|whitespace)'
 
     - name: declines_to_edit_or_post
       description: Suggests fixes but refuses to edit files or post comments

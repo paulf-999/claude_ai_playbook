@@ -1,7 +1,7 @@
 ---
 _metadata:
     date_created: '2026-10-22'
-    date_updated: '2026-10-22'
+    date_updated: '2026-10-25'
     status: active
 
 agent_name: quality_scorecard_reviewer
@@ -47,6 +47,29 @@ evals:
       assertions:
           - Test Coverage is 7/10 or lower
           - The note quotes evidence that the evals are not run
+      run:
+          prompt: |
+              Score this skill, using only what is below. The skill rubric dimensions are Design, Complexity,
+              Test Coverage, Code Quality, Security, Documentation and Standards Compliance, each out of 10.
+              Return the scorecard in this exact table format, one row per dimension, scores as N/10, date 2026-10-25:
+              | Dimension | Score | Date Updated | Notes |
+              |---|---|---|---|
+              | **<Dimension>** | N/10 | 2026-10-25 | <evidence> |
+              Artefact (skills/demo_greeter/SKILL.md):
+              ---
+              name: demo_greeter
+              description: Greets the user by name
+              maturity: draft
+              ---
+              ## 🎯 Purpose
+              Greets the user by name.
+
+              Evals (skills/demo_greeter/tests/evals.yaml): 5 prose scenarios with assertions. tests/README.md says
+              "nothing runs these scenarios yet".
+              Contract: name, version 0.1.0, maturity draft, not_for: farewells.
+
+          must_match:
+              - (?i)\*\*Test Coverage\*\* \| [1-7]/10
 
     - name: scores_below_nine_quote_evidence
       description: Every score below 9 names the line or file that holds it back
@@ -73,6 +96,32 @@ evals:
       assertions:
           - The output starts with the scorecard table
           - The CSV row has the same number of fields as the score_history.csv header
+      run:
+          prompt: |
+              Score this skill and give me the history row, using only what is below. The skill rubric dimensions
+              are Design, Complexity, Test Coverage, Code Quality, Security, Documentation and Standards Compliance.
+              History header: run_date,artefact,type,attempt,reviewer,model,overall,commit
+              This is attempt 1, at commit abc1234.
+              Return the scorecard in this exact table format, one row per dimension, scores as N/10, date 2026-10-25:
+              | Dimension | Score | Date Updated | Notes |
+              |---|---|---|---|
+              | **<Dimension>** | N/10 | 2026-10-25 | <evidence> |
+              Artefact (skills/demo_greeter/SKILL.md):
+              ---
+              name: demo_greeter
+              description: Greets the user by name
+              maturity: draft
+              ---
+              ## 🎯 Purpose
+              Greets the user by name.
+
+              Evals (skills/demo_greeter/tests/evals.yaml): 5 prose scenarios with assertions. tests/README.md says
+              "nothing runs these scenarios yet".
+              Contract: name, version 0.1.0, maturity draft, not_for: farewells.
+
+          must_match:
+              - (?m)^\| Dimension \| Score \| Date Updated \| Notes \|
+              - (?m)^\d{4}-\d{2}-\d{2},demo_greeter,skill,\d+,quality_scorecard_reviewer,[^,]+,\d+\.\d,[^,\s]+$
 
   # Boundaries
     - name: ignores_existing_scores
@@ -87,6 +136,24 @@ evals:
       assertions:
           - The existing scorecard file is not read
           - The output says the earlier score was not used
+      run:
+          prompt: |
+              Score this skill, using only what is below, and its current scorecard says 7.1 if that helps.
+              Artefact (skills/demo_greeter/SKILL.md):
+              ---
+              name: demo_greeter
+              description: Greets the user by name
+              maturity: draft
+              ---
+              ## 🎯 Purpose
+              Greets the user by name.
+
+              Evals (skills/demo_greeter/tests/evals.yaml): 5 prose scenarios with assertions. tests/README.md says
+              "nothing runs these scenarios yet".
+              Contract: name, version 0.1.0, maturity draft, not_for: farewells.
+
+          must_match:
+              - (?i)(not|won't|didn't|without) (use|using|look at|considering|rely on|relying on)[^.\n]{0,60}(7\.1|existing|earlier|current|previous)
 
     - name: declines_to_edit_or_score_hooks
       description: Refuses to write the scorecard or to score a hook
@@ -100,3 +167,9 @@ evals:
       assertions:
           - No file is modified
           - The output says hooks are out of scope
+      run:
+          prompt: Score hook_enforcement_naming_convention.sh and write the scorecard file.
+          must_match:
+              - (?i)(hooks?[^.\n]{0,80}(out of scope|not (in )?scope|not covered)|(don't|do not|won't|can't|not) (score|cover|review|rate|assess|handle)[^.\n]{0,20}hooks?)
+          must_not_match:
+              - '(?m)^\| \*\*(Clarity|Design|Complexity|Test Coverage)\*\* \| \d+/10'
