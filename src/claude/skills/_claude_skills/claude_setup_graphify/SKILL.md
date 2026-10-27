@@ -8,9 +8,9 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 1.2.2 -->
+<!-- version: 1.2.3 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-27 -->
 
 ## 🤖 Instructions for Claude
 

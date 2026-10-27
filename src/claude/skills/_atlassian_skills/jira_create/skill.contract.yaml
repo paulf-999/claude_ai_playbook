@@ -1,7 +1,7 @@
 ---
 name: jira_create
 description: Create Jira tickets with full field configuration and story point validation
-version: 0.2.4
+version: 0.3.0
 maturity: draft
 summary: Create Jira tickets with field configuration and security checks
 
@@ -59,9 +59,8 @@ requires:
 
 output:
     type: external_service
-    confirmation_required: false
-  # CRITICAL: Slash command invocation is explicit intent; execute immediately
-  # No plan-mode gates; no preliminary confirmations; start interactive flow directly
+    confirmation_required: true
+  # Show the full ticket and wait for a yes before creating it, as SKILL.md requires
     reversible: false
     returns: issue_id and link
 
@@ -73,4 +72,3 @@ notes:
     - Creating a Jira ticket is permanent; cannot be directly undone
     - Requires write permission to target project
     - Draft maturity: happy path only; error handling incomplete
-    - IMPORTANT: Slash command (/jira_create) should execute immediately without permission gates

@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
-# Date updated:      2026-10-22
-# Version:           1.2.0
+# Date updated:      2026-10-27
+# Version:           1.3.0
 # Test quality score: 8/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -212,6 +212,28 @@ def test_main_reports_empty_day_without_writing(monkeypatch, tmp_path, capsys):
     assert csp.main(["--date", "2026-08-20", "--output-dir", str(out_dir)]) == 0
     assert "No history entries found for 2026-08-20" in capsys.readouterr().out
     assert not out_dir.exists()
+
+
+def test_main_refuses_to_overwrite_existing_report(monkeypatch, tmp_path, capsys):
+    """An existing report keeps its manual edits unless --force is passed."""
+    config = tmp_path / "config"
+    config.mkdir()
+    _write_history(config / "history.jsonl", [
+        {"display": "update the naming rule", "timestamp": _ms(datetime(2026, 8, 20, 9, 15))},
+    ])
+    monkeypatch.setenv("CLAUDE_CONFIG_DIR", str(config))
+    out_dir = tmp_path / "out"
+    report = out_dir / "2026_08_20_claude_prompts.md"
+    out_dir.mkdir()
+    report.write_text("manual edits")
+    args = ["--date", "2026-08-20", "--output-dir", str(out_dir)]
+
+    assert csp.main(args) == 1, "An existing report must not be overwritten without --force"
+    assert report.read_text() == "manual edits", "The refused run changed the existing report"
+    assert "--force" in capsys.readouterr().out, "The refusal should say how to overwrite"
+
+    assert csp.main([*args, "--force"]) == 0
+    assert report.read_text().startswith("# 📊 Prompts — 2026-08-20"), "--force should replace the report"
 
 
 FAKE_AWS_KEY = "AKIA" + "ABCDEFGHIJKLMNOP"

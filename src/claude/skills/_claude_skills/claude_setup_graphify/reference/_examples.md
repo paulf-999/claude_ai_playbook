@@ -22,7 +22,7 @@ $ /graphify "What functions call user_authentication()?"
 
 ## Team Repository Setup
 
-**Scenario:** Team shared repo, all developers need the same graph.
+**Scenario:** Team shared repo, where every developer wants a graph.
 
 ```bash
 cd ~/git_repos/core/team-project
@@ -30,16 +30,16 @@ cd ~/git_repos/core/team-project
 
 # All 5 phases complete successfully
 
-# Commit and push:
-git add .gitignore CLAUDE.md graphify-out/graph.json
-git commit -m "feat: add Graphify knowledge graph for structural queries"
-git push origin feature/add-graphify
+# Commit and push the setup only, never graphify-out/:
+git add .gitignore CLAUDE.md
+git commit -m "feat: add Graphify setup for structural queries"
+git push origin feature/add_graphify
 
-# Team members:
+# Team members build their own local graph:
 cd team-project
-/claude_setup_graphify --skip-extract  # graph.json in repo
+/claude_setup_graphify
 
-# All can now query the graph locally
+# Each graph stays local, because graphify-out/ can hold LLM summaries of internal docs
 ```
 
 ## Verification Checklist

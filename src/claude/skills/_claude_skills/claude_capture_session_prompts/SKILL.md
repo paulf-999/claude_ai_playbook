@@ -8,15 +8,16 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 0.4.1 -->
+<!-- version: 0.5.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-27 -->
 
 ## 🤖 Instructions for Claude
 
 - **Pre-check:** confirm `python3 --version` is 3.9 or newer, and stop and tell the user if it isn't.
 - **Read first:** read `reference/_implementation.md` for the capture, review and plan phases before running anything.
 - **Always:** run `python3 "${CLAUDE_SKILL_DIR}/capture_session_prompts.py" [--date YYYY-MM-DD]`, and never rebuild the table by hand.
+  - **Report exists:** the script stops rather than lose manual edits, so ask the user before re-running it with `--force`.
 - **Always:** write the report to `~/_sessions/YYYY_MM_DD_claude_prompts.md`, with `~` expanded to the absolute home path.
 - **Never:** paste raw `history.jsonl` lines into the chat, because they skip the script's secret masking.
 - **Never:** edit `history.jsonl`, which Claude Code maintains.
