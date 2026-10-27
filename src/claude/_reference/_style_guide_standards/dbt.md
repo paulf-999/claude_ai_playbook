@@ -3,7 +3,7 @@ paths:
   - "**/models/**/*.sql"
   - "**/dbt_project.yml"
 ---
-<!-- version: 1.2.0 -->
+<!-- version: 1.2.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-27 -->
 <!-- miss_cost: medium — models that break naming or layering and fail review -->
@@ -18,11 +18,11 @@ paths:
 
 | File | Purpose | When to load |
 |------|---------|-------------|
-| [`dbt/model_organisation.md`](dbt/model_organisation.md) | Model layers (staging → base → mart → publication), folder structure, minimum requirements | Creating a new model or directory |
-| [`dbt/naming_conventions.md`](dbt/naming_conventions.md) | Naming for models (prefixes), keys, marts, audit fields, null handling | Choosing names for models/columns |
-| [`dbt/yaml_resource_properties.md`](dbt/yaml_resource_properties.md) | YAML structure, property names, style conventions | Writing `.yml` files |
-| [`dbt/snapshots.md`](dbt/snapshots.md) | Snapshot use cases, configuration, best practices, examples | Working with slowly-changing dimensions |
-| [`dbt/macros.md`](dbt/macros.md) | Custom macros directory, dbt packages, conventions | Building shared/reusable logic |
+| [`dbt/_model_organisation.md`](dbt/_model_organisation.md) | Model layers (staging → base → mart → publication), folder structure, minimum requirements | Creating a new model or directory |
+| [`dbt/_naming_conventions.md`](dbt/_naming_conventions.md) | Naming for models (prefixes), keys, marts, audit fields, null handling | Choosing names for models/columns |
+| [`dbt/_yaml_resource_properties.md`](dbt/_yaml_resource_properties.md) | YAML structure, property names, style conventions | Writing `.yml` files |
+| [`dbt/_snapshots.md`](dbt/_snapshots.md) | Snapshot use cases, configuration, best practices, examples | Working with slowly-changing dimensions |
+| [`dbt/_macros.md`](dbt/_macros.md) | Custom macros directory, dbt packages, conventions | Building shared/reusable logic |
 
 For SQL formatting rules within dbt models, see [`sql.md`](sql.md).
 
@@ -49,15 +49,15 @@ For SQL formatting rules within dbt models, see [`sql.md`](sql.md).
 
 4. **Selective materialization** — choose materialization strategically, not by default
    - **Why:** the wrong materialisation wastes Snowflake compute or creates stale data
-   - **How:** start from each layer's default in `model_organisation.md`, and justify any change
+   - **How:** start from each layer's default in `_model_organisation.md`, and justify any change
    - **Test:** is each materialisation choice justified by query frequency and data volume?
 
 ---
 
 ## 📂 Model Layers (Architecture)
 
-- **Four layers:** Staging → Base → Mart → Publication, defined with their materialisations in [`dbt/model_organisation.md`](dbt/model_organisation.md).
-- **Prefixes:** `staging_`, `mart_` and `pub_`, with no prefix for base models, per [`dbt/naming_conventions.md`](dbt/naming_conventions.md).
+- **Four layers:** Staging → Base → Mart → Publication, defined with their materialisations in [`dbt/_model_organisation.md`](dbt/_model_organisation.md).
+- **Prefixes:** `staging_`, `mart_` and `pub_`, with no prefix for base models, per [`dbt/_naming_conventions.md`](dbt/_naming_conventions.md).
 
 ---
 

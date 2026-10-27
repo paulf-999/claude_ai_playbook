@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-27 -->
 # 🗂️ SQL Formatting Standards
 
 **Purpose:** Establish formatting and style conventions for SQL queries and dbt models to ensure readability, consistency, and maintainability.
@@ -36,7 +36,7 @@
 ## 🗂️ Structure
 
 - **Use CTEs over subqueries:** one CTE per logical step, named descriptively
-- **Follow grouping pattern:** Import → Logical → Final → SELECT (see [`cte_style_guide.md`](cte_style_guide.md))
+- **Follow grouping pattern:** Import → Logical → Final → SELECT (see [`_cte_style_guide.md`](_cte_style_guide.md))
 - **DRY code:** consolidate repeated logic using CTEs and Jinja
 - **No wildcards:** use explicit column lists — never `SELECT *` in production
 - **One column per line:** in `SELECT` statements

@@ -1,9 +1,9 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-27 -->
 # 🗂️ dbt Model Organisation
 
-Defines the four-layer model architecture, folder structure, and the minimum requirements that every dbt model in the project must satisfy.
+**Purpose:** Define the four-layer model architecture, folder structure, and the minimum requirements that every dbt model in the project must satisfy.
 
 ## 🏛️ Model layers
 
@@ -32,7 +32,7 @@ The project uses a four-layer architecture. Each layer has a distinct responsibi
 | **Surrogate key** | Every model must have a surrogate key named `KEY`, generated using `{{ create_surrogate_key(['field1', 'field2']) }}`. |
 | **dbt tests** | At minimum, apply `unique` and `not_null` tests to `KEY` on every model. |
 | **Source selection** | Only `staging` models select from `source()`. All downstream models use `ref()`. |
-| **CTEs over subqueries** | Use CTEs — never subqueries. See [`../sql/cte_style_guide.md`](../sql/cte_style_guide.md). |
+| **CTEs over subqueries** | Use CTEs — never subqueries. See [`../sql/_cte_style_guide.md`](../sql/_cte_style_guide.md). |
 | **Row limiting** | Always append `{{ limit_rows() }}` to the final SELECT and to major intermediate CTEs. This is a no-op in production and limits rows in dev/CI targets. |
 | **Audit fields** | Staging models must include audit fields via `{{ dbt_last_modified_field() }}` or the relevant audit macro. |
 

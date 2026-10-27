@@ -2,7 +2,7 @@
 paths:
   - "**/*.sql"
 ---
-<!-- version: 1.2.9 -->
+<!-- version: 1.2.10 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-27 -->
 <!-- miss_cost: medium — SQL that fails SQLFluff or costs more to run -->
@@ -17,10 +17,10 @@ paths:
 
 | File | Purpose | When to load |
 |------|---------|-------------|
-| [`sql/formatting.md`](sql/formatting.md) | Keywords, structure, joins, aliases, indentation rules | Writing SQL queries |
-| [`sql/cte_style_guide.md`](sql/cte_style_guide.md) | CTE grouping pattern (Import → Logical → Final → SELECT) | Structuring complex queries |
-| [`sql/snowflake_data_type_standards.md`](sql/snowflake_data_type_standards.md) | Preferred Snowflake data types and why (cost, correctness) | Choosing data types in model definitions |
-| [`sql/sqlfluff.md`](sql/sqlfluff.md) | SQLFluff dialect/templater settings, excluded rules, troubleshooting | Debugging SQLFluff violations |
+| [`sql/_formatting.md`](sql/_formatting.md) | Keywords, structure, joins, aliases, indentation rules | Writing SQL queries |
+| [`sql/_cte_style_guide.md`](sql/_cte_style_guide.md) | CTE grouping pattern (Import → Logical → Final → SELECT) | Structuring complex queries |
+| [`sql/_snowflake_data_type_standards.md`](sql/_snowflake_data_type_standards.md) | Preferred Snowflake data types and why (cost, correctness) | Choosing data types in model definitions |
+| [`sql/_sqlfluff.md`](sql/_sqlfluff.md) | SQLFluff dialect/templater settings, excluded rules, troubleshooting | Debugging SQLFluff violations |
 
 ---
 
@@ -38,7 +38,7 @@ paths:
 SQL style is enforced by **SQLFluff** in dialect mode `snowflake`:
 - Pre-commit hook validates all `.sql` files and dbt models
 - Violations block commits; fix before retry
-- See [`sql/sqlfluff.md`](sql/sqlfluff.md) for dialect settings, rule exclusions, and troubleshooting
+- See [`sql/_sqlfluff.md`](sql/_sqlfluff.md) for dialect settings, rule exclusions, and troubleshooting
 
 **Common violations & fixes:**
 
@@ -103,7 +103,7 @@ Before committing SQL changes:
 
 ## 📚 Read on demand
 
-- **Read on demand:** `~/.claude/_reference/_style_guide_standards/sql/formatting.md` — keywords, naming, structure, joins, indentation and commenting.
-- **Read on demand:** `~/.claude/_reference/_style_guide_standards/sql/cte_style_guide.md` — CTE grouping pattern for dbt models and queries.
-- **Read on demand:** `~/.claude/_reference/_style_guide_standards/sql/snowflake_data_type_standards.md` — which Snowflake data type to use.
-- **Read on demand:** `~/.claude/_reference/_style_guide_standards/sql/sqlfluff.md` — SQLFluff dialect, templater and excluded rules.
+- **Read on demand:** `~/.claude/_reference/_style_guide_standards/sql/_formatting.md` — keywords, naming, structure, joins, indentation and commenting.
+- **Read on demand:** `~/.claude/_reference/_style_guide_standards/sql/_cte_style_guide.md` — CTE grouping pattern for dbt models and queries.
+- **Read on demand:** `~/.claude/_reference/_style_guide_standards/sql/_snowflake_data_type_standards.md` — which Snowflake data type to use.
+- **Read on demand:** `~/.claude/_reference/_style_guide_standards/sql/_sqlfluff.md` — SQLFluff dialect, templater and excluded rules.
