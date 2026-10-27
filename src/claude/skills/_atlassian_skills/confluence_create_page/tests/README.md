@@ -9,12 +9,12 @@
 | 1 | `happy_path_general_page` | Draft & review | Full flow: gathers details, writes a local draft, waits for explicit approval before publishing |
 | 2 | `happy_path_platform_risk_assessment` | Draft & review | Platform risk pattern: confirms space and parent, rates each theme L/M/H, publishes only after draft approval |
 | 3 | `mcp_unavailable` | Setup | Stops and tells the user to enable the Atlassian MCP if it isn't connected |
-| 4 | `validation_failure_title` | Validate | Rejects a title under 3 characters before any draft is written |
-| 5 | `validation_failure_space` | Validate | Rejects a space key containing non-alphanumeric characters |
-| 6 | `validation_failure_pattern` | Validate | Rejects a pattern name outside the supported list, offers a valid one instead |
-| 7 | `validation_failure_sections` | Validate | Rejects duplicate section names |
+| 4 | `space_not_named_is_confirmed` | Pattern | Asks for the Confluence space instead of inferring one |
+| 5 | `parent_page_required` | Pattern | Never publishes at the space root, and asks for a parent page |
+| 6 | `unsupported_pattern_offers_valid_ones` | Not for | Turns down an unsupported pattern and offers the two supported ones |
+| 7 | `personal_names_replaced_with_roles` | Pattern | Replaces a named individual with a role descriptor |
 | 8 | `draft_review_iteration` | Draft & review | Applies requested changes and re-asks for approval, never publishing mid-iteration |
-| 9 | `publish_timeout_all_choices` | Publish | Each choice (Abort / Retry / Continue) in the publish-timeout dialog behaves correctly |
-| 10 | `publish_permission_denied` | Publish | A permission error names the space, preserves the draft, and points to troubleshooting docs |
+| 9 | `publish_permission_denied` | Publish | A permission error names the space, keeps the draft, and points to the error-recovery doc |
+| 10 | `page_update_request_out_of_scope` | Not for | Turns down a request to edit an existing page |
 
 - **Only test suite:** `evals.yaml` is this skill's whole test suite, since the skill has no Python code of its own.

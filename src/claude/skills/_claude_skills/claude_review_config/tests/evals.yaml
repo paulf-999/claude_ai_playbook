@@ -29,7 +29,7 @@ evals:
       expected_output:
           - Scorecard table (6 dimensions + overall)
           - Per-dimension scores with notes
-          - Overall grade mapping (A=9+, B=8, C=7, etc.)
+          - Overall grade mapped per reference/_scoring_guide.md (9.0–9.4 = A, 8.0–8.4 = B+, 7.5–7.9 = B)
 
     - name: phase1_error_missing_claude_md
       description: Phase 1 handles missing CLAUDE.md gracefully
@@ -106,3 +106,12 @@ evals:
           - Error message (rules/ not found)
           - Graceful exit
           - Config structure verification suggestion
+
+    - name: single_rule_file_out_of_scope
+      description: User asks to review one rule file, which the skill does not do (a not_for case)
+      input: /claude_review_config just review rules/02_claude_standards/git.md
+      setup: Full config present
+      expected_output:
+          - Explains the skill audits the whole config, not a single rule file
+          - Offers a full config review instead
+          - Produces no scorecard for the single file

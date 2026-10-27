@@ -9,7 +9,7 @@
 | 1 | `happy_path_feature_pr` | Full flow | Reads the template, derives names, confirms title and plan, then creates the PR and reports its link |
 | 2 | `missing_pr_template_stops` | Gather | Stops and asks for a PR template instead of inventing a body |
 | 3 | `clean_working_tree_stops` | Gather | Stops when there's nothing to commit |
-| 4 | `reuses_existing_feature_branch` | Derive | Keeps an existing `feature/` branch rather than creating a new one |
+| 4 | `reuses_existing_feature_branch` | Derive | Keeps the current feature branch, and turns down a base branch other than `main` (a not_for case) |
 | 5 | `branch_name_derived_in_snake_case` | Derive | Turns messy arguments into a valid lowercase, underscore-only branch name |
 | 6 | `pr_title_plain_english_no_filenames` | Derive | PR title is plain English, 70 characters or fewer, with no filenames |
 | 7 | `labels_mapped_and_missing_ones_skipped` | Labels | Applies `claude-skill` from the path, and skips and reports `hotfix` when the repo lacks it |

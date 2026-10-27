@@ -1,6 +1,6 @@
 ---
 name: capture_session_prompts_evals
-description: 6 evaluation scenarios for capture_session_prompts (v0.1.0 - Draft)
+description: 7 evaluation scenarios for capture_session_prompts
 
 evals:
   # Capture phase
@@ -66,3 +66,13 @@ evals:
           - Refined file can be re-read for planning
           - High-priority pending items easily identifiable (Pending + Must/Should)
           - Integration with TODO planning workflow is straightforward
+
+  # Not for
+    - name: cross_session_aggregation_out_of_scope
+      description: User asks for a week of prompts in one table, which the skill does not do (a not_for case)
+      input: /claude_capture_session_prompts for the whole of last week in one table
+      setup: $CLAUDE_CONFIG_DIR/history.jsonl holds prompts across several days
+      expected_output:
+          - Explains the skill captures one date at a time
+          - Offers to run it once per date instead
+          - Does not build a combined table by hand from raw history.jsonl lines
