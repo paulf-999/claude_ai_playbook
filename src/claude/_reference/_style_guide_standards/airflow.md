@@ -2,9 +2,9 @@
 paths:
   - "**/dags/**/*.py"
 ---
-<!-- version: 1.2.4 -->
+<!-- version: 1.3.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-27 -->
 <!-- miss_cost: medium — DAGs that fail review or misbehave on schedule -->
 <!-- loading: path-scoped — only applies to Airflow DAGs, so it loads when a DAG file is open -->
 # 🌬️ Airflow Style Guide & Standards
@@ -31,24 +31,24 @@ paths:
 **These four principles define all DAG design decisions:**
 
 1. **Idempotency** — Re-running the same logical date produces identical results
-   - Why: Airflow backfills and retries are common; non-idempotent DAGs accumulate corrupted data
-   - How: Dedupe inputs, upsert rather than insert, make task result independent of prior runs
-   - Test: Verify that running a DAG twice produces same data in warehouse
+   - **Why:** airflow backfills and retries are common; non-idempotent DAGs accumulate corrupted data
+   - **How:** dedupe inputs, upsert rather than insert, make task result independent of prior runs
+   - **Test:** verify that running a DAG twice produces same data in warehouse
 
 2. **Atomicity** — One task = one logical operation; no bundling unrelated steps
-   - Why: Failure granularity enables targeted retries without re-running successful work
-   - How: Split long pipelines into focused tasks; use TaskGroups for related work
-   - Test: Can I identify why a failed task failed without inspecting adjacent tasks?
+   - **Why:** failure granularity enables targeted retries without re-running successful work
+   - **How:** split long pipelines into focused tasks; use TaskGroups for related work
+   - **Test:** can I identify why a failed task failed without inspecting adjacent tasks?
 
-3. **Config-driven** — Never hardcode environment-specific values; use Airflow Variables or config.yaml
-   - Why: Same DAG code runs in dev/ci/prod; hardcoded values block safe transitions
-   - How: All env-specific values (warehouse size, slack channels, S3 paths) → Variables
-   - Test: Can I change the environment by only modifying Variables, not code?
+3. **Config-driven** — Never hardcode environment-specific values; put them in each DAG's `config.yaml`
+   - **Why:** the same DAG code runs in dev, CI and prod, and hardcoded values block safe transitions
+   - **How:** env-specific values (warehouse size, Slack channels, S3 paths) go in `config.yaml`, read through `common.get_default_dag_params()`, and Variables are read only in `includes/` utilities
+   - **Test:** can I change the environment by only modifying config, not DAG code?
 
 4. **Fail fast** — Configure retries deliberately; surface errors immediately; don't silently swallow failures
-   - Why: Silent failures corrupt downstream data; deliberate retries handle transient issues
-   - How: Set retries based on actual SLA (3x for flaky, 0x for non-transient); use `on_failure_callback`
-   - Test: Do I know why a DAG failed within 10 seconds of checking Airflow UI?
+   - **Why:** silent failures corrupt downstream data, and deliberate retries handle transient issues
+   - **How:** inherit `retries` and `retry_delay` from `default_args`, never set retries to `0` in production, and use `on_failure_callback`
+   - **Test:** do I know why a DAG failed within 10 seconds of checking the Airflow UI?
 
 ---
 
@@ -56,8 +56,8 @@ paths:
 
 | Mistake | Impact | How to fix |
 |---------|--------|-----------|
-| Hardcoded warehouse size | Wrong cost/performance tradeoff | Move to Variables: `Variable.get("WH_SIZE")` |
-| No retries on flaky tasks | Overnight DAG failures block analysis | Add `retries=3, retry_delay=timedelta(minutes=1)` |
+| Hardcoded warehouse size | Wrong cost/performance tradeoff | Move it to the DAG's `config.yaml` |
+| No retries on flaky tasks | Overnight DAG failures block analysis | Inherit `retries=3, retry_delay=timedelta(minutes=5)` from `default_args` |
 | SQL inserted fresh without upsert logic | Duplicate rows after retries | Use `CREATE OR REPLACE TABLE` / `MERGE` instead of `INSERT` |
 | Tasks bundled into single operator | Single failure blocks entire pipeline | Split into separate tasks with explicit dependencies |
 | No error notification | Failures discovered hours later | Add `on_failure_callback` to notify Slack/Teams |
@@ -77,13 +77,13 @@ paths:
    └─ Reviewer checks principles against DAG file
 
 4. CI validation
-   └─ Pre-commit validates DAG syntax, Variable references
+   └─ Pre-commit validates DAG syntax and config
 
 5. Production backfill
    └─ Run DAG for past N days; verify results identical across runs
 
 6. Scheduling
-   └─ Enable schedule_interval; monitor first week
+   └─ Unpause the DAG (its `schedule` comes from `config.yaml`); monitor first week
 ```
 
 ---
@@ -92,7 +92,7 @@ paths:
 
 Before marking a DAG as production-ready:
 
-- [ ] All hardcoded env values moved to Variables
+- [ ] All hardcoded env values moved to `config.yaml`
 - [ ] Each task is atomic (single logical operation)
 - [ ] Idempotency verified (run twice, compare results)
 - [ ] Retries configured based on actual failure patterns

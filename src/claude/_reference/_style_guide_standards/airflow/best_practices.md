@@ -1,13 +1,13 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-27 -->
 # ✅ Best Practices
 
 **Purpose:** Establish practices for idempotency, retries, error handling, testing, and configuration to ensure reliable and maintainable Airflow pipelines.
 
 ## 🔄 Idempotency
 
-Every DAG run for a given `execution_date` must produce the same result regardless of re-runs. Design tasks to be safe to retry:
+Every DAG run for a given `logical_date` must produce the same result regardless of re-runs. Design tasks to be safe to retry:
 
 - **SQL writes:** use `INSERT OVERWRITE` or `MERGE` rather than bare `INSERT`
 - **Data replacement:** delete and recreate target data for the execution window before writing — never append blindly
@@ -53,13 +53,13 @@ default_args = {
 ## 🚨 Error handling
 
 - **Use callbacks:** use `on_failure_callback` to notify on task failure — do not rely solely on email alerts
-- **Share callbacks:** keep callback functions in a shared module (`plugins/callbacks.py`) rather than inlining in DAG files
+- **Share callbacks:** keep callback functions in a shared module in `includes/`, such as `email_notifications`, rather than inlining them in DAG files
 
 ```python
 def notify_on_failure(context: dict) -> None:
     dag_id = context["dag"].dag_id
     task_id = context["task_instance"].task_id
-    execution_date = context["execution_date"]
+    logical_date = context["logical_date"]
     # send alert (Slack, PagerDuty, etc.)
 
 default_args = {
@@ -73,7 +73,7 @@ default_args = {
 
 - **Load test:** `python dags/my_dag.py` must exit cleanly
 - **Unit tests:** use `pytest` with Airflow test utilities for task callables
-- **Integrity validation:** both `airflow dags list` and `airflow dags test <dag_id> <execution_date>` must pass in CI
+- **Integrity validation:** both `airflow dags list` and `airflow dags test <dag_id> <logical_date>` must pass in CI
 - **Avoid `depends_on_past=True`:** without explicit justification — it makes testing and backfilling significantly harder
 
 ---

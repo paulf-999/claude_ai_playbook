@@ -1,6 +1,6 @@
-<!-- version: 1.0.3 -->
+<!-- version: 1.0.4 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-27 -->
 # 🔁 CTE Style Guide
 
 **Purpose:** Establish CTE patterns and grouping conventions for dbt models and SQL queries to improve readability and maintainability.
@@ -36,13 +36,20 @@ See working example: `~/.claude/_reference/_style_guide_standards/sql/templates/
 Base queries that reference source tables:
 
 ```sql
-base_orders as (
-    SELECT *
+base_orders AS (
+    SELECT
+        order_id
+        , customer_id
+        , order_date
+        , total
     FROM {{ source('jaffle_shop', 'orders') }}
 ),
 
-base_customers as (
-    SELECT *
+base_customers AS (
+    SELECT
+        customer_id
+        , first_name
+        , last_name
     FROM {{ source('jaffle_shop', 'customers') }}
 ),
 ```
@@ -54,16 +61,19 @@ base_customers as (
 Perform preparation and transforms on base tables:
 
 ```sql
-customers as (
+customers AS (
     SELECT
-        first_name || ' ' || last_name AS name,
-        *
+        customer_id
+        , first_name || ' ' || last_name AS customer_name
     FROM base_customers
 ),
 
-orders as (
+orders AS (
     -- perform transforms on base_orders
-    SELECT *
+    SELECT
+        order_id
+        , customer_id
+        , total
     FROM base_orders
 ),
 ```
@@ -75,13 +85,14 @@ orders as (
 Join together all logical CTEs into a single result set:
 
 ```sql
-final_cte as (
+final_cte AS (
     SELECT
-        c.name,
-        o.order_id,
-        o.total
-    FROM orders o
-    JOIN customers c ON o.customer_id = c.customer_id
+        customers.customer_name
+        , orders.order_id
+        , orders.total
+    FROM orders
+    INNER JOIN customers
+        ON orders.customer_id = customers.customer_id
 )
 ```
 
@@ -92,6 +103,9 @@ final_cte as (
 Simple SELECT from the final CTE:
 
 ```sql
-SELECT *
+SELECT
+    customer_name
+    , order_id
+    , total
 FROM final_cte
 ```
