@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-27 -->
 # 🔁 CI & Tooling
 
 Standards for pre-commit hooks, code formatting, and the Azure Pipelines CI/CD workflow.
@@ -46,7 +46,7 @@ Key formatting rules enforced by `terraform fmt`:
 On every pull request, the pipeline runs `terraform validate` and `terraform plan` across all environments:
 
 ```
-DEV → UAT → CICD → PROD → GLOBAL  (all in parallel on PR)
+DEV | UAT | CICD | PROD | GLOBAL  (all in parallel on PR)
 ```
 
 The PR pipeline uses a shared template: `src/cicd/pipelines/pr_pipeline_terraform_validate_and_plan.yml`.

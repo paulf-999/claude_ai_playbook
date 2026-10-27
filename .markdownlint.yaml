@@ -8,6 +8,10 @@ MD033: false   # inline HTML — used in Mermaid diagrams and skill content
 MD041: false   # first-line heading — many files open with YAML frontmatter
 MD024: false   # duplicate headings — skills use repeated phase headings across child files
 
+# --- Narrowed ---
+MD010:         # hard tabs — allowed only in makefile code blocks, where Make requires them
+    ignore_code_languages: [makefile]
+
 # --- Temporarily disabled (pre-existing violations — re-enable progressively) ---
 MD004: false   # unordered list style — mixed bullet chars across the repo
 MD022: false   # blanks around headings — 200+ violations in existing agent/skill files

@@ -1,6 +1,6 @@
-<!-- version: 1.0.4 -->
+<!-- version: 1.0.5 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-27 -->
 # 🔧 Ansible Roles & Tasks
 
 ## 🗂️ Role layout
@@ -79,6 +79,7 @@ When using `community.docker.docker_compose_v2`:
 
 - Use `pull: missing` rather than `pull: always` when image tags are immutable and a dedicated pre-pull task manages freshness — avoids re-pulling images already cached. Use `pull: always` if tags are mutable.
 - Add `retries: 3` and `delay: 5` to guard against transient registry or network failures.
+- **Air-gapped examples:** `templates/template_docker_airgapped.yml` pulls, re-tags and loads images, and `templates/template_helm_deploy.yml` deploys a Helm chart from a local `.tgz`.
 
 ---
 
@@ -92,7 +93,7 @@ When using `community.docker.docker_compose_v2`:
 
 ## 🔖 CODEOWNERS
 
-When adding a new role directory, update `.github/CODEOWNERS`. Key ownerships:
+When adding a new role directory, update `.github/CODEOWNERS`. Example entries (placeholders, not real owners):
 
 - `/roles/database` — `@acme/database-administration`
 - `/roles/observability` — `@jane-doe`

@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-27 -->
 # ⚙️ Makefile Variables, Operators & Commands
 
 ## 📋 Contents
@@ -18,7 +18,7 @@
 Every Makefile must define the `SHELL` variable to avoid inheriting an unexpected shell from the environment:
 
 ```makefile
-SHELL = /bin/sh
+SHELL := /bin/sh
 ```
 
 ---
@@ -40,8 +40,11 @@ $(info    text…)   # informational
 When assigning variables, prefer the `:=` (simply expanded) operator over `=` (recursively expanded). This avoids unexpected behaviour from deferred evaluation:
 
 ```makefile
-build_dir := $(current_dir)/build   # preferred
-build_dir = $(current_dir)/build    # avoid
+# preferred
+build_dir := $(current_dir)/build
+
+# avoid
+build_dir = $(current_dir)/build
 ```
 
 See: [makefiletutorial.com — Flavors and Modification](https://makefiletutorial.com#flavors-and-modification)
@@ -54,8 +57,8 @@ Prefix a command with `@` to suppress it from being echoed to the terminal:
 
 ```makefile
 install:
-    @echo "Installing dependencies..."
-    @pip install -r requirements.txt
+	$(info Installing dependencies...)
+	@pip install -r requirements.txt
 ```
 
 ---
@@ -66,5 +69,5 @@ install:
 
 ```makefile
 build:
-    mkdir -p $@
+	mkdir -p $@
 ```

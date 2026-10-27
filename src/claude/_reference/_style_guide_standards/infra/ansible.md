@@ -3,9 +3,9 @@ paths:
   - "**/playbooks/**/*.yml"
   - "**/roles/**/*.yml"
 ---
-<!-- version: 1.2.5 -->
+<!-- version: 1.2.6 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-27 -->
 <!-- miss_cost: medium — playbooks that fail review or idempotency checks -->
 <!-- loading: path-scoped — only applies to Ansible, so it loads when a playbook or role file is open -->
 # 📦 Ansible Style Guide & Standards
@@ -22,7 +22,7 @@ paths:
 
 - **Read on demand:** `~/.claude/_rules_lazy_load/org.md` — before deploying, for any organisation-specific estate constraints such as air-gapped hosts.
 
-> **Note:** `secrets_and_inventory.md` is excluded from this guide — handle vault secrets and dynamic inventory configuration directly in the repo.
+> **Note:** this guide sets no standard for vault secrets or dynamic inventory configuration yet, so follow the patterns already in the repo.
 
 ## 📋 Contents
 
@@ -81,7 +81,7 @@ pipelines/                          # CI/CD pipeline definitions
 | Playbook files | `[app]_[asset_role]_[descriptor].yml` | `acme_ilb_setup.yml` |
 | Role directories | `roles/[capability]/[role_name]` | `roles/systems/azure_devops_agent` |
 | Inventory scope dirs | `[org]-[env]-[qualifier]` | `acme-prd-cde`, `acme-stg-dct` |
-| Dynamic plugin files | `[provider]_[account/site]_[plugin].yml` | `aws_28122221233-aws_ec2.yml` |
+| Dynamic plugin files | `[provider]_[account/site]_[plugin].yml` | `aws_28122221233_aws_ec2.yml` |
 | Variables in roles | `[role]_[variable_name]` | `webserver_port` |
 | Variables in vars files | `[app/dept]__[role]_[variable_name]_[descriptor]` | `acme__nginx_port_http` |
 | Task names | Sentence case, descriptive | `Install nginx package` |
@@ -96,4 +96,4 @@ Use FQCN for all modules: `ansible.builtin.apt`, not `apt`.
 - All YAML files must pass `yamllint --strict` before committing.
 - All playbooks and roles must pass `ansible-lint` (production profile) before committing.
 - Both are enforced via pre-commit hooks — fix the underlying issue rather than suppressing warnings.
-- Ansible-lint skips: `role-name[path]`, `var-naming[no-role-prefix]`.
+- Ansible-lint skips: `role-name[path]`, which nested capability directories need, and no others.
