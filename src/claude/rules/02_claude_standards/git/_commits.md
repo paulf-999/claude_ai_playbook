@@ -1,6 +1,6 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-25 -->
+<!-- updated: 2026-10-26 -->
 # 📝 Commits
 
 **Purpose:** Establish commit boundaries, formatting, and staging discipline to maintain clean history and safe operations.
@@ -17,10 +17,10 @@
   - **Permission to commit:** an explicit "commit"/"push", a task that names committing as its endpoint, or reaching done in non-interactive mode (`/goal`, `/loop`, auto).
   - **Push timing:** feature-branch pushes within an approved task need no extra confirmation (per `behaviour.md`) — batch to the boundary, not one per micro-commit.
 - **Format:** `type(scope): imperative description` (Conventional Commits)
-  - `type`: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `ci`, etc.
-  - `scope`: the affected area (e.g., `dbt`, `pre-commit`, `makefile`)
-  - Description: lowercase, imperative, no trailing period
-  - Examples: `feat(pre-commit): add ruff`, `fix(dbt): correct model reference`
+  - **`type`:** `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `ci`, etc.
+  - **`scope`:** the affected area (e.g., `dbt`, `pre-commit`, `makefile`)
+  - **Description:** lowercase, imperative, no trailing period
+  - **Examples:** `feat(pre-commit): add ruff`, `fix(dbt): correct model reference`
 - **No-verify:** only use `--no-verify` when explicitly instructed — not by default.
 - **Stage by name:** stage specific files by name, and never use `git add -A` or `git add .`.
 - **Confirm branch:** run `git branch --show-current` before staging and confirm it matches the expected branch.

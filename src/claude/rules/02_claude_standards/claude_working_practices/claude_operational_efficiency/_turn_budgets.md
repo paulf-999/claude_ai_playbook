@@ -1,6 +1,6 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-26 -->
 # 🔄 Turn Budgets
 
 **Purpose:** Establish constraints on turns for non-interactive automation to prevent runaway sessions and cost overrun.
@@ -9,14 +9,14 @@
 
 ## 🎯 Core principle
 
-Unbounded turns are a known source of significant cost overrun. Always cap turns when invoking Claude Code non-interactively (skills, automation, CI/CD).
+- **Why:** unbounded turns are a known source of significant cost overrun.
+- **Rule:** always cap turns when invoking Claude Code non-interactively (skills, automation, CI/CD).
 
 ---
 
 ## 📋 Turn budget discipline
 
-**Use `--max-turns N` on every non-interactive invocation**
-
+- **Flag:** use `--max-turns N` on every non-interactive invocation
 - **Default:** 20 turns is reasonable for most tasks
 - **Higher cap:** If a task genuinely needs more turns, set it deliberately — don't remove the limit hoping it will be fine
 - **Scope before invoking:** Plan the critical path before launching so it completes within the turn budget
@@ -37,6 +37,6 @@ Unbounded turns are a known source of significant cost overrun. Always cap turns
 
 ## 🚫 Red flags (adjust cap or reconsider automation)
 
-- **Task hitting turn limit repeatedly** — scope is bigger than estimated; increase cap or decompose task
-- **Unclear success criteria** — automation needs clear exit condition; clarify before running
-- **Manual spot-checks needed** — if human judgment required mid-run, automation may not be appropriate
+- **Task hitting turn limit repeatedly:** scope is bigger than estimated; increase cap or decompose task
+- **Unclear success criteria:** automation needs clear exit condition; clarify before running
+- **Manual spot-checks needed:** if human judgement required mid-run, automation may not be appropriate

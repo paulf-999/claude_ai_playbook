@@ -1,4 +1,4 @@
-<!-- version: 1.1.3 -->
+<!-- version: 1.1.4 -->
 <!-- created: 2026-09-18 -->
 <!-- updated: 2026-10-26 -->
 <!-- applies_to: **/hooks/*.sh, **/_tests/**/*.py, **/scripts/**/*.py -->
@@ -12,9 +12,11 @@
 
 ## 🎯 Core principle
 
-**Never hardcode an absolute path, username, or literal `~/.claude`/`~/claude` reference.** Always resolve the config directory dynamically — from `CLAUDE_CONFIG_DIR` in Python, or from the script's own location in shell. A hook or test that works on one machine and silently breaks on another has failed its job.
-
-**Why:** This config is deliberately deployed at non-default locations (`~/claude`, no dot, on this account's live machine; a repo checkout under test in the playbook). Code that hardcodes `~/.claude/...` or another machine's username passes locally and fails everywhere else — and fails silently, since shell `source ... || true` and Python's bare `except` patterns both swallow the resulting error.
+- **Rule:** never hardcode an absolute path, username, or literal `~/.claude`/`~/claude` reference.
+- **Instead:** resolve the config directory dynamically — from `CLAUDE_CONFIG_DIR` in Python, or from the script's own location in shell.
+- **Bar:** a hook or test that works on one machine and silently breaks on another has failed its job.
+- **Why:** this config is deliberately deployed at non-default locations (`~/claude`, no dot, on this account's live machine, and a repo checkout under test in the playbook).
+- **Silent failure:** code that hardcodes `~/.claude/...` or another machine's username passes locally and fails everywhere else without warning, since shell `source ... || true` and Python's bare `except` both swallow the error.
 
 ---
 
@@ -25,7 +27,7 @@ Found across two sessions (2026-09-17 and 2026-09-18), all four shipped without 
 - **Test files:** `test_response_standards_hook.py` / `_inject.py` hardcoded `/home/paul/.claude/hooks/...` — a different user's home directory from a different machine entirely.
 - **Test-harness bug:** `test_rules_structure.py`'s import-reachability check used `Path(...).expanduser()`, resolving `~` against the real `$HOME` instead of substituting `CLAUDE_CONFIG_DIR` — always failed off the one machine it was written on.
 - **Hook scripts:** `hook_enforcement_dir_structure.sh` / `_naming_convention.sh` hardcoded `source ~/.claude/_templates/utils/shell_utils.sh` — on a machine where the config lives at `~/claude` (no dot), `~/.claude/` exists (Claude Code's own state dir, `ide`/`projects`) but has no `_templates/`, so the hook always failed.
-- **This rule's own test, written minutes later (2026-09-18):** `test_always_on_reachability.py`'s import parser recognized only the literal string `"@~/.claude/"` — would have silently found zero imports and reported every file orphaned had it been ported to live's `~/claude/`-convention config unmodified.
+- **This rule's own test, written minutes later (2026-09-18):** `test_always_on_reachability.py`'s import parser recognised only the literal string `"@~/.claude/"` — would have silently found zero imports and reported every file orphaned had it been ported to live's `~/claude/`-convention config unmodified.
 
 ---
 
@@ -34,8 +36,9 @@ Found across two sessions (2026-09-17 and 2026-09-18), all four shipped without 
 **Python (tests, scripts):**
 - **Resolve via `CLAUDE_DIR`:** import `from _shared_paths import CLAUDE_DIR` and build paths as `CLAUDE_DIR / "hooks" / "x.sh"` — never `Path("~/.claude/hooks/x.sh").expanduser()`.
 - **Never hardcode a username or absolute path:** no `/home/<name>/...`, no `/Users/<name>/...` as a literal string used for real path resolution.
-- **`.expanduser()` is reserved for `_shared_paths.py` itself** — that's the one file whose job is turning `~` into a real path; nowhere else should call it.
-- **Never hardcode the `@~/.claude/` or `@~/claude/` import-prefix string when parsing `@import` lines** — the config-dir name varies. Detect any `@~/<name>/` prefix generically and strip through the first two path segments; don't match on one literal convention.
+- **`.expanduser()`:** reserved for `_shared_paths.py`, the one file whose job is turning `~` into a real path, so nowhere else should call it.
+- **Import prefixes:** never hardcode the `@~/.claude/` or `@~/claude/` prefix when parsing `@import` lines, because the config-dir name varies.
+  - **Instead:** detect any `@~/<name>/` prefix generically and strip through the first two path segments.
 
 **Shell (hooks):**
 - **Resolve relative to the script's own location:** `CLAUDE_ROOT_DIR="$(dirname "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)")"`, then reference `"${CLAUDE_ROOT_DIR}/rules/..."` — never `~/.claude/...` or `~/claude/...` as a literal string.

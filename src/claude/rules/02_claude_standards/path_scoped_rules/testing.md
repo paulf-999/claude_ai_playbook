@@ -5,14 +5,14 @@ paths:
   - "**/*.sql"
   - "**/_tests/**"
 ---
-<!-- version: 3.0.6 -->
+<!-- version: 3.0.7 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-26 -->
 <!-- miss_cost: medium — untested code the user catches in review -->
 <!-- loading: path-scoped — only matters when writing code, so it loads when a Python, shell or SQL file is open -->
 # 🧪 Testing
 
-**Purpose:** Every new code artifact needs a test to prevent regressions and validate intended behavior.
+**Purpose:** Every new code artefact needs a test to prevent regressions and validate intended behaviour.
 
 **Rule of thumb:** if you added code, write a test.
 
@@ -34,7 +34,7 @@ paths:
 
 ## 🎯 Test Goals (What to Validate)
 
-Define the goal before writing the test, because tests validate *intended behavior*, not just "the code runs."
+Define the goal before writing the test, because tests validate *intended behaviour*, not just "the code runs."
 
 - **Specific:** "accurate sentiment classification", not "good performance".
 - **Measurable:** quantifiable metrics (F1, accuracy) or well-defined qualitative scales.
@@ -45,7 +45,7 @@ Define the goal before writing the test, because tests validate *intended behavi
 | Goal | Example | Purpose |
 |---|---|---|
 | **Structure** | `test_aliases.py` | Config file structure and required fields are valid |
-| **Behavior** | `test_enforcement_naming_convention.py` | Feature works as documented |
+| **Behaviour** | `test_enforcement_naming_convention.py` | Feature works as documented |
 | **Principles** | `test_settings.py` | Change aligns with guiding principles |
 | **Integration** | Skill runs end-to-end | Feature integrates with the rest of the system |
 | **Regression** | Bug fix test | Bug won't silently reappear |

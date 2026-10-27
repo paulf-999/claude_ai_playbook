@@ -1,6 +1,6 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-26 -->
 # 🚩 Pre-Existing Issue Disclosure
 
 **Purpose:** Ensure pre-existing issues found during scoped work always reach the user, instead of being silently fixed (scope creep) or silently absorbed into "out of scope" (findings get lost).
@@ -18,23 +18,23 @@
 ## ⚙️ When to apply
 
 **Applies whenever, during any task:**
-- A pre-existing bug or regression is discovered that the current task didn't cause
-- A broken reference, import, or link predates the change being made
-- Lint, test, or structural debt surfaces that isn't attributable to the current work
-- Documentation or comments describe a reality that no longer matches the code
+- **New bug:** a pre-existing bug or regression is discovered that the current task didn't cause
+- **Broken reference:** a broken reference, import, or link predates the change being made
+- **Debt:** lint, test, or structural debt surfaces that isn't attributable to the current work
+- **Doc drift:** documentation or comments describe a reality that no longer matches the code
 
 **Distinguish from:**
-- Issues the current task *did* cause — those get fixed as part of the task, not just disclosed
-- Issues already known and previously disclosed to the user in this session — no need to re-report the same finding every time it's re-verified, a brief reference back is enough
+- **Caused by this task:** issues the current task *did* cause get fixed as part of the task, not just disclosed
+- **Already disclosed:** an issue already reported in this session needs only a brief reference back each time it's re-verified
 
 ---
 
 ## 📋 How to apply
 
-1. **Name it specifically** — what's broken, where, one line
-2. **State whether it's pre-existing** — confirm against a baseline (git history, a backup, prior behavior) rather than assuming
-3. **State the disposition** — fixed now, flagged for later, or explicitly left alone, and why
-4. **Don't bury it** — a findings section or a direct callout, not a footnote inside an unrelated paragraph
+1. **Name it specifically:** what's broken, where, one line
+2. **State whether it's pre-existing:** confirm against a baseline (git history, a backup, prior behaviour) rather than assuming
+3. **State the disposition:** fixed now, flagged for later, or explicitly left alone, and why
+4. **Make it visible:** a findings section or a direct callout, not a footnote inside an unrelated paragraph
 
 **Format (in a phase report, PR description, or chat response):**
 
@@ -47,7 +47,7 @@ Disposition: [fixed / flagged, not fixed — reason]
 
 ## 🚫 Anti-patterns (what NOT to do)
 
-- ❌ Fixing a pre-existing issue silently because it was easy, without mentioning it
-- ❌ Deciding something is "out of scope" and moving on without telling the user it exists
-- ❌ Bundling a pre-existing fix into a commit/PR without calling it out separately in the description
-- ❌ Assuming something is pre-existing without checking a baseline — verify, don't guess
+- ❌ **Silent fix:** fixing a pre-existing issue silently because it was easy, without mentioning it
+- ❌ **Silent skip:** deciding something is "out of scope" and moving on without telling the user it exists
+- ❌ **Buried fix:** bundling a pre-existing fix into a commit/PR without calling it out separately in the description
+- ❌ **Unchecked claim:** assuming something is pre-existing without checking a baseline — verify, don't guess

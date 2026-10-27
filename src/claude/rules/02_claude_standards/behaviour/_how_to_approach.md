@@ -1,6 +1,6 @@
-<!-- version: 2.0.1 -->
+<!-- version: 2.0.2 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-26 -->
 # 🔬 How to Approach
 
 **Purpose:** Establish habits for approaching a task well — diagnosing root causes, scoping narrowly, and preserving context across long sessions.
@@ -9,7 +9,7 @@
 
 - 🎯 **Simplest approach:** try the simplest solution first — diagnose root causes, don't brute-force past blockers.
   - **Note:** if a search fails twice, stop and ask; a clarifying question is cheaper than five failed tool calls.
-- 🎯 **Colleague test:** before finalizing a prompt, show it to someone with minimal context on the task and ask them to follow it. If they'd be confused, Claude will be too.
+- 🎯 **Colleague test:** before finalising a prompt, show it to someone with minimal context on the task and ask them to follow it, because if they'd be confused, Claude will be too.
 - 🔬 **Narrow scope:** treat a narrow request as narrow — don't refactor or restructure unless explicitly asked.
   - **Note:** when asked to modify specific files or a PR, state the exact files and target branch before editing; don't touch anything outside that scope.
 - ✅ **No best-effort:** only propose solutions with a guaranteed, verifiable outcome — if no such solution exists, say so and ask how to proceed rather than proposing a workaround that relies on convention, trust, or hope.
@@ -21,6 +21,6 @@
   - **Include:** decisions made, files modified, build commands, constraints, open items, and current task state.
   - **Never:** write session state to `CLAUDE.md`.
   - **Why:** Claude Code auto-compression can drop critical context — an explicit checkpoint ensures continuity across context windows.
-- 🧠 **Tune exploration for current models:** newer models explore more than older ones by default. Replace blanket "be thorough" defaults with targeted instructions.
-  - ❌ "Default to using [tool]" (causes overtriggering)
-  - ✅ "Use [tool] when it would enhance understanding of the problem"
+- 🧠 **Tune exploration for current models:** newer models explore more than older ones by default, so replace blanket "be thorough" defaults with targeted instructions.
+  - ❌ **Too broad:** "Default to using [tool]" (causes overtriggering)
+  - ✅ **Targeted:** "Use [tool] when it would enhance understanding of the problem"
