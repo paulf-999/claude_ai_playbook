@@ -3,9 +3,9 @@ paths:
   - "**/models/**/*.sql"
   - "**/dbt_project.yml"
 ---
-<!-- version: 1.1.7 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-27 -->
 <!-- miss_cost: medium — models that break naming or layering and fail review -->
 <!-- loading: path-scoped — only applies to dbt models, so it loads when a model or dbt_project.yml is open -->
 # 🔵 dbt Style Guide & Standards
@@ -18,7 +18,7 @@ paths:
 
 | File | Purpose | When to load |
 |------|---------|-------------|
-| [`dbt/model_organisation.md`](dbt/model_organisation.md) | Model layers (staging → base → intermediate → mart), folder structure, minimum requirements | Creating a new model or directory |
+| [`dbt/model_organisation.md`](dbt/model_organisation.md) | Model layers (staging → base → mart → publication), folder structure, minimum requirements | Creating a new model or directory |
 | [`dbt/naming_conventions.md`](dbt/naming_conventions.md) | Naming for models (prefixes), keys, marts, audit fields, null handling | Choosing names for models/columns |
 | [`dbt/yaml_resource_properties.md`](dbt/yaml_resource_properties.md) | YAML structure, property names, style conventions | Writing `.yml` files |
 | [`dbt/snapshots.md`](dbt/snapshots.md) | Snapshot use cases, configuration, best practices, examples | Working with slowly-changing dimensions |
@@ -33,38 +33,31 @@ For SQL formatting rules within dbt models, see [`sql.md`](sql.md).
 **dbt excellence rests on these four pillars:**
 
 1. **Lineage clarity** — use `ref()` and `source()` everywhere; never hardcoded table references
-   - Why: Enables `dbt lineage` visualization, allows safe refactoring
-   - How: Every table reference is `{{ ref('model') }}` or `{{ source('raw', 'table') }}`
-   - Test: Does `dbt lineage` show the correct upstream and downstream dependencies?
+   - **Why:** builds the lineage graph that `dbt docs generate` renders, and allows safe refactoring
+   - **How:** every table reference is `{{ ref('model') }}` or `{{ source('raw', 'table') }}`
+   - **Test:** does the lineage graph in the generated docs show the correct upstream and downstream models?
 
 2. **Documentation completeness** — every model and column has a description
-   - Why: Undocumented models create confusion; descriptions are the source-of-truth for downstream teams
-   - How: Add `description:` field for every model and column in YAML
-   - Test: Does `dbt docs` clearly explain what each model/column contains and who owns it?
+   - **Why:** undocumented models create confusion, and descriptions are the source of truth for downstream teams
+   - **How:** add a `description:` field for every model and column in YAML
+   - **Test:** do the docs from `dbt docs generate` explain what each model and column contains and who owns it?
 
 3. **Testing discipline** — all sources and logical joins have tests
-   - Why: Broken lineage silently corrupts downstream data; tests catch schema changes immediately
-   - How: Add `dbt_expectations` tests for source freshness, referential integrity, uniqueness
-   - Test: Do CI checks block PRs with missing tests?
+   - **Why:** broken lineage silently corrupts downstream data, and tests catch schema changes immediately
+   - **How:** apply `unique` and `not_null` to every model's `KEY`, plus source freshness and `relationships` tests where they fit
+   - **Test:** do CI checks block PRs with missing tests?
 
 4. **Selective materialization** — choose materialization strategically, not by default
-   - Why: Wrong materialization wastes Snowflake compute or creates stale data
-   - How: view (frequent changes), table (stable marts), incremental (large volumes)
-   - Test: Is each materialization choice justified by query frequency and data volume?
+   - **Why:** the wrong materialisation wastes Snowflake compute or creates stale data
+   - **How:** start from each layer's default in `model_organisation.md`, and justify any change
+   - **Test:** is each materialisation choice justified by query frequency and data volume?
 
 ---
 
 ## 📂 Model Layers (Architecture)
 
-Models are organized by **semantic maturity** — each layer serves a specific purpose:
-
-| Layer | Purpose | SLA | Examples |
-|-------|---------|-----|----------|
-| **Staging** | 1:1 with sources; minimal transformation | Daily | `stg_orders`, `stg_customers` |
-| **Base** | Logical entities; foundational business logic | Daily | `base_transactions`, `base_customer_lifetime` |
-| **Intermediate** | Pre-mart joins; complex transformations | Daily | `int_customer_payments`, `int_order_timeline` |
-| **Mart** | Denormalized fact/dimension tables; BI-ready | Daily+ | `fct_orders`, `dim_customer` |
-| **Operations** | Alerts, audits, metadata | Per-run | `audit_column_changes`, `alert_failed_dbt_tests` |
+- **Four layers:** Staging → Base → Mart → Publication, defined with their materialisations in [`dbt/model_organisation.md`](dbt/model_organisation.md).
+- **Prefixes:** `staging_`, `mart_` and `pub_`, with no prefix for base models, per [`dbt/naming_conventions.md`](dbt/naming_conventions.md).
 
 ---
 
@@ -75,7 +68,7 @@ Models are organized by **semantic maturity** — each layer serves a specific p
 | Missing `ref()` relationships | Lineage broken; schema changes undetected | Replace `schema.table` with `{{ ref('model_name') }}` |
 | No documentation on new columns | BI users confused about column meaning | Add `description:` for every column in YAML |
 | Materialized as table when should be view | Stale data served to BI | Change `materialized: view` and re-run dbt |
-| Missing uniqueness test on key | Duplicate fact rows silently accumulated | Add `dbt_expectations.expect_table_columns_to_match_ordered_list` test |
+| Missing uniqueness test on key | Duplicate fact rows silently accumulated | Add `unique` and `not_null` tests on `KEY` in the model's YAML |
 | No incremental logic in large models | Full model rebuilds waste Snowflake compute | Use `is_incremental()` block with `unique_key` |
 
 ---
@@ -84,7 +77,7 @@ Models are organized by **semantic maturity** — each layer serves a specific p
 
 ```
 1. Create model
-   └─ Choose layer (staging/base/intermediate/mart)
+   └─ Choose layer (staging/base/mart/publication)
    └─ Write SQL following SQL style guide
    └─ Declare `ref()` and `source()` dependencies
 
@@ -102,7 +95,7 @@ Models are organized by **semantic maturity** — each layer serves a specific p
 5. CI validation
    └─ dbt parse (syntax check)
    └─ dbt test (all tests pass)
-   └─ dbt docs (documentation present)
+   └─ dbt docs generate (documentation present)
 
 6. Production deploy
    └─ dbt run (build models)
@@ -121,16 +114,6 @@ Before marking a model PR as ready:
 - [ ] Tests defined for sources (freshness, completeness)
 - [ ] Tests defined for keys (uniqueness, foreign key)
 - [ ] SQL passes SQLFluff validation
-- [ ] dbt lineage shows correct upstream/downstream
+- [ ] Lineage graph in the generated docs shows correct upstream/downstream
 - [ ] Materialization choice justified (view/table/incremental)
-- [ ] Documentation generated and reviewed (`dbt docs`)
-
----
-
-## 📚 Read on demand
-
-- **Read on demand:** `~/.claude/_reference/_style_guide_standards/dbt/model_organisation.md` — layers, folders and materialisation.
-- **Read on demand:** `~/.claude/_reference/_style_guide_standards/dbt/naming_conventions.md` — model, column and file names.
-- **Read on demand:** `~/.claude/_reference/_style_guide_standards/dbt/yaml_resource_properties.md` — YAML properties for models and sources.
-- **Read on demand:** `~/.claude/_reference/_style_guide_standards/dbt/snapshots.md` — snapshot configuration.
-- **Read on demand:** `~/.claude/_reference/_style_guide_standards/dbt/macros.md` — macros and packages.
+- [ ] Documentation generated and reviewed (`dbt docs generate`)

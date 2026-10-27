@@ -1,6 +1,6 @@
-<!-- version: 1.0.3 -->
+<!-- version: 1.0.4 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-27 -->
 # ⚙️ Tasks, Operators & Dependencies
 
 **Purpose:** Establish standards for DAG boilerplate, task design, operator selection, helper files, and task dependencies to ensure consistent and maintainable DAG structure.
@@ -24,7 +24,7 @@ with DAG(**default_dag_params) as dag:
     task_a >> task_b
 ```
 
-- **`default_dag_params`:** contains `dag_id`, `schedule_interval`, `start_date`, `catchup`, `tags`, `description`, `doc_md`, `default_args`
+- **`default_dag_params`:** contains `dag_id`, `schedule`, `start_date`, `catchup`, `tags`, `description`, `doc_md`, `default_args`
 - **`optional_dag_params`:** contains `dag_inputs` (raw config.yaml), `py_helpers` (from `__py_helpers.py`), and `sql_queries` (from `__sql_queries.py`)
 - **DAG graph:** always end the DAG block with a `# DAG graph` comment followed by all task dependency declarations
 

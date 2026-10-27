@@ -1,6 +1,6 @@
-<!-- version: 1.0.3 -->
+<!-- version: 1.0.4 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-27 -->
 # ⚙️ dbt Macros
 
 Documents the team's custom macros, third-party packages, and the macro directory structure — so engineers know what is available before writing equivalent logic from scratch.
@@ -47,7 +47,7 @@ The following macros are defined in the project and should be used in preference
 | Package | Version | Purpose |
 |---------|---------|---------|
 | `dbt-labs/dbt_utils` | 1.3.3 | General utility macros (surrogate keys, date spine, etc.) |
-| `dbt-labs/dbt_date` | via `godatadriven/dbt_date` 0.14.2 | Date dimension and date utility macros |
+| `godatadriven/dbt_date` | 0.14.2 | Date dimension and date utility macros |
 | `dbt-labs/audit_helper` | 0.12.2 | Helpers for comparing model outputs during refactoring |
 | `brooklyn-data/dbt_artifacts` | 2.9.3 | Captures dbt run metadata to Snowflake for observability |
 | `get-select/dbt_snowflake_monitoring` | 5.5.1 | Snowflake query cost and performance monitoring |

@@ -1,29 +1,35 @@
-with
+WITH
 
-import_orders as (
+import_orders AS (
     -- query only non-test orders
-    select * from {{ source('jaffle_shop', 'orders') }}
-    where amount > 0
+    SELECT
+        order_id
+        , customer_id
+        , amount
+    FROM {{ source('jaffle_shop', 'orders') }}
+    WHERE amount > 0
 ),
 
-import_customers as (
-    select * from {{ source('jaffle_shop', 'customers') }}
+import_customers AS (
+    SELECT
+        customer_id
+        , first_name
+        , last_name
+    FROM {{ source('jaffle_shop', 'customers') }}
 ),
 
-logical_cte_1 as (
-
+logical_cte_1 AS (
     -- perform some math on import_orders
-
 ),
 
-logical_cte_2 as (
-
+logical_cte_2 AS (
     -- perform some math on import_customers
 ),
 
-final_cte as (
-
+final_cte AS (
     -- join together logical_cte_1 and logical_cte_2
 )
 
-SELECT * FROM final_cte
+SELECT
+    -- list the final columns explicitly
+FROM final_cte

@@ -2,9 +2,9 @@
 paths:
   - "**/*.sql"
 ---
-<!-- version: 1.2.8 -->
+<!-- version: 1.2.9 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-27 -->
 <!-- miss_cost: medium — SQL that fails SQLFluff or costs more to run -->
 <!-- loading: path-scoped — only applies to SQL, so it loads when a .sql file is open -->
 # 🗄️ SQL Style Guide & Standards
@@ -44,9 +44,8 @@ SQL style is enforced by **SQLFluff** in dialect mode `snowflake`:
 
 | Error | Cause | Fix |
 |-------|-------|-----|
-| `L019: Inconsistent capitalisation` | Mixed case keywords | Use UPPERCASE for keywords |
-| `L029: Ambiguous reference` | Unqualified column name | Add table alias: `table.column` |
-| `L031: Avoid using reserved keywords` | Keyword used as identifier | Use backticks: `` `column` `` |
+| `CP01` (capitalisation.keywords) | Mixed-case keywords | Use UPPERCASE for keywords |
+| Parse error (`PRS`) | A reserved keyword such as `ORDER` used as an unquoted column name | Rename the column, or quote it with Snowflake double quotes: `"ORDER"` |
 
 ---
 
@@ -80,7 +79,7 @@ SQL style is enforced by **SQLFluff** in dialect mode `snowflake`:
 
 **Over-aliasing leading to unreadable queries**
 - ❌ `SELECT a.id, b.amt, c.dt FROM table_a a JOIN table_b b ON a.id = b.id ...`
-- ✅ Use CTEs: `WITH customers AS (SELECT ...), orders AS (SELECT ...) SELECT customer.id, order.amount FROM customers JOIN orders ...`
+- ✅ Use CTEs: `WITH customers AS (SELECT ...), orders AS (SELECT ...) SELECT customers.customer_id, orders.amount FROM customers INNER JOIN orders ON ...`
 - **Recovery:** Refactor into CTEs following CTE style guide
 
 **Forgetting to document new columns**
