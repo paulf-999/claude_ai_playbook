@@ -127,16 +127,27 @@ cat > "${HOME}/.claude/settings.json" << 'EOF'
   "permissions": {
     "allow": [
       "Bash(git add:*)",
-      "Bash(git branch:*)",
+      "Bash(git branch)",
+      "Bash(git branch --show-current)",
+      "Bash(git branch -a)",
+      "Bash(git branch -r)",
+      "Bash(git branch -vv)",
       "Bash(git diff:*)",
       "Bash(git fetch:*)",
       "Bash(git log:*)",
       "Bash(git status:*)",
-      "Bash(gh api:*)",
-      "Bash(gh issue:*)",
-      "Bash(gh pr:*)",
+      "Bash(gh issue list:*)",
+      "Bash(gh issue status:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr status:*)",
+      "Bash(gh pr view:*)",
       "Bash(gh repo view:*)",
-      "Bash(gh run:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)",
+      "Bash(gh run watch:*)",
       "Bash(find:*)"
     ]
   }

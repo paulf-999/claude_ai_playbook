@@ -151,7 +151,7 @@ Link to supporting documentation:
 3. **Write When to use** — concrete scenarios + NOT use cases
 4. **Write Role & Principles** — persona (3-5 lines) + 5-7 core principles
 5. **Write Constraints** — explicit boundaries (what agent does NOT do)
-6. **Create evals.yaml** — 8–12 test scenarios (by maturity level)
+6. **Create evals.yaml** — the scenario count its maturity needs (Draft 5–8, Tactical 8–12, Strategic 12+)
 7. **Justify maturity** — document why this maturity level, with evidence
 
 **See also:** `authoring_agents.md` for comprehensive creation guidelines, hard gates checklist, and common mistakes to avoid.

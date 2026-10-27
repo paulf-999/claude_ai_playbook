@@ -1,6 +1,6 @@
-<!-- version: 1.2.0 -->
+<!-- version: 1.2.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-21 -->
+<!-- updated: 2026-10-27 -->
 # ✏️ Writing style
 
 **Purpose:** Establish consistent, scannable, and user-friendly writing conventions for all content Claude produces — ensuring clarity, respect for reader time, and professional presentation.
@@ -34,7 +34,7 @@ Applies to **all** content Claude produces — responses, drafts, Confluence pag
 - **History lives in git:** describe only the current state in repo files, and leave notes about removed, merged, archived or renamed files to the git log.
   - **Exception:** an incident that justifies a rule stays as that rule's evidence (e.g. `portable_paths.md`).
 - **British English spelling:** use British spellings (organise, behaviour, centralise) over American (organize, behavior, centralize) throughout prose — matches this config's established house style (`behaviour.md`, not `behavior.md`).
-  - **Exception:** code identifiers, filenames, and function names that already use American spelling stay as-is (e.g. `test_aliases_behavior.py`) — don't rename real files or code to chase this.
+  - **Exception:** code identifiers, filenames, and function names that already use American spelling stay as-is (e.g. `_testing_file_organization.md`) — don't rename real files or code to chase this.
 - **No transposition exemption:** moving, copying, or splitting existing content into new files does not exempt the output — apply house style on the first draft, never as a later pass.
 - **Tables for structured content:** use a table when comparing two or more categories that share identical column structures — not for a single list with no comparison dimension.
   - **Signal:** you're writing `**Category A:**` then `**Category B:**`, repeating the same fields for each — that's a table, not a bullet list.

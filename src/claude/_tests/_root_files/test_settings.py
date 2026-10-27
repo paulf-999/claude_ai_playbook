@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-26
-# Version:           1.4.0
+# Date updated:      2026-10-27
+# Version:           1.5.0
 # Test quality score: 9/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -15,6 +15,7 @@ Ensures:
 - Deny list includes security-critical paths
 - Broad wildcard permissions are intentional and documented
 - Git writes and allow-list bypasses are not auto-approved
+- GitHub CLI and branch writes are not auto-approved, while their reads still are
 - Configuration aligns with guiding principles (least privilege)
 - No real secret is written into the file
 - Transcript retention is the chosen 90 days
@@ -126,8 +127,8 @@ def test_allow_list_intentional():
         "Bash(find:*)",
         # Used for code search
         "Bash(grep:*)",
-        # GitHub API flexibility
-        "Bash(gh api:*)",
+        # Reading GitHub PRs
+        "Bash(gh pr view:*)",
     }
 
     # Verify each intentional wildcard is present
@@ -146,7 +147,7 @@ def test_allow_list_git_read_operations_present():
 
     # Read-only git operations, safe to run without a prompt
     required_git_ops = {
-        "Bash(git branch:*)",
+        "Bash(git branch --show-current)",
         "Bash(git diff:*)",
         "Bash(git log:*)",
         "Bash(git status:*)",
@@ -191,6 +192,80 @@ def test_allow_list_gates_git_writes():
         f"Allow list auto-approves git writes or bypasses: {sorted(auto_approved)}. "
         f"Remove them so each one prompts, per _security_guardrails.md."
     )
+
+
+def auto_approves(allow_list: list[str], command: str) -> bool:
+    """Return True if an allow-list entry would run ``command`` without a prompt.
+
+    ``Bash(x:*)`` matches any command starting with ``x``, and ``Bash(x)`` matches ``x`` exactly.
+
+    :param allow_list: The ``permissions.allow`` entries from settings.json.
+    :param command: A shell command as Claude would run it.
+    :return: Whether any entry matches the command.
+    """
+    for entry in allow_list:
+        if not entry.startswith("Bash(") or not entry.endswith(")"):
+            continue
+        pattern = entry[len("Bash("):-1]
+        if pattern.endswith(":*") and command.startswith(pattern[:-2]):
+            return True
+        if pattern == command:
+            return True
+    return False
+
+
+# Writes that look like reads to a prefix rule: each would change GitHub or delete a branch
+GH_AND_BRANCH_WRITES = (
+    "gh pr merge 12",
+    "gh pr close 12",
+    "gh pr comment 12 --body hi",
+    "gh pr review 12 --approve",
+    "gh issue close 12",
+    "gh issue delete 12",
+    "gh api -X DELETE repos/o/r/git/refs/heads/x",
+    "gh api repos/o/r/issues -f title=x",
+    "gh run cancel 99",
+    "gh run delete 99",
+    "git branch -D feature/x",
+    "git branch -m old new",
+)
+
+# Reads the narrowed list must keep prompt-free, so the fix doesn't over-correct
+GH_AND_BRANCH_READS = (
+    "gh pr view 12",
+    "gh pr list",
+    "gh pr diff 12",
+    "gh pr checks 12",
+    "gh issue view 12",
+    "gh issue list",
+    "gh run list",
+    "gh run view 99",
+    "git branch",
+    "git branch --show-current",
+)
+
+
+def test_allow_list_gates_gh_and_branch_writes():
+    """No GitHub CLI write or branch delete runs without a prompt, per _security_guardrails.md."""
+    allow_list = _load_settings()["permissions"]["allow"]
+    approved = [cmd for cmd in GH_AND_BRANCH_WRITES if auto_approves(allow_list, cmd)]
+    assert not approved, f"Allow list auto-approves these writes — narrow the entry that matches: {approved}"
+
+
+def test_allow_list_keeps_gh_and_branch_reads():
+    """Common GitHub CLI and branch reads still run without a prompt."""
+    allow_list = _load_settings()["permissions"]["allow"]
+    prompted = [cmd for cmd in GH_AND_BRANCH_READS if not auto_approves(allow_list, cmd)]
+    assert not prompted, f"These reads now prompt — add a read-only entry for them: {prompted}"
+
+
+def test_auto_approves_matches_prefix_and_exact_entries():
+    """A ``:*`` entry matches by prefix, a plain entry only exactly, and non-Bash entries never."""
+    allow_list = ["Bash(gh pr view:*)", "Bash(git branch)", "Read(./x)"]
+    assert auto_approves(allow_list, "gh pr view 12"), "a prefix entry should match a longer command"
+    assert auto_approves(allow_list, "git branch"), "an exact entry should match itself"
+    assert not auto_approves(allow_list, "git branch -D x"), "an exact entry must not match a longer command"
+    assert not auto_approves(allow_list, "gh pr merge 12"), "a prefix entry must not match a different command"
 
 
 def test_default_mode_set():

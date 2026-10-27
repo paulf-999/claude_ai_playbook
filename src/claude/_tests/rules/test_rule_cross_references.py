@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-11
-# Date updated:      2026-10-26
-# Version:           2.1.0
+# Date updated:      2026-10-27
+# Version:           2.2.0
 # Test quality score: 10/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -42,6 +42,18 @@ RULE_TIERS = (
 # ── writing_style.md ─────────────────────────────────────
 
 WRITING_STYLE = RULES_DIR / "01_essentials" / "claude_usage_standards" / "writing_style.md"
+
+
+# Names writing_style.md uses as made-up examples, not as real files
+WRITING_STYLE_EXAMPLE_NAMES = {"behavior.md", "claude_code_automation_commands.md"}
+
+
+def test_writing_style_names_real_files():
+    """Every file writing_style.md names exists, apart from its deliberate made-up examples."""
+    names = set(re.findall(r"`([A-Za-z_][\w.]*\.(?:py|md))`", WRITING_STYLE.read_text()))
+    assert names, "writing_style.md should name some files"
+    missing = sorted(name for name in names - WRITING_STYLE_EXAMPLE_NAMES if not any(CLAUDE_DIR.rglob(name)))
+    assert not missing, f"writing_style.md names missing files — fix the name or list it as an example: {missing}"
 
 
 def test_writing_style_points_to_its_multifile_child():

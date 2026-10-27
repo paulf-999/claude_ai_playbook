@@ -39,13 +39,12 @@ See `~/.claude/rules/01_essentials/guiding_principles.md` for the decision frame
 | Pattern | Justification | Usage |
 |---------|--------------|-------|
 | `Bash(find:*)` | File discovery (non-destructive) | Common codebase search |
-| `Bash(gh api:*)` | GitHub API reads (GET requests safe via flags) | Issue/PR inspection |
-| `Bash(gh issue:*)` | Read GitHub issues | Common workflow |
-| `Bash(gh pr:*)` | Read GitHub PRs | Very common |
+| `Bash(gh issue view/list/status:*)` | Read GitHub issues — close, edit, delete and comment still prompt | Common workflow |
+| `Bash(gh pr view/list/diff/checks/status:*)` | Read GitHub PRs — create, merge, close, review and comment still prompt | Very common |
 | `Bash(gh repo view:*)` | Inspect repository metadata | Occasional |
-| `Bash(gh run:*)` | View CI/CD runs | Occasional |
+| `Bash(gh run list/view/watch:*)` | View CI/CD runs — cancel, rerun and delete still prompt | Occasional |
 | `Bash(git add:*)` | Stage files (safe: isolated to current branch) | Common |
-| `Bash(git branch:*)` | List/read branches | Common (8 uses/session) |
+| `Bash(git branch)`, `--show-current`, `-a`, `-r`, `-vv` | List branches, as exact commands so `-D` and `-m` still prompt | Common (8 uses/session) |
 | `Bash(git diff:*)` | View uncommitted changes | Very common (4+ uses/session) |
 | `Bash(git fetch:*)` | Download remote updates (no merge) | Common |
 | `Bash(git log:*)` | View commit history | Very common |
@@ -54,7 +53,7 @@ See `~/.claude/rules/01_essentials/guiding_principles.md` for the decision frame
 | `Bash(grep *)` | Text search | Very common (48 uses/session) |
 | `Bash(mkdir:*)` | Create directories under `~/.claude/` | Occasional config work |
 
-**Rationale for breadth:** read-only git and gh operations run without a prompt to remove friction, while the rules in `git.md` (no force-push to main, no skipping hooks, stage by name) guide the rest.
+**Rationale for breadth:** read-only git and gh operations run without a prompt to remove friction, and each `gh` entry names its read subcommands because a bare `gh pr:*` or `gh api:*` prefix also approves writes (`gh api` has no read-only prefix, so every call prompts), while the rules in `git.md` (no force-push to main, no skipping hooks, stage by name) guide the rest.
 
 **Git writes prompt each time:** `checkout`, `commit`, `merge`, `pull`, `push` and `rebase` are left out of the allow list, per `_security_guardrails.md`.
 - **Why:** a prefix such as `git push:*` also matches `git push --force`, and `git commit:*` matches `git commit --amend`.
