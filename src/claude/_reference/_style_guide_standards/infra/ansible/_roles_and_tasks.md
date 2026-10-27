@@ -1,7 +1,9 @@
-<!-- version: 1.0.5 -->
+<!-- version: 1.0.6 -->
 <!-- created: 2026-04-08 -->
 <!-- updated: 2026-10-27 -->
 # 🔧 Ansible Roles & Tasks
+
+**Purpose:** Set how roles are laid out and how their tasks, variables and versions are written.
 
 ## 🗂️ Role layout
 
@@ -62,7 +64,7 @@ ansible-galaxy role init --offline <role_name>
 - Prefer `ansible.builtin.command` over `ansible.builtin.shell` unless the task genuinely requires shell features (pipes, redirects, glob expansion).
 - Set `changed_when` explicitly on every `ansible.builtin.command` or `ansible.builtin.shell` task — derive the condition from stdout/stderr content where possible.
 
-See working example: `~/.claude/_reference/_style_guide_standards/infra/ansible/templates/template_tasks_main.yml`
+See working example: [`templates/template_tasks_main.yml`](templates/template_tasks_main.yml)
 
 ---
 

@@ -2,7 +2,7 @@
 paths:
   - "**/*.mmd"
 ---
-<!-- version: 1.1.5 -->
+<!-- version: 1.1.6 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-27 -->
 <!-- miss_cost: low — diagram style drift -->
@@ -17,5 +17,5 @@ These standards apply to every Mermaid diagram: `.mmd` files load this guide aut
 
 ## 📋 Structure
 
-- [**Fundamentals**](mermaid/fundamentals.md) — When to use diagrams, placement, diagram level, direction
-- [**Advanced Techniques**](mermaid/advanced.md) — Node shapes, content format, styling, subgraphs
+- [**Fundamentals**](mermaid/_fundamentals.md) — When to use diagrams, placement, diagram level, direction
+- [**Advanced Techniques**](mermaid/_advanced.md) — Node shapes, content format, styling, subgraphs

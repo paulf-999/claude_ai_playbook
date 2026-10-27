@@ -1,7 +1,9 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-27 -->
 # 🔀 Mermaid Fundamentals
+
+**Purpose:** Set when and where to add a diagram, at what level, and in which direction.
 
 [Mermaid](https://mermaid.js.org) is a Markdown-native diagramming language that renders flowcharts, sequence diagrams, and more directly in GitHub — no external tooling required.
 

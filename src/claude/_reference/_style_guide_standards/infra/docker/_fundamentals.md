@@ -1,7 +1,9 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-27 -->
 # 🐳 Docker Fundamentals
+
+**Purpose:** Set the base-image, Dockerfile structure and naming standards every image starts from.
 
 ## 📋 Contents
 
