@@ -7,7 +7,7 @@ writes ``~/_sessions/YYYY_MM_DD_claude_prompts.md``.
 
 Usage::
 
-    python3 capture_session_prompts.py [--date YYYY-MM-DD] [--output-dir DIR]
+    python3 capture_session_prompts.py [--date YYYY-MM-DD] [--output-dir DIR] [--force]
 """
 from __future__ import annotations
 
@@ -72,6 +72,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Capture session prompts from history")
     parser.add_argument("--date", default=None, help="Date in YYYY-MM-DD format (default: today, local time)")
     parser.add_argument("--output-dir", default=None, help="Directory to write to (default: ~/_sessions)")
+    parser.add_argument("--force", action="store_true", help="Overwrite an existing report for the same date")
     return parser.parse_args(argv)
 
 
@@ -377,7 +378,7 @@ def main(argv: list[str] | None = None) -> int:
     """Capture one day's prompts and write the report.
 
     :param argv: Arguments to parse; ``None`` reads ``sys.argv``.
-    :return: Exit code (always 0; an empty day is reported, not an error).
+    :return: Exit code: 0, or 1 when a report for the date exists and ``--force`` wasn't given.
     """
     args = parse_args(argv)
     target_date = get_target_date(args.date)
@@ -389,6 +390,10 @@ def main(argv: list[str] | None = None) -> int:
     rows = [build_row(idx, entry["timestamp"], entry.get("display", "")) for idx, entry in enumerate(entries, 1)]
     output_dir = Path(args.output_dir) if args.output_dir else default_output_dir()
     output_path = output_path_for(target_date, output_dir)
+    # A report may hold manual Phase 2 edits, so never replace one without --force
+    if output_path.exists() and not args.force:
+        print(f"⚠️ {output_path} already exists and may hold manual edits; re-run with --force to overwrite it")
+        return 1
     write_report(rows, target_date, output_path)
     print(f"✅ Generated {output_path}")
     print(f"   {len(rows)} prompts captured")

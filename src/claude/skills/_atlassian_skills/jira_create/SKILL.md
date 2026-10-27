@@ -8,9 +8,9 @@ tags:
   tested: true
 tools: Read, mcp__atlassian__createJiraIssue
 ---
-<!-- version: 0.2.4 -->
+<!-- version: 0.3.0 -->
 <!-- created: 2026-04-11 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-27 -->
 
 ## 🤖 Instructions for Claude
 

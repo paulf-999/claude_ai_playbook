@@ -38,4 +38,4 @@
 
 ## 🗂️ Jira Project Context
 
-This skill assumes a default Jira project context. Specify which project (e.g., `INFRA`, `FEATURE`) when creating tickets for different teams.
+This skill never assumes a Jira project. Confirm the project (e.g., `INFRA`, `FEATURE`) with the user before creating each ticket.
