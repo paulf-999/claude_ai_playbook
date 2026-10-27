@@ -1,12 +1,11 @@
-<!-- version: 1.2.1 -->
+<!-- version: 1.2.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-26 -->
 # ⚙️ Automation Controls
 
 **Purpose:** Establish guardrails for experimental automation features (`/loop`, `/batch`, `/goal`) to prevent runaway sessions, excessive token usage, and unintended side effects.
 
-Automation features are powerful but risky — these rules protect against costly mistakes.
-
+- **Why:** automation features are powerful but risky, so these rules protect against costly mistakes.
 - **Turn caps for other non-interactive runs:** see [_turn_budgets.md](_turn_budgets.md).
 
 ## 📋 Contents
@@ -24,7 +23,8 @@ Automation features are powerful but risky — these rules protect against costl
 
 Run a prompt or command repeatedly at a fixed interval (e.g., poll for deploy status every 5 minutes).
 
-- **Minimum interval:** 5 minutes, so shorter intervals are not allowed (prevents hammering endpoints and wasting tokens on overhead)
+- **Minimum interval:** 5 minutes, with nothing shorter allowed
+  - **Why:** shorter intervals hammer endpoints and waste tokens on overhead
 - **Default interval:** 10 minutes (conservative baseline)
 - **Turn budget:** stop after 10 turns per iteration by default; higher requires explicit approval
 - **Max runtime:** 2 hours before manual re-approval required
@@ -81,7 +81,7 @@ Decompose a large change into isolated parallel subagents, each opening a PR.
 If a looping automation is consuming tokens too quickly or behaving unexpectedly:
 
 1. **Stop immediately:** `TaskStop` or close Claude Code
-2. **Don't restart** without investigating
+2. **Investigate first:** don't restart until you know what went wrong
 3. **Check the transcript:** what was the agent doing? Where did it diverge?
 4. **Narrow the scope:** reduce the batch size, tighten the goal condition, or extend the `/loop` interval
 5. **Verify before restarting:** confirm the new spec won't repeat the same issue

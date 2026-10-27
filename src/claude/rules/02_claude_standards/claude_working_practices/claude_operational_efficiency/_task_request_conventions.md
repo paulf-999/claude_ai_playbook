@@ -1,23 +1,25 @@
-<!-- version: 1.2.4 -->
+<!-- version: 1.2.5 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-26 -->
 # 🎯 Task Request Conventions
 
-**Purpose:** Establish durable, version-controlled conventions for how Claude responds to specific, recurring user request types — patterns that are behavioral, not mechanical, and codified as guidance rules.
+**Purpose:** Establish durable, version-controlled conventions for how Claude responds to specific, recurring user request types — patterns that are behavioural, not mechanical, and codified as guidance rules.
 
-> **Scope:** Behavioral conventions for user request patterns (e.g., "add to TODOs", "propose a hook"). Not mechanical enforcement (hooks, tests) — those are governed by `testing.md` and individual enforcement rules.
+> **Scope:** Behavioural conventions for user request patterns (e.g., "add to TODOs", "propose a hook"). Not mechanical enforcement (hooks, tests) — those are governed by `testing.md` and individual enforcement rules.
 
 ---
 
 ## 🎯 Overview
 
-When a user makes a specific request type, Claude should follow the documented convention. This file groups repeatable behavioral patterns — not foundational principles, but rather patterns for handling common, recurring requests. The structure allows grouping related conventions and scales to future patterns (e.g., "when user asks for a plan", "when user says verify").
+- **Convention:** when a user makes a specific request type, Claude follows the documented convention.
+- **Contents:** this file groups repeatable patterns for handling common, recurring requests, not foundational principles.
+- **Room to grow:** the structure groups related conventions and scales to future patterns (e.g., "when user asks for a plan", "when user says verify").
 
 **Benefits:**
-- Conventions are versioned and tracked (not lost in resets)
-- Discoverable in one file
-- Can be applied consistently across sessions
-- Easily extended with new conventions
+- **Versioned:** conventions are versioned and tracked (not lost in resets)
+- **Discoverable:** they live in one file
+- **Consistent:** they apply the same way across sessions
+- **Extensible:** new conventions are easy to add
 
 ---
 
@@ -27,7 +29,7 @@ Convention for "add to TODOs" requests — when a user says "add to TODOs" or "a
 
 **Trigger:** User says "add to TODOs", "add a TODO", "add this to TODOs", or similar variants indicating a task to log.
 
-**Behavior:** Edit `~/.claude/TODO.md` and add a new entry to the **Items by Execution Order** table.
+**Behaviour:** Edit `~/.claude/TODO.md` and add a new entry to the **Items by Execution Order** table.
 
 **Format:** Match the existing table structure:
 
@@ -44,7 +46,7 @@ Convention for "add to TODOs" requests — when a user says "add to TODOs" or "a
 | **Value** | High, Medium, Low (impact if completed) |
 | **Description** | Bullet-pointed description of the task, context, and success criteria |
 
-**Note:** This is the default behavior unless the user explicitly specifies a different location or format.
+**Note:** This is the default behaviour unless the user explicitly specifies a different location or format.
 
 ### 📌 Example usage
 

@@ -1,6 +1,6 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-08-31 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-26 -->
 # ⚠️ MCP Server Toggling — Restart Requirement
 
 **Purpose:** Explain why Claude Code must be restarted after toggling MCP servers and how to recover if you forget.
@@ -10,13 +10,13 @@ When you run `make enable_mcp server=<name>` or `make disable_mcp server=<name>`
 ## 🔍 Why?
 
 Claude Code caches settings at session startup. Even though `settings.json` is updated, the current session continues to use the cached configuration. This creates a confusing state where:
-- MCP tool calls appear to hang (2–6 minutes)
-- The session seems stuck, but actually it's fighting cached config
+- **Hanging calls:** MCP tool calls appear to hang (2–6 minutes)
+- **Looks stuck:** the session seems stuck, but it's actually fighting cached config
 
 ## ✅ What the fix does
 
 - **mcp_toggle.py** exits with code 1 when changes are made, displaying a **BLOCKING message** that lists the server toggled and restart instructions
-- **Makefile target** (`make enable_mcp`) shows as "failed," signaling user action needed
+- **Makefile target** (`make enable_mcp`) shows as "failed," signalling user action needed
 - **`hook_enforcement_mcp_stale_settings.sh`** warns once, on your next prompt, if the disabled MCP servers changed since the session started
 
 ## 🔄 How to proceed

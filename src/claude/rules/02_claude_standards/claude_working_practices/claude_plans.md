@@ -1,4 +1,4 @@
-<!-- version: 2.2.0 -->
+<!-- version: 2.2.1 -->
 <!-- created: 2026-09-17 -->
 <!-- updated: 2026-10-26 -->
 <!-- applies_to: * -->
@@ -14,22 +14,22 @@
 
 **Pause after each phase.** When implementing multi-phase work (3+ phases), complete one phase, then stop and request explicit approval before proceeding to the next phase.
 
-**Why:** Early feedback catches misalignments before effort is wasted on subsequent phases. User can correct course, adjust scope, or deprioritize based on results from each phase.
+**Why:** Early feedback catches misalignments before effort is wasted on subsequent phases. User can correct course, adjust scope, or deprioritise based on results from each phase.
 
 ---
 
 ## ⚙️ When to apply
 
 **Apply gates when:**
-- Implementing work with 3+ distinct phases (sequential, not parallel)
-- Each phase produces concrete deliverables or changes
-- Feedback from one phase could affect the next phase's approach
-- User hasn't explicitly waived gates
+- **3+ phases:** the work has 3+ distinct phases (sequential, not parallel)
+- **Concrete output:** each phase produces concrete deliverables or changes
+- **Feedback matters:** feedback from one phase could affect the next phase's approach
+- **No waiver:** the user hasn't explicitly waived gates
 
-**Do NOT apply gates when:**
-- User explicitly says "proceed without interruption" or "no gates"
-- Phases are tightly coupled (output of phase N is required input for phase N+1; stopping breaks workflow) — outside plan mode only, since a plan keeps its gates unless the user waives them
-- Single-phase work (no gates needed)
+**Skip gates when:**
+- **User waiver:** the user explicitly says "proceed without interruption" or "no gates"
+- **Tightly coupled:** phases are tightly coupled (output of phase N is required input for phase N+1; stopping breaks workflow) — outside plan mode only, since a plan keeps its gates unless the user waives them
+- **Single phase:** single-phase work needs no gates
 
 ---
 
@@ -37,11 +37,11 @@
 
 **After completing each phase:**
 
-1. **Summarize what was delivered** — one sentence per deliverable (what changed, what's done)
-2. **Request explicit approval** — "Ready to proceed to Phase X?" or similar
-3. **Wait for response** — do not proceed until user confirms (yes/no)
-4. **On "yes"** — proceed to next phase
-5. **On "no" or feedback** — adjust approach, ask clarifying questions, or halt
+1. **Summarise what was delivered:** one sentence per deliverable (what changed, what's done)
+2. **Request explicit approval:** "Ready to proceed to Phase X?" or similar
+3. **Wait for response:** proceed only once the user confirms (yes/no)
+4. **On "yes":** proceed to next phase
+5. **On "no" or feedback:** adjust approach, ask clarifying questions, or halt
 
 **Format:** use the normal response format from `claude_response_standards.md` (Summary, then Next steps). The phase report must contain:
 
@@ -65,11 +65,11 @@
 
 ## 🚫 Anti-patterns (what NOT to do)
 
-- ❌ Complete all phases silently, then ask "Done?" at the end
-- ❌ Ask "Ready to proceed?" while already starting Phase N+1
-- ❌ Summarize all phases as one massive wall of text; break by phase
-- ❌ Ignore user feedback ("no, adjust this") and barrel forward anyway
-- ❌ Apply gates to parallel work where phases run concurrently
+- ❌ **Silent run:** complete all phases silently, then ask "Done?" at the end
+- ❌ **Asking while acting:** ask "Ready to proceed?" while already starting Phase N+1
+- ❌ **Wall of text:** summarise all phases as one massive wall of text instead of breaking by phase
+- ❌ **Ignoring feedback:** ignore user feedback ("no, adjust this") and barrel forward anyway
+- ❌ **Gating parallel work:** apply gates to parallel work where phases run concurrently
 
 ---
 

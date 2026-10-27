@@ -1,6 +1,6 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-26 -->
 # 🔌 External System Access Patterns
 
 **Purpose:** Establish the correct approach when accessing external systems, preventing premature "can't access" claims by checking available tools first.
@@ -18,10 +18,10 @@ Before claiming an external system is inaccessible:
 
 **How to apply:**
 
-- User mentions an external system (Teams, Slack, Jira, GitHub, email) or a platform (Google Drive, Salesforce, AWS)
-- Before responding "I can't access that," run `ToolSearch` with relevant keywords
-- If tools load → use them
-- If tools don't exist or fail → then report the blocker and offer alternatives
+- **Trigger:** the user mentions an external system (Teams, Slack, Jira, GitHub, email) or a platform (Google Drive, Salesforce, AWS)
+- **Search first:** before responding "I can't access that," run `ToolSearch` with relevant keywords
+- **Tools load:** use them
+- **No tools, or they fail:** report the blocker and offer alternatives
 
 **Examples:**
 

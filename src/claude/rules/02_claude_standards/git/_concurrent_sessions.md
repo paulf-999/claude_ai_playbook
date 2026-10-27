@@ -1,6 +1,6 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-09-21 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-26 -->
 # 🔀 Concurrent Sessions — Shared Working Tree Safety
 
 **Purpose:** Prevent one Claude Code session from silently absorbing or corrupting another session's uncommitted work when both operate on the same git working tree at once.
@@ -9,7 +9,10 @@
 
 ## 📅 Real incident (2026-09-21)
 
-While building several PRs in one session, another Claude Code session was concurrently working in the *same* working tree. The git index accumulated a mix of both sessions' staged content. A `git commit` for an unrelated PR nearly included three files from the other session (`confluence_create_page_handler.py`, `jira_create_handler.py`, `_confluence_page_formatting.md`) before this was caught. Later, a `git stash pop` produced a merge conflict against the other session's concurrent edits, and a pre-commit hook failure turned out to be caused by an orphaned file the other session had left mid-rename — not a defect in the change being committed.
+- **Setup:** while building several PRs in one session, another Claude Code session was working in the *same* working tree, so the git index held a mix of both sessions' staged content.
+- **Near miss:** a `git commit` for an unrelated PR nearly included three files from the other session (`confluence_create_page_handler.py`, `jira_create_handler.py`, `_confluence_page_formatting.md`) before this was caught.
+- **Stash conflict:** a later `git stash pop` produced a merge conflict against the other session's concurrent edits.
+- **Misleading hook failure:** a pre-commit hook failure came from an orphaned file the other session had left mid-rename, not from a defect in the change being committed.
 
 ---
 
@@ -22,7 +25,7 @@ While building several PRs in one session, another Claude Code session was concu
 ## 🧹 Never blind-stage
 
 - **Stage by explicit filename only:** never `git add -A` or `git add .` (already required by `_commits.md`) — this is the single control that prevents contamination.
-- **Re-verify column-by-column before committing:** `git status --short`'s first column is staged, second is unstaged (`M ` vs ` M`) — misreading this is an easy, real mistake; check every line, not just the filenames.
+- **Re-verify column-by-column before committing:** `git status --short`'s first column is staged, second is unstaged (`M ` vs ` M`), and misreading this is an easy, real mistake, so check every line, not just the filenames.
 - **Reset before each separate commit:** when building multiple unrelated commits/PRs from one working tree, run `git reset` (unstages only, never touches file content) before staging each one's specific files — don't assume the index is clean just because you didn't add anything new.
 
 ## 🗄️ Stash operations compound the risk
