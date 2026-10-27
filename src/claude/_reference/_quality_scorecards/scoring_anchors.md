@@ -39,8 +39,9 @@ These anchors apply to every type that scores the dimension.
 | **Security** | • ⚠️ **Gaps:** posts or writes externally without a confirm step | • 🔒 **Confirmed:** a confirm step, but untrusted input isn't treated as data | • 🛡️ **Defended:** a confirm step, plus untrusted input handled as data throughout |
 | **Standards Compliance** | • 📏 **Drift:** misses several hard gates | • ✅ **Mostly met:** one or two hard gates missed | • ✅ **All met:** every hard gate in `_hard_gates_checklist.md` passes |
 
-- **~9 example:** `scorecard_claude_review_config.md` (9.4/10).
-- **~7 example:** `scorecard_jira_create.md` (7.7/10), held back by missing adversarial-input evals.
+- **~9 example:** none yet, since no skill scores 9 under independent review.
+- **~7 example:** `scorecard_git_review_pr.md` (7.6/10), held back by evals nothing runs.
+- **~5 to 7 example:** `scorecard_jira_create.md` (5.7/10), held back by a contract that waives its confirm step.
 
 ---
 

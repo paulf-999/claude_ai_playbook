@@ -49,12 +49,12 @@ The five lowest-scoring artefacts, each with the first recommended improvement f
 
 | # | Artefact | Score | Action | Scorecard |
 |---|---|---|---|---|
-| 1 | `makefile.md` | 6.8 | Fix or remove the broken `~/.claude/templates/makefile/` templates reference | [scorecard_makefile.md](rules/style_guide_standards/utilities/scorecard_makefile.md) |
-| 2 | `claude_operational_efficiency.md` | 7.1 | Add structural tests for the parent and its imported children | [scorecard_claude_operational_efficiency.md](rules/02_claude_standards/scorecard_claude_operational_efficiency.md) |
-| 3 | `claude_kaizen` | 7.1 | Add a `reference/_implementation.md` covering the audit and promotion logic | [scorecard_claude_kaizen.md](skills/scorecard_claude_kaizen.md) |
-| 4 | `automation_controls.md` | 7.5 | Split the 162-line file into a parent and child files | [scorecard_automation_controls.md](rules/02_claude_standards/scorecard_automation_controls.md) |
-| 5 | `claude_plans.md` | 7.6 | Add a "Right" example alongside the existing "Wrong" one | [scorecard_claude_plans.md](rules/02_claude_standards/scorecard_claude_plans.md) |
+| 1 | `dbt.md` | 5.5 | Make the parent's model layers and name prefixes match `dbt/model_organisation.md` and `dbt/naming_conventions.md` | [scorecard_dbt.md](rules/style_guide_standards/scorecard_dbt.md) |
+| 2 | `jira_create` | 5.7 | Set `output.confirmation_required: true` in the contract, so it matches SKILL.md's "wait for a yes" rule | [scorecard_jira_create.md](skills/scorecard_jira_create.md) |
+| 3 | `confluence_create_page` | 5.7 | Rewrite or delete the evals that test Python functions that don't exist | [scorecard_confluence_create_page.md](skills/scorecard_confluence_create_page.md) |
+| 4 | `airflow.md` | 5.7 | Make the parent and `airflow/best_practices.md` agree on Variables vs `config.yaml`, retries and retry delay | [scorecard_airflow.md](rules/style_guide_standards/scorecard_airflow.md) |
+| 5 | `sql.md` | 5.7 | Fix `sql.md`'s advice to quote Snowflake identifiers with backticks, since Snowflake uses double quotes | [scorecard_sql.md](rules/style_guide_standards/scorecard_sql.md) |
 
-- **Tie:** `claude_plans.md` and `jira_create` both score 7.6, and the always-on rule ranks first because it loads every session.
+- **Tie:** four artefacts score 5.7, and the skills rank above the lazy-load style guides because a skill runs actions while a style guide only advises.
 - **Upkeep:** refresh this list whenever a scorecard is re-scored.
 - **Full ranking:** see `quality_scorecards_summary.md`.

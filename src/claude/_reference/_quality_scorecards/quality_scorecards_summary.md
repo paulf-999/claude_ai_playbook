@@ -14,7 +14,7 @@
 | Type | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
 | Tests | 60 | 9.1/10 | 2026-10-11 | • 💪 **Strongest:** 2 files tied at 9.6/10, including `test_rule_reachability.py`<br>• ⚠️ **Weakest:** `test_capture_session_prompts.py` (8.1/10) |
-| Skills | 8 | 8.3/10 | 2026-10-26 | • 💪 **Strongest:** `claude_review_config` (9.4/10)<br>• ⚠️ **Weakest:** `git_review_pr` (7.6/10) |
+| Skills | 8 | 6.4/10 | 2026-10-27 | • 💪 **Strongest:** `git_review_pr` (7.6/10)<br>• ⚠️ **Weakest:** 2 files tied at 5.7/10, `confluence_create_page` and `jira_create` |
 | Rules — always-on | 19 | 7.0/10 | 2026-10-25 | • 💪 **Strongest:** `claude_working_practices.md` (7.9/10)<br>• ⚠️ **Weakest:** `claude_operational_efficiency.md` (5.9/10) |
 | Rules — lazy-load | 12 | 6.3/10 | 2026-10-25 | • 💪 **Strongest:** `latency_optimisation.md` (7.0/10)<br>• ⚠️ **Weakest:** `dbt.md` (5.5/10) |
 | Hooks | 5 | 8.5/10 | 2026-10-02 | • 💪 **Strongest:** `hook_enforcement_mcp_stale_settings.sh` (9.0/10)<br>• ⚠️ **Weakest:** `hook_style_guide_response_standards_checker.sh` (8.0/10) |
@@ -30,7 +30,7 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 |---|---|---|---|
 | 1 | • 🔧 **Lowest always-on rule score:** add or stop naming the `make disable_mcp` target in `claude_operational_efficiency.md`'s children | • 🔻 **Bottom of the table:** at 5.9/10 it is the lowest-scoring always-on rule | `rules/rule_scorecards_summary.md` |
 | 2 | • 📅 **Reserved hook:** set a date to wire in or remove `hook_style_guide_response_standards_checker.sh` | • 🔻 **Weakest hook:** at 8.0/10 it is the lowest-scoring hook | `hooks/hook_scorecards_summary.md` |
-| 3 | • 🔧 **Lowest skill score:** add scenarios for the 4 untested "not for" hand-offs, and a runner for them (#387) (`git_review_pr`) | • 🔻 **Bottom of the table:** at 7.6/10 it is the lowest-scoring skill | `skills/skill_scorecards_summary.md` |
+| 3 | • 🔧 **Lowest skill score:** set `output.confirmation_required: true` in the contract, so it matches SKILL.md's "wait for a yes" rule (`jira_create`) | • 🔻 **Bottom of the table:** at 5.7/10 it ties `confluence_create_page` as the lowest-scoring skill | `skills/skill_scorecards_summary.md` |
 | 4 | • 🔧 **Lowest lazy-load rule score:** make `dbt.md`'s layers, prefixes and commands match its children, and replace the non-existent `dbt lineage` | • 🔻 **Bottom of the table:** at 5.5/10 it is the lowest-scoring lazy-load rule | `rules/rule_scorecards_summary.md` |
 
 ---
@@ -40,7 +40,7 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 | Summary | Scored | Overall | Date Updated |
 |---|---|---|---|
 | `tests/test_scorecards_summary.md` | 60 | 9.1/10 | 2026-10-11 |
-| `skills/skill_scorecards_summary.md` | 8 | 8.3/10 | 2026-10-26 |
+| `skills/skill_scorecards_summary.md` | 8 | 6.4/10 | 2026-10-27 |
 | `rules/rule_scorecards_summary.md` | 31 | 6.7/10 | 2026-10-25 |
 | `hooks/hook_scorecards_summary.md` | 5 | 8.5/10 | 2026-10-02 |
 | `agents/agent_scorecards_summary.md` | 3 | 7.7/10 | 2026-10-26 |

@@ -12,7 +12,7 @@
 
 | Group | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
-| Skills | 8 | 8.3/10 | 2026-10-26 | • 💪 **Strongest:** `claude_review_config` (9.4/10)<br>• ⚠️ **Weakest:** `git_review_pr` (7.6/10) |
+| Skills | 8 | 6.4/10 | 2026-10-27 | • 💪 **Strongest:** `git_review_pr` (7.6/10)<br>• ⚠️ **Weakest:** 2 files tied at 5.7/10, `confluence_create_page` and `jira_create` |
 
 ---
 
@@ -22,11 +22,11 @@ Ranked by impact, highest first.
 
 | # | Action | Why | Source |
 |---|---|---|---|
-| 1 | • 🔧 **`git_review_pr`:** add scenarios for the 4 untested "not for" hand-offs, and a runner for them (#387) | • 🔻 **Score:** 7.6/10 | `scorecard_git_review_pr.md` |
-| 2 | • 🔧 **`jira_create`:** add adversarial-input and assignee-validation scenarios to `tests/evals.yaml` | • 🔻 **Score:** 7.7/10 | `scorecard_jira_create.md` |
-| 3 | • 🔧 **`claude_kaizen`:** record one real promotion end to end, since the evals cover the runner but not a full skill run | • 🔻 **Score:** 7.9/10 | `scorecard_claude_kaizen.md` |
-| 4 | • 🔧 **`confluence_create_page`:** add adversarial-input scenarios to `tests/evals.yaml` | • 🔻 **Score:** 8.1/10 | `scorecard_confluence_create_page.md` |
-| 5 | • 🔧 **`git_create_pr`:** add an eval scenario for a missing `gh` login | • 🔻 **Score:** 8.1/10 | `scorecard_git_create_pr.md` |
+| 1 | • 🔧 **`jira_create`:** set `output.confirmation_required: true` in the contract, so it matches SKILL.md's "wait for a yes" rule | • 🔻 **Score:** 5.7/10, and the contract waives the confirm step on an irreversible write | `scorecard_jira_create.md` |
+| 2 | • 🔧 **`confluence_create_page`:** rewrite or delete the evals that test Python functions that don't exist | • 🔻 **Score:** 5.7/10 | `scorecard_confluence_create_page.md` |
+| 3 | • 🔧 **`claude_review_config`:** add a runner or pytest for the evals, or set `tested: false` until one exists | • 🔻 **Score:** 6.1/10 | `scorecard_claude_review_config.md` |
+| 4 | • 🔧 **`claude_setup_graphify`:** remove the `_examples.md` step that commits `graphify-out/graph.json` | • 🔻 **Score:** 6.3/10, and the step contradicts the skill's own "Never" rule | `scorecard_claude_setup_graphify.md` |
+| 5 | • 🔧 **`git_create_pr`:** bring raw complexity down to the tactical cap of 6, or move the skill to strategic | • 🔻 **Score:** 6.3/10 | `scorecard_git_create_pr.md` |
 
 ---
 
@@ -36,14 +36,14 @@ Sorted by Overall score, highest first.
 
 | Scorecard | Overall | Date Updated | Recommended improvements |
 |---|---|---|---|
-| `scorecard_claude_review_config.md` | 9.4/10 | 2026-10-06 | — (≥8.5) |
-| `scorecard_claude_capture_session_prompts.md` | 9.0/10 | 2026-10-06 | — (≥8.5) |
-| `scorecard_claude_setup_graphify.md` | 8.4/10 | 2026-10-06 | • Bring the evals within the tactical range of 8–12, or justify strategic maturity |
-| `scorecard_confluence_create_page.md` | 8.1/10 | 2026-09-19 | • Add adversarial-input scenarios to `tests/evals.yaml`<br>• Add retry logic for transient MCP failures in `phase_3_publish_page`<br>• Add a short FAQ section to the documentation |
-| `scorecard_git_create_pr.md` | 8.1/10 | 2026-10-06 | • Add an eval scenario for a missing `gh` login<br>• Merge the two phase files into one `reference/_implementation.md`, or note why they stay split |
-| `scorecard_claude_kaizen.md` | 7.9/10 | 2026-10-06 | • Record one real promotion end to end, since the evals cover the runner but not a full skill run |
-| `scorecard_jira_create.md` | 7.7/10 | 2026-10-06 | • Add adversarial-input and assignee-validation scenarios to `tests/evals.yaml`<br>• Add retry logic for transient MCP failures in `phase_3_create_ticket`<br>• Add a short FAQ section to the documentation |
 | `scorecard_git_review_pr.md` | 7.6/10 | 2026-10-26 | • Add a runner for `tests/evals.yaml` (#387)<br>• Add scenarios for the 4 untested "not for" hand-offs<br>• Record use-frequency evidence for the strategic claim<br>• Set an allowed `output.type` in the contract |
+| `scorecard_claude_capture_session_prompts.md` | 7.0/10 | 2026-10-27 | • Make the column list in the evals and reference files match the script<br>• Make the Python minimum the same everywhere<br>• Stop the script silently overwriting an existing report<br>• Add evals for the `not_for` cases and secret masking |
+| `scorecard_claude_kaizen.md` | 6.4/10 | 2026-10-27 | • Bring raw complexity down to the draft limit of 4<br>• Ask before writing `candidates.md`, or say the ledger is exempt<br>• Treat `~/_errors/` log content as data<br>• Fix the stale `tests/README.md` and contract drift |
+| `scorecard_claude_setup_graphify.md` | 6.3/10 | 2026-10-27 | • Remove the step that commits `graphify-out/graph.json`<br>• Define or delete `--dry-run`, `--skip-extract` and `--state`<br>• Add `not_for` and declined-prompt evals<br>• Check `.gitignore` before appending to it |
+| `scorecard_git_create_pr.md` | 6.3/10 | 2026-10-27 | • Bring raw complexity down to the tactical cap of 6<br>• Add evals for the `not_for` cases and untested error rows<br>• Quote the PR title safely and treat diff content as data<br>• Make the staging default match the description |
+| `scorecard_claude_review_config.md` | 6.1/10 | 2026-10-27 | • Add a runner or pytest for the evals, or set `tested: false`<br>• Fix the grade mapping in the evals and the SKILL.md example<br>• Align the phase numbering<br>• Add error handling to `_implementation.md` |
+| `scorecard_confluence_create_page.md` | 5.7/10 | 2026-10-27 | • Rewrite or delete the evals that test functions that don't exist<br>• Add `not_for` and untrusted-input evals<br>• Rewrite `_troubleshooting.md` to match the current skill<br>• Remove the unused `updateConfluencePage` tool |
+| `scorecard_jira_create.md` | 5.7/10 | 2026-10-27 | • Set `confirmation_required: true` in the contract<br>• Rewrite the evals that test functions that don't exist<br>• Add `not_for`, confirm-step and no-project evals<br>• Fix the contradictions in the field constraints |
 
 ---
 
