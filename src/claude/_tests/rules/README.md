@@ -6,7 +6,7 @@
 |---|---|---|---|---|---|
 | `test_rules_structure.py` | Per-file format across all `rules/` files — line limits, H1 and H2 heading emoji, trailing newlines, and no Related or unearned Contents sections | 10/10 | 2026-08-28 | 2026-10-11 | 2.5.4 |
 | `test_rules_structure_layout.py` | Where `rules/` files live, every import in `CLAUDE.md` and `rules/` resolves, and no import chain reaches `_reference/` | 7/10 | 2026-10-01 | 2026-10-11 | 5.0.0 |
-| `test_rule_cross_references.py` | Rule files point at things that exist and agree with the files that repeat them, across six rules, including git.md's branch pattern and its examples, and every `make` target a rule names is defined | 10/10 | 2026-10-11 | 2026-10-26 | 2.1.0 |
+| `test_rule_cross_references.py` | Rule files point at things that exist and agree with the files that repeat them, across six rules, including git.md's branch pattern and its examples, every `make` target a rule names is defined, and every file writing_style.md names exists | 10/10 | 2026-10-11 | 2026-10-27 | 2.2.0 |
 
 ## 📁 `01_essentials/`
 
