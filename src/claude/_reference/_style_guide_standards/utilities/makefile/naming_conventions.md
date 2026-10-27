@@ -1,6 +1,6 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-29 -->
+<!-- updated: 2026-10-27 -->
 # 🏷️ Makefile Naming Conventions
 
 ## Targets
@@ -9,7 +9,7 @@ Target names must use lowercase letters. Words are separated with an underscore 
 
 ```makefile
 test_debug:
-    $(build_dir)/debug/bin
+	$(build_dir)/debug/bin
 ```
 
 ---

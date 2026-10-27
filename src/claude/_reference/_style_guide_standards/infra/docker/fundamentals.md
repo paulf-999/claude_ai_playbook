@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-27 -->
 # 🐳 Docker Fundamentals
 
 ## 📋 Contents
@@ -13,13 +13,13 @@
 
 ## 🏷️ Base images
 
-- Always use an official base image from Docker Hub.
+- Always use an official or verified-publisher base image, such as a Docker Hub official image or Google's distroless images (`gcr.io/distroless/...`).
 - Pin base image tags to a specific version — never use `:latest` in any non-local environment.
 - Prefer minimal base images (`slim`, `alpine`, or distroless variants) to reduce attack surface and image size. Only use full images (e.g., `ubuntu`) when required OS tooling cannot be installed on a minimal base.
 
 ```dockerfile
 # Good
-FROM python:3.10-slim
+FROM python:3.12-slim
 
 # Bad
 FROM python:latest
@@ -62,5 +62,5 @@ CMD [...]
 ## 🏷️ Naming conventions
 
 - Image names: `snake_case`, descriptive of the image's purpose (e.g., `baseline_dbt_docker_image`).
-- Image tags: use semantic versioning (`1.0`, `1.1`) — never `:latest` in non-local environments.
+- Image tags: use semantic versioning (`1.0.0`, `1.1.0`) — never `:latest` in non-local environments.
 - Container names: `snake_case`, matching the image name where possible.

@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-27 -->
 # 🐳 Docker Advanced Techniques
 
 ## 📋 Contents
@@ -91,15 +91,17 @@ Use multi-stage builds to produce lean production images — compile or install 
 
 ```dockerfile
 # Builder stage
-FROM python:3.10 AS builder
+FROM python:3.12 AS builder
 WORKDIR /build
 COPY requirements.txt .
 RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
 
 # Final stage
-FROM python:3.10-slim
+FROM python:3.12-slim
 COPY --from=builder /install /usr/local
 COPY src/ /app/src/
 WORKDIR /app
+RUN useradd --create-home appuser
+USER appuser
 ENTRYPOINT ["python", "-m", "myapp"]
 ```

@@ -2,9 +2,9 @@
 paths:
   - "**/*.tf"
 ---
-<!-- version: 1.1.4 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-27 -->
 <!-- miss_cost: medium — modules that fail review or plan checks -->
 <!-- loading: path-scoped — only applies to Terraform, so it loads when a .tf file is open -->
 # 🏗️ Terraform Style Guide & Standards
@@ -15,8 +15,10 @@ paths:
 
 | File | Purpose |
 |------|---------|
-| [`terraform/structure.md`](terraform/structure.md) | Directory layout, standard files, provider configuration, and version pinning |
-| [`terraform/conventions.md`](terraform/conventions.md) | Snowflake object naming, resource names, variable declarations, and outputs |
+| [`terraform/structure.md`](terraform/structure.md) | Directory layout, standard files, and what must not be committed |
+| [`terraform/providers.md`](terraform/providers.md) | Provider version pinning, authentication, and preview features |
+| [`terraform/conventions.md`](terraform/conventions.md) | Snowflake object naming, and resource, module, variable and output names |
+| [`terraform/declarations.md`](terraform/declarations.md) | Variable and output declaration rules, and validation blocks |
 | [`terraform/modules.md`](terraform/modules.md) | Module composition, layered resource pattern, iteration, and lifecycle |
 | [`terraform/ci_and_tooling.md`](terraform/ci_and_tooling.md) | Pre-commit hooks, Azure Pipelines, and sequential environment deployment |
 
