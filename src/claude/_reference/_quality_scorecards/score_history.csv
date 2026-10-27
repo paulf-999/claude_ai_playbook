@@ -79,3 +79,10 @@ run_date,artefact,type,attempt,reviewer,model,overall,commit
 2026-10-26,quality_scorecard_reviewer,agent,2,quality_scorecard_reviewer,claude-opus-5-5,7.9,9cfc85e
 2026-10-26,technical_writer,agent,2,quality_scorecard_reviewer,claude-opus-5-5,7.3,9cfc85e
 2026-10-26,git_review_pr,skill,5,quality_scorecard_reviewer,claude-opus-5-5,7.6,c02060c
+2026-10-27,claude_capture_session_prompts,skill,2,quality_scorecard_reviewer,claude-opus-5-5,7.0,7d09aa6
+2026-10-27,claude_kaizen,skill,2,quality_scorecard_reviewer,claude-opus-5-5,6.4,7d09aa6
+2026-10-27,claude_review_config,skill,2,quality_scorecard_reviewer,claude-opus-5-5,6.1,7d09aa6
+2026-10-27,claude_setup_graphify,skill,2,quality_scorecard_reviewer,claude-opus-5-5,6.3,7d09aa6
+2026-10-27,confluence_create_page,skill,2,quality_scorecard_reviewer,claude-opus-5-5,5.7,7d09aa6
+2026-10-27,git_create_pr,skill,2,quality_scorecard_reviewer,claude-opus-5-5,6.3,7d09aa6
+2026-10-27,jira_create,skill,2,quality_scorecard_reviewer,claude-opus-5-5,5.7,7d09aa6
