@@ -1,9 +1,11 @@
-<!-- version: 2.0.1 -->
+<!-- version: 2.0.2 -->
 <!-- created: 2026-05-20 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-27 -->
 # 📋 Field Standards
 
-Required fields, default values, custom fields, component conventions, label rules, and the business value field format. Your project's field IDs, components and label live in the Jira values in `~/.claude/_rules_lazy_load/org.md`.
+**Purpose:** Set the required fields, default values, custom fields, component conventions, label rules, and the business value field format.
+
+Your project's field IDs, components and label live in the Jira values in `~/.claude/_rules_lazy_load/org.md`.
 
 ## 📋 Contents
 
@@ -21,16 +23,16 @@ Every ticket must have the following fields set before it enters a sprint:
 
 | Field | Required | Default | Notes |
 |---|---|---|---|
-| Summary | Yes | — | See naming convention in `ticket_conventions.md` |
+| Summary | Yes | — | See naming convention in `_ticket_conventions.md` |
 | Description | Yes | — | Two-section format: intro bullets + acceptance criteria |
 | Priority | Yes | **Medium** | Deviate only with explicit justification |
 | Story points | Yes | — | Must be > 0 |
-| Sprint | Yes | — | Integer sprint ID — see `sprint_planning.md` |
+| Sprint | Yes | — | Integer sprint ID — see `_sprint_planning.md` |
 | Assignee | Yes | — | Must be set before sprint entry |
 | Components | Yes | — | The components `org.md` lists as required |
 | Parent epic | Yes | — | Set to the relevant planning or initiative epic |
 | Status | Yes | **Backlog** | Triage is a hygiene failure — transition to Backlog immediately |
-| Business Value | Yes | — | Must follow format and scoring convention — see [`business_value.md`](business_value.md) |
+| Business Value | Yes | — | Must follow format and scoring convention — see [`_business_value.md`](_business_value.md) |
 
 ---
 
@@ -41,7 +43,7 @@ Story points, Sprint and Business value are custom fields, and their `customfiel
 | Field | Type | Notes |
 |---|---|---|
 | Story points | Number | Decimal allowed (e.g. `0.5`) |
-| Sprint | Integer | Sprint ID, not the sprint number — see `sprint_planning.md` |
+| Sprint | Integer | Sprint ID, not the sprint number — see `_sprint_planning.md` |
 | Business value | ADF document | See format below |
 
 - **IDs:** take each field's ID from `org.md`.
@@ -59,10 +61,10 @@ Story points, Sprint and Business value are custom fields, and their `customfiel
 ## 📦 Components
 
 - **Which ones:** apply the components `org.md` lists as required on every ticket.
-- **Quarter component:** where your project uses one, derive it from the ticket's sprint — see `sprint_planning.md`.
+- **Quarter component:** where your project uses one, derive it from the ticket's sprint — see `_sprint_planning.md`.
 
 ---
 
 ## 💼 Business value field
 
-See [`business_value.md`](business_value.md) for the full format, audience guidance, scoring framework, and worked example.
+See [`_business_value.md`](_business_value.md) for the full format, audience guidance, scoring framework, and worked example.

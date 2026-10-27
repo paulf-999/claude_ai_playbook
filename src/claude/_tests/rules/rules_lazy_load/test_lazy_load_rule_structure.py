@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-11
-# Version:           2.0.0
+# Date updated:      2026-10-27
+# Version:           2.1.0
 # Test quality score: 10/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -14,7 +14,8 @@ Their scorecards average 4.9/10 for Test Coverage, the lowest dimension
 anywhere (see ``quality_scorecards_summary.md``). This file guards five
 things for each rule: its metadata header, its ``**Purpose:**`` line, that
 every child page is linked, that every relative link resolves, and that each
-Contents entry matches a real heading.
+Contents entry matches a real heading. It also checks every style-guide
+child page, not just the parents, for a ``_`` prefix and a Purpose line.
 
 One of them (MCP trust model) moved to rules/02_claude_standards/ on
 2026-10-11 to load every session, and stays tracked here so its guard isn't lost.
@@ -305,6 +306,61 @@ def test_every_rule_has_purpose_line():
     assert not missing, f"Rules with no **Purpose:** line — add one under the H1: {missing}"
 
 
+# ── Style-guide children ─────────────────────────────────────────────────
+
+GUIDES_ROOT = CLAUDE_DIR / STYLE_GUIDES_NAME
+INSTALLED_GUIDES = PATH_SCOPED_DIR / "style_guide_standards"
+NOT_CHILD_FOLDERS = {"templates", "examples"}
+
+
+def is_style_guide_child(path: Path, root: Path, installed_root: Path) -> bool:
+    """Return True if a page sits in a guide's own folder, so it's a child of that guide.
+
+    A folder belongs to a guide when the guide's parent page sits beside it, or at its installed
+    path once the install has moved path-scoped parents. READMEs and anything under a
+    ``templates/`` or ``examples/`` folder are support files, not children.
+
+    :param path: A markdown file under the style-guides folder.
+    :param root: The style-guides folder.
+    :param installed_root: Where the install puts path-scoped parent guides.
+    :return: Whether the file is a child page of a guide.
+    """
+    folder = path.parent
+    if folder == root or path.name == "README.md" or NOT_CHILD_FOLDERS & set(path.relative_to(root).parts):
+        return False
+    rel_parent = folder.relative_to(root).with_suffix(".md")
+    return (root / rel_parent).is_file() or (installed_root / rel_parent).is_file()
+
+
+def is_nested_parent(path: Path) -> bool:
+    """Return True if a child page is itself a parent, with a folder of its own children beside it."""
+    return path.with_suffix("").is_dir()
+
+
+@lru_cache(maxsize=None)
+def style_guide_children() -> tuple[Path, ...]:
+    """List every style-guide child page, skipping templates, examples and READMEs."""
+    return tuple(p for p in sorted(GUIDES_ROOT.rglob("*.md")) if is_style_guide_child(p, GUIDES_ROOT, INSTALLED_GUIDES))
+
+
+def test_style_guide_children_exist_to_check():
+    """There are child pages to check, so the two checks below can't pass on an empty set."""
+    assert style_guide_children(), f"no style-guide children found under {GUIDES_ROOT}"
+
+
+def test_style_guide_children_start_with_underscore():
+    """Every child page starts with ``_``, except a child that is itself a parent and names its folder."""
+    bad = [str(p.relative_to(GUIDES_ROOT)) for p in style_guide_children()
+           if not p.name.startswith("_") and not is_nested_parent(p)]
+    assert not bad, f"Style-guide children without a _ prefix — rename them and their links: {bad}"
+
+
+def test_style_guide_children_have_purpose_line():
+    """Every child page states its purpose on a **Purpose:** line."""
+    bad = [str(p.relative_to(GUIDES_ROOT)) for p in style_guide_children() if not has_purpose_line(p.read_text())]
+    assert not bad, f"Style-guide children with no **Purpose:** line — add one under the H1: {bad}"
+
+
 # ── Synthetic cases: prove each detector fails when it should ────────────
 
 
@@ -356,3 +412,23 @@ def test_contents_mismatches_detects_stale_entry():
     text = "## 📋 Contents\n- [🎨 Theme](#-theme)\n- [🔌 Plugins](#-plugins)\n## 🎨 Theme\n"
     assert contents_mismatches(text) == ["Plugins"], "Stale Contents entry missed"
     assert contents_mismatches("## 🎨 Theme\n") == [], "A file without Contents should report nothing"
+
+
+def test_is_style_guide_child_tells_children_from_support_files(tmp_path: Path):
+    """Pages in a guide's folder are children, while the parent, READMEs, templates and unguided folders are not."""
+    root, installed = tmp_path / "guides", tmp_path / "installed"
+    for rel in ("sql.md", "sql/_formatting.md", "sql/README.md", "sql/templates/t.md", "loose/page.md",
+                "infra/docker/_advanced.md"):
+        (root / rel).parent.mkdir(parents=True, exist_ok=True)
+        (root / rel).write_text("x")
+    (installed / "infra").mkdir(parents=True)
+    (installed / "infra" / "docker.md").write_text("x")
+    children = {p.relative_to(root).as_posix() for p in root.rglob("*.md") if is_style_guide_child(p, root, installed)}
+    assert children == {"sql/_formatting.md", "infra/docker/_advanced.md"}, f"wrong children found: {children}"
+
+
+def test_is_nested_parent_needs_its_own_folder(tmp_path: Path):
+    """A child with a same-named folder beside it is a nested parent, and one without is not."""
+    (tmp_path / "testing").mkdir()
+    assert is_nested_parent(tmp_path / "testing.md"), "a child with its own folder should count as a parent"
+    assert not is_nested_parent(tmp_path / "comments.md"), "a child with no folder should not count as a parent"

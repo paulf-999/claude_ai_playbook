@@ -1,9 +1,9 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-05-20 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-27 -->
 # 🎫 Ticket Conventions
 
-Standards for summary naming, description structure, acceptance criteria format, and issue type usage for Jira tickets.
+**Purpose:** Set the standards for summary naming, description structure, acceptance criteria format, and issue type usage for Jira tickets.
 
 ## 📋 Contents
 

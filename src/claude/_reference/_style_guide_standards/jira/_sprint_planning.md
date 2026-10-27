@@ -1,9 +1,11 @@
-<!-- version: 2.0.1 -->
+<!-- version: 2.0.2 -->
 <!-- created: 2026-05-20 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-27 -->
 # 📅 Sprint Planning
 
-Sprint IDs, quarter-to-component mapping, parent epic references, and capacity conventions. Your project's board, sprint IDs and component IDs live in the Jira values in `~/.claude/_rules_lazy_load/org.md`.
+**Purpose:** Set sprint IDs, quarter-to-component mapping, parent epic references, and capacity conventions.
+
+Your project's board, sprint IDs and component IDs live in the Jira values in `~/.claude/_rules_lazy_load/org.md`.
 
 ## 📋 Contents
 

@@ -238,7 +238,7 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 - Parent: `../python.md` — Python coding standards
 - Sibling: `../_inline_comments_example.py` — Commenting complex code
 
-### `style_guide_standards/python/comments.md`
+### `style_guide_standards/python/_comments.md`
 
 - Parent: `../python.md` — Python coding standards, which keeps a one-line summary of this file
 
@@ -309,7 +309,7 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 
 ### `style_guide_standards/python.md`
 
-- [`python/python_environment.md`](../../_reference/_style_guide_standards/python/python_environment.md) — Virtual environment setup, dependency management, and tooling
+- [`python/_python_environment.md`](../../_reference/_style_guide_standards/python/_python_environment.md) — Virtual environment setup, dependency management, and tooling
 - [`python/testing.md`](../../_reference/_style_guide_standards/python/testing.md) — Pytest conventions: test naming, structure, fixtures, mocking, assertions
 - [`python/logging.md`](../../_reference/_style_guide_standards/python/logging.md) — Logging standards for debugging, monitoring, and auditing
 - [`python/code_complexity.md`](../../_reference/_style_guide_standards/python/code_complexity.md) — Metrics to identify and prevent overly complex code

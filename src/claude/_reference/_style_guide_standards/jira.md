@@ -1,6 +1,6 @@
-<!-- version: 2.0.1 -->
+<!-- version: 2.0.2 -->
 <!-- created: 2026-05-20 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-27 -->
 <!-- miss_cost: low — tickets in the wrong format -->
 <!-- loading: lazy — only applies when writing Jira tickets, which have no local file to trigger on -->
 # 🎫 Jira Style Guide & Standards
@@ -13,11 +13,11 @@
 
 | File | Purpose |
 |------|---------|
-| [`jira/ticket_conventions.md`](jira/ticket_conventions.md) | Summary naming, description structure, acceptance criteria, and issue type usage |
-| [`jira/field_standards.md`](jira/field_standards.md) | Required fields, default values, custom fields, components, and label conventions |
-| [`jira/definition_of_ready.md`](jira/definition_of_ready.md) | Definition of Ready checklist — blocking and recommended checks before sprint entry |
-| [`jira/sprint_planning.md`](jira/sprint_planning.md) | Sprint IDs, quarter components, parent epics, and capacity conventions |
-| [`jira/business_value.md`](jira/business_value.md) | Business Value tab format, audience guidance, scoring frameworks, and worked example |
+| [`jira/_ticket_conventions.md`](jira/_ticket_conventions.md) | Summary naming, description structure, acceptance criteria, and issue type usage |
+| [`jira/_field_standards.md`](jira/_field_standards.md) | Required fields, default values, custom fields, components, and label conventions |
+| [`jira/_definition_of_ready.md`](jira/_definition_of_ready.md) | Definition of Ready checklist — blocking and recommended checks before sprint entry |
+| [`jira/_sprint_planning.md`](jira/_sprint_planning.md) | Sprint IDs, quarter components, parent epics, and capacity conventions |
+| [`jira/_business_value.md`](jira/_business_value.md) | Business Value tab format, audience guidance, scoring frameworks, and worked example |
 
 ## 🏗️ Core principles
 

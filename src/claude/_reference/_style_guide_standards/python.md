@@ -2,9 +2,9 @@
 paths:
   - "**/*.py"
 ---
-<!-- version: 1.3.3 -->
+<!-- version: 1.3.4 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-27 -->
 <!-- miss_cost: low — Python style drift -->
 <!-- loading: path-scoped — only applies to Python, so it loads when a .py file is open -->
 # 🐍 Python Coding Standards
@@ -92,7 +92,7 @@ Add type hints when they add value — i.e., when the type is non-obvious or spe
 
 ## 💬 Inline comments
 
-Err on the side of over-commenting: explain non-obvious logic and purpose, put comments above the code they describe, and keep them accurate — full guidance in [`python/comments.md`](python/comments.md).
+Err on the side of over-commenting: explain non-obvious logic and purpose, put comments above the code they describe, and keep them accurate — full guidance in [`python/_comments.md`](python/_comments.md).
 
 ## 📌 General
 
@@ -101,9 +101,9 @@ Err on the side of over-commenting: explain non-obvious logic and purpose, put c
 
 ## 📂 Child files
 
-- [`python/python_environment.md`](python/python_environment.md) — Virtual environment setup, dependency management, and tooling
+- [`python/_python_environment.md`](python/_python_environment.md) — Virtual environment setup, dependency management, and tooling
 - [`python/testing.md`](python/testing.md) — Pytest conventions: test naming, structure, fixtures, mocking, assertions
 - [`python/logging.md`](python/logging.md) — Logging standards for debugging, monitoring, and auditing
-- [`python/comments.md`](python/comments.md) — When and how to write inline comments
+- [`python/_comments.md`](python/_comments.md) — When and how to write inline comments
 - [`python/code_complexity.md`](python/code_complexity.md) — Metrics to identify and prevent overly complex code
 - [`python/module_organisation.md`](python/module_organisation.md) — Module docstrings, metadata, and public/private organisation
