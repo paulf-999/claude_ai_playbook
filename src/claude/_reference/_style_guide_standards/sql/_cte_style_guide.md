@@ -1,4 +1,4 @@
-<!-- version: 1.0.4 -->
+<!-- version: 1.0.5 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-27 -->
 # 🔁 CTE Style Guide
@@ -20,7 +20,7 @@ Use four logical grouping layers for all CTEs:
 3. **Final CTE:** join together all logical CTEs
 4. **Simple SELECT:** final SELECT statement from the final CTE
 
-See working example: `~/.claude/_reference/_style_guide_standards/sql/templates/template_cte.sql`
+See working example: [`templates/template_cte.sql`](templates/template_cte.sql)
 
 ## 📋 Contents
 

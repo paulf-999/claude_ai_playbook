@@ -1,7 +1,9 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-04-08 -->
 <!-- updated: 2026-10-27 -->
 # 🔧 SQLFluff Configuration
+
+**Purpose:** Record the team's SQLFluff settings and excluded rules, so every SQL file is checked the same way.
 
 SQL style is enforced by SQLFluff. The canonical config lives in the dbt repo:
 the dbt project's `.sqlfluff`
@@ -22,7 +24,7 @@ The following SQLFluff rules are excluded in the team config, with reasons. Code
 
 | Rule | What it checks | Why it's excluded |
 |---|---|---|
-| `RF02` (`L027`) | Columns are qualified when a query reads from more than one table | Not enforced by lint, though `formatting.md` still asks for table prefixes in joins |
+| `RF02` (`L027`) | Columns are qualified when a query reads from more than one table | Not enforced by lint, though `_formatting.md` still asks for table prefixes in joins |
 | `RF04` (`L029`) | Unreserved keywords aren't used as identifiers | Legacy column names use them |
 | `AM02` (`L033`) | `UNION` is written as `UNION ALL` or `UNION DISTINCT` | Bare `UNION` is allowed |
 | `ST06` (`L034`) | Wildcards and simple columns come before calculations in `SELECT` | Preserves the author's column order |

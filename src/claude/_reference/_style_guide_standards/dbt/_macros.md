@@ -1,14 +1,14 @@
-<!-- version: 1.0.4 -->
+<!-- version: 1.0.5 -->
 <!-- created: 2026-04-08 -->
 <!-- updated: 2026-10-27 -->
 # ⚙️ dbt Macros
 
-Documents the team's custom macros, third-party packages, and the macro directory structure — so engineers know what is available before writing equivalent logic from scratch.
+**Purpose:** Document the team's custom macros, third-party packages, and the macro directory structure — so engineers know what is available before writing equivalent logic from scratch.
 
 ## 🛠️ Team custom macros
 
 The following macros are defined in the project and should be used in preference to writing equivalent logic inline. See usage examples:
-`~/.claude/_reference/_style_guide_standards/dbt/templates/template_macro_usage.sql`
+[`templates/template_macro_usage.sql`](templates/template_macro_usage.sql)
 
 ### 🔨 Data processing
 

@@ -2,7 +2,7 @@
 paths:
   - "**/dags/**/*.py"
 ---
-<!-- version: 1.3.0 -->
+<!-- version: 1.3.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-27 -->
 <!-- miss_cost: medium — DAGs that fail review or misbehave on schedule -->
@@ -17,10 +17,10 @@ paths:
 
 | File | Purpose | When to load |
 |------|---------|-------------|
-| [`airflow/dag_design.md`](airflow/dag_design.md) | DAG file structure, naming conventions, mandatory attributes | Creating a new DAG |
-| [`airflow/dag_configuration.md`](airflow/dag_configuration.md) | config.yaml fields, default args, scheduling, tags, documentation | Configuring DAG behavior |
-| [`airflow/tasks_and_operators.md`](airflow/tasks_and_operators.md) | Task design, operator selection, dependencies, TaskGroups, XComs | Writing DAG logic |
-| [`airflow/best_practices.md`](airflow/best_practices.md) | Idempotency, catchup, retries, error handling, testing | Debugging DAG failures |
+| [`airflow/_dag_design.md`](airflow/_dag_design.md) | DAG file structure, naming conventions, mandatory attributes | Creating a new DAG |
+| [`airflow/_dag_configuration.md`](airflow/_dag_configuration.md) | config.yaml fields, default args, scheduling, tags, documentation | Configuring DAG behavior |
+| [`airflow/_tasks_and_operators.md`](airflow/_tasks_and_operators.md) | Task design, operator selection, dependencies, TaskGroups, XComs | Writing DAG logic |
+| [`airflow/_best_practices.md`](airflow/_best_practices.md) | Idempotency, catchup, retries, error handling, testing | Debugging DAG failures |
 
 - **Read on demand:** `~/.claude/_rules_lazy_load/org.md` — before adding a connection or variable, for any organisation-specific secrets conventions.
 
