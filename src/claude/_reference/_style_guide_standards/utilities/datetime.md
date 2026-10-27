@@ -1,6 +1,6 @@
-<!-- version: 2.0.1 -->
+<!-- version: 2.0.2 -->
 <!-- created: 2026-04-11 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-27 -->
 <!-- miss_cost: low — a date in the wrong format, which review catches and is cheap to fix -->
 <!-- loading: lazy — only matters when writing dates into names, code or logs, which no single file type marks -->
 # 📅 Date & Time Standards
@@ -15,9 +15,9 @@ opportunistically when a file is being actively modified for another reason.
 
 - [📅 Standard formats](#-standard-formats)
 - [🕐 Timezone](#-timezone)
-- [📋 Applies to — technical contexts](#-applies-to-technical-contexts)
+- [📋 Applies to — technical contexts](#-applies-to--technical-contexts)
 - [⚠️ Known exceptions](#-known-exceptions)
-- [📝 Does not apply — human-facing content](#-does-not-apply-human-facing-content)
+- [📝 Does not apply — human-facing content](#-does-not-apply--human-facing-content)
 
 ---
 
@@ -41,7 +41,7 @@ it makes the timezone explicit and avoids ambiguity.
 
 Use ISO format where dates are machine-readable, sortable, or stored:
 
-- Frontmatter fields (e.g. `last-reviewed`, `created`, `updated`)
+- Metadata headers (e.g. the `created` and `updated` comment lines)
 - Changelog and release note dates
 - Log entries and audit outputs
 - Code files and technical documentation
