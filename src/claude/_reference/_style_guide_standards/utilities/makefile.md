@@ -3,9 +3,9 @@ paths:
   - "**/Makefile"
   - "**/*.mk"
 ---
-<!-- version: 1.1.4 -->
+<!-- version: 1.1.5 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-27 -->
 <!-- miss_cost: low — Makefile style drift -->
 <!-- loading: path-scoped — only applies to Makefiles, so it loads when a Makefile is open -->
 # 🛠️ Makefile Style Guide & Standards
@@ -14,5 +14,5 @@ paths:
 
 ## 📋 Structure
 
-- [**Naming Conventions**](makefile/naming_conventions.md) — Target and variable naming standards
-- [**Variables, Operators & Commands**](makefile/variables_operators_and_commands.md) — SHELL, `:=` operator, display functions, command silencing, automatic variables
+- [**Naming Conventions**](makefile/_naming_conventions.md) — Target and variable naming standards
+- [**Variables, Operators & Commands**](makefile/_variables_operators_and_commands.md) — SHELL, `:=` operator, display functions, command silencing, automatic variables

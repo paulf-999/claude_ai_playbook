@@ -1,9 +1,11 @@
-<!-- version: 2.0.1 -->
+<!-- version: 2.0.2 -->
 <!-- created: 2026-05-20 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-27 -->
 # ✅ Definition of Ready
 
-Validation checklist for Jira tickets before sprint entry. All blocking checks must pass before a ticket is moved into a sprint. Custom field IDs live in the Jira values in `~/.claude/_rules_lazy_load/org.md`.
+**Purpose:** Give the validation checklist for Jira tickets before sprint entry.
+
+All blocking checks must pass before a ticket is moved into a sprint. Custom field IDs live in the Jira values in `~/.claude/_rules_lazy_load/org.md`.
 
 ## Blocking (must pass before entering a sprint)
 

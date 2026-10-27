@@ -1,7 +1,9 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.0.3 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-27 -->
 # 🏷️ Makefile Naming Conventions
+
+**Purpose:** Set how Makefile targets and variables are named.
 
 ## Targets
 

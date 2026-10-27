@@ -1,6 +1,6 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-10-02 -->
-<!-- updated: 2026-10-02 -->
+<!-- updated: 2026-10-27 -->
 # 💬 Python Inline Comments
 
 **Purpose:** Say when and how to comment Python code, so readers can follow it without pausing.

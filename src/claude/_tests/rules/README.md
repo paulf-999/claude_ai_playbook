@@ -45,7 +45,7 @@
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
 | `test_lazy_load_coverage.py` | Every `_rules_lazy_load/` file is reachable from at least one hook (direct or via a parent index file) | 8/10 | 2026-09-16 | 2026-10-11 | 2.5.8 |
-| `test_lazy_load_rule_structure.py` | The 14 rules once lacking a dedicated test keep their metadata header, Purpose line, linked child pages, working links and accurate Contents | 10/10 | 2026-10-01 | 2026-10-11 | 2.0.0 |
+| `test_lazy_load_rule_structure.py` | The 14 rules once lacking a dedicated test keep their metadata header, Purpose line, linked child pages, working links and accurate Contents, and every style-guide child has a `_` prefix and a Purpose line | 10/10 | 2026-10-01 | 2026-10-27 | 2.1.0 |
 | `test_lazy_load_triggers.py` | Validates that every lazy rule has something that makes Claude load it | 9/10 | 2026-10-01 | 2026-10-11 | 2.0.0 |
 | `test_org.py` | Organisation-specific terms stay inside _rules_lazy_load/org/ and never leak into shared files | 8/10 | 2026-10-01 | 2026-10-11 | 1.3.6 |
 | `test_test_metadata.py` | Every test's metadata header, in `_tests/` and the repo's `src/claude/_install/_tests/`, is complete, in order and well formed (banners, dates, semver, scores) | 10/10 | 2026-10-01 | 2026-10-17 | 1.5.0 |
