@@ -1,9 +1,9 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-27 -->
 # 📁 Structure
 
-Directory layout, standard file conventions and what stays out of version control; provider configuration lives in [`providers.md`](providers.md).
+**Purpose:** Set the directory layout, standard file conventions and what stays out of version control; provider configuration lives in [`_providers.md`](_providers.md).
 
 ## 🗂️ Top-level layout
 

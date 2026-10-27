@@ -1,9 +1,9 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-10-27 -->
 <!-- updated: 2026-10-27 -->
 # 📋 Declarations
 
-What every variable and output must declare, and how to validate inputs, split from [`conventions.md`](conventions.md).
+**Purpose:** Set what every variable and output must declare, and how to validate inputs, split from [`_conventions.md`](_conventions.md).
 
 ## 📋 Contents
 

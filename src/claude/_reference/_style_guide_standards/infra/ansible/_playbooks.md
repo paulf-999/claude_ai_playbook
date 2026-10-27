@@ -1,7 +1,9 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-27 -->
 # 📋 Ansible Playbooks
+
+**Purpose:** Set how playbooks are named, foldered, linked and tagged.
 
 ## 🏷️ Naming convention
 
@@ -37,7 +39,7 @@ playbooks/
       roles -> ../../roles             # symlink — required
 ```
 
-Each playbook directory must contain symlinks to the root `group_vars/` and `roles/` directories so Ansible resolves variables and roles correctly regardless of where the playbook is invoked. Adjust the relative path to match the actual directory depth — see [variables.md](variables.md) for the full symlink guidance.
+Each playbook directory must contain symlinks to the root `group_vars/` and `roles/` directories so Ansible resolves variables and roles correctly regardless of where the playbook is invoked. Adjust the relative path to match the actual directory depth — see [_variables.md](_variables.md) for the full symlink guidance.
 
 ---
 

@@ -2,7 +2,7 @@
 paths:
   - "**/*.tf"
 ---
-<!-- version: 1.2.0 -->
+<!-- version: 1.2.1 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-27 -->
 <!-- miss_cost: medium — modules that fail review or plan checks -->
@@ -15,12 +15,12 @@ paths:
 
 | File | Purpose |
 |------|---------|
-| [`terraform/structure.md`](terraform/structure.md) | Directory layout, standard files, and what must not be committed |
-| [`terraform/providers.md`](terraform/providers.md) | Provider version pinning, authentication, and preview features |
-| [`terraform/conventions.md`](terraform/conventions.md) | Snowflake object naming, and resource, module, variable and output names |
-| [`terraform/declarations.md`](terraform/declarations.md) | Variable and output declaration rules, and validation blocks |
-| [`terraform/modules.md`](terraform/modules.md) | Module composition, layered resource pattern, iteration, and lifecycle |
-| [`terraform/ci_and_tooling.md`](terraform/ci_and_tooling.md) | Pre-commit hooks, Azure Pipelines, and sequential environment deployment |
+| [`terraform/_structure.md`](terraform/_structure.md) | Directory layout, standard files, and what must not be committed |
+| [`terraform/_providers.md`](terraform/_providers.md) | Provider version pinning, authentication, and preview features |
+| [`terraform/_conventions.md`](terraform/_conventions.md) | Snowflake object naming, and resource, module, variable and output names |
+| [`terraform/_declarations.md`](terraform/_declarations.md) | Variable and output declaration rules, and validation blocks |
+| [`terraform/_modules.md`](terraform/_modules.md) | Module composition, layered resource pattern, iteration, and lifecycle |
+| [`terraform/_ci_and_tooling.md`](terraform/_ci_and_tooling.md) | Pre-commit hooks, Azure Pipelines, and sequential environment deployment |
 
 ## 🏗️ Core principles
 

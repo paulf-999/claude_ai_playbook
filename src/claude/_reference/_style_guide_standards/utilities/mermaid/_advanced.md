@@ -1,7 +1,9 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.0.1 -->
 <!-- created: 2026-06-07 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-27 -->
 # 🎨 Mermaid Advanced Techniques
+
+**Purpose:** Set the node shapes, content format, styling and subgraph rules for Mermaid diagrams.
 
 ## 📋 Contents
 

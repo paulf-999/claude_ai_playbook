@@ -1,9 +1,9 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-09-17 -->
+<!-- updated: 2026-10-27 -->
 # 📦 Modules
 
-Standards for module composition, provider passing, iteration patterns, and lifecycle management.
+**Purpose:** Set the standards for module composition, provider passing, iteration patterns, and lifecycle management.
 
 ## 🧩 Module composition pattern
 

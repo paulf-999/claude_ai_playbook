@@ -1,7 +1,9 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-05-20 -->
-<!-- updated: 2026-10-01 -->
+<!-- updated: 2026-10-27 -->
 # 📊 Ansible Variables
+
+**Purpose:** Set the `group_vars` hierarchy, its precedence, and how variables are named.
 
 ## 🗂️ group_vars hierarchy
 

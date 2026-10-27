@@ -1,7 +1,9 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-10-27 -->
 # 🐳 Docker Advanced Techniques
+
+**Purpose:** Keep images small, cached and secure with layer, security, `.dockerignore` and multi-stage practices.
 
 ## 📋 Contents
 
