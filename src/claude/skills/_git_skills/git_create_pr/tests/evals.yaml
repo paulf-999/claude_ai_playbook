@@ -1,7 +1,7 @@
 ---
 _metadata:
     date_created: '2026-09-29'
-    date_updated: '2026-09-30'
+    date_updated: '2026-10-27'
     status: active
 
 skill_name: git_create_pr
@@ -57,9 +57,9 @@ evals:
 
   # Phase 1 — derivations
     - name: reuses_existing_feature_branch
-      description: Already on a feature branch — skill keeps it instead of deriving a new one
+      description: Already on a feature branch, and asked to target develop — skill keeps the branch and turns down the non-main base (a not_for case)
       input:
-          prompt: /git_create_pr add login form
+          prompt: /git_create_pr add login form, raise it against develop
       setup:
           current_branch: feature/login_form
           changed_files:
@@ -67,10 +67,13 @@ evals:
           pr_template_exists: true
       expected_output: >
           Claude uses the current feature/login_form branch rather than
-          deriving and creating a new branch from the arguments.
+          deriving a new one, says PRs to a base other than main are out of
+          scope, and asks whether to raise it against main instead.
       assertions:
           - Claude does not run git checkout -b
-          - The PR is raised from feature/login_form
+          - The plan raises the PR from feature/login_form
+          - Claude says a base branch other than main is out of scope
+          - Claude never runs gh pr create with --base develop
 
     - name: branch_name_derived_in_snake_case
       description: Arguments with capitals, hyphens and punctuation become a valid branch name

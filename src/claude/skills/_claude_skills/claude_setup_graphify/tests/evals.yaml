@@ -1,58 +1,34 @@
 ---
 name: claude_setup_graphify_evals
-description: 15 evaluation scenarios for claude_setup_graphify (v0.1.0 - Draft)
+description: 12 evaluation scenarios for claude_setup_graphify
 
 evals:
   # Pre-flight validation (linear checks)
 
     - name: validate_git_repo
-      description: validate we're in git repository
-      input: /claude_setup_graphify (in git repo)
-      setup: directory is git repo
-      expected_output: [git repo confirmed, continue]
-
-    - name: validate_not_git_repo
-      description: fail gracefully if not in git repo
-      input: /claude_setup_graphify (not in git repo)
-      setup: regular directory (no .git)
-      expected_output: [error: not in git repo, clear msg]
+      description: confirm a git repository, and fail gracefully outside one
+      input: /claude_setup_graphify (once in a git repo, once in a plain directory)
+      setup: one directory with .git, one without
+      expected_output: [git repo confirmed and setup continues, outside a repo a clear "not in git repo" error and nothing installed]
 
     - name: validate_python_version
-      description: validate Python 3.8+ available
-      input: /claude_setup_graphify
-      setup: Python 3.8+ installed
-      expected_output: [python version confirmed]
-
-    - name: validate_python_too_old
-      description: fail gracefully on Python 3.6
-      input: /claude_setup_graphify (with Python 3.6)
-      setup: Python 3.6 or 3.7
-      expected_output: [error: Python 3.8+ required, clear msg]
+      description: confirm Python 3.8+, and fail gracefully on an older version
+      input: /claude_setup_graphify (once with Python 3.8+, once with 3.6 or 3.7)
+      setup: two interpreters
+      expected_output: [3.8+ confirmed and setup continues, on 3.6/3.7 a clear "Python 3.8+ required" error and nothing installed]
 
     - name: validate_writable_directory
-      description: validate target directory writable
-      input: /claude_setup_graphify
-      setup: graphify-out/ writable
-      expected_output: [write permission confirmed]
-
-    - name: validate_readonly_directory
-      description: fail gracefully on read-only directory
-      input: /claude_setup_graphify
-      setup: graphify-out/ read-only
-      expected_output: [error: directory not writable, clear msg]
+      description: confirm the target directory is writable, and fail gracefully when it is read-only
+      input: /claude_setup_graphify (once writable, once read-only)
+      setup: graphify-out/ writable, then read-only
+      expected_output: [write permission confirmed, when read-only a clear "directory not writable" error and nothing extracted]
 
   # Happy path: Installation (after validation passes)
-    - name: install_graphifyy_package
-      description: pip install graphifyy==0.8.36 succeeds, pinned
+    - name: install_graphify
+      description: pinned pip install graphifyy==0.8.36, then graphify install --platform claude
       input: /claude_setup_graphify
       setup: all validations pass, internet
-      expected_output: [pinned version installed, import graphify succeeds]
-
-    - name: install_graphify_claude_skill
-      description: graphify install --platform claude succeeds
-      input: after pip install
-      setup: graphifyy installed
-      expected_output: [skill callable]
+      expected_output: [pinned version installed, import graphify succeeds, /graphify skill callable]
 
   # Happy path: Extraction to verification
     - name: extract_knowledge_graph
@@ -97,3 +73,10 @@ evals:
       input: test query to /graphify
       setup: all phases done, skill error
       expected_output: [error detected, manual verify suggested]
+
+  # Not for
+    - name: query_existing_graph_out_of_scope
+      description: user asks a question of an existing graph, which belongs to /graphify (a not_for case)
+      input: /claude_setup_graphify which files call the auth module?
+      setup: graphify-out/graph.json already exists
+      expected_output: [points the user to /graphify for the question, does not reinstall or re-extract]

@@ -12,6 +12,7 @@
 | 4 | `categorization_status` | Categorize | Status markers (Done, Pending, Question, Response, Note) are detected correctly |
 | 5 | `markdown_table_format` | Output | The generated table is well-formed, complete, and not truncated |
 | 6 | `manual_refinement_workflow` | Integration | The output file can be hand-edited and re-read for TODO planning |
+| 7 | `cross_session_aggregation_out_of_scope` | Not for | A request for several days in one table is turned down |
 
 - **Script tests:** `_tests/skills/claude_capture_session_prompts/test_capture_session_prompts.py` runs the skill's script against sample history
 - **Scenario tests:** `evals.yaml` covers the end-to-end workflow above

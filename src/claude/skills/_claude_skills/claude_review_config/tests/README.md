@@ -17,6 +17,7 @@
 | 9 | `phase4_sync_to_playbook_repo` | Apply fixes | Keeps `~/.claude/` and the playbook repo's `src/claude/` in sync after a fix |
 | 10 | `error_malformed_yaml_in_rules` | Error handling | Malformed YAML in a rule file is caught, not a crash |
 | 11 | `error_missing_rules_directory` | Error handling | A missing `rules/` directory produces a clear error, not a crash |
+| 12 | `single_rule_file_out_of_scope` | Not for | A request to review one rule file is turned down |
 
 - **No Python handler:** this skill has none
 - **Only coverage:** `evals.yaml` is this skill's sole test coverage

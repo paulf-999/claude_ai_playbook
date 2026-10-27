@@ -13,7 +13,7 @@ test_coverage_level: comprehensive
   # none           = no tests exist
   # basic          = 1–2 happy path tests
   # comprehensive  = main path + error cases + edge cases + security
-  # tests/evals.yaml has 6 scenarios covering creation, validation and MCP errors
+  # tests/evals.yaml has 8 scenarios covering creation, validation, the confirm step, MCP errors and a not_for case
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Usage

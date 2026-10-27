@@ -4,8 +4,8 @@ version: 1.4.1
 summary: Create Confluence pages using the general_page or platform_risk_assessment pattern with local draft review and explicit approval
 maturity: tactical
 test_coverage_level: comprehensive
-  # comprehensive = tests/evals.yaml covers validation, draft review,
-  # publish errors and the timeout dialog (10 scenarios);
+  # comprehensive = tests/evals.yaml covers space, parent and pattern checks,
+  # draft review, a publish error and a not_for case (10 scenarios);
   # matches tags.tested: true in SKILL.md
 date_created: '2026-08-28'
 date_updated: '2026-10-17'
