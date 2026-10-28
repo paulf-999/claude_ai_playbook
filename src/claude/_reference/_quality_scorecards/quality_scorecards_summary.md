@@ -15,7 +15,7 @@
 |---|---|---|---|---|
 | Tests | 60 | 9.1/10 | 2026-10-11 | • 💪 **Strongest:** 2 files tied at 9.6/10, including `test_rule_reachability.py`<br>• ⚠️ **Weakest:** `test_capture_session_prompts.py` (8.1/10) |
 | Skills | 8 | 6.4/10 | 2026-10-27 | • 💪 **Strongest:** `git_review_pr` (7.6/10)<br>• ⚠️ **Weakest:** 2 files tied at 5.7/10, `confluence_create_page` and `jira_create` |
-| Rules — always-on | 19 | 7.0/10 | 2026-10-25 | • 💪 **Strongest:** `claude_working_practices.md` (7.9/10)<br>• ⚠️ **Weakest:** `claude_operational_efficiency.md` (5.9/10) |
+| Rules — always-on | 19 | 7.1/10 | 2026-10-28 | • 💪 **Strongest:** `claude_working_practices.md` (7.9/10)<br>• ⚠️ **Weakest:** `claude_operational_efficiency.md` (5.9/10) |
 | Rules — lazy-load | 12 | 6.3/10 | 2026-10-25 | • 💪 **Strongest:** `latency_optimisation.md` (7.0/10)<br>• ⚠️ **Weakest:** `dbt.md` (5.5/10) |
 | Hooks | 5 | 8.5/10 | 2026-10-02 | • 💪 **Strongest:** `hook_enforcement_mcp_stale_settings.sh` (9.0/10)<br>• ⚠️ **Weakest:** `hook_style_guide_response_standards_checker.sh` (8.0/10) |
 | Agents | 3 | 7.7/10 | 2026-10-26 | • 💪 **Strongest:** `code_reviewer` (8.0/10)<br>• ⚠️ **Weakest:** `technical_writer` (7.3/10) |
@@ -41,7 +41,7 @@ Ranked by impact, highest first, with lazy-load rule actions last because those 
 |---|---|---|---|
 | `tests/test_scorecards_summary.md` | 60 | 9.1/10 | 2026-10-11 |
 | `skills/skill_scorecards_summary.md` | 8 | 6.4/10 | 2026-10-27 |
-| `rules/rule_scorecards_summary.md` | 31 | 6.7/10 | 2026-10-25 |
+| `rules/rule_scorecards_summary.md` | 31 | 6.8/10 | 2026-10-28 |
 | `hooks/hook_scorecards_summary.md` | 5 | 8.5/10 | 2026-10-02 |
 | `agents/agent_scorecards_summary.md` | 3 | 7.7/10 | 2026-10-26 |
 

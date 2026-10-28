@@ -1,30 +1,42 @@
 # Quality Scorecard — claude_response_standards.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-10-25
+**Date Updated:** 2026-10-28
 
-**Overall score:** 6.9/10
+**Overall score:** 7.6/10
 
 **Recommended improvements:**
-- Resolve the footer contradiction between line 93 ("never skip") and line 100 (skip for short answers)
-- Define "substantive" in the always-on rule, not only in the lazy child
-- Move Default Behaviour and Delivery Cadence out of a file about response format
-- Give the Summary bullets bold keywords and split the two-sentence bullet on line 92
+- Move the Delivery Cadence section to `behaviour.md` or `claude_operational_efficiency.md`, because it governs how Claude works and the rule's own Scope line limits it to how replies look.
+- Define "substantive" inside the rule and make the skip criteria match `response_standards_enforcement.md`, including its under-50-words threshold and its skill-output waiver.
+- Say whether "Wait: get an explicit reply" applies in non-interactive runs (subagents, `/goal`, `/loop`).
+- Split the semicolon-joined Human-readable format bullet into two child bullets.
+- Make capitalisation after the colon consistent in the Delivery Cadence and Response Timing bullets.
+- Move the "Anti-pattern" bullet out of the Follow-up offer list.
+- Record a passing run of `test_rules_structure.py` and `test_rule_headers.py` for this file.
+- Add a dated incident (when Claude Code replies missed the format) to back up the evidence of need.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 7/10 | 2026-10-25 | • 🔍 **Contradiction:** `claude_response_standards.md` line 93 says "never skip" the timing footer, but line 100 says to skip it for short answers.<br>• ⚠️ **Undefined trigger:** "substantive" (line 36) is defined only in the child `response_standards_enforcement.md` line 28, so a reader of the always-on rule alone can't tell when the Summary applies.<br>• 🌫️ **Fuzzy limit:** line 39's "≤~15 words (~100 chars)" gives a soft bound that two readers could apply differently. |
-| **Complexity** | 5/10 | 2026-10-25 | • 🧮 **Raw complexity 5:** Concepts 3 (default behaviour, summary format, next steps, offer line, delivery cadence, timing) + Scope 1 (parent plus child in `_rules_lazy_load/claude_config/`) + Dependencies 1 (the `UserPromptSubmit` hook, line 91) + Prerequisites 0.<br>• ⚠️ **Several jobs:** lines 23–30 (Default Behaviour) and 78–85 (Delivery Cadence) are about conduct, not response shape, so the file does more than one job. |
-| **Evidence of Need** | 6/10 | 2026-10-25 | • ❓ **No incident in rule:** the parent records no dated incident or usage evidence.<br>• 🔗 **Partial rationale:** the child's lines 17–19 explain the salience problem (Desktop vs CLI) but give no date, issue or count of times it happened. |
-| **Token Cost Justification** | 8/10 | 2026-10-25 | • ✅ **Justified placement:** line 4 `applies_to: *` matches a standard that shapes every reply.<br>• 💸 **Off-concept bulk:** lines 23–30 (Default Behaviour) add always-on cost for guidance that isn't response format. |
-| **Structural Compliance** | 6/10 | 2026-10-25 | • ✅ **Header and length:** metadata lines 1–6, an emoji H1, a Purpose line and about 100 counted lines are all present.<br>• 📏 **Missing bold keywords:** lines 37–72 are bullets with no leading bold keyword.<br>• 📏 **Multi-sentence bullet:** line 92 holds two sentences, which breaks the "one sentence per bullet" gate.<br>• 📏 **Stray anti-pattern:** line 74's "Anti-pattern" line is a loose fragment rather than a bullet.<br>• ⚠️ **Hardcoded path:** line 106 uses a literal `~/.claude/` path, against the hard gate's "No hardcoded paths" item.<br>• ⚠️ **One concept:** the file covers four distinct concepts, which misses that hard gate. |
-| **Currency** | 8/10 | 2026-10-25 | • ✅ **Paths exist:** `_before_acting.md`, `writing_style.md`, the child file and `hooks/hook_style_guide_response_standards_reminder.sh` all exist.<br>• 🍂 **Stale wording in child:** `response_standards_enforcement.md` line 17 says "always-on rule import", but rules now load natively and are not imported. |
-| **Test Coverage** | 8/10 | 2026-10-25 | • ✅ **Structural coverage exists:** `test_rules_structure.py` and `test_rule_headers.py` exist. `test_rule_directory_organisation.py` line 33 names the file. Not run in this review.<br>• 🧪 **Hook tested:** `test_style_guide_response_standards_reminder.py` lines 121 and 157 assert the injected `PROMPT_SUBMITTED_AT` start time.<br>• ⚠️ **No sync test:** no test ties the rule's own text (e.g. the `Mmin Ss` format at line 95) to the hook's directive, so the two can drift. |
-| **Overall** | **6.9/10** | 2026-10-25 | • 💪 **Mechanised:** a per-turn injection hook backs the rule, and that hook has tests.<br>• ⚠️ **Bundled and slipping:** non-format conduct sections, style slips, the footer skip contradiction and no recorded evidence hold it back. |
+| **Clarity** | 7/10 | 2026-10-25 | • 🔍 **Concrete format:** the Summary, Next steps, offer-line and footer rules each have a worked example, so two readers would build the same reply<br>• ⚠️ **Undefined threshold:** "substantive responses" (line 27) and "Short, single-fact answers" (line 90) are not defined in the rule, while `response_standards_enforcement.md` uses "<50 words" and adds skill-output, code-output and error waivers that the rule doesn't mention<br>• ⚠️ **Scope contradiction:** line 24 says the rule "covers only how replies look", but Delivery Cadence (lines 70–74) governs how Claude works ("Minimise digging", "Fastest correct path")<br>• ⚠️ **Wait in non-interactive runs:** "Wait: get an explicit reply before proceeding" (line 61) doesn't say how it applies to subagents or `/goal` runs |
+| **Complexity** | 5/10 | 2026-10-25 | • 🧮 **Raw complexity 5:** Concepts 3 (Summary, Next steps, narration, research acknowledgement, offer line, cadence and timing, so 6+) + Scope 0 (one file) + Dependencies 1 (the `UserPromptSubmit` hook that injects `PROMPT_SUBMITTED_AT`) + Prerequisites 1 (hook registered in `settings.json`)<br>• ⚠️ **Extra concern:** Delivery Cadence is a separate job, and moving it out would reduce the concept count |
+| **Evidence of Need** | 7/10 | 2026-10-28 | • 🔗 **Observed failure:** `response_standards_enforcement.md` records that the always-on rule is "diluted to low-salience background" in Claude Code but enforces reliably in Desktop, and the per-turn injection hook was built to fix this<br>• 📊 **Load data:** `docs/audits/audit_rule_usage.md` shows the rule applied in 115 of 115 sessions, with 11 misses<br>• ⚠️ **Undated:** no file gives a date or incident for replies that broke the format, so this sits at the one-real-problem anchor and not the recurring-incident anchor |
+| **Token Cost Justification** | 9/10 | 2026-10-28 | • 🎯 **Justified:** `applies_to: *` and `miss_cost: medium`, and the audit shows 100% applied (115 sessions), which the loading-strategy table places in always-on<br>• 💸 **Size:** 1,562 tokens per session, with a compact copy also injected each turn by `hook_style_guide_response_standards_reminder.sh` on purpose |
+| **Structural Compliance** | 8/10 | 2026-10-28 | • ✅ **Shape:** H1 emoji, Purpose line, metadata header including `applies_to`, `miss_cost` and `loading`, a Contents section earned by 4 `##` headings, and 97 lines in total<br>• ⚠️ **Joined bullet:** line 85 joins two clauses with a semicolon ("Under 60 seconds show `Ss` …; 60 seconds or more show …")<br>• ⚠️ **Style slips:** capitalisation after the colon is inconsistent ("Share", "On", "Avoid", "The" in lines 70–90 against lowercase elsewhere), and the "Anti-pattern" bullet (line 64) sits inside the Follow-up offer list |
+| **Currency** | 9/10 | 2026-10-28 | • 🔍 **References exist:** `behaviour.md`, `writing_style.md` and `_rules_lazy_load/claude_config/response_standards_enforcement.md` all exist<br>• ✅ **Matches the hook:** `hook_style_guide_response_standards_reminder.sh` is registered under `UserPromptSubmit` in `settings.json` and injects `PROMPT_SUBMITTED_AT`, as the rule says |
+| **Test Coverage** | 8/10 | 2026-10-25 | • 🧪 **Structural:** covered by `test_rules_structure.py` and `test_rule_headers.py`, and no content-regression test is needed because the rule records no incident<br>• 🧪 **Mechanism:** `test_style_guide_response_standards_reminder.py` checks the injected directive and the `PROMPT_SUBMITTED_AT` timestamp<br>• ⚠️ **Pass not shown:** this review found no record that these tests pass for this file at c638e09 |
+| **Overall** | **7.6/10** | 2026-10-28 | • 💪 **Format and enforcement:** a precise reply format backed by a registered, tested per-turn injection hook<br>• ⚠️ **Scope and skip rules:** Delivery Cadence is outside the rule's stated scope, and the skip criteria don't match the enforcement file |
 
 ## 🔗 Related files
 
 - `src/claude/rules/01_essentials/claude_response_standards.md` — the rule being scored
-- `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_reminder.py` — Test Coverage dimension
-- `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_checker_flags.py` — Test Coverage dimension
-- `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_checker_waivers.py` — Test Coverage dimension
+- `src/claude/rules/_rules_lazy_load/claude_config/response_standards_enforcement.md` — Clarity (different skip criteria), Evidence of Need (dilution finding), Currency
+- `src/claude/hooks/hook_style_guide_response_standards_reminder.sh` — Complexity, Token Cost, Currency
+- `src/claude/settings.json` — Complexity, Currency (hook registration)
+- `src/claude/rules/02_claude_standards/behaviour.md` — Clarity (where Delivery Cadence belongs), Currency
+- `src/claude/rules/01_essentials/claude_usage_standards/writing_style.md` — Structural Compliance, Currency
+- `src/claude/rules/02_claude_standards/path_scoped_rules/claude_rule_loading_strategy.md` — Token Cost Justification
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md` — Complexity
+- `docs/audits/audit_rule_usage.md` — Evidence of Need, Token Cost Justification
+- `src/claude/_tests/rules/test_rules_structure.py` — Test Coverage
+- `src/claude/_tests/rules/03_authoring_guidelines/test_rule_headers.py` — Test Coverage
+- `src/claude/_tests/hooks/response_standards/test_style_guide_response_standards_reminder.py` — Test Coverage

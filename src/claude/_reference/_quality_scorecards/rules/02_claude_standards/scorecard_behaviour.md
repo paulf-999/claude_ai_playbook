@@ -1,33 +1,48 @@
 # Quality Scorecard — behaviour.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-10-25
+**Date Updated:** 2026-10-28
 
-**Overall score:** 6.7/10
+**Overall score:** 6.9/10
 
 **Recommended improvements:**
-- Move "Other safety patterns" (lines 46–58) under a heading that matches what they cover
-- Record evidence of need for the parent and its children
-- Fix the multi-sentence bullets and `**X** —` bullets on lines 42, 51 and 66–73
-- Add pointer tests for the six children that `test_rule_cross_references.py` doesn't cover
+- Make `_artefact_proposal_gates.md` line 12 and `_decision_making.md` line 23 give the same instruction on whether options follow passed gates
+- Open the Risky actions section with the action to take, e.g. "Confirm before any of these, even on Trivial tasks"
+- Add a dated incident to the parent or a child that shows each gate is needed
+- Move the artefact proposal gates behind `paths:` or a read-on-demand pointer, since only authoring sessions need them
+- Fix the style slips: the bold, emoji-less `Override signals` heading, bullets without a keyword in `_before_acting.md` and Gates 1 and 3, the semicolon-joined `**Why:**`, and "prioritizing"
+- Correct the stale wording: the Gate 2 and Gate 3 Reference descriptions, and the "Processes" artefact type
+- Extend `test_rule_cross_references.py` so it checks every `Loads on its own from:` pointer in `behaviour.md` resolves, as it already does for `git.md` and `claude_operational_efficiency.md`
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 7/10 | 2026-10-25 | • 🔍 **Misfiled guidance:** `behaviour.md` lines 46–58 put "Other safety patterns" (ask first, investigate, literal direction, plan approval) under "Before claiming completion", so a reader can't tell from the heading what that section covers.<br>• ⚠️ **Mixed signal:** `behaviour.md` line 62 says "Do not proceed without explicit confirmation" for any flagged item, then line 64's engineer test reads as a self-check, so the two lines can be read as different gates.<br>• 🔍 **Option tension:** `_decision_making.md` line 19 ("always present 2–3 options") sits next to `_artefact_proposal_gates.md` line 12 ("proceeds without options"), and only line 23's prerequisite links the two. |
-| **Complexity** | 5/10 | 2026-10-25 | • 🧮 **Raw complexity 5:** Concepts 3 (eight distinct concerns: approach, task tiers, completion, proposing, artefact gates, decision-making, disclosure, model choice, session conduct) + Scope 2 (`rules/02_claude_standards/behaviour/` plus `_rules_lazy_load/claude_config/hooks_decision_framework.md` from `behaviour.md` line 68) + Dependencies 0 + Prerequisites 0, per `_complexity_scoring.md`.<br>• ⚠️ **Bundled concerns:** `_model_selection_strategy.md` and `_session_conduct.md` are separate jobs that sit under a "safe defaults" parent. |
-| **Evidence of Need** | 6/10 | 2026-10-25 | • ❓ **No dated incidents:** none of the eight files records an incident, PR or repeated failure, which `_hard_gates_checklist.md` line 26 requires.<br>• 🔗 **Sourced, not observed:** the only provenance is the Boris Cherny source comment at `_how_to_approach.md` line 17 and the `miss_cost: high` header at `behaviour.md` line 5, which state need but don't show it happening. |
-| **Token Cost Justification** | 8/10 | 2026-10-25 | • ✅ **Justified core:** `behaviour.md` lines 4–6 set `applies_to: *`, `miss_cost: high` and an always-on reason, and the risky-action and confirmation gates apply in every session.<br>• ⚖️ **Passengers:** about 100 parent lines plus seven always-on children load every session, including low-risk material such as `_model_selection_strategy.md` lines 10–13 and `_how_to_approach.md` lines 24–26, which don't need high-miss-cost placement. |
-| **Structural Compliance** | 6/10 | 2026-10-25 | • ✅ **Header and length met:** metadata on lines 1–6, emoji H1, Purpose line, 103 lines with children split out under `behaviour/`.<br>• ⚠️ **Multi-sentence bullets:** `behaviour.md` lines 42 and 51, `_how_to_approach.md` lines 12 and 24.<br>• ⚠️ **No bold-keyword colon:** `behaviour.md` lines 66–73 use `**X** —`, and `_pre_existing_issue_disclosure.md` lines 21–24 and 50–53 have no bold keyword, both breaking `_hard_gates_checklist.md` line 25.<br>• ⚠️ **Redundant line:** `behaviour.md` line 11 repeats the Purpose on line 9. |
-| **Currency** | 8/10 | 2026-10-25 | • ✅ **Pointers resolve:** all seven `behaviour/_*.md` children and `rules/_rules_lazy_load/claude_config/hooks_decision_framework.md` (line 68) exist, and `test_rule_cross_references.py` checks every gate Reference file.<br>• 🔍 **Unverified path:** `_how_to_approach.md` line 20 names `~/_sessions/`, which is outside the config and which I couldn't check from the allowed inputs.<br>• 🔍 **Possible drift:** `_artefact_proposal_gates.md` line 59 calls `claude_rule_loading_strategy.md` a "full rule index table", but I didn't read that file in the allowed inputs, so this is unconfirmed. |
-| **Test Coverage** | 7/10 | 2026-10-25 | • 🧪 **Partial targeted tests:** `_tests/rules/test_rule_cross_references.py` lines 150–208 cover only `behaviour.md`'s pointer to `_artefact_proposal_gates.md` and that child's examples and references.<br>• ⚠️ **Other children unchecked:** no test found by Grep checks the other six "Loads on its own from" pointers (`behaviour.md` lines 30, 36, 90, 94, 98, 102) or the `hooks_decision_framework.md` pointer on line 68.<br>• ✅ **No incident test owed:** no file records an incident, so no content-regression test is needed, and I didn't run the structure-test pass. |
-| **Overall** | **6.7/10** | 2026-10-25 | • 💪 **Strong safety core:** clear risky-action list, proportional task tiers and a confirm-first rule for every tier.<br>• ⚠️ **Gaps:** no recorded evidence of need, several style slips across the children, and tests that cover one of seven children. |
+| **Clarity** | 6/10 | 2026-10-28 | • ⚠️ **Contradiction:** `_artefact_proposal_gates.md` says "when every gate passes, the proposal proceeds without options", but `_decision_making.md` says "Options are presented *after* gates pass, not before"<br>• ⚠️ **No action in Risky actions:** the section lists Delete, Destructive git and the others, but never says what to do about them, so a reader has to connect it to the "Ask first" bullet higher up<br>• 🔍 **Clear tiers:** `_before_acting.md` names four tiers with examples and override signals, so two readers would pick the same tier |
+| **Complexity** | 6/10 | 2026-10-28 | • 🧮 **Raw complexity 4:** Concepts 3 (six or more: tiers, verification, proposal flags, artefact gates, options, disclosure, model choice, conduct) + Scope 1 (the parent plus one children folder) + Dependencies 0 + Prerequisites 0<br>• ⚠️ **Wide family:** the parent and 7 children cover several separate jobs under one entry point |
+| **Evidence of Need** | 6/10 | 2026-10-25 | • ⚠️ **No dated incident:** none of the 8 files records an incident or usage, unlike `portable_paths.md` or `git/_concurrent_sessions.md`<br>• 🔗 **External sources only:** the support is the Karpathy principles cited in `_before_acting.md` and the Boris Cherny source comment in `_how_to_approach.md`, not problems this config observed |
+| **Token Cost Justification** | 8/10 | 2026-10-25 | • 🎯 **Headers set:** `applies_to: *`, `miss_cost: high` and a `loading:` reason are present, and confirmation gates apply to every session<br>• ⚠️ **Narrow child:** `_artefact_proposal_gates.md` (62 lines) is needed only when proposing a rule, skill, hook or agent, yet it loads every session |
+| **Structural Compliance** | 7/10 | 2026-10-28 | • ✅ **Within length:** the parent is 96 lines excluding the 6 metadata lines, and each child is under 75 lines with a metadata header and Purpose line<br>• ⚠️ **Heading slip:** `_before_acting.md` line 28 `## **Override signals**` is bold and has no emoji<br>• ⚠️ **Bullet slips:** `_before_acting.md` "Example:" and "If YES → proceed" bullets, plus Gate 1 sub-bullets and Gate 3 bullets, have no bold keyword<br>• ⚠️ **Prose slips:** the parent's `**Why:**` joins two points with a semicolon, and `_session_conduct.md` uses "prioritizing" (American spelling) |
+| **Currency** | 7/10 | 2026-10-28 | • ✅ **Paths exist:** `claude_plans.md`, `hooks_decision_framework.md`, `skill_domains.yaml`, the naming and directory-structure files and `technical_writer/AGENT.md` all exist<br>• ⚠️ **Stale description:** Gate 3 calls `claude_rule_loading_strategy.md` the "full rule index table", but that file now says each folder is the source of truth and holds no index<br>• ⚠️ **Stale description:** Gate 2 calls `_claude_directory_organisation.md` the "full tree", but that file says it is "not a comprehensive inventory"<br>• ⚠️ **Missing type:** Gate 1 names a "Processes" artefact with the example `session_kickoff.md`, and no such file or artefact type exists in `src/claude/` |
+| **Test Coverage** | 8/10 | 2026-10-28 | • 🧪 **Gates covered:** `test_rule_cross_references.py` checks the gates' example skills, hook, agent, domains, tiers and reference files, plus synthetic bad cases<br>• 🧪 **Structure:** `test_rules_structure.py` and `test_rule_headers.py` cover file quality and headers, and with no incident recorded no content-regression test is required<br>• ⚠️ **Unchecked pointers:** only the gates pointer in `behaviour.md` is asserted, not its other six `Loads on its own from:` lines, whereas the `git.md` and efficiency children each have a resolve check |
+| **Overall** | **6.9/10** | 2026-10-28 | • 💪 **Tiered gates:** proportional Trivial to Complex gates, with override signals and a confirmation floor for every tier<br>• ⚠️ **Conflict and evidence:** a direct contradiction between two children, and no recorded incident behind any gate |
 
 ## 🔗 Related files
 
 - `src/claude/rules/02_claude_standards/behaviour.md` — the rule being scored
-- `src/claude/_tests/rules/test_rule_cross_references.py` — Test Coverage dimension
-- `src/claude/rules/02_claude_standards/behaviour/_how_to_approach.md` — Test Coverage dimension (untested child)
-- `src/claude/rules/02_claude_standards/behaviour/_before_acting.md` — Test Coverage dimension (untested child)
-- `src/claude/rules/02_claude_standards/behaviour/_pre_existing_issue_disclosure.md` — Test Coverage dimension (untested child)
-- `src/claude/rules/02_claude_standards/behaviour/_model_selection_strategy.md` — Test Coverage dimension (untested child)
-- `src/claude/rules/02_claude_standards/behaviour/_session_conduct.md` — Test Coverage dimension (untested child)
+- `src/claude/rules/02_claude_standards/behaviour/_before_acting.md` — Clarity, Structural Compliance
+- `src/claude/rules/02_claude_standards/behaviour/_how_to_approach.md` — Evidence of Need
+- `src/claude/rules/02_claude_standards/behaviour/_decision_making.md` — Clarity
+- `src/claude/rules/02_claude_standards/behaviour/_artefact_proposal_gates.md` — Clarity, Token Cost Justification, Structural Compliance, Currency
+- `src/claude/rules/02_claude_standards/behaviour/_pre_existing_issue_disclosure.md` — Complexity
+- `src/claude/rules/02_claude_standards/behaviour/_session_conduct.md` — Structural Compliance
+- `src/claude/rules/02_claude_standards/behaviour/_model_selection_strategy.md` — Complexity
+- `src/claude/rules/02_claude_standards/claude_working_practices/claude_plans.md` — Currency
+- `src/claude/rules/_rules_lazy_load/claude_config/hooks_decision_framework.md` — Currency
+- `src/claude/rules/03_authoring_guidelines/authoring_skills/skill_domains.yaml` — Currency, Test Coverage
+- `src/claude/rules/02_claude_standards/path_scoped_rules/claude_rule_loading_strategy.md` — Currency
+- `src/claude/rules/02_claude_standards/path_scoped_rules/claude_directory_structure/_claude_directory_organisation.md` — Currency
+- `src/claude/agents/core/technical_writer/AGENT.md` — Currency
+- `src/claude/rules/02_claude_standards/claude_working_practices.md` — Evidence of Need (its children hold the dated-incident examples)
+- `src/claude/rules/02_claude_standards/git/_concurrent_sessions.md` — Evidence of Need
+- `src/claude/_tests/rules/test_rule_cross_references.py` — Test Coverage
+- `src/claude/_tests/rules/test_rules_structure.py` — Test Coverage
+- `src/claude/_tests/rules/test_rule_headers.py` — Test Coverage

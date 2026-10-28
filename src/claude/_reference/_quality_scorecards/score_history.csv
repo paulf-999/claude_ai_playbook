@@ -86,3 +86,7 @@ run_date,artefact,type,attempt,reviewer,model,overall,commit
 2026-10-27,confluence_create_page,skill,2,quality_scorecard_reviewer,claude-opus-5-5,5.7,7d09aa6
 2026-10-27,git_create_pr,skill,2,quality_scorecard_reviewer,claude-opus-5-5,6.3,7d09aa6
 2026-10-27,jira_create,skill,2,quality_scorecard_reviewer,claude-opus-5-5,5.7,7d09aa6
+2026-10-28,claude_response_standards,rule,3,quality_scorecard_reviewer,claude-opus-5-5,7.6,c638e09
+2026-10-28,authoring_rules,rule,3,quality_scorecard_reviewer,claude-opus-5-5,6.9,c638e09
+2026-10-28,claude_plans,rule,3,quality_scorecard_reviewer,claude-opus-5-5,7.3,c638e09
+2026-10-28,behaviour,rule,3,quality_scorecard_reviewer,claude-opus-5-5,6.9,c638e09

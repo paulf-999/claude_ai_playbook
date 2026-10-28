@@ -52,7 +52,7 @@ This is the rule-specific version of the shared `_templates/scorecard/scorecard.
 - `<full/repo-relative/path/to/anything/named/in/the/Notes/above>` — <which dimension it's relevant to>
 ```
 
-**Notes column format:** bullet points, one per line, joined with `<br>` (standard markdown lists don't render inside table cells) — `• <emoji> **<bold keyword>:** <one point>`. Never a single run-on sentence. One point per bullet, matching `writing_style.md`'s general bullet convention and the same pattern used in `claude_plans/_plan_file_format.md`.
+**Notes column format:** bullet points, one per line, joined with `<br>` (standard markdown lists don't render inside table cells) — `• <emoji> **<bold keyword>:** <one point>`. Never a single run-on sentence. One point per bullet, matching `writing_style.md`'s general bullet convention and the same pattern used in `rules/02_claude_standards/path_scoped_rules/plan_file_format.md`.
 
 **Related files:** full repo-relative path (e.g. `src/claude/_tests/rules/01_essentials/test_guiding_principles.py`), never just a bare filename — a scorecard often outlives the memory of where things live, and a bare filename forces a search. List the rule file itself plus every other file named anywhere in the Notes column (tests, other rules cited as evidence, anything a reader would otherwise have to go find).
 
