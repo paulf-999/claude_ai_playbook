@@ -1,21 +1,21 @@
 ---
 name: claude_setup_graphify
 description: Set up Graphify on a repo to generate a local AST-based knowledge graph, reducing token cost for codebase exploration
-maturity: tactical
+maturity: strategic
 tags:
   criticality: could
   status: active
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 1.2.3 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-27 -->
+<!-- updated: 2026-10-28 -->
 
 ## 🤖 Instructions for Claude
 
 - **Pre-check:** confirm the folder is a git repo, Python is 3.8 or newer and the repo root is writable, and stop and report any failure.
-- **Read first:** read `reference/_workflow.md` for the five phases, and `reference/_security.md` before Phase 1.
+- **Read first:** read `reference/_implementation.md` for the five phases, and `reference/_security.md` before Phase 1.
 - **Always:** install with `pip install "graphifyy==0.8.36"`, never an unpinned `pip install graphifyy`.
 - **Always:** before Phase 2, tell the user that code stays local but docs, PDFs and images get an LLM pass when an API key is set, and wait for a yes.
 - **Never:** run as root, write outside `$(git rev-parse --show-toplevel)`, or commit `graphify-out/`.
@@ -46,15 +46,24 @@ Setup complete! Graph ready for queries.
 
 ## ✨ Best For
 
-Large codebases, around 1,000 files or more, where reading files costs too many tokens. Currently at the **tactical** stage — setup, pre-flight checks and error recovery are covered, but scope may still change.
+Large codebases, around 1,000 files or more, where reading files costs too many tokens. Currently at the **strategic** stage — setup, pre-flight checks, the data-sharing prompt and error recovery are covered, with scope fixed to the five phases.
 
 **Caveats:** one-time setup per repo, and the graph must be re-extracted after code changes. Pinned to graphifyy 0.8.36. The contract sets `waives_response_standards: true`, so the setup keeps its own step-by-step format.
 
+## ⚠️ Known gaps
+
+- **Stale graph:** nothing re-extracts the graph after code changes, so answers drift from the code over time.
+  - **Workaround:** run `graphify update .` from the repo root after significant changes.
+- **One pinned version:** the skill is tested only against graphifyy 0.8.36.
+  - **Workaround:** stay on the pin, and re-run the evals by hand before raising it.
+- **Unrun scenarios:** nothing runs `tests/evals.yaml` yet, which #463 tracks.
+  - **Workaround:** check a change against the scenarios by hand before merging it.
+
 ## 📚 References
 
-- `reference/_workflow.md` — the five phases, flags (`--dry-run`, `--skip-extract`, `--state`) and FAQ
+- `reference/_implementation.md` — the five phases, flags (`--dry-run`, `--skip-extract`, `--state`) and FAQ
 - `reference/_security.md` — what leaves the machine, the version pin and file safeguards
 - `reference/_troubleshooting.md` — common install and extraction errors
 - `reference/_examples.md` — example setup scenarios
-- `tests/evals.yaml` — 15 test scenarios covering checks, phases and errors
+- `tests/evals.yaml` — 12 test scenarios covering checks, phases, errors and a not_for case
 - `_reference/_quality_scorecards/skills/scorecard_claude_setup_graphify.md` — quality scorecard

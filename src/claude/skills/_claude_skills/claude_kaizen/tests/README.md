@@ -13,7 +13,9 @@
 | 5 | `stale_rule_flagged_not_removed` | Prune | A rule older than 6 months is flagged, not deleted |
 | 6 | `missing_errors_dir` | Setup | No `~/_errors/` means no audit, and no invented patterns |
 | 7 | `cross_repo_request_out_of_scope` | Scope | Cross-repo promotion is declined as a planned v2 feature |
+| 8 | `bulk_rule_removal_declined` | Scope | A request to delete every stale rule flags them for re-validation and deletes nothing |
 
-- **Maturity:** 7 scenarios sits within the 5–8 expected for a **draft** skill
+- **Maturity:** 8 scenarios sits within the 8–12 expected for a **tactical** skill
 - **Not the same as `evals/`:** the skill's own `evals/` folder holds the rule-checking dataset and runner it uses while running, not tests of the skill
-- **Known limit:** `evals/runner.py` is still a placeholder that marks every case as passed, so scenario 4 can't pass until a real eval harness replaces it (see `reference/_roadmap.md`)
+- **Runner:** `evals/runner.py` asks headless Claude each rule-checking case and judges the reply with regexes, one Claude call per case
+- **Known limit:** nothing runs the scenarios in this `evals.yaml` yet, which #463 tracks
