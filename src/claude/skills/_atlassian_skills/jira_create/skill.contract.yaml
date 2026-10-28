@@ -1,7 +1,7 @@
 ---
 name: jira_create
 description: Create Jira tickets with full field configuration and story point validation
-version: 0.3.0
+version: 0.4.0
 maturity: draft
 summary: Create Jira tickets with field configuration and security checks
 
@@ -45,6 +45,7 @@ dispatch:
 requires:
     tools:
         - Read
+        - mcp__atlassian__getAccessibleAtlassianResources
         - mcp__atlassian__createJiraIssue
 
     mcp_servers:

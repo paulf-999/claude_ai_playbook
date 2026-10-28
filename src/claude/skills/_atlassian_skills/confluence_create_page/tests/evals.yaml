@@ -19,7 +19,7 @@ evals:
           then publishes to Confluence only after the user explicitly approves
           the draft.
       assertions:
-          - Claude reads reference/_phases.md and follows reference/patterns/_general_page.md (Phase 2)
+          - Claude reads reference/_implementation.md and follows reference/patterns/_general_page.md (Phase 2)
           - Claude writes a draft to ~/_drafts/confluence/ before creating anything in Confluence
           - Draft filename uses lowercase with underscores (no spaces, no hyphens)
           - Claude asks the user to review the draft and requests approval before publishing
@@ -66,7 +66,7 @@ evals:
           prompt: create a general confluence page called Data Platform Q4 Roadmap
       setup: {}
       expected_output: >
-          Claude asks which Confluence space to use, per _phases.md's "Do NOT infer
+          Claude asks which Confluence space to use, per _implementation.md's "Do NOT infer
           the target Confluence space", before writing any draft.
       assertions:
           - Claude asks the user for the target space
@@ -93,7 +93,7 @@ evals:
       setup: {}
       expected_output: >
           Claude says the requirements pattern isn't supported and offers the two
-          patterns from _phases.md, general_page and platform_risk_assessment.
+          patterns from _implementation.md, general_page and platform_risk_assessment.
       assertions:
           - Claude says the requested pattern isn't supported
           - Claude lists general_page and platform_risk_assessment as the options
@@ -106,7 +106,7 @@ evals:
       setup: {}
       expected_output: >
           Claude writes the section with a generic role, such as "the migration
-          owner", per _phases.md's rule against naming individuals.
+          owner", per _implementation.md's rule against naming individuals.
       assertions:
           - The draft does not contain the individual's name
           - Claude uses a role descriptor in place of the name
