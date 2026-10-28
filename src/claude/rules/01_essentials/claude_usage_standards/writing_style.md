@@ -1,6 +1,9 @@
-<!-- version: 1.2.1 -->
+<!-- version: 1.2.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-27 -->
+<!-- updated: 2026-10-28 -->
+<!-- applies_to: * -->
+<!-- miss_cost: low — prose drifts from the house style, which review catches -->
+<!-- loading: always-on — every reply and file Claude writes follows it -->
 # ✏️ Writing style
 
 **Purpose:** Establish consistent, scannable, and user-friendly writing conventions for all content Claude produces — ensuring clarity, respect for reader time, and professional presentation.

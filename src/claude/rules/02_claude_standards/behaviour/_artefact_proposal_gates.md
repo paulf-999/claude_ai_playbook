@@ -1,6 +1,6 @@
-<!-- version: 3.1.0 -->
+<!-- version: 3.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-17 -->
+<!-- updated: 2026-10-28 -->
 # 🚪 Artefact Proposal Gates
 
 **Purpose:** Validate naming, placement, and duplication *before* proposing any new artefact (rule, skill, hook, agent, process), ensuring proposals already comply with established standards.
@@ -9,7 +9,7 @@
 
 ## 🚪 The Three Gates
 
-Before proposing any new artefact, run these gates in order — when every gate passes, the proposal proceeds without options:
+Before proposing any new artefact, run these gates in order — a gate that fails gets a direct correction, not options, and once every gate passes the design choices still follow `_decision_making.md`:
 
 ### Gate 1️⃣: Naming
 
@@ -21,7 +21,6 @@ Before proposing any new artefact, run these gates in order — when every gate 
 - **Rules:** snake_case, descriptive (e.g., `naming_standards.md`, `security.md`)
 - **Hooks:** `hook_<type>_<domain>.sh` (e.g., `hook_enforcement_naming_convention.sh`)
 - **Agents:** `agents/<group>/<name>/AGENT.md` (e.g. `agents/core/technical_writer/AGENT.md`)
-- **Processes:** snake_case, descriptive (e.g., `session_kickoff.md`)
 
 **Reference:** `~/.claude/rules/01_essentials/claude_usage_standards/naming_standards.md` (parent) → `_claude_naming_patterns.md` (child file with detailed patterns)
 
@@ -42,7 +41,7 @@ Before proposing any new artefact, run these gates in order — when every gate 
 - **hooks/** — enforcement and style-guide hooks
 - **agents/** — custom sub-agents (domain-grouped subdirectories, e.g. `agents/core/`)
 
-**Reference:** `~/.claude/rules/02_claude_standards/path_scoped_rules/claude_directory_structure.md` (parent) → `_claude_directory_organisation.md` (full tree) + `_claude_directory_naming.md` (naming patterns)
+**Reference:** `~/.claude/rules/02_claude_standards/path_scoped_rules/claude_directory_structure.md` (parent) → `_claude_directory_organisation.md` (directory tiers and their purpose) + `_claude_directory_naming.md` (naming patterns)
 
 **Action:** If placement is wrong, **recommend the correct directory directly** (no options; the standard is clear), and present placement options with token-cost and scope trade-offs only when scope is genuinely unclear.
 
@@ -56,6 +55,6 @@ Before proposing any new artefact, run these gates in order — when every gate 
 - Search for skills in `~/.claude/skills/` with matching domain or action
 - Search for hooks in `~/.claude/hooks/` with similar enforcement goal
 
-**Reference:** `~/.claude/rules/02_claude_standards/path_scoped_rules/claude_rule_loading_strategy.md` (full rule index table)
+**Reference:** `~/.claude/rules/02_claude_standards/path_scoped_rules/claude_rule_loading_strategy.md` (which folder each kind of rule belongs in)
 
 **Action:** If found, offer integration option: extend existing artefact vs. create new one (present options with rationale).

@@ -1,6 +1,9 @@
-<!-- version: 1.2.3 -->
+<!-- version: 1.2.4 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-28 -->
+<!-- applies_to: * -->
+<!-- miss_cost: medium — a badly named file or skill has to be renamed and relinked later -->
+<!-- loading: always-on — any session can create a file, and a new file opens nothing that a path trigger could match -->
 # 📛 Naming
 
 **Purpose:** Establish self-describing, unambiguous naming conventions that enable readers to understand files and identifiers without additional context.

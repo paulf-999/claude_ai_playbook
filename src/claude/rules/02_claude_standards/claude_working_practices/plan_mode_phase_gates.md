@@ -1,6 +1,9 @@
-<!-- version: 3.6.2 -->
+<!-- version: 3.6.3 -->
 <!-- created: 2026-09-17 -->
 <!-- updated: 2026-10-28 -->
+<!-- applies_to: * -->
+<!-- miss_cost: medium — plan phases run without approval, so wrong turns need rework -->
+<!-- loading: always-on — plan mode can start in any session, before any plan file is open -->
 # 🗂️ Plan-Mode Phase Gates
 
 **Purpose:** Apply phase gates in plan mode for every 3+ phase plan, unless the user explicitly waives gates — a plan's whole point is structured, checkpointed progression.
