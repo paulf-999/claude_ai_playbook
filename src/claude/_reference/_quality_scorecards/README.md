@@ -49,12 +49,12 @@ The five lowest-scoring artefacts, each with the first recommended improvement f
 
 | # | Artefact | Score | Action | Scorecard |
 |---|---|---|---|---|
-| 1 | `dbt.md` | 5.5 | Make the parent's model layers and name prefixes match `dbt/model_organisation.md` and `dbt/naming_conventions.md` | [scorecard_dbt.md](rules/style_guide_standards/scorecard_dbt.md) |
-| 2 | `jira_create` | 5.7 | Set `output.confirmation_required: true` in the contract, so it matches SKILL.md's "wait for a yes" rule | [scorecard_jira_create.md](skills/scorecard_jira_create.md) |
-| 3 | `confluence_create_page` | 5.7 | Rewrite or delete the evals that test Python functions that don't exist | [scorecard_confluence_create_page.md](skills/scorecard_confluence_create_page.md) |
-| 4 | `airflow.md` | 5.7 | Make the parent and `airflow/best_practices.md` agree on Variables vs `config.yaml`, retries and retry delay | [scorecard_airflow.md](rules/style_guide_standards/scorecard_airflow.md) |
-| 5 | `sql.md` | 5.7 | Fix `sql.md`'s advice to quote Snowflake identifiers with backticks, since Snowflake uses double quotes | [scorecard_sql.md](rules/style_guide_standards/scorecard_sql.md) |
+| 1 | `jira_create` | 5.7 | Set `output.confirmation_required: true` in the contract, so it matches SKILL.md's "wait for a yes" rule | [scorecard_jira_create.md](skills/scorecard_jira_create.md) |
+| 2 | `confluence_create_page` | 5.7 | Rewrite or delete the evals that test Python functions that don't exist | [scorecard_confluence_create_page.md](skills/scorecard_confluence_create_page.md) |
+| 3 | `claude_review_config` | 6.1 | Add a runner or a pytest for the evals, or set `tested: false` until one exists | [scorecard_claude_review_config.md](skills/scorecard_claude_review_config.md) |
+| 4 | `dbt.md` | 6.2 | Make the source-test requirement say the same thing in every section, and define "completeness" or drop it | [scorecard_dbt.md](rules/style_guide_standards/scorecard_dbt.md) |
+| 5 | `makefile.md` | 6.2 | Bring the repo's own Makefiles into line with the guide, or record the exceptions | [scorecard_makefile.md](rules/style_guide_standards/utilities/scorecard_makefile.md) |
 
-- **Tie:** four artefacts score 5.7, and the skills rank above the lazy-load style guides because a skill runs actions while a style guide only advises.
+- **Tie:** three style guides score 6.2, and `dbt.md` and `makefile.md` rank above `terraform.md` alphabetically.
 - **Upkeep:** refresh this list whenever a scorecard is re-scored.
 - **Full ranking:** see `quality_scorecards_summary.md`.

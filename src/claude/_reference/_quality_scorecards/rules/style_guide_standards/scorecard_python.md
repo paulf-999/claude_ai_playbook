@@ -1,40 +1,35 @@
 # Quality Scorecard — python.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-10-25
+**Date Updated:** 2026-10-28
 
-**Overall score:** 6.5/10 (6-dimension average, Token Cost N/A)
+**Overall score:** 7.0/10 (6-dimension average, Token Cost N/A)
 
 **Recommended improvements:**
-- Move "Meaningful names" and "No history in names" (lines 35–36) out from under "Constants"
-- Give the 6 children `_` prefixes, and add a Purpose line to `python/python_environment.md`
-- Record evidence of need, and add an exception for top-level handlers to the `except` rule on line 50
+- Move "Meaningful names" and "No history in names" (lines 35–36) out from under "Constants" so they read as rules for every name.
+- Rename the "Absolute imports" bullet (line 41) to "No wildcard imports", or add a sentence that actually covers absolute versus relative imports.
+- Add the cleanup-handler exception that `python/logging/_error_handling.md` line 95 already uses to the "never `except Exception:`" rule (line 50), or change that child's example.
+- Fix the docstring example on lines 58–59, which mentions a "body" the function has no parameter for.
+- Split the multi-clause bullets on lines 35, 51 and 91, and reword line 46 as a positive instruction.
+- Record a dated style-drift incident, or real loads of this guide, as evidence beyond the "applied" rows.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 7/10 | 2026-10-25 | • 🔍 **Mostly direct:** layout, naming, imports and docstring rules are short and testable, and the two docstring examples (python.md lines 57–72) make the default plain.<br>• ⚠️ **Misplaced nesting:** "Meaningful names" and "No history in names" sit as child bullets under "Constants" (python.md lines 35–36), but they apply to every identifier.<br>• ⚠️ **Subjective trigger:** "Add type hints when they add value" (python.md line 88) leaves the call to each reader.<br>• ⚠️ **No escape hatch:** "never bare `except:` or `except Exception:`" (python.md line 50) has no exception for top-level handlers, so readers will apply it differently. |
-| **Complexity** | 5/10 | 2026-10-25 | • 🧮 **Raw complexity 5:** Concepts 3 (10 `##` topic sections plus 6 child pages) + Scope 1 (one style-guide tree, `python.md` plus `python/`) + Dependencies 1 (`ruff`, line 14) + Prerequisites 0.<br>• ⚠️ **Breadth:** the parent covers 10 separate topics (python.md lines 21–100), which is normal for a style guide but far from the raw-1 anchor. |
-| **Evidence of Need** | 5/10 | 2026-10-25 | • ❓ **No recorded need:** the Purpose line (python.md line 12) gives a general aim ("consistent, readable … across the team"), with no dated incident, PR or usage record.<br>• 🔗 **Hint only:** "trim long docstrings when a file is next edited" (python.md line 78) suggests a real past decision, but no file records it. |
-| **Token Cost Justification** | N/A | 2026-10-25 | • N/A — lazy-load rule, so the rubric leaves this out of the average |
-| **Structural Compliance** | 6/10 | 2026-10-25 | • ✅ **Header and shape:** has the `paths:` frontmatter, a 3-line metadata header plus `miss_cost`/`loading` (lines 1–9), an H1 emoji, a Purpose line and about 100 counted lines.<br>• ⚠️ **Child naming:** the 6 children (python.md lines 104–109, e.g. `python/comments.md`) have no `_` prefix, so they fail `_hard_gates_checklist.md` line 16.<br>• ⚠️ **Child style slips:** `python/python_environment.md` has no `**Purpose:**` line (lines 4–6), and its bullets have no bold keyword (lines 51–52, 56–58).<br>• ⚠️ **Bullet slip:** "Use f-strings: exclusively; do not use…" (python.md line 46) joins two clauses with a semicolon and is phrased as a negation. |
-| **Currency** | 8/10 | 2026-10-25 | • ✅ **Links resolve:** all 6 linked children exist on disk under `_reference/_style_guide_standards/python/`.<br>• ⚠️ **Child path drift:** `python/python_environment.md` line 38 points to `python/testing.md` from inside `python/`, and its example path `src/py/airbyte_manager/...` (line 27) refers to a codebase outside this config.<br>• 🔍 **Practice gap:** the "No `:type:` or `:rtype:`" rule (python.md line 76) is not yet followed in the repo's own tests (e.g. `_tests/rules/rules_lazy_load/test_lazy_load_rule_structure.py` lines 74–77), though line 78 allows trimming them later. |
-| **Test Coverage** | 8/10 | 2026-10-25 | • 🧪 **Tracked:** `_tests/rules/rules_lazy_load/test_lazy_load_rule_structure.py` line 50 checks python.md's header, Purpose line, required H2s, child links, relative links and Contents entries.<br>• 🧪 **Live check:** `_tests/rules/02_claude_standards/test_path_scoped_rules_live.py` line 173 uses python.md as the negative case for `paths:` loading.<br>• ⚠️ **Blind spots:** that test's Contents check only matches `- [` list entries, so the inline `·` Contents on python.md line 18 is never checked.<br>• ⚠️ **Children untracked:** the children are not checked themselves, which is how the missing Purpose in `python_environment.md` goes unnoticed. |
-| **Overall** | **6.5/10** | 2026-10-25 | • 💪 **Strength:** concise, testable conventions with good docstring examples and structural test coverage.<br>• ⚠️ **Gaps:** no recorded evidence of need, children named without the `_` prefix, and style slips in `python_environment.md`. |
+| **Clarity** | 7/10 | 2026-10-25 | • 🔍 **Clear core:** PEP 8 baseline with a single stated override (line 14), and each section gives concrete do/don't rules.<br>• ⚠️ **Misplaced scope:** "Meaningful names" and "No history in names" (lines 35–36) are nested under "Constants", so they read as applying only to constants.<br>• ⚠️ **Keyword mismatch:** "**Absolute imports:** no wildcard imports" (line 41) labels one rule and states a different one, and absolute versus relative imports are never covered.<br>• ⚠️ **Contradicted absolute:** "never bare `except:` or `except Exception:`" (line 50), yet the child `python/logging/_error_handling.md` line 95 shows `except Exception as e:` as a good cleanup pattern.<br>• ⚠️ **Example slip:** the docstring on line 59 says "from a shebang, header and body", but `build_hook` has no body parameter. |
+| **Complexity** | 5/10 | 2026-10-25 | • 🧮 **Raw complexity 5:** Concepts 3 (10 topic sections plus 6 child pages) + Scope 1 (one guide tree, `python.md` plus `python/`) + Dependencies 1 (`ruff`, line 14) + Prerequisites 0.<br>• ⚠️ **Breadth:** this many topics is normal for a style guide, but it sits at the raw-5 anchor. |
+| **Evidence of Need** | 7/10 | 2026-10-28 | • 📈 **Recurring applicability:** `docs/audits/rule_usage_sessions.csv` has 30 rows for this guide marked applied, from 2026-08-31 to 2026-09-30.<br>• ⚠️ **One recorded load:** only 1 of those 30 rows has `loaded=1`, and those rows use the old `rules/04_path_scoped/` path, from before `paths:` scoping.<br>• ⚠️ **No incident:** no file records style drift that this guide prevented, and its own header says `miss_cost: low` (line 8). |
+| **Token Cost Justification** | N/A | 2026-10-25 | • 🎯 **Path-scoped:** `paths: "**/*.py"` (lines 1–4) loads it only when a Python file is open, so the rubric marks this N/A and leaves it out of the average. |
+| **Structural Compliance** | 7/10 | 2026-10-28 | • ✅ **Header and Purpose:** frontmatter, then the version/created/updated header, an emoji H1, a Purpose line and emoji H2s.<br>• ⚠️ **At the limit:** 110 lines, the top of the tolerated range.<br>• ⚠️ **Bullet slips:** semicolon-joined clauses on lines 35, 51 and 91, and a negation ("do not use", line 46) where `writing_style.md` asks for positive framing.<br>• ⚠️ **Prose paragraph:** line 95 packs three instructions into one sentence instead of bullets. |
+| **Currency** | 8/10 | 2026-10-25 | • ✅ **Paths exist:** all 6 linked children are on disk under `python/`.<br>• ✅ **Line length current:** the 120 limit (line 14) matches `.pre-commit-config.yaml` line 86 (`ruff --line-length=120`).<br>• ⚠️ **Drift from children:** the `except Exception` ban (line 50) disagrees with `python/logging/_error_handling.md` line 95 and `python/examples/logging_patterns.py` line 33.<br>• ⚠️ **Drift from practice:** `src/claude/_tests/rules/rules_lazy_load/test_lazy_load_rule_structure.py` was updated 2026-10-27 and still uses `:type:`/`:rtype:`, which line 76 bans, while its header says "Python style compliant: Yes". |
+| **Test Coverage** | 8/10 | 2026-10-25 | • 🧪 **Structural tests:** `test_lazy_load_rule_structure.py` line 51 pins this guide's H2s, and its tests check the header, the Purpose line, child links and link resolution.<br>• 🧪 **Loading pinned:** `test_lazy_load_triggers.py` line 257 requires the `paths:` trigger.<br>• ✅ **Mechanically enforced:** ruff selects N, I, UP031/UP032, BLE, PTH, B006 and D10x (`.pre-commit-config.yaml` line 87), which covers naming, imports, f-strings, broad excepts, pathlib, mutable defaults and docstring presence.<br>• ⚠️ **Not run here:** the reviewer can only read files, so it didn't run the tests.<br>• ⚠️ **Gap:** nothing checks that the guide agrees with its own children, which is how the `except Exception` contradiction got through. |
+| **Overall** | **7.0/10** | 2026-10-28 | • 💪 **Well-enforced:** path-scoped, structurally tested, and most rules are backed by ruff in pre-commit.<br>• ⚠️ **Clarity and drift:** misplaced bullets, a mislabelled imports rule, and an absolute `except` ban that its own child contradicts. |
 
 ## 🔗 Related files
 
 - `src/claude/_reference/_style_guide_standards/python.md` — the rule being scored
-- `src/claude/_reference/_style_guide_standards/python/python_environment.md` — Currency dimension
-- `src/claude/_reference/_style_guide_standards/python/testing.md` — Currency dimension
-- `src/claude/_reference/_style_guide_standards/python/logging.md` — Currency dimension
-- `src/claude/_reference/_style_guide_standards/python/module_organisation.md` — Currency dimension
-- `src/claude/_reference/_style_guide_standards/python/code_complexity.md` — Currency dimension
-
----
-
-## 🚩 Pre-existing issues — found here, fixed separately
-
-- 🐛 **Broken link syntax:** "Related" used `[[python_environment]]` — the memory system's wiki-link format, not a resolvable reference in a `_rules/` file.
-- 🐛 **Domain disconnect:** unlike `airflow.md`/`dbt.md`, this parent had no links to `testing.md`, `logging.md`, `module_organisation.md`, or `code_complexity.md`.
-- 🐛 **Two orphaned duplicates, not one:** `python/python.md` was an unreferenced near-copy of this parent — and so, it turned out on closer inspection, was `python/python_standards.md` (initially misclassified as a genuine sibling page rather than a second duplicate).
-- ✅ **Disposition:** all four fixed directly in this same audit pass, per explicit request — not left open.
+- `src/claude/_reference/_style_guide_standards/python/logging/_error_handling.md` — Clarity and Currency (`except Exception` in the line 95 good example)
+- `src/claude/_reference/_style_guide_standards/python/examples/logging_patterns.py` — Currency (`except Exception` on line 33)
+- `docs/audits/rule_usage_sessions.csv` — Evidence of Need (30 applied rows, 1 load)
+- `.pre-commit-config.yaml` — Currency and Test Coverage (ruff line length and selected rules, lines 82–93)
+- `src/claude/_tests/rules/rules_lazy_load/test_lazy_load_rule_structure.py` — Test Coverage (structural tests), and Currency (`:type:`/`:rtype:` drift)
+- `src/claude/_tests/rules/rules_lazy_load/test_lazy_load_triggers.py` — Test Coverage (`paths:` trigger pinned)
