@@ -12,7 +12,7 @@
 
 | Group | Scored | Overall | Date Updated | Strengths and gaps |
 |---|---|---|---|---|
-| Agents | 3 | 7.7/10 | 2026-10-26 | • 💪 **Strongest:** `code_reviewer` (8.0/10)<br>• ⚠️ **Weakest:** `technical_writer` (7.3/10) |
+| Agents | 3 | 7.4/10 | 2026-10-28 | • 💪 **Strongest:** `quality_scorecard_reviewer` (8.1/10)<br>• ⚠️ **Weakest:** `technical_writer` (6.3/10) |
 
 ---
 
@@ -22,9 +22,9 @@ Ranked by impact, highest first.
 
 | # | Action | Why | Source |
 |---|---|---|---|
-| 1 | • 🔧 **`technical_writer`:** resolve the Confluence job it shares with `confluence_create_page`, and record real uses | • 🔻 **Score:** 7.3/10 | `scorecard_technical_writer.md` |
-| 2 | • 🔧 **`quality_scorecard_reviewer`:** update its stale maturity evidence and add a run block to `scores_below_nine_quote_evidence` | • 🔻 **Score:** 7.9/10 | `scorecard_quality_scorecard_reviewer.md` |
-| 3 | • 🔧 **`code_reviewer`:** tighten the three eval checks that are weaker than their assertions | • 🔻 **Score:** 8.0/10 | `scorecard_code_reviewer.md` |
+| 1 | • 🔧 **`technical_writer`:** decide whether it drafts Confluence pages, and fix or explain its 4 failing evals | • 🔻 **Score:** 6.3/10 | `scorecard_technical_writer.md` |
+| 2 | • 🔧 **`code_reviewer`:** find out why `findings_have_fixes` fails, then fix the agent or the eval | • 🔻 **Score:** 7.9/10 | `scorecard_code_reviewer.md` |
+| 3 | • 🔧 **`quality_scorecard_reviewer`:** fix the failing `declines_to_edit_or_score_hooks` eval and update its stale maturity evidence | • 🔻 **Score:** 8.1/10 | `scorecard_quality_scorecard_reviewer.md` |
 
 ---
 
@@ -34,9 +34,9 @@ Sorted by Overall score, highest first.
 
 | Scorecard | Overall | Date Updated | Recommended improvements |
 |---|---|---|---|
-| `scorecard_code_reviewer.md` | 8.0/10 | 2026-10-26 | • Make `clean_change_approved` check for a plain Approve with no Must or Should items, not just the word "approve"<br>• Make `declines_to_edit_or_post` check that the agent declines to edit, not only that it names `git_review_pr`<br>• Catch alignment findings in `skips_linter_style` even when they lack a bold severity label<br>• Add the "bug hunt goes to `/code-review`" boundary and a "review this PR" trigger to the description |
-| `scorecard_quality_scorecard_reviewer.md` | 7.9/10 | 2026-10-26 | • Name in the description when not to use it (hooks, tests, PR diffs, whole-config audits)<br>• Name what owns the hook and test scorecard flow on line 31<br>• Add a run block to `scores_below_nine_quote_evidence`, which needs no full session<br>• Update the stale maturity evidence on lines 53–54 and `tested: false` now that 4 evals run |
-| `scorecard_technical_writer.md` | 7.3/10 | 2026-10-26 | • Resolve line 3's hand-off of Confluence pages to `confluence_create_page` against lines 25 and 30, which say the agent drafts them<br>• Record real uses, or lower the Tactical maturity on line 4 until usage exists<br>• Give the boundaries on line 52 a reason, and say how audience rewrites differ from editing existing docs<br>• Check the draft path and "no draft written" assertions, which the run blocks don't cover |
+| `scorecard_quality_scorecard_reviewer.md` | 8.1/10 | 2026-10-28 | • Fix the failing `declines_to_edit_or_score_hooks` eval, either by changing the agent's hook refusal or by widening the eval's `must_match` regex, so that every "not for" case passes when it runs<br>• Add a `run` block to `scores_below_nine_quote_evidence`, since it needs no full session and so shouldn't be skipped<br>• Add `git_review_pr` to the "Not for" PR-diff bullet beside `code_reviewer`<br>• Put the "not for" boundary (hooks, tests, PR diffs, config audits) in the frontmatter `description`, so the description alone says when not to use the agent |
+| `scorecard_code_reviewer.md` | 7.9/10 | 2026-10-28 | • Find out why `findings_have_fixes` fails, then fix the agent or loosen the eval's narrow `for item in items:` regex, and record which it was<br>• Add `quality_scorecard_reviewer` and `claude_review_config` to "When to use" as "Not for" lines, so every near neighbour is named<br>• Add a usage record (dated rows or linked PRs) beyond the single 2026-10-05 use<br>• Add "review this PR" and "score this PR" to `triggers:`, since the routing eval's own prompt uses that wording |
+| `scorecard_technical_writer.md` | 6.3/10 | 2026-10-28 | • Decide whether this agent drafts Confluence pages, then make the description, "When to use", triggers and evals all say the same thing<br>• If Confluence drafting stays, add `confluence_create_page`'s own drafting to "Not for", or remove Confluence pages from the agent<br>• Add triggers for common phrasings such as "write a PR description" and "write the PR body"<br>• Record real uses, for example usage rows or dated PRs drafted by the agent, or step maturity down to draft as line 59 says to |
 
 ---
 

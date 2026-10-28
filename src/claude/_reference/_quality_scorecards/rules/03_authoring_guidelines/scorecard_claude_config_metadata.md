@@ -1,29 +1,40 @@
 # Quality Scorecard — _claude_config_metadata.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-10-25
+**Date Updated:** 2026-10-27
 
-**Overall score:** 7.7/10
+**Overall score:** 8.1/10
 
 **Recommended improvements:**
-- Change line 60's "up to three more lines" to say which usage fields are required
-- Update line 72's `path-scoped` definition to match `test_rule_headers.py` lines 345–346
-- Add a test for line 24's bump-on-edit rule
+- Define "the audit's built-in defaults" on line 70, or point to where they live in `audit_rule_usage.py`.
+- Split line 51's "Single source of version" bullet at the semicolon into two child bullets.
+- Add a `shared_standards.md` parent, or move both children under the parent that points to them, so the folder follows `multifile_document_organisation.md`.
+- Record one dated case where an `updated` or `version` value drove a staleness or audit decision.
+- Add a check that `created` never changes and that `version` moves whenever `updated` moves, or say in the rule that these two are not checked.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 8/10 | 2026-10-25 | • 🎯 **Unambiguous core:** the three fields, the bump rules (lines 23–27) and the per-artefact placement table (lines 36–41) leave little room for different readings<br>• ⚠️ **Understated requirement:** `_claude_config_metadata.md` line 60 says entry-point rules "add up to three more lines", but line 69 makes `applies_to` required on always-on entry points and line 74 makes `loading` required on every entry point, so "up to" makes them sound optional |
-| **Complexity** | 6/10 | 2026-10-25 | • 🧮 **Raw complexity 4:** Concepts 2 (three fields, bump semantics, per-artefact placement, rule-only usage fields) + Scope 2 (rules, skills, agents and hooks across several folders) + Dependencies 0 + Prerequisites 0, per `_complexity_scoring.md`<br>• ⚠️ **Two jobs in one file:** lines 58–77 add a rule-only usage-field standard (`applies_to`, `miss_cost`, `loading`) on top of the shared header standard set out in line 11's Purpose |
-| **Evidence of Need** | 7/10 | 2026-10-25 | • ✅ **Real consumers:** four header tests and `make audit_rule_usage` (line 75) depend on the format, so it is in active use<br>• ⚠️ **No dated problem:** line 20 ("git history doesn't travel with the live `~/.claude/` copy") gives a reason, but no incident or recorded failure is cited, and the 2026-09-28 note on line 53 is a design check, not a need |
-| **Token Cost Justification** | 8/10 | 2026-10-25 | • ✅ **Path-scoped, cost near zero:** `paths:` frontmatter (lines 1–5) keeps it out of non-config sessions, and line 53 records that HTML-comment headers cost no tokens<br>• ⚠️ **Broad trigger:** lines 3–4 (`**/.claude/**`, `**/claude/**`) match every file under the config, including reads unrelated to authoring, so in this repo it loads on almost any read |
-| **Structural Compliance** | 9/10 | 2026-10-25 | • ✅ **Clean:** 78 lines, emoji H1, one-line Purpose, metadata header straight after `paths:`, bold-keyword one-sentence bullets, no Related section<br>• 🔍 **Not run:** compliance is judged from the file against `_hard_gates_checklist.md`, and `test_claude_config_metadata.py` covers it, but I didn't run that test this pass |
-| **Currency** | 8/10 | 2026-10-25 | • ✅ **References exist:** `testing_lazy_load/_test_metadata.md` (line 54) and `test_rule_headers.py` (line 73) both exist, and line 73's folder-match claim matches `expected_loading()` in that test<br>• ⚠️ **Drifted definition:** line 72 defines `path-scoped` as "lazy with `paths:` frontmatter", but this rule sits in tier 03 with `paths:`, and `test_rule_headers.py` lines 345–346 treat any rule with `paths:` as path-scoped wherever it lives<br>• 🔍 **Unverified:** `make audit_rule_usage` (line 75) falls outside the allowed inputs and was only seen named in `test_rule_headers.py` line 17 |
-| **Test Coverage** | 8/10 | 2026-10-25 | • ✅ **Mechanically enforced:** `test_claude_config_metadata.py` scans every rule header, `test_rule_headers.py` checks `applies_to`, `miss_cost` and `loading` against the folder, and the skill, agent, hook and shared-format header tests cover the other artefacts<br>• ⚠️ **Untested behaviour:** no test found checks line 24's "bump `version` on every edit, never change `created`" or line 23's new-artefact defaults, and I only grepped the skill, agent and hook test files, so line 51's contract-version match wasn't confirmed |
-| **Overall** | **7.7/10** | 2026-10-25 | • 💪 **Strength:** one shared standard enforced by tests across all four artefact types<br>• ⚠️ **Gaps:** the rule-only usage fields widen the scope, line 72's path-scoped definition has drifted, and the bump-on-edit rule has no test |
+| **Clarity** | 8/10 | 2026-10-25 | • 🔍 **Clear core:** the three-field table, the semver bullets and the per-artefact placement table leave little room for different readings<br>• ⚠️ **Undefined default:** line 70 says lazy rules can skip `applies_to` because "the audit's built-in defaults apply otherwise", but never says what those defaults are<br>• ⚠️ **Undefined term:** "Entry-point rules" (line 60) is only explained by contrast in line 76 ("a child file inherits its parent's fields") |
+| **Complexity** | 6/10 | 2026-10-25 | • 🧮 **Raw complexity 4:** Concepts 2 (three fields, semver bump policy, placement, three usage fields) + Scope 2 (rules, skills, agents and hooks folders) + Dependencies 0 + Prerequisites 0<br>• ⚠️ **Two jobs in one file:** the shared header standard and the rule-only usage fields (`applies_to`, `miss_cost`, `loading`) are separate concerns in the same file |
+| **Evidence of Need** | 8/10 | 2026-10-27 | • 🔗 **Stated need:** line 20 says "git history doesn't travel with the live copy", and line 21 says `updated` is "the main signal in audits and 6-month resets"<br>• 📈 **Used everywhere:** five test files enforce the header on every rule, skill, agent and hook, and `audit_rule_usage.py` reads `applies_to` and `miss_cost` (14 references)<br>• ⚠️ **No dated incident:** no file records an audit or reset decision driven by these fields, and line 28 says they show change, not use |
+| **Token Cost Justification** | 9/10 | 2026-10-27 | • 🎯 **Scoped load:** `paths:` frontmatter (`**/.claude/**`, `**/claude/**`) loads it only when a config file is open, which is when the standard applies<br>• ✅ **Header is free:** line 53 records a dated check (2026-09-28) that HTML comment headers add no input tokens |
+| **Structural Compliance** | 8/10 | 2026-10-27 | • ✅ **Within limits:** 78 lines including frontmatter and header, with emoji headings, a Purpose line and bold-keyword bullets<br>• ⚠️ **Two-sentence bullet:** line 51, "skills and agents drop `version:` from frontmatter; a skill's `skill.contract.yaml` version must match its header", joins two sentences with a semicolon<br>• ⚠️ **No parent folder match:** `shared_standards/` has no `shared_standards.md` parent, but `multifile_document_organisation.md` says children "live in a subdirectory named after the parent" |
+| **Currency** | 9/10 | 2026-10-27 | • 🔍 **Claims checked:** hook lines 2–4 after the shebang, skill header matching the contract version, the line-limit exemption, `make audit_rule_usage`, `test_rule_headers.py` and `testing_lazy_load/_test_metadata.md` all exist and match the rule<br>• 🔍 **Minor nit:** line 20 says the live copy is `~/.claude/`, while `portable_paths.md` says it is deliberately installed at `~/claude` |
+| **Test Coverage** | 9/10 | 2026-10-27 | • 🧪 **Enforced by tests:** `test_claude_config_metadata.py` checks every rule header, `test_rule_headers.py` checks `applies_to`, `miss_cost`, `loading` and that `loading` matches the folder, the hook, skill and agent header tests cover the other types, and `test_rules_structure.py` checks the line-limit exemption<br>• ⚠️ **Edit rules not checked:** nothing checks "never change `created`" or "bump `version` whenever `updated` moves" (line 24)<br>• ⚠️ **Not run here:** the reviewer read the tests but couldn't run pytest, because it only has read access |
+| **Overall** | **8.1/10** | 2026-10-27 | • 💪 **Strength:** one standard for four artefact types, with nearly every claim backed by a test<br>• ⚠️ **Gaps:** the "built-in defaults" wording is vague, there's a folder-structure slip, the edit rules aren't checked and no dated incident is recorded |
 
 ## 🔗 Related files
 
 - `src/claude/rules/03_authoring_guidelines/shared_standards/_claude_config_metadata.md` — the rule being scored
-- `src/claude/rules/03_authoring_guidelines/authoring_rules.md` — imports this file (Token Cost Justification)
-- `src/claude/_tests/rules/03_authoring_guidelines/test_claude_config_metadata.py` — Test Coverage dimension
-- `src/claude/_tests/rules/02_claude_standards/test_always_on_reachability.py` — why the always-on import is required
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md` — Complexity formula
+- `src/claude/_tests/rules/03_authoring_guidelines/test_claude_config_metadata.py` — Test Coverage
+- `src/claude/_tests/rules/03_authoring_guidelines/test_rule_headers.py` — Test Coverage, Currency
+- `src/claude/_tests/rules/test_rules_structure.py` — Test Coverage, Currency (line-limit exemption)
+- `src/claude/_tests/hooks/test_hook_metadata_header.py` — Currency, Test Coverage
+- `src/claude/_tests/skills/_all_skills/test_skill_metadata_header.py` — Currency, Test Coverage
+- `src/claude/_tests/agents/test_agent_metadata_header.py` — Test Coverage
+- `src/claude/_tests/_shared_checks/test_metadata_header_format.py` — Test Coverage
+- `src/claude/scripts/_audit_scripts/audit_rule_usage.py` — Evidence of Need, Currency
+- `src/claude/rules/_rules_lazy_load/testing_lazy_load/_test_metadata.md` — Currency
+- `src/claude/rules/01_essentials/claude_usage_standards/multifile_document_organisation.md` — Structural Compliance
+- `src/claude/rules/02_claude_standards/claude_working_practices/portable_paths.md` — Currency

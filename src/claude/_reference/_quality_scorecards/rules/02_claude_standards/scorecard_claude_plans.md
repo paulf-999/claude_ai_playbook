@@ -1,29 +1,36 @@
 # Quality Scorecard — claude_plans.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-10-25
+**Date Updated:** 2026-10-27
 
-**Overall score:** 7.1/10
+**Overall score:** 8.0/10
 
 **Recommended improvements:**
-- Reconcile the gate exceptions in `claude_plans.md` line 31 with `_plan_mode_phase_gates.md` line 6
-- Say which phase threshold wins, 3+ phases or every plan-mode phase
-- Replace the literal `~/.claude/` prefix in `_plan_mode_phase_gates.md` lines 22, 27 and 35
-- Give bullets bold keywords and use British spelling ("deprioritise", "summarise")
+- Record a dated incident or issue in which phases ran without approval, to back the rule's need.
+- Add a "✅ Right" example beside the existing "❌ Wrong: No gate, silent progress" case.
+- Swap "or similar" in step 2 for the exact approval wording the rule wants.
+- Make step 3 match step 5, so a reply with feedback counts as a valid answer and the gate isn't only yes or no.
+- Split the long "Tightly coupled" skip bullet so the plan-mode caveat is its own child bullet.
+- Add a content-regression test for the parent's own rules (the 3-phase threshold, the skip conditions and the three required report parts).
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 7/10 | 2026-10-25 | • 🔍 **Conflicting scope:** `claude_plans.md` line 31 waives gates for tightly coupled phases, but `claude_plans/_plan_mode_phase_gates.md` line 6 says plan-mode gates apply "without exception".<br>• 🔍 **Threshold drift:** the parent gates only 3+ phase work (line 15), but the child's line 8 gates every plan-mode phase, and neither says which rule wins.<br>• ⚠️ **Self-contradiction:** `_plan_mode_phase_gates.md` line 22 calls `TODO.md` "Read-only content" while allowing edits to it. |
-| **Complexity** | 6/10 | 2026-10-25 | • 🧮 **Raw complexity 4:** Concepts 2 (phase gates, plan-mode approval, plan persistence, plan file format, plan status) + Scope 1 (parent plus 2 children in one folder) + Dependencies 1 (`make list_plans`/`clean_plans` and the `ExitPlanMode` harness) + Prerequisites 0.<br>• ⚠️ **Bundled concepts:** `_plan_file_format.md` lines 31–50 add a five-state status lifecycle on top of the table format. |
-| **Evidence of Need** | 7/10 | 2026-10-25 | • ✅ **One real incident:** `_plan_mode_phase_gates.md` line 34 records the 2026-09-19 literal-`~` incident.<br>• ⚠️ **Parent unevidenced:** the core gate rule's only example (`claude_plans.md` line 80) is hypothetical, with no dated incident or usage record. |
-| **Token Cost Justification** | 7/10 | 2026-10-25 | • ⚖️ **Arguable:** `applies_to: *` (line 4) is fair for the gate principle, since any task can become multi-phase.<br>• ⚠️ **Narrow child always-on:** `_plan_file_format.md` (53 lines) matters only when writing a plan file in `_plans/`, yet it loads every session. |
-| **Structural Compliance** | 6/10 | 2026-10-25 | • ✅ **Basics met:** metadata header, emoji H1, Purpose line, 81 lines, and 2 children in `claude_plans/` named in `Loads on its own from:` lines.<br>• ⚠️ **No bold keywords:** `claude_plans.md` lines 24–27, 30–32 and 68–72 are bullets that don't open with a bold keyword.<br>• ⚠️ **Multi-sentence bullet:** `_plan_mode_phase_gates.md` line 22, and `_plan_file_format.md` lines 12 and 18 are multi-sentence paragraphs.<br>• ⚠️ **American spelling:** `claude_plans.md` uses "deprioritize" (line 17) and "Summarize" (lines 40 and 70), and `_plan_mode_phase_gates.md` line 22 uses "pre-authorized".<br>• ⚠️ **Negative framing:** `claude_plans.md` line 29 heading reads "Do NOT apply gates when". |
-| **Currency** | 8/10 | 2026-10-25 | • 🔍 **Mostly current:** `test_clean_plans.py` and `test_audit_plans.py` exist, which supports the `make clean_plans`/`list_plans` behaviour in `_plan_file_format.md` lines 47–48.<br>• ⚠️ **Unverified targets:** I could not confirm that the `make list_plans` and `make install` targets (`_plan_file_format.md` lines 47–48) exist using only the allowed inputs.<br>• ⚠️ **Hardcoded prefix:** `_plan_mode_phase_gates.md` lines 22, 27 and 35 use a literal `~/.claude/`, which `portable_paths.md` warns breaks on non-default installs. |
-| **Test Coverage** | 9/10 | 2026-10-25 | • 🧪 **Incident pinned:** `_tests/rules/02_claude_standards/test_plan_mode_phase_gates.py` asserts that the persistence section and the 2026-09-19 incident survive, and its asserts are tagged `wording-check`.<br>• ✅ **Status behaviour runs:** `_tests/scripts/test_clean_plans.py` tests the Plan status line parsing and folder filing.<br>• 🔍 **Structural assumed:** I didn't open `test_rules_structure.py` to confirm it covers these files. I assumed coverage because it scans every rule. |
-| **Overall** | **7.1/10** | 2026-10-25 | • 💪 **Strength:** a real incident is recorded and pinned by a test, and the plan-status lifecycle is backed by script tests.<br>• ⚠️ **Gap:** the parent and child disagree on exceptions and the phase threshold, and several style slips remain (unbolded bullets, American spelling, multi-sentence bullets). |
+| **Clarity** | 8/10 | 2026-10-27 | • 🎯 **Clear trigger:** "3+ phases", "sequential, not parallel" and the skip list make it plain when to gate.<br>• ⚠️ **Loose wording:** step 2's "Ready to proceed to Phase X?" or similar leaves the approval wording open.<br>• ⚠️ **Yes/no versus feedback:** step 3's "(yes/no)" clashes with step 5's "On "no" or feedback".<br>• ⚠️ **One-sided example:** the `## 📚 Example` section shows only the wrong case. |
+| **Complexity** | 9/10 | 2026-10-27 | • 🧮 **Raw complexity 1:** Concepts 1 (the gate, when to apply or skip, and the report format), Scope 0 (one file, with the children loading on their own), Dependencies 0, Prerequisites 0. |
+| **Evidence of Need** | 5/10 | 2026-10-27 | • ❓ **No recorded incident:** the only example is hypothetical ("User plans 3-phase work... User discovers Phase 2 approach was misaligned").<br>• ⚠️ **Not inherited:** the dated 2026-09-19 incident in `_plan_mode_phase_gates.md` is about a wrong Write path, not a missed phase gate. |
+| **Token Cost Justification** | 8/10 | 2026-10-27 | • ✅ **Header set:** `applies_to: *` and `loading: always-on`, with a reason ("any task can grow into multi-phase work").<br>• ⚖️ **Arguable coverage:** only multi-phase sessions need it, but it is short (81 lines) and its `miss_cost` is medium. |
+| **Structural Compliance** | 8/10 | 2026-10-27 | • ✅ **Within limits:** 81 lines, a complete metadata header, emoji on H1 and H2, a Purpose line, and no Related section.<br>• ✅ **Contents optional:** no Contents section, which `test_rules_structure.py` allows.<br>• ⚠️ **Style slip:** line 31 crams the skip condition and the plan-mode caveat into one bullet joined by an em dash.<br>• ⚠️ **Style slip:** the line 17 `**Why:**` paragraph has two sentences. |
+| **Currency** | 9/10 | 2026-10-27 | • ✅ **Paths exist:** `claude_response_standards.md`, `claude_plans/_plan_mode_phase_gates.md` and `claude_plans/_plan_file_format.md` all exist at commit 1705887.<br>• ✅ **Consistent:** the plan-mode caveat on line 31 matches the child's "unless the user explicitly waives gates". |
+| **Test Coverage** | 9/10 | 2026-10-25 | • ✅ **Structural:** covered by `test_rules_structure.py` and `test_rule_headers.py`.<br>• ✅ **No incident in the parent:** so the rubric asks for no content-regression test.<br>• ⚠️ **Not run in this review:** the reviewer can only read files, so the pass result comes from coverage, not a fresh run.<br>• ⚠️ **Child-only test:** `test_plan_mode_phase_gates.py` checks only the child. |
+| **Overall** | **8.0/10** | 2026-10-27 | • 💪 **Tight and current:** a short, single-concept rule whose references all resolve.<br>• ⚠️ **Need unproven:** no dated incident backs the parent rule. |
 
 ## 🔗 Related files
 
 - `src/claude/rules/02_claude_standards/claude_working_practices/claude_plans.md` — the rule being scored
-- `src/claude/_tests/rules/02_claude_standards/test_plan_mode_phase_gates.py` — Test Coverage dimension
-- `src/claude/rules/02_claude_standards/claude_working_practices/claude_plans/_plan_file_format.md` — Test Coverage dimension (untested child)
+- `src/claude/rules/02_claude_standards/claude_working_practices/claude_plans/_plan_mode_phase_gates.md` — Evidence of Need, Currency, Test Coverage
+- `src/claude/rules/02_claude_standards/claude_working_practices/claude_plans/_plan_file_format.md` — Currency
+- `src/claude/rules/01_essentials/claude_response_standards.md` — Currency
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md` — Complexity
+- `src/claude/_tests/rules/test_rules_structure.py` — Structural Compliance, Test Coverage
+- `src/claude/_tests/rules/03_authoring_guidelines/test_rule_headers.py` — Token Cost Justification, Test Coverage
+- `src/claude/_tests/rules/02_claude_standards/test_plan_mode_phase_gates.py` — Test Coverage

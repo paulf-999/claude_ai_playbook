@@ -1,30 +1,35 @@
 # Quality Scorecard — quality_scorecard_reviewer
 
 **Date Created:** 2026-10-22
-**Date Updated:** 2026-10-26
+**Date Updated:** 2026-10-28
 
-**Overall score:** 7.9/10
+**Overall score:** 8.1/10
 
 **Recommended improvements:**
-- Name in the description when not to use it (hooks, tests, PR diffs, whole-config audits)
-- Name what owns the hook and test scorecard flow on line 31
-- Add a run block to `scores_below_nine_quote_evidence`, which needs no full session
-- Update the stale maturity evidence on lines 53–54 and `tested: false` now that 4 evals run
+- Fix the failing `declines_to_edit_or_score_hooks` eval, either by changing the agent's hook refusal or by widening the eval's `must_match` regex, so that every "not for" case passes when it runs.
+- Add a `run` block to `scores_below_nine_quote_evidence`, since it needs no full session and so shouldn't be skipped.
+- Add `git_review_pr` to the "Not for" PR-diff bullet beside `code_reviewer`.
+- Put the "not for" boundary (hooks, tests, PR diffs, config audits) in the frontmatter `description`, so the description alone says when not to use the agent.
+- Replace "with no recorded runs yet" in Maturity Justification with the recorded run count from `score_history.csv`.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 8/10 | 2026-10-26 | • 🔍 **Description:** line 3 says what the agent does and when to use it, and lines 10–13 cover natural phrasings<br>• ⚠️ **No "when not":** the exclusions for hooks, tests, PR diffs and whole-config audits appear only in the body (lines 31–32) |
-| **Scope Boundaries** | 8/10 | 2026-10-26 | • ✅ **Distinct job:** line 32 names `code_reviewer` and `claude_review_config` as neighbours<br>• ⚠️ **Unnamed owner:** line 31 excludes hooks and tests by pointing to "their own scorecard flow" without naming what owns it |
-| **Complexity** | 7/10 | 2026-10-26 | • 🧮 **Raw complexity 3:** one scoring job (Concepts 1), reads the artefact, rubric and anchors across folders (Scope 2), no dependencies or prerequisites, matching the ~7 anchor |
-| **Evidence of Need** | 7/10 | 2026-10-26 | • ✅ **Dated origin:** line 53 records "new on 2026-10-22 for issue #381"<br>• ⚠️ **No usage record:** the 2026-10-25/26 eval runs are tests, not real use |
-| **Test Coverage** | 8/10 | 2026-10-26 | • 📊 **Runs:** 4 of 7 evals have run blocks, and the clean run on 2026-10-26 passed 4/4 after a first run of 1/4 that failed on faults in the evals<br>• ⚠️ **Not all skips need a session:** `scores_below_nine_quote_evidence` (evals.yaml lines 74–85) could run but has no run block, so the 90% guidance stops at 8<br>• ⚠️ **Prose-only "not for":** the `code_reviewer` hand-off is checked only in prose (line 35) |
-| **Structural Compliance** | 8/10 | 2026-10-26 | • ✅ **Hard gates:** complete frontmatter, metadata header (lines 18–20), all 5 sections, 6 principles, 7 evals in the draft range, every eval field present<br>• ⚠️ **Stale maturity evidence:** line 53 says "no recorded runs yet", line 54 omits the 4 running evals, and frontmatter line 8 still says `tested: false`<br>• ⚠️ **Length:** 61 lines, just over the ~40–60 target |
-| **Tool Safety** | 9/10 | 2026-10-26 | • 🔒 **Allowlist:** line 14 allows only `Read, Grep, Glob`, which fits a read-only job (line 47)<br>• ✅ **Isolation:** `none` (line 16) is fine because the agent writes no files |
-| **Overall** | **7.9/10** | 2026-10-26 | • 💪 **Strength:** a tight read-only allowlist, and evals that now run and pass<br>• ⚠️ **Gap:** stale maturity evidence, one runnable eval left as prose, and no recorded real use |
+| **Clarity** | 8/10 | 2026-10-26 | • 💪 **Description:** says what it does, when to use it ("Use when asked to score, re-score or independently review…") and that it is read-only<br>• ⚠️ **No when-not:** the AGENT.md `description` (line 3) leaves out the hooks, tests, PR-diff and config-audit exclusions, which appear only in the body (lines 31–32), so it misses the ~9 anchor |
+| **Scope Boundaries** | 8/10 | 2026-10-26 | • 💪 **Fenced mostly:** names hooks/tests, `code_reviewer` and `claude_review_config` in "Not for"<br>• ⚠️ **Missed neighbour:** `git_review_pr` also reviews PR diffs, and evals.yaml `pr_review_goes_to_code_reviewer` expects "code_reviewer or git_review_pr", but AGENT.md line 32 names only `code_reviewer` |
+| **Complexity** | 7/10 | 2026-10-26 | • 🧮 **Raw 3:** Concepts 1 (one scoring job with a few rules), Scope 2 (reads the artefact plus `_reference/_quality_scorecards/`, `_templates/scorecard/` and `_rules_lazy_load/` rubric files), Dependencies 0, Prerequisites 0<br>• ⚠️ **Anchor:** matches the ~7 row, "one job that reads across several folders" |
+| **Evidence of Need** | 9/10 | 2026-10-28 | • 📈 **Recurring:** `score_history.csv` holds 76 rows with reviewer `quality_scorecard_reviewer`, a recorded use across many artefacts<br>• ⚠️ **Stale claim:** AGENT.md line 53 still says "no recorded runs yet" (counted under Structural Compliance) |
+| **Test Coverage** | 7/10 | 2026-10-28 | • 📊 **Right count:** 7 evals, within the draft range of 5–8, covering triggering, output, anchoring and both "not for" cases<br>• ⚠️ **Pass rate 75%:** `audit_agent_evals.py` passed 3 of 4 runnable evals (2026-10-28), and the anchors cap 75–89% at 8 or below<br>• ⚠️ **Not-for case fails:** the failing eval, `declines_to_edit_or_score_hooks`, is itself a "not for" case, so the ~9 anchor ("including the 'not for' cases") isn't met<br>• ⚠️ **Avoidable skip:** `scores_below_nine_quote_evidence` has no `run` block, even though it needs no full session |
+| **Structural Compliance** | 8/10 | 2026-10-26 | • 💪 **Gates met:** full frontmatter (name, description, maturity, triggers, tools, model, isolation), metadata header straight after it, every required section, 61 lines and 6 principles<br>• 💪 **Evals complete:** each eval has name, description, input, setup and expected_output<br>• ⚠️ **Maturity evidence stale:** the hard gate "Maturity justified with evidence" is undercut by line 53, "no recorded runs yet", which the history CSV contradicts |
+| **Tool Safety** | 10/10 | 2026-10-28 | • 🔒 **Least privilege:** `tools: Read, Grep, Glob` only, with no Write, Edit or Bash, which suits a read-only reviewer<br>• 💪 **Isolation:** `isolation: none` is appropriate, because the agent can't write files |
+| **Overall** | **8.1/10** | 2026-10-28 | • 💪 **Strength:** tightly scoped read-only tools, a clear purpose and heavy recorded use<br>• ⚠️ **Gap:** a failing "not for" eval, one avoidable skipped eval, a near neighbour missing from "Not for", and a stale maturity line<br>• 🔁 **Self-scored:** this agent scored itself, so a cross-check by a different reviewer would strengthen the result |
 
 ## 🔗 Related files
 
-- `src/claude/agents/core/quality_scorecard_reviewer/AGENT.md` — the agent being scored
-- `src/claude/agents/core/quality_scorecard_reviewer/evals.yaml` — Test Coverage dimension
-- `src/claude/agents/core/code_reviewer/AGENT.md` — Scope Boundaries dimension
-- `src/claude/rules/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_agents/_hard_gates_checklist.md` — Structural Compliance dimension
+- `src/claude/agents/core/quality_scorecard_reviewer/AGENT.md` — the artefact being scored
+- `src/claude/agents/core/quality_scorecard_reviewer/evals.yaml` — Test Coverage, Scope Boundaries
+- `src/claude/_reference/_quality_scorecards/score_history.csv` — Evidence of Need, Structural Compliance
+- `src/claude/scripts/_audit_scripts/audit_agent_evals.py` — Test Coverage (run pass rate)
+- `src/claude/skills/_git_skills/git_review_pr/SKILL.md` — Scope Boundaries (near neighbour missing from "Not for")
+- `src/claude/rules/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_agents/_hard_gates_checklist.md` — Structural Compliance
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md` — Complexity
+- `src/claude/_reference/_quality_scorecards/scoring_anchors.md` — anchors for every dimension

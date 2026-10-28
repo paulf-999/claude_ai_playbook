@@ -1,30 +1,33 @@
 # Quality Scorecard — aliases.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-10-25
+**Date Updated:** 2026-10-27
 
-**Overall score:** 7.1/10
+**Overall score:** 7.7/10
 
 **Recommended improvements:**
-- Add the standard metadata header and `applies_to` / `miss_cost` fields to `aliases.md`
-- Define what the `Ready` and `Testing` statuses mean
-- Drop the controls-path repetition in lines 17–25, and use British "optimise" on line 10
-- Add a test that checks `aliases.md` has a metadata header
+- Add a dated usage record, or an incident, for at least the `bullets`, `draft` and `plan` aliases (for example, rows in a usage CSV).
+- Say in one line how an alias triggers: only when the whole message is the alias, or anywhere in a message.
+- Define the `Ready` and `Testing` statuses in the file.
+- Name the controls file once, in the note, and drop the copy from the three automation rows.
+- Split the `/fewer-permission-prompts` meaning, which is two clauses joined by a semicolon, into one clause.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 7/10 | 2026-10-25 | • 🔍 **Clear rows:** each alias has a plain, actionable meaning, such as `plan` → "Enter plan mode" on line 13.<br>• ⚠️ **Undefined status:** `aliases.md` lines 5–13 use the statuses `Ready` and `Testing` but never say what they mean or when a `Testing` alias becomes `Ready`.<br>• ⚠️ **Repeated pointer:** lines 7, 11 and 12 each embed the controls path, and lines 17–25 say it again in prose, so the reader must check that the two agree. |
-| **Complexity** | 9/10 | 2026-10-25 | • 🧮 **Raw complexity 1:** Concepts 1 (an alias list plus one pointer to the controls doc) + Scope 0 (one file) + Dependencies 0 + Prerequisites 0, per `_complexity_scoring.md`.<br>• ⚠️ **Second concept:** the "Note on automation controls" section (`aliases.md` lines 17–25) is the one extra concept above raw 0. |
-| **Evidence of Need** | 6/10 | 2026-10-25 | • ❓ **No usage record:** `aliases.md` has no usage-evidence section, incident or issue reference showing these shortcuts are used.<br>• ⚠️ **Built-ins listed:** `/batch`, `/goal`, `/loop`, `/fewer-permission-prompts` and `plan` (lines 7, 10–13) appear to be Claude Code's own commands, and no file shows that documenting them fixed a real problem.<br>• ✅ **Custom shorthands:** `bullets` and `draft` (lines 8–9) are this config's own shorthands, which gives some sign they were needed. |
-| **Token Cost Justification** | 6/10 | 2026-10-25 | • ⚖️ **Always imported:** `CLAUDE.md`'s `@~/.claude/aliases.md` loads the file every session, and the file is small (25 lines).<br>• ⚠️ **No `applies_to` / `miss_cost`:** `aliases.md` line 1 goes straight to the H1, so nothing in the file justifies loading it always-on.<br>• ⚠️ **Duplicate tokens:** lines 17–25 repeat the controls path that lines 7, 11 and 12 already carry, so every session pays for it twice. |
-| **Structural Compliance** | 5/10 | 2026-10-25 | • ❌ **No metadata header:** `aliases.md` line 1 is the H1, with no `version` / `created` / `updated` lines, which fails `_hard_gates_checklist.md` line 19.<br>• ⚠️ **Bullets without bold keywords:** lines 20–23 ("Turn budgets and caps", …) have no bold keyword, against `_hard_gates_checklist.md` line 25.<br>• ⚠️ **Prose paragraphs:** line 19 is a multi-clause paragraph and line 25 is a loose prose sentence, not bullets.<br>• ⚠️ **American spelling:** line 10 uses "optimize", where British English is the house style.<br>• ✅ **Basics met:** emoji H1, a Purpose line (line 3), well under 110 lines, and one concept. |
-| **Currency** | 8/10 | 2026-10-25 | • ✅ **Paths checked:** `test_referenced_rule_paths_exist` in `_tests/_root_files/test_aliases.py` (lines 111–116) proves the `_automation_controls.md` path in lines 7, 11 and 12 exists.<br>• ⚠️ **Unchecked commands:** nothing in the inputs shows that `/fewer-permission-prompts` (line 10) or the `Testing` status of `/batch`, `/goal` and `/loop` (lines 7, 11, 12) still match today's Claude Code. |
-| **Test Coverage** | 9/10 | 2026-10-25 | • ✅ **Content tests:** `_tests/_root_files/test_aliases.py` has 18 tests: required fields, valid status, unique inputs, input format, paths exist, the note matches the table, core aliases kept, plus negative cases for the parser.<br>• ✅ **Wiring tests:** `test_claude_md_imports_aliases` (`_tests/rules/02_claude_standards/test_always_on_reachability.py` line 68) and `test_aliases_at_claude_root` (`_tests/rules/test_rules_structure_layout.py` line 86) check the import and the file's location.<br>• ⚠️ **No header check:** none of the tests found checks that `aliases.md` has a metadata header, which is how the gap on line 1 went unnoticed. |
-| **Overall** | **7.1/10** | 2026-10-25 | • 💪 **Well tested:** a strong set of tests, and simple to follow.<br>• ⚠️ **Structure and justification gaps:** no metadata or usage headers, no recorded evidence of need, and the pointer to the controls doc appears twice. |
+| **Clarity** | 7/10 | 2026-10-25 | • 🔍 **Clear table:** the table plus line 9's Purpose make each shortcut easy to read<br>• ⚠️ **Trigger unstated:** nothing says whether `plan` (line 19) or `draft` (line 15) fires only as a whole message or anywhere in a sentence<br>• ⚠️ **Status undefined:** the `Ready` / `Testing` values are used but never explained in the file |
+| **Complexity** | 8/10 | 2026-10-27 | • 🧮 **Raw complexity 2:** one concept in one file, with one dependency (`_automation_controls.md`) and no prerequisites |
+| **Evidence of Need** | 5/10 | 2026-10-27 | • ❓ **No record:** no file records a use of any alias or an incident behind one<br>• ⚠️ **Illustration only:** the `/fewer-permission-prompts` line in `usage_evidence.md` (line 20) is a template example, not a recorded use |
+| **Token Cost Justification** | 8/10 | 2026-10-27 | • 🎯 **Justified placement:** `applies_to: *` is set and CLAUDE.md line 32 imports the file, because shortcuts have to work in every session<br>• ⚠️ **Repeated path:** the long controls path appears four times (lines 13, 17, 18 and 25), which costs tokens every session for little gain<br>• ⚠️ **Low miss cost:** the header itself says `miss_cost: low` (line 5) |
+| **Structural Compliance** | 8/10 | 2026-10-27 | • ✅ **Clean shape:** metadata header, emoji H1, Purpose line, 28 lines, bold-keyword bullets in the note<br>• ⚠️ **Style slip:** the line 16 meaning joins two clauses with a semicolon ("Audit transcripts…; optimise…")<br>• ⚠️ **Duplication:** the rows repeat the controls pointer that line 25's note already gives |
+| **Currency** | 9/10 | 2026-10-27 | • ✅ **Paths exist:** `_automation_controls.md` exists at the named path, and `test_referenced_rule_paths_exist` keeps it checked<br>• 🔍 **Built-ins not verifiable:** `/batch`, `/goal`, `/loop` and `/fewer-permission-prompts` are Claude Code commands that no repo file can confirm |
+| **Test Coverage** | 9/10 | 2026-10-25 | • 🧪 **Dedicated suite:** `test_aliases.py` has 18 tests covering parsing, required fields, status values, input format, rule paths existing, note-to-table match, core aliases and the metadata header<br>• 🧪 **Layout check:** `test_rules_structure_layout.py::test_aliases_at_claude_root` checks where the file lives<br>• 🔍 **No incident to regress:** the rule records no incident, so no content-regression test is needed |
+| **Overall** | **7.7/10** | 2026-10-27 | • 💪 **Well tested:** a strong mechanical suite guards a small, current file<br>• ⚠️ **No usage evidence:** nothing on file shows the aliases are used, which holds the score back most |
 
 ## 🔗 Related files
 
 - `src/claude/aliases.md` — the rule being scored
-- `src/claude/_tests/_root_files/test_aliases.py` — Test Coverage dimension
-- `src/claude/_tests/rules/test_aliases_behavior.py` — Test Coverage dimension
-- `src/claude/rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md` — Currency dimension
+- `src/claude/CLAUDE.md` — line 32 import (Token Cost Justification)
+- `src/claude/rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md` — the controls file it names (Currency, Token Cost, Structural)
+- `src/claude/rules/_rules_lazy_load/claude_config/usage_evidence.md` — illustrative alias examples only (Evidence of Need)
+- `src/claude/_tests/_root_files/test_aliases.py` — dedicated test suite (Test Coverage, Currency)
+- `src/claude/_tests/rules/test_rules_structure_layout.py` — root-location check (Test Coverage)
