@@ -1,7 +1,7 @@
 """File saved plans and plan-mode drafts into subfolders named after their plan status.
 
 Saved plans in <config>/_plans/ move to active/, parked/, done/ or dropped/, following
-each plan's "**Plan status:**" line (see _plan_file_format.md). Plans saved before that
+each plan's "**Plan status:**" line (see plan_file_format.md). Plans saved before that
 line existed count as Done only when every phase in their table reads Done, and Active
 otherwise. The status line stays the source of truth, so a plan whose status changes is
 simply moved again on the next run.
@@ -93,7 +93,7 @@ def is_finished(text: str) -> bool:
 
 PLAN_STATUSES = ("Draft", "Active", "Parked", "Done", "Dropped")
 FINISHED = ("Done", "Dropped")
-# The plan-level line from _plan_file_format.md, e.g. "**Plan status:** 🟢 Active"
+# The plan-level line from plan_file_format.md, e.g. "**Plan status:** 🟢 Active"
 PLAN_STATUS_RE = re.compile(
     r"^\*\*Plan status:\*\*\s*(?:\S+\s+)?(Draft|Active|Parked|Done|Dropped)\b", re.IGNORECASE | re.MULTILINE
 )

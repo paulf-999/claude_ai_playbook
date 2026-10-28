@@ -25,7 +25,7 @@
 | `test_no_wording_pinning.py` | No test pins an instructional rule's prose (a multi-word literal checked against a real file's text) or guards a finished migration (`assert not <path>.exists()`), unless tagged `# wording-check:` or `# absence-check:` with a reason | 10/10 | 2026-10-11 | 2026-10-17 | 1.3.0 |
 | `test_path_scoped_rules.py` | Path-scoped rules in `rules/` carry no `@` imports, `rules/` holds real files not links, and every `02_claude_standards/path_scoped_rules/` file has `paths:` | 7/10 | 2026-10-01 | 2026-10-11 | 2.3.2 |
 | `test_path_scoped_rules_live.py` | Proves in a live session that a `paths:` rule loads when, and only when, a matching file is read | 9/10 | 2026-10-01 | 2026-10-11 | 1.2.3 |
-| `test_plan_mode_phase_gates.py` | `_plan_mode_phase_gates.md` keeps its plan-persistence section and 2026-09-19 incident record | 9/10 | 2026-09-16 | 2026-10-11 | 4.0.0 |
+| `test_plan_mode_phase_gates.py` | `plan_mode_phase_gates.md` keeps its plan-persistence section and 2026-09-19 incident record | 9/10 | 2026-09-16 | 2026-10-28 | 4.0.1 |
 | `test_portable_paths_hooks.py` | Hooks resolve the config dir from their own location — no hardcoded `~/.claude/` file operations or guard substrings | 10/10 | 2026-09-18 | 2026-10-11 | 2.0.3 |
 | `test_portable_paths_python.py` | Python test and script files use `CLAUDE_DIR` — no `.expanduser()` outside `_shared_paths.py`, home-directory constants or one-convention import prefixes | 8/10 | 2026-09-18 | 2026-10-26 | 2.3.0 |
 | `test_testing.py` | Every enforcement hook has a test (aspect splits allowed), no orphaned hook tests, and testing.md's pointers, example test files and relative links exist | 10/10 | 2026-08-28 | 2026-10-26 | 2.2.0 |

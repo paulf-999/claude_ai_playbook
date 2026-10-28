@@ -20,6 +20,7 @@
 | `claude_config/claude_cost/` | **latency_optimisation.md** | Effort tuning and API-level latency strategies for fast, focused responses | Interactive tools or cost-sensitive tasks where latency is blocking |
 | — | **testing.md** (in `rules/02_claude_standards/path_scoped_rules/`) | When tests are required, test goals, test layers and running the suite; lazy children in `testing_lazy_load/` cover design pattern, anti-patterns, file organisation, the test metadata standard and its quarterly audit | Loads through `paths:` on Python, shell, SQL and `_tests/` files |
 | — | **claude_rule_loading_strategy.md** (in `rules/02_claude_standards/path_scoped_rules/`) | The rule folders and when a rule should be always-on or lazy, from measured usage and miss cost | Loads through `paths:` on rule files and `CLAUDE.md` |
+| — | **plan_file_format.md** (in `rules/02_claude_standards/path_scoped_rules/`) | The plan file's phase table, its columns and the plan-status line | Loads through `paths:` on files in `_plans/` and `plans/`, and `claude_plans.md` points to it for brand-new plans |
 | — | **style_guide_standards/** | Domain-specific style guides (SQL, Airflow, dbt, Terraform, etc.) | Moved to their own `_reference/_style_guide_standards/` folder beside this one, read on demand; entry files install to `rules/02_claude_standards/path_scoped_rules/style_guide_standards/` and load through `paths:` |
 
 ---

@@ -1,6 +1,6 @@
-<!-- version: 4.1.1 -->
+<!-- version: 4.1.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-26 -->
+<!-- updated: 2026-10-28 -->
 <!-- applies_to: **/rules/**, **/_rules_lazy_load/** -->
 <!-- miss_cost: medium — rules ship without tests or in the wrong tier -->
 <!-- loading: always-on — a new rule can start before any rule file is open, and it points to the shared complexity formula -->
@@ -56,7 +56,7 @@ Before writing any rule, answer these five essential questions:
 - **H1 emoji header:** scannability
 - **Purpose statement:** one line, top of file
 - **One concept per rule:** related patterns grouped, not split across files
-- **~100-line limit:** split into parent + child files if needed (see writing_style.md)
+- **~100 lines, up to 110 tolerated:** split into parent + child files beyond that (see writing_style.md)
 - **Trailing newline:** exactly one `\n` at EOF
 - **Contents only with 3+ headings:** add a Contents section only when the rule has 3 or more real `##` headings
 - **No Related section in the rule:** a lazy or path-scoped rule's parent, sibling and dependency links go in `_rules_lazy_load/README.md` under "🔗 Related rules", which never loads by itself, and always-on rules (tiers 01–03) keep none

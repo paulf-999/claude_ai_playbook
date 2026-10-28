@@ -1,6 +1,6 @@
-<!-- version: 2.0.2 -->
+<!-- version: 2.0.3 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-10-26 -->
+<!-- updated: 2026-10-28 -->
 # 🔬 How to Approach
 
 **Purpose:** Establish habits for approaching a task well — diagnosing root causes, scoping narrowly, and preserving context across long sessions.
@@ -9,7 +9,7 @@
 
 - 🎯 **Simplest approach:** try the simplest solution first — diagnose root causes, don't brute-force past blockers.
   - **Note:** if a search fails twice, stop and ask; a clarifying question is cheaper than five failed tool calls.
-- 🎯 **Colleague test:** before finalising a prompt, show it to someone with minimal context on the task and ask them to follow it, because if they'd be confused, Claude will be too.
+- 🎯 **Colleague test:** before finalising a prompt, reread it as someone with no context on the task would, and rewrite anything they couldn't follow, because a confused reader means a confused Claude.
 - 🔬 **Narrow scope:** treat a narrow request as narrow — don't refactor or restructure unless explicitly asked.
   - **Note:** when asked to modify specific files or a PR, state the exact files and target branch before editing; don't touch anything outside that scope.
 - ✅ **No best-effort:** only propose solutions with a guaranteed, verifiable outcome — if no such solution exists, say so and ask how to proceed rather than proposing a workaround that relies on convention, trust, or hope.
