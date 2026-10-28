@@ -1,183 +1,46 @@
 ---
 date_created: "2026-09-07"
-date_updated: "2026-10-01"
+date_updated: "2026-10-28"
 status: active
 ---
 
-# Troubleshooting — confluence_create_page
+# 🔧 Troubleshooting — confluence_create_page
 
-Common issues and how to resolve them.
+**Purpose:** Match a symptom to its cause and fix, for problems the steps in `_error_recovery.md` don't settle on their own.
 
----
+## 🔗 Atlassian access fails at the pre-check
 
-## Phase 2: Creator Name Incorrect
+- **Symptom:** `getAccessibleAtlassianResources` errors or returns no sites.
+- **Cause:** the Atlassian MCP server is off, or its login has expired.
+- **Fix:** run `make enable_mcp server=Atlassian`, restart Claude Code, then run the skill again.
 
-**Symptom:** Draft shows creator as your git username or an unexpected name; not your real name.
+## 📂 Draft isn't where the skill said
 
-**Root cause:** Creator retrieved from `git config user.name` in this order:
-1. git config user.name
-2. FULLNAME environment variable
-3. System whoami
+- **Symptom:** nothing at `~/_drafts/confluence/YYYY_MM_DD_<topic>.md`.
+- **Cause:** `~` wasn't expanded before the Write call, so the file landed in a literal `~` folder inside the current directory.
+- **Fix:** look for a stray `~/` folder in the directory you ran Claude from, move the draft to your real home folder, and delete the stray folder.
 
-**Solutions:**
+## 🔐 Permission denied when publishing
 
-| Source | Command | Example |
-|---|---|---|
-| Git config | `git config user.name "Your Real Name"` | `git config user.name "Paul Fry"` |
-| Environment | `export FULLNAME="Your Real Name"` | `export FULLNAME="Paul Fry"` |
-| System | Modify system user (not recommended) | — |
+- **Symptom:** Confluence rejects `createConfluencePage` for the chosen space.
+- **Cause:** you can't add pages to that space, or the space key or parent page is wrong.
+- **Fix:** check the space key and parent page in Confluence, ask a space admin for edit access, or pick a space you can write to.
 
-**Verify current user:**
-```bash
-# Check current resolution (in order)
-git config user.name || echo "Not set in git config"
-echo $FULLNAME || echo "Not set in FULLNAME env var"
-whoami
-```
+## ⏳ Publishing hangs or fails part-way
 
----
+- **Symptom:** the publish call is slow, errors, or you can't tell whether it worked.
+- **Cause:** a slow or unreachable Confluence site, or a dropped MCP connection.
+- **Fix:** check the parent page in Confluence for a new draft before retrying, so you don't create a duplicate.
+  - **Draft kept:** the approved local draft stays in `~/_drafts/confluence/`, so a retry needs no new review.
 
-## Phase 2: Creator Email Incorrect or Missing
+## 📄 The page isn't live
 
-**Symptom:** Creator email shows as "user@company.com" or the wrong domain.
+- **Symptom:** the new page shows as a draft in Confluence.
+- **Cause:** this is by design, because the skill always creates pages with `status: draft`.
+- **Fix:** open the page in Confluence and publish it yourself, and set the wide-view toggle there if you want it.
 
-**Root cause:** Email retrieved from `git config user.email` in this order:
-1. git config user.email
-2. EMAIL environment variable
-3. Constructed as "firstname.lastname@company.com"
+## 👤 Names were replaced with roles
 
-**Solutions:**
-
-| Source | Command | Example |
-|---|---|---|
-| Git config | `git config user.email "<your.email@company.com>"` | `git config user.email "jane.doe@company.com"` |
-| Environment | `export EMAIL="<your.email@company.com>"` | `export EMAIL="jane.doe@company.com"` |
-
-**Verify current resolution:**
-```bash
-git config user.email || echo "Not set in git config"
-echo $EMAIL || echo "Not set in EMAIL env var"
-```
-
----
-
-## Phase 3: Draft Not Appearing in Expected Location
-
-**Symptom:** Skill says "Draft written to `~/_drafts/confluence/`" but file not there.
-
-**Possible causes:**
-
-1. **Directory doesn't exist:** Skill auto-creates it; may fail if permissions denied
-2. **Hidden directory:** Use `ls -la ~/_drafts/confluence/` to show hidden files
-3. **Different shell:** File written to wrong home directory (multi-user systems)
-4. **Timeout before save:** If Confluence API call times out before draft is saved, draft may be lost
-
-**Debug steps:**
-
-```bash
-# Check if directory exists
-ls -la ~/_drafts/confluence/
-
-# Create directory manually if needed
-mkdir -p ~/_drafts/confluence/
-
-# Check permissions
-ls -ld ~/_drafts/
-stat ~/.claude/
-
-# Find drafts anywhere
-find ~ -name "*confluence*" -type f 2>/dev/null | head -10
-```
-
----
-
-## Phase 3: Confluence API Timeout
-
-**Symptom:** "⏱️ CONFLUENCE PUBLISH TIMEOUT" appears after 2 minutes; page may or may not publish.
-
-**Causes:**
-
-- Confluence server slow or unreachable
-- Large page content (many sections with extensive text)
-- Network latency
-- Atlassian MCP server rate-limiting
-
-**Solutions:**
-
-| Action | Result |
-|---|---|
-| **[A] Abort** | Cancel publish, preserve draft in `~/_drafts/confluence/` for retry later |
-| **[R] Retry** | Cancel, start fresh publish attempt (may succeed if server recovered) |
-| **[C] Continue** | Wait 4 more minutes (max 6 min total); for very slow Confluence instances |
-
-**Prevention:**
-
-- Use `--timeout-seconds N` to adjust timeout (default 120s):
-  ```
-  /confluence_create_page --outline "X" --title "Y" --timeout-seconds 60
-  ```
-- Keep page size reasonable (~10 sections max, short content per section)
-- Publish during low-traffic hours
-
-**If timeout occurs:**
-
-1. Save the draft path shown in dialog
-2. Fix Confluence server issues (if known)
-3. Retry: `/confluence_create_page --outline "X" --title "Y" --timeout-seconds 180`
-
----
-
-## Phase 3: Permission Denied Error
-
-**Symptom:** "Permission denied: You lack write access to space <SPACE_KEY>"
-
-**Causes:**
-
-- User doesn't have edit permission in target space
-- Atlassian MCP token expired or invalid
-- Target space doesn't exist
-
-**Solutions:**
-
-1. **Check permissions:** Ask space admin to grant "Editor" role in Confluence space
-2. **Re-enable MCP:** `make enable_mcp server=Atlassian` and restart Claude Code
-3. **Verify space exists:** Confirm space key (e.g., "<SPACE_KEY>") in Confluence UI
-4. **Use different space:** Specify `--space "YOURSPACE"` if you have access to another space
-
----
-
-## General: How to Report Issues
-
-If you encounter a bug not listed above:
-
-1. **Save the full error message** — copy entire output
-2. **Note the phase:** Phase 1a, 1b, 2, or 3?
-3. **Provide context:** What message/outline/title triggered the issue?
-4. **Include diagnostic info:**
-   ```bash
-   git config user.name
-   git config user.email
-   echo $FULLNAME
-   echo $EMAIL
-   ```
-5. **Check logs:** `~/.claude/logs/` if logging enabled
-
----
-
-## Performance Tips
-
-- **Faster outline detection:** Lead with action verb and topic: "create page describing X" (vs. "I want to create a page about X")
-- **Better titles:** Provide specific outlines: "Airflow cluster deployment in us-west-2" (better than "Airflow")
-- **Quicker drafts:** Keep sections list short (<10 sections)
-- **Reliable publishing:** Test Confluence access before bulk page creation
-
----
-
-## Known Limitations (v1.0)
-
-- **Title generation is keyword-based:** May miss semantic nuance; use custom title for important pages
-- **No page editing:** This skill creates pages only; use Confluence UI to edit after publishing
-- **Pattern detection limited:** Only recognizes `describing`, `about`, `for`, `on` keywords
-- **Auto-sections generic:** Defaults to "Overview", "Details", "Summary"; use `--sections` for custom
-
-These will be addressed in Phase 2+ enhancements.
+- **Symptom:** the page says "platform owner" where you gave a person's name.
+- **Cause:** by design, since the pattern rules forbid naming individuals on the page.
+- **Fix:** add names in Confluence after publishing if your space allows it.

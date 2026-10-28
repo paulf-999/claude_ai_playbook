@@ -1,8 +1,8 @@
 ---
 name: git_create_pr
-version: 1.4.1
+version: 2.0.0
 summary: Create GitHub PR from staged changes
-maturity: tactical
+maturity: strategic
 test_coverage_level: comprehensive
 
 dispatch:
@@ -11,6 +11,7 @@ dispatch:
             - /git_create_pr
             - create a pr
             - make a pr
+            - open a pull request
     not_for:
         - complex merge conflict scenarios
         - non-main branch PRs

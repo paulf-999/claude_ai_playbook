@@ -7,16 +7,16 @@ tags:
   status: active
   tested: true
   date_created: "2026-06-07"
-  date_updated: "2026-10-17"
+  date_updated: "2026-10-28"
 tools: Read, Write, mcp__atlassian__getAccessibleAtlassianResources, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
-<!-- version: 1.4.1 -->
+<!-- version: 1.5.0 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-10-25 -->
+<!-- updated: 2026-10-28 -->
 
 ## 🤖 Instructions for Claude
 
-- **Read first:** read `reference/_phases.md` before acting, and follow its phases in order.
+- **Read first:** read `reference/_implementation.md` before acting, and follow its phases in order.
 - **Pre-check:** call `getAccessibleAtlassianResources` to confirm Atlassian access works and to get the cloud ID.
   - **On failure:** stop and tell the user to run `make enable_mcp server=Atlassian` and restart Claude Code.
 - **Never:** call `createConfluencePage` or `updateConfluencePage` until the user has approved the local draft — even when asked to "just publish".
@@ -31,7 +31,6 @@ Create a Confluence page from a team-approved template, with a local draft you r
 - **Gather details** — title, creator, status, purpose, and sections
 - **Local draft review** — generates a markdown draft, asks for approval, and iterates on your feedback before publishing
 - **Explicit publish** — only writes to Confluence after you approve the draft
-- **Timeout protection** — if Confluence hangs during publish, offers abort/retry/continue instead of waiting silently
 
 ## 💡 Example Usage
 
@@ -52,11 +51,11 @@ One-off pages using the general_page pattern, or a Platform Risk & Maturity Asse
 
 ## 📚 References
 
-- `reference/_phases.md` — the three interactive phases in full
+- `reference/_implementation.md` — the interactive phases and the mandatory local draft review, in full
 - `reference/patterns/_general_page.md` — the general_page pattern, followed in Phase 2
 - `reference/patterns/_platform_risk_assessment.md` — the platform_risk_assessment pattern, followed in Phase 2
 - `reference/_error_recovery.md` — what to do when Confluence access, drafts, or publishing fail
-- `reference/_troubleshooting.md` — common issues, including publish timeouts
+- `reference/_troubleshooting.md` — symptoms, causes and fixes, including a stray draft folder and a publish that fails part-way
 - `reference/_confluence_page_formatting.md` — page header structure and formatting rules
 - `_reference/_quality_scorecards/skills/scorecard_confluence_create_page.md` — 7-dimension quality assessment
 

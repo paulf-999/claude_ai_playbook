@@ -6,7 +6,7 @@ status: active
 
 # Pattern — platform_risk_assessment
 
-Creates a **Platform Risk & Maturity Assessment** page for one platform tool or component. Use this file in place of Phase 2 of `_phases.md`, then continue to the **Local Draft Review** phase there.
+Creates a **Platform Risk & Maturity Assessment** page for one platform tool or component. Use this file in place of Phase 2 of `_implementation.md`, then continue to the **Local Draft Review** phase there.
 
 Act as an objective platform assessor: rate maturity from evidence, identify operational exposure, flag risks and gaps, and prioritise findings by impact.
 
@@ -63,7 +63,7 @@ Present the ratings and summary to the user for confirmation.
 
 Flag any theme with no description, or where the rating is uncertain. Confirm the overall maturity level and executive summary with the user.
 
-Wait for confirmation, then go to the **Local Draft Review** phase in `_phases.md`.
+Wait for confirmation, then go to the **Local Draft Review** phase in `_implementation.md`.
 
 ---
 
@@ -106,4 +106,4 @@ Render each maturity rating as an inline `status` badge in its table cell (and f
 
 Use the ADF conventions in `_common_header.md` throughout. Return the draft URL.
 
-**Critical constraints:** the Phase 2 constraints in `_phases.md` apply here too — no publish before draft approval, no space root, no inferred space, no personal names.
+**Critical constraints:** the Phase 2 constraints in `_implementation.md` apply here too — no publish before draft approval, no space root, no inferred space, no personal names.

@@ -1,21 +1,21 @@
 ---
 name: git_create_pr
-description: Create GitHub PR with staged changes, commit message, and PR body
-maturity: tactical
+description: Create a GitHub PR from your changes, with a branch, commit message and PR body — use when asked to create a PR, make a PR or open a pull request
+maturity: strategic
 tags:
   criticality: should
   status: active
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 1.4.1 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-28 -->
 
 ## 🤖 Instructions for Claude
 
 - **Pre-check:** run `gh auth status` and confirm `.github/pull_request_template.md` exists, and stop and tell the user if either fails.
-- **Read first:** read `reference/_phase1_gather.md`, then `reference/_phase2_execute.md` before running any git command.
+- **Read first:** read `reference/_implementation.md` for the phase map, then `reference/_phase1_gather.md` and `reference/_phase2_execute.md` before running any git command.
 - **Always:** confirm the PR title, then the full plan, before creating a branch, committing or pushing.
 - **Always:** stage files by name, and draft the PR body from the repo template using `subagent_type: technical_writer`.
 - **Never:** commit to `main`, force-push, or use `--no-verify` unless the user explicitly asks.
@@ -49,10 +49,20 @@ PR #1234 created: https://github.com/org/repo/pull/1234
 
 ## ✨ Best For
 
-Routine feature and hotfix PRs, faster than the manual git workflow and with Conventional Commits enforced. Currently at the **tactical** stage — main path, both confirmation steps and push errors are covered, but not merge conflicts or non-main base branches.
+Routine feature and hotfix PRs, faster than the manual git workflow and with Conventional Commits enforced. Currently at the **strategic** stage — a core, frequently used workflow with both confirmation steps, push errors and the 20-file limit covered, but not merge conflicts or non-main base branches.
+
+## ⚠️ Known gaps
+
+- **Merge conflicts:** the skill stops when a branch conflicts with `main` and doesn't resolve it.
+  - **Workaround:** resolve the conflict by hand, then run `/git_create_pr` again.
+- **Non-main base branches:** every PR targets `main`, so stacked PRs need their base changed afterwards.
+  - **Workaround:** run `gh pr edit <number> --base <branch>` once the PR exists.
+- **Unrun scenarios:** nothing runs `tests/evals.yaml` yet, and it has no adversarial or secret-leak cases.
+  - **Workaround:** check a change against the scenarios by hand, and review the staged diff before confirming the plan.
 
 ## 📚 References
 
+- `reference/_implementation.md` — the phase map and error handling, pointing to the two phase files
 - `reference/_phase1_gather.md` — gather-info logic, branch/commit/PR-title/PR-body derivation, label mapping and the label-exists check
 - `reference/_phase2_execute.md` — title and plan confirmation, execution rules and error recovery
 - `tests/evals.yaml` — 12 test scenarios covering every phase, both confirmation steps, a rejected push and the 20-file limit

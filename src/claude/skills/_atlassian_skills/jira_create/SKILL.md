@@ -1,22 +1,22 @@
 ---
 name: jira_create
-description: Create individual Jira tickets with full field configuration. Requires Atlassian MCP enabled.
+description: Create a single Jira ticket with full field configuration, after you approve the draft — use when asked to create a Jira ticket, create a bug in Jira or log this as a Jira ticket. Requires the Atlassian MCP server.
 maturity: draft
 tags:
   criticality: should
   status: active
   tested: true
-tools: Read, mcp__atlassian__createJiraIssue
+tools: Read, mcp__atlassian__getAccessibleAtlassianResources, mcp__atlassian__createJiraIssue
 ---
-<!-- version: 0.3.0 -->
+<!-- version: 0.4.0 -->
 <!-- created: 2026-04-11 -->
-<!-- updated: 2026-10-27 -->
+<!-- updated: 2026-10-28 -->
 
 ## 🤖 Instructions for Claude
 
 - **Pre-check:** call `getAccessibleAtlassianResources` to confirm Atlassian access and get the cloud ID.
   - **On failure:** stop and tell the user to run `make enable_mcp server=Atlassian` and restart Claude Code.
-- **Read first:** read `reference/_field_constraints.md` before drafting, and `reference/_error_handling.md` if a call fails.
+- **Read first:** read `reference/_implementation.md` for the phase order, `reference/_field_constraints.md` before drafting, and `reference/_error_handling.md` if a call fails.
 - **Always:** show the full ticket (project, type, title, description, assignee, story points) and wait for a yes before creating it.
 - **Never:** infer the Jira project, so confirm it with the user.
 - **Never:** create a ticket with story points below 0.5.
@@ -32,10 +32,13 @@ Create individual Jira tickets with the fields your team actually needs:
 
 ```
 $ /jira_create create a ticket for the login bug, 2 story points
-[Phase 1] Gathering details: type=Task, title, description, assignee, story points
-[Phase 2] Validating: story points 2 ≥ 0.5 ✓
-          Creating ticket in Jira...
-[Phase 3] Ticket created: PROJ-1234
+[Phase 1] Which Jira project should this go in? PROJ
+[Phase 2] Gathering details: type=Task, title, description, assignee, story points
+[Phase 3] Validating: story points 2 ≥ 0.5 ✓
+[Phase 4] Here is the ticket I will create: PROJ · Task · "Fix login bug" · 2 points
+          Create it? y
+[Phase 5] Creating ticket in Jira...
+[Phase 6] Ticket created: PROJ-1234
 
 PROJ-1234 created: https://yourteam.atlassian.net/browse/PROJ-1234
 ```
@@ -46,6 +49,7 @@ One ticket at a time, with basic fields. Currently at the **draft** development 
 
 ## 📚 References
 
+- `reference/_implementation.md` — the six phases in order, including the confirm step, and error handling
 - `reference/_error_handling.md` — Atlassian connection errors and recovery steps
 - `reference/_field_constraints.md` — story point rules and other field validation
 - `~/.claude/_reference/_style_guide_standards/jira.md` — team ticket conventions, read before drafting the ticket
