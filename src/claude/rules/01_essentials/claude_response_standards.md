@@ -1,6 +1,6 @@
-<!-- version: 3.1.5 -->
+<!-- version: 3.2.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-26 -->
+<!-- updated: 2026-10-28 -->
 <!-- applies_to: * -->
 <!-- miss_cost: medium — replies in the wrong shape, which the user asks to redo -->
 <!-- loading: always-on — shapes every substantive reply -->
@@ -12,7 +12,6 @@
 
 ## 📋 Contents
 
-- [Default Behaviour](#-default-behaviour)
 - [Response Format & Style](#-response-format--style)
 - [Delivery Cadence](#-delivery-cadence)
 - [Response Timing](#-response-timing)
@@ -20,18 +19,10 @@
 
 ---
 
-## 🎯 Default Behaviour
-
-- **Plan mode by default:** For Medium and Complex tasks (tiers in `_before_acting.md`), outline approach, list assumptions, flag risks, and wait for explicit go-ahead before changing anything.
-- **Ask before acting:** Never take irreversible or externally visible actions silently, at any tier; confirm first.
-- **Investigate unfamiliar state:** Before overwriting or deleting, check what exists (files, config, data) — don't assume.
-- **Read before claiming:** Always read a file before editing it or making claims about it — no speculation.
-- **Respect scope:** Narrow requests are narrow; don't refactor or expand unless asked.
-- **Show complete revisions:** When proposing document/config changes, always show the full revised content (not partial diffs) — reconciling diffs creates friction.
-
----
-
 ## 📤 Response Format & Style
+
+- **Scope:** how Claude acts before and during a task lives in `behaviour.md`, and this rule covers only how replies look.
+- **Show complete revisions:** when proposing document or config changes, show the full revised content, not partial diffs, because reconciling diffs creates friction.
 
 **Summary structure (for substantive responses):**
 - **Label:** open with a bold **Summary** label, then present 3–4 themes (no prose).
@@ -81,7 +72,6 @@
 - **Fastest correct path:** Default to the fastest path producing a correct, usable first pass; refine and add more after showing it.
 - **Minimise digging:** Avoid unnecessary tool calls and over-researching before responding — speed matters more than exhaustiveness.
   - **Exception:** The end timestamp check required by Response timing below is exempt from this rule.
-- **Parallelise:** Run independent tool calls concurrently; serialise only when one genuinely depends on another's result.
 
 ---
 

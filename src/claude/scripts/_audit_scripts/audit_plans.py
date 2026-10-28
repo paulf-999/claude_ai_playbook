@@ -2,7 +2,7 @@
 """List saved plans in <config>/_plans/ by plan status, so the ones still being acted on are easy to find.
 
 Each plan's status and last-updated date come from its "**Plan status:**" line
-(see _plan_file_format.md). Plans saved before that line existed fall back to their
+(see plan_file_format.md). Plans saved before that line existed fall back to their
 phase table for the status, and any plan without a date falls back to the file's
 modified time. Active plans untouched for stale_days or more are listed again as
 stale, to park or drop. Saved plans are read loose in _plans/ and in its status subfolders

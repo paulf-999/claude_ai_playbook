@@ -1,6 +1,13 @@
-<!-- version: 1.6.1 -->
+---
+paths:
+  - "**/_plans/**"
+  - "**/plans/**"
+---
+<!-- version: 1.7.0 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-10-26 -->
+<!-- updated: 2026-10-28 -->
+<!-- miss_cost: low — a plan file in the wrong layout, which is quick to reformat -->
+<!-- loading: path-scoped — only needed when writing a plan file, so it loads when a plan file is open, and claude_plans.md points to it for brand-new plans -->
 # 📊 Plan File Format
 
 **Purpose:** Define how the persisted plan document (not the chat response) presents its phase breakdown, so every plan is scannable at a glance.

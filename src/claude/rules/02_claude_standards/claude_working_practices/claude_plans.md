@@ -1,6 +1,6 @@
-<!-- version: 2.2.1 -->
+<!-- version: 2.3.0 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-10-26 -->
+<!-- updated: 2026-10-28 -->
 <!-- applies_to: * -->
 <!-- miss_cost: medium — phases run without approval, so wrong turns need rework -->
 <!-- loading: always-on — any task can grow into multi-phase work that needs approval gates -->
@@ -53,13 +53,14 @@
 
 ## 🗂️ Plan-Mode Phase Gates
 
-- **Loads on its own from:** `rules/02_claude_standards/claude_working_practices/claude_plans/_plan_mode_phase_gates.md`
+- **Loads on its own from:** `rules/02_claude_standards/claude_working_practices/plan_mode_phase_gates.md`
 
 ---
 
 ## 📊 Plan file format
 
-- **Loads on its own from:** `rules/02_claude_standards/claude_working_practices/claude_plans/_plan_file_format.md`
+- **Loads with plan files from:** `rules/02_claude_standards/path_scoped_rules/plan_file_format.md` — through `paths:`, whenever a plan file is open
+- **Read on demand:** `~/.claude/rules/02_claude_standards/path_scoped_rules/plan_file_format.md` — before writing a brand-new plan file, which opens no matching file first
 
 ---
 

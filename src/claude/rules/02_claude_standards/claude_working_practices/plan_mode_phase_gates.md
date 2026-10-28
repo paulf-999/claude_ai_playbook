@@ -1,6 +1,6 @@
-<!-- version: 3.6.1 -->
+<!-- version: 3.6.2 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-10-26 -->
+<!-- updated: 2026-10-28 -->
 # 🗂️ Plan-Mode Phase Gates
 
 **Purpose:** Apply phase gates in plan mode for every 3+ phase plan, unless the user explicitly waives gates — a plan's whole point is structured, checkpointed progression.
@@ -31,7 +31,7 @@ Claude Code's plan-mode harness assigns a scratch plan file under `~/.claude/pla
 - 📝 **Mark the draft:** when first writing the scratch file, put `**Plan status:** 📝 Draft · updated <today>` under its H1, so a draft never passes for a saved plan.
 - 📂 **Two folders:** `plansDirectory` points at `<config-dir>/plans/`, so drafts stay apart from the saved plans in `_plans/` — never point it at `_plans/`.
 
-- 📤 **Copy on exit:** the moment `ExitPlanMode` is approved and before any implementation step begins, copy the finalised plan content into `<config-dir>/_plans/active/<date>_<topic>.md`, where `<config-dir>` is the absolute path of `$CLAUDE_CONFIG_DIR` (or `~/.claude` when it's unset), date-prefixed per `writing_style.md`'s drafts/errors convention, formatted per `_plan_file_format.md`, with `**Plan status:** 🟢 Active · updated <today>` under its H1.
+- 📤 **Copy on exit:** the moment `ExitPlanMode` is approved and before any implementation step begins, copy the finalised plan content into `<config-dir>/_plans/active/<date>_<topic>.md`, where `<config-dir>` is the absolute path of `$CLAUDE_CONFIG_DIR` (or `~/.claude` when it's unset), date-prefixed per `writing_style.md`'s drafts/errors convention, formatted per `plan_file_format.md`, with `**Plan status:** 🟢 Active · updated <today>` under its H1.
 - ⚠️ **Resolve `~` before calling Write, every time:** the Write tool requires an absolute path and does not perform shell tilde-expansion — a literal `~` argument creates a real directory named `~` under whatever the current working directory happens to be, not the home directory.
   - **Fix:** always substitute the actual absolute config path (e.g. `/Users/<you>/.claude/_plans/...`, or your `$CLAUDE_CONFIG_DIR`'s path) before the call.
   - **Incident (2026-09-19):** exactly this happened — a prior session wrote the persisted plan to a literal `~/claude/_plans/...` path while the cwd was a project repo, creating `<repo>/~/claude/_plans/<slug>.md` inside that repo instead of the real archive.
