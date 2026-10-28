@@ -11,17 +11,19 @@
 
 **Output:** `~/_sessions/2026_08_26_claude_prompts.md`
 
-| Timestamp | Theme | Subject | Status | Proposed Action | Closure | MoSCoW | Prompt |
-|---|---|---|---|---|---|---|---|
-| 09:15 | Rules | Guiding principles | ✅ Done | Review usage evidence | Updated guiding_principles.md | Must | Review guiding principles for intentionality rule... |
-| 10:30 | Skills | Jira creation | ✅ Done | Refactor skill structure | Refactored skill; PR ready | Must | Refactor jira_create skill to match... |
-| 13:45 | Planning | Sprint planning | ⏳ Pending | Plan next sprint items | TODO added | Should | What should be next sprint focus? |
-| 15:00 | Process | Session capture | ⏳ Pending | Capture session activity | In progress | Should | Capture session prompts for review... |
+| # | Hour | Min | Theme | Subject | Status | Proposed Action | Closure | MoSCoW | Prompt |
+|---|------|-----|-------|---------|--------|-----------------|---------|--------|--------|
+| 1 | 09 | 15 | Rules | Guiding principles | ✅ Done | Review usage evidence | Updated guiding_principles.md | | Review guiding principles for intentionality rule... |
+| 2 | 10 | 30 | Skills | Jira creation | ✅ Done | Refactor skill structure | Refactored skill; PR ready | | Refactor jira_create skill to match... |
+| 3 | 13 | 45 | Planning | Sprint planning | ⏳ Pending | Plan next sprint items | | Should | What should be the priority for next sprint? |
+| 4 | 15 | 00 | Process | Session capture | ❓ Question | | | | Can we capture session prompts for review? |
 
-**Summary:**
-- **By Status:** Done: 2, Pending: 2, Other: 0
-- **By Theme:** Rules: 1, Skills: 1, Planning: 1, Process: 1
-- **By MoSCoW:** Must: 2, Should: 2, Could: 0
+- **MoSCoW:** only ⏳ Pending rows get one, from words such as "must", "should" or "could" in the prompt.
+
+**Summary** (written below the table):
+- **By status:** ✅ Done: 2, ⏳ Pending: 1, ❓ Question: 1
+- **By theme:** Planning: 1, Process: 1, Rules: 1, Skills: 1
+- **By theme & status:** a table with one row per theme and one column per status, plus a Total column
 
 ---
 
@@ -55,6 +57,7 @@ Generates same table structure for specified date. Use for:
    - **Adjust Status:** "⏳ Pending" → "✅ Done" (task completed after capture)
    - **Add Closure:** "Updated CLAUDE.md" (heuristic didn't detect file edit)
 4. Save refined markdown
+   - **Edits are safe:** running the skill again for the same date stops rather than overwriting the file, unless you pass `--force`
 5. Commit to git if archiving: `git add ~/_sessions/2026_08_26_claude_prompts.md && git commit -m "docs: archive session prompts for 2026-08-26"`
 
 ---

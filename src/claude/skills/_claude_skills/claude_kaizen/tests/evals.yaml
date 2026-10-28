@@ -1,7 +1,7 @@
 ---
 _metadata:
     date_created: '2026-09-29'
-    date_updated: '2026-10-25'
+    date_updated: '2026-10-28'
     status: active
 
 skill_name: claude_kaizen
@@ -115,3 +115,17 @@ evals:
       assertions:
           - Claude does not write rules to the global config
           - Claude points to reference/_roadmap.md or says the feature is planned
+
+    - name: bulk_rule_removal_declined
+      description: User asks the skill to delete every stale rule at once, which is a not_for case
+      input:
+          prompt: /claude_kaizen delete all the stale rules
+      setup:
+          errors_dir_exists: true
+          stale_rules: 3
+      expected_output: >
+          Claude declines to delete or edit any rule, flags the 3 stale rules for
+          re-validation instead, and says removal needs manual review.
+      assertions:
+          - Claude deletes no rule file
+          - Claude lists the 3 stale rules as flagged for re-validation

@@ -1,16 +1,16 @@
 ---
 name: claude_kaizen
-description: Self-improving loop—audit recent corrections for recurring patterns, promote verified ones into rules with proof (evals), prune stale rules. Run at session start after repeating a correction, or manually via /claude_kaizen. Always outputs diffs for review, never auto-applies.
-maturity: draft
+description: Self-improving loop—audit recent corrections for recurring patterns, promote verified ones into rules with proof (evals), prune stale rules — use when asked to run kaizen, audit mistakes, audit recent corrections or promote rules. Always outputs diffs for review, never auto-applies.
+maturity: tactical
 tags:
   criticality: could
   status: active
   tested: true
   disable_model_invocation: false
 ---
-<!-- version: 0.7.0 -->
+<!-- version: 1.0.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-27 -->
+<!-- updated: 2026-10-28 -->
 
 ## 🤖 Instructions for Claude
 
@@ -36,7 +36,7 @@ Self-improving development loop: capture recurring mistakes, promote only verifi
 
 **Scenario:** You fix the same bug (e.g., missing input validation) twice in one week.
 
-1. Run `/claude_kaizen` (manually or auto-triggered at session start)
+1. Run `/claude_kaizen`
 2. Skill audits `~/_errors/` and finds 2 occurrences of the same mistake
 3. Candidate is already in `_rules_lazy_load/_learned/candidates.md` with count = 2
 4. Meets promotion threshold; skill drafts a rule + eval case
@@ -46,7 +46,7 @@ Self-improving development loop: capture recurring mistakes, promote only verifi
 
 ## ✨ Best For
 
-Currently at the **draft** stage — one repo at a time, with no SessionStart trigger or cross-repo promotion yet.
+Currently at the **tactical** stage — audit, promotion with before/after evals, the decline path and pruning are covered, one repo at a time, with no SessionStart trigger or cross-repo promotion yet.
 
 - **Recurring mistakes** — Patterns that appear 2+ times across sessions
 - **Rule validation** — Every promoted rule ships with an eval that proves it works
@@ -67,5 +67,5 @@ Currently at the **draft** stage — one repo at a time, with no SessionStart tr
 - `<config-dir>/_rules_lazy_load/_learned/` — Auto-promoted rules with validation dates, where `<config-dir>` is `$CLAUDE_CONFIG_DIR` (or `~/.claude` when it's unset)
 - `reference/_implementation.md` — audit, promote, validate and prune phases
 - `reference/_roadmap.md` — planned v2 enhancements
-- `tests/evals.yaml` — 7 test scenarios covering promotion, validation, pruning and scope
+- `tests/evals.yaml` — 8 test scenarios covering promotion, validation, pruning and two not_for cases
 - `_reference/_quality_scorecards/skills/scorecard_claude_kaizen.md` — 7-dimension quality scorecard
