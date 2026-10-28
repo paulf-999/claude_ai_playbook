@@ -1,6 +1,9 @@
-<!-- version: 3.0.0 -->
+<!-- version: 3.0.1 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-28 -->
+<!-- applies_to: **/*.md -->
+<!-- miss_cost: low — a document grows flat or past 110 lines, which is easy to split later -->
+<!-- loading: always-on — a growing document can be split in any session that edits markdown -->
 # 📁 Multifile Document Organisation
 
 **Purpose:** One convention for when to split a document into a parent and child files, and how to lay them out — preventing flat-level sprawl across `_rules/`, style guides, skills, agents and any other structured documentation.

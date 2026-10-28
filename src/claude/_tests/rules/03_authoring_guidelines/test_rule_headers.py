@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-11
-# Version:           1.9.6
+# Date updated:      2026-10-28
+# Version:           1.10.0
 # Test quality score: 8/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -70,14 +70,26 @@ def has_header(content: str) -> bool:
     return any(line.startswith(HEADER_PREFIX) for line in content.splitlines()[:HEADER_LINES])
 
 
+def is_entry_point(path: Path) -> bool:
+    """Tell whether a rule file is an entry point rather than a ``_``-prefixed child or a README.
+
+    :param path: A markdown file under a rule tier.
+    :return: True when the file is named like a standalone rule.
+    """
+    return not path.name.startswith("_") and path.name != "README.md"
+
+
 def always_on_entry_points() -> list[Path]:
-    """List the top-level rule files in tiers 01–03.
+    """List the entry-point rule files in tiers 01–03, including those in tier subfolders.
+
+    A file such as ``claude_working_practices/plan_mode_phase_gates.md`` loads every session just like a
+    top-level one, so it needs the same headers. Path-scoped rules have their own checks.
 
     :return: Paths of the always-on entry-point rules.
     """
     return sorted(
-        p for tier in ALWAYS_ON_TIERS for p in (RULES_DIR / tier).glob("*.md")
-        if p.name != "README.md" and not has_paths(p.read_text())
+        p for tier in ALWAYS_ON_TIERS for p in (RULES_DIR / tier).rglob("*.md")
+        if is_entry_point(p) and PATH_SCOPED_DIR not in p.parents and not has_paths(p.read_text())
     )
 
 
@@ -152,7 +164,7 @@ def test_always_on_tiers_have_entry_points():
     """The scan finds the always-on rules, so an empty result can't pass silently."""
     entry_points = always_on_entry_points()
     assert len(entry_points) >= 9, f"expected at least 9 always-on entry points, found {len(entry_points)}"
-    assert all(p.parent.name in ALWAYS_ON_TIERS for p in entry_points), "scan left tiers 01–03"
+    assert all(p.relative_to(RULES_DIR).parts[0] in ALWAYS_ON_TIERS for p in entry_points), "scan left tiers 01–03"
 
 
 def test_every_always_on_entry_point_declares_applies_to():
@@ -390,3 +402,10 @@ def test_every_entry_point_declares_loading():
     }
     problems = {path: errors for path, errors in problems.items() if errors}
     assert not problems, f"loading problems {HINT}:\n  " + "\n  ".join(f"{k}: {v}" for k, v in problems.items())
+
+
+def test_is_entry_point_skips_children_and_readmes():
+    """Standalone rules count as entry points, while ``_`` children and READMEs don't."""
+    assert is_entry_point(Path("tier/group/plan_gates.md")), "a standalone rule in a subfolder is an entry point"
+    assert not is_entry_point(Path("tier/group/_child.md")), "a _ child inherits its parent's headers"
+    assert not is_entry_point(Path("tier/README.md")), "a README is not a rule"
