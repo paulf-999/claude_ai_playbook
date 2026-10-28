@@ -1,26 +1,35 @@
 # Quality Scorecard — docker.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-10-25
+**Date Updated:** 2026-10-28
 
-**Overall score:** 6.3/10 (6-dimension average, Token Cost N/A)
+**Overall score:** 6.5/10 (6-dimension average, Token Cost N/A)
 
 **Recommended improvements:**
-- Make the multi-stage example in `docker/advanced.md` lines 99–104 switch to a non-root user, as line 51 requires
-- Reconcile the Docker Hub base-image rule (`fundamentals.md` line 16) with the distroless advice on line 18
-- Give the children `_` prefixes and Purpose lines, and record evidence of need
+- Add Compose guidance to the guide, or drop the `docker-compose*` globs from `paths:`, so the guide doesn't load where it has nothing to say
+- Add `compose.yaml` / `compose.yml` to `paths:` if Compose guidance is kept, since that's the current Compose file name
+- Make the multi-stage example follow the mandated section order, putting `WORKDIR` before `COPY`
+- Add a `USER` step to the Fundamentals structure template, so it matches the non-root rule in Advanced
+- Rewrite the child-page bullets as bold-keyword bullets with one sentence each, phrased as positive actions
+- Record the evidence of need, such as a dated review finding or a project that uses the guide
+- Add a check that every `paths:` glob has matching content, or note in the scorecard why the structural test is enough
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 7/10 | 2026-10-25 | • 🔍 **Concrete:** most guidance pairs a "Good" and a "Bad" Dockerfile example, so it's easy to act on.<br>• ⚠️ **Self-contradiction:** `infra/docker/advanced.md` line 51 says not to run as root, but the multi-stage example at lines 99–104 never switches to a non-root user.<br>• ⚠️ **Conflicting base-image advice:** `infra/docker/fundamentals.md` line 16 requires "an official base image from Docker Hub", while line 18 recommends distroless images, which aren't hosted on Docker Hub.<br>• ⚠️ **Vague exception:** `advanced.md` line 51, "unless the base image or tooling requires root", gives no test for when that applies. |
-| **Complexity** | 6/10 | 2026-10-25 | • 🧮 **Raw complexity 4:** Concepts 3 (base images, structure, naming, layers, security, .dockerignore and multi-stage builds are 6+) + Scope 1 (a parent plus two children in one folder) + Dependencies 0 + Prerequisites 0.<br>• ⚠️ **Many concepts:** the 6+ concepts across `docker/fundamentals.md` and `docker/advanced.md` are what keep the score down. |
-| **Evidence of Need** | 4/10 | 2026-10-25 | • ❓ **No recorded need:** no incident, PR or usage record appears in any file read.<br>• ⚠️ **Claim only:** `infra/docker.md` line 10 (`miss_cost: medium — images that fail review or bloat`) and line 14 ("the team's standards") assert a need but point to no evidence. |
-| **Token Cost Justification** | N/A | 2026-10-25 | • N/A — lazy-load rule, so the rubric leaves this out of the average |
-| **Structural Compliance** | 6/10 | 2026-10-25 | • ✅ **Parent clean:** `infra/docker.md` is 20 lines, with `paths:` frontmatter, a metadata header, an emoji H1 and a Purpose line.<br>• ⚠️ **Child naming:** the children are `docker/fundamentals.md` and `docker/advanced.md` with no `_` prefix, which fails `_hard_gates_checklist.md` line 16.<br>• ⚠️ **No Purpose in children:** neither child has a `**Purpose:**` line under its H1 (`fundamentals.md` line 4, `advanced.md` line 4), which `_hard_gates_checklist.md` line 21 requires.<br>• ⚠️ **Bullet style:** the bullets have no bold keyword (`fundamentals.md` lines 16–18 and 64–66, `advanced.md` lines 17–19 and 51–55).<br>• ⚠️ **Multi-sentence bullets:** `fundamentals.md` line 18 and `advanced.md` lines 51–52 each hold two sentences. |
-| **Currency** | 7/10 | 2026-10-25 | • ✅ **Links resolve:** both child links in `infra/docker.md` lines 18–19 exist, and `test_every_relative_link_resolves` checks them.<br>• ⚠️ **Dated example:** the `python:3.10` pins in `fundamentals.md` line 22 and `advanced.md` lines 94 and 100 point at a Python release that reaches end-of-life in October 2026.<br>• ⚠️ **Mislabelled versioning:** `fundamentals.md` line 65 calls `1.0` and `1.1` "semantic versioning", but semver tags have three parts (X.Y.Z). |
-| **Test Coverage** | 8/10 | 2026-10-25 | • 🧪 **Structural guard:** `_tests/rules/rules_lazy_load/test_lazy_load_rule_structure.py` line 54 tracks this rule and checks its header, Purpose line, child links, relative links and Contents entries.<br>• ✅ **No incident:** the rule records no incident, so no content-regression test is needed.<br>• ⚠️ **Children unchecked:** that test reads only the parent, so missing Purpose lines and headers in `docker/fundamentals.md` and `docker/advanced.md` go unnoticed, as line 220 shows (`_rule_texts` covers only the tracked rules). |
-| **Overall** | **6.3/10** | 2026-10-25 | • 💪 **Actionable examples:** a small path-scoped parent, with concrete good-and-bad Dockerfile snippets.<br>• ⚠️ **Gaps:** no recorded evidence of need, child files outside house style, and an example that breaks the guide's own non-root rule. |
+| **Clarity** | 7/10 | 2026-10-25 | • ✅ **Actionable:** most points come with a Good/Bad Dockerfile example (`_fundamentals.md` lines 22–28, `_advanced.md` lines 23–47)<br>• ⚠️ **Compose gap:** `paths:` loads the guide for `docker-compose*.yml`/`.yaml`, but no page says anything about Compose<br>• ⚠️ **Self-contradiction:** `_fundamentals.md` line 34 says "Follow this section order" with `WORKDIR` second, but the `_advanced.md` multi-stage example (lines 102–105) puts `COPY` before `WORKDIR`<br>• ⚠️ **Missing step:** the structure template (`_fundamentals.md` lines 36–60) has no `USER` step, although `_advanced.md` line 53 requires non-root |
+| **Complexity** | 6/10 | 2026-10-25 | • 🧮 **Raw complexity 4:** Concepts 3 (7 areas: base images, structure, naming, layers, security, .dockerignore, multi-stage) + Scope 1 (a parent plus one child folder) + Dependencies 0 + Prerequisites 0 |
+| **Evidence of Need** | 4/10 | 2026-10-25 | • ❓ **No incident:** no file records a Docker review failure or a bloated image, and `<!-- miss_cost: medium -->` is a claim with no evidence behind it<br>• ⚠️ **No recorded use:** `docs/audits/rule_usage_history.csv` shows 0 applied and 0 loaded across 115–146 sessions in all six 2026-10-01 rows |
+| **Token Cost Justification** | N/A | 2026-10-25 | • 🎯 **Path-scoped:** loads only for Dockerfiles and compose files, so it isn't in the average<br>• ⚠️ **Wasted load:** compose files load a guide with no compose content (see Clarity) |
+| **Structural Compliance** | 6/10 | 2026-10-25 | • ✅ **Parent clean:** 20 lines, frontmatter then the metadata header, emoji H1, a Purpose line, and both children linked<br>• ⚠️ **No bold keywords:** child bullets have no leading bold keyword (`_fundamentals.md` lines 18–20 and 66–68, `_advanced.md` lines 19–21 and 53–57)<br>• ⚠️ **Multi-sentence bullets:** `_fundamentals.md` line 20 ("…image size. Only use full images…") and `_advanced.md` lines 53–54<br>• ⚠️ **Negative framing:** "Do not run…", "Never embed…" and "Do not use `ADD`…" break the positive-actions rule<br>• ⚠️ **At the limit:** `_advanced.md` is 109 lines, right at the 110-line tolerance |
+| **Currency** | 8/10 | 2026-10-28 | • ✅ **Links resolve:** both child links exist, and the commands (`apt-get`, `pip --no-cache-dir`, `useradd`, `COPY --from`) are current<br>• ⚠️ **Old Compose name:** `paths:` matches only `docker-compose*`, and misses the current Compose file names `compose.yaml` / `compose.yml` |
+| **Test Coverage** | 8/10 | 2026-10-25 | • 🧪 **Structural test:** `test_lazy_load_rule_structure.py` tracks `infra/docker.md` (line 55) and checks the header, Purpose line, child links, link resolution and the "Structure" H2<br>• 🧪 **Children checked:** each child is checked for the `_` prefix and a Purpose line (lines 351–360)<br>• ⚠️ **Not run in this review:** no pass result was seen, and nothing checks child bullet style or whether `paths:` globs match content<br>• ✅ **No incident test needed:** the rule documents no incident, so no content-regression test is required |
+| **Overall** | **6.5/10** | 2026-10-28 | • 💪 **Practical examples:** concrete Good/Bad Dockerfiles, plus a working multi-stage template<br>• ⚠️ **Gaps:** Compose is in `paths:` but has no content, no evidence of need or use is recorded, and the child pages slip on house style |
 
 ## 🔗 Related files
 
 - `src/claude/_reference/_style_guide_standards/infra/docker.md` — the rule being scored
+- `src/claude/_reference/_style_guide_standards/infra/docker/_fundamentals.md` — Clarity, Structural Compliance
+- `src/claude/_reference/_style_guide_standards/infra/docker/_advanced.md` — Clarity, Structural Compliance
+- `src/claude/_tests/rules/rules_lazy_load/test_lazy_load_rule_structure.py` — Test Coverage
+- `docs/audits/rule_usage_history.csv` — Evidence of Need
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md` — Complexity

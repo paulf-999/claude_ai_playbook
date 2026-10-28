@@ -1,42 +1,37 @@
 # Quality Scorecard — guiding_principles.md
 
 **Date Created:** 2026-09-21
-**Date Updated:** 2026-10-25
+**Date Updated:** 2026-10-27
 
-**Overall score:** 6.9/10
+**Overall score:** 7.3/10
 
 **Recommended improvements:**
-- Align line 17's 200-line target with the 110-line rule limit, or say which files each applies to
-- Record evidence of need, meeting the bar the rule sets on line 19
-- Give the child `usage_evidence.md` emoji headings and bold-keyword bullets
-- Spell out the ROI example on line 22 and what counts as "directly referenced" on line 15
+- Use one unit (minutes or money) in the Automation ROI threshold, and write the line 22 example as a full worked comparison.
+- Record at least one dated incident or usage-evidence entry for a principle, such as a pruned import or a removed hook, so the rule's need rests on a file.
+- Path-scope the rule, or correct line 6's claim that path-scoping saves nothing, since the rule also loads in sessions outside the config.
+- Confirm that `/doctor prompt-audit` exists and cite where, or replace it with a command that does.
+- Delete line 11, which repeats the Purpose line.
+- Add a content check for the "under 200 lines" and "110-line" size targets, or record a passing `test_rules_structure.py` run.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 7/10 | 2026-10-25 | • 🔍 **Actionable table:** each principle has Description, Rationale and How to apply columns, so a reader can apply it straight away.<br>• ⚠️ **Contradiction:** `rules/01_essentials/guiding_principles.md` line 17 says "keep each CLAUDE.md, rule and imported file under 200 lines". The rule limit in `_hard_gates_checklist.md` line 24 is 110 lines, which breaks the rule's own "remove conflicts" advice on line 25.<br>• ⚠️ **Vague bullets:** line 15 "Imports: only when directly referenced" doesn't say what counts as a reference.<br>• ⚠️ **Unclear example:** line 22 "manual 10 min < Claude 2 min + $5" uses a bare inequality that has to be decoded before it means anything. |
-| **Complexity** | 5/10 | 2026-10-25 | • 🧮 **Raw complexity 5:** Concepts 3 (11 principles, lines 15–25), Scope 2 (covers settings, hooks, imports, rules and skills across several folders), Dependencies 0, Prerequisites 0.<br>• ⚠️ **Many concepts:** 11 separate principles sit in one always-on file, which matches the ~5 anchor ("several jobs, several folders"). |
-| **Evidence of Need** | 6/10 | 2026-10-25 | • 🔗 **Cited sources:** lines 17–18 link the Claude Code memory docs for the size and enforcement claims.<br>• 🔗 **Reused:** `_reference/_quality_scorecards/rules/README.md` lines 75 and 87 build two scoring dimensions on this rule.<br>• ⚠️ **No dated incident:** neither `guiding_principles.md` nor `usage_evidence.md` records an incident, PR or usage count, so the rule doesn't meet the bar it sets itself on line 19 ("Require evidence"). |
-| **Token Cost Justification** | 7/10 | 2026-10-25 | • 🎯 **Headers set:** `applies_to`, `miss_cost` and `loading` are on lines 4–6, and the bulky evidence guidance is moved out to a lazy child (line 19).<br>• ⚠️ **Loads beyond its scope:** line 4 limits it to `**/claude/**, **/.claude/**`, but the file loads in every session, including non-config work. Line 6 only argues that path-scoping saves nothing *inside* the config.<br>• ⚠️ **Dense rows:** 11 long table rows (lines 15–25) for a medium miss cost (line 5). |
-| **Structural Compliance** | 8/10 | 2026-10-25 | • ✅ **Parent clean:** the metadata header (lines 1–3), emoji H1 (line 7), Purpose (line 9), 26 lines and bold-keyword cell bullets all pass. There is no Contents section, which is correct with no `##` headings.<br>• ⚠️ **Child style slips:** `rules/_rules_lazy_load/claude_config/usage_evidence.md` `##` headings on lines 14, 24, 32 and 45 have no emoji. Its bullets on lines 26–30 and 47–49 don't open with a bold keyword followed by a colon (they use ❌ markers or bold without the colon).<br>• ⚠️ **Redundant line:** line 11 repeats the Purpose on line 9. |
-| **Currency** | 7/10 | 2026-10-25 | • ✅ **Pointer resolves:** the line 19 child `rules/_rules_lazy_load/claude_config/usage_evidence.md` exists.<br>• ⚠️ **Drifted limit:** line 17's 200-line target doesn't match the 110-line limit the authoring gates now use (`_hard_gates_checklist.md` line 24).<br>• ⚠️ **Unconfirmed commands:** no allowed input confirms `/doctor prompt-audit` (line 17) or `/faster-mode` (`usage_evidence.md` line 18). |
-| **Test Coverage** | 8/10 | 2026-10-25 | • 🧪 **Dedicated test:** `_tests/rules/01_essentials/test_guiding_principles.py` checks the CLAUDE.md import discipline against three principles (docstring lines 13–15). `_tests/_shared_checks/test_resolved_rule.py` line 22 also uses this rule.<br>• 🧪 **No incident, no regression test needed:** the rule records no incident, so a content-regression test isn't required.<br>• ⚠️ **No recorded run:** no allowed input shows these tests or `test_rules_structure.py` passing. |
-| **Overall** | **6.9/10** | 2026-10-25 | • 💪 **Foundational and lean:** 26 lines, a clean header, and the evidence detail moved out to a lazy child.<br>• ⚠️ **Gaps:** the 200-vs-110 line contradiction, 11 concepts in one always-on file, no recorded evidence of need, and style slips in the child. |
+| **Clarity** | 7/10 | 2026-10-25 | • 🔍 **Clear principles:** each row's name, description and "How to apply" read the same to any reader.<br>• ⚠️ **Mixed units:** line 22's "if manual time per month < automation setup + monthly API cost" compares minutes with money.<br>• ⚠️ **Cryptic example:** line 22's "manual 10 min < Claude 2 min + $5" doesn't say which way the decision goes.<br>• ⚠️ **Vague trigger:** line 15's "Imports: only when directly referenced" doesn't say who references the import or how. |
+| **Complexity** | 7/10 | 2026-10-27 | • 🧮 **Raw complexity 3:** Concepts 3 (11 principles) + Scope 0 (one file) + Dependencies 0 + Prerequisites 0, per `_complexity_scoring.md`.<br>• ⚠️ **Broad bundle:** 11 principles in one table, matching the ~7 anchor ("one job that reads across several folders") more than the ~9 one. |
+| **Evidence of Need** | 6/10 | 2026-10-25 | • ⚠️ **No dated incident:** unlike `portable_paths.md`, the rule records no incident, issue or usage row for any principle.<br>• 🔗 **External backing:** the size target and "context, not enforcement" points cite the Claude Code memory docs (lines 17 and 18).<br>• 🔗 **Relied on:** the rule rubric's Evidence and Currency dimensions are defined from this rule's principles (`rules/README.md` lines 75 and 87). |
+| **Token Cost Justification** | 7/10 | 2026-10-25 | • 🎯 **Header set:** lines 4–6 give `applies_to`, `miss_cost` and a loading reason.<br>• ⚠️ **Loads beyond its scope:** `applies_to` is `**/claude/**, **/.claude/**`, but the rule sits always-on in `rules/01_essentials/`, so it also loads in projects outside the config.<br>• ⚠️ **Overstated reason:** line 6's "path-scoping would save nothing" holds only for sessions inside the config. |
+| **Structural Compliance** | 8/10 | 2026-10-25 | • ✅ **Within limits:** 25 lines, a metadata header, an emoji H1, a Purpose line and bold-keyword cell bullets.<br>• ⚠️ **Redundant line:** line 11 repeats the Purpose line, against `writing_style.md`'s brevity rule.<br>• ⚠️ **No recorded run:** no input records `test_rules_structure.py` or the header tests passing on this commit. |
+| **Currency** | 8/10 | 2026-10-27 | • ✅ **Pointer resolves:** line 19's `_rules_lazy_load/claude_config/usage_evidence.md` exists.<br>• ✅ **Limits agree:** line 17's 110-line rule-file limit matches `_hard_gates_checklist.md` line 24.<br>• ⚠️ **Unconfirmed command:** no file in the repo defines or documents `/doctor prompt-audit` (line 17). |
+| **Test Coverage** | 8/10 | 2026-10-25 | • 🧪 **Runnable test:** `test_guiding_principles.py` checks CLAUDE.md's imports against three principles: lazy-load, explicit and context efficiency.<br>• ✅ **No regression test needed:** the rule documents no incident, so the rubric asks only for structural coverage.<br>• ⚠️ **Partial content coverage:** the other eight principles get only structural checks, and no input records a pass rate. |
+| **Overall** | **7.3/10** | 2026-10-27 | • 💪 **Strength:** a short, scannable, foundational table that the rubric itself builds on, with a real pytest behind three principles.<br>• ⚠️ **Gap:** no recorded evidence of need, a muddled ROI threshold and wider loading than its `applies_to`. |
 
 ## 🔗 Related files
 
 - `src/claude/rules/01_essentials/guiding_principles.md` — the rule being scored
-- `src/claude/_tests/rules/01_essentials/test_guiding_principles.py` — Test Coverage dimension
-- `src/claude/rules/03_authoring_guidelines/authoring_rules.md` — Evidence of Need dimension
-- `src/claude/rules/02_claude_standards/git/_concurrent_sessions.md` — Evidence of Need dimension
-- `src/claude/rules/_rules_lazy_load/claude_config/hooks_decision_framework.md` — Evidence of Need dimension
-- `src/claude/rules/01_essentials/claude_usage_standards/writing_style.md` — Structural Compliance dimension
-- `src/claude/rules/02_claude_standards/claude_working_practices/portable_paths.md` — Test Coverage dimension (the disclosed violation)
-
----
-
-## 🚩 Pre-existing issue — found here, fixed separately
-
-- 🐛 **Violation found:** `test_guiding_principles.py` (lines 32, 81) hardcoded `@~/.claude/` when parsing `@import` lines.
-- 🚫 **Rule broken:** `portable_paths.md` forbids this — "never hardcode the `@~/.claude/` or `@~/claude/` import-prefix string when parsing `@import` lines."
-- ✅ **Resolved:** fixed in PR #88, on its own hotfix branch rather than bundled into this scorecard PR.
-- 📋 **Disposition:** per this config's pre-existing-issue disclosure rule — flagged here, fixed separately, not silently absorbed into scope.
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md` — Complexity
+- `src/claude/rules/_rules_lazy_load/claude_config/usage_evidence.md` — Currency
+- `src/claude/rules/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_rules/_hard_gates_checklist.md` — Currency
+- `src/claude/rules/01_essentials/claude_usage_standards/writing_style.md` — Structural Compliance
+- `src/claude/_reference/_quality_scorecards/rules/README.md` — Evidence of Need
+- `src/claude/rules/02_claude_standards/claude_working_practices/portable_paths.md` — Evidence of Need (the comparison anchor)
+- `src/claude/_tests/rules/01_essentials/test_guiding_principles.py` — Test Coverage
+- `src/claude/_tests/rules/test_rules_structure.py` — Structural Compliance and Test Coverage

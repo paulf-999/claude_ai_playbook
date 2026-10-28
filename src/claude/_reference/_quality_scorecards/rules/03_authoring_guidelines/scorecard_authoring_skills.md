@@ -1,29 +1,38 @@
 # Quality Scorecard — authoring_skills.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-10-25
+**Date Updated:** 2026-10-27
 
-**Overall score:** 7.3/10
+**Overall score:** 7.6/10
 
 **Recommended improvements:**
-- Resolve line 45's `patterns/` ban against line 47's `reference/patterns/` exception
-- Update line 31's "~60 lines" to match `_core_standards.md` line 20's instructions exemption
-- Make the drafts-path guidance agree between `_core_standards.md` line 34 and the hard gates
-- Add a content-regression test for the 2026-10-01 incident in `_core_standards.md` line 37
+- Record each time a skill shipped without a contract or evals, so the parent's `miss_cost` claim has dated evidence behind it.
+- Add `applies_to: *`, or move the rule into `path_scoped_rules/` with a skill-authoring trigger, so where it loads matches what `applies_to` says.
+- Add a test that checks a skill's folder against the File Organisation section, so a missing `tests/README.md`, a root-level `evals.yaml` or an extra subfolder fails the build.
+- Mark in the tree whether `reference/_implementation.md` is required or optional, as `_formats.md` already is.
+- Join the two "Exception" bullets to the list above them, and reword "Nothing else: add no…" as a positive instruction.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 8/10 | 2026-10-25 | • 🔍 **Clear opening:** line 11 tells the reader to go through the five children in order and finish with the checklist.<br>• ⚠️ **Contradicting exception:** `authoring_skills.md` line 45 bans `patterns/` subdirectories, then line 47 allows `reference/patterns/`.<br>• ⚠️ **Line budget differs:** line 31 says SKILL.md is "~60 lines", but `_core_standards.md` line 20 says "~60 lines plus the instructions section". |
-| **Complexity** | 5/10 | 2026-10-25 | • 🧮 **Raw complexity 5:** Concepts 3 (naming, structure, instructions, contract, maturity, triggers, scope, orphans, file layout) + Scope 2 (`skills/`, `_reference/_quality_scorecards/skills/`, `_tests/skills/`) + Dependencies 0 + Prerequisites 0, matching the ~5 anchor.<br>• ⚠️ **Wide spread:** about a dozen concepts across a parent and five children (`_core_standards.md` alone covers naming, structure, description, contract and maturity). |
-| **Evidence of Need** | 8/10 | 2026-10-25 | • 🔗 **Dated incidents:** `_core_standards.md` line 37 (instructions pushed into `reference/` and skipped, 2026-10-01).<br>• 🔗 **Audit evidence:** `_no_orphaned_files.md` line 14 (2026-09-19 audit: 16, 6 and 3 unreachable or missing files across three skills).<br>• ⚠️ **No repeat-use record:** no usage CSV or session count shows how often the rule is applied, so it falls short of the ~9 anchor. |
-| **Token Cost Justification** | 7/10 | 2026-10-25 | • 🎯 **Justified header:** `applies_to: **/skills/**` and a `loading:` reason (new-skill gap) are set on lines 4 and 6.<br>• 💪 **Lean parent:** the bulky detail is in five on-demand children, and the parent is 50 lines.<br>• ⚠️ **Loads everywhere:** the always-on "File Organization" block (lines 25–49) loads in sessions that never touch `skills/`. It is more than the pointer the new-file gap needs. |
-| **Structural Compliance** | 7/10 | 2026-10-25 | • ✅ **Header and shape:** metadata header on lines 1–3, emoji H1, Purpose line, 50 lines, no Related section, children wired with `**Read on demand:**`.<br>• ⚠️ **Multi-sentence paragraphs:** `authoring_skills.md` lines 41, 43 and 45 are bold-led paragraphs with two or three sentences each.<br>• ⚠️ **Missing bold keywords:** `_core_standards.md` lines 12–16, `_trigger_design.md` lines 17–21 and `_scope_and_maintenance.md` lines 29–37 have bullets without a bold keyword.<br>• ⚠️ **Spelling:** American "Organization" in the heading on line 25 (house style is British). |
-| **Currency** | 8/10 | 2026-10-25 | • ✅ **Paths exist:** every path checked exists (`_templates/skills/SKILL.md.template`, `_quality_scorecard_template.md`, `skill_domains.yaml`, `test_no_orphaned_skill_files.py`, `capture_session_prompts.py`, `git_create_pr/skill.contract.yaml`).<br>• ⚠️ **Path guidance differs:** `_core_standards.md` line 34 says use `~/claude/_drafts/<domain>/`, but `_hard_gates_checklist.md` line 27 says `$HOME`-based paths.<br>• ⚠️ **Stale line limit:** parent line 31 ("~60 lines") predates the instructions-section exemption. |
-| **Test Coverage** | 8/10 | 2026-10-25 | • 🧪 **Content tests:** `_tests/rules/03_authoring_guidelines/test_authoring_skills.py` checks that the children resolve, the six sections stay in order, the frontmatter example is valid and the contract fields match. It also checks that the maturity eval counts and complexity caps match the checklist and `_complexity_scoring.md`.<br>• 🧪 **Mechanical backstop:** `_tests/skills/_all_skills/test_no_orphaned_skill_files.py` enforces `_no_orphaned_files.md`.<br>• ⚠️ **Incident record not tested:** no `# wording-check: incident record` assert protects the 2026-10-01 record in `_core_standards.md` line 37. |
-| **Overall** | **7.3/10** | 2026-10-25 | • 💪 **Strengths:** a slim always-on parent, lazy children backed by dated incidents, and a solid test that checks the parts agree.<br>• ⚠️ **Gaps:** wide concept spread, style slips in the children, wording that differs between files on paths and line budget, and no test for the incident record. |
+| **Clarity** | 8/10 | 2026-10-25 | • 🔍 **Clear pointers:** each of the five "Read on demand" lines says what that child covers.<br>• 🔍 **Clear layout:** the tree plus five bullets say exactly what a skill folder may hold.<br>• ⚠️ **Optional or required:** line 35 marks `_formats.md` "(if applicable)", but line 34's `_implementation.md` says neither. |
+| **Complexity** | 7/10 | 2026-10-27 | • 🧮 **Raw complexity 3:** one concept (how a skill folder is laid out), but its scope covers `skills/`, `_reference/_quality_scorecards/skills/` and `_tests/skills/`, and it depends on five lazy children. |
+| **Evidence of Need** | 7/10 | 2026-10-27 | • 🔗 **Children's incidents:** `_core_standards.md` line 37 records an incident on 2026-10-01, and `_no_orphaned_files.md` line 14 records a 2026-09-19 audit across three skills.<br>• ⚠️ **Parent unbacked:** the parent's own `miss_cost` ("skills ship without contracts or evals") has no dated incident or usage record.<br>• ⚠️ **Reasoning only:** the `tests/` folder rule is argued from readability (line 43), not from an observed problem. |
+| **Token Cost Justification** | 6/10 | 2026-10-27 | • 🎯 **Lean:** 50 lines, and the long content sits in lazy children.<br>• ⚠️ **Mismatch:** it loads in every session, but line 4 says `applies_to: **/skills/**`, so most of the sessions it loads in don't need it.<br>• 💡 **Reason given:** line 6 explains that a new skill can start before any `skills/` file is open, which softens the mismatch without fixing it. |
+| **Structural Compliance** | 8/10 | 2026-10-27 | • ✅ **Header and length:** a full metadata header (version, dates, applies_to, miss_cost, loading), an emoji H1, a Purpose line and 50 lines.<br>• ⚠️ **List gaps:** blank lines at 46 and 48 split the two "Exception" bullets off from the list above.<br>• ⚠️ **Negative wording:** line 45's "add no `templates/`…" is phrased as a ban, which `writing_style.md` asks to avoid.<br>• ⚠️ **Not run:** the reviewer read but did not run `test_rules_structure.py` or the header tests. |
+| **Currency** | 9/10 | 2026-10-27 | • ✅ **Paths exist:** all five children, `_reference/_quality_scorecards/skills/`, `capture_session_prompts.py` and `_tests/skills/claude_capture_session_prompts/` exist.<br>• ✅ **Matches practice:** all 8 skills keep `evals.yaml` in `tests/` with a `README.md` beside it.<br>• 🔍 **Pointer prefix:** the pointers use `~/.claude/`, as the sibling rules in this tier do, and the repo alone can't show whether the install rewrites it to `~/claude/`. |
+| **Test Coverage** | 8/10 | 2026-10-25 | • 🧪 **Content tests:** `test_authoring_skills.py` checks that the children resolve, the six SKILL.md sections (the 2026-10-01 incident), the contract fields, eval counts and complexity caps.<br>• ⚠️ **Layout untested:** no test covers the parent's File Organisation section, meaning the mandatory `tests/README.md`, the ban on `evals.yaml` at skill root and the "nothing else" rule.<br>• 🔍 **Checked:** `test_skill_structure_compliance.py` only writes `tests/evals.yaml` into a test fixture. |
+| **Overall** | **7.6/10** | 2026-10-27 | • 💪 **Thin parent:** a short, current parent that sends the detail to tested lazy children.<br>• ⚠️ **Gaps:** loads in every session against a narrow `applies_to`, the File Organisation section has no test, and the parent has no evidence of its own. |
 
 ## 🔗 Related files
 
 - `src/claude/rules/03_authoring_guidelines/authoring_skills.md` — the rule being scored
-- `src/claude/_tests/rules/03_authoring_guidelines/test_authoring_skills.py` — Test Coverage dimension
-- `src/claude/rules/_rules_lazy_load/testing_lazy_load/_test_metadata.md` — Test Coverage dimension (metadata-header format the test's own header is missing fields from)
+- `src/claude/rules/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_skills/_core_standards.md` — Evidence of Need (2026-10-01 incident)
+- `src/claude/rules/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_skills/_no_orphaned_files.md` — Evidence of Need (2026-09-19 audit)
+- `src/claude/rules/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_skills/_trigger_design.md` — Currency
+- `src/claude/rules/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_skills/_scope_and_maintenance.md` — Currency
+- `src/claude/rules/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_skills/_hard_gates_checklist.md` — Currency, Test Coverage
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_claude_config_metadata.md` — Token Cost Justification (applies_to and loading fields)
+- `src/claude/skills/_claude_skills/claude_capture_session_prompts/capture_session_prompts.py` — Currency
+- `src/claude/_tests/skills/claude_capture_session_prompts/test_capture_session_prompts.py` — Currency
+- `src/claude/_tests/rules/03_authoring_guidelines/test_authoring_skills.py` — Test Coverage
+- `src/claude/_tests/skills/_all_skills/test_skill_structure_compliance.py` — Test Coverage

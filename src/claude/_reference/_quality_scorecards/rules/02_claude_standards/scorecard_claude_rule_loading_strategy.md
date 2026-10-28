@@ -1,40 +1,39 @@
 # Quality Scorecard — claude_rule_loading_strategy.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-10-25
+**Date Updated:** 2026-10-27
 
-**Overall score:** 7.0/10 (6-dimension average, Token Cost N/A)
+**Overall score:** 7.2/10 (6-dimension average, Token Cost N/A)
 
 **Recommended improvements:**
-- Change line 71's `load:` to the real field name, `loading:`
-- Update `HEADER_LINES` in `test_claude_rule_loading_strategy.py` lines 30–31 to the current 12-line header
-- Record evidence of need for the placement rules
-- Split the multi-sentence lines 17, 19 and 92, and give the numbered steps bold keywords
+- Re-run `make audit_rule_usage` so `docs/audits/audit_rule_usage.md` uses the current folder names and has data from after the move, since the rule says to decide placement from that report.
+- Say what "small" means in the Low / half-or-more cell (for example, a token threshold), so two readers place the same rule the same way.
+- Split the "Folder sets the mode" bullet into two, and give each "When adding a rule" step a bold keyword.
+- Add a test that checks the cut-offs (10 sessions, half, 90 days) against `MIN_SAMPLE_SESSIONS`, `DEMOTE_APPLIED_BELOW` and `STALE_AFTER_DAYS` in `audit_rule_usage.py`.
+- Lower complexity by moving "Audit flags" into a lazy child, or into the audit report's own "How to read this" section.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 8/10 | 2026-10-25 | • 🎯 **Decision table:** the miss-cost by applied-% grid (lines 47–51) gives one answer per cell, so two readers will place a rule the same way.<br>• ⚠️ **Wrong field name:** line 71 says "its `load:` reason names the pointer", but the header field is `loading:` (line 12 of the same file), so a reader may look for a field that doesn't exist.<br>• ⚠️ **Tier overlap:** line 34 says "tiers 01–03 load every session", yet the path-scoped folder sits inside `02_claude_standards/` (line 29), and only the `paths:` clause explains the exception. |
-| **Complexity** | 6/10 | 2026-10-25 | • 🧮 **Raw complexity 4:** Concepts 2 (tier table, load decision grid, `paths:` fit, audit flags, adding steps) + Scope 2 (`rules/`, `_rules_lazy_load/` and `_reference/_style_guide_standards/`, lines 31 and 54) + Dependencies 0 (`make audit_rule_usage` is the config's own script) + Prerequisites 0.<br>• ⚠️ **Five jobs in one file:** lines 75–81 (audit flags) and 85–92 (adding steps) sit on top of the placement guidance, which pushes the Concepts count up. |
-| **Evidence of Need** | 6/10 | 2026-10-25 | • ❓ **No incident recorded:** lines 17–19 state the per-session cost but give no dated incident or misplacement that the rule fixed.<br>• 🔗 **Uses measured data:** lines 42–45 base the decision on `docs/audits/audit_rule_usage.md`, which exists, but the rule records no result from it. |
-| **Token Cost Justification** | N/A | 2026-10-25 | • N/A — path-scoped rule in `path_scoped_rules/`, so the rubric leaves this out of the average<br>• 🔍 **Reviewer note:** `paths:` on lines 2–6 loads it only with rule, lazy-rule, style-guide or `CLAUDE.md` files, which the reviewer would have scored 9/10. |
-| **Structural Compliance** | 7/10 | 2026-10-25 | • ✅ **Header and length:** metadata comments on lines 8–12, emoji H1, Purpose line, about 80 body lines and no Related section.<br>• ⚠️ **Multi-sentence lines:** line 17 (`**Principle:**` has two sentences), line 19 and line 92 are each more than one sentence.<br>• ⚠️ **Steps lack keywords:** the numbered steps on lines 87–90 don't start with a bold keyword. |
-| **Currency** | 7/10 | 2026-10-25 | • ✅ **Paths exist:** `test_rule_headers.py` (with `test_high_cost_lazy_rules_load_mechanically`), `test_path_scoped_rules_live.py`, `audit_rule_usage.py`, `rule_usage_history.csv`, `docs/audits/audit_rule_usage.md`, `authoring_agents.md`, `_claude_config_metadata.md` and `latency_optimisation.md` all exist today.<br>• 🍂 **One stale reference:** line 71 names a `load:` field, but the metadata standard and this file's own line 12 use `loading:`. |
-| **Test Coverage** | 8/10 | 2026-10-25 | • ✅ **Drift test runs:** `src/claude/_tests/rules/02_claude_standards/test_claude_rule_loading_strategy.py` checks the five-row table against the folders on disk, plus tier order, example files, loading claims, the on-demand pointer, line limit and trailing newline. No incident is recorded, so no content-regression test is needed.<br>• ⚠️ **Header count out of date:** that test's lines 30–31 set `HEADER_LINES = 9` ("5 lines + version, created, updated, miss_cost"), but the rule now has a 7-line frontmatter plus 5 comment lines (12 in total, including `loading:`). The line-limit check still passes, but its maths is wrong.<br>• ⚠️ **Gaps:** nothing checks the test and script names on lines 56, 70 and 81 or the field name on line 71. I did not run the test. |
-| **Overall** | **7.0/10** | 2026-10-25 | • 💪 **Strengths:** a decisive placement grid, path-scoped loading, and a drift test tied to the real folders.<br>• ⚠️ **Gaps:** the stale `load:` field name (line 71), no recorded incident, multi-sentence lines (17, 19, 92), and an out-of-date header count in the test. |
+| **Clarity** | 8/10 | 2026-10-25 | • 💪 **Decision matrix:** the miss-cost by applied-% table makes most placements mechanical<br>• ⚠️ **Undefined "small":** the "Always-on only if small" cell and step 4's "judging on criticality and size" give no threshold<br>• ⚠️ **Nesting:** the `02_claude_standards/` row says "Always-on" while `path_scoped_rules/` sits inside it, and only line 34's "unless a rule there has `paths:`" resolves this |
+| **Complexity** | 4/10 | 2026-10-27 | • 🧮 **Raw complexity 6:** Concepts 2 (tier table, decision matrix, `paths:` fit, audit flags, adding steps) + Scope 2 (`rules/`, `_rules_lazy_load/`, `_reference/_style_guide_standards/`, `docs/audits/`) + Dependencies 1 (`make audit_rule_usage`) + Prerequisites 1 (a current audit report)<br>• ⚠️ **Five jobs:** "Audit flags" and "When adding a rule" are separate tasks from "which folder does a rule belong in" |
+| **Evidence of Need** | 8/10 | 2026-10-27 | • 📈 **Recorded use:** `docs/audits/rule_usage_sessions.csv` records 35 applied sessions between 2026-08-31 and 2026-10-01<br>• 🔗 **Own placement:** `docs/audits/rule_usage_history.md` shows it missed in 35 of 35 sessions when it was purely lazy, which supports the `paths:` trigger it has now<br>• ⚠️ **No data since the move:** every row is from before the 2026-10-11 move to `path_scoped_rules/`, so whether it loads in its new place hasn't been measured |
+| **Token Cost Justification** | N/A | 2026-10-25 | • 🎯 **Path-scoped:** loads only with `**/rules/**`, `**/_rules_lazy_load/**`, `**/_style_guide_standards/**` or `**/CLAUDE.md`, so it's left out of the average |
+| **Structural Compliance** | 8/10 | 2026-10-27 | • ✅ **Clean basics:** emoji headings, a Purpose line, the header in the right place, about 81 body lines, and `test_line_limit` / `test_ends_with_single_newline` cover the length and newline<br>• ⚠️ **Joined bullet:** line 34 puts two points in one bullet ("…unless a rule there has `paths:`…, and nothing under `rules/` is `@import`ed")<br>• ⚠️ **Steps with no keyword:** the numbered steps on lines 87–90 have no bold keyword |
+| **Currency** | 7/10 | 2026-10-25 | • ✅ **Paths exist:** `make audit_rule_usage`, `test_rule_headers.py`, `test_path_scoped_rules_live.py`, `rule_usage_history.csv`, `_claude_config_metadata.md`, `authoring_agents.md` (has `paths:`) and every table example all resolve<br>• ⚠️ **Stale source:** line 42 says both deciding numbers are in `docs/audits/audit_rule_usage.md`, but that report was generated on 2026-10-01, still lists this rule as `05_lazy_load/`, and its miss-cost note says "— until Phase 5 adds them" |
+| **Test Coverage** | 8/10 | 2026-10-25 | • ✅ **Drift tests:** `test_claude_rule_loading_strategy.py` checks the five rows against the folders on disk, the order of the rows, that each example file exists, that each Loading cell matches its folder, the on-demand pointer, the length limit and the trailing newline<br>• ✅ **Enforced claims:** `test_high_cost_lazy_rules_load_mechanically` and the live `test_path_scoped_rules_live.py` back the "Pointers aren't triggers" and "Proven" bullets<br>• ⚠️ **Untested numbers:** nothing ties the decision matrix or the cut-offs (10, half, 90 days) to `audit_rule_usage.py`, so they match the script today only by luck |
+| **Overall** | **7.2/10** | 2026-10-27 | • 💪 **Grounded:** a placement method backed by measured usage, with drift tests on its table<br>• ⚠️ **Gaps:** it relies on an audit report that's out of date, it does several jobs, and "small" is undefined |
 
 ## 🔗 Related files
 
 - `src/claude/rules/02_claude_standards/path_scoped_rules/claude_rule_loading_strategy.md` — the rule being scored
-- `src/claude/_tests/rules/02_claude_standards/test_always_on_reachability.py` — Test Coverage dimension
-- `src/claude/_tests/rules/rules_lazy_load/test_lazy_load_coverage.py` — Test Coverage dimension
-- `src/claude/_tests/rules/02_claude_standards/test_claude_rule_loading_strategy.py` — Test Coverage dimension (dedicated test)
-- `src/claude/_tests/rules/test_rules_structure.py` — Structural Compliance dimension (H2 emoji check)
-- `src/claude/rules/01_essentials/claude_usage_standards/writing_style.md` — Structural Compliance dimension (the emoji-heading rule being violated)
-
----
-
-## 🚩 Pre-existing issues — since resolved
-
-- ✅ **Resolved:** all `##` headings now carry an emoji (v1.2.0, 2026-09-30), and `test_h2_headings_have_emoji()` now enforces it for every rule.
-- ✅ **Resolved:** the tier list now covers all five tiers, including `03_authoring_guidelines/`.
-- 📋 **Disposition:** resolved by later PRs and kept here as a record.
+- `src/claude/_tests/rules/02_claude_standards/test_claude_rule_loading_strategy.py` — Test Coverage, Structural Compliance
+- `src/claude/_tests/rules/03_authoring_guidelines/test_rule_headers.py` — Test Coverage
+- `src/claude/_tests/rules/02_claude_standards/test_path_scoped_rules_live.py` — Test Coverage, Currency
+- `src/claude/scripts/_audit_scripts/audit_rule_usage.py` — Test Coverage, Currency
+- `docs/audits/audit_rule_usage.md` — Currency
+- `docs/audits/rule_usage_sessions.csv` — Evidence of Need
+- `docs/audits/rule_usage_history.md` — Evidence of Need
+- `docs/audits/rule_usage_history.csv` — Currency
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_claude_config_metadata.md` — Currency
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md` — Complexity
+- `src/claude/rules/03_authoring_guidelines/authoring_agents.md` — Currency

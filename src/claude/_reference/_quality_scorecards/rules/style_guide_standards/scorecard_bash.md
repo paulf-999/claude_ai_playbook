@@ -1,35 +1,38 @@
 # Quality Scorecard — bash.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-10-25
+**Date Updated:** 2026-10-28
 
-**Overall score:** 6.8/10 (6-dimension average, Token Cost N/A)
+**Overall score:** 6.7/10 (6-dimension average, Token Cost N/A)
 
 **Recommended improvements:**
-- Say whether `local` variables are uppercase too (lines 72 and 78)
-- Reconcile the relative `shell_utils.sh` path on line 47 with the absolute-path rule on line 87
-- Replace the literal `~/.claude/` paths on lines 30 and 50, and say what "strict mode" means on line 8
+- Replace the relative `source src/sh/shell_utils.sh` (lines 47 and 50) with a source line that works from any folder, such as one that finds the path from the script's own location, matching the guide's own "Absolute paths" bullet on line 87.
+- Decide whether `set -e` is enough as the required minimum, and if it isn't, require `set -euo pipefail`, which the newer hooks already use, and update `template_bash_script.sh` to match.
+- Say whether function `local` variables also follow `UPPER_SNAKE_CASE`, or give them their own case.
+- Rewrite the bullet on line 82 in `**Keyword:** text` form, and turn the intro sentence on line 28 into a bullet.
+- Add evidence of need: a dated incident, a review finding or a usage record, since the `miss_cost` comment is currently the only justification.
+- Add a test that checks the five functions and six log-level constants named on lines 51–58 still exist in `shell_utils.sh`, and that the template path on line 30 still exists.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 7/10 | 2026-10-25 | • 🔍 **Mostly actionable:** the 8 short sections each give a concrete do-this rule.<br>• ⚠️ **Naming clash:** `bash.md` line 72 says variables are `UPPER_SNAKE_CASE`, but line 78 asks for `local` function variables, and it doesn't say whether locals are uppercase too.<br>• ⚠️ **Path clash:** line 47 sources the relative `src/sh/shell_utils.sh`, while line 87 says to use absolute paths where the working directory may vary.<br>• ⚠️ **Strict mode unclear:** line 8 names "strict mode", but lines 38–39 require only `set -e`, with no `-u` or `pipefail`. |
-| **Complexity** | 4/10 | 2026-10-25 | • 🧮 **Raw complexity 6:** Concepts 3 (8 separate sections, lines 26–89) + Scope 1 (points into `_templates/utils/`) + Dependencies 1 (`shellcheck`, line 62) + Prerequisites 1 (copy `shell_utils.sh` into each project, line 50).<br>• ⚠️ **Many concepts:** one style guide covers structure, flags, utilities, linting, naming, variables and conditionals, which is what pushes the raw sum past the ~5 anchor. |
-| **Evidence of Need** | 7/10 | 2026-10-25 | • 🔗 **Dated usage signal:** `_tests/rules/rules_lazy_load/test_lazy_load_triggers.py` lines 252–258 list `bash.md` among "the rules that missed most often", with its `paths:` trigger added on 2026-10-01.<br>• ⚠️ **Not in the rule:** `bash.md` records no incident or usage evidence itself, only the `miss_cost` reason on line 8. |
-| **Token Cost Justification** | N/A | 2026-10-25 | • N/A — lazy-load rule, so the rubric leaves this out of the average |
-| **Structural Compliance** | 7/10 | 2026-10-25 | • ✅ **Header and shape:** `paths:` frontmatter, a 3-line metadata header (lines 5–7), an emoji H1, a Purpose line, Contents for 8 headings and 89 lines.<br>• ⚠️ **Bullets without keywords:** the log-level bullets on lines 53–58 have no bold keyword.<br>• ⚠️ **Hardcoded paths:** lines 30 and 50 write a literal `~/.claude/...`, against the hard-gates item "No hardcoded paths or usernames, per `portable_paths.md`".<br>• ⚠️ **Two-clause bullet:** line 89 joins two instructions with a dash. |
-| **Currency** | 8/10 | 2026-10-25 | • ✅ **Paths exist:** `_templates/utils/template_bash_script.sh` and `_templates/utils/shell_utils.sh` are both in the repo today.<br>• ⚠️ **Install-dependent:** the literal `~/.claude/` prefix on lines 30 and 50 resolves only where the config sits at the default location.<br>• ⚠️ **Helper list not checked:** line 51's list of helpers (`log_message`, `handle_interruption` and the rest) was not checked against `shell_utils.sh`. |
-| **Test Coverage** | 8/10 | 2026-10-25 | • 🧪 **Structural guard:** `_tests/rules/rules_lazy_load/test_lazy_load_rule_structure.py` line 55 checks the header, Purpose, links, Contents and the "Safety flags" and "Naming conventions" headings.<br>• 🧪 **Trigger guard:** `test_lazy_load_triggers.py` line 258 checks that the `paths:` trigger stays.<br>• ⚠️ **Gaps:** I didn't run the tests, and nothing checks the backtick template paths on lines 30 and 50, which the link check doesn't parse.<br>• ✅ **No incident:** the rule records none, so it needs no content-regression test. |
-| **Overall** | **6.8/10** | 2026-10-25 | • 💪 **Compact and tested:** a short, path-scoped guide with a working structure test and trigger test.<br>• ⚠️ **Held back by:** a raw complexity of 6, the variable and path contradictions (lines 72/78 and 47/87), and the hardcoded `~/.claude/` paths (lines 30 and 50). |
+| **Clarity** | 7/10 | 2026-10-25 | • 🔍 **Clear body:** each section is short and gives a direct instruction<br>• ⚠️ **Self-conflict:** line 47 requires a relative `source src/sh/shell_utils.sh`, but line 87 says to use absolute paths where the working directory may vary<br>• ⚠️ **Case ambiguity:** line 72 says variables are `UPPER_SNAKE_CASE`, and line 78 requires `local`, but nothing says what case locals use |
+| **Complexity** | 4/10 | 2026-10-25 | • 🧮 **Raw complexity 6:** Concepts 3 (8 sections: structure, flags, utilities and log levels, tooling, naming, variables, conditionals, general) + Scope 1 (points into `_templates/utils/`) + Dependencies 1 (`shellcheck`) + Prerequisites 1 (copy `shell_utils.sh` into each project's `src/sh/`) |
+| **Evidence of Need** | 5/10 | 2026-10-28 | • ⚠️ **Undated:** the only justification is line 8's `miss_cost: medium — scripts without strict mode that fail review`<br>• ⚠️ **No record:** no dated incident, issue or usage row is cited |
+| **Token Cost Justification** | N/A | 2026-10-25 | • 🎯 **Path-scoped:** `paths: "**/*.sh"` loads it only when a shell script is open, so the rubric leaves this out of the average |
+| **Structural Compliance** | 8/10 | 2026-10-28 | • ✅ **Within limits:** 90 lines, metadata header straight after the frontmatter, Purpose line, emoji H2s, and a Contents list earned by 8 headings<br>• ⚠️ **Style slips:** line 82 `**Prefer `[[ ]]`** over `[ ]`` isn't in keyword-colon form, and line 28 is a prose lead-in rather than a bullet |
+| **Currency** | 8/10 | 2026-10-25 | • ✅ **Paths exist:** `template_bash_script.sh` and `shell_utils.sh` exist, and all 5 functions and 6 constants on lines 51–58 are defined there<br>• ✅ **Install rewrite:** the `~/.claude/` paths are pointed at the real config folder at install time by `claude_file_utils.sh`<br>• ⚠️ **Practice drift:** `hook_style_guide_response_standards_reminder.sh` and `_checker.sh` use `set -euo pipefail`, and `hook_enforcement_mcp_stale_settings.sh` uses `set -eu`<br>• ⚠️ **Not followed:** none of the hooks source `src/sh/shell_utils.sh`, although line 44 says "All scripts must" |
+| **Test Coverage** | 8/10 | 2026-10-25 | • 🧪 **Structural:** `test_lazy_load_rule_structure.py` pins only 2 of the 8 H2s (`Safety flags`, `Naming conventions`) and the metadata header<br>• 🧪 **Trigger:** `test_lazy_load_triggers.py` checks that the installed file loads through `paths`<br>• ⚠️ **Unchecked references:** no test confirms the functions, constants and template path the guide names still exist<br>• ⚠️ **Not run:** this review didn't run the tests (read-only), so passing is inferred, not seen |
+| **Overall** | **6.7/10** | 2026-10-28 | • 💪 **Lean and scoped:** short, path-scoped, and every file it names exists<br>• ⚠️ **Gaps:** the relative `source` line contradicts its own advice, the required flags are weaker than the repo's newer hooks, and there is no evidence of need |
 
 ## 🔗 Related files
 
 - `src/claude/_reference/_style_guide_standards/bash.md` — the rule being scored
-- `src/claude/_templates/template_bash_script.sh` — Currency dimension (the real location the stale reference should point to)
-- `src/claude/_templates/utils/shell_utils.sh` — Currency dimension (the one reference confirmed correct)
-
----
-
-## 🚩 Pre-existing issue disclosed, not fixed
-
-- 🐛 **Stale tier + wrong path:** "Template location" reads `~/.claude/_rules/03_lazy_load/style_guide_standards/unix/templates/template_bash_script.sh` — both the tier (`03_lazy_load` vs. the real `05_lazy_load`) and the subdirectory (`unix` vs. the real `bash`) are wrong. Confirmed via `find`.
-- 📋 **Disposition:** out of scope for this scorecard — flagged here per this config's pre-existing-issue disclosure rule, not silently fixed.
+- `src/claude/_templates/utils/template_bash_script.sh` — Currency, Clarity (it mirrors the `set -e` and relative `source` lines)
+- `src/claude/_templates/utils/shell_utils.sh` — Currency (functions and log-level constants)
+- `src/claude/_install/helpers/claude_file_utils.sh` — Currency (install-time `~/.claude/` path rewrite)
+- `src/claude/hooks/hook_style_guide_response_standards_reminder.sh` — Currency (`set -euo pipefail`)
+- `src/claude/hooks/hook_style_guide_response_standards_checker.sh` — Currency (`set -euo pipefail`)
+- `src/claude/hooks/hook_enforcement_mcp_stale_settings.sh` — Currency (`set -eu`)
+- `src/claude/_tests/rules/rules_lazy_load/test_lazy_load_rule_structure.py` — Test Coverage
+- `src/claude/_tests/rules/rules_lazy_load/test_lazy_load_triggers.py` — Test Coverage
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md` — Complexity

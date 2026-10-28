@@ -1,30 +1,38 @@
 # Quality Scorecard — authoring_rules.md
 
 **Date Created:** 2026-09-28
-**Date Updated:** 2026-10-25
+**Date Updated:** 2026-10-27
 
 **Overall score:** 7.0/10
 
 **Recommended improvements:**
-- Name the file to open in line 37's naming pointer
-- Make line 51's test location agree with the hard gates (`_tests/rules/` or `_tests/hooks/`)
-- Give the checklist sub-bullets bold keywords and use British spelling on lines 9 and 52
-- Reconcile the always-on placement with the narrow `applies_to` on line 4
+- Replace the "~100–150 tokens/session cost" figure on line 22 with a measured one, or remove it.
+- Correct the `02_claude_standards/` tier description so it no longer lists `testing`, which lives in `path_scoped_rules/`.
+- Move the always-on rule to `paths:` loading that matches its `applies_to`, or write down why sessions that never touch a rule still need it.
+- Put one dated incident or PR from `_common_mistakes.md` into the rule itself as its evidence.
+- Split the semicolon-joined bullets on lines 63 and 66 into child bullets, and make the punctuation of the five creation steps match.
+- Add cross-reference tests for the `claude_rule_loading_strategy.md`, `_claude_config_metadata.md` and `_complexity_scoring.md` pointers, and for the `quality_scorecard_reviewer` agent.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Clarity** | 7/10 | 2026-10-25 | • 🔍 **Clear process:** the checklist, five creation steps and quality gates are easy to follow in order.<br>• ⚠️ **Muddled pointer:** `authoring_rules.md` line 37 ("naming via `naming_standards.md` → children files for directory structure and naming patterns") doesn't say which file to open.<br>• ⚠️ **Test location conflict:** line 51 says enforcement tests go in `_tests/rules/`, but `_hard_gates_checklist.md` line 31 allows `_tests/rules/` or `_tests/hooks/`. |
-| **Complexity** | 6/10 | 2026-10-25 | • 🧮 **Raw complexity 4:** Concepts 2 (pre-creation checklist, creation steps, quality gates, common mistakes, lifecycle) + Scope 2 (`rules/`, `_rules_lazy_load/`, `_tests/`, `_templates/`, `_reference/`) + Dependencies 0 + Prerequisites 0, per `_complexity_scoring.md`.<br>• ⚠️ **Wide reach:** lines 47–52 and 63–66 send the author into five folders. |
-| **Evidence of Need** | 8/10 | 2026-10-25 | • 🔗 **Recorded mistakes:** `_common_mistakes.md` cites PR #94 (lines 33–37), PR #97 (line 57) and the 2026-09-17 portable-path incidents (line 27).<br>• ⚠️ **None in the parent:** `authoring_rules.md` lines 9–11 claim a need but record no incident or usage. |
-| **Token Cost Justification** | 6/10 | 2026-10-25 | • 🎯 **Reason given:** line 6 explains always-on loading (a new rule can start before any rule file is open), and the bulky children are on demand (lines 75–77).<br>• ⚠️ **Scope mismatch:** line 4's `applies_to: **/rules/**, **/_rules_lazy_load/**` names a narrow set of files, yet the rule loads in every session, which is near the ~5 anchor ("always-on, but only one file type's sessions need it"). |
-| **Structural Compliance** | 6/10 | 2026-10-25 | • ✅ **Basics met:** 78 lines, metadata header on lines 1–6, an emoji H1, a Purpose line and the bulky children split out.<br>• ⚠️ **Plain sub-bullets:** lines 18–19, 22–25, 28–29, 32–34 and 37–43 don't open with a bold keyword, which fails the `_hard_gates_checklist.md` line 25 gate.<br>• ⚠️ **Multi-sentence item:** line 51 holds two sentences.<br>• ⚠️ **American spelling:** "standardized" and "rigor" on line 9 and "centralized" on line 52 break the house rule of British spelling. |
-| **Currency** | 8/10 | 2026-10-25 | • 🔍 **Paths exist:** the template, `testing.md`, `test_rules_structure.py`, `test_always_on_reachability.py`, `claude_rule_loading_strategy.md`, `authoring_agents.md`, the reviewer agent and `score_history.csv` are all on disk.<br>• ⚠️ **Unmeasured figure:** line 22's "~100–150 tokens/session cost" is a fixed estimate, while `claude_rule_loading_strategy.md` says `make audit_rule_usage` reports the measured sizes.<br>• ⚠️ **Partial drift:** line 51's `_tests/rules/`-only wording lags behind the hard-gates checklist. |
-| **Test Coverage** | 8/10 | 2026-10-25 | • 🧪 **Tests run:** `_tests/rules/test_rule_cross_references.py` lines 89–119 check that the template, tiers, scorecard README, the three on-demand children and `test_rules_structure.py` all exist.<br>• 🧪 **Agent pointer checked:** `_tests/rules/03_authoring_guidelines/test_authoring_agents.py` line 160 checks the pointer on line 41.<br>• ⚠️ **Gaps:** nothing checks the line 32 `claude_rule_loading_strategy.md` pointer or the two shared-standards children on lines 69 and 71. |
-| **Overall** | **7.0/10** | 2026-10-25 | • 💪 **Strength:** a tested, well-split process guide whose children record real mistakes.<br>• ⚠️ **Gap:** style slips in the checklist bullets, and an always-on placement that its narrow `applies_to` doesn't fully support. |
+| **Clarity** | 8/10 | 2026-10-27 | • 🔍 **Actionable flow:** the 5-question checklist, then 5 steps, then the gates, reads in order and can be followed as written<br>• ⚠️ **Loose pointers:** lines 69 and 71 sit apart from the gate list, and line 71 never says why the complexity formula matters when writing a rule |
+| **Complexity** | 6/10 | 2026-10-25 | • 🧮 **Raw complexity 4:** Concepts 2 (checklist, creation steps, quality gates, scorecard, on-demand children) + Scope 2 (rules tiers, `_tests/`, `_templates/`, `_reference/`) + Dependencies 0 + Prerequisites 0 — see `_complexity_scoring.md` |
+| **Evidence of Need** | 7/10 | 2026-10-27 | • ✅ **Shipped mistakes:** `_common_mistakes.md` cites PR #94 (stale tier names) and PR #97 (missing metadata headers)<br>• ⚠️ **Not in the rule:** the parent names no incident, PR or usage record of its own, and the child's PRs have no dates |
+| **Token Cost Justification** | 6/10 | 2026-10-25 | • ⚖️ **Justified in a comment:** the line 6 `loading:` comment says a new rule can start before any rule file is open<br>• ⚠️ **Wider than its scope:** `applies_to` (line 4) is `**/rules/**, **/_rules_lazy_load/**`, but the file loads every session<br>• ⚠️ **Cost figure looks wrong:** line 22 quotes "~100–150 tokens/session" for always-on rules, but this 78-line file alone is far larger |
+| **Structural Compliance** | 7/10 | 2026-10-27 | • ✅ **Header and length:** metadata in lines 1–3, H1 with emoji, a one-line Purpose, and 78 lines, under the limit<br>• ⚠️ **Style slips:** lines 63 and 66 join two statements with a semicolon instead of using child bullets<br>• ⚠️ **Uneven steps:** only step 4 (line 51) ends with a full stop, and line 11 is two prose sentences outside the bullets<br>• ⚠️ **Not run:** the reviewer didn't run `test_rules_structure.py`, so a pass isn't confirmed |
+| **Currency** | 7/10 | 2026-10-27 | • ✅ **Paths exist:** the template, `claude_rule_loading_strategy.md`, `authoring_agents.md`, both `shared_standards/` children, all three on-demand children, `test_always_on_reachability.py` and the `quality_scorecard_reviewer` agent are all there at commit 1705887<br>• ⚠️ **Tier drift:** line 39 lists `testing` under `02_claude_standards/`, but `testing.md` is at `02_claude_standards/path_scoped_rules/testing.md` |
+| **Test Coverage** | 8/10 | 2026-10-25 | • ✅ **Runnable tests:** `test_rule_cross_references.py` checks the template, tiers, scorecard README, three on-demand children and the structural test, and `test_authoring_agents.py` checks the agent-guide pointer<br>• ⚠️ **Unchecked pointers:** no test covers the loading-strategy, metadata or complexity-scoring pointers, or the reviewer agent name on line 52<br>• ⚠️ **Not run:** the reviewer didn't run these tests |
+| **Overall** | **7.0/10** | 2026-10-25 | • 💪 **Well tested:** most of the references the rule names are checked by tests that actually run<br>• ⚠️ **Always-on cost:** the rule loads every session, but its own `applies_to` covers only rule-authoring files |
 
 ## 🔗 Related files
 
 - `src/claude/rules/03_authoring_guidelines/authoring_rules.md` — the rule being scored
-- `src/claude/rules/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_rules/_common_mistakes.md` — child, scored as part of this rule
-- `src/claude/rules/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_rules/_hard_gates_checklist.md` — child, scored as part of this rule
-- `src/claude/_tests/rules/test_rule_cross_references.py` — Test Coverage dimension
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_complexity_scoring.md` — Complexity, Clarity
+- `src/claude/rules/03_authoring_guidelines/shared_standards/_claude_config_metadata.md` — Test Coverage
+- `src/claude/rules/_rules_lazy_load/authoring_guidelines_lazy_load/authoring_rules/_common_mistakes.md` — Evidence of Need
+- `src/claude/rules/02_claude_standards/path_scoped_rules/testing.md` — Currency
+- `src/claude/rules/02_claude_standards/path_scoped_rules/claude_rule_loading_strategy.md` — Currency, Test Coverage
+- `src/claude/_tests/rules/test_rule_cross_references.py` — Test Coverage
+- `src/claude/_tests/rules/03_authoring_guidelines/test_authoring_agents.py` — Test Coverage
+- `src/claude/_tests/rules/test_rules_structure.py` — Structural Compliance, Test Coverage
+- `src/claude/agents/core/quality_scorecard_reviewer/AGENT.md` — Currency, Test Coverage
