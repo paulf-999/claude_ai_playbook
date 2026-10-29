@@ -53,7 +53,7 @@ evals:
           prompt: Draft the PR description for this branch
       setup:
           pr_template_exists: true
-          current_branch: feature/proj_1234_retry_backoff
+          current_branch: feature/proj_1234_add_retry
       expected_output: >
           The agent puts PROJ-1234 in the Related Jira Issue section as a link and leaves
           the rest of the template intact.
@@ -63,7 +63,7 @@ evals:
       run:
           prompt: |
               Draft the PR description for this branch, using only this repo template, and reply with the body only.
-              Branch: feature/PROJ-1234_add_retry. The change adds a retry to the export job.
+              Branch: feature/proj_1234_add_retry. The change adds a retry to the export job.
 
               Template (.github/pull_request_template.md):
               ## Summary

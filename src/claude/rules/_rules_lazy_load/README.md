@@ -107,15 +107,15 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 
 ### `authoring_guidelines_lazy_load/authoring_agents/_common_mistakes.md`
 
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
+- Parent: `authoring_agents.md` — quick navigation and on-demand pointers to each child
 
 ### `authoring_guidelines_lazy_load/authoring_agents/_core_standards.md`
 
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
+- Parent: `authoring_agents.md` — quick navigation and on-demand pointers to each child
 
 ### `authoring_guidelines_lazy_load/authoring_agents/_decision_tree_and_process.md`
 
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
+- Parent: `authoring_agents.md` — quick navigation and on-demand pointers to each child
 
 ### `authoring_guidelines_lazy_load/authoring_agents/_hard_gates_checklist.md`
 
@@ -123,7 +123,7 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 
 ### `authoring_guidelines_lazy_load/authoring_agents/_scope_and_maturity.md`
 
-- Parent: `authoring_agents.md` — quick navigation and hard gates checklist
+- Parent: `authoring_agents.md` — quick navigation and on-demand pointers to each child
 
 ### `authoring_agents.md`
 
@@ -313,6 +313,7 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 - [`python/_python_environment.md`](../../_reference/_style_guide_standards/python/_python_environment.md) — Virtual environment setup, dependency management, and tooling
 - [`python/testing.md`](../../_reference/_style_guide_standards/python/testing.md) — Pytest conventions: test naming, structure, fixtures, mocking, assertions
 - [`python/logging.md`](../../_reference/_style_guide_standards/python/logging.md) — Logging standards for debugging, monitoring, and auditing
+- [`python/_comments.md`](../../_reference/_style_guide_standards/python/_comments.md) — When and how to write inline comments
 - [`python/code_complexity.md`](../../_reference/_style_guide_standards/python/code_complexity.md) — Metrics to identify and prevent overly complex code
 - [`python/module_organisation.md`](../../_reference/_style_guide_standards/python/module_organisation.md) — Module docstrings, metadata, and public/private organisation
 

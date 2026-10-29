@@ -3,9 +3,9 @@ paths:
   - "**/.claude/**"
   - "**/claude/**"
 ---
-<!-- version: 1.1.0 -->
+<!-- version: 1.1.1 -->
 <!-- created: 2026-09-21 -->
-<!-- updated: 2026-10-17 -->
+<!-- updated: 2026-10-28 -->
 # 🧮 Complexity Scoring (0–10)
 
 **Purpose:** One shared complexity formula for every authored artefact type in this config — skills, agents, rules, hooks, and tests — defined once here so each new domain references it instead of redefining or drifting from it.
@@ -39,5 +39,5 @@ paths:
 
 - **Skills** (`authoring_skills.md`): maturity gates use the *raw sum* (Draft ≤4, Tactical ≤6, Strategic ≤8); the quality scorecard's "Complexity" dimension uses the *inverted score* (10 = simple, 1 = tangled) — both draw from this same formula.
 - **Agents** (`authoring_agents.md`): same raw-sum maturity gates as skills — reference this file rather than redefining the formula when agent authoring is built out further.
-- **Tests** (`testing.md`'s complexity scoring): uses the *inverted score* — see that file for how it relates to the required quality floor.
+- **Tests** (`testing.md`'s complexity scoring): uses the *inverted score* — see `testing_lazy_load/_test_metadata_complexity_scoring.md` for how it relates to the required quality floor.
 - **Rules and hooks:** no maturity levels or complexity gates exist for these yet — this formula is here so that whenever one is designed, it starts from this definition rather than a new one. Don't invent gate thresholds for rules/hooks speculatively; wait until that design work is actually needed.

@@ -174,6 +174,6 @@ Before finalizing:
 
 **Resources:**
 - Full guidance: `authoring_agents.md`
-- Hard gates: `authoring_agents.md` → Hard Gates Checklist section
+- Hard gates: `_rules_lazy_load/authoring_guidelines_lazy_load/authoring_agents/_hard_gates_checklist.md`
 - Testing: `testing.md` → evals.yaml patterns
-- Template issues?: Reference `authoring_agents.md` → Common Mistakes section
+- Template issues?: `_rules_lazy_load/authoring_guidelines_lazy_load/authoring_agents/_common_mistakes.md`

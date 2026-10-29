@@ -53,9 +53,9 @@ These anchors apply to every type that scores the dimension.
 | **Currency** | • 🍂 **Stale:** names a file or command that no longer exists | • 🔍 **Mostly current:** one reference out of date | • ✅ **Current:** every path and command it names exists today |
 | **Structural Compliance** | • 📏 **Over length:** past 110 lines with no split, or no metadata header | • ✅ **Minor gaps:** within length, with a style slip such as a multi-sentence bullet | • ✅ **Clean:** passes `test_rules_structure.py` and the header tests with no style slips |
 
-- **~9 example:** `scorecard_portable_paths.md` (9.4/10), backed by dated incidents.
-- **~7 example:** `scorecard_automation_controls.md` (7.5/10).
-- **~5 to 7 example:** `scorecard_makefile.md` (6.8/10), held back by a broken templates reference.
+- **~8 example:** `scorecard_claude_config_metadata.md` (8.1/10), current and tested, held back by small style slips.
+- **~7 example:** `scorecard_authoring_rules.md` (7.0/10), held back by a stale pointer and a narrow `applies_to` on an always-on rule.
+- **~5 to 7 example:** `scorecard_makefile.md` (6.2/10), held back by examples that contradict the guide's own rules.
 
 ---
 
@@ -66,5 +66,5 @@ These anchors apply to every type that scores the dimension.
 | **Scope Boundaries** | • 🔁 **Overlaps:** shares a job or a trigger with a skill or another agent | • ✅ **Distinct:** a distinct job, but the "not for" list misses a near neighbour | • ✅ **Fenced:** a distinct job, with every near neighbour named in "not for" |
 | **Tool Safety** | • ⚠️ **Broad:** Bash or Write with no reason given, and no isolation | • 🔒 **Mostly scoped:** one tool more than the job needs | • 🔒 **Least privilege:** only the tools the job needs, plus worktree isolation if it writes |
 
-- **~9 example:** `scorecard_code_reviewer.md` (8.9/10).
-- **~8 example:** `scorecard_technical_writer.md` (8.1/10), held back by no record of use.
+- **~8 example:** `scorecard_code_reviewer.md` (7.9/10).
+- **~6 example:** `scorecard_technical_writer.md` (6.3/10), held back by failing evals and an unsettled scope.

@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-27
-# Version:           2.1.0
+# Date updated:      2026-10-28
+# Version:           2.1.1
 # Test quality score: 10/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -73,9 +73,7 @@ def _strip_emoji(text: str) -> str:
     """Drop any leading emoji, variation selectors and spaces from a heading.
 
     :param text: Heading or link text.
-    :type text: str
     :return: The text from its first letter, digit or bracket onwards.
-    :rtype: str
     """
     return re.sub(r"^[^\w(]+", "", text).strip()
 
@@ -84,9 +82,7 @@ def _unfenced_lines(text: str) -> list[str]:
     """Return the lines of a markdown file that sit outside code fences.
 
     :param text: Full file content.
-    :type text: str
     :return: Lines outside ``` or ~~~ blocks.
-    :rtype: list[str]
     """
     lines, in_fence = [], False
     for line in text.splitlines():
@@ -104,9 +100,7 @@ def read_header(text: str) -> tuple[str, str] | None:
     The header sits on lines 1–3, or straight after ``paths:`` frontmatter.
 
     :param text: Full file content.
-    :type text: str
     :return: The two dates, or ``None`` if the header is missing or malformed.
-    :rtype: tuple[str, str] | None
     """
     lines = text.splitlines()
     start = 0
@@ -128,9 +122,7 @@ def has_purpose_line(text: str) -> bool:
     """Return True if a line outside code fences opens with ``**Purpose:**``.
 
     :param text: Full file content.
-    :type text: str
     :return: Whether the rule states its purpose on a line of its own.
-    :rtype: bool
     """
     return any(line.startswith("**Purpose:**") for line in _unfenced_lines(text))
 
@@ -139,9 +131,7 @@ def h2_headings(text: str) -> list[str]:
     """Return every H2 heading outside code fences, emoji stripped.
 
     :param text: Full file content.
-    :type text: str
     :return: Heading texts in file order.
-    :rtype: list[str]
     """
     return [_strip_emoji(line[3:]) for line in _unfenced_lines(text) if line.startswith("## ")]
 
@@ -153,9 +143,7 @@ def relative_links(text: str) -> list[str]:
     suffix is dropped from a file link.
 
     :param text: Full file content.
-    :type text: str
     :return: Link targets relative to the file's own folder.
-    :rtype: list[str]
     """
     targets = []
     for line in _unfenced_lines(text):
@@ -170,13 +158,9 @@ def unlinked_children(text: str, stem: str, child_names: list[str]) -> list[str]
     """Return child pages that the parent rule never links to.
 
     :param text: The parent rule's content.
-    :type text: str
     :param stem: The parent's filename stem, which names its child folder.
-    :type stem: str
     :param child_names: Filenames of the ``.md`` files in the child folder.
-    :type child_names: list[str]
     :return: Child filenames with no link ending in ``<stem>/<child>``.
-    :rtype: list[str]
     """
     # A parent may link across folders, so match the link's tail
     linked = set(relative_links(text))
@@ -190,9 +174,7 @@ def contents_mismatches(text: str) -> list[str]:
     """Return Contents entries whose text matches no H2 heading.
 
     :param text: Full file content.
-    :type text: str
     :return: Entry texts, emoji stripped, that have no matching heading.
-    :rtype: list[str]
     """
     headings = {heading.lower() for heading in h2_headings(text)}
     entries = [_strip_emoji(m.group(1)) for m in map(CONTENTS_ENTRY_PATTERN.match, _unfenced_lines(text)) if m]
@@ -203,9 +185,7 @@ def _child_names(rule: Path) -> list[str]:
     """Return the ``.md`` child pages sitting directly in a rule's child folder.
 
     :param rule: Absolute path to the parent rule.
-    :type rule: Path
     :return: Sorted child filenames, excluding README.md and nested folders.
-    :rtype: list[str]
     """
     folder = rule.parent / rule.stem
     if not folder.is_dir() and PATH_SCOPED_DIR / STYLE_DIR in rule.parents:

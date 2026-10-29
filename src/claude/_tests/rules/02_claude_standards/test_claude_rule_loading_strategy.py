@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-30
-# Date updated:      2026-10-25
-# Version:           4.0.1
+# Date updated:      2026-10-28
+# Version:           4.0.2
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -63,7 +63,7 @@ def _tiers_on_disk():
 
 
 def test_rule_file_exists():
-    """The rule file must be present at its tier 04 path."""
+    """The rule file must be present in path_scoped_rules/."""
     assert RULE.is_file(), f"Rule missing: {RULE}"
 
 
