@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-25
-# Version:           2.3.0
+# Date updated:      2026-10-29
+# Version:           2.3.1
 # Test quality score: 10/10
 # Test complexity score: 9/10
 # Python style compliant: Yes
@@ -27,7 +27,7 @@ COLUMNS = ["Input", "Theme", "Status", "Meaning"]
 VALID_STATUSES = {"Ready", "Testing"}
 INPUT_PATTERN = r"`/?[a-z][a-z0-9_-]*`"
 CONTROLS_DOC = (
-    "rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md"
+    "_rules_lazy_load/claude_config/automation_controls.md"
 )
 # A rule path an alias meaning names, under rules/ or _rules_lazy_load/
 RULE_PATH = r"\b_?rules(?:_lazy_load)?/[\w/]+\.md"

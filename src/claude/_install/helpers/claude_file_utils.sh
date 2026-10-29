@@ -229,17 +229,38 @@ style_guide_install_path() {
     fi
 }
 
+# Point a moved entry file's relative links back at the children it left behind in the style-guide folder.
+# Links to files that also move (sibling entry files), URLs and #anchors are left as written.
+relink_moved_entry_file() {
+    local MOVED="$1" OLD_DIR="$2" PREFIX="$3"
+    local CONTENT LINK TARGET
+    CONTENT="$(<"${MOVED}")"
+    while IFS= read -r LINK; do
+        TARGET="${OLD_DIR}/${LINK%%#*}"
+        if [[ ! -f "${TARGET}" ]] || is_path_scoped "${TARGET}"; then
+            continue
+        fi
+        CONTENT="${CONTENT//"](${LINK})"/"](${PREFIX}${LINK})"}"
+    done < <(grep -oE '\]\([^)#:[:space:]][^):[:space:]]*\)' "${MOVED}" | sed -E 's/^\]\((.*)\)$/\1/' | sort -u)
+    printf '%s\n' "${CONTENT}" > "${MOVED}"
+}
+
 # Move the style guides' entry files from _reference/_style_guide_standards/ into rules/, where Claude Code loads them
 # on matching files, overwriting the last install's copy. Every other file stays put and is read on demand.
 split_style_guides() {
     local FROM_DIR="${TARGET_DIR}/${STYLE_GUIDES_NAME}"
-    local FROM TO COUNT=0
+    local FROM TO SUBDIR UPS COUNT=0
     [[ -d "${FROM_DIR}" ]] || return 0
     while IFS= read -r FROM; do
         is_path_scoped "${FROM}" || continue
         TO="${TARGET_DIR}/${STYLE_GUIDES_PATH_SCOPED}/${FROM#"${FROM_DIR}/"}"
         mkdir -p "$(dirname "${TO}")"
         mv -f "${FROM}" "${TO}"
+        # From the moved file's folder, climb to the config root, then down to where its children stayed
+        SUBDIR="$(dirname "${FROM#"${FROM_DIR}/"}")"
+        [[ "${SUBDIR}" == "." ]] && SUBDIR="" || SUBDIR="${SUBDIR}/"
+        UPS="$(printf '%s' "${STYLE_GUIDES_PATH_SCOPED}/${SUBDIR}" | tr -cd '/' | sed 's#/#../#g')"
+        relink_moved_entry_file "${TO}" "$(dirname "${FROM}")" "${UPS}${STYLE_GUIDES_NAME}/${SUBDIR}"
         COUNT=$((COUNT + 1))
     done < <(find "${FROM_DIR}" -type f)
     find "${FROM_DIR}" -depth -type d -empty -delete

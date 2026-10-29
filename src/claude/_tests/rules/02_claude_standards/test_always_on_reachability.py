@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-18
-# Date updated:      2026-10-17
-# Version:           3.3.0
+# Date updated:      2026-10-29
+# Version:           3.3.1
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -85,7 +85,9 @@ def test_lazy_rules_live_outside_rules():
 # 42 -> 43 on 2026-10-11: claude_working_practices.md indexes the plans, efficiency and portable-paths group.
 # 43 -> 41 on 2026-10-17: the two shared_standards children load through paths: with config files, to stay under
 # Claude Code's 150k-char instruction limit.
-MAX_STARTUP_FILES = 41
+# 41 -> 40 on 2026-10-29: _automation_controls.md moved to _rules_lazy_load/ with a medium miss cost,
+# read on demand from aliases.md, which names it beside each automation command (#459).
+MAX_STARTUP_FILES = 40
 STARTUP_IMPORT = re.compile(r"^@~/[^/\s]+/(\S+\.md)\s*$", re.M)
 
 

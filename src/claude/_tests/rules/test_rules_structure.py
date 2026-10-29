@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-08-28
-# Date updated:      2026-10-11
-# Version:           2.5.4
+# Date updated:      2026-10-29
+# Version:           2.6.0
 # Test quality score: 10/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -146,6 +146,47 @@ def test_frontmatter_and_usage_fields_are_not_counted():
         "<!-- miss_cost: low — x -->\n<!-- loading: path-scoped — x -->\n# 🧪 Title\nbody\n"
     )
     assert body_lines(text) == ["# 🧪 Title", "body"], f"got {body_lines(text)}"
+
+
+def lazy_rule_files() -> list[Path]:
+    """Return the on-demand rule files, which Claude Code doesn't load natively but which follow the same limits.
+
+    :return: Every ``.md`` under the lazy folder except READMEs.
+    """
+    return sorted(f for f in LAZY_RULES_DIR.rglob("*.md") if f.name != "README.md")
+
+
+def over_line_limit(files: list[Path]) -> list[str]:
+    """Return ``name: count`` for each file whose counted lines pass the limit."""
+    counts = {f.name: len(body_lines(f.read_text())) for f in files}
+    return [f"{name}: {count}" for name, count in counts.items() if count > LINE_LIMIT]
+
+
+def bad_endings(files: list[Path]) -> list[str]:
+    """Return the names of files that don't end with exactly one newline."""
+    return [f.name for f in files if not f.read_bytes().endswith(b"\n") or f.read_bytes().endswith(b"\n\n")]
+
+
+def test_lazy_rules_fit_line_limit_and_newline():
+    """On-demand rules keep the same 110-line limit and single trailing newline as rules that load natively."""
+    files = lazy_rule_files()
+    assert files, f"no lazy rule files found under {LAZY_RULES_DIR}"
+    over = over_line_limit(files)
+    assert not over, f"lazy rules over {LINE_LIMIT} lines — split into a parent and children: {over}"
+    bad = bad_endings(files)
+    assert not bad, f"lazy rules without exactly one trailing newline: {bad}"
+
+
+def test_lazy_checks_flag_long_files_and_bad_endings(tmp_path: Path):
+    """The lazy-rule checks catch a file over the limit and files with no or extra trailing newlines."""
+    long_file = tmp_path / "long.md"
+    long_file.write_text("# 🧪 Long\n" + "line\n" * LINE_LIMIT)
+    no_newline, two_newlines, good = tmp_path / "none.md", tmp_path / "two.md", tmp_path / "good.md"
+    no_newline.write_text("# 🧪 x")
+    two_newlines.write_text("# 🧪 x\n\n")
+    good.write_text("# 🧪 x\n")
+    assert over_line_limit([long_file, good]) == [f"long.md: {LINE_LIMIT + 1}"], "a long file wasn't flagged"
+    assert bad_endings([no_newline, two_newlines, good]) == ["none.md", "two.md"], "a bad ending wasn't flagged"
 
 
 def test_files_end_with_single_newline():

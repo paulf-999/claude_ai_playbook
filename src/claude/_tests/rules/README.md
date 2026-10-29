@@ -4,7 +4,7 @@
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_rules_structure.py` | Per-file format across all `rules/` files — line limits, H1 and H2 heading emoji, trailing newlines, and no Related or unearned Contents sections | 10/10 | 2026-08-28 | 2026-10-11 | 2.5.4 |
+| `test_rules_structure.py` | Per-file format across all `rules/` files — line limits, H1 and H2 heading emoji, trailing newlines, and no Related or unearned Contents sections | 10/10 | 2026-08-28 | 2026-10-29 | 2.6.0 |
 | `test_rules_structure_layout.py` | Where `rules/` files live, every import in `CLAUDE.md` and `rules/` resolves, and no import chain reaches `_reference/` | 7/10 | 2026-10-01 | 2026-10-11 | 5.0.0 |
 | `test_rule_cross_references.py` | Rule files point at things that exist and agree with the files that repeat them, across six rules, including git.md's branch pattern and its examples, every `make` target a rule names is defined, and every file writing_style.md names exists | 10/10 | 2026-10-11 | 2026-10-27 | 2.2.0 |
 
@@ -19,7 +19,7 @@
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_always_on_reachability.py` | Every file under `rules/` loads the way its folder says — no README, `_lazy_load/` folder, `@import` or unscoped `02_claude_standards/path_scoped_rules/` file — and every 'Read on demand' pointer | 9/10 | 2026-09-18 | 2026-10-11 | 3.2.5 |
+| `test_always_on_reachability.py` | Every file under `rules/` loads the way its folder says — no README, `_lazy_load/` folder, `@import` or unscoped `02_claude_standards/path_scoped_rules/` file — and every 'Read on demand' pointer | 9/10 | 2026-09-18 | 2026-10-29 | 3.3.1 |
 | `test_claude_rule_loading_strategy.py` | The five-folder table matches the real `rules/` and `_rules_lazy_load/` folders, and its example files exist, matching each tier's loading claim | 9/10 | 2026-09-30 | 2026-10-28 | 4.0.2 |
 | `test_concurrent_sessions.py` | `git/_concurrent_sessions.md` stays reachable from `git.md` and keeps its 2026-09-21 incident record | 9/10 | 2026-09-21 | 2026-10-28 | 3.0.1 |
 | `test_no_wording_pinning.py` | No test pins an instructional rule's prose (a multi-word literal checked against a real file's text) or guards a finished migration (`assert not <path>.exists()`), unless tagged `# wording-check:` or `# absence-check:` with a reason | 10/10 | 2026-10-11 | 2026-10-17 | 1.3.0 |
