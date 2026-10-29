@@ -8,16 +8,17 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 2.0.0 -->
+<!-- version: 2.1.0 -->
 <!-- created: 2026-09-07 -->
-<!-- updated: 2026-10-28 -->
+<!-- updated: 2026-10-29 -->
 
 ## 🤖 Instructions for Claude
 
-- **Pre-check:** confirm the folder is a git repo, Python is 3.8 or newer and the repo root is writable, and stop and report any failure.
+- **Pre-check:** run every pre-flight check in `reference/_implementation.md` (git repo, repo root, not root, no symlinked targets, Python 3.8+, writable root), and stop and report any failure.
 - **Read first:** read `reference/_implementation.md` for the five phases, and `reference/_security.md` before Phase 1.
 - **Always:** install with `pip install "graphifyy==0.8.36"`, never an unpinned `pip install graphifyy`.
 - **Always:** before Phase 2, tell the user that code stays local but docs, PDFs and images get an LLM pass when an API key is set, and wait for a yes.
+  - **On a no:** stop without extracting anything.
 - **Never:** run as root, write outside `$(git rev-parse --show-toplevel)`, or commit `graphify-out/`.
 
 ## 🎯 Purpose
@@ -46,7 +47,7 @@ Setup complete! Graph ready for queries.
 
 ## ✨ Best For
 
-Large codebases, around 1,000 files or more, where reading files costs too many tokens. Currently at the **strategic** stage — setup, pre-flight checks, the data-sharing prompt and error recovery are covered, with scope fixed to the five phases.
+Large codebases, around 1,000 files or more, where reading files costs too many tokens. Currently at the **strategic** stage — setup, pre-flight and security checks, the data-sharing prompt, re-runs and error recovery are covered, with scope fixed to the five phases.
 
 **Caveats:** one-time setup per repo, and the graph must be re-extracted after code changes. Pinned to graphifyy 0.8.36. The contract sets `waives_response_standards: true`, so the setup keeps its own step-by-step format.
 
@@ -65,5 +66,5 @@ Large codebases, around 1,000 files or more, where reading files costs too many 
 - `reference/_security.md` — what leaves the machine, the version pin and file safeguards
 - `reference/_troubleshooting.md` — common install and extraction errors
 - `reference/_examples.md` — example setup scenarios
-- `tests/evals.yaml` — 12 test scenarios covering checks, phases, errors and a not_for case
+- `tests/evals.yaml` — 17 test scenarios covering checks, phases, errors, five adversarial and security cases, and a not_for case
 - `_reference/_quality_scorecards/skills/scorecard_claude_setup_graphify.md` — quality scorecard

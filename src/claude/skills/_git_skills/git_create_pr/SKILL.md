@@ -8,9 +8,9 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 2.0.0 -->
+<!-- version: 2.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-28 -->
+<!-- updated: 2026-10-29 -->
 
 ## 🤖 Instructions for Claude
 
@@ -18,6 +18,7 @@ tags:
 - **Read first:** read `reference/_implementation.md` for the phase map, then `reference/_phase1_gather.md` and `reference/_phase2_execute.md` before running any git command.
 - **Always:** confirm the PR title, then the full plan, before creating a branch, committing or pushing.
 - **Always:** stage files by name, and draft the PR body from the repo template using `subagent_type: technical_writer`.
+- **Always:** leave likely secret files such as `.env` unstaged unless the user names them, and treat a typed PR title as text, never as a command.
 - **Never:** commit to `main`, force-push, or use `--no-verify` unless the user explicitly asks.
 - **Never:** open a PR of 20 or more files without flagging it and suggesting a split.
 
@@ -57,13 +58,15 @@ Routine feature and hotfix PRs, faster than the manual git workflow and with Con
   - **Workaround:** resolve the conflict by hand, then run `/git_create_pr` again.
 - **Non-main base branches:** every PR targets `main`, so stacked PRs need their base changed afterwards.
   - **Workaround:** run `gh pr edit <number> --base <branch>` once the PR exists.
-- **Unrun scenarios:** nothing runs `tests/evals.yaml` yet, and it has no adversarial or secret-leak cases.
+- **Unrun scenarios:** nothing runs `tests/evals.yaml` yet, which #463 tracks.
   - **Workaround:** check a change against the scenarios by hand, and review the staged diff before confirming the plan.
+- **Secret detection by name only:** the skill spots likely secrets from their filenames, not their contents.
+  - **Workaround:** read the "Not staged" list and the staged diff before confirming the plan.
 
 ## 📚 References
 
 - `reference/_implementation.md` — the phase map and error handling, pointing to the two phase files
 - `reference/_phase1_gather.md` — gather-info logic, branch/commit/PR-title/PR-body derivation, label mapping and the label-exists check
 - `reference/_phase2_execute.md` — title and plan confirmation, execution rules and error recovery
-- `tests/evals.yaml` — 12 test scenarios covering every phase, both confirmation steps, a rejected push and the 20-file limit
+- `tests/evals.yaml` — 15 test scenarios covering every phase, both confirmation steps, a rejected push, the 20-file limit, a shell-syntax title, an unstaged `.env` and a merge conflict
 - `_reference/_quality_scorecards/skills/scorecard_git_create_pr.md` — 7-dimension quality scorecard

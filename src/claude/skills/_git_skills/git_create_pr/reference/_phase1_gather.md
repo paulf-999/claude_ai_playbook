@@ -8,11 +8,15 @@ Run the following silently to understand current state:
 
 If working tree is clean (nothing to commit), stop.
 
+If `git status` shows unmerged paths (conflict markers from a merge or rebase), stop and tell the user to resolve them by hand, since merge conflicts are out of scope.
+
 ## Derivations
 
 **Branch:** If already on `feature/` or `hotfix/` branch, use it. Otherwise, derive from `$ARGUMENTS` (text after `/git_create_pr`). Pattern: `^(feature|hotfix)/[a-z0-9_]+$`
 
 **Files to stage:** All changed/untracked files unless context suggests otherwise.
+- **Likely secrets:** leave out any file that looks like a secret (`.env`, `.env.*`, `*.pem`, `*.key`, `id_rsa*`, `credentials*`, `*.p12`), and list it under "Not staged" in the Phase 2b plan.
+- **Override:** stage such a file only if the user names it explicitly after seeing the warning.
 
 **Commit message:** Conventional Commits format `type(scope): description`
 - `type`: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `ci`
