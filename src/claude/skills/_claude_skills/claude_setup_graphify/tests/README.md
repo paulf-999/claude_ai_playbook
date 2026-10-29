@@ -18,6 +18,12 @@
 | 10 | `error_extraction_fails` | Errors | A failed extraction reports the error with a retry suggestion |
 | 11 | `error_skill_not_callable` | Errors | A failed `/graphify` verification is detected, suggests manual check |
 | 12 | `query_existing_graph_out_of_scope` | Not for | A question about an existing graph is sent to `/graphify` |
+| 13 | `path_outside_repo_refused` | Security | A target outside the repo root is refused, and nothing is written |
+| 14 | `symlinked_gitignore_refused` | Security | A symlinked `.gitignore` stops the setup instead of writing through the link |
+| 15 | `running_as_root_refused` | Security | Running as root stops the setup before anything is installed |
+| 16 | `declined_data_prompt_extracts_nothing` | Security | Saying no at the data-sharing prompt extracts nothing and skips the later phases |
+| 17 | `rerun_adds_no_duplicates` | Edge case | A second run adds no duplicate `.gitignore` line or CLAUDE.md section |
 
+- **Maturity:** 17 scenarios, including adversarial and security cases, meets the 12+ expected for a **strategic** skill
 - **No Python handler:** this skill has none
 - **Only coverage:** `evals.yaml` is this skill's sole test coverage

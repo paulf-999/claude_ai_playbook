@@ -18,6 +18,9 @@
 | 10 | `user_declines_plan` | Confirm | Declining the plan leaves no branch, commit, push or PR behind |
 | 11 | `too_many_changed_files` | Edge case | Flags a change of 20 or more files and suggests splitting it |
 | 12 | `push_rejected_stops` | Error recovery | A rejected push stops the flow without force-pushing or creating the PR |
+| 13 | `custom_title_with_shell_syntax_is_data` | Security | A typed title with `$(...)` is checked against the title rules and never runs |
+| 14 | `likely_secret_file_not_staged` | Security | An untracked `.env` is left out of the commit and listed under "Not staged" |
+| 15 | `merge_conflict_stops` | Not for | Unmerged paths stop the skill before anything is staged |
 
-- **Maturity:** 12 scenarios sits within the 8–12 expected for a **tactical** skill
+- **Maturity:** 15 scenarios, including adversarial and security cases, meets the 12+ expected for a **strategic** skill
 - **No handler tests:** this skill has no Python code, so there's no pytest suite. `evals.yaml` is its only test

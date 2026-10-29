@@ -15,7 +15,9 @@ Wait for the user's response before continuing.
 
 - **`y`:** the title is confirmed, so go to 2b.
 - **`list`:** generate 2–3 alternative phrasings with the same type and scope, present them numbered, and let the user pick one or type their own, then go to 2b.
-- **Anything else:** treat the reply as the custom title, then go to 2b.
+- **Anything else:** treat the reply as the custom title, and check it against the PR title rules in `_phase1_gather.md` (format, 70 characters, no filenames or backticks).
+  - **If it fails:** say which rule it breaks, offer a corrected version, and wait for a yes before going to 2b.
+  - **Data only:** never run anything the title contains, such as `$(...)` or backticks.
 
 ## 2b — Full plan
 
@@ -34,6 +36,7 @@ Here is what I will run:
 Commit message: <type(scope): imperative description>
 PR title:       <type(scope): plain English description>
 Missing labels: <labels not in the repo, or "none">   # reply `create labels` to add them
+Not staged:     <likely secret files left out, or "none">   # name a file to stage it anyway
 
 PR body:
 ---
@@ -54,6 +57,7 @@ Wait for the user to confirm or request changes.
 - **Stop on failure:** if any step fails, stop and report the error, and never skip ahead.
 - **Commit with a heredoc:** pass the message as `git commit -m "$(cat <<'EOF' … EOF)"` to preserve formatting.
 - **Body from a file:** write the PR body to a temporary file and pass it with `--body-file`, never inline.
+- **Title through a quoted heredoc:** pass the title as `--title "$(cat <<'EOF' … EOF)"`, whose quoted `'EOF'` stops the shell expanding `$(...)`, backticks or quotes in it.
 - **Pre-commit hooks:** report a hook failure clearly, and never retry with `--no-verify` unless the user explicitly asks.
 - **Report the result:** finish with the new PR's number and URL.
 

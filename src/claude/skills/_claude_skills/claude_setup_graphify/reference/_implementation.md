@@ -2,10 +2,13 @@
 
 ## Five-Phase Setup
 
-**Pre-flight validation:**
+**Pre-flight validation (stop and report on any failure, before installing anything):**
 - Git repo: `git rev-parse --git-dir`
+- Repo root: `cd "$(git rev-parse --show-toplevel)"`, and refuse any target path that resolves outside it, such as `../`
+- Not root: `[ "$(id -u)" -ne 0 ]`
+- No symlinks: `[ ! -L .gitignore ] && [ ! -L CLAUDE.md ] && [ ! -L graphify-out ]`, so no write follows a link out of the repo
 - Python 3.8+: `python3 --version | grep -E "3\.[89]|3\.1[0-9]"`
-- Writable target: `touch graphify-out/.test && rm graphify-out/.test`
+- Writable target: `[ -w . ]` on the repo root, which works before `graphify-out/` exists
 
 **Phase 1:** `pip install "graphifyy==0.8.36" && graphify install --platform claude`
 → Verify: `python3 -c "import graphify"` (the package is `graphifyy`, the module is `graphify`)
@@ -14,13 +17,14 @@
 **Phase 2:** `graphify extract .` (from repo root — the argument is the folder to read, and the graph is written to `./graphify-out/`)
 → Verify: `jq empty graphify-out/graph.json`
 → Confirm first: tell the user what leaves the machine (see `_security.md` → Data leaving the machine) and get a yes before extracting a work repo
+→ On a no: stop without extracting, skip Phases 3–5, and report that nothing left the machine
 Cost: code parsing is local and free; only a semantic pass over docs, PDFs or images uses an LLM, billed to the API key it runs with
 
-**Phase 3:** `printf '\ngraphify-out/\n' >> .gitignore`
-→ Verify: `grep graphify-out/ .gitignore` (no duplicates)
+**Phase 3:** `grep -qx 'graphify-out/' .gitignore || printf '\ngraphify-out/\n' >> .gitignore`
+→ Verify: `grep -cx 'graphify-out/' .gitignore` returns 1, so a re-run adds no duplicate
 
-**Phase 4:** Add Graphify section to CLAUDE.md with graph path
-→ Verify: `grep "## Graphify" CLAUDE.md`
+**Phase 4:** Add a Graphify section to CLAUDE.md with the graph path, only if `grep -q "## Graphify" CLAUDE.md` finds none
+→ Verify: `grep -c "## Graphify" CLAUDE.md` returns 1
 
 **Phase 5:** Test `/graphify "List files"` from repo directory
 → Verify: Skill responds within 10 seconds
