@@ -49,12 +49,12 @@ The five lowest-scoring artefacts, each with the first recommended improvement f
 
 | # | Artefact | Score | Action | Scorecard |
 |---|---|---|---|---|
-| 1 | `jira_create` | 5.7 | Set `output.confirmation_required: true` in the contract, so it matches SKILL.md's "wait for a yes" rule | [scorecard_jira_create.md](skills/scorecard_jira_create.md) |
-| 2 | `confluence_create_page` | 5.7 | Rewrite or delete the evals that test Python functions that don't exist | [scorecard_confluence_create_page.md](skills/scorecard_confluence_create_page.md) |
-| 3 | `claude_review_config` | 6.1 | Add a runner or a pytest for the evals, or set `tested: false` until one exists | [scorecard_claude_review_config.md](skills/scorecard_claude_review_config.md) |
+| 1 | `git_create_pr` | 6.0 | Add a runner or pytest that runs `tests/evals.yaml`, or score the skill as unrun until one exists | [scorecard_git_create_pr.md](skills/scorecard_git_create_pr.md) |
+| 2 | `claude_review_config` | 6.1 | Fix the grade in SKILL.md's Example Usage: 7.7/10 should be B, not B+ | [scorecard_claude_review_config.md](skills/scorecard_claude_review_config.md) |
+| 3 | `claude_setup_graphify` | 6.1 | Fix the writable pre-check so it works on a fresh repo | [scorecard_claude_setup_graphify.md](skills/scorecard_claude_setup_graphify.md) |
 | 4 | `dbt.md` | 6.2 | Make the source-test requirement say the same thing in every section, and define "completeness" or drop it | [scorecard_dbt.md](rules/style_guide_standards/scorecard_dbt.md) |
 | 5 | `makefile.md` | 6.2 | Bring the repo's own Makefiles into line with the guide, or record the exceptions | [scorecard_makefile.md](rules/style_guide_standards/utilities/scorecard_makefile.md) |
 
-- **Tie:** three style guides score 6.2, and `dbt.md` and `makefile.md` rank above `terraform.md` alphabetically.
+- **Ties:** two skills score 6.1 and rank alphabetically, and three style guides score 6.2, with `dbt.md` and `makefile.md` ranking above `terraform.md` alphabetically.
 - **Upkeep:** refresh this list whenever a scorecard is re-scored.
 - **Full ranking:** see `quality_scorecards_summary.md`.

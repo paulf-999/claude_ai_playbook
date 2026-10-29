@@ -1,32 +1,33 @@
 # Quality Scorecard — jira_create
 
 **Date Created:** 2026-09-19
-**Date Updated:** 2026-10-27
+**Date Updated:** 2026-10-29
 
-**Overall score:** 5.7/10
+**Overall score:** 6.4/10
 
 **Recommended improvements:**
-- Set `output.confirmation_required: true` in `skill.contract.yaml` and remove the "execute immediately without permission gates" comments, so the contract matches SKILL.md's "wait for a yes" rule
-- Rewrite `tests/evals.yaml` to assert on Claude's behaviour, not on functions that don't exist (`phase_2_validate`, `validate_story_points`, `create_jira_ticket`, `MIN_STORY_POINTS`)
-- Add evals for a `not_for` request (for example "update PROJ-12"), the confirm-before-create step, a request with no project named, and pasted description text
-- Add `reference/_implementation.md` with the phases and the confirm step, and show the confirm and project steps in Example Usage
-- Fix the contradictions in `_field_constraints.md` and `_error_handling.md`: the story point upper limit, an empty description, Epic as a valid type, and "assumes a default Jira project"
-- Add `getAccessibleAtlassianResources` to `tools:` and `requires.tools`, and change the `~/.claude/` paths to `$HOME`-based ones
-- Put the phrases users type into the frontmatter `description`, and remove `test_coverage_level: comprehensive` or back it with security evals
+- Drop Epic from the valid issue types in `_field_constraints.md` and `_error_handling.md`, because `not_for` and Best For both say the skill can't create epics
+- Settle the story-points limit: `_field_constraints.md` gives "Valid range: 0.5 to 100" and also "no upper limit enforced"
+- Set `tested: false` until a runner or a pytest runs `tests/evals.yaml`, because nothing under `_tests/skills/` covers `jira_create`
+- Change `test_coverage_level: comprehensive` to `basic` or add the missing security case, and remove the contract note "error handling incomplete" that `_error_handling.md` no longer supports
+- Fix the `waives_response_standards` comment ("3-phase … gather → create → confirm") so it matches the six phases, where confirm comes before create
+- Add a `dependencies.permissions` entry for Jira write access, and remove "security checks" from the contract `summary`, since there aren't any
+- Add evals for Jira 403 and assignee-not-found errors, for pasted ticket text that contains instructions, and for at least one more `not_for` case, such as an epic
+- Have the skill treat pasted or quoted content as data rather than instructions when drafting the description
+- Replace the literal `~/.claude/` paths in References with paths that resolve to the config directory, as `portable_paths.md` requires
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Design** | 6/10 | 2026-10-27 | • ✅ **Focused:** one clear purpose and a sensible Task default<br>• ⚠️ **Contradiction:** SKILL.md says to wait for a yes before creating, while the contract says "execute immediately; no preliminary confirmations"<br>• 🕳️ **Missing:** Example Usage merges validation and creation with no confirm or project step, and no `_implementation.md` records the phases |
-| **Complexity** | 6/10 | 2026-10-27 | • 🧮 **Raw complexity 4:** Concepts 1, Scope 1 (read-only pointers to `jira.md` and `org.md`), Dependencies 1 (Atlassian MCP), Prerequisites 1 (MCP enabled and restarted)<br>• ⚠️ **At the cap:** right at the draft limit of 4 |
-| **Test Coverage** | 5/10 | 2026-10-27 | • 📊 **Draft count:** 6 evals, inside 5–8<br>• 👻 **Phantom targets:** the assertions target code that doesn't exist, though `tests/README.md` says the skill has no Python code<br>• 🕳️ **Gaps:** no eval for a `not_for` case, the confirm step, project confirmation or adversarial input, and nothing runs them |
-| **Code Quality** | 6/10 | 2026-10-27 | • ✅ **Errors covered:** MCP, 403, 404 and assignee failures<br>• ⚠️ **Contradictions:** story points "0.5 to 100" then "no upper limit", description "Required" yet "can be empty", and Epic valid though epics are `not_for`<br>• ⚠️ **Missing tool:** the pre-check calls `getAccessibleAtlassianResources`, which isn't in `tools:` |
-| **Security** | 6/10 | 2026-10-27 | • 🔒 **In SKILL.md:** a confirm step and "never infer the Jira project"<br>• ⚠️ **Undercut:** the contract sets `confirmation_required: false` on an irreversible external write<br>• ⚠️ **Gaps:** pasted ticket text isn't treated as data, and `_field_constraints.md` assumes a default project |
-| **Documentation** | 6/10 | 2026-10-27 | • ✅ **Clear:** purpose, Best For caveats and the error-recovery guide<br>• ⚠️ **Contradiction:** the example has no confirm step, against the Always rule<br>• ⚠️ **Unbacked:** "gaps logged as TODOs" with no TODO recorded, and unverified recovery steps<br>• ❓ **No FAQ** |
-| **Standards Compliance** | 5/10 | 2026-10-27 | • ✅ **Met:** naming, a 0.2.4 header matching the contract, `tests/README.md` and eval count<br>• ❌ **Missed:** no `_implementation.md` (gate 6), an irreversible write without confirmation (gate 2), no trigger phrases and `~/.claude/` paths (gate 3)<br>• ⚠️ **Misplaced:** the write permission sits in `requires.external`, not `dependencies.permissions` |
-| **Overall** | **5.7/10** | 2026-10-27 | The flow is short and usable, but it can't be trusted yet: the contract waives the confirm step SKILL.md requires, and the evals test code that doesn't exist. |
+| **Design** | 7/10 | 2026-10-29 | The phase table in `_implementation.md` is clean, with one job per phase and the detail kept in `reference/`. The scope contradicts itself, though: `_field_constraints.md` lists "Valid values: Bug, Task, Improvement, Epic", while `not_for` says "creating epics (v2.0+)". |
+| **Complexity** | 6/10 | 2026-10-27 | The raw sum is 4: Concepts 1 (project, story-point and confirm rules), Scope 1 (its own `reference/` plus the `jira.md` read), Dependencies 1 (Atlassian MCP) and Prerequisites 1 (MCP enabled). That sits right at the Draft limit of 4. |
+| **Test Coverage** | 7/10 | 2026-10-29 | There are 8 evals, the right count for Draft, and one `not_for` case (`update_request_out_of_scope`). The cap applies because they are prose that nothing runs. No eval covers a Jira 403 or assignee error, injected text, or the other five `not_for` entries. |
+| **Code Quality** | 6/10 | 2026-10-27 | Validation and error paths are written down, but the field rules contradict each other. Story points are "0.5 to 100" and also "no upper limit enforced". Description is "Required: Yes" and also "Can be empty string". |
+| **Security** | 7/10 | 2026-10-29 | The skill shows the full ticket and waits for a yes, and `confirmation_required: true` now matches SKILL.md. It uses only three tools. Nothing says pasted or quoted content in "log this as a Jira ticket" is data, not instructions. |
+| **Documentation** | 6/10 | 2026-10-27 | Purpose, Example Usage and Best For are clear. The contract `summary` promises "security checks" that don't exist. Best For says "gaps logged as TODOs", but no file records them. References use literal `~/.claude/` paths, which don't resolve on a `~/claude/` install. |
+| **Standards Compliance** | 6/10 | 2026-10-29 | Naming, structure, the length limit, the metadata header and matching versions (0.4.0) all pass. There is no `dependencies.permissions` block (hard gate 2). The frontmatter claims `tested: true` with no behavioural test in `_tests/skills/`. The contract says `test_coverage_level: comprehensive` alongside "Draft maturity: happy path only; error handling incomplete". |
+| **Overall** | **6.4/10** | 2026-10-29 | A sound, well-confirmed Draft skill held back by contradictions between its contract, field rules and scope, plus evals that nothing runs. |
 
 ## 🔗 Related files
 
 - `src/claude/skills/_atlassian_skills/jira_create/SKILL.md` — the skill being scored
 - `src/claude/skills/_atlassian_skills/jira_create/tests/evals.yaml` — Test Coverage dimension
-- `src/claude/_reference/_quality_scorecards/score_history.csv` — attempt 2, scored by `quality_scorecard_reviewer`, which saw an earlier score in `README.md` and `scoring_anchors.md`
