@@ -51,5 +51,5 @@ Most folders map to one config folder, but some code and checks belong to none o
 
 ## 📐 When to add a test
 
-- **Enforcement hooks:** adding or changing one needs a matching test, per `rules/02_claude_standards/behaviour.md`.
+- **Enforcement hooks:** adding or changing one needs a matching test, per `rules/02_claude_standards/behaviour/_how_to_approach.md`.
 - **Instructional rules:** files Claude reads but no hook enforces need no test of their own, because `test_rules_structure.py` covers their structure.

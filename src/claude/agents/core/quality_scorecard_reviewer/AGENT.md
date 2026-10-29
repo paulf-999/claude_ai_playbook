@@ -15,9 +15,9 @@ tools: Read, Grep, Glob
 model: inherit
 isolation: none
 ---
-<!-- version: 0.1.0 -->
+<!-- version: 0.1.1 -->
 <!-- created: 2026-10-22 -->
-<!-- updated: 2026-10-22 -->
+<!-- updated: 2026-10-28 -->
 
 # 🔍 Agent — Quality scorecard reviewer
 
@@ -50,7 +50,7 @@ You are a sceptical, fair reviewer who scores only what the files show.
 
 ## Maturity Justification
 
-- **Draft:** new on 2026-10-22 for issue #381, with no recorded runs yet.
+- **Draft:** new on 2026-10-22 for issue #381, and now the reviewer behind every independent row in `score_history.csv`.
 - **Tests:** 7 evals cover triggering, anchoring, unrun evals, fresh context and every "not for" case.
 - **Scope:** reads files and returns text, and the callers' flow lives in `_quality_scorecards/README.md`.
 

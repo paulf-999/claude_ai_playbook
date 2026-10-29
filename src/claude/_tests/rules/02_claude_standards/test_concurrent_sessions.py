@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-09-21
-# Date updated:      2026-10-11
-# Version:           3.0.0
+# Date updated:      2026-10-28
+# Version:           3.0.1
 # Test quality score: 9/10
 # Test complexity score: 8/10
 # Python style compliant: Yes
@@ -21,10 +21,10 @@ GIT_MD = CLAUDE_DIR / "rules" / "02_claude_standards" / "git.md"
 
 
 def test_concurrent_sessions_imported_from_git_md():
-    """git.md must import _concurrent_sessions.md, or it's unreachable."""
+    """git.md must point to _concurrent_sessions.md, or it's unreachable."""
     content = GIT_MD.read_text()
     assert "_concurrent_sessions.md" in content, (
-        "git.md does not @import _concurrent_sessions.md — rule is orphaned"
+        "git.md does not point to _concurrent_sessions.md — rule is orphaned"
     )
 
 

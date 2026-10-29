@@ -1,6 +1,6 @@
-<!-- version: 1.1.1 -->
+<!-- version: 1.1.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-06 -->
+<!-- updated: 2026-10-28 -->
 <!-- applies_to: * -->
 <!-- miss_cost: high — commits to main or stages another session's work -->
 <!-- loading: always-on — commits can happen in any session, and a miss is costly -->
@@ -57,7 +57,7 @@
 - **Prefix:** `feature/` for new features, `hotfix/` for urgent fixes, `release/` for bulk changes spanning 20+ files
 - **Characters:** lowercase only, letters/numbers/underscores — no hyphens, spaces, or special characters
 - **Pattern:** `^(feature|hotfix|release)/[a-z0-9_]+$`
-- **Examples:** `feature/add_pr_template`, `hotfix/fix_commitlint`, `release/new_col_all_int_dim_merchant_models`
+- **Examples:** `feature/add_pr_template`, `hotfix/fix_commitlint`, `release/rename_columns_across_models`
 
 ---
 
