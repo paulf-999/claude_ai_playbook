@@ -3,29 +3,29 @@
 **Date Created:** 2026-09-07
 **Date Updated:** 2026-10-29
 
-**Overall score:** 6.1/10
+**Overall score:** 6.4/10
 
 **Recommended improvements:**
-- Fix the writable pre-check so it works on a fresh repo: `touch graphify-out/.test` fails until `graphify-out/` exists.
-- Check `.gitignore` for an existing `graphify-out/` entry before appending, instead of only checking after the append.
-- Make the re-run guidance agree in one place, either duplicate detection or "remove the old section first".
-- Build out `--dry-run`, `--skip-extract` and `--state`, or remove them.
-- Set `confirmation_required: true` in the contract so it matches SKILL.md's "wait for a yes".
-- Add adversarial evals for path traversal, a symlinked `.gitignore`, running as root, the user declining the data prompt, and running twice.
-- Set `tested` / `test_coverage_level` to match what actually runs until #463 adds an eval runner.
-- Treat repo docs, and the graph built from them, as untrusted data, and either wire the `_security.md` safeguards into the phases or cut them.
-- Replace the hardcoded `~/.claude/skills/graphify/` path, and the GNU-only `stat -c`, with portable forms.
+- Define `--dry-run`, `--skip-extract` and `--state` in SKILL.md or `_implementation.md`, or delete them and the FAQ answer about `--state`.
+- Point the writable fix in the troubleshooting quick links and the `validate_writable_directory` eval at the repo root (`[ -w . ]`), not `graphify-out/`.
+- Say what Phase 4 does when CLAUDE.md doesn't exist, since the contract lists `Edit` but not `Write`.
+- Either build the controls `_security.md` lists (umask, `chmod 600`, backup and rollback, checksums, ownership check) into the phases, or mark them as advice.
+- Delete the claim that concurrent runs are safe, or back it, because grep-then-append isn't atomic.
+- Install with `python3 -m pip` so the package goes to the same interpreter the pre-check tested.
+- Add a runner for `tests/evals.yaml` (#463), plus evals for the flags and for a missing CLAUDE.md.
+- Back the `strategic` maturity with recorded usage, or lower it to `tactical`.
+- Swap the hardcoded `~/.claude/skills/graphify/` in `_troubleshooting.md` for a path built from the config directory.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Design** | 7/10 | 2026-10-27 | Five clear phases, with detail in `reference/`. Two problems: `_implementation.md` L34 points flags to "see SKILL.md for details", but SKILL.md has none. Phase 4 (L22) says only "Add Graphify section to CLAUDE.md" and never says what goes in it or how duplicates are handled. |
-| **Complexity** | 4/10 | 2026-10-29 | Raw 6: Concepts 2 (pre-flight, install, extract, file config, verify), Scope 2 (repo root plus the `/graphify` skill that `graphify install --platform claude` installs), Dependencies 1 (graphifyy, with its LLM backends optional), Prerequisites 1 (Python, pip, git). This is within the Strategic limit of 8 but sits below the raw-5 anchor. |
-| **Test Coverage** | 6/10 | 2026-10-27 | 12 prose evals, the bare Strategic count, plus one not_for case. Nothing runs them (SKILL.md L59, #463), so the cap is 7. Strategic also needs adversarial inputs and there are none: no traversal, symlink, root, declined-prompt or re-run eval. `add_gitignore_entry` expects only `[.gitignore updated]`, with no duplicate check. |
-| **Code Quality** | 6/10 | 2026-10-27 | `_implementation.md` L8's writable check `touch graphify-out/.test` fails before the folder exists. L19 appends to `.gitignore` before the duplicate check on L20. `_security.md` L51 uses `stat -c '%A'`, which fails on macOS. The Python check `grep -E "3\.[89]\|3\.1[0-9]"` misses 3.20 and later. Every phase does have a verify step and a recovery hint. |
-| **Security** | 6/10 | 2026-10-29 | Good: there is a confirm step before data leaves the machine (SKILL.md L20), plus the pinned install, the no-root rule and repo-root confinement. Weak: the contract has `confirmation_required: false` (L24), which contradicts that confirm step. Repo docs that get an LLM pass, and the graph built from them, are never treated as untrusted data. `_security.md`'s backups, checksums, umask and symlink checks are not wired into any phase. |
-| **Documentation** | 7/10 | 2026-10-27 | Troubleshooting, FAQ, examples and known gaps are all there. But FAQ L53 documents `--state`, which nothing implements. FAQ L62 ("Duplicate detection prevents corruption") and `_troubleshooting.md` L75 contradict `_troubleshooting.md` L47 ("Remove old section before re-running"). The "50–90%" savings figure (L50) has no source. |
-| **Standards Compliance** | 7/10 | 2026-10-29 | Naming, contract fields, not_for, `tests/README.md`, emoji headings and the maturity line all pass. Gates missed: hardcoded `~/.claude/skills/graphify/` (`_troubleshooting.md` L59, which `portable_paths.md` forbids). Strategic eval coverage has no adversarial cases. Frontmatter `tested: true` / `comprehensive` (L8–9) overstates evals that nothing runs. The body is about 62 lines outside Instructions, against a limit of 60. |
-| **Overall** | **6.1/10** | 2026-10-29 | The phased setup and data-sharing prompt are sound, but the pre-check bug, contradictory re-run guidance, unbuilt flags and unrun, non-adversarial evals fall short of the claimed strategic maturity. |
+| **Design** | 7/10 | 2026-10-27 | The phases are clear and linear, with must-follow steps in SKILL.md and the detail in `reference/`. Two gaps: `_implementation.md` L38 has "Utility flags (see SKILL.md for details)" but SKILL.md never defines them, and Phase 4 (L26) doesn't say what happens when there's no CLAUDE.md. |
+| **Complexity** | 5/10 | 2026-10-29 | Raw sum 5: Concepts 2 (validate, install, extract with consent, edit repo files, verify), Scope 1 (repo root), Dependencies 1 (graphifyy), Prerequisites 1 (Python, pip, network, git). This is within the strategic limit of 8 and matches the ~5 anchor. |
+| **Test Coverage** | 6/10 | 2026-10-27 | There are 17 prose evals, including adversarial cases and a not_for case. Nothing runs them (SKILL.md L60), so the cap of 7 applies. Below the cap: `validate_writable_directory` sets up "graphify-out/ writable, then read-only" (evals L23), but the pre-check tests the repo root. No eval covers the three flags or a missing CLAUDE.md, and `add_gitignore_entry` and `update_claude_md` each expect one thin result. |
+| **Code Quality** | 6/10 | 2026-10-27 | The Phase 3 and 4 appends are idempotent and the symlink and root checks are quoted. But the pre-check runs `python3` while Phase 1 runs bare `pip`, which can install to a different interpreter. The FAQ says "safe for concurrent runs. Duplicate detection prevents corruption" (L66), but grep-then-append can race. The writable quick link says "Check: `ls -ld graphify-out/`" (L71), which contradicts the `[ -w . ]` check (L11). |
+| **Security** | 7/10 | 2026-10-29 | Strong core: the version is pinned, there is an Always/On-a-no data-sharing confirm step, root is refused, symlinked targets are refused and writes are bounded by `git rev-parse --show-toplevel`. However, `_security.md` lists controls that no phase carries out: `umask 0077`, `chmod 600 graph.json` (L20–21), pre-backup and atomic rollback (L33–34), md5sum checksums (L47), `.git` ownership (L29). It also never says to treat repo content passed to the LLM pass as data rather than instructions. |
+| **Documentation** | 7/10 | 2026-10-27 | SKILL.md, the example, Known gaps, troubleshooting and FAQ are all present and readable. Inaccurate in places: the FAQ says "`/claude_setup_graphify --state` shows completion for all 5 phases" (L57) with nothing behind it, and the "see SKILL.md for details" pointer goes nowhere. `_implementation.md` L19 asks for a yes only "before extracting a work repo", while SKILL.md L20 says always. |
+| **Standards Compliance** | 7/10 | 2026-10-29 | Naming, the six-section structure, the version match (2.1.0), `tests/README.md` and the eval count all pass. Gaps: `_troubleshooting.md` L59 hardcodes `~/.claude/skills/graphify/` (portable paths), and the contract puts tools under `dependencies.tools` instead of `requires.tools`. `maturity: strategic` needs "20+/month or always-on" in `_core_standards.md`, but the skill is `criticality: could`, a "one-time setup per repo" (SKILL.md L52), and no file records its use. |
+| **Overall** | **6.4/10** | 2026-10-29 | A well-shaped setup skill with real safeguards, held back by unrun evals, flags and security controls that are claimed but never defined, and a strategic maturity that no recorded use supports. |
 
 ## 🔗 Related files
 
