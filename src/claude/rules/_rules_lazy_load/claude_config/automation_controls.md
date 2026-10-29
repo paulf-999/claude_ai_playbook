@@ -1,12 +1,14 @@
-<!-- version: 1.2.2 -->
+<!-- version: 1.3.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-26 -->
+<!-- updated: 2026-10-29 -->
+<!-- miss_cost: medium — a /loop, /goal or /batch run without caps can burn tokens, which the user notices and stops -->
+<!-- loading: lazy — read on demand from aliases.md, which loads every session and names it beside each automation command -->
 # ⚙️ Automation Controls
 
 **Purpose:** Establish guardrails for experimental automation features (`/loop`, `/batch`, `/goal`) to prevent runaway sessions, excessive token usage, and unintended side effects.
 
 - **Why:** automation features are powerful but risky, so these rules protect against costly mistakes.
-- **Turn caps for other non-interactive runs:** see [_turn_budgets.md](_turn_budgets.md).
+- **Turn caps for other non-interactive runs:** see `_turn_budgets.md` in `rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/`.
 
 ## 📋 Contents
 

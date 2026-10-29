@@ -191,9 +191,15 @@ Parent, sibling and dependency links for each lazy and path-scoped file — kept
 - `rules/01_essentials/testing.md` → Hook test requirements
 - Pointer from: `_task_request_conventions.md` and `behaviour.md` — Behavioral conventions for user request patterns
 
+### `claude_config/automation_controls.md`
+
+- Pointer from: `aliases.md` — names it beside `/batch`, `/goal` and `/loop`
+- Pointer from: `02_claude_standards/claude_working_practices/claude_operational_efficiency.md` — Automation controls section
+
 ### `claude_config/automation_troubleshooting.md`
 
-- Pointer from: `02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md` — the caps and kill-switch this file helps recover from
+- Pointer from: `claude_config/automation_controls.md` — the caps and kill-switch this file helps recover from
+- Pointer from: `02_claude_standards/claude_working_practices/claude_operational_efficiency.md` — Automation controls section
 
 ### `claude_config/hooks_decision_framework/_precedent_and_examples.md`
 

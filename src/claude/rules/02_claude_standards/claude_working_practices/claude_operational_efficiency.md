@@ -1,6 +1,6 @@
-<!-- version: 1.4.1 -->
+<!-- version: 1.5.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-11 -->
+<!-- updated: 2026-10-29 -->
 <!-- applies_to: * -->
 <!-- miss_cost: high — uncapped automation or non-interactive runs overrun cost before anyone notices -->
 <!-- loading: always-on — tool-use and delegation choices come up in every session -->
@@ -14,7 +14,7 @@
 - [Default behaviours](#-default-behaviours)
 - [When to delegate](#-when-to-delegate) — `_claude_when_to_delegate.md`
 - [Turn budgets](#-turn-budgets) — `--max-turns` caps for non-interactive runs; `_turn_budgets.md`
-- [Automation controls](#-automation-controls) — caps and kill-switch for `/loop`, `/goal`, `/batch`; `_automation_controls.md`
+- [Automation controls](#-automation-controls) — caps and kill-switch for `/loop`, `/goal`, `/batch`, read on demand
 - [Intervention mode](#-intervention-mode)
 - [External system access](#-external-system-access)
 - [Task request conventions](#-task-request-conventions)
@@ -54,7 +54,8 @@
 
 ## ⚙️ Automation controls
 
-- **Loads on its own from:** `rules/02_claude_standards/claude_working_practices/claude_operational_efficiency/_automation_controls.md`
+- **Read on demand:** `~/.claude/_rules_lazy_load/claude_config/automation_controls.md` — before running `/loop`, `/goal` or `/batch`, for their caps and kill-switch.
+- **Read on demand:** `~/.claude/_rules_lazy_load/claude_config/automation_troubleshooting.md` — when one of those runs misbehaves, for recovery steps and a pre-flight checklist.
 
 ---
 

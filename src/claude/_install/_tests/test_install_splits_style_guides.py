@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-10
-# Date updated:      2026-10-11
-# Version:           2.0.3
+# Date updated:      2026-10-29
+# Version:           2.1.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -17,6 +17,7 @@ from ``claude_file_utils.sh`` against a fake source and a temp target.
 """
 
 import os
+import re
 import subprocess
 from pathlib import Path
 
@@ -160,3 +161,35 @@ def test_installs_split_after_relocating_and_before_pruning():
     windows = WINDOWS_SCRIPT.read_text()
     assert windows.index("    relocate_lazy_rules") < windows.index("    split_style_guides"), \
         "the Windows install must split style guides after relocating the lazy folder"
+
+
+LINK = re.compile(r"\]\(([^)]+)\)")
+LINKED_GUIDES = {
+    f"{GUIDES}/sql.md": ENTRY + "[f](sql/_formatting.md) [t](sql/templates/t.sql#top) [d](dbt.md)\n"
+                                "[w](https://example.com/a.md) [a](#top)\n",
+    f"{GUIDES}/dbt.md": ENTRY,
+    f"{GUIDES}/sql/_formatting.md": "# Formatting\n",
+    f"{GUIDES}/sql/templates/t.sql": "select 1\n",
+    f"{GUIDES}/infra/docker.md": '---\npaths:\n  - "**/Dockerfile*"\n---\n[a](docker/_advanced.md)\n',
+    f"{GUIDES}/infra/docker/_advanced.md": "# Advanced\n",
+}
+
+
+def test_moved_entry_files_keep_working_child_links(tmp_path: Path):
+    """A moved entry file's relative links still reach its children, while URLs and anchors stay as written."""
+    make_tree(tmp_path / "src", LINKED_GUIDES)
+    (tmp_path / "home").mkdir()
+    (tmp_path / "target").mkdir()
+    install(tmp_path)
+    target = tmp_path / "target"
+    broken = []
+    for rel in ("sql.md", "infra/docker.md"):
+        installed = target / PATH_SCOPED / rel
+        for link in LINK.findall(installed.read_text()):
+            if "://" in link or link.startswith("#"):
+                continue
+            if not (installed.parent / link.split("#")[0]).resolve().is_file():
+                broken.append(f"{rel}: {link}")
+    assert not broken, f"links that no longer resolve after install: {broken}"
+    text = (target / PATH_SCOPED / "sql.md").read_text()
+    assert "](https://example.com/a.md)" in text and "](#top)" in text, "a URL or anchor link was rewritten"

@@ -98,7 +98,7 @@ DEFAULT_APPLIES_TO = {
     "style_guide_standards/airflow.md": ["**/dags/**/*.py"],
     "style_guide_standards/infra/terraform.md": ["**/*.tf"],
     "style_guide_standards/infra/ansible.md": ["**/playbooks/**/*.yml", "**/roles/**/*.yml"],
-    "style_guide_standards/infra/docker.md": ["**/Dockerfile*", "**/docker-compose*.yml"],
+    "style_guide_standards/infra/docker.md": ["**/Dockerfile*"],
     "style_guide_standards/utilities/makefile.md": ["**/Makefile", "**/*.mk"],
     "style_guide_standards/utilities/mermaid.md": ["**/*.mmd"],
     "claude_config/response_standards_enforcement.md": ["**/hook_style_guide_response_standards*.sh"],
