@@ -1,33 +1,31 @@
 # Quality Scorecard — claude_capture_session_prompts
 
 **Date Created:** 2026-09-07
-**Date Updated:** 2026-10-27
+**Date Updated:** 2026-10-29
 
-**Overall score:** 7.0/10
+**Overall score:** 7.4/10
 
 **Recommended improvements:**
-- Make the column list in `evals.yaml` (`capture_default_date`), `reference/_implementation.md` and `reference/_examples.md` match the script's real columns
-- Make the Python minimum the same everywhere, since the script needs 3.10 but SKILL.md, the contract and `_error_recovery.md` say 3.9
-- Fix the `_implementation.md` pointer to a "**Run:** command in SKILL.md → Example Usage" that doesn't exist
-- Add evals for the `not_for` cases and the secret-masking path, and give each eval a `run` block or a pytest case
-- Stop the script silently overwriting an existing `~/_sessions/YYYY_MM_DD_claude_prompts.md`, which loses Phase 2 edits
-- Catch a bad `--date` value with a clear message instead of a `ValueError` traceback
-- Add `returns` to the contract's `output`, and put trigger phrases in the SKILL.md `description`
-- Narrow the `summarize this session` trigger, and lower `test_coverage_level: comprehensive` to match 6 unrun evals
+- Use one minimum Python version everywhere: the script needs 3.10 (`capture_session_prompts.py` line 16), but SKILL.md line 17, contract line 59 and `_error_recovery.md` line 12 all say 3.9.
+- Catch the `ValueError` from `strptime` (script line 86) and print a clear message, so a bad `--date` doesn't end in a traceback.
+- Make the evals match the script: `capture_default_date` expects a `Timestamp` header, but the script writes `# | Hour | Min`.
+- Add a runner for the evals, or at least for the `cross_session_aggregation_out_of_scope` "not for" case.
+- Fix the doc drift: SKILL.md line 60 says "6 test scenarios" but there are 7, `_implementation.md` points to a missing **Run:** command and lists the wrong columns, and `_examples.md` row 4 shows `❓ Question` where the script gives `✔️ Clarifying Question`.
+- Rewrite SKILL.md Example Usage so it shows what the script really prints (`✅ Generated <path>` and `N prompts captured`), not the theme and status counts it shows now.
+- Remove or narrow the `summarize this session` trigger, which is US spelling and catches general summary requests, and add `dependencies.permissions` for the write to `~/_sessions/`.
 
 | Dimension | Score | Date Updated | Notes |
 |---|---|---|---|
-| **Design** | 8/10 | 2026-10-27 | • ✅ **Clear phases:** the script builds the table instead of Claude, and the detail lives in `reference/`<br>• 🕳️ **Gap:** `_implementation.md` Phase 1 points to a Run command in Example Usage that doesn't exist |
-| **Complexity** | 6/10 | 2026-10-27 | • 🧮 **Raw complexity 4:** Concepts 2, Scope 1, Dependencies 1 (`history.jsonl` and Python), Prerequisites 0, at the draft limit of 4<br>• 🔀 **Branching:** `determine_status` is a 7-branch chain where order matters |
-| **Test Coverage** | 7/10 | 2026-10-27 | • 📊 **Draft count:** 6 evals, and 22 pytest tests run the script, including masking and the end-to-end report<br>• 🕳️ **Gaps:** the evals are prose with no `run` block and no `not_for` case<br>• ⚠️ **Stale:** eval 1 expects a "Timestamp" header the script never writes |
-| **Code Quality** | 7/10 | 2026-10-27 | • ✅ **Solid:** typed, documented, skips malformed JSON lines and escapes pipes<br>• ⚠️ **Gaps:** `write_text` overwrites an existing report, and an invalid `--date` ends in a traceback<br>• ⚠️ **Mismatch:** the 3.10 check contradicts the documented 3.9 |
-| **Security** | 8/10 | 2026-10-27 | • 🛡️ **Masked:** secrets are masked in `build_row` before any field is built, with an end-to-end test<br>• ✅ **Local:** never pastes raw history lines, never edits `history.jsonl`, posts nothing externally<br>• ⚠️ **Limits:** masking knows fixed patterns only, and the overwrite needs no confirmation |
-| **Documentation** | 6/10 | 2026-10-27 | • ✅ **Clear:** SKILL.md and the error-recovery table<br>• 🍂 **Stale:** `_examples.md` shows a Timestamp column, MoSCoW on Done rows and a "By MoSCoW" summary the script doesn't produce<br>• ⚠️ **Drift:** `_implementation.md` lists the wrong columns, and the Python version differs between files |
-| **Standards Compliance** | 7/10 | 2026-10-27 | • ✅ **Met:** naming, `tests/` layout, a 0.4.1 header matching the contract, `not_for` and length<br>• ❌ **Missed:** no `returns` in the contract `output`, and few trigger phrases in the `description`<br>• ⚠️ **Overstated:** `test_coverage_level: comprehensive` for 6 unrun evals |
-| **Overall** | **7.0/10** | 2026-10-27 | A sound, well-tested script that masks secrets, held back by reference docs and evals that no longer match its output, and by unrun evals with no `not_for` case. |
+| **Design** | 8/10 | 2026-10-27 | Clear three-phase flow: script capture, then manual review, then optional planning. Detail lives in `reference/`, and the `--force` overwrite guard keeps manual edits safe. Held back by the broad contract trigger `summarize this session`, which overlaps with general summary requests. |
+| **Complexity** | 8/10 | 2026-10-29 | One job and no external services. It reads `$CLAUDE_CONFIG_DIR/history.jsonl` and writes to `~/_sessions/` (two locations, raw ~2), and the heuristics are flat first-match keyword lists. |
+| **Test Coverage** | 7/10 | 2026-10-27 | 7 evals meet the Draft count (5–8) and include a "not for" case. `test_capture_session_prompts.py` (24 tests) runs the script's paths, including masking, the overwrite guard and malformed lines. Capped at 7 because nothing runs the evals themselves, including the "not for" case. Some evals have also drifted from the script: `capture_default_date` expects a `Timestamp` header, and `categorization_themes` sets a "<10% misclassification" target that nothing measures. |
+| **Code Quality** | 7/10 | 2026-10-27 | Well-structured functions with docstrings, malformed JSON skipped, and exit code 1 on an existing report. Gaps: the 3.10 version gate (line 16) contradicts the 3.9 pre-check, so a 3.9 user passes the pre-check and then the script exits. An invalid `--date` raises an uncaught `ValueError` (line 86). The Note check `prompt.startswith(("this ", ...))` (line 171) is case-sensitive, so "This looks fine" never gets the Note status. |
+| **Security** | 8/10 | 2026-10-27 | Secrets are masked before any field is built, which is tested end to end. Cells are escaped, prompt text is handled as data, and the "Never paste raw `history.jsonl` lines" rule backs this up. The only write is a local file guarded by `--force`. Held back because masking only knows five formats plus key=value pairs, so Bearer/JWT tokens and connection strings get through (SKILL.md admits this as a caveat). |
+| **Documentation** | 6/10 | 2026-10-27 | The SKILL.md opening and the error-recovery table are clear. Several files have drifted: SKILL.md line 60 says "6 test scenarios" (there are 7). Example Usage shows output the script never prints. `_implementation.md` line 9 points to a missing **Run:** command, and line 17 lists `Timestamp ... Prompt Text` columns. `_examples.md` uses `❓ Question` where the script gives `✔️ Clarifying Question`, and Example 4 hardcodes `~/.claude/TODO.md`. There is no FAQ. |
+| **Standards Compliance** | 8/10 | 2026-10-29 | Naming, contract fields, `not_for`, the metadata header (0.5.1 matches the contract), emoji headings, ≤60 lines, `tests/evals.yaml`, `tests/README.md` and `reference/_implementation.md` all pass. Gaps: no `dependencies.permissions` for the `~/_sessions/` write. `dependencies` and `requires` repeat each other. Frontmatter says `test_coverage_level: comprehensive` on a draft whose evals nothing runs. |
+| **Overall** | **7.4/10** | 2026-10-29 | A sound, well-tested script held back by doc and eval drift from the code and a Python version that contradicts itself. |
 
 ## 🔗 Related files
 
 - `src/claude/skills/_claude_skills/claude_capture_session_prompts/SKILL.md` — the skill being scored
 - `src/claude/skills/_claude_skills/claude_capture_session_prompts/tests/evals.yaml` — Test Coverage dimension
-- `src/claude/_reference/_quality_scorecards/score_history.csv` — attempt 2, scored blind by `quality_scorecard_reviewer`
