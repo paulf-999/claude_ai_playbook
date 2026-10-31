@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Description: <one line saying what this script does>
+# Usage: src/sh/<script_name>.sh [args] (run from the repo root)
+
 source src/sh/shell_utils.sh
 
 #=======================================================================
