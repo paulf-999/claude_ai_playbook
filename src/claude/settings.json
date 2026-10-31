@@ -45,6 +45,12 @@
     ],
     "defaultMode": "plan"
   },
+  "autoMode": {
+      "allow": [
+        "$defaults",
+        "Merged-work cleanup: removing a local git worktree (without --force) or deleting a local git branch is allowed once the branch's pull request is merged and its tip matches the merged PR head, since nothing unmerged is lost; deleting remote branches is not covered"
+      ]
+  },
   "showClearContextOnPlanAccept": true,
   "plansDirectory": "~/.claude/plans",
   "autoMemoryEnabled": true,
