@@ -1,7 +1,14 @@
 #!/bin/bash
-set -e
+set -euo pipefail  # Fail fast, including on unset variables and errors anywhere in a pipeline.
 
+# Description: <one line saying what this script does>
+# Usage: src/sh/<script_name>.sh [args] (run from the repo root)
+
+# Load reusable shell script vars & functions
 source src/sh/shell_utils.sh
+
+# Catch Ctrl+C, so an interrupted run says so and exits 1
+trap handle_interruption SIGINT
 
 #=======================================================================
 # Variables
@@ -18,9 +25,6 @@ source src/sh/shell_utils.sh
 #=======================================================================
 # Main script logic
 #=======================================================================
-
-trap handle_interruption INT
-
 print_section_header "${DEBUG}" "Script execution started."
 
 # TODO: add your code here
