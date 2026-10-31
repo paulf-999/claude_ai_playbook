@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-10
-# Date updated:      2026-10-29
-# Version:           2.1.0
+# Date updated:      2026-10-31
+# Version:           2.2.0
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -193,3 +193,20 @@ def test_moved_entry_files_keep_working_child_links(tmp_path: Path):
     assert not broken, f"links that no longer resolve after install: {broken}"
     text = (target / PATH_SCOPED / "sql.md").read_text()
     assert "](https://example.com/a.md)" in text and "](#top)" in text, "a URL or anchor link was rewritten"
+
+
+def test_relinked_links_gain_no_stray_quotes(tmp_path: Path):
+    """Rewritten links keep their exact ``[text](path)`` form, with no quote marks added around them.
+
+    macOS's built-in bash 3.2 keeps the quotes in ``${var//"a"/"b"}`` inside a double-quoted string, which the
+    link-resolution test above can't see, since the path between the brackets still resolves.
+    """
+    make_tree(tmp_path / "src", LINKED_GUIDES)
+    (tmp_path / "home").mkdir()
+    (tmp_path / "target").mkdir()
+    install(tmp_path)
+    for rel in ("sql.md", "infra/docker.md"):
+        text = (tmp_path / "target" / PATH_SCOPED / rel).read_text()
+        assert '"](' not in text and ')"' not in text, f"{rel} gained stray quotes around a link: {text!r}"
+    sql = (tmp_path / "target" / PATH_SCOPED / "sql.md").read_text()
+    assert "[f](" in sql and "_formatting.md) [t](" in sql, f"sql.md's first two links aren't exact: {sql!r}"

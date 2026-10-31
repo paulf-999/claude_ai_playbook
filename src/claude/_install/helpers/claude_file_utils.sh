@@ -233,14 +233,18 @@ style_guide_install_path() {
 # Links to files that also move (sibling entry files), URLs and #anchors are left as written.
 relink_moved_entry_file() {
     local MOVED="$1" OLD_DIR="$2" PREFIX="$3"
-    local CONTENT LINK TARGET
+    local CONTENT LINK TARGET OLD_LINK NEW_LINK
     CONTENT="$(<"${MOVED}")"
     while IFS= read -r LINK; do
         TARGET="${OLD_DIR}/${LINK%%#*}"
         if [[ ! -f "${TARGET}" ]] || is_path_scoped "${TARGET}"; then
             continue
         fi
-        CONTENT="${CONTENT//"](${LINK})"/"](${PREFIX}${LINK})"}"
+        OLD_LINK="](${LINK})"
+        NEW_LINK="](${PREFIX}${LINK})"
+        # Left unquoted on purpose: inside "...", macOS's bash 3.2 keeps the inner quotes as literal text,
+        # while the quoted "${NEW_LINK}" stops bash 5.2+ reading an & in a path as the matched text
+        CONTENT=${CONTENT//"${OLD_LINK}"/"${NEW_LINK}"}
     done < <(grep -oE '\]\([^)#:[:space:]][^):[:space:]]*\)' "${MOVED}" | sed -E 's/^\]\((.*)\)$/\1/' | sort -u)
     printf '%s\n' "${CONTENT}" > "${MOVED}"
 }
