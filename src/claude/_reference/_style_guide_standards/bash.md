@@ -2,9 +2,9 @@
 paths:
   - "**/*.sh"
 ---
-<!-- version: 1.1.3 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-10 -->
+<!-- updated: 2026-10-31 -->
 <!-- miss_cost: medium — scripts without strict mode that fail review -->
 <!-- loading: path-scoped — only applies to shell scripts, so it loads when a .sh file is open -->
 # 🖥️ Bash Style Guide
@@ -25,7 +25,7 @@ paths:
 ---
 ## 📄 Script structure
 
-All new scripts must start from the canonical template for correct section order (shebang, safety flags, shell_utils source, section headers, trap, logging):
+All new scripts must start from the canonical template for correct section order (shebang, safety flags, description and usage lines, shell_utils source, trap, section headers, logging):
 
 - **Template location:** `~/.claude/_templates/utils/template_bash_script.sh`
 - **Always reference:** read the template before writing a new script
@@ -36,8 +36,12 @@ All scripts must begin with:
 
 ```bash
 #!/bin/bash
-set -e
+set -euo pipefail
 ```
+
+- **`-e`:** stop on the first command that fails.
+- **`-u`:** stop on an unset variable instead of treating it as empty.
+- **`-o pipefail`:** fail a pipeline when any command in it fails, not only the last.
 
 ## 🔧 Shell utilities
 
