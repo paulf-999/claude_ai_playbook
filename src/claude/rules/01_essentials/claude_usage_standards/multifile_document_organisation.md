@@ -1,6 +1,6 @@
-<!-- version: 3.0.1 -->
+<!-- version: 3.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-28 -->
+<!-- updated: 2026-11-02 -->
 <!-- applies_to: **/*.md -->
 <!-- miss_cost: low — a document grows flat or past 110 lines, which is easy to split later -->
 <!-- loading: always-on — a growing document can be split in any session that edits markdown -->
@@ -14,8 +14,8 @@
 
 | Shape | When | Layout |
 |---|---|---|
-| **Single file** | One complete, self-contained topic, ≤110 lines | `<directory>/<topic>.md`, placed flat |
-| **Parent + children** | A topic with 2+ related child pages, or one that has grown past 110 lines | `<directory>/<topic>.md` plus `<directory>/<topic>/_<aspect>.md` |
+| **Single file** | One complete, self-contained topic, ≤110 lines and about 500 words | `<directory>/<topic>.md`, placed flat |
+| **Parent + children** | A topic with 2+ related child pages, or one that has grown past 110 lines or about 500 words | `<directory>/<topic>.md` plus `<directory>/<topic>/_<aspect>.md` |
 
 - **Parent:** sits at the top level as the discoverable entry point, explains the topic and links (or, in `rules/`, points to) every child.
 - **Children:** live in a subdirectory named after the parent, use the `_` prefix, and each cover one aspect of the parent's topic.
@@ -28,7 +28,7 @@
 ## ⚠️ When to Apply
 
 1. **Does the topic have 2+ related child pages?** Yes → parent + subdirectory. No → single file.
-2. **Is the file over 110 lines?** Yes → split into parent + children. No → split only if the topic's complexity warrants it.
+2. **Is the file over 110 lines or about 500 words?** Yes → split into parent + children. No → split only if the topic's complexity warrants it.
 3. **Are the children distinct aspects of one parent topic?** Yes → group them in one subdirectory. No → make each a standalone file, and don't mix unrelated files in one folder.
 
 ---
@@ -66,7 +66,7 @@ rules/02_claude_standards/
 - [ ] **Parent + children?** → parent at `<directory>/<topic>.md`, children at `<directory>/<topic>/_<aspect>.md`
 - [ ] **Children use the `_` prefix** and there are 2 or more of them
 - [ ] **Every child relates directly to the parent topic**
-- [ ] **Over 110 lines?** → split into parent + children
+- [ ] **Over 110 lines or about 500 words?** → split into parent + children
 - [ ] **A rule file?** → the extra rules above are met
 
 ---
