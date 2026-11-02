@@ -1,10 +1,10 @@
 # :pencil2: Pull Request Summary
 
-[Summary of the change here.]
+[Summary of the change in 1–2 sentences, linking each file, issue or PR it names with a full GitHub URL.]
 
 ## :clipboard: (Optional) Additional Details
 
-[If needed, give further context in 5 bullets or fewer, and link to anything longer.]
+[If needed, only what a reviewer must or should know, in 5 bullets or fewer, with full GitHub URLs for any file, issue or PR.]
 
 ## :hammer_and_wrench: Type of PR Change
 
