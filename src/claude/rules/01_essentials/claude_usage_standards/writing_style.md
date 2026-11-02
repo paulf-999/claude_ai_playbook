@@ -24,7 +24,7 @@
 Applies to **all** content Claude produces — responses, drafts, Confluence pages, Jira tickets, rule files, plans, scratch notes, and internal docs. The list is illustrative, not exhaustive: no file type or context is exempt.
 
 - **Emojis:** open headings, table rows and bullets with an emoji — they're the anchors a reader scans for.
-- **Bullets:** prefer over prose for rules and lists.
+- **Bullets:** prefer over prose for rules and lists, and keep each list to 5 top-level bullets or fewer.
 - **Frame as positive actions, not negations:** tell Claude what to do instead of what not to do — this reliably steers output better.
   - ❌ "Do not use excessive markdown"
   - ✅ "Write in flowing prose paragraphs with complete sentences"
