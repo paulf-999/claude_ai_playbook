@@ -3,7 +3,7 @@ paths:
   - "**/_plans/**"
   - "**/plans/**"
 ---
-<!-- version: 1.7.1 -->
+<!-- version: 1.8.0 -->
 <!-- created: 2026-09-17 -->
 <!-- updated: 2026-11-02 -->
 <!-- miss_cost: low — a plan file in the wrong layout, which is quick to reformat -->
@@ -18,9 +18,9 @@ paths:
 
 **Bullet the Action and Test cells:** each is a bullet list, one sentence per bullet — never a single run-on sentence or a comma-spliced list.
 
-**Cell bullets:** use `•` bullets joined with `<br>`, because standard markdown lists don't render inside table cells (the table-cell rule in `writing_style.md`).
+**Cell bullets:** use `•` bullets joined with `<br>`, because standard markdown lists don't render inside table cells (the table-cell rule in `writing_style/_markdown_layout.md`).
 
-**Each bullet:** emoji + leading bold keyword + colon, same as any other bullet under `writing_style.md` — e.g. `• 💾 **Backup:** create a full timestamped copy before touching anything`.
+**Each bullet:** emoji + leading bold keyword + colon, an exception to the no-emoji cell rule in `writing_style/_markdown_layout.md`, because a plan's status-heavy cells scan faster with them — e.g. `• 💾 **Backup:** create a full timestamped copy before touching anything`.
 
 **Effort:** T-shirt size — XS, S, M, L, XL.
 

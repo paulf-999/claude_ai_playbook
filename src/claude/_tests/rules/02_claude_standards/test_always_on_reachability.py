@@ -87,7 +87,9 @@ def test_lazy_rules_live_outside_rules():
 # Claude Code's 150k-char instruction limit.
 # 41 -> 40 on 2026-10-29: _automation_controls.md moved to _rules_lazy_load/ with a medium miss cost,
 # read on demand from aliases.md, which names it beside each automation command (#459).
-MAX_STARTUP_FILES = 40
+# 40 -> 42 on 2026-11-02: writing_style.md sat at the 110-line limit and broke its own list and emoji rules,
+# so it split into _markdown_layout.md and _audience_and_depth.md, which adds files but no tokens.
+MAX_STARTUP_FILES = 42
 STARTUP_IMPORT = re.compile(r"^@~/[^/\s]+/(\S+\.md)\s*$", re.M)
 
 

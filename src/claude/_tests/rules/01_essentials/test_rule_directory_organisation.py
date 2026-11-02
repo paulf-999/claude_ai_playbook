@@ -39,7 +39,7 @@ USAGE_STANDARDS_PARENTS = {
     "writing_style.md",
     "multifile_document_organisation.md",
 }
-USAGE_STANDARDS_SUBDIRS = {"naming_standards"}
+USAGE_STANDARDS_SUBDIRS = {"naming_standards", "writing_style"}
 
 # Folders that group parents or shared children rather than one parent's children
 GROUPING_DIRS = {
