@@ -94,7 +94,7 @@ repos:
 
   # 🔁 Pyupgrade — automatically modernise syntax
     - repo: https://github.com/asottile/pyupgrade
-      rev: v3.3.1
+      rev: v3.22.0
       hooks:
           - id: pyupgrade
             name: Python fixes — Upgrade syntax to Python 3.6+
