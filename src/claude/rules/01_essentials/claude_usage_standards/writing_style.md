@@ -1,4 +1,4 @@
-<!-- version: 1.4.0 -->
+<!-- version: 2.0.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-11-02 -->
 <!-- applies_to: * -->
@@ -13,7 +13,6 @@
 - [Style — all content](#-style--all-content)
 - [Clarity principles — all content](#-clarity-principles--all-content)
 - [Rule files — additional constraints](#-rule-files--additional-constraints)
-- [Pre-writing checks](#-pre-writing-checks)
 - [Drafts and errors](#-drafts-and-errors)
 - [Child pages](#-child-pages)
 
@@ -21,96 +20,67 @@
 
 ## 🎨 Style — all content
 
-Applies to **all** content Claude produces — responses, drafts, Confluence pages, Jira tickets, rule files, plans, scratch notes, and internal docs. The list is illustrative, not exhaustive: no file type or context is exempt.
+Applies to **all** content Claude produces — responses, drafts, Confluence pages, Jira tickets, rule files, plans, scratch notes and repo docs — and no file type or context is exempt.
 
-- **Emojis:** in repo docs, PRs, issues, plans and chat, open headings, table rows and top-level bullets with one emoji, and elsewhere use the audience table's Emojis column.
-- **Bullets:** prefer over prose for rules and lists, and keep each list to 5 top-level bullets or fewer.
-- **Frame as positive actions, not negations:** tell Claude what to do instead of what not to do — this reliably steers output better.
-  - ❌ "Do not use excessive markdown"
-  - ✅ "Write in flowing prose paragraphs with complete sentences"
-- **Leading bold keyword + colon:** open each bullet with the key term in bold:
-  - `**Why:**` rationale for a decision
-  - `**Note:**` a caveat or edge case
-  - `**Example:**` a concrete illustration
-- **One sentence per bullet:** if a bullet needs more than one sentence, use child bullets — never run multiple sentences in a single bullet.
-- **Brevity:** if a sentence can be cut without losing meaning, cut it.
-- **History lives in git:** describe only the current state in repo files, and leave notes about removed, merged, archived or renamed files to the git log.
+- 🗣️ **Frame as positive actions:** in prompts and rules, tell Claude what to do instead of what not to do, because that steers output better, while docs for people may state a plain prohibition.
+  - **Avoid:** "Do not use excessive markdown."
+  - **Prefer:** "Write in flowing prose paragraphs with complete sentences."
+- 🔑 **Bold keyword and colon:** open every bullet and numbered item with its key term in bold, such as **Why:**, **Note:** or **Example:**.
+- 1️⃣ **One sentence per bullet:** put a second sentence, or a clause after a semicolon, in a child bullet, while an em-dash aside stays part of its sentence.
+- ✂️ **Brevity:** if a sentence can be cut without losing meaning, cut it.
+- 📜 **History lives in git:** describe only the current state in repo files, and leave notes about removed, merged, archived or renamed files to the git log.
   - **Exception:** an incident that justifies a rule stays as that rule's evidence (e.g. `portable_paths.md`).
-- **British English spelling:** use British spellings (organise, behaviour, centralise) over American (organize, behavior, centralize) throughout prose — matches this config's established house style (`behaviour.md`, not `behavior.md`).
-  - **Exception:** code identifiers, filenames, and function names that already use American spelling stay as-is (e.g. `_testing_file_organization.md`) — don't rename real files or code to chase this.
-- **No transposition exemption:** moving, copying, or splitting existing content into new files does not exempt the output — apply house style on the first draft, never as a later pass.
-- **Tables for structured content:** use a table when comparing two or more categories that share identical column structures — not for a single list with no comparison dimension.
-  - **Signal:** you're writing `**Category A:**` then `**Category B:**`, repeating the same fields for each — that's a table, not a bullet list.
-  - **Example:** comparing tools by capability — a `| Tool | Can do | Can't do |` table beats separate bullet lists per tool.
-  - **Cells:** a bullet in a cell follows the bullet rules above (emoji, bold keyword, one sentence), bullets join as `• … <br>`, and each cell stays under about 25 words.
+  - **Records:** plans, audits and changelogs keep their status history, because recording it is their purpose.
+
+### 🇬🇧 Spelling and rewritten content
+
+- 🇬🇧 **British spelling:** use -ise and other British forms (organise, behaviour, centralise) in prose and headings, and in new identifiers.
+  - **Exception:** existing code identifiers, filenames and function names keep their spelling (e.g. `_testing_file_organization.md`).
+- ✍️ **No transposition exemption:** content you rewrite, copy or split into new files follows house style from the first draft, while a file only moved or renamed keeps its content.
 
 ## 👥 Clarity principles — all content
 
-Lead with what things do, not how they work. Assume no prior familiarity with the domain. Explain jargon or use plain language instead. Readers should understand core idea in 60 seconds. Structure for progressive disclosure: heading + opening = complete idea; first section = enough to use; later sections = advanced cases.
-
-- 📋 **Executive Summary first:** open long-form written content (blog posts, Confluence pages, reports) with a `📋 Executive Summary` section of 3–5 bullets that gives the whole idea before any detail — the first layer of progressive disclosure, and the written counterpart of the chat Summary in `claude_response_standards.md`.
+Lead with what things do, not how they work. Assume no prior familiarity with the domain. Explain jargon or use plain language instead. Readers should understand the core idea in 60 seconds. Structure for progressive disclosure: heading + opening = complete idea; first section = enough to use; later sections = advanced cases.
 
 ### ✍️ Writing Style for Skills
 
-When writing SKILL.md files, apply these conventions specific to skill documentation:
-
-**Lead with what it does, not how it works:**
-- ❌ "This skill uses complex validation patterns"
-- ✅ "Validates Confluence pages against team standards"
-
-**Explain jargon or replace with plain language:**
-- ❌ "Uses maturity framework with scope gates"
-- ✅ "Works with draft (early), tactical (stable), and strategic (production-ready) phases"
-
-**Clarity without context:** Reader should understand in 60 seconds
-- Test: Read opening aloud to someone unfamiliar — do they get it?
-- Use: Concrete examples, plain language, short sentences
-
-**Progressive disclosure:** Essentials first, details layer in
-- Opening: what it does
-- First section (Overview): enough to use, high-level summary
-- Later sections (Workflow, Known Gaps): advanced cases and roadmap
+| Principle | ❌ Avoid | ✅ Prefer |
+|---|---|---|
+| 🎯 **Lead with what it does** | "This skill uses complex validation patterns" | "Validates Confluence pages against team standards" |
+| 🗣️ **Plain language** | "Uses maturity framework with scope gates" | "Works with draft (early), tactical (stable), and strategic (production-ready) phases" |
+| ⏱️ **Clear in 60 seconds** | An opening that needs the rest of the file | An opening someone unfamiliar gets when read aloud |
+| 🪜 **Progressive disclosure** | Workflow detail before the overview | What it does, then the Overview, then Workflow and Known Gaps |
 
 ## 📏 Rule files — additional constraints
 
-- **Limit:** ~100 lines. Up to 110 tolerated; beyond that, split into a parent index + child files referenced from the parent.
-- **Scope:** one concept per file — don't bundle unrelated rules into a single file.
-- **Newline:** files must end with a single newline.
-- **Imports:** use `@`-references for shared content — never duplicate inline.
-
-## ✍️ Pre-writing checks
-
-- **Audience:** before producing content for an external audience (Confluence, Jira, email, comms), confirm the target audience and calibrate technical depth accordingly — if unknown or spanning multiple groups, ask before writing.
-
-| No. | Audience | Content focus | Technical level | Emojis | Depth |
-|---|---|---|---|---|---|
-| 1 | 💼 **Management** | Business outcomes | None | None | • Non-technical — plain language only, no jargon<br>• Project-level — progress, status, decisions, and risks; no domain-specific terminology |
-| 2 | 🔭 **Technical management** | Strategy & outcomes | Partial | Headings only | • Technology-aware and strategy-level — outcomes and concepts<br>• Not implementation mechanics |
-| 3 | 📊 **Data analytics team** | Data & insights | Partial | Headings only | • Semi-technical — understands data concepts and business domain<br>• Not stack-aware — focus on what the data means, not how it's produced |
-| 4 | 🗄️ **Data engineering team** | Technical implementation | Full | Headings only | • Fully technical — data stack focus (Airflow, dbt, Snowflake, connectors) |
-| 5 | ⚙️ **Infrastructure / DevOps** | Infra & operations | Full | Headings only | • Fully technical — infra focus (VMs, networking, Ansible, OS, cloud) |
+- 📐 **Limit:** about 100 lines, up to 110 tolerated, and beyond that split into a parent and child files.
+- 🎯 **Scope:** one concept per file, so unrelated rules live in separate files.
+- ↩️ **Newline:** files end with a single newline.
+- 🔗 **Shared content:** point to it with a `Loads on its own from` or `Read on demand` line instead of copying it inline.
 
 ## 📝 Drafts and errors
 
-- **Drafts:** write proposed content to `~/_drafts/<domain>/YYYY_MM_DD_<topic>.md`
-- **Errors:** write error details to `~/_errors/<domain>/YYYY_MM_DD_<topic>.md`
-- **Reference:** put an evergreen guide Claude reads on demand in `~/.claude/_rules_lazy_load/<topic>.md`, named in a `**Read on demand:**` pointer, and human-only background in the playbook repo's `docs/reference/` — no date prefix; topic-named in snake_case
-- **File naming:** date-first for drafts/errors, snake_case topic-only for reference — e.g. `2026_08_04_onboarding_plan.md` or `claude_code_automation_commands.md`
-  - **Why underscores, not hyphens:** the date prefix is part of the filename, so it must satisfy `naming_standards.md`'s snake_case rule (no hyphens) like every other filename — `YYYY-MM-DD` is correct as a data *value* (e.g. in frontmatter), but not as a filename segment.
+- 📝 **Drafts:** write proposed content to `~/_drafts/<domain>/YYYY_MM_DD_<topic>.md`.
+- 🚨 **Errors:** write error details to `~/_errors/<domain>/YYYY_MM_DD_<topic>.md`.
+- 📚 **Reference:** put an evergreen guide Claude reads on demand in `~/claude/_rules_lazy_load/<topic>.md`, named in a `**Read on demand:**` pointer, and human-only background in the playbook repo's `docs/reference/`.
+- 🏷️ **File naming:** date-first for drafts and errors, and a snake_case topic only for reference, e.g. `2026_08_04_onboarding_plan.md` or `claude_code_automation_commands.md`.
+  - **Why underscores:** the date prefix is part of the filename, so it follows `naming_standards.md`'s snake_case rule, while `YYYY-MM-DD` stays correct as a data value.
 
 | Domain | Use for |
 |---|---|
-| `1on1` | One-to-one meeting notes and prep |
-| `confluence` | Confluence page drafts |
-| `email` | Email drafts |
-| `general` | Anything that doesn't fit a specific domain |
-| `important` | High-priority items requiring attention |
-| `jira` | Jira ticket drafts |
-| `meetings` | Meeting notes and agendas |
-| `plans` | Plans and proposals |
-| `reference` | Reference material |
-| `teams` | Microsoft Teams message drafts |
+| 👥 `1on1` | One-to-one meeting notes and prep |
+| 📄 `confluence` | Confluence page drafts |
+| ✉️ `email` | Email drafts |
+| 🗂️ `general` | Anything that doesn't fit a specific domain |
+| ❗ `important` | High-priority items requiring attention |
+| 🎫 `jira` | Jira ticket drafts |
+| 🗓️ `meetings` | Meeting notes and agendas |
+| 🧭 `plans` | Plans and proposals |
+| 📚 `reference` | Reference material |
+| 💬 `teams` | Microsoft Teams message drafts |
 
-## 📚 Multifile Document Organization
+## 🧩 Child pages
 
-- **Loads on its own from:** `rules/01_essentials/claude_usage_standards/multifile_document_organisation.md`
+- **Loads on its own from:** `rules/01_essentials/claude_usage_standards/writing_style/_markdown_layout.md` — emojis, lists and tables.
+- **Loads on its own from:** `rules/01_essentials/claude_usage_standards/writing_style/_audience_and_depth.md` — audiences, depth and the Executive Summary.
+- **Loads on its own from:** `rules/01_essentials/claude_usage_standards/multifile_document_organisation.md` — when to split a document into a parent and children.
