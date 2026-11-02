@@ -38,7 +38,9 @@ If `git status` shows unmerged paths (conflict markers from a merge or rebase), 
 
 **PR body:** Use Agent tool (`subagent_type: technical_writer`) to draft following template structure exactly:
 - **Summary:** 1 punchy sentence max. 2 sentences only if critical context would be lost. No jargon, no code refs. State what + why.
-- **Additional Details:** Omit if not needed. 1 line for single point; bullets (max 3) for multiple. Never mix prose and bullets.
+- **Additional Details:** Omit if not needed, and otherwise give only what a reviewer must or should know, in the template's 5 bullets or fewer, never mixing prose and bullets.
+- **Links:** give every file, issue or PR the body names a full GitHub URL, with file links pinned to the head commit, because CI rejects relative links in some repos and they never work in a PR.
+- **Brief the writer:** pass these limits to `technical_writer` with only the must-know facts, because it keeps whatever detail the brief gives it.
 - **Checkboxes:** Tick only applicable one
 - **Jira links:** Format as `[ABC-123](https://<your-site>.atlassian.net/browse/ABC-123)` if ticket known
 - **Team links:** Format as `[team-name](https://github.com/orgs/<your-org>/teams/team-name)`
