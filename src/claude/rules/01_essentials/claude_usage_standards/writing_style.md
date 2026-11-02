@@ -1,6 +1,6 @@
-<!-- version: 1.2.2 -->
+<!-- version: 1.3.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-28 -->
+<!-- updated: 2026-11-02 -->
 <!-- applies_to: * -->
 <!-- miss_cost: low — prose drifts from the house style, which review catches -->
 <!-- loading: always-on — every reply and file Claude writes follows it -->
@@ -23,8 +23,8 @@
 
 Applies to **all** content Claude produces — responses, drafts, Confluence pages, Jira tickets, rule files, plans, scratch notes, and internal docs. The list is illustrative, not exhaustive: no file type or context is exempt.
 
-- **Emojis:** use on all major headings and callout blocks — they aid scannability.
-- **Bullets:** prefer over prose for rules and lists.
+- **Emojis:** open headings, table rows and bullets with an emoji — they're the anchors a reader scans for.
+- **Bullets:** prefer over prose for rules and lists, and keep each list to 5 top-level bullets or fewer.
 - **Frame as positive actions, not negations:** tell Claude what to do instead of what not to do — this reliably steers output better.
   - ❌ "Do not use excessive markdown"
   - ✅ "Write in flowing prose paragraphs with complete sentences"
@@ -42,7 +42,7 @@ Applies to **all** content Claude produces — responses, drafts, Confluence pag
 - **Tables for structured content:** use a table when comparing two or more categories that share identical column structures — not for a single list with no comparison dimension.
   - **Signal:** you're writing `**Category A:**` then `**Category B:**`, repeating the same fields for each — that's a table, not a bullet list.
   - **Example:** comparing tools by capability — a `| Tool | Can do | Can't do |` table beats separate bullet lists per tool.
-  - **Counter-example:** a single capabilities list with no categorical breakout stays as bullets — one dimension, no comparison, no table needed.
+  - **Cells:** a bullet in a cell follows the bullet rules above (emoji, bold keyword, one sentence), bullets join as `• … <br>`, and each cell stays under about 25 words.
 
 ## 👥 Clarity principles — all content
 

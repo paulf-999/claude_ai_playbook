@@ -3,9 +3,9 @@ paths:
   - "**/_plans/**"
   - "**/plans/**"
 ---
-<!-- version: 1.7.0 -->
+<!-- version: 1.7.1 -->
 <!-- created: 2026-09-17 -->
-<!-- updated: 2026-10-28 -->
+<!-- updated: 2026-11-02 -->
 <!-- miss_cost: low — a plan file in the wrong layout, which is quick to reformat -->
 <!-- loading: path-scoped — only needed when writing a plan file, so it loads when a plan file is open, and claude_plans.md points to it for brand-new plans -->
 # 📊 Plan File Format
@@ -18,7 +18,7 @@ paths:
 
 **Bullet the Action and Test cells:** each is a bullet list, one sentence per bullet — never a single run-on sentence or a comma-spliced list.
 
-**Cell bullets:** use `•` bullets joined with `<br>`, because standard markdown lists don't render inside table cells (the working pattern already used in `writing_style.md`).
+**Cell bullets:** use `•` bullets joined with `<br>`, because standard markdown lists don't render inside table cells (the table-cell rule in `writing_style.md`).
 
 **Each bullet:** emoji + leading bold keyword + colon, same as any other bullet under `writing_style.md` — e.g. `• 💾 **Backup:** create a full timestamped copy before touching anything`.
 

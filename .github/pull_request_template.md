@@ -4,7 +4,7 @@
 
 ## :clipboard: (Optional) Additional Details
 
-[If needed, provide further context or details.]
+[If needed, give further context in 5 bullets or fewer, and link to anything longer.]
 
 ## :hammer_and_wrench: Type of PR Change
 
