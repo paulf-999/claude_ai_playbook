@@ -1,4 +1,4 @@
-<!-- version: 1.3.0 -->
+<!-- version: 1.4.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-11-02 -->
 <!-- applies_to: * -->
@@ -23,7 +23,7 @@
 
 Applies to **all** content Claude produces — responses, drafts, Confluence pages, Jira tickets, rule files, plans, scratch notes, and internal docs. The list is illustrative, not exhaustive: no file type or context is exempt.
 
-- **Emojis:** open headings, table rows and bullets with an emoji — they're the anchors a reader scans for.
+- **Emojis:** in repo docs, PRs, issues, plans and chat, open headings, table rows and top-level bullets with one emoji, and elsewhere use the audience table's Emojis column.
 - **Bullets:** prefer over prose for rules and lists, and keep each list to 5 top-level bullets or fewer.
 - **Frame as positive actions, not negations:** tell Claude what to do instead of what not to do — this reliably steers output better.
   - ❌ "Do not use excessive markdown"
@@ -82,13 +82,13 @@ When writing SKILL.md files, apply these conventions specific to skill documenta
 
 - **Audience:** before producing content for an external audience (Confluence, Jira, email, comms), confirm the target audience and calibrate technical depth accordingly — if unknown or spanning multiple groups, ask before writing.
 
-| No. | Audience | Content focus | Technical level | Depth |
-|---|---|---|---|---|
-| 1 | 💼 **Management** | Business outcomes | None | • Non-technical — plain language only, no jargon<br>• Project-level — progress, status, decisions, and risks; no domain-specific terminology |
-| 2 | 🔭 **Technical management** | Strategy & outcomes | Partial | • Technology-aware and strategy-level — outcomes and concepts<br>• Not implementation mechanics |
-| 3 | 📊 **Data analytics team** | Data & insights | Partial | • Semi-technical — understands data concepts and business domain<br>• Not stack-aware — focus on what the data means, not how it's produced |
-| 4 | 🗄️ **Data engineering team** | Technical implementation | Full | • Fully technical — data stack focus (Airflow, dbt, Snowflake, connectors) |
-| 5 | ⚙️ **Infrastructure / DevOps** | Infra & operations | Full | • Fully technical — infra focus (VMs, networking, Ansible, OS, cloud) |
+| No. | Audience | Content focus | Technical level | Emojis | Depth |
+|---|---|---|---|---|---|
+| 1 | 💼 **Management** | Business outcomes | None | None | • Non-technical — plain language only, no jargon<br>• Project-level — progress, status, decisions, and risks; no domain-specific terminology |
+| 2 | 🔭 **Technical management** | Strategy & outcomes | Partial | Headings only | • Technology-aware and strategy-level — outcomes and concepts<br>• Not implementation mechanics |
+| 3 | 📊 **Data analytics team** | Data & insights | Partial | Headings only | • Semi-technical — understands data concepts and business domain<br>• Not stack-aware — focus on what the data means, not how it's produced |
+| 4 | 🗄️ **Data engineering team** | Technical implementation | Full | Headings only | • Fully technical — data stack focus (Airflow, dbt, Snowflake, connectors) |
+| 5 | ⚙️ **Infrastructure / DevOps** | Infra & operations | Full | Headings only | • Fully technical — infra focus (VMs, networking, Ansible, OS, cloud) |
 
 ## 📝 Drafts and errors
 
