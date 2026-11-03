@@ -1,6 +1,6 @@
-<!-- version: 2.0.0 -->
+<!-- version: 2.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-11-02 -->
+<!-- updated: 2026-11-03 -->
 <!-- applies_to: * -->
 <!-- miss_cost: low — prose drifts from the house style, which review catches -->
 <!-- loading: always-on — every reply and file Claude writes follows it -->
@@ -25,7 +25,8 @@ Applies to **all** content Claude produces — responses, drafts, Confluence pag
 - 🗣️ **Frame as positive actions:** in prompts and rules, tell Claude what to do instead of what not to do, because that steers output better, while docs for people may state a plain prohibition.
   - **Avoid:** "Do not use excessive markdown."
   - **Prefer:** "Write in flowing prose paragraphs with complete sentences."
-- 🔑 **Bold keyword and colon:** open every bullet and numbered item with its key term in bold, such as **Why:**, **Note:** or **Example:**.
+- 🔑 **Bold keyword and colon:** open a bullet with its key term in bold, such as **Why:** or **Note:**, when the label adds meaning, as for rules and definitions.
+  - **Plain lists:** leave simple item lists and numbered steps unlabelled, since a label that repeats the text slows reading.
 - 1️⃣ **One sentence per bullet:** put a second sentence, or a clause after a semicolon, in a child bullet, while an em-dash aside stays part of its sentence.
 - ✂️ **Brevity:** if a sentence can be cut without losing meaning, cut it.
 - 📜 **History lives in git:** describe only the current state in repo files, and leave notes about removed, merged, archived or renamed files to the git log.
