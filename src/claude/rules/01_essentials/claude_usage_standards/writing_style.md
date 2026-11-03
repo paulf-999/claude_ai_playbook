@@ -1,4 +1,4 @@
-<!-- version: 2.1.0 -->
+<!-- version: 2.2.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-11-03 -->
 <!-- applies_to: * -->
@@ -83,5 +83,5 @@ Lead with what things do, not how they work. Assume no prior familiarity with th
 ## 🧩 Child pages
 
 - **Loads on its own from:** `rules/01_essentials/claude_usage_standards/writing_style/_markdown_layout.md` — emojis, lists and tables.
-- **Loads on its own from:** `rules/01_essentials/claude_usage_standards/writing_style/_audience_and_depth.md` — audiences, depth and the Executive Summary.
+- **Loads on its own from:** `rules/01_essentials/claude_usage_standards/writing_style/_audience_and_depth.md` — audiences, depth, the Executive Summary, openings and assumed knowledge.
 - **Loads on its own from:** `rules/01_essentials/claude_usage_standards/multifile_document_organisation.md` — when to split a document into a parent and children.
