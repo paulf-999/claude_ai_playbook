@@ -1,6 +1,6 @@
 ---
 date_created: "2026-08-28"
-date_updated: "2026-10-28"
+date_updated: "2026-11-03"
 status: active
 ---
 
@@ -17,7 +17,7 @@ status: active
 | Pattern | Description |
 |---|---|
 | `general_page` | General-purpose page — free-form sections using the standard page template |
-| `platform_risk_assessment` | Platform Risk & Maturity Assessment — rates one tool or component across fixed themes (L/M/H) |
+| `platform_risk_assessment` | Platform Risk & Maturity Assessment — rates one tool or component across fixed themes (Low/Medium/High) |
 
 Wait for the user's response before proceeding.
 
