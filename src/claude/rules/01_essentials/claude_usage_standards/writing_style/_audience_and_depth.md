@@ -1,9 +1,9 @@
-<!-- version: 1.0.0 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-11-02 -->
-<!-- updated: 2026-11-02 -->
+<!-- updated: 2026-11-03 -->
 # 👥 Writing style — Audience and depth
 
-**Purpose:** Match technical depth and formality to the reader, and give long content its whole idea up front.
+**Purpose:** Match technical depth and formality to the reader, open each page clearly, and write so a newcomer can follow it.
 
 ---
 
@@ -25,3 +25,16 @@
 - 📋 **When:** open long-form content (blog posts, Confluence pages, reports and repo parent pages) with a `📋 Executive Summary`.
 - 🔢 **Shape:** 3–5 bullets that give the whole idea before any detail.
 - 🪜 **Why:** it's the first layer of progressive disclosure, and the written counterpart of the chat Summary in `claude_response_standards.md`.
+
+## 🚪 Openings
+
+- 🎯 **Purpose first:** put `**Purpose:**` and one full sentence on what the page covers on the line after the H1.
+- 🧭 **Navigation second:** after the Purpose line, say in a plain sentence which page this one belongs to, rather than opening with a bare `Part of` link.
+- 📝 **Sentences over fragments:** write the opening as prose, not as stacked labels.
+
+## 🧊 No assumed knowledge
+
+- 🔤 **Define on first use:** explain every term the first time it appears, including ones this project coined, such as a named test or review.
+- 🔗 **Self-contained references:** when naming another page, say in a few words what it is, so the reader needn't open it.
+- 📅 **No back-story:** don't rely on earlier PRs, plans or chats the reader hasn't seen.
+- 🗣️ **Test:** read each sentence as someone who has never seen the repo, and rewrite any they couldn't follow.
