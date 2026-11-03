@@ -1,4 +1,4 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-11-02 -->
 <!-- updated: 2026-11-03 -->
 # 🧱 Writing style — Markdown layout
@@ -20,6 +20,7 @@
 - 📝 **Bullets over prose:** use a list for rules and steps rather than a paragraph.
 - 5️⃣ **Five at most:** keep each bulleted list to 5 top-level items, counted as displayed, since a blank line doesn't end a list.
 - 🔢 **Steps:** numbered steps can run past 5, since a procedure needs every step.
+- 📋 **Lead-in:** open a list with a sentence saying what the items are, so they don't read as fragments.
 - ➗ **Overflow:** move a sixth item under a new subheading, or into a table if the items share fields.
 
 ## 📊 Tables
@@ -36,6 +37,7 @@
 - 🎯 **Limits are ceilings:** aim well under any length limit, since a page that fills its limit is usually packed.
 - 1️⃣ **One point each:** give a second point its own bullet or row, or cut it.
 - 🧹 **Caveats:** keep a qualifier only if the reader would act differently without it.
+- 📏 **Short sentences:** one idea each, about 25 words at most, with caveats split out or cut.
 - 🔁 **Review for cuts:** ask what can be removed, not only what's missing.
   - ❌ **Packed, when every cell looks like this:** `| 🌱 **Minimal** | • **Mandatory:** only CLAUDE.md, tests, CI and two checks.<br>• **Everything else:** optional. |`
   - ✅ **One point:** `| 🌱 **Minimal** | Only the baseline is mandatory. |`

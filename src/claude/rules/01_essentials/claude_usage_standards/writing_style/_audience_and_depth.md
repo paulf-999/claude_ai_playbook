@@ -1,4 +1,4 @@
-<!-- version: 1.1.0 -->
+<!-- version: 1.2.0 -->
 <!-- created: 2026-11-02 -->
 <!-- updated: 2026-11-03 -->
 # 👥 Writing style — Audience and depth
@@ -35,6 +35,6 @@
 ## 🧊 No assumed knowledge
 
 - 🔤 **Define on first use:** explain every term the first time it appears, including ones this project coined, such as a named test or review.
-- 🔗 **Self-contained references:** when naming another page, say in a few words what it is, so the reader needn't open it.
+- 🔗 **Descriptive links:** make the link text say what the linked page is, rather than describing it in a clause after the link.
 - 📅 **No back-story:** don't rely on earlier PRs, plans or chats the reader hasn't seen.
 - 🗣️ **Test:** read each sentence as someone who has never seen the repo, and rewrite any they couldn't follow.
