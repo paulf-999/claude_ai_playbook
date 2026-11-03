@@ -1,7 +1,7 @@
 ---
 _metadata:
     date_created: '2026-06-07'
-    date_updated: '2026-10-27'
+    date_updated: '2026-11-03'
     status: active
 
 skill_name: confluence_create_page
@@ -26,20 +26,22 @@ evals:
           - Claude does not call createConfluencePage until the user explicitly approves the draft
 
     - name: happy_path_platform_risk_assessment
-      description: Platform risk pattern — gather theme descriptions, rate L/M/H, draft review, publish after approval
+      description: Platform risk pattern — pre-fill themes from cited evidence, rate Low/Medium/High, draft review, publish after approval
       input:
           prompt: create a platform risk assessment page for Airbyte
       setup: {}
       expected_output: >
           Claude follows reference/patterns/_platform_risk_assessment.md for
-          Phase 2, gathers the tool, space, parent page and a description for
-          every Build, Run and Govern theme, proposes L/M/H ratings and an
-          executive summary for confirmation, writes a local draft, and
-          publishes only after approval.
+          Phase 2, gathers the tool, space and parent page, pre-fills every
+          Build, Run and Govern theme from cited evidence, proposes
+          Low/Medium/High ratings and a summary for confirmation, writes a
+          local draft, and publishes only after approval.
       assertions:
           - Claude reads reference/patterns/_platform_risk_assessment.md for Phase 2
           - Claude asks for the target space and parent page rather than defaulting to one
-          - Claude presents L/M/H ratings per theme and flags uncertain ones before writing the draft
+          - Claude pre-fills each theme from existing documentation with a cited page or file, or <TODO>
+          - Claude presents Low/Medium/High ratings per theme and flags uncertain ones before writing the draft
+          - Ratings appear as full words (Low, Medium, High), never L/M/H
           - Claude writes a draft to ~/_drafts/confluence/ before creating anything in Confluence
           - The page title follows 'Platform Risk & Maturity Assessment: <tool name>'
           - Claude does not call createConfluencePage until the user explicitly approves the draft

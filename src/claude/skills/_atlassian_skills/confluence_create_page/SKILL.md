@@ -1,18 +1,18 @@
 ---
 name: confluence_create_page
-description: Create, add, write or publish a Confluence page (or publish a local draft to Confluence) from the general_page or platform_risk_assessment template, with a local draft you approve first. Requires the Atlassian MCP server.
+description: Create, add, write or publish a Confluence page (or publish a local draft to Confluence) from the template, with a local draft you approve first. Requires the Atlassian MCP server.
 maturity: tactical
 tags:
   criticality: should
   status: active
   tested: true
   date_created: "2026-06-07"
-  date_updated: "2026-10-28"
+  date_updated: "2026-11-03"
 tools: Read, Write, mcp__atlassian__getAccessibleAtlassianResources, mcp__atlassian__createConfluencePage, mcp__atlassian__updateConfluencePage
 ---
-<!-- version: 1.5.0 -->
+<!-- version: 1.6.0 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-10-28 -->
+<!-- updated: 2026-11-03 -->
 
 ## 🤖 Instructions for Claude
 
