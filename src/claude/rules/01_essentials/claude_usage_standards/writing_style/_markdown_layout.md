@@ -1,4 +1,4 @@
-<!-- version: 1.2.0 -->
+<!-- version: 1.3.0 -->
 <!-- created: 2026-11-02 -->
 <!-- updated: 2026-11-03 -->
 # 🧱 Writing style — Markdown layout
@@ -20,7 +20,7 @@
 - 📝 **Bullets over prose:** use a list for rules and steps rather than a paragraph.
 - 5️⃣ **Five at most:** keep each bulleted list to 5 top-level items, counted as displayed, since a blank line doesn't end a list.
 - 🔢 **Steps:** numbered steps can run past 5, since a procedure needs every step.
-- 📋 **Lead-in:** open a list with a sentence saying what the items are, so they don't read as fragments.
+- 📋 **Lead-in:** open a list with a sentence saying what the items are, unless the heading right above it already says so.
 - ➗ **Overflow:** move a sixth item under a new subheading, or into a table if the items share fields.
 
 ## 📊 Tables
