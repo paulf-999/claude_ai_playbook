@@ -1,8 +1,8 @@
 # Test Metadata
 # ─────────────────────────────────────────────────────────
 # Date created:      2026-10-01
-# Date updated:      2026-10-27
-# Version:           1.3.4
+# Date updated:      2026-11-03
+# Version:           1.3.5
 # Test quality score: 9/10
 # Test complexity score: 7/10
 # Python style compliant: Yes
@@ -19,6 +19,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -97,9 +98,9 @@ def test_every_import_resolves(custom: dict[str, Path]):
 def test_always_on_rules_reachable(custom: dict[str, Path]):
     """The repo's reachability test passes against the installed folder."""
     env = {**os.environ, "CLAUDE_CONFIG_DIR": str(custom["target"])}
-    command = ["python3", "-m", "pytest", str(REACHABILITY_TEST), "-q", "--no-cov", "-p", "no:cacheprovider"]
+    command = [sys.executable, "-m", "pytest", str(REACHABILITY_TEST), "-q", "--no-cov", "-p", "no:cacheprovider"]
     result = subprocess.run(command, cwd=REPO_ROOT, env=env, capture_output=True, text=True, timeout=120)
-    assert result.returncode == 0, result.stdout[-1500:]
+    assert result.returncode == 0, (result.stdout + result.stderr)[-1500:]
 
 
 def test_pointers_use_the_real_folder(custom: dict[str, Path]):
