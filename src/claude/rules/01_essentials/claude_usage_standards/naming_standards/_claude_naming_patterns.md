@@ -26,12 +26,12 @@
 
 | Pattern | Example | What it's for |
 |---|---|---|
-| `<domain>_<action>` | `confluence_create_page` | Creates a Confluence page |
-| | `jira_create` | Creates a Jira issue |
-| | `claude_review_config` | Reviews Claude configuration |
+| `<domain>-<action>` | `confluence-create-page` | Creates a Confluence page |
+| | `jira-create` | Creates a Jira issue |
+| | `claude-review-config` | Reviews Claude configuration |
 
 - **Domain prefix:** must match a domain ID from `skill_domains.yaml`
-- **Directory:** the skill lives in the folder its domain's `directory:` names in `skill_domains.yaml`, and several domains may share one (e.g. `confluence_create_page` → `_atlassian_skills/`)
+- **Directory:** the skill lives in the folder its domain's `directory:` names in `skill_domains.yaml`, and several domains may share one (e.g. `confluence-create-page` → `_atlassian_skills/`)
 - **Action:** lowercase imperative verb describing what the skill does
 
 **Load details on-demand:** See `~/.claude/rules/03_authoring_guidelines/authoring_skills.md` for full skill creation guide, complexity scoring, and domain reference (YAML files).

@@ -1,5 +1,5 @@
 ---
-name: <domain>_<purpose>
+name: <domain>-<purpose>
 description: One-sentence value prop, user-focused (what does this agent do for users?)
 maturity: draft  # draft | tactical | strategic
 triggers:
@@ -17,7 +17,7 @@ isolation: worktree  # worktree (recommended) or none
 # 🎯 [Agent name]
 
 **Frontmatter guide:**
-- `name` — identifier matching `<domain>_<purpose>` pattern (e.g., `technical_writer`, `code_analyzer`)
+- `name` — identifier matching `<domain>-<purpose>` pattern (e.g., `technical-writer`, `code-analyzer`)
 - `description` — one sentence, user-focused, non-technical (what value does this agent provide?)
 - `maturity` — draft | tactical | strategic (same model as skills)
 - `triggers` — how users invoke: `/agent_name`, natural language variants

@@ -341,12 +341,12 @@ def test_path_outside_root_is_shown_in_full(tmp_path):
 def test_skill_discovery_ignores_words_above_skills_dir(tmp_path, monkeypatch):
     """Skills are still found when the checkout path contains 'template' or '_tests'."""
     skills_dir = tmp_path / "repo_skill_template" / "git_pr_tests" / "skills"
-    _make_discovery_skill(skills_dir, "_git_skills/git_create_pr")
+    _make_discovery_skill(skills_dir, "_git_skills/git-create-pr")
     monkeypatch.setattr(sys.modules[__name__], "SKILLS_DIR", skills_dir)
 
     found = [path.name for path in get_all_skills()]
 
-    assert found == ["git_create_pr"], (
+    assert found == ["git-create-pr"], (
         f"Words in the path above skills/ hid real skills — found {found}"
     )
 
@@ -354,7 +354,7 @@ def test_skill_discovery_ignores_words_above_skills_dir(tmp_path, monkeypatch):
 def test_skill_discovery_still_skips_templates_tests_and_dot_dirs(tmp_path, monkeypatch):
     """Template, _tests and dot-prefixed folders below skills/ are still skipped."""
     skills_dir = tmp_path / "skills"
-    _make_discovery_skill(skills_dir, "_git_skills/git_create_pr")
+    _make_discovery_skill(skills_dir, "_git_skills/git-create-pr")
     _make_discovery_skill(skills_dir, "_templates/skill_template")
     _make_discovery_skill(skills_dir, "_git_skills/_tests/fixture_skill")
     _make_discovery_skill(skills_dir, ".trash/old_skill")
@@ -362,6 +362,6 @@ def test_skill_discovery_still_skips_templates_tests_and_dot_dirs(tmp_path, monk
 
     found = [path.name for path in get_all_skills()]
 
-    assert found == ["git_create_pr"], (
+    assert found == ["git-create-pr"], (
         f"Template, _tests or dot-prefixed folders were not skipped — found {found}"
     )

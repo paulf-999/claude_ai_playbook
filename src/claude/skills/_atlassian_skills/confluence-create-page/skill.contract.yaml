@@ -1,0 +1,56 @@
+---
+name: confluence-create-page
+version: 1.6.0
+summary: Create Confluence pages using the general_page or platform_risk_assessment pattern with local draft review and explicit approval
+maturity: tactical
+test_coverage_level: comprehensive
+  # comprehensive = tests/evals.yaml covers space, parent and pattern checks,
+  # draft review, a publish error and a not_for case (10 scenarios);
+  # matches tags.tested: true in SKILL.md
+date_created: '2026-08-28'
+date_updated: '2026-11-03'
+
+dispatch:
+    triggers:
+        explicit:
+            - /confluence-create-page
+            - create confluence page
+            - create a confluence page
+            - add a confluence page
+            - add to confluence
+            - write a confluence page
+            - create a page in confluence
+            - platform risk assessment
+            - maturity assessment
+    not_for:
+        - Bulk page creation (planned for v2.0)
+        - Page updates or editing (use /confluence_update_page in v2.0)
+        - Page patterns beyond general_page and platform_risk_assessment (v2.0+)
+        - Complex ADF formatting beyond standard sections
+
+output:
+    type: conversational
+    confirmation_required: true
+    reversible: true
+    returns:
+        - Page URL in Confluence
+        - Page ID
+        - Confirmation message
+
+waives_response_standards: true
+
+requires:
+    tools:
+        - Atlassian MCP server enabled (mcp__atlassian__createConfluencePage)
+    resources:
+        - Target Confluence space "<SPACE_KEY>" (accessible)
+    mcp_servers:
+        - Atlassian
+    external: []
+
+dependencies:
+    external:
+        - Confluence API (stable, v4+)
+    permissions:
+        - confluence:create_page
+        - confluence:view_pages

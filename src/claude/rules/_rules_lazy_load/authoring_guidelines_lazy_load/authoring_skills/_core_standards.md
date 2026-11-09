@@ -9,11 +9,11 @@
 
 ## 🏷️ Naming Pattern
 
-- **Format:** `<domain>_<action>` (lowercase, snake_case)
+- **Format:** `<domain>-<action>` (lowercase, snake_case)
 - **Domain:** must match valid domain ID from `skill_domains.yaml`
 - **Action:** imperative verb describing what the skill does
-- **Examples:** `confluence_create_page`, `jira_create`, `git_create_pr`, `claude_review_config`
-- **Hard rule:** the skill lives in the folder its domain's `directory:` names in `skill_domains.yaml` (e.g. `confluence_create_page` → `_atlassian_skills/`)
+- **Examples:** `confluence-create-page`, `jira-create`, `git-create-pr`, `claude-review-config`
+- **Hard rule:** the skill lives in the folder its domain's `directory:` names in `skill_domains.yaml` (e.g. `confluence-create-page` → `_atlassian_skills/`)
 
 ## 📄 SKILL.md Structure [REQUIRED]
 
@@ -45,7 +45,7 @@ Claude reliably reads only `SKILL.md` when a skill loads, so every must-follow s
 
 ```yaml
 ---
-name: git_create_pr
+name: git-create-pr
 description: Create a GitHub PR with auto-populated description, review checklist, and branch protection checks
 maturity: tactical
 tags:
@@ -60,7 +60,7 @@ tags:
 ```
 
 **What makes this good:**
-- ✅ name matches `<domain>_<action>` pattern (git_create_pr)
+- ✅ name matches `<domain>-<action>` pattern (git-create-pr)
 - ✅ description is 1 sentence, non-technical, shows user value, and carries the phrases users type (create, GitHub PR)
 - ✅ version sits in the metadata header straight after the frontmatter, follows semver, and matches `skill.contract.yaml` (see `_claude_config_metadata.md`)
 - ✅ maturity justified (tactical = battle-tested, widely used)

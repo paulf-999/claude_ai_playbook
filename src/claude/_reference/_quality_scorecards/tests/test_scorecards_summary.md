@@ -30,7 +30,7 @@ Ranked by impact, highest first.
 
 | # | Action | Why | Source |
 |---|---|---|---|
-| 1 | • 🔧 **`test_capture_session_prompts.py`:** add failure messages that say how to fix each assertion (14% have one today) | • 🔻 **Score:** 8.1/10 | `skills/claude_capture_session_prompts/scorecard_test_capture_session_prompts.md` |
+| 1 | • 🔧 **`test_capture_session_prompts.py`:** add failure messages that say how to fix each assertion (14% have one today) | • 🔻 **Score:** 8.1/10 | `skills/claude-capture-session-prompts/scorecard_test_capture_session_prompts.md` |
 | 2 | • 🔧 **`test_lazy_load_coverage.py`:** add failure messages that say how to fix each assertion (27% have one today) | • 🔻 **Score:** 8.3/10 | `rules/rules_lazy_load/scorecard_test_lazy_load_coverage.md` |
 
 ---
@@ -93,7 +93,7 @@ Sorted by Overall score, highest first.
 | `rules/02_claude_standards/scorecard_test_testing.md` | 8.9/10 | 2026-10-11 | — (≥8.5) |
 | `rules/rules_lazy_load/scorecard_test_org.md` | 8.9/10 | 2026-10-11 | — (≥8.5) |
 | `rules/scorecard_test_rule_cross_references.md` | 8.9/10 | 2026-10-11 | — (≥8.5) |
-| `skills/claude_kaizen/scorecard_test_claude_kaizen_runner.md` | 8.9/10 | 2026-10-06 | — (≥8.5) |
+| `skills/claude-kaizen/scorecard_test_claude_kaizen_runner.md` | 8.9/10 | 2026-10-06 | — (≥8.5) |
 | `skills/_all_skills/scorecard_test_skill_metadata_header.md` | 8.9/10 | 2026-10-11 | — (≥8.5) |
 | `skills/_all_skills/scorecard_test_skill_structure_compliance.md` | 8.9/10 | 2026-09-30 | — (≥8.5) |
 | `_reference/scorecard_test_scorecard_coverage.md` | 8.7/10 | 2026-10-11 | — (≥8.5) |
@@ -101,7 +101,7 @@ Sorted by Overall score, highest first.
 | `rules/02_claude_standards/scorecard_test_claude_rule_loading_strategy.md` | 8.6/10 | 2026-10-11 | — (≥8.5) |
 | `rules/03_authoring_guidelines/scorecard_test_authoring_agents.md` | 8.4/10 | 2026-10-11 | — (≥8.5) |
 | `rules/rules_lazy_load/scorecard_test_lazy_load_coverage.md` | 8.3/10 | 2026-10-11 | • Add failure messages that say how to fix each assertion (27% have one today) |
-| `skills/claude_capture_session_prompts/scorecard_test_capture_session_prompts.md` | 8.1/10 | 2026-09-30 | • Add failure messages that say how to fix each assertion (14% have one today)<br>• Add a synthetic bad-input test that proves the check fails when it should |
+| `skills/claude-capture-session-prompts/scorecard_test_capture_session_prompts.md` | 8.1/10 | 2026-09-30 | • Add failure messages that say how to fix each assertion (14% have one today)<br>• Add a synthetic bad-input test that proves the check fails when it should |
 
 ---
 

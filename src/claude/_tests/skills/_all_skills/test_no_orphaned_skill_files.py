@@ -11,9 +11,9 @@
 """Generic orphaned-file detection for every skill under src/claude/skills/.
 
 Every non-structural file in a skill must be named somewhere else in that skill, or in
-its out-of-tree tests — how confluence_create_page's dead ``templates/`` folder and
+its out-of-tree tests — how confluence-create-page's dead ``templates/`` folder and
 unused pattern files were found (2026-09-19). Every ``reference/`` path SKILL.md names
-must exist — how git_create_pr's three broken links were found — and no SKILL.md may
+must exist — how git-create-pr's three broken links were found — and no SKILL.md may
 ``@``-import a file, so reference files load on demand.
 
 The detectors in ``_skill_orphans.py`` are pure functions over a ``{path: text}`` map,
@@ -122,7 +122,7 @@ def test_file_does_not_reference_itself():
 
 
 def test_broken_link_detector_flags_missing_reference():
-    """The 2026-09-19 git_create_pr finding: SKILL.md naming a reference/ file that doesn't exist."""
+    """The 2026-09-19 git-create-pr finding: SKILL.md naming a reference/ file that doesn't exist."""
     files = {"SKILL.md": "See `reference/_implementation.md`."}
     assert find_broken_links(files) == ["reference/_implementation.md"], f"got {find_broken_links(files)}"
 

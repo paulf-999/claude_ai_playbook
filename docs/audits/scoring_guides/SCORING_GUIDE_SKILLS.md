@@ -47,8 +47,8 @@ Measures test count, breadth (happy path + edge cases), and depth (unit + integr
 
 | Score | Test Count | Coverage | Types | Example |
 |---|---|---|---|---|
-| 1–3 | 0–2 or placeholder tests | Happy path only | Unit only | `jira_create` — 1–2 draft tests, no error cases |
-| 4–6 | 3–8 tests | Main path + light edge cases | Unit + basic integration | `confluence_create_page` — draft review flow + pattern selection |
+| 1–3 | 0–2 or placeholder tests | Happy path only | Unit only | `jira-create` — 1–2 draft tests, no error cases |
+| 4–6 | 3–8 tests | Main path + light edge cases | Unit + basic integration | `confluence-create-page` — draft review flow + pattern selection |
 | 7–8 | 8–15 tests | Main + error cases + state validation | Unit + integration | `admin_review_claude_config` — scoring logic, recommendation generation |
 | 9–10 | 15+ tests | Comprehensive (all paths, edge cases, regression) | Unit + integration + E2E | Hypothetical: full compliance suite with edge case coverage |
 

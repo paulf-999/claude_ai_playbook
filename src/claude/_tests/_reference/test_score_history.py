@@ -32,8 +32,8 @@ OVERALL = re.compile(r"^\*\*Overall score:\*\* ([\d.]+)/10\b", re.M)
 
 VALID = """run_date,artefact,type,attempt,reviewer,model,overall,commit
 2026-10-01,git,rule,1,author,unrecorded,8.7,33e91f0
-2026-10-22,git,rule,2,quality_scorecard_reviewer,claude-opus-5-5,8.2,uncommitted
-2026-10-05,code_reviewer,agent,1,author,unrecorded,8.9,b7e49c7
+2026-10-22,git,rule,2,quality-scorecard-reviewer,claude-opus-5-5,8.2,uncommitted
+2026-10-05,code-reviewer,agent,1,author,unrecorded,8.9,b7e49c7
 """
 
 
@@ -110,7 +110,11 @@ def scorecards(type_name: str) -> dict:
     found = {}
     for path in (CARDS / TYPES[type_name]).rglob("scorecard_*.md"):
         match = OVERALL.search(path.read_text())
-        found[path.stem.removeprefix("scorecard_")] = match.group(1) if match else None
+        name = path.stem.removeprefix("scorecard_")
+        # Skill and agent names use hyphens, but scorecard file names stay snake_case
+        if type_name in ("skill", "agent"):
+            name = name.replace("_", "-")
+        found[name] = match.group(1) if match else None
     return found
 
 

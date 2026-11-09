@@ -49,7 +49,7 @@ Before writing any rule, answer these five essential questions:
    - **Templates:** Template A (single principle, ~60 lines) vs. Template B (multiple patterns, ~100 lines)
 3. **Write the rule:** follow template structure, emoji headers, one sentence per bullet
 4. **Write tests:** enforcement rules require tests in `_tests/rules/`, while instructional rules use structural checks.
-5. **Create a quality scorecard:** `_reference/_quality_scorecards/rules/<tier>/scorecard_<rule_name>.md`, per the template in that folder's `README.md` — centralised, never `@import`ed, scored by the `quality_scorecard_reviewer` agent in a fresh context and recorded in `score_history.csv`.
+5. **Create a quality scorecard:** `_reference/_quality_scorecards/rules/<tier>/scorecard_<rule_name>.md`, per the template in that folder's `README.md` — centralised, never `@import`ed, scored by the `quality-scorecard-reviewer` agent in a fresh context and recorded in `score_history.csv`.
 
 ## 📏 Quality Gates
 

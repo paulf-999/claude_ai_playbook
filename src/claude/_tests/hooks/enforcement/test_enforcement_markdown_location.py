@@ -110,7 +110,7 @@ def test_stray_root_markdown_is_flagged():
 
 def test_other_config_folders_are_ignored():
     """Folders with their own conventions are left to their own checks."""
-    for relative in ("_rules_lazy_load/Odd-Name.md", "skills/_git_skills/git_create_pr/SKILL.md", "_plans/x.md"):
+    for relative in ("_rules_lazy_load/Odd-Name.md", "skills/_git_skills/git-create-pr/SKILL.md", "_plans/x.md"):
         result = run_hook(config_path(relative))
         assert result.returncode == 0, f"{relative} should be ignored, got {result.returncode}"
 

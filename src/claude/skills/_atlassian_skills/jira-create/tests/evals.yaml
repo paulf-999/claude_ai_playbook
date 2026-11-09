@@ -1,0 +1,123 @@
+---
+_metadata:
+    date_created: '2026-09-19'
+    date_updated: '2026-10-27'
+    status: active
+
+skill_name: jira-create
+
+evals:
+  # Gather details / happy path
+    - name: happy_path_task_ticket
+      description: Full flow — gather details, confirm the project, show the ticket, create it after a yes
+      input:
+          prompt: create a ticket for the login bug, 2 story points
+          confirm_response: y
+      setup: {}
+      expected_output: >
+          Claude gathers type (Task by default), title, description, assignee and
+          story points, asks which Jira project to use, shows the full ticket and
+          waits for a yes, then creates it via mcp__atlassian__createJiraIssue.
+      assertions:
+          - Claude defaults the issue type to Task when none is specified
+          - Claude asks which Jira project to use instead of inferring one
+          - Claude does not call mcp__atlassian__createJiraIssue before the user says yes
+
+    - name: mcp_unavailable
+      description: Atlassian MCP not enabled — skill stops before gathering details
+      input:
+          prompt: /jira-create
+      setup:
+          mcp_available: false
+      expected_output: >
+          Claude tells the user to run 'make enable_mcp server=Atlassian' and
+          restart Claude Code, per reference/_error_handling.md's MCP Connection
+          Errors section, instead of attempting to gather ticket details.
+      assertions:
+          - Claude points the user to reference/_error_handling.md's MCP Connection Errors section
+          - Claude does not start gathering ticket details without a working MCP connection
+          - Claude does not fabricate a ticket ID or link when the MCP call cannot be made
+
+  # Story points and required fields
+    - name: story_points_at_minimum_accepted
+      description: Story points exactly at the 0.5 minimum are accepted
+      input:
+          prompt: create a DATA task "Fix database timeout", postgres queries time out after 30s, 0.5 story points
+          confirm_response: y
+      setup: {}
+      expected_output: >
+          Claude accepts 0.5 story points, shows the ticket for confirmation and
+          creates it after the yes.
+      assertions:
+          - Claude accepts 0.5 story points without asking the user to change it
+          - Claude shows the ticket with story points 0.5 before creating it
+          - Claude creates the ticket only after the yes
+
+    - name: story_points_below_minimum_rejected
+      description: Story points below 0.5 are rejected before anything is created
+      input:
+          prompt: create a DATA task "Fix database timeout", postgres queries time out after 30s, 0.3 story points
+      setup: {}
+      expected_output: >
+          Claude says story points must be at least 0.5, per
+          reference/_field_constraints.md, and asks for a new value; no MCP call is made.
+      assertions:
+          - Claude rejects 0.3 and states the 0.5 minimum
+          - Claude asks the user for a new value instead of silently rounding up
+          - Claude does not call mcp__atlassian__createJiraIssue while story points are below 0.5
+
+    - name: missing_title_requested
+      description: No title given — Claude asks for one
+      input:
+          prompt: create a DATA task, postgres queries time out after 30s, 2 story points
+      setup: {}
+      expected_output: >
+          Claude asks the user for a title, since the title is required, and
+          doesn't invent a placeholder.
+      assertions:
+          - Claude asks the user for a title before showing the ticket
+          - Claude does not fill the title with a placeholder or its own invention
+
+  # Confirm and create
+    - name: declined_confirmation_creates_nothing
+      description: User says no at the confirm step — nothing is created
+      input:
+          prompt: create a DATA task "Fix database timeout", postgres queries time out after 30s, 2 story points
+          confirm_response: no, not yet
+      setup: {}
+      expected_output: >
+          Claude shows the full ticket, the user declines, and Claude stops without
+          creating anything, offering to change the ticket instead.
+      assertions:
+          - Claude shows project, type, title, description, assignee and story points before asking
+          - Claude does not call mcp__atlassian__createJiraIssue after the user declines
+          - Claude does not claim a ticket was created
+
+    - name: ticket_created_reports_id_and_link
+      description: Successful creation — Claude reports the new issue's ID and link
+      input:
+          prompt: create a DATA task "Fix database timeout", postgres queries time out after 30s, 5 story points
+          confirm_response: y
+      setup:
+          mcp_tool_call: returns_success_with_issue_key
+      expected_output: >
+          Claude creates the ticket after the yes and reports the new issue's ID
+          and its Jira browse link.
+      assertions:
+          - Claude passes the confirmed title as the ticket summary
+          - Claude reports both the issue ID and a browse link in its final response
+          - Claude does not report success if the MCP call failed
+
+  # Not for
+    - name: update_request_out_of_scope
+      description: User asks to update an existing ticket, which the skill does not do
+      input:
+          prompt: /jira-create update PROJ-12 to 3 story points
+      setup: {}
+      expected_output: >
+          Claude explains that jira-create only creates new tickets and can't
+          update PROJ-12, and makes no MCP call.
+      assertions:
+          - Claude says updating existing tickets is out of scope for this skill
+          - Claude does not call mcp__atlassian__createJiraIssue to create a duplicate ticket
+          - Claude does not claim PROJ-12 was updated

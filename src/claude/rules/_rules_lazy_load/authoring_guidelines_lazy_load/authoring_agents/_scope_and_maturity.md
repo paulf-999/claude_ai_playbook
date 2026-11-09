@@ -24,7 +24,7 @@ This agent:
 - Requires [specific tools, if any]
 ```
 
-**Example (technical_writer):**
+**Example (technical-writer):**
 ```markdown
 This agent:
 - Does NOT write ADRs or runbooks (v1.0)

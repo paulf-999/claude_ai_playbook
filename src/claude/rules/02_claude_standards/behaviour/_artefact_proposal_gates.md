@@ -15,12 +15,12 @@ Before proposing any new artefact, run these gates in order — a gate that fail
 
 **Check:** Does the artefact name follow established conventions?
 
-- **Skills:** `<domain>_<action>` format (e.g., `confluence_create_page`, `jira_create`)
+- **Skills:** `<domain>-<action>` format (e.g., `confluence-create-page`, `jira-create`)
   - Domain must be valid (check `skill_domains.yaml`)
   - Action must be lowercase imperative verb
 - **Rules:** snake_case, descriptive (e.g., `naming_standards.md`, `security.md`)
 - **Hooks:** `hook_<type>_<domain>.sh` (e.g., `hook_enforcement_naming_convention.sh`)
-- **Agents:** `agents/<group>/<name>/AGENT.md` (e.g. `agents/core/technical_writer/AGENT.md`)
+- **Agents:** `agents/<group>/<name>/AGENT.md` (e.g. `agents/core/technical-writer/AGENT.md`)
 
 **Reference:** `~/.claude/rules/01_essentials/claude_usage_standards/naming_standards.md` (parent) → `_claude_naming_patterns.md` (child file with detailed patterns)
 

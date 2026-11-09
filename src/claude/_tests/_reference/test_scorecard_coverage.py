@@ -20,9 +20,10 @@ from _shared_paths import CLAUDE_DIR
 
 CARDS = CLAUDE_DIR / "_reference" / "_quality_scorecards"
 HOOK_NAMES = sorted(p.stem for p in (CLAUDE_DIR / "hooks").glob("hook_*.sh"))
-AGENT_NAMES = sorted(p.parent.name for p in (CLAUDE_DIR / "agents").rglob("AGENT.md"))
+# Skill and agent names use hyphens, but their scorecard file names stay snake_case
+AGENT_NAMES = sorted(p.parent.name.replace("-", "_") for p in (CLAUDE_DIR / "agents").rglob("AGENT.md"))
 SKILL_NAMES = sorted(
-    p.parent.name for p in (CLAUDE_DIR / "skills").rglob("SKILL.md")
+    p.parent.name.replace("-", "_") for p in (CLAUDE_DIR / "skills").rglob("SKILL.md")
     if not any(part.startswith(".") for part in p.relative_to(CLAUDE_DIR / "skills").parts)
 )
 KINDS = {

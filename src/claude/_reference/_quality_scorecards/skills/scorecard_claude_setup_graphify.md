@@ -1,4 +1,4 @@
-# Quality Scorecard — claude_setup_graphify
+# Quality Scorecard — claude-setup-graphify
 
 **Date Created:** 2026-09-07
 **Date Updated:** 2026-10-29
@@ -23,11 +23,11 @@
 | **Test Coverage** | 6/10 | 2026-10-27 | There are 17 prose evals, including adversarial cases and a not_for case. Nothing runs them (SKILL.md L60), so the cap of 7 applies. Below the cap: `validate_writable_directory` sets up "graphify-out/ writable, then read-only" (evals L23), but the pre-check tests the repo root. No eval covers the three flags or a missing CLAUDE.md, and `add_gitignore_entry` and `update_claude_md` each expect one thin result. |
 | **Code Quality** | 6/10 | 2026-10-27 | The Phase 3 and 4 appends are idempotent and the symlink and root checks are quoted. But the pre-check runs `python3` while Phase 1 runs bare `pip`, which can install to a different interpreter. The FAQ says "safe for concurrent runs. Duplicate detection prevents corruption" (L66), but grep-then-append can race. The writable quick link says "Check: `ls -ld graphify-out/`" (L71), which contradicts the `[ -w . ]` check (L11). |
 | **Security** | 7/10 | 2026-10-29 | Strong core: the version is pinned, there is an Always/On-a-no data-sharing confirm step, root is refused, symlinked targets are refused and writes are bounded by `git rev-parse --show-toplevel`. However, `_security.md` lists controls that no phase carries out: `umask 0077`, `chmod 600 graph.json` (L20–21), pre-backup and atomic rollback (L33–34), md5sum checksums (L47), `.git` ownership (L29). It also never says to treat repo content passed to the LLM pass as data rather than instructions. |
-| **Documentation** | 7/10 | 2026-10-27 | SKILL.md, the example, Known gaps, troubleshooting and FAQ are all present and readable. Inaccurate in places: the FAQ says "`/claude_setup_graphify --state` shows completion for all 5 phases" (L57) with nothing behind it, and the "see SKILL.md for details" pointer goes nowhere. `_implementation.md` L19 asks for a yes only "before extracting a work repo", while SKILL.md L20 says always. |
+| **Documentation** | 7/10 | 2026-10-27 | SKILL.md, the example, Known gaps, troubleshooting and FAQ are all present and readable. Inaccurate in places: the FAQ says "`/claude-setup-graphify --state` shows completion for all 5 phases" (L57) with nothing behind it, and the "see SKILL.md for details" pointer goes nowhere. `_implementation.md` L19 asks for a yes only "before extracting a work repo", while SKILL.md L20 says always. |
 | **Standards Compliance** | 7/10 | 2026-10-29 | Naming, the six-section structure, the version match (2.1.0), `tests/README.md` and the eval count all pass. Gaps: `_troubleshooting.md` L59 hardcodes `~/.claude/skills/graphify/` (portable paths), and the contract puts tools under `dependencies.tools` instead of `requires.tools`. `maturity: strategic` needs "20+/month or always-on" in `_core_standards.md`, but the skill is `criticality: could`, a "one-time setup per repo" (SKILL.md L52), and no file records its use. |
 | **Overall** | **6.4/10** | 2026-10-29 | A well-shaped setup skill with real safeguards, held back by unrun evals, flags and security controls that are claimed but never defined, and a strategic maturity that no recorded use supports. |
 
 ## 🔗 Related files
 
-- `src/claude/skills/_claude_skills/claude_setup_graphify/SKILL.md` — the skill being scored
-- `src/claude/skills/_claude_skills/claude_setup_graphify/tests/evals.yaml` — Test Coverage dimension
+- `src/claude/skills/_claude_skills/claude-setup-graphify/SKILL.md` — the skill being scored
+- `src/claude/skills/_claude_skills/claude-setup-graphify/tests/evals.yaml` — Test Coverage dimension

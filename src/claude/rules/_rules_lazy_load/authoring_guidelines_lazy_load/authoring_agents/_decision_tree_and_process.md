@@ -20,13 +20,13 @@ Is this guidance Claude reads and follows?
 
 Is this a user-invoked multi-step workflow?
 ├─ YES → SKILL (user-facing, slash-command invoked)
-│   └ Example: git_create_pr, confluence_create_page, jira_create
+│   └ Example: git-create-pr, confluence-create-page, jira-create
 │
 └─ NO → Continue
 
 Is this a persona/role Claude adopts when working?
 ├─ YES → AGENT (system prompt, invoked via subagent_type)
-│   └ Example: technical_writer, architect, code_reviewer
+│   └ Example: technical-writer, architect, code-reviewer
 │
 └─ NO → Reconsider your approach
 ```
@@ -49,7 +49,7 @@ Do NOT create an agent if:
 
 ## 🚀 Create an Agent (5 Steps)
 
-1. **Name it:** `<domain>_<purpose>` format, self-describing
+1. **Name it:** `<domain>-<purpose>` format, self-describing
 2. **Define frontmatter:** name, description, maturity, triggers, model, isolation — then the version/created/updated header after it
 3. **Write AGENT.md** using the 5-section structure (Purpose → When to use → Role & Principles → Constraints → optional References)
 4. **Create evals.yaml** with the scenario count its maturity needs, per the table in `_core_standards.md` (Draft 5–8, Tactical 8–12, Strategic 12+)

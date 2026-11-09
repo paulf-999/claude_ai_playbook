@@ -19,23 +19,23 @@
 
 ## 🏷️ Naming Pattern
 
-- Format: `<domain>_<purpose>` (lowercase, snake_case)
-- Domain: primary area of expertise (e.g., `technical_writer`, `architect`, `code_reviewer`)
+- Format: `<domain>-<purpose>` (lowercase, snake_case)
+- Domain: primary area of expertise (e.g., `technical-writer`, `architect`, `code-reviewer`)
 - Purpose: specific function the agent serves
-- Examples: `technical_writer`, `architect`, `code_analyzer`, `design_reviewer`
+- Examples: `technical-writer`, `architect`, `code-analyzer`, `design_reviewer`
 - Hard rule: Naming must be self-describing — unambiguous without context
 
 ## 📁 Directory Structure
 
 - **Location:** `~/.claude/agents/<group>/<name>/`, one folder per agent inside a group folder such as `core/`
 - **Files:** `AGENT.md` holds the agent, with its `evals.yaml` beside it
-- **Example:** `~/.claude/agents/core/technical_writer/AGENT.md` and `~/.claude/agents/core/technical_writer/evals.yaml`
+- **Example:** `~/.claude/agents/core/technical-writer/AGENT.md` and `~/.claude/agents/core/technical-writer/evals.yaml`
 
 ## 🧾 Agent Frontmatter [REQUIRED]
 
 ```yaml
 ---
-name: <domain>_<purpose>
+name: <domain>-<purpose>
 description: One-sentence value prop, user-focused
 maturity: draft  # draft | tactical | strategic
 triggers:
@@ -51,7 +51,7 @@ isolation: worktree
 ```
 
 **Frontmatter fields explained:**
-- `name` — identifier matching `<domain>_<purpose>` pattern
+- `name` — identifier matching `<domain>-<purpose>` pattern
 - `description` — one sentence, what does this agent do for users?
 - `maturity` — draft | tactical | strategic (same as skills)
 - `triggers` — how users invoke this agent (slash command + natural language variants)

@@ -98,11 +98,11 @@ def test_every_domain_has_required_fields():
         assert not missing, f"Domain {domain.get('id', '?')} is missing {sorted(missing)}"
 
 
-def test_prefix_is_id_plus_underscore():
-    """A domain's prefix is always its id followed by an underscore."""
+def test_prefix_is_id_plus_hyphen():
+    """A domain's prefix is always its id followed by a hyphen."""
     for domain in load_domains():
-        assert domain["prefix"] == f"{domain['id']}_", (
-            f"Domain {domain['id']} has prefix {domain['prefix']!r}; expected {domain['id']}_"
+        assert domain["prefix"] == f"{domain['id']}-", (
+            f"Domain {domain['id']} has prefix {domain['prefix']!r}; expected {domain['id']}-"
         )
 
 
@@ -144,17 +144,17 @@ def test_every_skill_sits_in_its_domain_folder():
 
 def test_every_domain_is_used():
     """Every registered domain has at least one skill, so the list doesn't collect dead entries."""
-    used = {skill.name.split("_")[0] for skill in installed_skills()}
+    used = {skill.name.split("-")[0] for skill in installed_skills()}
     unused = [domain["id"] for domain in load_domains() if domain["id"] not in used]
     assert not unused, f"Domains with no skills: {unused} — remove them or add the skill"
 
 
 def test_detector_flags_skill_in_wrong_folder(tmp_path):
     """Synthetic bad case: a skill in the wrong group folder is reported."""
-    skill = tmp_path / "_wrong_skills" / "demo_do_thing"
+    skill = tmp_path / "_wrong_skills" / "demo-do-thing"
     skill.mkdir(parents=True)
     (skill / "SKILL.md").write_text("# demo")
-    domains = [{"id": "demo", "prefix": "demo_", "directory": "_demo_skills"}]
+    domains = [{"id": "demo", "prefix": "demo-", "directory": "_demo_skills"}]
     problems = misplaced_skills(domains, installed_skills(tmp_path))
     assert len(problems) == 1, f"Expected one problem, got {problems}"
     assert "_wrong_skills/" in problems[0], "The problem should name the folder the skill is actually in"
@@ -162,30 +162,30 @@ def test_detector_flags_skill_in_wrong_folder(tmp_path):
 
 def test_detector_flags_unregistered_prefix(tmp_path):
     """Synthetic bad case: a skill whose prefix matches no domain is reported."""
-    skill = tmp_path / "_demo_skills" / "other_do_thing"
+    skill = tmp_path / "_demo_skills" / "other-do-thing"
     skill.mkdir(parents=True)
     (skill / "SKILL.md").write_text("# demo")
-    domains = [{"id": "demo", "prefix": "demo_", "directory": "_demo_skills"}]
+    domains = [{"id": "demo", "prefix": "demo-", "directory": "_demo_skills"}]
     problems = misplaced_skills(domains, installed_skills(tmp_path))
-    assert problems == ["other_do_thing: no domain in skill_domains.yaml has a matching prefix"], problems
+    assert problems == ["other-do-thing: no domain in skill_domains.yaml has a matching prefix"], problems
 
 
 def test_detector_passes_flattened_copy(tmp_path):
     """Regression: a live install keeps each group folder and adds a flattened skills/<name> copy."""
     for parent in (tmp_path / "_demo_skills", tmp_path):
-        skill = parent / "demo_do_thing"
+        skill = parent / "demo-do-thing"
         skill.mkdir(parents=True)
         (skill / "SKILL.md").write_text("# demo")
-    domains = [{"id": "demo", "prefix": "demo_", "directory": "_demo_skills"}]
+    domains = [{"id": "demo", "prefix": "demo-", "directory": "_demo_skills"}]
     assert misplaced_skills(domains, installed_skills(tmp_path)) == [], "A flattened copy of a grouped skill is fine"
 
 
 def test_detector_flags_top_level_skill_without_group_original(tmp_path):
     """A top-level skill with no original in its group folder is still misplaced."""
-    skill = tmp_path / "demo_do_thing"
+    skill = tmp_path / "demo-do-thing"
     skill.mkdir(parents=True)
     (skill / "SKILL.md").write_text("# demo")
-    domains = [{"id": "demo", "prefix": "demo_", "directory": "_demo_skills"}]
+    domains = [{"id": "demo", "prefix": "demo-", "directory": "_demo_skills"}]
     problems = misplaced_skills(domains, installed_skills(tmp_path))
     assert len(problems) == 1, f"Expected one problem, got {problems}"
 
@@ -200,12 +200,12 @@ def test_group_folder_detection(tmp_path):
 
 def test_detector_passes_shared_folder(tmp_path):
     """Two domains may share one folder, as confluence and jira share _atlassian_skills."""
-    for name in ("alpha_one", "beta_two"):
+    for name in ("alpha-one", "beta-two"):
         skill = tmp_path / "_shared_skills" / name
         skill.mkdir(parents=True)
         (skill / "SKILL.md").write_text("# demo")
     domains = [
-        {"id": "alpha", "prefix": "alpha_", "directory": "_shared_skills"},
-        {"id": "beta", "prefix": "beta_", "directory": "_shared_skills"},
+        {"id": "alpha", "prefix": "alpha-", "directory": "_shared_skills"},
+        {"id": "beta", "prefix": "beta-", "directory": "_shared_skills"},
     ]
     assert misplaced_skills(domains, installed_skills(tmp_path)) == [], "A shared group folder must be allowed"

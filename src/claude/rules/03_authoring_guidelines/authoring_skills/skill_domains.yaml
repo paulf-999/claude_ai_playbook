@@ -14,25 +14,25 @@
 
 domains:
     - id: confluence
-      prefix: confluence_
+      prefix: confluence-
       directory: _atlassian_skills
       description: Confluence page creation and management
       stable: false
 
     - id: jira
-      prefix: jira_
+      prefix: jira-
       directory: _atlassian_skills
       description: Jira issue and epic creation
       stable: false
 
     - id: claude
-      prefix: claude_
+      prefix: claude-
       directory: _claude_skills
       description: Claude optimization tools (config review, Graphify setup, audits)
       stable: false
 
     - id: git
-      prefix: git_
+      prefix: git-
       directory: _git_skills
       description: Git and GitHub workflow automation (branches, commits, pull requests)
       stable: false

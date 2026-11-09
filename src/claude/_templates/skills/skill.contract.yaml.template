@@ -5,8 +5,8 @@
 # Use this as your starting point when creating a new skill.
 # Populate this file BEFORE writing SKILL.md — the contract defines scope.
 
-name: <domain>_<action>          # [REQUIRED] must match directory prefix
-                                 # Example: git_create_pr, confluence_create_page
+name: <domain>-<action>          # [REQUIRED] must match directory prefix
+                                 # Example: git-create-pr, confluence-create-page
 version: 0.1.0                   # [REQUIRED] semver: 0.x (draft) · 1.x (tactical) · 2.x+ (strategic)
 summary: One-line description    # [REQUIRED] plain-language description
 maturity: draft                  # [REQUIRED] draft, tactical, or strategic

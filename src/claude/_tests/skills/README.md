@@ -17,7 +17,7 @@ Tests that every skill must pass.
 | `test_skill_instructions_section.py` | Every SKILL.md must carry its own must-follow instructions for Claude | 8/10 | 2026-10-01 | 2026-10-11 | 2.2.4 |
 | `test_skill_metadata_header.py` | Every SKILL.md carries a valid header after its frontmatter, matching its contract version, and the template models it | 9/10 | 2026-09-28 | 2026-10-17 | 2.0.2 |
 
-## 📁 `claude_capture_session_prompts/`
+## 📁 `claude-capture-session-prompts/`
 
 Tests for the skill's own script, `capture_session_prompts.py`, which lives in the skill folder.
 
@@ -25,15 +25,15 @@ Tests for the skill's own script, `capture_session_prompts.py`, which lives in t
 |---|---|---|---|---|---|
 | `test_capture_session_prompts.py` | The history file resolves from `CLAUDE_CONFIG_DIR`, output goes to `~/_sessions/` with a date-first name, and the categories and markdown match the skill's docs | 8/10 | 2026-09-30 | 2026-10-22 | 1.2.0 |
 
-## 📁 `claude_kaizen/`
+## 📁 `claude-kaizen/`
 
 Tests for the skill's eval scorer, `evals/runner.py`.
 
 | File | What it tests | Quality | Created | Updated | Version |
 |---|---|---|---|---|---|
-| `test_claude_kaizen_runner.py` | Tests for claude_kaizen's evals/runner.py, the before/after eval scorer | 9/10 | 2026-10-02 | 2026-10-25 | 1.5.0 |
+| `test_claude_kaizen_runner.py` | Tests for claude-kaizen's evals/runner.py, the before/after eval scorer | 9/10 | 2026-10-02 | 2026-10-25 | 1.5.0 |
 
-## 📁 `git_review_pr/`
+## 📁 `git-review-pr/`
 
 Tests for the skill's secret check, the `grep -nE` pattern in `reference/_implementation.md`.
 

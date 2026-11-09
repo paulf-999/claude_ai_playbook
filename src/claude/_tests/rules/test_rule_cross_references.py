@@ -173,11 +173,11 @@ def test_gates_naming_examples_exist():
     """Every skill, hook and agent Gate 1 uses as an example is real."""
     section = gate_section(GATES.read_text(), 1)
     skills = {path.parent.name for path in SKILLS_DIR.rglob("SKILL.md")}
-    for skill in ("confluence_create_page", "jira_create"):
+    for skill in ("confluence-create-page", "jira-create"):
         assert f"`{skill}`" in section, f"Gate 1 no longer uses {skill} as an example — update this test"
         assert skill in skills, f"Gate 1 example skill {skill} doesn't exist under skills/"
     assert (HOOKS_DIR / "hook_enforcement_naming_convention.sh").is_file(), "Gate 1 example hook no longer exists"
-    agent = CLAUDE_DIR / "agents" / "core" / "technical_writer" / "AGENT.md"
+    agent = CLAUDE_DIR / "agents" / "core" / "technical-writer" / "AGENT.md"
     assert agent.is_file(), "Gate 1 example agent no longer exists"
 
 

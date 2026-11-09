@@ -196,8 +196,8 @@ ORG_DIR = ORG_INDEX.with_suffix("")
 ORG_POINTER = "_rules_lazy_load/org.md"
 POINTING_FILES = (
     ("rules", "01_essentials/claude_usage_standards/naming_standards.md"),
-    ("skills", "jira_create/SKILL.md"),
-    ("skills", "git_create_pr/reference/_phase1_gather.md"),
+    ("skills", "jira-create/SKILL.md"),
+    ("skills", "git-create-pr/reference/_phase1_gather.md"),
 )
 
 

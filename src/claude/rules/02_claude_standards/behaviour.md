@@ -49,9 +49,9 @@ Apply proportional gates based on task complexity — heavier scrutiny for riski
 - 📖 **Read before claiming:** open a file before editing it or making claims about it, including any file or function the user names.
 - 📖 **Take stated direction literally, don't infer alternatives:** when the user explicitly names a tool, action or skill, treat it as stated rather than substituting a different form based on context.
   - **When:** User explicitly directs "use X" or "run Y"
-  - **Example:** User: "re-trigger confluence_create_page" → use the skill, not the API
+  - **Example:** User: "re-trigger confluence-create-page" → use the skill, not the API
   - ❌ **Wrong:** infer "they probably want the API" and call it directly
-  - ✅ **Right:** treat "confluence_create_page" as stated; confirm if genuinely uncertain
+  - ✅ **Right:** treat "confluence-create-page" as stated; confirm if genuinely uncertain
   - **When NOT to apply:** User says "create a page" (no tool named) → you choose the best tool
   - **Related:** See _decision_making.md "User explicitly directs" — don't present options when direction is clear
 - 🗂️ **Plan approval:** see `claude_plans.md` for the full plan-approval and phase-gate rules.

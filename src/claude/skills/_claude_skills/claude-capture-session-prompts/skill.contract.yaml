@@ -1,0 +1,63 @@
+---
+name: claude-capture-session-prompts
+version: 0.5.1
+summary: Generate structured prompts table from session history with theme, status, and MoSCoW categorization
+maturity: draft
+test_coverage_level: comprehensive
+
+dispatch:
+    triggers:
+        explicit:
+            - /claude-capture-session-prompts
+            - capture session prompts
+            - audit session prompts
+            - audit my claude prompts
+            - audit claude prompts
+            - audit my claude session prompts
+            - summarize this session
+        contextual:
+            - user wants to audit session prompts
+            - user wants to track session activity
+            - user wants to plan next steps based on pending items
+
+    not_for:
+        - Querying existing prompts tables (edit manually or re-generate)
+        - Automatic categorization refinement (manual markdown editing required)
+        - Cross-session prompt aggregation (one date at a time)
+
+output:
+    type: conversational
+    confirmation_required: false
+    reversible: true
+    artifacts:
+        - type: markdown
+          location: ~/_sessions/YYYY_MM_DD_claude_prompts.md
+          description: Structured table with prompts, categorization, and summary statistics
+    returns:
+        - path of the written ~/_sessions/YYYY_MM_DD_claude_prompts.md report
+        - number of prompts captured
+
+waives_response_standards: true
+# Heuristic categorization workflow requires iterative refinement and free-form prompts
+# incompatible with response standards Summary + Next steps format
+
+dependencies:
+    tools:
+        - Bash (to run Python script)
+        - Read (to inspect history.jsonl)
+        - Edit (to refine output markdown)
+    external:
+        - history.jsonl (auto-maintained by Claude Code; at $CLAUDE_CONFIG_DIR/history.jsonl, default ~/.claude/history.jsonl)
+
+requires:
+    tools:
+        - Bash (to run capture_session_prompts.py)
+        - Read (to review the generated table)
+        - Edit (to refine the table)
+    mcp_servers: []
+    external:
+        - Python 3.9+ (on PATH as python3)
+        - $CLAUDE_CONFIG_DIR/history.jsonl (Claude Code session history)
+        - Write access to ~/_sessions/ (output directory)
+    resources:
+        - capture_session_prompts.py (skill script, in this skill's directory)

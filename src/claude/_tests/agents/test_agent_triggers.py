@@ -10,8 +10,8 @@
 
 """No agent trigger competes with a skill for the same request.
 
-On 2026-10-01 the technical_writer agent's "create confluence page" trigger clashed with the
-confluence_create_page skill, so two artefacts answered one request. A trigger clashes when every
+On 2026-10-01 the technical-writer agent's "create confluence page" trigger clashed with the
+confluence-create-page skill, so two artefacts answered one request. A trigger clashes when every
 meaningful word in it appears in a skill's description, which is what Claude Code matches skills on.
 """
 import re

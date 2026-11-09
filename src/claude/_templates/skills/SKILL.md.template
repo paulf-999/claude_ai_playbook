@@ -1,5 +1,5 @@
 ---
-name: <domain>_<action>
+name: <domain>-<action>
 description: One-line description of what the skill does, using the phrases users type to ask for it
 maturity: draft
 tags:
@@ -28,7 +28,7 @@ One plain-language sentence saying what the skill does for the user:
 ## 💡 Example Usage
 
 ```
-$ /<domain>_<action> [arguments]
+$ /<domain>-<action> [arguments]
 
 [A realistic run, start to finish: what the user types, what Claude asks,
 and what the user gets back. Keep it to 10–15 lines.]

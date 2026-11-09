@@ -8,7 +8,7 @@
 # Python style compliant: Yes
 # ─────────────────────────────────────────────────────────
 
-"""audit_agent_evals.py runs each agent's runnable evals through claude_kaizen's runner and reports pass rates.
+"""audit_agent_evals.py runs each agent's runnable evals through claude-kaizen's runner and reports pass rates.
 
 Issue #387 found that no agent eval ever ran, so Test Coverage could never honestly score above 7. The
 agent's prompt comes from the AGENT.md on disk, while Claude runs with the caller's own config and login,
@@ -47,7 +47,7 @@ EVALS = textwrap.dedent("""\
 CALLER_CONFIG = "/caller/own/config"
 
 
-def make_config(tmp_path, agents=("code_reviewer",), with_evals=True, with_kaizen=True):
+def make_config(tmp_path, agents=("code-reviewer",), with_evals=True, with_kaizen=True):
     """Build a fake config folder holding agents, their evals and, optionally, the real kaizen runner."""
     for name in agents:
         folder = tmp_path / "agents" / "core" / name
@@ -58,7 +58,7 @@ def make_config(tmp_path, agents=("code_reviewer",), with_evals=True, with_kaize
     if with_kaizen:
         candidates = (CLAUDE_DIR / "skills" / rel for rel in audit.KAIZEN_RUNNER)
         real = next(path for path in candidates if path.is_file())
-        target = tmp_path / "skills" / "claude_kaizen" / "evals" / "runner.py"
+        target = tmp_path / "skills" / "claude-kaizen" / "evals" / "runner.py"
         target.parent.mkdir(parents=True)
         target.write_text(real.read_text())
     return tmp_path
@@ -97,16 +97,16 @@ def test_agents_without_evals_are_left_out(tmp_path):
 
 
 def test_missing_kaizen_runner_is_reported(tmp_path):
-    """Without claude_kaizen's runner the script names where it looked, instead of failing obscurely."""
-    with pytest.raises(FileNotFoundError, match="claude_kaizen"):
+    """Without claude-kaizen's runner the script names where it looked, instead of failing obscurely."""
+    with pytest.raises(FileNotFoundError, match="claude-kaizen"):
         audit.load_kaizen_runner(tmp_path)
 
 
 def test_agent_definition_uses_description_and_body(tmp_path):
     """The --agents entry is the frontmatter description plus the body below the frontmatter."""
     make_config(tmp_path, with_kaizen=False)
-    definition = audit.agent_definition(tmp_path / "agents" / "core" / "code_reviewer" / "AGENT.md")
-    assert definition == {"description": "Reviews things", "prompt": "# code_reviewer\n\nBe fair."}, definition
+    definition = audit.agent_definition(tmp_path / "agents" / "core" / "code-reviewer" / "AGENT.md")
+    assert definition == {"description": "Reviews things", "prompt": "# code-reviewer\n\nBe fair."}, definition
 
 
 # --- Choosing cases ---
@@ -115,7 +115,7 @@ def test_agent_definition_uses_description_and_body(tmp_path):
 def test_only_cases_with_a_prompt_and_patterns_run(tmp_path):
     """A case runs only with a run block holding a prompt and a pattern, and the rest are skipped by name."""
     make_config(tmp_path, with_kaizen=False)
-    cases, skipped = audit.runnable_cases(tmp_path / "agents" / "core" / "code_reviewer" / "evals.yaml")
+    cases, skipped = audit.runnable_cases(tmp_path / "agents" / "core" / "code-reviewer" / "evals.yaml")
     assert [c["name"] for c in cases] == ["approves_clean_diff"], cases
     assert cases[0] == {"name": "approves_clean_diff", "prompt": "Review this diff", "must_match": ["(?i)approve"],
                         "must_not_match": ["(?i)request changes"]}, "case not converted to the kaizen shape"
@@ -144,13 +144,13 @@ def test_dry_run_makes_no_claude_calls(tmp_path, monkeypatch, capsys):
     assert audit.main(["--config-dir", str(make_config(tmp_path)), "--dry-run"]) == 0, "a dry run should exit 0"
     assert calls == [], "a dry run must not call Claude"
     out = capsys.readouterr().out
-    assert "code_reviewer: 1 runnable (approves_clean_diff), 2 skipped" in out, out
+    assert "code-reviewer: 1 runnable (approves_clean_diff), 2 skipped" in out, out
 
 
 def test_dry_run_with_nothing_runnable_says_none(tmp_path, capsys):
     """An agent whose evals are all prose shows 'none' in the dry run."""
     make_config(tmp_path, with_kaizen=False)
-    (tmp_path / "agents" / "core" / "code_reviewer" / "evals.yaml").write_text("evals:\n  - name: prose\n")
+    (tmp_path / "agents" / "core" / "code-reviewer" / "evals.yaml").write_text("evals:\n  - name: prose\n")
     assert audit.main(["--config-dir", str(tmp_path), "--dry-run"]) == 0, "a dry run should exit 0"
     out = capsys.readouterr().out
     assert "0 runnable (none), 1 skipped" in out, out
@@ -160,13 +160,13 @@ def test_passing_agent_runs_with_its_definition_and_the_callers_login(tmp_path, 
     """Each case passes the AGENT.md as --agents before --tools, and keeps the caller's own CLAUDE_CONFIG_DIR."""
     calls = fake_claude(monkeypatch, "Verdict: Approve")
     config = make_config(tmp_path)
-    assert audit.main(["--config-dir", str(config), "code_reviewer"]) == 0, "a passing agent should exit 0"
+    assert audit.main(["--config-dir", str(config), "code-reviewer"]) == 0, "a passing agent should exit 0"
     (command, claude_config), = calls
-    expected = json.dumps({"code_reviewer": {"description": "Reviews things", "prompt": "# code_reviewer\n\nBe fair."}})
-    assert command == ["claude", "-p", "--agents", expected, "--agent", "code_reviewer", "--tools", ""], command
+    expected = json.dumps({"code-reviewer": {"description": "Reviews things", "prompt": "# code-reviewer\n\nBe fair."}})
+    assert command == ["claude", "-p", "--agents", expected, "--agent", "code-reviewer", "--tools", ""], command
     assert claude_config == CALLER_CONFIG, f"Claude should run with the caller's own config: {claude_config}"
     out = capsys.readouterr().out
-    assert "code_reviewer: 1/1 passed (100%), 2 skipped" in out, out
+    assert "code-reviewer: 1/1 passed (100%), 2 skipped" in out, out
 
 
 def test_failing_eval_exits_one(tmp_path, monkeypatch, capsys):
@@ -175,7 +175,7 @@ def test_failing_eval_exits_one(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(audit.sys, "argv", ["audit_agent_evals.py", "--config-dir", str(make_config(tmp_path))])
     assert audit.main() == 1, "a failing eval should exit 1"
     out = capsys.readouterr().out
-    assert "code_reviewer: 0/1 passed (0%), 2 skipped" in out, out
+    assert "code-reviewer: 0/1 passed (0%), 2 skipped" in out, out
 
 
 def test_unknown_agent_exits_one(tmp_path, monkeypatch, capsys):
@@ -189,14 +189,14 @@ def test_unknown_agent_exits_one(tmp_path, monkeypatch, capsys):
 
 
 def test_real_agent_evals_are_well_formed():
-    """code_reviewer's run blocks compile and its AGENT.md yields a definition, so a live run can't break on setup."""
+    """code-reviewer's run blocks compile and its AGENT.md yields a definition, so a live run can't break on setup."""
     files = audit.agent_eval_files(CLAUDE_DIR)
-    assert "code_reviewer" in files, "code_reviewer's evals should be found"
-    cases, _ = audit.runnable_cases(files["code_reviewer"])
-    assert len(cases) >= 6, f"expected code_reviewer's 6 runnable evals, found {len(cases)}"
+    assert "code-reviewer" in files, "code-reviewer's evals should be found"
+    cases, _ = audit.runnable_cases(files["code-reviewer"])
+    assert len(cases) >= 6, f"expected code-reviewer's 6 runnable evals, found {len(cases)}"
     for case in cases:
         for pattern in case["must_match"] + case["must_not_match"]:
             re.compile(pattern)
-    definition = audit.agent_definition(files["code_reviewer"].parent / "AGENT.md")
+    definition = audit.agent_definition(files["code-reviewer"].parent / "AGENT.md")
     assert definition["description"], "AGENT.md should yield a description"
     assert "\n# " in definition["prompt"], "AGENT.md should yield a prompt that includes its H1"

@@ -67,7 +67,7 @@ The file uses `.gitignore` syntax. Only files that match a pattern **and** are g
 
 ## Subagent worktrees
 
-The `architect` and `technical_writer` agents are configured with `isolation: worktree` in their frontmatter. This means when either agent runs as a subagent, it automatically gets its own isolated worktree — preventing branch conflicts when Claude is delegating work in parallel.
+The `architect` and `technical-writer` agents are configured with `isolation: worktree` in their frontmatter. This means when either agent runs as a subagent, it automatically gets its own isolated worktree — preventing branch conflicts when Claude is delegating work in parallel.
 
 For other agents, you can request worktree isolation on demand:
 
@@ -75,7 +75,7 @@ For other agents, you can request worktree isolation on demand:
 Use worktrees for your agents.
 ```
 
-See [`src/claude/agents/core/technical_writer/AGENT.md`](../../../src/claude/agents/core/technical_writer/AGENT.md) for the frontmatter reference — it sets `isolation: worktree`.
+See [`src/claude/agents/core/technical-writer/AGENT.md`](../../../src/claude/agents/core/technical-writer/AGENT.md) for the frontmatter reference — it sets `isolation: worktree`.
 
 ---
 

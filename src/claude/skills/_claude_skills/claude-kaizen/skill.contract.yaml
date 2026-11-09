@@ -1,0 +1,52 @@
+---
+name: claude-kaizen
+version: 1.0.0
+summary: Self-improving loop—audit corrections for patterns, promote verified ones into rules with proof, prune stale rules
+maturity: tactical
+test_coverage_level: comprehensive
+
+dispatch:
+    triggers:
+        explicit:
+            - /claude-kaizen
+            - run kaizen
+            - audit mistakes
+            - promote rules
+            - audit recent corrections
+        contextual:
+            - user wants to audit recurring mistakes
+            - user wants to promote corrections into rules
+            - user wants to audit rule staleness
+
+    not_for:
+        - auto-applying rules (manual review required)
+        - cross-repo pattern analysis (v2.0+)
+        - bulk rule removal (manual intervention needed)
+
+output:
+    type: conversational
+    confirmation_required: true
+    reversible: true
+    artifacts:
+        - Diff proposal for new rules and evals
+        - Before/after test results
+
+waives_response_standards: true
+# Multi-phase audit workflow (scan → analyze → promote → test → propose) requires free-form prompts
+# incompatible with response standards Summary + Next steps format
+
+requires:
+    tools:
+        - Read
+        - Bash
+
+    external:
+        - ~/_errors/ directory with error logs
+        - rules/ and _rules_lazy_load/ directory structure
+        - Python 3.10+ (for evals/runner.py)
+
+dependencies:
+    tools:
+        - claude CLI (headless, one call per eval case)
+    external:
+        - git (for diff generation)

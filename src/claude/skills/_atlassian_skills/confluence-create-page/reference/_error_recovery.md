@@ -1,0 +1,24 @@
+---
+date_created: "2026-08-28"
+date_updated: "2026-10-01"
+status: active
+---
+
+# 🆘 Error recovery — confluence-create-page
+
+## Can't access the Confluence space
+
+- **Check space exists:** Log in to Confluence and verify the `<SPACE_KEY>` space exists
+- **Check permissions:** Do you have Contributor role in the space?
+- **Check MCP:** Run `make enable_mcp server=Atlassian` + restart Claude Code
+
+## Draft review rejected (don't want to publish)
+
+- **Iterate locally:** Make changes to draft and request approval again
+- **Or:** Cancel and start over with `/confluence-create-page`
+
+## Page creation fails (MCP error)
+
+- **Check Atlassian MCP is enabled**
+- **Check network connection to Confluence**
+- **Try again:** Transient errors are common

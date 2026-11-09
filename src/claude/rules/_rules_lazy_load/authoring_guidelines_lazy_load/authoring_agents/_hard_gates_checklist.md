@@ -10,7 +10,7 @@
 ## ✅ Before finalizing an agent, verify ALL of these:
 
 ### Naming & Structure
-- [ ] Name follows `<domain>_<purpose>` pattern, self-describing
+- [ ] Name follows `<domain>-<purpose>` pattern, self-describing
 - [ ] Frontmatter complete: name, description, maturity, triggers, tools, model, isolation
 - [ ] Metadata header straight after the frontmatter: version, created, updated
 - [ ] 5-section structure: Purpose, When to use, Role & Principles, Constraints, [References]
@@ -41,5 +41,5 @@
 - [ ] Model and isolation mode specified
 - [ ] `tools:` lists only what the job needs — no Bash or MCP tools unless the agent's job requires them
 - [ ] References or related rules linked (if applicable)
-- [ ] Quality scorecard at `_reference/_quality_scorecards/agents/scorecard_<agent_name>.md`, scored by the `quality_scorecard_reviewer` agent in a fresh context
+- [ ] Quality scorecard at `_reference/_quality_scorecards/agents/scorecard_<agent_name>.md`, scored by the `quality-scorecard-reviewer` agent in a fresh context
 - [ ] The run is recorded as a row in `_reference/_quality_scorecards/score_history.csv`

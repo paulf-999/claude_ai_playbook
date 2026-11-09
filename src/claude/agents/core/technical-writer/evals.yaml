@@ -1,0 +1,239 @@
+---
+_metadata:
+    date_created: '2026-09-07'
+    date_updated: '2026-10-25'
+    status: active
+
+agent_name: technical-writer
+maturity: tactical  # 12 scenarios, within the tactical range of 8-12
+
+evals:
+  # PR bodies
+    - name: pr_body_follows_template
+      description: Drafts a PR body that reproduces every section of the repo template
+      input:
+          prompt: Draft a PR body for the auth retry fix
+      setup:
+          pr_template_exists: true
+          template_sections: [Summary, Type of change, Related Jira Issue, Testing]
+      expected_output: >
+          The agent reads .github/pull_request_template.md, keeps every section in order,
+          fills only the placeholders, opens with a one-sentence summary and writes the
+          draft to ~/_drafts/general/YYYY_MM_DD_<topic>.md.
+      assertions:
+          - Every template section appears in the draft, in the template's order
+          - The draft opens with a one-sentence summary
+          - The draft file path uses an absolute home path, not a literal ~
+      run:
+          prompt: |
+              Draft a PR body for the auth retry fix, using only this repo template, and reply with the body only.
+              The change: login now retries a failed token refresh once before showing an error. Tested locally.
+
+              Template (.github/pull_request_template.md):
+              ## Summary
+              <one sentence>
+
+              ## Type of change
+              - [ ] Feature
+              - [ ] Bugfix
+
+              ## Related Jira Issue
+              <ticket link or None>
+
+              ## Testing
+              <how it was tested>
+
+          must_match:
+              - (?s)## Summary.*## Type of change.*## Related Jira Issue.*## Testing
+              - (?i)\[x\] Bugfix
+
+    - name: pr_body_links_jira_ticket
+      description: Picks up a Jira key from the branch name and links it
+      input:
+          prompt: Draft the PR description for this branch
+      setup:
+          pr_template_exists: true
+          current_branch: feature/proj_1234_add_retry
+      expected_output: >
+          The agent puts PROJ-1234 in the Related Jira Issue section as a link and leaves
+          the rest of the template intact.
+      assertions:
+          - The Related Jira Issue section contains PROJ-1234
+          - No template section is added or removed
+      run:
+          prompt: |
+              Draft the PR description for this branch, using only this repo template, and reply with the body only.
+              Branch: feature/proj_1234_add_retry. The change adds a retry to the export job.
+
+              Template (.github/pull_request_template.md):
+              ## Summary
+              <one sentence>
+
+              ## Type of change
+              - [ ] Feature
+              - [ ] Bugfix
+
+              ## Related Jira Issue
+              <ticket link or None>
+
+              ## Testing
+              <how it was tested>
+
+          must_match:
+              - (?s)## Related Jira Issue[^#]*PROJ-1234
+              - (?s)## Summary.*## Testing
+
+    - name: pr_body_missing_template_stops
+      description: Stops instead of inventing a PR body when there is no template
+      input:
+          prompt: Draft a PR body for the readme typo fix
+      setup:
+          pr_template_exists: false
+      expected_output: >
+          The agent says .github/pull_request_template.md is missing and asks the user
+          to add one, and writes no draft.
+      assertions:
+          - No draft file is written
+          - The reply names .github/pull_request_template.md
+      run:
+          prompt: |
+              Draft a PR body for the readme typo fix. This repo has no .github/pull_request_template.md file.
+          must_match:
+              - pull_request_template
+          must_not_match:
+              - (?m)^## Summary
+
+  # Confluence pages
+    - name: confluence_technical_audience
+      description: Writes page text with technical depth for engineers
+      input:
+          prompt: Draft a Confluence page explaining the new Airflow retry policy for the data engineering team
+      setup:
+          audience: data engineering team
+      expected_output: >
+          The agent uses technical terms without over-explaining, structures the page
+          with headings and bullets, and writes it to ~/_drafts/confluence/.
+      assertions:
+          - The draft is written under ~/_drafts/confluence/ with a YYYY_MM_DD_ prefix
+          - The draft uses headings and bullets rather than runs of prose
+
+    - name: confluence_mixed_audience
+      description: Adjusts tone and depth when non-technical readers are included
+      input:
+          prompt: Draft a Confluence page on the Q3 data platform changes for managers and engineers
+      setup:
+          audience: management and engineers
+      expected_output: >
+          The agent leads with business outcomes in plain English and keeps
+          implementation detail in a clearly separated later section.
+      assertions:
+          - The opening section contains no unexplained technical jargon
+          - Implementation detail sits below the outcomes, not before them
+
+    - name: confluence_asks_for_audience
+      description: Asks who the page is for before writing when the audience is unclear
+      input:
+          prompt: Draft a Confluence page about the new deployment process
+      setup:
+          audience: null
+      expected_output: >
+          The agent asks who the page is for, offering the audience types from
+          writing_style.md, and writes nothing until the user answers.
+      assertions:
+          - The reply asks about the audience
+          - No draft file is written before the answer
+      run:
+          prompt: Draft a Confluence page about the new deployment process.
+          must_match:
+              - (?i)(audience|who (is|will be) (it|this|the page) for|who will read)
+
+  # Clarity and tone
+    - name: restructures_prose_into_bullets
+      description: Turns paragraph-heavy source notes into a scannable draft
+      input:
+          prompt: Turn these notes into a PR description
+      setup:
+          pr_template_exists: true
+          source_notes: three dense paragraphs with no headings
+      expected_output: >
+          The agent rewrites the content as bullets under the template's sections,
+          one point per bullet, without losing any facts from the notes.
+      assertions:
+          - The draft has no paragraph longer than two sentences
+          - Every fact in the source notes appears in the draft
+
+    - name: flags_assumed_knowledge
+      description: Flags jargon the stated audience may not know
+      input:
+          prompt: Draft a page for the analytics team about moving to incremental dbt models
+      setup:
+          audience: data analytics team
+      expected_output: >
+          The agent explains or replaces terms like "incremental materialisation" and
+          lists any knowledge the draft assumes.
+      assertions:
+          - Each technical term is explained or replaced
+          - The reply lists assumptions the draft makes about the reader
+
+    - name: tone_differs_by_audience
+      description: Produces a different tone for engineers and for business stakeholders
+      input:
+          prompt: Draft two versions of the outage summary, one for engineers and one for leadership
+      setup:
+          audiences: [data engineering team, management]
+      expected_output: >
+          The engineer version names the failing components, while the leadership
+          version covers impact, status and next steps in plain English.
+      assertions:
+          - The leadership version names no internal component
+          - The engineer version names the failing components
+
+  # Boundaries
+    - name: hands_off_publishing_to_skill
+      description: Drafts but doesn't publish, and names the skill that does
+      input:
+          prompt: Write and publish a Confluence page about the on-call rota
+      setup:
+          audience: engineers
+      expected_output: >
+          The agent writes the draft, says it can't publish, and tells the user to run
+          confluence-create-page with the draft path.
+      assertions:
+          - The agent makes no Confluence or Bash call
+          - The reply names confluence-create-page and the draft path
+      run:
+          prompt: Write and publish a Confluence page about the on-call rota.
+          must_match:
+              - confluence-create-page
+
+    - name: declines_adr
+      description: Declines to write an Architecture Decision Record
+      input:
+          prompt: Write an ADR for choosing Snowflake over BigQuery
+      setup: {}
+      expected_output: >
+          The agent says ADRs are out of scope and writes nothing.
+      assertions:
+          - No draft file is written
+          - The reply says ADRs are out of scope
+      run:
+          prompt: Write an ADR for choosing Snowflake over BigQuery.
+          must_match:
+              - (?i)(out of scope|not something I (write|draft)|don't (write|draft) ADRs|(fall|falls|is) outside|outside (my|what (I|this agent)))
+
+    - name: declines_editing_existing_docs
+      description: Declines to improve an existing document
+      input:
+          prompt: Improve the wording of docs/quickstart.md
+      setup:
+          existing_doc: docs/quickstart.md
+      expected_output: >
+          The agent says editing existing documentation is out of scope and makes no
+          change to the file.
+      assertions:
+          - docs/quickstart.md is unchanged
+          - The reply says editing existing docs is out of scope
+      run:
+          prompt: Improve the wording of docs/quickstart.md.
+          must_match:
+              - (?i)(out of scope|don't edit|not edit|outside (my|what I)|only draft new)

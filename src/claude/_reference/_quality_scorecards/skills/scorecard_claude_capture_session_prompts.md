@@ -1,4 +1,4 @@
-# Quality Scorecard — claude_capture_session_prompts
+# Quality Scorecard — claude-capture-session-prompts
 
 **Date Created:** 2026-09-07
 **Date Updated:** 2026-10-29
@@ -27,5 +27,5 @@
 
 ## 🔗 Related files
 
-- `src/claude/skills/_claude_skills/claude_capture_session_prompts/SKILL.md` — the skill being scored
-- `src/claude/skills/_claude_skills/claude_capture_session_prompts/tests/evals.yaml` — Test Coverage dimension
+- `src/claude/skills/_claude_skills/claude-capture-session-prompts/SKILL.md` — the skill being scored
+- `src/claude/skills/_claude_skills/claude-capture-session-prompts/tests/evals.yaml` — Test Coverage dimension

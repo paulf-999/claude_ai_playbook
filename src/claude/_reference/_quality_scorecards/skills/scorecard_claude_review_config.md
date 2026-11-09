@@ -1,4 +1,4 @@
-# Quality Scorecard — claude_review_config
+# Quality Scorecard — claude-review-config
 
 **Date Created:** 2026-09-07
 **Date Updated:** 2026-10-29
@@ -29,5 +29,5 @@
 
 ## 🔗 Related files
 
-- `src/claude/skills/_claude_skills/claude_review_config/SKILL.md` — the skill being scored
-- `src/claude/skills/_claude_skills/claude_review_config/tests/evals.yaml` — Test Coverage dimension
+- `src/claude/skills/_claude_skills/claude-review-config/SKILL.md` — the skill being scored
+- `src/claude/skills/_claude_skills/claude-review-config/tests/evals.yaml` — Test Coverage dimension

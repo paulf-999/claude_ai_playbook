@@ -11,7 +11,7 @@
 
 **If nothing else in the skill mentions a file by name, it isn't part of the skill.** A `patterns/` or `templates/` directory that grew alongside a feature that was later descoped, a draft contract left behind after a rename, a reference doc nobody linked — these accumulate silently because nothing breaks when they're unused, so nothing prompts their removal.
 
-**Why this matters:** found via a real audit (2026-09-19) — `confluence_create_page` had 16 unreachable files (an entire duplicate `templates/` directory, four patterns never wired into `VALID_PATTERNS`, a stale draft `skill.contract.yaml`), `jira_create` had 6 more of the same, and `git_create_pr`'s `SKILL.md` linked to three `reference/` files that had never existed while its one real reference file sat unlinked.
+**Why this matters:** found via a real audit (2026-09-19) — `confluence-create-page` had 16 unreachable files (an entire duplicate `templates/` directory, four patterns never wired into `VALID_PATTERNS`, a stale draft `skill.contract.yaml`), `jira-create` had 6 more of the same, and `git-create-pr`'s `SKILL.md` linked to three `reference/` files that had never existed while its one real reference file sat unlinked.
 
 ---
 

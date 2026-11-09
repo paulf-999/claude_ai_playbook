@@ -9,7 +9,7 @@
 
 ## ✅ Before Submitting
 
-- [ ] **1. Naming:** `<domain>_<action>` format, valid domain ID, directory matches (see `_core_standards.md`)
+- [ ] **1. Naming:** `<domain>-<action>` format, valid domain ID, directory matches (see `_core_standards.md`)
 - [ ] **2. Contract complete BEFORE SKILL.md** — never write SKILL.md without contract finalization
   - [ ] name, version, summary, maturity all defined
   - [ ] dispatch.triggers documented (when is skill invoked?)
@@ -42,7 +42,7 @@
   - [ ] reference/_formats.md [IF APPLICABLE] (standards, validation, examples)
 - [ ] **7. Quality scorecard [REQUIRED]:** `_reference/_quality_scorecards/skills/scorecard_<skill_name>.md`, table-only
   - [ ] Follows `~/.claude/_templates/skills/_quality_scorecard_template.md`, including Date Created and Date Updated
-  - [ ] 7 dimensions scored by the `quality_scorecard_reviewer` agent in a fresh context, with evals.yaml as evidence
+  - [ ] 7 dimensions scored by the `quality-scorecard-reviewer` agent in a fresh context, with evals.yaml as evidence
   - [ ] The run is recorded as a row in `_reference/_quality_scorecards/score_history.csv`
 - [ ] **8. Complexity score [REQUIRED]:** raw sum per `_complexity_scoring.md`
   - [ ] Score ≤ maturity limit (Draft ≤4, Tactical ≤6, Strategic ≤8)

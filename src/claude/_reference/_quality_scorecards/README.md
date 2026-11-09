@@ -30,7 +30,7 @@ Skills, rules and agents are scored by a reviewer that didn't write them, so the
 1. **Deterministic checks:** `make lint` and `CLAUDE_CONFIG_DIR=$PWD/src/claude python3 -m pytest` pass before any scoring.
 2. **Evals:** the artefact's evals exist at the count its maturity needs.
    - **Agents:** run `python3 src/claude/scripts/_audit_scripts/audit_agent_evals.py <agent>` and give the reviewer its pass rate, which costs one Claude call per runnable eval.
-3. **Fresh-context review:** call the Agent tool with `subagent_type: quality_scorecard_reviewer`, passing only the artefact's path and its type.
+3. **Fresh-context review:** call the Agent tool with `subagent_type: quality-scorecard-reviewer`, passing only the artefact's path and its type.
    - **Its inputs:** the artefact, its contract, its evals, the type's rubric and `scoring_anchors.md`.
    - **Never pass:** the authoring conversation or the current scorecard's scores, since either would anchor the result.
 4. **History row:** append the row it returns to `score_history.csv` as the next attempt, then copy the scores into the scorecard and its summaries.
@@ -49,12 +49,12 @@ The five lowest-scoring artefacts, each with the first recommended improvement f
 
 | # | Artefact | Score | Action | Scorecard |
 |---|---|---|---|---|
-| 1 | `claude_review_config` | 6.1 | Fix the grade in SKILL.md's Example Usage: 7.7/10 should be B, not B+ | [scorecard_claude_review_config.md](skills/scorecard_claude_review_config.md) |
+| 1 | `claude-review-config` | 6.1 | Fix the grade in SKILL.md's Example Usage: 7.7/10 should be B, not B+ | [scorecard_claude_review_config.md](skills/scorecard_claude_review_config.md) |
 | 2 | `dbt.md` | 6.2 | Make the source-test requirement say the same thing in every section, and define "completeness" or drop it | [scorecard_dbt.md](rules/style_guide_standards/scorecard_dbt.md) |
 | 3 | `makefile.md` | 6.2 | Bring the repo's own Makefiles into line with the guide, or record the exceptions | [scorecard_makefile.md](rules/style_guide_standards/utilities/scorecard_makefile.md) |
 | 4 | `terraform.md` | 6.2 | Read the Snowflake private key path from a variable, or state it as the one allowed exception to "never hardcoded" | [scorecard_terraform.md](rules/style_guide_standards/infra/scorecard_terraform.md) |
-| 5 | `technical_writer` | 6.3 | Decide whether the agent drafts Confluence pages, then make its description, triggers and evals agree | [scorecard_technical_writer.md](agents/scorecard_technical_writer.md) |
+| 5 | `technical-writer` | 6.3 | Decide whether the agent drafts Confluence pages, then make its description, triggers and evals agree | [scorecard_technical_writer.md](agents/scorecard_technical_writer.md) |
 
-- **Ties:** three style guides score 6.2 and rank alphabetically, and `technical_writer` ranks above `airflow.md`, also 6.3, because an agent acts while a style guide only advises.
+- **Ties:** three style guides score 6.2 and rank alphabetically, and `technical-writer` ranks above `airflow.md`, also 6.3, because an agent acts while a style guide only advises.
 - **Upkeep:** refresh this list whenever a scorecard is re-scored.
 - **Full ranking:** see `quality_scorecards_summary.md`.

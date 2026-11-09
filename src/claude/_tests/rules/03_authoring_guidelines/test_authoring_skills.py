@@ -68,10 +68,11 @@ def test_skill_md_has_six_sections_in_order():
 
 
 def test_example_name_follows_pattern():
-    """The example skill name follows the <domain>_<action> pattern it teaches."""
+    """The example skill name follows the <domain>-<action> pattern it teaches."""
     name = re.search(r"^name: (\S+)$", frontmatter_example(), re.M)
     assert name, "the example has no name field"
-    assert re.fullmatch(r"[a-z]+_[a-z_]+", name.group(1)), f"example name {name.group(1)} breaks <domain>_<action>"
+    pattern = r"[a-z0-9]+(-[a-z0-9]+)+"
+    assert re.fullmatch(pattern, name.group(1)), f"example name {name.group(1)} breaks <domain>-<action>"
 
 
 def test_example_maturity_is_a_real_level():

@@ -102,7 +102,7 @@ Every skill has a scorecard at `_reference/_quality_scorecards/skills/scorecard_
 
 ## Notes
 
-- Every dimension is **scored by `quality_scorecard_reviewer`** in a fresh context, with evals.yaml as evidence — if the evals don't cover a dimension, its score reflects that gap
+- Every dimension is **scored by `quality-scorecard-reviewer`** in a fresh context, with evals.yaml as evidence — if the evals don't cover a dimension, its score reflects that gap
 - Each dimension is scored **independently** — a 10/10 in Design doesn't guarantee 10/10 in Code Quality
 - Scores reflect the **current version** — update when significant changes occur
 - Overall score is **not a grade** — a 9.5/10 skill is production-ready, not "A-"

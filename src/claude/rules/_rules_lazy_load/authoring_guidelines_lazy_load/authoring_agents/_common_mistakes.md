@@ -74,7 +74,7 @@ Strategic maturity because this is a cool idea and could be very useful.
 ## Maturity Justification
 Tactical maturity because:
 - Solves recurring problem (used in 60% of sessions)
-- Battle-tested in git_create_pr and confluence_create_page skills
+- Battle-tested in git-create-pr and confluence-create-page skills
 - 12 evals cover all phases (PR body drafting, Confluence creation, error cases)
 - Stable external dependencies (GitHub API, Atlassian API)
 ```

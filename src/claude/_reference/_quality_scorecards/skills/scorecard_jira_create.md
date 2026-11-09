@@ -1,4 +1,4 @@
-# Quality Scorecard — jira_create
+# Quality Scorecard — jira-create
 
 **Date Created:** 2026-09-19
 **Date Updated:** 2026-10-29
@@ -8,7 +8,7 @@
 **Recommended improvements:**
 - Drop Epic from the valid issue types in `_field_constraints.md` and `_error_handling.md`, because `not_for` and Best For both say the skill can't create epics
 - Settle the story-points limit: `_field_constraints.md` gives "Valid range: 0.5 to 100" and also "no upper limit enforced"
-- Set `tested: false` until a runner or a pytest runs `tests/evals.yaml`, because nothing under `_tests/skills/` covers `jira_create`
+- Set `tested: false` until a runner or a pytest runs `tests/evals.yaml`, because nothing under `_tests/skills/` covers `jira-create`
 - Change `test_coverage_level: comprehensive` to `basic` or add the missing security case, and remove the contract note "error handling incomplete" that `_error_handling.md` no longer supports
 - Fix the `waives_response_standards` comment ("3-phase … gather → create → confirm") so it matches the six phases, where confirm comes before create
 - Add a `dependencies.permissions` entry for Jira write access, and remove "security checks" from the contract `summary`, since there aren't any
@@ -29,5 +29,5 @@
 
 ## 🔗 Related files
 
-- `src/claude/skills/_atlassian_skills/jira_create/SKILL.md` — the skill being scored
-- `src/claude/skills/_atlassian_skills/jira_create/tests/evals.yaml` — Test Coverage dimension
+- `src/claude/skills/_atlassian_skills/jira-create/SKILL.md` — the skill being scored
+- `src/claude/skills/_atlassian_skills/jira-create/tests/evals.yaml` — Test Coverage dimension

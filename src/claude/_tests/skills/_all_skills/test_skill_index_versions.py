@@ -23,13 +23,13 @@ from _metadata_header import header_version_after_frontmatter as header_version
 from _shared_paths import SKILLS_DIR
 
 SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
-SKILL_CELL = re.compile(r"^`/([a-z0-9_]+)`$")
+SKILL_CELL = re.compile(r"^`/([a-z0-9-]+)`$")
 SAMPLE_INDEX = """\
 | Skill | Description | Version | Tested |
 |---|---|---|---|
-| `/git_create_pr` | Create a PR, with a pipe-free description | 1.3.1 | yes |
-| `/git_review_pr` | Review a PR | 0.4.1 | no |
-| `/demo_unversioned` | Has no version yet | — | no |
+| `/git-create-pr` | Create a PR, with a pipe-free description | 1.3.1 | yes |
+| `/git-review-pr` | Review a PR | 0.4.1 | no |
+| `/demo-unversioned` | Has no version yet | — | no |
 """
 
 
@@ -75,8 +75,8 @@ def group_skill_versions(group: Path) -> dict[str, str]:
 def test_index_row_version_is_read():
     """A skill row yields its name and the version cell."""
     versions = index_versions(SAMPLE_INDEX)
-    assert versions["git_create_pr"] == "1.3.1", f"wrong version read: {versions}"
-    assert versions["git_review_pr"] == "0.4.1", f"second row not read: {versions}"
+    assert versions["git-create-pr"] == "1.3.1", f"wrong version read: {versions}"
+    assert versions["git-review-pr"] == "0.4.1", f"second row not read: {versions}"
 
 
 def test_header_and_separator_rows_ignored():
@@ -88,12 +88,12 @@ def test_header_and_separator_rows_ignored():
 
 def test_row_without_version_skipped():
     """A row whose version cell isn't semver is left out, so drift reports it as missing."""
-    assert "demo_unversioned" not in index_versions(SAMPLE_INDEX), "non-semver cell accepted as a version"
+    assert "demo-unversioned" not in index_versions(SAMPLE_INDEX), "non-semver cell accepted as a version"
 
 
 def test_prose_lines_ignored():
     """Text outside the table yields nothing."""
-    assert index_versions("# Git skills\n\nSee `/git_create_pr` 1.0.0 for details.\n") == {}, "prose parsed as a row"
+    assert index_versions("# Git skills\n\nSee `/git-create-pr` 1.0.0 for details.\n") == {}, "prose parsed as a row"
 
 
 # --- Drift rules ---

@@ -6,7 +6,7 @@ in-memory example. ``read_skill`` builds that map from disk for the real scan.
 
 A file counts as referenced when its stem appears in another of the skill's content
 files, or in the skill's out-of-tree tests at ``_tests/skills/<skill_name>/`` — a
-handler moved out of the skill (the confluence_create_page precedent, 2026-09-19) is
+handler moved out of the skill (the confluence-create-page precedent, 2026-09-19) is
 still referenced by the test that imports it.
 """
 from __future__ import annotations

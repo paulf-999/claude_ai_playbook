@@ -147,8 +147,8 @@ def test_skill_has_instructions_for_claude(name):
 
 def test_confluence_skill_drafts_to_home_folder():
     """The Confluence skill names ~/_drafts/confluence/ for drafts (moved 2026-10-25)."""
-    section = instructions_section(skill_md_for("confluence_create_page"))
-    assert section, "confluence_create_page has no Instructions for Claude section"
+    section = instructions_section(skill_md_for("confluence-create-page"))
+    assert section, "confluence-create-page has no Instructions for Claude section"
     assert "~/_drafts/confluence/" in section, "drafts path ~/_drafts/confluence/ is missing"
     assert "getAccessibleAtlassianResources" in section, "the Atlassian MCP pre-check is missing"
 

@@ -1,4 +1,4 @@
-# Quality Scorecard — git_review_pr
+# Quality Scorecard — git-review-pr
 
 **Date Created:** 2026-10-05
 **Date Updated:** 2026-10-26
@@ -25,7 +25,7 @@
 
 ## 🔗 Related files
 
-- `src/claude/skills/_git_skills/git_review_pr/SKILL.md` — the skill being scored
-- `src/claude/skills/_git_skills/git_review_pr/reference/_implementation.md` — Design, Code Quality and Security dimensions
-- `src/claude/skills/_git_skills/git_review_pr/tests/evals.yaml` — Test Coverage dimension
-- `src/claude/_reference/_quality_scorecards/score_history.csv` — attempt 5, scored blind by `quality_scorecard_reviewer`
+- `src/claude/skills/_git_skills/git-review-pr/SKILL.md` — the skill being scored
+- `src/claude/skills/_git_skills/git-review-pr/reference/_implementation.md` — Design, Code Quality and Security dimensions
+- `src/claude/skills/_git_skills/git-review-pr/tests/evals.yaml` — Test Coverage dimension
+- `src/claude/_reference/_quality_scorecards/score_history.csv` — attempt 5, scored blind by `quality-scorecard-reviewer`

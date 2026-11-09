@@ -43,7 +43,7 @@ Ordered by recommended evaluation priority. Score reflects potential usefulness 
 |---|---|---|---|---|---|---|---|---|
 | 1 | [Data](https://claude.com/plugins/data) | ✅ | 1.4k | No | Snowflake / warehouse MCP | Low | **9** | SQL, dataset exploration, visualisations, and dashboards against Snowflake, Databricks, and BigQuery. Requires a database MCP to query live data — without one it falls back to file-based inputs. |
 | 2 | [Engineering](https://claude.com/plugins/engineering) | ✅ | N/A | Unknown | GitHub MCP (team has this) | Unknown | **6** | Code review, ADR drafting, incident post-mortems, and standup summaries from commits/PRs. Available in Claude Cowork — verify Claude Code compatibility before adopting. |
-| 4 | [PR Review Toolkit](https://claude.com/plugins/pr-review-toolkit) | ✅ | 64k | No | GitHub MCP (team has this) | Moderate | **6** | Six specialised PR review agents (docs accuracy, test coverage, error handling, type design, standards, simplification). Deeper than the existing `code_reviewer` sub-agent. |
+| 4 | [PR Review Toolkit](https://claude.com/plugins/pr-review-toolkit) | ✅ | 64k | No | GitHub MCP (team has this) | Moderate | **6** | Six specialised PR review agents (docs accuracy, test coverage, error handling, type design, standards, simplification). Deeper than the existing `code-reviewer` sub-agent. |
 | 5 | [Feature Dev](https://claude.com/plugins/feature-dev) | ✅ | 144k | No | — | Moderate | **5** | Structured 7-phase feature workflow with code-explorer, code-architect, and code-reviewer agents. Substantial overlap with the architect sub-agent and `rules/workflows.md`. |
 | 6 | [Explanatory Output Style](https://claude.com/plugins/explanatory-output-style) | ✅ | N/A | No | — | **High** — adds explanation boxes to every response | **4** | Adds educational insight boxes to every response. Useful for onboarding; token cost is ongoing — not recommended for regular use. |
 
@@ -51,7 +51,7 @@ Ordered by recommended evaluation priority. Score reflects potential usefulness 
 
 | Plugin | Verified | Reason |
 |---|---|---|
-| [Code Review](https://claude.com/plugins/code-review) | ✅ | Duplicates existing `code_reviewer` sub-agent and `/review` command |
+| [Code Review](https://claude.com/plugins/code-review) | ✅ | Duplicates existing `code-reviewer` sub-agent and `/review` command |
 | [Microsoft Docs](https://claude.com/plugins/microsoft-docs) | ❌ | Not Anthropic verified; only 2.9k installs; low value alongside existing O365 MCP server |
 | [Remember](https://claude.com/plugins/remember) | ❌ | Not Anthropic verified; overlaps with the auto-memory system already configured in this playbook |
 

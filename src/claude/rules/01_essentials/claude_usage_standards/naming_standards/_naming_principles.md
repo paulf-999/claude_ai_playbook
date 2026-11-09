@@ -48,7 +48,7 @@ Choose a name that fits the likely higher grouping, not just today's problem.
 | Artefact | Pattern | Example | Details |
 |---|---|---|---|
 | **Hook files** | `hook_<type>_<domain>.sh` | `hook_enforcement_naming_convention.sh` | See `_claude_naming_patterns.md` |
-| **Skill** | `<domain>_<action>` | `confluence_create_page` | See `_claude_naming_patterns.md` |
+| **Skill** | `<domain>-<action>` | `confluence-create-page` | See `_claude_naming_patterns.md` |
 | **Rule file** | `snake_case.md` | `naming_standards.md` | See `_claude_naming_patterns.md` |
 | **Directory (user-created)** | `_<name>/` | `_rules_lazy_load/`, `_templates/` | See `claude_directory_structure.md` |
 | **Directory (auto-generated)** | `<name>/` | `backups/`, `memory/` | See `claude_directory_structure.md` |

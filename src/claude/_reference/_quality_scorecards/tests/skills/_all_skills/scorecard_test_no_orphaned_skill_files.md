@@ -9,7 +9,7 @@
 |---|---|---|---|
 | **Clarity** | 9/10 | 2026-10-01 | • 🔍 **Messages:** every test function has a docstring, and every assertion says what was flagged |
 | **Complexity** | 7/10 | 2026-10-01 | • 🧮 **Raw complexity 3:** Concepts 1 (orphans, broken links, eager imports) + Scope 2 (`skills/` and `_tests/skills/`) + Dependencies 0 + Prerequisites 0 (in-memory skills, no fixtures) |
-| **Evidence of Need** | 10/10 | 2026-10-01 | • 🔗 **Incidents:** found confluence_create_page's dead `templates/` and git_create_pr's three broken links (2026-09-19) |
+| **Evidence of Need** | 10/10 | 2026-10-01 | • 🔗 **Incidents:** found confluence-create-page's dead `templates/` and git-create-pr's three broken links (2026-09-19) |
 | **Coverage** | 10/10 | 2026-09-30 | • 📊 **Counts:** 14 test functions and 19 assertions<br>• 🧩 **Edge cases:** self-mentions, external test references, both fence styles and email addresses |
 | **Structural Compliance** | 10/10 | 2026-10-01 | • ✅ **Header:** full metadata header, marked Python style compliant and checked with `ruff` |
 | **Currency** | 10/10 | 2026-10-01 | • 🔍 **References:** passes against the current skills, header last updated 2026-10-01 |

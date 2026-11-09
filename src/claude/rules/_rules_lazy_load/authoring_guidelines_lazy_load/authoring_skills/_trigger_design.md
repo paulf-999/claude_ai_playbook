@@ -15,7 +15,7 @@ Triggers determine how users invoke your skill. Comprehensive trigger coverage e
 
 - **Explicit triggers:** `/skill_name` slash commands and direct phrase matches
   - **Format:** `- /skill_name` or `- exact phrase`
-  - **Example:** `/confluence_create_page`, `create a confluence page`
+  - **Example:** `/confluence-create-page`, `create a confluence page`
 - **Contextual triggers:** Natural language patterns the system uses to detect user intent
   - **Format:** `- user wants to <action>`
   - **Example:** `user wants to create a Confluence page`
@@ -28,4 +28,4 @@ Triggers determine how users invoke your skill. Comprehensive trigger coverage e
 - **Case:** add both lowercase and uppercase variants — e.g. `create a pr` and `create a PR`.
 - **Be exhaustive:** a false positive costs less than a missed invocation.
 - **Not too generic:** "help" or "please" alone won't distinguish your skill from others.
-- **Example:** see `git_create_pr`'s `skill.contract.yaml` for a complete trigger list.
+- **Example:** see `git-create-pr`'s `skill.contract.yaml` for a complete trigger list.

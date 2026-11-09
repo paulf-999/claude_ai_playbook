@@ -11,7 +11,7 @@
 
 Every skill must explicitly declare what it does AND what it does NOT do. This prevents feature creep and sets user expectations upfront.
 
-**In `skill.contract.yaml`, list them under `dispatch.not_for` — example (git_create_pr):**
+**In `skill.contract.yaml`, list them under `dispatch.not_for` — example (git-create-pr):**
 ```yaml
 not_for:
   - complex merge conflict scenarios
@@ -28,7 +28,7 @@ not_for:
 
 **❌ Don't try to handle everything**
 - **Bloat:** a skill that handles "all Confluence page operations" becomes bloated and unmaintainable
-- **Better:** narrow scope (e.g., `confluence_create_page`, `confluence_update_page` as separate skills)
+- **Better:** narrow scope (e.g., `confluence-create-page`, `confluence_update_page` as separate skills)
 - **Boundaries:** use `not_for` to document explicit boundaries
 
 **❌ Don't substitute `test_*_handler.py` for `evals.yaml` — match the test type to what's being tested**

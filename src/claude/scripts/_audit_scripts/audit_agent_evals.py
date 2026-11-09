@@ -2,7 +2,7 @@
 """Run each agent's runnable evals through headless Claude and report a pass rate per agent.
 
 An eval is runnable when it has a ``run`` block holding a ``prompt`` and at least one ``must_match``
-or ``must_not_match`` regex. Each one runs ``claude -p`` with no tools, through claude_kaizen's eval
+or ``must_not_match`` regex. Each one runs ``claude -p`` with no tools, through claude-kaizen's eval
 runner, and costs one Claude call. Evals without a ``run`` block, such as routing checks that need a
 full session to pick the agent, are skipped and counted.
 
@@ -14,8 +14,8 @@ load alongside the agent, as in real use, so results can shift when that config 
 
 Usage:
     python3 src/claude/scripts/_audit_scripts/audit_agent_evals.py --dry-run
-    python3 src/claude/scripts/_audit_scripts/audit_agent_evals.py code_reviewer
-    python3 src/claude/scripts/_audit_scripts/audit_agent_evals.py --config-dir <folder> code_reviewer
+    python3 src/claude/scripts/_audit_scripts/audit_agent_evals.py code-reviewer
+    python3 src/claude/scripts/_audit_scripts/audit_agent_evals.py --config-dir <folder> code-reviewer
 
 Exits 1 when any eval fails or a named agent has no evals, and 0 otherwise.
 """
@@ -35,18 +35,18 @@ from typing import Any
 import yaml
 
 # Grouped in the playbook repo (skills/_claude_skills/<name>/), flat in a live config (skills/<name>/)
-KAIZEN_RUNNER = ("claude_kaizen/evals/runner.py", "_claude_skills/claude_kaizen/evals/runner.py")
+KAIZEN_RUNNER = ("claude-kaizen/evals/runner.py", "_claude_skills/claude-kaizen/evals/runner.py")
 SCRIPT_CONFIG = Path(__file__).resolve().parents[2]
 
 
 def load_kaizen_runner(config: Path):
-    """Import claude_kaizen's eval runner, which owns the ``claude -p`` call and the regex judge.
+    """Import claude-kaizen's eval runner, which owns the ``claude -p`` call and the regex judge.
 
-    :raises FileNotFoundError: If the config holds no claude_kaizen runner.
+    :raises FileNotFoundError: If the config holds no claude-kaizen runner.
     """
     path = next((config / "skills" / rel for rel in KAIZEN_RUNNER if (config / "skills" / rel).is_file()), None)
     if path is None:
-        raise FileNotFoundError(f"claude_kaizen's evals/runner.py not found under {config / 'skills'}")
+        raise FileNotFoundError(f"claude-kaizen's evals/runner.py not found under {config / 'skills'}")
     spec = importlib.util.spec_from_file_location("kaizen_runner", path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -94,7 +94,7 @@ def run_agent(kaizen, name: str, eval_file: Path) -> dict[str, Any]:
 
 
 def summary_line(name: str, results: dict[str, Any]) -> str:
-    """Return one agent's pass rate, for example ``code_reviewer: 5/6 passed (83%), 2 skipped``."""
+    """Return one agent's pass rate, for example ``code-reviewer: 5/6 passed (83%), 2 skipped``."""
     total, passed = results["total"], results["passed"]
     rate = f"{round(100 * passed / total)}%" if total else "n/a"
     return f"{name}: {passed}/{total} passed ({rate}), {len(results['skipped'])} skipped"
