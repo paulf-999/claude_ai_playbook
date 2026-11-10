@@ -18,6 +18,10 @@ LINTER="$REPO_ROOT/src/claude/scripts/_lint_scripts/lint_skill_authoring_gate.py
 COMPLEXITY_SCORER="$REPO_ROOT/src/claude/scripts/_audit_scripts/audit_skill_complexity.py"
 SKILLS_ROOT="$REPO_ROOT/src/claude/skills"
 
+# Prefer the repo venv, which has requirements.txt installed, since a bare python3 may lack PyYAML
+PYTHON="$REPO_ROOT/venv/bin/python"
+[ -x "$PYTHON" ] || PYTHON=python3
+
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "🏗️  Skill Authoring Gate — Pre-Commit Validation"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -36,7 +40,7 @@ COMPLEXITY_EXIT=0
 
 # Run linter
 if [ -f "$LINTER" ]; then
-    if python3 "$LINTER" "$SKILLS_ROOT" 2>&1; then
+    if "$PYTHON" "$LINTER" "$SKILLS_ROOT" 2>&1; then
         echo "✅ Gate (crawl, walk, run): PASS — any WARN lines above are advisory"
         LINTER_EXIT=0
     else
@@ -57,8 +61,10 @@ if [ -f "$COMPLEXITY_SCORER" ] && [ -d "$SKILLS_ROOT" ]; then
     for skill_dir in "$SKILLS_ROOT"/**/*/; do
         if [ -f "$skill_dir/skill.contract.yaml" ]; then
             skill_name=$(basename "$skill_dir")
-            if ! python3 "$COMPLEXITY_SCORER" "$skill_dir" > /dev/null 2>&1; then
+            if ! scorer_output=$("$PYTHON" "$COMPLEXITY_SCORER" "$skill_dir" 2>&1); then
                 echo "❌ Complexity check failed for $skill_name"
+                # Show the scorer's last lines, so a crash such as a missing module is visible
+                echo "$scorer_output" | tail -n 3
                 COMPLEXITY_EXIT=1
             fi
         fi
