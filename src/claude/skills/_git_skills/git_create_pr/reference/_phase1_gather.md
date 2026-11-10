@@ -15,7 +15,7 @@ If `git status` shows unmerged paths (conflict markers from a merge or rebase), 
 **Branch:** If already on `feature/` or `hotfix/` branch, use it. Otherwise, derive from `$ARGUMENTS` (text after `/git_create_pr`). Pattern: `^(feature|hotfix)/[a-z0-9_]+$`
 
 **Files to stage:** All changed/untracked files unless context suggests otherwise.
-- **Likely secrets:** leave out any file that looks like a secret (`.env`, `.env.*`, `*.pem`, `*.key`, `id_rsa*`, `credentials*`, `*.p12`), and list it under "Not staged" in the Phase 2b plan.
+- **Likely secrets:** leave out any file that looks like a secret (`.env`, `.env.*`, `*.pem`, `*.key`, `id_rsa*`, `credentials*`, `*.p12`), and list it under "Not staged" in the Phase 2 prompt.
 - **Override:** stage such a file only if the user names it explicitly after seeing the warning.
 
 **Commit message:** Conventional Commits format `type(scope): description`
@@ -37,9 +37,10 @@ If `git status` shows unmerged paths (conflict markers from a merge or rebase), 
   - ❌ `chore(settings.local.json): untrack .claude/settings.local.json` (contains filename)
 
 **PR body:** Use Agent tool (`subagent_type: technical_writer`) to draft following template structure exactly:
+- **Foreground, before the gate:** run the writer in the foreground as the last Phase 1 step, so the Phase 2 prompt shows the finished body and nothing waits between prompts.
 - **Summary:** 1 punchy sentence max. 2 sentences only if critical context would be lost. No jargon, no code refs. State what + why.
 - **Additional Details:** Omit if not needed, and otherwise give only what a reviewer must or should know, in the template's 5 bullets or fewer, never mixing prose and bullets.
-- **Links:** give every file, issue or PR the body names a full GitHub URL, with file links pinned to the head commit, because CI rejects relative links in some repos and they never work in a PR.
+- **Links:** give every file, issue or PR the body names a full GitHub URL, with file links on the branch until the push pins them to the head commit, because CI rejects relative links in some repos and they never work in a PR.
 - **Brief the writer:** pass these limits to `technical_writer` with only the must-know facts, because it keeps whatever detail the brief gives it.
 - **Checkboxes:** Tick only applicable one
 - **Jira links:** Format as `[ABC-123](https://<your-site>.atlassian.net/browse/ABC-123)` if ticket known
