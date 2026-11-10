@@ -8,7 +8,7 @@ tags:
   tested: true
   test_coverage_level: comprehensive
 ---
-<!-- version: 2.2.0 -->
+<!-- version: 2.3.0 -->
 <!-- created: 2026-08-28 -->
 <!-- updated: 2026-11-10 -->
 
@@ -67,5 +67,5 @@ Routine feature and hotfix PRs, faster than the manual git workflow and with Con
 - `reference/_implementation.md` — the phase map and error handling, pointing to the two phase files
 - `reference/_phase1_gather.md` — gather-info logic, branch/commit/PR-title/PR-body derivation, label mapping and the label-exists check
 - `reference/_phase2_execute.md` — the single confirmation prompt, execution rules and error recovery
-- `tests/evals.yaml` — 15 test scenarios covering every phase, the confirmation prompt's replies, a rejected push, the 20-file limit, a shell-syntax title, an unstaged `.env` and a merge conflict
+- `tests/evals.yaml` — 16 test scenarios covering every phase, already-committed work, the confirmation prompt's replies, a rejected push, the 20-file limit, a shell-syntax title, an unstaged `.env` and a merge conflict
 - `_reference/_quality_scorecards/skills/scorecard_git_create_pr.md` — 7-dimension quality scorecard

@@ -12,7 +12,7 @@ PR title: <type(scope): plain English description>
 Here is what I will run:
 
 1. git checkout -b <branch_name>        # (omit if already on feature/hotfix branch)
-2. git add <file1> <file2> ...
+2. git add <file1> <file2> ...         # (omit steps 2–3 if the work is already committed)
 3. git commit -m "<commit message>"
 4. git push -u origin <branch_name>
 5. write the PR body to a temporary file, with file links pinned to the pushed commit

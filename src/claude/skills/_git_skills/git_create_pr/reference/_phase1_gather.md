@@ -6,7 +6,9 @@ Run the following silently to understand current state:
 2. `git diff` — review unstaged changes
 3. Read `.github/pull_request_template.md` from repo root. **This file is mandatory** — stop if not found and ask the user to create one.
 
-If working tree is clean (nothing to commit), stop.
+If the working tree is clean, check `git log main..HEAD`:
+- **No commits ahead:** stop, since there is nothing to ship.
+- **Commits ahead on a `feature/` or `hotfix/` branch:** ship them, so the plan drops the checkout, add and commit steps and the commit message comes from those commits.
 
 If `git status` shows unmerged paths (conflict markers from a merge or rebase), stop and tell the user to resolve them by hand, since merge conflicts are out of scope.
 
@@ -37,7 +39,7 @@ If `git status` shows unmerged paths (conflict markers from a merge or rebase), 
   - ❌ `chore(settings.local.json): untrack .claude/settings.local.json` (contains filename)
 
 **PR body:** Use Agent tool (`subagent_type: technical_writer`) to draft following template structure exactly:
-- **Foreground, before the gate:** run the writer in the foreground as the last Phase 1 step, so the Phase 2 prompt shows the finished body and nothing waits between prompts.
+- **Wait before the gate:** start the writer as the last Phase 1 step and wait for its result before showing the Phase 2 prompt, so the prompt shows the finished body and nothing waits between prompts.
 - **Summary:** 1 punchy sentence max. 2 sentences only if critical context would be lost. No jargon, no code refs. State what + why.
 - **Additional Details:** Omit if not needed, and otherwise give only what a reviewer must or should know, in the template's 5 bullets or fewer, never mixing prose and bullets.
 - **Links:** give every file, issue or PR the body names a full GitHub URL, with file links on the branch until the push pins them to the head commit, because CI rejects relative links in some repos and they never work in a PR.
