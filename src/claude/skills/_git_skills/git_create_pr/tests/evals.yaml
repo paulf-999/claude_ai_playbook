@@ -58,6 +58,24 @@ evals:
           - Claude does not run git commit or gh pr create
           - Claude tells the user there is nothing to commit
 
+    - name: already_committed_branch_ships_commits
+      description: Clean working tree, but the feature branch has commits ahead of main
+      input:
+          prompt: /git_create_pr add login form
+          confirm_reply: y
+      setup:
+          current_branch: feature/login_form
+          changed_files: []
+          commits_ahead_of_main: 1
+          pr_template_exists: true
+      expected_output: >
+          Claude ships the existing commit, so the plan holds only the push and
+          gh pr create, takes the commit message from the commit, and opens the PR.
+      assertions:
+          - Claude does not stop with "nothing to commit"
+          - The plan has no git checkout, git add or git commit step
+          - Claude pushes feature/login_form and runs gh pr create after approval
+
   # Phase 1 — derivations
     - name: reuses_existing_feature_branch
       description: Already on a feature branch, and asked to target develop — skill keeps the branch and turns down the non-main base (a not_for case)
