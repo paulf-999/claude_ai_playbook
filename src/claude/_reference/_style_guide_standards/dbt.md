@@ -3,16 +3,16 @@ paths:
   - "**/models/**/*.sql"
   - "**/dbt_project.yml"
 ---
-<!-- version: 1.2.1 -->
+<!-- version: 1.3.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-27 -->
+<!-- updated: 2026-10-29 -->
 <!-- miss_cost: medium — models that break naming or layering and fail review -->
 <!-- loading: path-scoped — only applies to dbt models, so it loads when a model or dbt_project.yml is open -->
 # 🔵 dbt Style Guide & Standards
 
-**Purpose:** Define standards for the dbt project — covering model organization, naming, YAML properties, testing, snapshots, and macros. Standards ensure consistency, maintainability, and correctness across the dbt project.
+**Purpose:** Define the dbt project's standards for model organisation, naming, YAML properties, testing, snapshots and macros, so every model is consistent, maintainable and correct.
 
-**Scope:** All models, macros, and YAML in the dbt project. Standards are checked in CI and enforce best practices from [dbt Labs style guide](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md).
+**Scope:** all models, macros and YAML in the dbt project, building on [dbt Labs' style guide](https://docs.getdbt.com/best-practices/how-we-style/0-how-we-style-our-dbt-projects).
 
 ## 📋 Child pages
 
@@ -42,12 +42,12 @@ For SQL formatting rules within dbt models, see [`sql.md`](sql.md).
    - **How:** add a `description:` field for every model and column in YAML
    - **Test:** do the docs from `dbt docs generate` explain what each model and column contains and who owns it?
 
-3. **Testing discipline** — all sources and logical joins have tests
+3. **Testing discipline** — every model's key and every source has tests
    - **Why:** broken lineage silently corrupts downstream data, and tests catch schema changes immediately
-   - **How:** apply `unique` and `not_null` to every model's `KEY`, plus source freshness and `relationships` tests where they fit
+   - **How:** apply `unique` and `not_null` to every model's `KEY`, a freshness test to every source with a loaded-at column, and `relationships` tests on foreign keys
    - **Test:** do CI checks block PRs with missing tests?
 
-4. **Selective materialization** — choose materialization strategically, not by default
+4. **Selective materialisation** — choose materialisation strategically, not by default
    - **Why:** the wrong materialisation wastes Snowflake compute or creates stale data
    - **How:** start from each layer's default in `_model_organisation.md`, and justify any change
    - **Test:** is each materialisation choice justified by query frequency and data volume?
@@ -67,41 +67,9 @@ For SQL formatting rules within dbt models, see [`sql.md`](sql.md).
 |---------|--------|-----------|
 | Missing `ref()` relationships | Lineage broken; schema changes undetected | Replace `schema.table` with `{{ ref('model_name') }}` |
 | No documentation on new columns | BI users confused about column meaning | Add `description:` for every column in YAML |
-| Materialized as table when should be view | Stale data served to BI | Change `materialized: view` and re-run dbt |
+| Materialised as table when should be view | Stale data served to BI | Change `materialized: view` and re-run dbt |
 | Missing uniqueness test on key | Duplicate fact rows silently accumulated | Add `unique` and `not_null` tests on `KEY` in the model's YAML |
 | No incremental logic in large models | Full model rebuilds waste Snowflake compute | Use `is_incremental()` block with `unique_key` |
-
----
-
-## 🎯 Development Workflow
-
-```
-1. Create model
-   └─ Choose layer (staging/base/mart/publication)
-   └─ Write SQL following SQL style guide
-   └─ Declare `ref()` and `source()` dependencies
-
-2. Document
-   └─ Add model description in YAML
-   └─ Add descriptions for all columns
-
-3. Test
-   └─ Add tests for sources (freshness, completeness)
-   └─ Add tests for keys (uniqueness, referential integrity)
-
-4. Code review
-   └─ Reviewer checks layer, naming, lineage, tests
-
-5. CI validation
-   └─ dbt parse (syntax check)
-   └─ dbt test (all tests pass)
-   └─ dbt docs generate (documentation present)
-
-6. Production deploy
-   └─ dbt run (build models)
-   └─ dbt test (final verification)
-   └─ Monitor freshness in BI layer
-```
 
 ---
 
@@ -111,9 +79,9 @@ Before marking a model PR as ready:
 
 - [ ] All tables referenced via `{{ ref() }}` or `{{ source() }}`
 - [ ] Model and all columns have descriptions in YAML
-- [ ] Tests defined for sources (freshness, completeness)
-- [ ] Tests defined for keys (uniqueness, foreign key)
-- [ ] SQL passes SQLFluff validation
+- [ ] Every source with a loaded-at column has a freshness test
+- [ ] `KEY` has `unique` and `not_null` tests, and foreign keys have `relationships` tests
+- [ ] SQL passes SQLFluff validation, and `dbt parse` and `dbt test` pass
 - [ ] Lineage graph in the generated docs shows correct upstream/downstream
-- [ ] Materialization choice justified (view/table/incremental)
+- [ ] Materialisation choice justified (view/table/incremental)
 - [ ] Documentation generated and reviewed (`dbt docs generate`)

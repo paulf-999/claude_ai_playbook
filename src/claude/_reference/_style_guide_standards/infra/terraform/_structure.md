@@ -1,9 +1,18 @@
-<!-- version: 2.0.1 -->
+<!-- version: 2.0.2 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-27 -->
+<!-- updated: 2026-10-29 -->
 # 📁 Structure
 
 **Purpose:** Set the directory layout, standard file conventions and what stays out of version control; provider configuration lives in [`_providers.md`](_providers.md).
+
+## 📋 Contents
+
+- [🗂️ Top-level layout](#-top-level-layout)
+- [📄 Standard files per module or environment](#-standard-files-per-module-or-environment)
+- [🔢 Numbered subdirectory convention](#-numbered-subdirectory-convention)
+- [🔒 What must not be committed](#-what-must-not-be-committed)
+
+---
 
 ## 🗂️ Top-level layout
 
@@ -28,14 +37,6 @@ terraform/
 │           └── grant_write_db_access/
 └── examples/             # Standalone usage examples for modules
 ```
-
-## 📋 Contents
-
-- [📄 Standard files per module or environment](#-standard-files-per-module-or-environment)
-- [🔢 Numbered subdirectory convention](#-numbered-subdirectory-convention)
-- [🔒 What must not be committed](#-what-must-not-be-committed)
-
----
 
 ## 📄 Standard files per module or environment
 

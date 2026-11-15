@@ -1,6 +1,6 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-10-27 -->
-<!-- updated: 2026-10-27 -->
+<!-- updated: 2026-10-29 -->
 # 🔌 Providers
 
 **Purpose:** Set provider version pinning, authentication and preview features, split from [`_structure.md`](_structure.md).
@@ -44,7 +44,7 @@ provider "snowflake" {
   organization_name = var.SNOWFLAKE_ORGANIZATION_NAME
   account_name      = var.SNOWFLAKE_ACCOUNT_NAME
   user              = var.SNOWFLAKE_USER
-  private_key       = file("~/.ssh/snowflake_key.p8")
+  private_key       = file(var.SNOWFLAKE_PRIVATE_KEY_PATH)
   authenticator     = "SNOWFLAKE_JWT"
   role              = var.SNOWFLAKE_ROLE
   warehouse         = var.SNOWFLAKE_WAREHOUSE
@@ -52,7 +52,7 @@ provider "snowflake" {
 ```
 
 - All authentication values are passed in as variables — never hardcoded.
-- The private key path `~/.ssh/snowflake_key.p8` is the team standard — do not commit the key file.
+- The key's path comes from `SNOWFLAKE_PRIVATE_KEY_PATH`, set in each developer's environment, and the key file itself is never committed.
 - See `.env_template` in each environment directory for the expected environment variable names.
 
 ---

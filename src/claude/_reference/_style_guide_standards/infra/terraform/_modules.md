@@ -1,9 +1,19 @@
-<!-- version: 1.0.1 -->
+<!-- version: 1.0.2 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-10-27 -->
+<!-- updated: 2026-10-29 -->
 # 📦 Modules
 
 **Purpose:** Set the standards for module composition, provider passing, iteration patterns, and lifecycle management.
+
+## 📋 Contents
+
+- [🧩 Module composition pattern](#-module-composition-pattern)
+- [🔁 Layered resource pattern](#-layered-resource-pattern)
+- [🔄 Iteration with for_each](#-iteration-with-for_each)
+- [⚙️ Lifecycle management](#-lifecycle-management)
+- [📝 Module README](#-module-readme)
+
+---
 
 ## 🧩 Module composition pattern
 
@@ -21,15 +31,6 @@ module "roles_and_grants" {
 
 - Always pass providers explicitly using the `providers` argument — do not rely on implicit provider inheritance.
 - Use relative paths for module sources within the same repository (`source = "../../grants/default_grants_new_role_v1"`).
-
-## 📋 Contents
-
-- [🔁 Layered resource pattern](#-layered-resource-pattern)
-- [🔄 Iteration with for_each](#-iteration-with-for_each)
-- [⚙️ Lifecycle management](#-lifecycle-management)
-- [📝 Module README](#-module-readme)
-
----
 
 ## 🔁 Layered resource pattern
 

@@ -1,9 +1,19 @@
-<!-- version: 2.0.1 -->
+<!-- version: 2.0.3 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-27 -->
+<!-- updated: 2026-10-29 -->
 # 🏷️ Conventions
 
 **Purpose:** Set naming standards for Snowflake objects, Terraform resources, modules, variables and outputs; declaration rules live in [`_declarations.md`](_declarations.md).
+
+## 📋 Contents
+
+- [❄️ Snowflake object names](#-snowflake-object-names)
+- [🔧 Terraform resource names](#-terraform-resource-names)
+- [📦 Module names](#-module-names)
+- [📥 Variable names](#-variable-names)
+- [📤 Output names](#-output-names)
+
+---
 
 ## ❄️ Snowflake object names
 
@@ -27,21 +37,12 @@ Examples: `FUNC_CREATE_MODIFY_DATABASE_ROLE`, `ACCESS_READ_ONLY_ROLE`
 
 Pattern: `<NAME>_WH` — e.g. `DEV_WH`, `APP_DB_FILE_SUBMITTER_WH`
 
-## 📋 Contents
-
-- [🔧 Terraform resource names](#-terraform-resource-names)
-- [📦 Module names](#-module-names)
-- [📥 Variable names](#-variable-names)
-- [📤 Output names](#-output-names)
-
----
-
 ## 🔧 Terraform resource names
 
 | Construct | Convention | Example |
 |-----------|------------|---------|
 | Primary resource in a module | `this` | `resource "snowflake_account_role" "this"` |
-| Non-primary resources | Descriptive `snake_case` prefixed with purpose | `module_grant_ownership_snowflake_warehouse` |
+| Non-primary resources | `snake_case` naming what the resource does, then what it acts on | `grant_ownership_snowflake_warehouse` |
 
 Use `this` when a module manages a single primary resource. Name each resource descriptively when a module creates multiple related resources.
 
