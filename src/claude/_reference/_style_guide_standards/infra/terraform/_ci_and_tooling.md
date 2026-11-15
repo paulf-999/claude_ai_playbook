@@ -1,9 +1,18 @@
-<!-- version: 1.0.2 -->
+<!-- version: 1.0.4 -->
 <!-- created: 2026-04-08 -->
-<!-- updated: 2026-10-27 -->
+<!-- updated: 2026-10-29 -->
 # 🔁 CI & Tooling
 
 **Purpose:** Set the standards for pre-commit hooks, code formatting, and the Azure Pipelines CI/CD workflow.
+
+## 📋 Contents
+
+- [🪝 Pre-commit hooks](#-pre-commit-hooks)
+- [🎨 Terraform formatting](#-terraform-formatting)
+- [🚀 Azure Pipelines — PR validation](#-azure-pipelines-pr-validation)
+- [🚀 Azure Pipelines — deployment](#-azure-pipelines-deployment)
+
+---
 
 ## 🪝 Pre-commit hooks
 
@@ -22,14 +31,6 @@ The following hooks are enforced on every commit via `.pre-commit-config.yaml`:
 
 All hooks must pass before a commit is accepted. Do not suppress failures without a documented reason.
 
-## 📋 Contents
-
-- [🎨 Terraform formatting](#-terraform-formatting)
-- [🚀 Azure Pipelines — PR validation](#-azure-pipelines-pr-validation)
-- [🚀 Azure Pipelines — deployment](#-azure-pipelines-deployment)
-
----
-
 ## 🎨 Terraform formatting
 
 Run `terraform fmt -recursive` before committing to ensure consistent formatting across all `.tf` files. The `terraform_fmt` pre-commit hook enforces this automatically.
@@ -37,7 +38,6 @@ Run `terraform fmt -recursive` before committing to ensure consistent formatting
 Key formatting rules enforced by `terraform fmt`:
 - Align `=` signs within blocks.
 - Indent with 2 spaces.
-- One blank line between resource blocks.
 
 ---
 

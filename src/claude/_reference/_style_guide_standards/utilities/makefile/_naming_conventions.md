@@ -1,13 +1,13 @@
-<!-- version: 1.0.3 -->
+<!-- version: 1.1.0 -->
 <!-- created: 2026-08-28 -->
-<!-- updated: 2026-10-27 -->
+<!-- updated: 2026-10-29 -->
 # 🏷️ Makefile Naming Conventions
 
 **Purpose:** Set how Makefile targets and variables are named.
 
-## Targets
+## 🎯 Targets
 
-Target names must use lowercase letters. Words are separated with an underscore (`_`):
+- **Rule:** target names must be lowercase, with words separated by underscores.
 
 ```makefile
 test_debug:
@@ -16,9 +16,10 @@ test_debug:
 
 ---
 
-## Variables
+## 📦 Variables
 
-Variables that are not special to Make or inherited from the environment must be in lowercase, with words separated by underscores:
+- **Rule:** variables you define must be lowercase, with words separated by underscores.
+- **Exceptions:** variables special to Make (such as `SHELL`) or inherited from the environment keep their own case.
 
 ```makefile
 src_dir := $(current_dir)/src
